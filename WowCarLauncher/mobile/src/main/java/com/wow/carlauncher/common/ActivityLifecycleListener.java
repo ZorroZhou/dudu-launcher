@@ -1,0 +1,57 @@
+package com.wow.carlauncher.common;
+
+import android.app.Activity;
+import android.app.Application;
+import android.os.Bundle;
+
+import com.wow.carlauncher.popupWindow.PopupWindow;
+
+/**
+ * Created by 10124 on 2017/10/29.
+ */
+
+public class ActivityLifecycleListener implements Application.ActivityLifecycleCallbacks {
+
+    private int refCount = 0;
+
+    @Override
+    public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+
+    }
+
+    @Override
+    public void onActivityStarted(Activity activity) {
+        if (refCount == 0) {
+            PopupWindow.self().hide();
+        }
+        refCount++;
+    }
+
+    @Override
+    public void onActivityResumed(Activity activity) {
+
+    }
+
+    @Override
+    public void onActivityPaused(Activity activity) {
+
+    }
+
+    @Override
+    public void onActivityStopped(Activity activity) {
+        refCount--;
+        if (refCount == 0) {
+            PopupWindow.self().show();
+        }
+    }
+
+    @Override
+    public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+
+    }
+
+    @Override
+    public void onActivityDestroyed(Activity activity) {
+
+    }
+}

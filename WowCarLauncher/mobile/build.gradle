@@ -1,0 +1,52 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion "26.0.1"
+    defaultConfig {
+        applicationId "com.wow.carlauncher"
+        minSdkVersion 21
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    signingConfigs {
+//        release {
+//            storeFile file("${getRootDir()}/satsoftec.jks")
+//            storePassword "123456"
+//            keyAlias "mobleclient"
+//            keyPassword "123456"
+//            //MD5: A9:78:80:0D:23:EF:1C:D5:C0:F4:06:72:ED:02:13:2A
+//            //SHA1: E0:65:46:0C:AA:F9:64:D8:EB:68:79:5B:31:D0:18:CE:2F:97:6C:E3
+//        }
+        debug {
+            storeFile file("${getRootDir()}/cl.jks")
+            storePassword "123456"
+            keyAlias "debug"
+            keyPassword "123456"
+            //MD5: 0B:8B:23:E2:EC:CC:6B:AC:0B:9C:4D:C3:C9:A1:7F:80
+            //SHA1: EB:0A:BE:9C:41:CD:C6:A6:91:29:FC:74:F1:B3:48:10:E5:A4:9C:38
+            //SHA256: 75:BD:A6:13:1C:F2:2B:0A:3B:06:34:A5:97:A3:87:86:46:1C:68:2A:20:6B:FC:07:33:BA:27:CC:98:D5:97:A9
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:26.+'
+    compile 'com.android.support:support-v4:26.+'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+
+    compile 'org.xutils:xutils:3.3.38'
+    compile 'org.greenrobot:eventbus:3.0.0'
+    compile 'com.zhy:percent-support-extends:+'
+    compile 'com.google.code.gson:gson:2.2.4'
+
+}

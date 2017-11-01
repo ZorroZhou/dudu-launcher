@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorAccent">#ff7ba4b9</color>
+    <color name="colorPrimary">#ff394a53</color>
+    <color name="colorPrimaryDark">#ff949bc4</color>
+
+    <color name="plugin_title">#bbffffff</color>
+    <color name="plugin_music_name">#bbffffff</color>
+    <color name="plugin_music_album">#bbffffff</color>
+
+    <color name="plugin_content">#bbffffff</color>
+
+    <color name="popup_show_plugin">#55555555</color>
+    <color name="popup_hide_plugin">#00000000</color>
+
+    <color name="main_interval_color">#e5e5e5</color>
+
+
+    <color name="set_view_title">#de000000</color>
+    <color name="set_view_summary">#8a000000</color>
+    <color name="set_view_disable">#43000000</color>
+    <color name="item_mask">#32000000</color>
+</resources>

@@ -12,8 +12,6 @@ import com.wow.carlauncher.popupWindow.PopupWindow;
 
 public class ActivityLifecycleListener implements Application.ActivityLifecycleCallbacks {
 
-    private int refCount = 0;
-
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
 
@@ -21,10 +19,7 @@ public class ActivityLifecycleListener implements Application.ActivityLifecycleC
 
     @Override
     public void onActivityStarted(Activity activity) {
-        if (refCount == 0) {
-            PopupWindow.self().hide();
-        }
-        refCount++;
+        PopupWindow.self().checkShow(1);
     }
 
     @Override
@@ -39,10 +34,7 @@ public class ActivityLifecycleListener implements Application.ActivityLifecycleC
 
     @Override
     public void onActivityStopped(Activity activity) {
-        refCount--;
-        if (refCount == 0) {
-            PopupWindow.self().show();
-        }
+        PopupWindow.self().checkShow(-1);
     }
 
     @Override

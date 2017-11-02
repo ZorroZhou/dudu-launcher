@@ -1,14 +1,19 @@
 package com.wow.carlauncher.plugin.time;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.DateUtil;
+import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.plugin.time.event.PEventTimeClock;
 import com.wow.carlauncher.plugin.time.event.PEventTimeWeather;
 
@@ -73,6 +78,21 @@ public class TimeLauncherView extends LinearLayout {
         week = findViewById(R.id.week);
         tv_tianqi = findViewById(R.id.tv_tianqi);
         tv_local = findViewById(R.id.tv_local);
+        linearLayout.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String selectapp = SharedPreUtil.getSharedPreString(CommonData.SDATA_TIME_PLUGIN_OPEN_APP);
+                if (CommonUtil.isNotNull(selectapp)) {
+                    Intent appIntent = getContext().getPackageManager().getLaunchIntentForPackage(selectapp);
+                    if (appIntent != null) {
+                        appIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        getContext().startActivity(appIntent);
+                        return;
+                    }
+                }
+                Toast.makeText(getContext(), "没有选择APP", Toast.LENGTH_SHORT);
+            }
+        });
     }
 
     private void setTime() {

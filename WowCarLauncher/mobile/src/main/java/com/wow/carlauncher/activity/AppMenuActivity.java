@@ -64,8 +64,7 @@ public class AppMenuActivity extends BaseActivity implements AdapterView.OnItemC
         x.task().run(new Runnable() {
             @Override
             public void run() {
-                List<PackageInfo> packages = pm.getInstalledPackages(0);
-                final List<AppInfo> appInfos = CommonUtil.getAllApp(mContext, true);
+                final List<AppInfo> appInfos = CommonUtil.getAllApp(mContext);
                 String selectapp = SharedPreUtil.getSharedPreString(CommonData.SDATA_HIDE_APPS);
                 List<AppInfo> hides = new ArrayList<>();
                 for (AppInfo appInfo : appInfos) {

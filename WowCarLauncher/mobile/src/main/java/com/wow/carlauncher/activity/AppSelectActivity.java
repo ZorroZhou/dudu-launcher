@@ -60,7 +60,7 @@ public class AppSelectActivity extends BaseActivity implements AdapterView.OnIte
         x.task().run(new Runnable() {
             @Override
             public void run() {
-                final List<AppInfo> appInfos = CommonUtil.getAllApp(mContext, false);
+                final List<AppInfo> appInfos = CommonUtil.getAllApp(mContext);
                 x.task().autoPost(new Runnable() {
                     @Override
                     public void run() {

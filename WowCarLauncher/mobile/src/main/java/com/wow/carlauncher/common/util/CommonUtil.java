@@ -13,7 +13,9 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.inputmethod.InputMethodManager;
 
@@ -86,24 +88,29 @@ public class CommonUtil {
     }
 
     public static String getForegroundApp(Context context) {
-        UsageStatsManager usageStatsManager =
-                (UsageStatsManager) context.getSystemService(Context.USAGE_STATS_SERVICE);
-        long ts = System.currentTimeMillis();
-        List<UsageStats> queryUsageStats = usageStatsManager.queryUsageStats(UsageStatsManager.INTERVAL_BEST, 0, ts);
-        if (queryUsageStats == null || queryUsageStats.isEmpty()) {
-            return null;
-        }
-
-        UsageStats recentStats = null;
-        for (UsageStats usageStats : queryUsageStats) {
-            if (recentStats == null || recentStats.getLastTimeUsed() < usageStats.getLastTimeUsed()) {
-                recentStats = usageStats;
+        if (Build.VERSION.SDK_INT >= 21) {
+            UsageStatsManager usageStatsManager = (UsageStatsManager) context.getSystemService(Context.USAGE_STATS_SERVICE);
+            long ts = System.currentTimeMillis();
+            List<UsageStats> queryUsageStats = usageStatsManager.queryUsageStats(UsageStatsManager.INTERVAL_BEST, 0, ts);
+            if (queryUsageStats == null || queryUsageStats.isEmpty()) {
+                return null;
             }
+
+            UsageStats recentStats = null;
+            for (UsageStats usageStats : queryUsageStats) {
+                if (recentStats == null || recentStats.getLastTimeUsed() < usageStats.getLastTimeUsed()) {
+                    recentStats = usageStats;
+                }
+            }
+            return recentStats.getPackageName();
+        } else {
+            ActivityManager activityManager = (ActivityManager) context.getApplicationContext().getSystemService(Context.ACTIVITY_SERVICE);
+            ComponentName runningTopActivity = activityManager.getRunningTasks(1).get(0).topActivity;
+            return runningTopActivity.getPackageName();
         }
-        return recentStats.getPackageName();
     }
 
-    public static List<AppInfo> getAllApp(Context context, boolean havaLaunch) {
+    public static List<AppInfo> getAllApp(Context context) {
         List<AppInfo> appInfos = new ArrayList<>();
 
         PackageManager manager = context.getPackageManager();
@@ -126,32 +133,6 @@ public class CommonUtil {
                 }
             }
         }
-
-
-//        PackageManager pm = context.getPackageManager();
-//        List<PackageInfo> packages = pm.getInstalledPackages(0);
-//        List<AppInfo> appInfos = new ArrayList<>();
-//        for (int i = 0; i < packages.size(); i++) {
-//            PackageInfo packageInfo = packages.get(i);
-//            if (havaLaunch) {
-//                Intent appIntent = pm.getLaunchIntentForPackage(packageInfo.packageName);
-//                if (appIntent != null && (!packageInfo.packageName.equals(context.getPackageName()))) {
-//                    appInfos.add(new AppInfo(
-//                            packageInfo.applicationInfo.loadIcon(pm),
-//                            packageInfo.applicationInfo.loadLabel(pm).toString(),
-//                            packageInfo.packageName)
-//                    );
-//                }
-//            } else {
-//                if (!packageInfo.packageName.equals(context.getPackageName())) {
-//                    appInfos.add(new AppInfo(
-//                            packageInfo.applicationInfo.loadIcon(pm),
-//                            packageInfo.applicationInfo.loadLabel(pm).toString(),
-//                            packageInfo.packageName)
-//                    );
-//                }
-//            }
-//        }
         return appInfos;
     }
 

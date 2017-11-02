@@ -4,6 +4,7 @@ import android.appwidget.AppWidgetHost;
 import android.appwidget.AppWidgetManager;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -39,6 +40,9 @@ public class SetActivity extends BaseActivity {
     @ViewInject(R.id.sv_popup_window_showtype)
     private SetView sv_popup_window_showtype;
 
+    @ViewInject(R.id.sv_popup_window_toxfk)
+    private SetView sv_popup_window_toxfk;
+
     @ViewInject(R.id.sv_popup_window_showapps)
     private SetView sv_popup_window_showapps;
 
@@ -69,6 +73,14 @@ public class SetActivity extends BaseActivity {
     @Override
     public void initView() {
         setTitle("全部应用");
+        sv_popup_window_toxfk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                        Uri.parse("package:" + getPackageName()));
+                startActivityForResult(intent, 123123);
+            }
+        });
 
         sv_popup_window_tosys.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,7 +118,7 @@ public class SetActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 String selectapp = SharedPreUtil.getSharedPreString(CommonData.SDATA_POPUP_SHOW_APPS);
-                final List<AppInfo> appInfos = CommonUtil.getAllApp(mContext, true);
+                final List<AppInfo> appInfos = CommonUtil.getAllApp(mContext);
                 String[] items = new String[appInfos.size()];
                 final boolean[] checks = new boolean[appInfos.size()];
                 for (int i = 0; i < items.length; i++) {
@@ -274,12 +286,12 @@ public class SetActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 String selectapp = SharedPreUtil.getSharedPreString(CommonData.SDATA_HIDE_APPS);
-                final List<AppInfo> appInfos = CommonUtil.getAllApp(mContext, true);
+                final List<AppInfo> appInfos = CommonUtil.getAllApp(mContext);
                 String[] items = new String[appInfos.size()];
                 final boolean[] checks = new boolean[appInfos.size()];
                 for (int i = 0; i < items.length; i++) {
                     items[i] = appInfos.get(i).name + "(" + appInfos.get(i).packageName + ")";
-                    if (selectapp.indexOf("[" + appInfos.get(i).packageName + "]") >= 0) {
+                    if (selectapp.contains("[" + appInfos.get(i).packageName + "]")) {
                         checks[i] = true;
                     } else {
                         checks[i] = false;
@@ -314,38 +326,27 @@ public class SetActivity extends BaseActivity {
         time_plugin_open_app_select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String selectapp = SharedPreUtil.getSharedPreString(CommonData.SDATA_HIDE_APPS);
-                final List<AppInfo> appInfos = CommonUtil.getAllApp(mContext, true);
+                String selectapp = SharedPreUtil.getSharedPreString(CommonData.SDATA_TIME_PLUGIN_OPEN_APP);
+                final List<AppInfo> appInfos = CommonUtil.getAllApp(mContext);
                 String[] items = new String[appInfos.size()];
-                final boolean[] checks = new boolean[appInfos.size()];
+                int select = -1;
                 for (int i = 0; i < items.length; i++) {
                     items[i] = appInfos.get(i).name + "(" + appInfos.get(i).packageName + ")";
-                    if (selectapp.indexOf("[" + appInfos.get(i).packageName + "]") >= 0) {
-                        checks[i] = true;
-                    } else {
-                        checks[i] = false;
+                    if (appInfos.get(i).packageName.equals(selectapp)) {
+                        select = i;
                     }
                 }
-
+                Log.e(TAG, "onClick: " + items.length + " " + select);
+                final ThreadObj<Integer> obj = new ThreadObj<>(select);
                 AlertDialog dialog = new AlertDialog.Builder(mContext).setTitle("请选择APP").setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        String selectapp = "";
-                        for (int i = 0; i < appInfos.size(); i++) {
-                            if (checks[i]) {
-                                selectapp = selectapp + "[" + appInfos.get(i).packageName + "];";
-                            }
-                        }
-                        if (selectapp.endsWith(";")) {
-                            selectapp = selectapp.substring(0, selectapp.length() - 1);
-                        }
-                        SharedPreUtil.saveSharedPreString(CommonData.SDATA_HIDE_APPS, selectapp);
+                        SharedPreUtil.saveSharedPreString(CommonData.SDATA_TIME_PLUGIN_OPEN_APP, appInfos.get(obj.getObj()).packageName);
                     }
-                }).setMultiChoiceItems(items, checks, new DialogInterface.OnMultiChoiceClickListener() {
+                }).setSingleChoiceItems(items, select, new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                        Log.e(TAG, "onClick: " + appInfos.get(which).name);
-                        checks[which] = isChecked;
+                    public void onClick(DialogInterface dialog, int which) {
+                        obj.setObj(which);
                     }
                 }).create();
                 dialog.show();

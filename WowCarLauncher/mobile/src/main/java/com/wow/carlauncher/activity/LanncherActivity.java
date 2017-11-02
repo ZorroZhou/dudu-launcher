@@ -1,9 +1,5 @@
 package com.wow.carlauncher.activity;
 
-import android.app.ActivityManager;
-import android.appwidget.AppWidgetHost;
-import android.appwidget.AppWidgetManager;
-import android.appwidget.AppWidgetProviderInfo;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -13,16 +9,10 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.provider.Settings;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -37,7 +27,6 @@ import com.wow.carlauncher.plugin.PluginManage;
 import com.wow.carlauncher.popupWindow.PopupWindow;
 
 import org.xutils.view.annotation.ViewInject;
-import org.xutils.x;
 
 import java.util.Timer;
 import java.util.TimerTask;

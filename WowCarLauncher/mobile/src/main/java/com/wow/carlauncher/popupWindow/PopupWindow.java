@@ -79,7 +79,7 @@ public class PopupWindow {
         winparams = new WindowManager.LayoutParams();
         // 类型
         winparams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
-        winparams.flags = WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
+        winparams.flags = WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN;
         winparams.format = PixelFormat.TRANSLUCENT;
         winparams.width = (int) (screenWidth * 0.15);
         winparams.height = (int) (screenWidth * 0.15);
@@ -102,7 +102,7 @@ public class PopupWindow {
         iv_open.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                moveing=true;
+                moveing = true;
                 return false;
             }
         });
@@ -137,35 +137,35 @@ public class PopupWindow {
 //                        return false;
 //                    }
                     moveing = false;
-                    int cx = winparams.x + popupWindow.getWidth() / 2;
-                    int cy = winparams.y + popupWindow.getHeight() / 2;
-                    Log.e(TAG, "onTouch: " + cx + "--" + cy);
-
-                    if (cx < screenWidth / 2 && cy < screenHeight / 2) {
-                        if (cx < cy) {
-                            stopMoveByX();
-                        } else {
-                            stopMoveByY();
-                        }
-                    } else if (cx > screenWidth / 2 && cy < screenHeight / 2) {
-                        if ((screenWidth - cx) < cy) {
-                            stopMoveByX();
-                        } else {
-                            stopMoveByY();
-                        }
-                    } else if (cx < screenWidth / 2 && cy > screenHeight / 2) {
-                        if (cx < (screenHeight - cy)) {
-                            stopMoveByX();
-                        } else {
-                            stopMoveByY();
-                        }
-                    } else {
-                        if ((screenWidth - cx) < (screenHeight - cy)) {
-                            stopMoveByX();
-                        } else {
-                            stopMoveByY();
-                        }
-                    }
+//                    int cx = winparams.x + popupWindow.getWidth() / 2;
+//                    int cy = winparams.y + popupWindow.getHeight() / 2;
+//                    Log.e(TAG, "onTouch: " + cx + "--" + cy);
+//
+//                    if (cx < screenWidth / 2 && cy < screenHeight / 2) {
+//                        if (cx < cy) {
+//                            stopMoveByX();
+//                        } else {
+//                            stopMoveByY();
+//                        }
+//                    } else if (cx > screenWidth / 2 && cy < screenHeight / 2) {
+//                        if ((screenWidth - cx) < cy) {
+//                            stopMoveByX();
+//                        } else {
+//                            stopMoveByY();
+//                        }
+//                    } else if (cx < screenWidth / 2 && cy > screenHeight / 2) {
+//                        if (cx < (screenHeight - cy)) {
+//                            stopMoveByX();
+//                        } else {
+//                            stopMoveByY();
+//                        }
+//                    } else {
+//                        if ((screenWidth - cx) < (screenHeight - cy)) {
+//                            stopMoveByX();
+//                        } else {
+//                            stopMoveByY();
+//                        }
+//                    }
                     SharedPreUtil.saveSharedPreInteger(CommonData.SDATA_POPUP_WIN_X, winparams.x);
                     SharedPreUtil.saveSharedPreInteger(CommonData.SDATA_POPUP_WIN_Y, winparams.y);
                     return true;
@@ -241,21 +241,6 @@ public class PopupWindow {
         SharedPreUtil.saveSharedPreInteger(CommonData.SDATA_POPUP_CURRENT_PLUGIN, currentPluginIndex);
     }
 
-    //显示方法
-    public void show() {
-        if (Build.VERSION.SDK_INT >= 23 && !Settings.canDrawOverlays(context)) {
-            return;
-        }
-        if (!SharedPreUtil.getSharedPreBoolean(SDATA_POPUP_ALLOW_SHOW, true)) {
-            return;
-        }
-        synchronized (isShow) {
-            if (!isShow) {
-                wm.addView(popupWindow, winparams);
-                isShow = true;
-            }
-        }
-    }
 
     public void checkShowApp(final String app) {
         if (!SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_POPUP_SHOW_TYPE, true)) {
@@ -273,13 +258,37 @@ public class PopupWindow {
         }
     }
 
+    private int activityCount = 0;
+
+    public synchronized void checkShow(int count) {
+        activityCount = activityCount + count;
+        Log.e(TAG, "checkShow: " + activityCount);
+        if (activityCount > 0) {
+            hide();
+        } else {
+            show();
+        }
+    }
+
     //隐藏方法
-    public void hide() {
-        synchronized (isShow) {
-            if (isShow) {
-                wm.removeView(popupWindow);
-                isShow = false;
-            }
+    private void hide() {
+        if (isShow) {
+            wm.removeView(popupWindow);
+            isShow = false;
+        }
+    }
+
+    //显示方法
+    private void show() {
+        if (Build.VERSION.SDK_INT >= 23 && !Settings.canDrawOverlays(context)) {
+            return;
+        }
+        if (!SharedPreUtil.getSharedPreBoolean(SDATA_POPUP_ALLOW_SHOW, true)) {
+            return;
+        }
+        if (!isShow) {
+            wm.addView(popupWindow, winparams);
+            isShow = true;
         }
     }
 

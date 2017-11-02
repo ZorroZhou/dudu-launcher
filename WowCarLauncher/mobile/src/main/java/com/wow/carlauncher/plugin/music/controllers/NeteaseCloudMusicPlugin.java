@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -75,7 +76,9 @@ public class NeteaseCloudMusicPlugin extends MusicController {
         popupWidgetView.setScaleY(2);
         popupWidgetView.setScaleX(2);
         popupWidgetView.setPadding(0, 0, 0, 0);
+        ergodicLauncherView2((ViewGroup) popupWidgetView, 1);
         ergodicPopupView((ViewGroup) popupWidgetView);
+
         popupView = new LinearLayout(context);
         popupView.setGravity(Gravity.CENTER);
         final LinearLayout.LayoutParams popupViewLp = new LinearLayout.LayoutParams(300, 300);
@@ -106,124 +109,198 @@ public class NeteaseCloudMusicPlugin extends MusicController {
     //app:id/amq 封面
 
     private void ergodicPopupView(ViewGroup vg) {
-        for (int i = 0; i < vg.getChildCount(); i++) {
-            View v = vg.getChildAt(i);
-            //背景
-            if (v.toString().indexOf("app:id/amp") > 0) {
-                v.getBackground().setAlpha(0);
+        //先处理背景
+        final ViewGroup bg = (ViewGroup) vg.getChildAt(0);
+        if (bg != null) {
+            bg.getBackground().setAlpha(0);
+            bg.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    if (popupAmt != null) {
+                        popupAmt.setVisibility(View.GONE);
+                    }
+                    if (popupAmx != null) {
+                        popupAmx.setVisibility(View.GONE);
+                    }
+                }
+            });
+
+            final View cover = bg.getChildAt(0);
+            if (cover != null) {
+                cover.setVisibility(View.GONE);
             }
-            if (v instanceof ViewGroup) {
-                ergodicPopupView((ViewGroup) v);
-            } else {
-                if (v.toString().indexOf("app:id/amq") > 0) {
-                    v.setVisibility(View.GONE);
-                }
-                if (v.toString().indexOf("app:id/amx") > 0) {
-                    v.setVisibility(View.GONE);
-                    popupAmx = v;
-                }
-                if (v.toString().indexOf("app:id/amt") > 0) {
-                    v.setVisibility(View.GONE);
-                    popupAmt = v;
-                }
-                if (v.toString().indexOf("app:id/amr") > 0) {
-                    //监听标题变化，变化之后立马处理布局，隐藏不需要出现的
-                    ((TextView) v).setCompoundDrawables(null, null, null, null);
-                    ((TextView) v).addTextChangedListener(new TextWatcher() {
-                        @Override
-                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+            if (bg.getChildAt(1) instanceof ViewGroup) {
+                ViewGroup vg1 = (ViewGroup) bg.getChildAt(1);
+                if (vg1.getChildAt(2) instanceof ViewGroup) {
+                    if (vg1.getChildAt(0) instanceof TextView) {
+                        ((TextView) vg1.getChildAt(0)).setCompoundDrawables(null, null, null, null);
+                    }
+                    vg1 = (ViewGroup) vg1.getChildAt(2);
+                    if (vg1 != null) {
+                        View v5 = vg1.getChildAt(4);
+                        if (v5 != null) {
+                            v5.setVisibility(View.GONE);
+                            popupAmx = v5;
                         }
-
-                        @Override
-                        public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                        View v0 = vg1.getChildAt(0);
+                        if (v0 != null) {
+                            v0.setVisibility(View.GONE);
+                            popupAmt = v0;
                         }
+                    }
+                }
+            }
+        }
 
-                        @Override
-                        public void afterTextChanged(Editable s) {
-                            x.task().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    popupAmt.setVisibility(View.GONE);
-                                    popupAmx.setVisibility(View.GONE);
-                                }
-                            }, 50);
+//        for (int i = 0; i < vg.getChildCount(); i++) {
+//            View v = vg.getChildAt(i);
+//            //背景
+//            if (v.toString().indexOf("app:id/amp") > 0) {
+//                v.getBackground().setAlpha(0);
+//                v.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//                    @Override
+//                    public void onGlobalLayout() {
+//                        Log.e(TAG, "onGlobalLayout: ！！！");
+//                        launcherAn2.setVisibility(View.GONE);
+//                        launcherAmx.setVisibility(View.GONE);
+//                    }
+//                });
+//            }
+//            if (v instanceof ViewGroup) {
+//                ergodicPopupView((ViewGroup) v);
+//            } else {
+//                if (v.toString().indexOf("app:id/amq") > 0) {
+//                    v.setVisibility(View.GONE);
+//                }
+//                if (v.toString().indexOf("app:id/amx") > 0) {
+//                    v.setVisibility(View.GONE);
+//                    popupAmx = v;
+//                }
+//                if (v.toString().indexOf("app:id/amt") > 0) {
+//                    v.setVisibility(View.GONE);
+//                    popupAmt = v;
+//                }
+//                if (v.toString().indexOf("app:id/amr") > 0) {
+//                    //监听标题变化，变化之后立马处理布局，隐藏不需要出现的
+//                    ((TextView) v).setCompoundDrawables(null, null, null, null);
+//                    ((TextView) v).addTextChangedListener(new TextWatcher() {
+//                        @Override
+//                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//                        }
+//
+//                        @Override
+//                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//                        }
+//
+//                        @Override
+//                        public void afterTextChanged(Editable s) {
+//                            x.task().postDelayed(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    popupAmt.setVisibility(View.GONE);
+//                                    popupAmx.setVisibility(View.GONE);
+//                                }
+//                            }, 50);
+//                        }
+//                    });
+//                }
+//            }
+//        }
+    }
+
+    private View launcherAn2, launcherAmx;
+
+    private void ergodicLauncherView(ViewGroup vg) {
+        //先处理背景
+        final ViewGroup bg = (ViewGroup) vg.getChildAt(0);
+        if (bg != null) {
+            bg.getBackground().setAlpha(0);
+            bg.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    if (launcherAn2 != null) {
+                        launcherAn2.setVisibility(View.GONE);
+                    }
+                    if (launcherAmx != null) {
+                        launcherAmx.setVisibility(View.GONE);
+                    }
+                }
+            });
+
+            final View titleLayout = bg.getChildAt(0);
+            if (titleLayout != null) {
+                titleLayout.setVisibility(View.GONE);
+            }
+            if (bg.getChildAt(1) instanceof ViewGroup) {
+                ViewGroup vg1 = (ViewGroup) bg.getChildAt(1);
+                if (vg1.getChildAt(1) instanceof ViewGroup) {
+                    vg1 = (ViewGroup) vg1.getChildAt(1);
+                    if (vg1.getChildAt(3) instanceof ViewGroup) {
+                        vg1 = (ViewGroup) vg1.getChildAt(3);
+                        View v0 = vg1.getChildAt(0);
+                        if (v0 != null) {
+                            v0.setVisibility(View.GONE);
+                            launcherAn2 = v0;
                         }
-                    });
+                        View v1 = vg1.getChildAt(1);
+                        if (v1 != null) {
+                            v1.setVisibility(View.GONE);
+                        }
+                        View v5 = vg1.getChildAt(5);
+                        if (v5 != null) {
+                            v5.setVisibility(View.GONE);
+                            launcherAmx = v5;
+                        }
+                        View v6 = vg1.getChildAt(6);
+                        if (v6 != null) {
+                            v6.setVisibility(View.GONE);
+                        }
+                    }
                 }
             }
         }
     }
 
-    private View launcherAn2, launcherAmx;
-    //以下是网易云音乐2*4组件的view id和名称的对照
-    //app:id/amt  换肤
-    //app:id/amz  搜索
-    //app:id/amq  1*4的封面
-    //app:id/an2 循环方式
-    //app:id/amx 收藏标记
-    //app:id/an3 下方的线
-    //app:id/amv 上一首的id
-    //app:id/amw 下一首
-    //app:id/amu 播放按钮
-    //app:id/amr 歌曲名称的id
-    //app:id/an0 作者的
-    //app:id/amq 封面的id
-
-    private void ergodicLauncherView(ViewGroup vg) {
+    private void ergodicLauncherView2(ViewGroup vg, int z) {
+        //先处理背景
         for (int i = 0; i < vg.getChildCount(); i++) {
+            Log.e(TAG, z + "    ergodicLauncherView: " + vg.getChildAt(i) + "       " + i);
             View v = vg.getChildAt(i);
             //背景
-            if (v.toString().indexOf("app:id/amp") > 0) {
-                v.getBackground().setAlpha(0);
-            }
+//            if (v.toString().indexOf("app:id/amp") > 0) {
+//                v.getBackground().setAlpha(0);
+//                v.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//                    @Override
+//                    public void onGlobalLayout() {
+//                        launcherAn2.setVisibility(View.GONE);
+//                        launcherAmx.setVisibility(View.GONE);
+//                    }
+//                });
+//            }
             if (v instanceof ViewGroup) {
-                ergodicLauncherView((ViewGroup) v);
+                int zz = z + 1;
+                ergodicLauncherView2((ViewGroup) v, zz);
             } else {
-                if (v.toString().indexOf("app:id/amt") > 0) {
-                    ((ViewGroup) v.getParent()).setVisibility(View.GONE);
-                }
-                if (v.toString().indexOf("app:id/an2") > 0) {
-                    v.setVisibility(View.GONE);
-                    launcherAn2 = v;
-                }
-                if (v.toString().indexOf("app:id/an3") > 0) {
-                    v.setVisibility(View.GONE);
-                }
-                if (v.toString().indexOf("app:id/amx") > 0) {
-                    v.setVisibility(View.GONE);
-                    launcherAmx = v;
-                }
-                if (v.toString().indexOf("app:id/amy") > 0) {
-                    v.setVisibility(View.GONE);
-                    //an3 = v;
-                }
-                if (v.toString().indexOf("app:id/amr") > 0) {
-                    //监听标题变化，变化之后立马处理布局，隐藏不需要出现的
-                    ((TextView) v).addTextChangedListener(new TextWatcher() {
-                        @Override
-                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                        }
-
-                        @Override
-                        public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-                        }
-
-                        @Override
-                        public void afterTextChanged(Editable s) {
-                            x.task().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    launcherAn2.setVisibility(View.GONE);
-                                    launcherAmx.setVisibility(View.GONE);
-                                }
-                            }, 100);
-                        }
-                    });
-                }
+//                if (v.toString().indexOf("app:id/amt") > 0) {
+//                    ((ViewGroup) v.getParent()).setVisibility(View.GONE);
+//                }
+//                if (v.toString().indexOf("app:id/an2") > 0) {
+//                    v.setVisibility(View.GONE);
+//                    launcherAn2 = v;
+//                }
+//                if (v.toString().indexOf("app:id/an3") > 0) {
+//                    v.setVisibility(View.GONE);
+//                }
+//                if (v.toString().indexOf("app:id/amx") > 0) {
+//                    v.setVisibility(View.GONE);
+//                    launcherAmx = v;
+//                }
+//                if (v.toString().indexOf("app:id/amy") > 0) {
+//                    v.setVisibility(View.GONE);
+//                    //an3 = v;
+//                }
             }
         }
     }
@@ -246,6 +323,6 @@ public class NeteaseCloudMusicPlugin extends MusicController {
 
     @Override
     public PopupViewProportion getPopupViewProportion() {
-        return new PopupViewProportion(1, 2);
+        return new PopupViewProportion(1, 2.5F);
     }
 }

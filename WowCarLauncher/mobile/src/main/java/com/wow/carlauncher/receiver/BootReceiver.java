@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
+import com.wow.carlauncher.service.MainService;
+
 import org.xutils.x;
 
 /**
@@ -17,16 +19,8 @@ public class BootReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(final Context context, Intent intent) {
         if (BOOT_COMPLETED.equals(intent.getAction())) {
-            x.task().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    Toast.makeText(context,"BOOT_COMPLETED",Toast.LENGTH_LONG);
-
-                    Intent intent = new Intent(Intent.ACTION_MAIN, null);
-                    intent.addCategory(Intent.CATEGORY_HOME);
-                    context.startActivity(intent);
-                }
-            }, 5000);
+            Intent startIntent = new Intent(context, MainService.class);
+            context.startService(startIntent);
         }
     }
 }

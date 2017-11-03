@@ -11,7 +11,9 @@ import android.os.Build;
 import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -47,6 +49,7 @@ import static com.wow.carlauncher.common.CommonData.SDATA_DOCK5_CLASS;
  * Created by 10124 on 2017/10/26.
  */
 public class LanncherActivity extends BaseActivity implements View.OnClickListener, View.OnLongClickListener {
+    private static final String TAG = "LanncherActivity";
 
     @ViewInject(R.id.ll_main_right)
     private LinearLayout ll_main_right;
@@ -114,7 +117,14 @@ public class LanncherActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void initView() {
         hideTitle();
+        if (PluginManage.music().getLauncherView().getParent() != null) {
+            ((ViewGroup) PluginManage.music().getLauncherView().getParent()).removeView(PluginManage.music().getLauncherView());
+        }
         ll_main_right.addView(PluginManage.music().getLauncherView(), new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+
+        if (PluginManage.time().getLauncherView().getParent() != null) {
+            ((ViewGroup) PluginManage.time().getLauncherView().getParent()).removeView(PluginManage.time().getLauncherView());
+        }
         ll_main_left.addView(PluginManage.time().getLauncherView(), new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
 
 
@@ -178,11 +188,6 @@ public class LanncherActivity extends BaseActivity implements View.OnClickListen
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_set: {
-//                int widgetId = mAppWidgetHost.allocateAppWidgetId();
-//                Intent pickIntent = new Intent(AppWidgetManager.ACTION_APPWIDGET_PICK);
-//                pickIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
-//                startActivityForResult(pickIntent, REQUEST_ADD_WIDGET);
-
                 startActivity(new Intent(this, SetActivity.class));
                 break;
             }
@@ -387,6 +392,12 @@ public class LanncherActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void onBackPressed() {
 
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.e(TAG, "onStop: " + this);
     }
 
     private BroadcastReceiver mHomeKeyEventReceiver = new BroadcastReceiver() {

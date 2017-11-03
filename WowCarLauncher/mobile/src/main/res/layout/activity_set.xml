@@ -8,13 +8,12 @@
         android:id="@+id/ll_set"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@android:color/white"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
-            android:background="@android:color/white"
             android:orientation="vertical">
 
             <TextView
@@ -45,24 +44,6 @@
                 st:summary2="@string/set_no"
                 st:titleEx="悬浮窗全局展示"
                 st:type="checkB" />
-
-            <View style="@style/Interval" />
-
-            <com.wow.carlauncher.common.view.SetView
-                android:id="@+id/sv_popup_window_tosys"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                st:titleEx="系统安全设置界面(根据APP展示悬浮框需要打开用户统计)"
-                st:type="buttonB" />
-
-            <View style="@style/Interval" />
-
-            <com.wow.carlauncher.common.view.SetView
-                android:id="@+id/sv_popup_window_toxfk"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                st:titleEx="悬浮框权限设置页面"
-                st:type="buttonB" />
 
             <View style="@style/Interval" />
 
@@ -128,7 +109,6 @@
                 st:type="buttonB" />
 
             <View style="@style/Interval" />
-
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

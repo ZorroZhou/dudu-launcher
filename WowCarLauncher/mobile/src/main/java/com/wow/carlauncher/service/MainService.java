@@ -4,8 +4,9 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
+import com.wow.carlauncher.CarLauncherApplication;
+import com.wow.carlauncher.activity.LanncherActivity;
 import com.wow.carlauncher.popupWindow.PopupWindow;
 
 /**
@@ -18,7 +19,11 @@ public class MainService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        PopupWindow.self().checkShow(0);
+        if (getApplicationEx().checkActivity(0) == 0) {
+            Intent intent = new Intent(this, LanncherActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }
     }
 
     @Nullable
@@ -29,11 +34,16 @@ public class MainService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        PopupWindow.self().checkShow(0);
         return START_REDELIVER_INTENT;
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+    }
+
+    private CarLauncherApplication getApplicationEx() {
+        return (CarLauncherApplication) getApplication();
     }
 }

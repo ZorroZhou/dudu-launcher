@@ -128,9 +128,9 @@ public class CommonUtil {
             for (int i = 0; i < count; i++) {
                 ResolveInfo info = apps.get(i);
 
-                if ((!info.activityInfo.applicationInfo.packageName.equals(context.getPackageName()))) {
+                //if ((!info.activityInfo.applicationInfo.packageName.equals(context.getPackageName()))) {
                     appInfos.add(new AppInfo(info.activityInfo.loadIcon(manager), info.loadLabel(manager).toString(), info.activityInfo.applicationInfo.packageName));
-                }
+               // }
             }
         }
         return appInfos;

@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Intent;
 
 import com.wow.carlauncher.common.ActivityLifecycleListener;
+import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.plugin.PluginManage;
 import com.wow.carlauncher.popupWindow.PopupWindow;
@@ -29,5 +30,12 @@ public class CarLauncherApplication extends Application {
 
         Intent startIntent = new Intent(this, MainService.class);
         startService(startIntent);
+    }
+
+    private int startedActivityCount = 0;
+
+    public synchronized int checkActivity(int count) {
+        startedActivityCount = startedActivityCount + count;
+        return startedActivityCount;
     }
 }

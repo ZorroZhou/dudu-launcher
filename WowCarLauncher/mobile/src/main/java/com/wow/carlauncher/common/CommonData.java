@@ -5,6 +5,7 @@ package com.wow.carlauncher.common;
  */
 
 public class CommonData {
+
     public static final int REQUEST_SELECT_APP_TO_DOCK1 = 10000;
     public static final int REQUEST_SELECT_APP_TO_DOCK2 = 10001;
     public static final int REQUEST_SELECT_APP_TO_DOCK3 = 10002;

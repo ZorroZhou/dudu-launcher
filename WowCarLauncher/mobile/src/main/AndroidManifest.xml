@@ -44,16 +44,23 @@
         <service android:name="com.amap.api.location.APSService" />
 
         <activity
+            android:name=".activity.MainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".activity.LanncherActivity"
             android:launchMode="singleTask"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-                <!-- 以下两行代码,是让我们的应用作为桌面运行的 -->
-                <category android:name="android.intent.category.HOME" />
                 <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.HOME" />
             </intent-filter>
         </activity>
         <activity
@@ -64,6 +71,9 @@
             android:screenOrientation="landscape" />
         <activity
             android:name=".activity.SetActivity"
+            android:screenOrientation="landscape" />
+        <activity
+            android:name=".activity.SystemSetActivity"
             android:screenOrientation="landscape" />
 
         <receiver android:name=".receiver.ScreenReceiver">
@@ -77,11 +87,11 @@
             </intent-filter>
         </receiver>
         <receiver android:name=".receiver.MountReceiver">
-            <intent-filter >
-                <action android:name="android.intent.action.MEDIA_MOUNTED"/>
-                <action android:name="android.intent.action.MEDIA_UNMOUNTED"/>
-                <data android:scheme="file">
-                </data>
+            <intent-filter>
+                <action android:name="android.intent.action.MEDIA_MOUNTED" />
+                <action android:name="android.intent.action.MEDIA_UNMOUNTED" />
+
+                <data android:scheme="file"></data>
             </intent-filter>
         </receiver>
 

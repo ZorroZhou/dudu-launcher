@@ -135,10 +135,12 @@ public class QQMusicCarPlugin extends MusicController {
         super.destroy();
         //stopUpdateTime();
         context.unregisterReceiver(mReceiver);
-
-        ((ViewGroup) qqMusicCarLauncherView.getParent()).removeView(qqMusicCarLauncherView);
-        ((ViewGroup) qqMusicCarPopupView.getParent()).removeView(qqMusicCarPopupView);
-
+        if (qqMusicCarLauncherView.getParent() != null) {
+            ((ViewGroup) qqMusicCarLauncherView.getParent()).removeView(qqMusicCarLauncherView);
+        }
+        if (qqMusicCarPopupView.getParent() != null) {
+            ((ViewGroup) qqMusicCarPopupView.getParent()).removeView(qqMusicCarPopupView);
+        }
     }
 
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {

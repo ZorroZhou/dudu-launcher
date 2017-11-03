@@ -13,6 +13,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.wow.carlauncher.CarLauncherApplication;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.util.SharedPreUtil;
@@ -50,7 +51,7 @@ public class PopupWindow {
     private WindowManager.LayoutParams winparams;
     //是否展示了
     private Boolean isShow = Boolean.valueOf(false);
-    private Context context;
+    private CarLauncherApplication context;
     //窗口视图
     private View popupWindow;
     //打开按钮
@@ -67,7 +68,7 @@ public class PopupWindow {
 
     private boolean moveing = false;
 
-    public void init(Context context) {
+    public void init(CarLauncherApplication context) {
         this.context = context;
         wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 
@@ -258,12 +259,8 @@ public class PopupWindow {
         }
     }
 
-    private int activityCount = 0;
-
     public synchronized void checkShow(int count) {
-        activityCount = activityCount + count;
-        Log.e(TAG, "checkShow: " + activityCount);
-        if (activityCount > 0) {
+        if (context.checkActivity(count) > 0) {
             hide();
         } else {
             show();

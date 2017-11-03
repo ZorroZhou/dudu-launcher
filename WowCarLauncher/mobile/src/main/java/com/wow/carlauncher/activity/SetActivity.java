@@ -4,8 +4,6 @@ import android.appwidget.AppWidgetHost;
 import android.appwidget.AppWidgetManager;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
-import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
@@ -40,9 +38,6 @@ public class SetActivity extends BaseActivity {
     @ViewInject(R.id.sv_popup_window_showtype)
     private SetView sv_popup_window_showtype;
 
-    @ViewInject(R.id.sv_popup_window_toxfk)
-    private SetView sv_popup_window_toxfk;
-
     @ViewInject(R.id.sv_popup_window_showapps)
     private SetView sv_popup_window_showapps;
 
@@ -51,9 +46,6 @@ public class SetActivity extends BaseActivity {
 
     @ViewInject(R.id.music_controller_select)
     private SetView music_controller_select;
-
-    @ViewInject(R.id.sv_popup_window_tosys)
-    private SetView sv_popup_window_tosys;
 
     @ViewInject(R.id.sv_apps_hides)
     private SetView sv_apps_hides;
@@ -72,24 +64,7 @@ public class SetActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        setTitle("全部应用");
-        sv_popup_window_toxfk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                        Uri.parse("package:" + getPackageName()));
-                startActivityForResult(intent, 123123);
-            }
-        });
-
-        sv_popup_window_tosys.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Settings.ACTION_SECURITY_SETTINGS);
-                startActivity(intent);
-            }
-        });
-
+        setTitle("设置");
         sv_allow_popup_window.setOnValueChangeListener(new SetView.OnValueChangeListener() {
             @Override
             public void onValueChange(String newValue, String oldValue) {
@@ -123,11 +98,7 @@ public class SetActivity extends BaseActivity {
                 final boolean[] checks = new boolean[appInfos.size()];
                 for (int i = 0; i < items.length; i++) {
                     items[i] = appInfos.get(i).name + "(" + appInfos.get(i).packageName + ")";
-                    if (selectapp.indexOf("[" + appInfos.get(i).packageName + "]") >= 0) {
-                        checks[i] = true;
-                    } else {
-                        checks[i] = false;
-                    }
+                    checks[i] = selectapp.contains("[" + appInfos.get(i).packageName + "]");
                 }
 
                 AlertDialog dialog = new AlertDialog.Builder(mContext).setTitle("请选择APP").setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -162,7 +133,7 @@ public class SetActivity extends BaseActivity {
                 int selectId = SharedPreUtil.getSharedPreInteger(CommonData.SDATA_CURRENT_MUSIC_CONTROLLER, SYSTEM.getId());
                 for (int i = 0; i < MUSIC_CONTORLLERS.length; i++) {
                     if (MusicControllerEnum.valueOfName(MUSIC_CONTORLLERS[i]).getId() == selectId) {
-                        select = Integer.valueOf(i);
+                        select = i;
                     }
                 }
                 final ThreadObj<Integer> obj = new ThreadObj<>(select);
@@ -191,12 +162,14 @@ public class SetActivity extends BaseActivity {
 
                             int id1 = SharedPreUtil.getSharedPreInteger(SDATA_MUSIC_PLUGIN_NCM_POPUP, -1);
                             if (id1 != -1) {
-                                tv_select_widget1.setText("1*4小组件，选择ID：" + id1);
+                                String msg = "1*4小组件，选择ID：" + id1;
+                                tv_select_widget1.setText(msg);
                             }
 
                             int id2 = SharedPreUtil.getSharedPreInteger(SDATA_MUSIC_PLUGIN_NCM_LANNCHER, -1);
                             if (id2 != -1) {
-                                tv_select_widget2.setText("2*4小组件，选择ID：" + id2);
+                                String msg = "2*4小组件，选择ID：" + id1;
+                                tv_select_widget2.setText(msg);
                             }
 
 
@@ -237,12 +210,14 @@ public class SetActivity extends BaseActivity {
 
                             int id1 = SharedPreUtil.getSharedPreInteger(SDATA_MUSIC_PLUGIN_QQMUSIC_POPUP, -1);
                             if (id1 != -1) {
-                                tv_select_widget1.setText("1*4小组件，选择ID：" + id1);
+                                String msg = "1*4小组件，选择ID：" + id1;
+                                tv_select_widget1.setText(msg);
                             }
 
                             int id2 = SharedPreUtil.getSharedPreInteger(SDATA_MUSIC_PLUGIN_QQMUSIC_LANNCHER, -1);
                             if (id2 != -1) {
-                                tv_select_widget2.setText("2*4小组件，选择ID：" + id2);
+                                String msg = "2*4小组件，选择ID：" + id1;
+                                tv_select_widget2.setText(msg);
                             }
 
 
@@ -272,7 +247,7 @@ public class SetActivity extends BaseActivity {
                 }).setSingleChoiceItems(MUSIC_CONTORLLERS, select, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        obj.setObj(Integer.valueOf(which));
+                        obj.setObj(which);
                     }
                 }).create();
                 dialog.show();
@@ -291,11 +266,7 @@ public class SetActivity extends BaseActivity {
                 final boolean[] checks = new boolean[appInfos.size()];
                 for (int i = 0; i < items.length; i++) {
                     items[i] = appInfos.get(i).name + "(" + appInfos.get(i).packageName + ")";
-                    if (selectapp.contains("[" + appInfos.get(i).packageName + "]")) {
-                        checks[i] = true;
-                    } else {
-                        checks[i] = false;
-                    }
+                    checks[i] = selectapp.contains("[" + appInfos.get(i).packageName + "]");
                 }
 
                 AlertDialog dialog = new AlertDialog.Builder(mContext).setTitle("请选择APP").setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -372,7 +343,8 @@ public class SetActivity extends BaseActivity {
                     int id = data.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1);
                     if (id != -1) {
                         SharedPreUtil.saveSharedPreInteger(SDATA_MUSIC_PLUGIN_NCM_POPUP, id);
-                        tv_select_widget1.setText("1*4小组件，选择ID：" + id);
+                        String msg = "1*4小组件，选择ID：" + id;
+                        tv_select_widget1.setText(msg);
                     }
                     break;
                 }
@@ -380,7 +352,8 @@ public class SetActivity extends BaseActivity {
                     int id = data.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1);
                     if (id != -1) {
                         SharedPreUtil.saveSharedPreInteger(SDATA_MUSIC_PLUGIN_NCM_LANNCHER, id);
-                        tv_select_widget2.setText("2*4小组件，选择ID：" + id);
+                        String msg = "2*4小组件，选择ID：" + id;
+                        tv_select_widget2.setText(msg);
                     }
                     break;
                 }
@@ -388,7 +361,8 @@ public class SetActivity extends BaseActivity {
                     int id = data.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1);
                     if (id != -1) {
                         SharedPreUtil.saveSharedPreInteger(SDATA_MUSIC_PLUGIN_QQMUSIC_POPUP, id);
-                        tv_select_widget1.setText("1*4小组件，选择ID：" + id);
+                        String msg = "1*4小组件，选择ID：" + id;
+                        tv_select_widget1.setText(msg);
                     }
                     break;
                 }
@@ -396,7 +370,8 @@ public class SetActivity extends BaseActivity {
                     int id = data.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1);
                     if (id != -1) {
                         SharedPreUtil.saveSharedPreInteger(SDATA_MUSIC_PLUGIN_QQMUSIC_LANNCHER, id);
-                        tv_select_widget2.setText("2*4小组件，选择ID：" + id);
+                        String msg = "2*4小组件，选择ID：" + id;
+                        tv_select_widget2.setText(msg);
                     }
                     break;
                 }

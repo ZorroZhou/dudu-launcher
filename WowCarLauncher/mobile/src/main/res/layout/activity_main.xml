@@ -5,38 +5,22 @@
     android:gravity="center"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="选中使用网易云音乐，不选中使用qq音乐" />
-
-    <ToggleButton
-        android:id="@+id/toggleButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/open_lanncher"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="播放" />
+        android:text="打开桌面" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/set"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="暂停" />
+        android:text="设置" />
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/sys_set"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="上一首" />
-
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="下一首" />
+        android:text="系统设置" />
 </LinearLayout>

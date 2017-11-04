@@ -79,7 +79,7 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="16dp"
                 android:paddingTop="16dp"
-                android:text="时间插件设置"
+                android:text="时间设置"
                 android:textColor="@color/colorPrimary"
                 android:textSize="14sp" />
 
@@ -87,7 +87,7 @@
                 android:id="@+id/time_plugin_open_app_select"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                st:titleEx="时间插件点击打开的APP"
+                st:titleEx="时间位置点击打开的APP"
                 st:type="buttonB" />
 
             <View style="@style/Interval" />

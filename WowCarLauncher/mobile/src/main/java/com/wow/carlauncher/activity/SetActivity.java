@@ -1,13 +1,10 @@
 package com.wow.carlauncher.activity;
 
-import android.appwidget.AppWidgetHost;
-import android.appwidget.AppWidgetManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.BaseActivity;
@@ -17,7 +14,6 @@ import com.wow.carlauncher.common.util.CommonUtil.AppInfo;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.util.ThreadObj;
 import com.wow.carlauncher.common.view.SetView;
-import com.wow.carlauncher.plugin.PluginManage;
 import com.wow.carlauncher.plugin.music.MusicControllerEnum;
 
 import org.xutils.view.annotation.ViewInject;
@@ -33,7 +29,6 @@ import static com.wow.carlauncher.plugin.music.MusicControllerEnum.*;
 
 public class SetActivity extends BaseActivity {
     private static final String TAG = "SetActivity";
-    private final static String[] MUSIC_CONTORLLERS = {SYSTEM.getName(), NETEASECLOUD.getName(), QQMUSICCAR.getName(), QQMUSIC.getName()};
 
     @ViewInject(R.id.sv_popup_window_showtype)
     private SetView sv_popup_window_showtype;
@@ -52,10 +47,6 @@ public class SetActivity extends BaseActivity {
 
     @ViewInject(R.id.time_plugin_open_app_select)
     private SetView time_plugin_open_app_select;
-
-    private AppWidgetHost appWidgetHost;
-
-    private TextView tv_select_widget1, tv_select_widget2;
 
     @Override
     public void init() {
@@ -202,9 +193,6 @@ public class SetActivity extends BaseActivity {
                 dialog.show();
             }
         });
-
-
-        appWidgetHost = new AppWidgetHost(getApplication(), APP_WIDGET_HOST_ID);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

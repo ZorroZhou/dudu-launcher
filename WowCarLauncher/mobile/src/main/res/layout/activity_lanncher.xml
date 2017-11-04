@@ -131,7 +131,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_weight="1"
-            android:background="@drawable/l_item_bg_blue"
+            android:background="@drawable/l_item_bg_black"
             android:gravity="center"
             android:orientation="vertical" />
 
@@ -142,7 +142,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_weight="1"
-            android:background="@drawable/l_item_bg_red"
+            android:background="@drawable/l_item_bg_black"
             android:gravity="center"
             android:orientation="vertical"
             android:padding="10dp" />
@@ -155,7 +155,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_weight="1"
-            android:background="@drawable/l_item_bg_greed"
+            android:background="@drawable/l_item_bg_black"
             android:gravity="center"
             android:orientation="vertical"
             android:padding="10dp" />
@@ -166,78 +166,129 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/launch_dock_bg"
+        android:gravity="center"
         android:orientation="horizontal"
-        android:padding="10dp"
         app:layout_heightPercent="20%h">
 
-        <ImageView
-            android:id="@+id/iv_dock0_icon"
+        <com.zhy.android.percent.support.PercentLinearLayout
+            android:id="@+id/ll_dock1"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:contentDescription="@string/iv_main_dock_icon"
-            android:padding="10dp"
-            android:src="@mipmap/main_dock_add"
-            app:layout_heightPercent="60%h" />
+            android:gravity="center">
 
-        <ImageView
-            android:id="@+id/iv_dock1_icon"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:contentDescription="@string/iv_main_dock_icon"
-            android:padding="10dp"
-            android:src="@mipmap/main_dock_add"
-            app:layout_heightPercent="60%h" />
+            <ImageView
+                android:id="@+id/iv_dock1"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:contentDescription="@string/iv_main_dock_icon"
+                android:src="@mipmap/main_dock_add"
+                app:layout_heightPercent="70%h"
+                app:layout_widthPercent="70%h" />
+        </com.zhy.android.percent.support.PercentLinearLayout>
 
-        <ImageView
-            android:id="@+id/iv_dock2_icon"
+        <com.zhy.android.percent.support.PercentLinearLayout
+            android:id="@+id/ll_dock2"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:contentDescription="@string/iv_main_dock_icon"
-            android:padding="10dp"
-            android:src="@mipmap/main_dock_add"
-            app:layout_heightPercent="60%h" />
+            android:gravity="center">
 
-        <ImageView
-            android:id="@+id/iv_dock3_icon"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:contentDescription="@string/iv_main_dock_icon"
-            android:padding="10dp"
-            android:src="@mipmap/main_dock_add"
-            app:layout_heightPercent="60%h" />
+            <ImageView
+                android:id="@+id/iv_dock2"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:contentDescription="@string/iv_main_dock_icon"
+                android:src="@mipmap/main_dock_add"
+                app:layout_heightPercent="70%h"
+                app:layout_widthPercent="70%h" />
+        </com.zhy.android.percent.support.PercentLinearLayout>
 
-        <ImageView
-            android:id="@+id/iv_dock4_icon"
+        <com.zhy.android.percent.support.PercentLinearLayout
+            android:id="@+id/ll_dock3"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:contentDescription="@string/iv_main_dock_icon"
-            android:padding="10dp"
-            android:src="@mipmap/main_dock_add"
-            app:layout_heightPercent="60%h" />
+            android:gravity="center">
 
-        <ImageView
-            android:id="@+id/iv_dock5_icon"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:contentDescription="@string/iv_main_dock_icon"
-            android:padding="10dp"
-            android:src="@mipmap/main_dock_add"
-            app:layout_heightPercent="60%h" />
+            <ImageView
+                android:id="@+id/iv_dock3"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:contentDescription="@string/iv_main_dock_icon"
+                android:src="@mipmap/main_dock_add"
+                app:layout_heightPercent="70%h"
+                app:layout_widthPercent="70%h" />
+        </com.zhy.android.percent.support.PercentLinearLayout>
 
-        <ImageView
-            android:id="@+id/iv_dock6_icon"
+        <com.zhy.android.percent.support.PercentLinearLayout
+            android:id="@+id/ll_dock4"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:contentDescription="@string/iv_main_dock_icon"
-            android:padding="10dp"
-            android:src="@mipmap/main_dock_add"
-            app:layout_heightPercent="60%h" />
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/iv_dock4"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:contentDescription="@string/iv_main_dock_icon"
+                android:src="@mipmap/main_dock_add"
+                app:layout_heightPercent="70%h"
+                app:layout_widthPercent="70%h" />
+        </com.zhy.android.percent.support.PercentLinearLayout>
+
+
+        <com.zhy.android.percent.support.PercentLinearLayout
+            android:id="@+id/ll_dock5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/iv_dock5"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:contentDescription="@string/iv_main_dock_icon"
+                android:src="@mipmap/main_dock_add"
+                app:layout_heightPercent="70%h"
+                app:layout_widthPercent="70%h" />
+        </com.zhy.android.percent.support.PercentLinearLayout>
+
+        <com.zhy.android.percent.support.PercentLinearLayout
+            android:id="@+id/ll_dock6"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/iv_dock6"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:contentDescription="@string/iv_main_dock_icon"
+                android:src="@mipmap/main_dock_add"
+                app:layout_heightPercent="70%h"
+                app:layout_widthPercent="70%h" />
+        </com.zhy.android.percent.support.PercentLinearLayout>
+
+        <com.zhy.android.percent.support.PercentLinearLayout
+            android:id="@+id/ll_all_apps"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/iv_all_apps"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:contentDescription="@string/iv_main_dock_icon"
+                android:src="@mipmap/apps"
+                app:layout_heightPercent="70%h"
+                app:layout_widthPercent="70%h" />
+        </com.zhy.android.percent.support.PercentLinearLayout>
+
     </com.zhy.android.percent.support.PercentLinearLayout>
 </com.zhy.android.percent.support.PercentLinearLayout>

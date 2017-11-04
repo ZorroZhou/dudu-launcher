@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.provider.Settings;
@@ -27,6 +28,7 @@ import com.wow.carlauncher.common.BaseActivity;
 import com.wow.carlauncher.common.WeatherIconUtil;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.DateUtil;
+import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.plugin.PluginManage;
 import com.wow.carlauncher.plugin.amap.WebService;
 import com.wow.carlauncher.plugin.amap.res.WeatherRes;
@@ -38,6 +40,8 @@ import org.xutils.x;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import static com.wow.carlauncher.common.CommonData.*;
 
 /**
  * Created by 10124 on 2017/10/26.
@@ -68,6 +72,39 @@ public class LauncherActivity extends BaseActivity implements View.OnClickListen
 
     @ViewInject(R.id.iv_tianqi)
     private ImageView iv_tianqi;
+
+    @ViewInject(R.id.ll_dock1)
+    private LinearLayout ll_dock1;
+    @ViewInject(R.id.iv_dock1)
+    private ImageView iv_dock1;
+
+    @ViewInject(R.id.ll_dock2)
+    private LinearLayout ll_dock2;
+    @ViewInject(R.id.iv_dock2)
+    private ImageView iv_dock2;
+
+    @ViewInject(R.id.ll_dock3)
+    private LinearLayout ll_dock3;
+    @ViewInject(R.id.iv_dock3)
+    private ImageView iv_dock3;
+
+    @ViewInject(R.id.ll_dock4)
+    private LinearLayout ll_dock4;
+    @ViewInject(R.id.iv_dock4)
+    private ImageView iv_dock4;
+
+    @ViewInject(R.id.ll_dock5)
+    private LinearLayout ll_dock5;
+    @ViewInject(R.id.iv_dock5)
+    private ImageView iv_dock5;
+
+    @ViewInject(R.id.ll_dock6)
+    private LinearLayout ll_dock6;
+    @ViewInject(R.id.iv_dock6)
+    private ImageView iv_dock6;
+
+    @ViewInject(R.id.ll_all_apps)
+    private LinearLayout ll_all_apps;
 
     public AMapLocationClient mlocationClient;
     public AMapLocationClientOption mLocationOption = null;
@@ -104,6 +141,88 @@ public class LauncherActivity extends BaseActivity implements View.OnClickListen
         }
         item_1.addView(PluginManage.music().getLauncherView(), LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
         iv_set.setOnClickListener(this);
+        ll_dock1.setOnClickListener(this);
+        ll_dock2.setOnClickListener(this);
+        ll_dock3.setOnClickListener(this);
+        ll_dock4.setOnClickListener(this);
+        ll_dock5.setOnClickListener(this);
+        ll_dock6.setOnClickListener(this);
+        ll_all_apps.setOnClickListener(this);
+        iv_set.setOnClickListener(this);
+
+        loadDock();
+    }
+
+    private void loadDock() {
+        String packname1 = SharedPreUtil.getSharedPreString(SDATA_DOCK1_CLASS);
+        if (CommonUtil.isNotNull(packname1)) {
+            try {
+                PackageInfo packageInfo = pm.getPackageInfo(packname1, 0);
+                iv_dock1.setImageDrawable(packageInfo.applicationInfo.loadIcon(pm));
+            } catch (Exception e) {
+                SharedPreUtil.saveSharedPreString(SDATA_DOCK1_CLASS, null);
+            }
+        }
+        String packname2 = SharedPreUtil.getSharedPreString(SDATA_DOCK2_CLASS);
+        if (CommonUtil.isNotNull(packname2)) {
+            try {
+                PackageInfo packageInfo = pm.getPackageInfo(packname2, 0);
+                iv_dock2.setImageDrawable(packageInfo.applicationInfo.loadIcon(pm));
+            } catch (Exception e) {
+                SharedPreUtil.saveSharedPreString(SDATA_DOCK2_CLASS, null);
+            }
+        }
+
+        String packname3 = SharedPreUtil.getSharedPreString(SDATA_DOCK3_CLASS);
+        if (CommonUtil.isNotNull(packname3)) {
+            try {
+                PackageInfo packageInfo = pm.getPackageInfo(packname3, 0);
+                iv_dock3.setImageDrawable(packageInfo.applicationInfo.loadIcon(pm));
+            } catch (Exception e) {
+                SharedPreUtil.saveSharedPreString(SDATA_DOCK3_CLASS, null);
+            }
+        }
+
+        String packname4 = SharedPreUtil.getSharedPreString(SDATA_DOCK4_CLASS);
+        if (CommonUtil.isNotNull(packname4)) {
+            try {
+                PackageInfo packageInfo = pm.getPackageInfo(packname4, 0);
+                iv_dock4.setImageDrawable(packageInfo.applicationInfo.loadIcon(pm));
+            } catch (Exception e) {
+                SharedPreUtil.saveSharedPreString(SDATA_DOCK4_CLASS, null);
+            }
+        }
+
+        String packname5 = SharedPreUtil.getSharedPreString(SDATA_DOCK5_CLASS);
+        if (CommonUtil.isNotNull(packname5)) {
+            try {
+                PackageInfo packageInfo = pm.getPackageInfo(packname5, 0);
+                iv_dock5.setImageDrawable(packageInfo.applicationInfo.loadIcon(pm));
+            } catch (Exception e) {
+                SharedPreUtil.saveSharedPreString(SDATA_DOCK5_CLASS, null);
+            }
+        }
+
+        String packname6 = SharedPreUtil.getSharedPreString(SDATA_DOCK6_CLASS);
+        if (CommonUtil.isNotNull(packname6)) {
+            try {
+                PackageInfo packageInfo = pm.getPackageInfo(packname6, 0);
+                iv_dock6.setImageDrawable(packageInfo.applicationInfo.loadIcon(pm));
+            } catch (Exception e) {
+                SharedPreUtil.saveSharedPreString(SDATA_DOCK6_CLASS, null);
+            }
+        }
+    }
+
+    private void openDock(String clazz) {
+        Intent appIntent = pm.getLaunchIntentForPackage(clazz);
+        if (appIntent != null) {
+            appIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(appIntent);
+        } else {
+            showTip("APP丢失");
+            loadDock();
+        }
     }
 
     @Override
@@ -111,6 +230,64 @@ public class LauncherActivity extends BaseActivity implements View.OnClickListen
         switch (v.getId()) {
             case R.id.iv_set: {
                 startActivity(new Intent(this, SetActivity.class));
+                break;
+            }
+            case R.id.ll_dock1: {
+                String packname = SharedPreUtil.getSharedPreString(SDATA_DOCK1_CLASS);
+                if (CommonUtil.isNull(packname)) {
+                    startActivityForResult(new Intent(this, AppSelectActivity.class), REQUEST_SELECT_APP_TO_DOCK1);
+                } else {
+                    openDock(packname);
+                }
+                break;
+            }
+            case R.id.ll_dock2: {
+                String packname = SharedPreUtil.getSharedPreString(SDATA_DOCK2_CLASS);
+                if (CommonUtil.isNull(packname)) {
+                    startActivityForResult(new Intent(this, AppSelectActivity.class), REQUEST_SELECT_APP_TO_DOCK2);
+                } else {
+                    openDock(packname);
+                }
+                break;
+            }
+            case R.id.ll_dock3: {
+                String packname = SharedPreUtil.getSharedPreString(SDATA_DOCK3_CLASS);
+                if (CommonUtil.isNull(packname)) {
+                    startActivityForResult(new Intent(this, AppSelectActivity.class), REQUEST_SELECT_APP_TO_DOCK3);
+                } else {
+                    openDock(packname);
+                }
+                break;
+            }
+            case R.id.ll_dock4: {
+                String packname = SharedPreUtil.getSharedPreString(SDATA_DOCK4_CLASS);
+                if (CommonUtil.isNull(packname)) {
+                    startActivityForResult(new Intent(this, AppSelectActivity.class), REQUEST_SELECT_APP_TO_DOCK4);
+                } else {
+                    openDock(packname);
+                }
+                break;
+            }
+            case R.id.ll_dock5: {
+                String packname = SharedPreUtil.getSharedPreString(SDATA_DOCK5_CLASS);
+                if (CommonUtil.isNull(packname)) {
+                    startActivityForResult(new Intent(this, AppSelectActivity.class), REQUEST_SELECT_APP_TO_DOCK5);
+                } else {
+                    openDock(packname);
+                }
+                break;
+            }
+            case R.id.ll_dock6: {
+                String packname = SharedPreUtil.getSharedPreString(SDATA_DOCK6_CLASS);
+                if (CommonUtil.isNull(packname)) {
+                    startActivityForResult(new Intent(this, AppSelectActivity.class), REQUEST_SELECT_APP_TO_DOCK6);
+                } else {
+                    openDock(packname);
+                }
+                break;
+            }
+            case R.id.ll_all_apps: {
+                startActivity(new Intent(this, AppMenuActivity.class));
                 break;
             }
         }
@@ -141,6 +318,53 @@ public class LauncherActivity extends BaseActivity implements View.OnClickListen
                 PopupWin.self().checkShowApp(CommonUtil.getForegroundApp(mContext));
             }
         }, 1000 - System.currentTimeMillis() % 1000, 1000);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_SELECT_APP_TO_DOCK1) {
+            if (resultCode == RESULT_OK) {
+                String packName = data.getStringExtra(IDATA_PACKAGE_NAME);
+                SharedPreUtil.saveSharedPreString(SDATA_DOCK1_CLASS, packName);
+                loadDock();
+            }
+        }
+        if (requestCode == REQUEST_SELECT_APP_TO_DOCK2) {
+            if (resultCode == RESULT_OK) {
+                String packName = data.getStringExtra(IDATA_PACKAGE_NAME);
+                SharedPreUtil.saveSharedPreString(SDATA_DOCK2_CLASS, packName);
+                loadDock();
+            }
+        }
+        if (requestCode == REQUEST_SELECT_APP_TO_DOCK3) {
+            if (resultCode == RESULT_OK) {
+                String packName = data.getStringExtra(IDATA_PACKAGE_NAME);
+                SharedPreUtil.saveSharedPreString(SDATA_DOCK3_CLASS, packName);
+                loadDock();
+            }
+        }
+        if (requestCode == REQUEST_SELECT_APP_TO_DOCK4) {
+            if (resultCode == RESULT_OK) {
+                String packName = data.getStringExtra(IDATA_PACKAGE_NAME);
+                SharedPreUtil.saveSharedPreString(SDATA_DOCK4_CLASS, packName);
+                loadDock();
+            }
+        }
+        if (requestCode == REQUEST_SELECT_APP_TO_DOCK5) {
+            if (resultCode == RESULT_OK) {
+                String packName = data.getStringExtra(IDATA_PACKAGE_NAME);
+                SharedPreUtil.saveSharedPreString(SDATA_DOCK5_CLASS, packName);
+                loadDock();
+            }
+        }
+        if (requestCode == REQUEST_SELECT_APP_TO_DOCK6) {
+            if (resultCode == RESULT_OK) {
+                String packName = data.getStringExtra(IDATA_PACKAGE_NAME);
+                SharedPreUtil.saveSharedPreString(SDATA_DOCK6_CLASS, packName);
+                loadDock();
+            }
+        }
     }
 
     @Override

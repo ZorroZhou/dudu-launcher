@@ -110,7 +110,6 @@ public class NeteaseCloudMusicPlugin extends MusicController {
         popupView.findViewById(R.id.iv_next).setOnClickListener(popupOnClickListener);
 
         ergodicPopupView((ViewGroup) popupWidgetView);
-        ergodicLauncherView2((ViewGroup) popupWidgetView, 0);
         startUpdate();
     }
 
@@ -403,22 +402,6 @@ public class NeteaseCloudMusicPlugin extends MusicController {
         View v8 = ViewUtils.getDeepViewByIndex(bg, new int[]{1, 1, 3, 2});
         if (v8 instanceof ImageView) {
             launcherWidgetViewPlay = (ImageView) v8;
-        }
-    }
-
-
-    private void ergodicLauncherView2(ViewGroup vg, int z) {
-        //先处理背景
-        for (int i = 0; i < vg.getChildCount(); i++) {
-            //if (z < 4) {
-            Log.e(TAG, z + "    ergodicLauncherView: " + vg.getChildAt(i) + "       " + i);
-            //}
-
-            View v = vg.getChildAt(i);
-            if (v instanceof ViewGroup) {
-                int zz = z + 1;
-                ergodicLauncherView2((ViewGroup) v, zz);
-            }
         }
     }
 

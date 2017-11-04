@@ -64,6 +64,7 @@ public class AppMenuActivity extends BaseActivity implements AdapterView.OnItemC
         x.task().run(new Runnable() {
             @Override
             public void run() {
+                adapter.clear();
                 final List<AppInfo> appInfos = CommonUtil.getAllApp(mContext);
                 String selectapp = SharedPreUtil.getSharedPreString(CommonData.SDATA_HIDE_APPS);
                 List<AppInfo> hides = new ArrayList<>();
@@ -98,12 +99,14 @@ public class AppMenuActivity extends BaseActivity implements AdapterView.OnItemC
         dialog.findViewById(R.id.run).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dialog.dismiss();
                 run(info);
             }
         });
         dialog.findViewById(R.id.un).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dialog.dismiss();
                 un(info);
             }
         });

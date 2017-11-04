@@ -11,14 +11,15 @@ public class CommonData {
     public static final int REQUEST_SELECT_APP_TO_DOCK3 = 10002;
     public static final int REQUEST_SELECT_APP_TO_DOCK4 = 10003;
     public static final int REQUEST_SELECT_APP_TO_DOCK5 = 10004;
+    public static final int REQUEST_SELECT_APP_TO_DOCK6 = 10005;
 
-    public static final int REQUEST_SELECT_NCM_WIDGET1 = 10005;
-    public static final int REQUEST_SELECT_NCM_WIDGET2 = 10006;
+    public static final int REQUEST_SELECT_NCM_WIDGET1 = 10006;
+    public static final int REQUEST_SELECT_NCM_WIDGET2 = 10007;
 
-    public static final int REQUEST_SELECT_QQMUSIC_WIDGET1 = 10007;
-    public static final int REQUEST_SELECT_QQMUSIC_WIDGET2 = 10008;
+    public static final int REQUEST_SELECT_QQMUSIC_WIDGET1 = 10008;
+    public static final int REQUEST_SELECT_QQMUSIC_WIDGET2 = 10009;
 
-    public static final int REQUEST_SELECT_MUSIC_PLUGIN = 10009;
+    public static final int REQUEST_SELECT_MUSIC_PLUGIN = 10010;
 
     public static final String IDATA_PACKAGE_NAME = "PACKAGE_NAME";
 
@@ -28,6 +29,7 @@ public class CommonData {
     public static final String SDATA_DOCK3_CLASS = "DOCK3_BEAN";
     public static final String SDATA_DOCK4_CLASS = "DOCK4_BEAN";
     public static final String SDATA_DOCK5_CLASS = "DOCK5_BEAN";
+    public static final String SDATA_DOCK6_CLASS = "DOCK6_BEAN";
     //dock的包名end
     //悬浮框的X坐标
     public static final String SDATA_POPUP_WIN_X = "SDATA_POPUP_WIN_X";

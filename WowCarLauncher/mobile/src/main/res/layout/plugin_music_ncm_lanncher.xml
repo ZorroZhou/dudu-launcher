@@ -83,7 +83,7 @@
         android:paddingEnd="20dp"
         android:paddingStart="20dp"
         android:text="11/33"
-        android:textColor="@color/plugin_music_album"
+        android:textColor="@android:color/white"
         app:layout_textSizePercent="6%h" />
 
     <TextView
@@ -98,7 +98,7 @@
         android:lines="1"
         android:paddingStart="20dp"
         android:text="@string/music_album"
-        android:textColor="@color/plugin_music_album"
+        android:textColor="@android:color/white"
         app:layout_textSizePercent="6%h" />
 
     <TextView
@@ -112,6 +112,6 @@
         android:paddingEnd="20dp"
         android:paddingStart="20dp"
         android:text="@string/music_name"
-        android:textColor="@color/plugin_music_name"
+        android:textColor="@android:color/white"
         app:layout_textSizePercent="8%h" />
 </com.zhy.android.percent.support.PercentRelativeLayout>

@@ -12,18 +12,6 @@
         android:alpha="0"
         android:orientation="horizontal" />
 
-    <com.wow.carlauncher.common.view.CustomImageView
-        android:id="@+id/iv_cover"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        app:radius="5dp" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/l_item_bg_transparent_black" />
-
     <com.zhy.android.percent.support.PercentLinearLayout
         android:id="@+id/rl_bottom"
         android:layout_width="match_parent"
@@ -74,7 +62,7 @@
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_above="@id/pb_music"
         android:ellipsize="end"
         android:gravity="center_vertical"
@@ -84,5 +72,5 @@
         android:text="@string/music_name"
         android:textColor="@color/plugin_music_name"
         app:layout_heightPercent="30%h"
-        app:layout_textSizePercent="8%h" />
+        app:layout_textSizePercent="15%h" />
 </com.zhy.android.percent.support.PercentRelativeLayout>

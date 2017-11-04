@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.GridView;
 import android.widget.LinearLayout;
@@ -122,7 +123,7 @@ public class ViewUtils {
     /**
      * 将GridView改成单行横向布局
      */
-    public static void changeGridView(int dataSize,Context context,GridView gv_record) {
+    public static void changeGridView(int dataSize, Context context, GridView gv_record) {
         // item宽度
         int itemWidth = ViewUtils.dip2px(context, 100);
         // item之间的间隔
@@ -139,9 +140,26 @@ public class ViewUtils {
         gv_record.setNumColumns(dataSize);
     }
 
-    public static void backgroundAlpha(Activity activity,float bgAlpha) {
+    public static void backgroundAlpha(Activity activity, float bgAlpha) {
         WindowManager.LayoutParams lp = activity.getWindow().getAttributes();
         lp.alpha = bgAlpha; //0.0-1.0
         activity.getWindow().setAttributes(lp);
+    }
+
+    public static View getDeepViewByIndex(View view, int[] deeps) {
+        View r;
+        for (int i = 0; i < deeps.length; i++) {
+            int deep = deeps[i];
+            if (view instanceof ViewGroup) {
+                view = ((ViewGroup) view).getChildAt(deep);
+            }
+            if (deep != deeps.length - 1) {
+                if (view == null) {
+                    return null;
+                }
+            }
+        }
+        r = view;
+        return r;
     }
 }

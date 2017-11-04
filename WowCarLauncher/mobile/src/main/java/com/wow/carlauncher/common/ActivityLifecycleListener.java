@@ -11,7 +11,7 @@ import android.widget.ImageView;
 
 import com.wow.carlauncher.CarLauncherApplication;
 import com.wow.carlauncher.R;
-import com.wow.carlauncher.activity.LanncherActivity;
+import com.wow.carlauncher.activity.Launcher2Activity;
 import com.wow.carlauncher.popupWindow.LoadWin;
 import com.wow.carlauncher.popupWindow.PopupWin;
 
@@ -30,7 +30,7 @@ public class ActivityLifecycleListener implements Application.ActivityLifecycleC
 
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-        if (activity instanceof LanncherActivity) {
+        if (activity instanceof Launcher2Activity) {
             loadWin.show();
         }
     }
@@ -43,7 +43,7 @@ public class ActivityLifecycleListener implements Application.ActivityLifecycleC
 
     @Override
     public void onActivityResumed(Activity activity) {
-        if (activity instanceof LanncherActivity) {
+        if (activity instanceof Launcher2Activity) {
             loadWin.hide();
         }
     }

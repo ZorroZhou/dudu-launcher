@@ -10,7 +10,6 @@ import com.wow.carlauncher.plugin.IPlugin;
 import com.wow.carlauncher.plugin.PopupViewProportion;
 import com.wow.carlauncher.plugin.music.controllers.NeteaseCloudMusicPlugin;
 import com.wow.carlauncher.plugin.music.controllers.QQMusicCarPlugin;
-//import com.wow.carlauncher.plugin.music.controllers.SystemMusicPlugin;
 import com.wow.carlauncher.plugin.music.controllers.QQMusicPlugin;
 import com.wow.carlauncher.plugin.music.controllers.SystemMusicPlugin;
 

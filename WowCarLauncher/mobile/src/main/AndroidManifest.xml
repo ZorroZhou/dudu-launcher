@@ -53,8 +53,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.LanncherActivity"
-            android:launchMode="singleTask"
+            android:name=".activity.Launcher2Activity"
+            android:launchMode="singleInstance"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -73,10 +73,10 @@
             android:name=".activity.SetActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".activity.SystemSetActivity"
+            android:name=".activity.MusicPluginSetActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".activity.Lanncher2Activity"
+            android:name=".activity.SystemSetActivity"
             android:screenOrientation="landscape" />
 
         <receiver

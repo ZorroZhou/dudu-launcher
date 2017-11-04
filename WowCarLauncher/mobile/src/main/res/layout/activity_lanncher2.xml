@@ -6,7 +6,7 @@
     android:background="@mipmap/background"
     android:orientation="vertical">
 
-    <LinearLayout
+    <com.zhy.android.percent.support.PercentRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="horizontal"
@@ -15,15 +15,16 @@
         <com.zhy.android.percent.support.PercentLinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="horizontal">
+            android:layout_alignParentStart="true"
+            android:orientation="horizontal"
+            app:layout_widthPercent="50%w">
 
             <TextView
                 android:id="@+id/time"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_marginEnd="20dp"
                 android:gravity="center_vertical|end"
-                android:text="11:11"
                 android:textColor="#fff"
                 app:layout_textSizePercent="60%h"
                 app:layout_widthPercent="50%w" />
@@ -39,7 +40,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:gravity="bottom|start"
-                    android:text="2017年11月1日"
                     android:textColor="#fff"
                     app:layout_heightPercent="50%h"
                     app:layout_textSizePercent="20%h" />
@@ -49,7 +49,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:gravity="top|start"
-                    android:text="星期一"
                     android:textColor="#fff"
                     app:layout_heightPercent="50%h"
                     app:layout_textSizePercent="20%h" />
@@ -59,8 +58,9 @@
         <com.zhy.android.percent.support.PercentLinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="horizontal">
+            android:layout_alignParentEnd="true"
+            android:orientation="horizontal"
+            app:layout_widthPercent="50%w">
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -87,7 +87,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:gravity="bottom|start"
-                    android:text="2017年11月1日"
+                    android:text="等待温度数据"
                     android:textColor="#fff"
                     app:layout_heightPercent="50%h"
                     app:layout_textSizePercent="20%h" />
@@ -97,13 +97,24 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:gravity="top|start"
-                    android:text="星期一"
+                    android:text="等待定位"
                     android:textColor="#fff"
                     app:layout_heightPercent="50%h"
                     app:layout_textSizePercent="20%h" />
             </com.zhy.android.percent.support.PercentLinearLayout>
         </com.zhy.android.percent.support.PercentLinearLayout>
-    </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_set"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_margin="20dp"
+            android:src="@mipmap/ic_set"
+            app:layout_heightPercent="20%h"
+            app:layout_widthPercent="20%h" />
+    </com.zhy.android.percent.support.PercentRelativeLayout>
 
     <LinearLayout
         android:id="@+id/ll_main"
@@ -150,11 +161,83 @@
             android:padding="10dp" />
     </LinearLayout>
 
-    <LinearLayout
+    <com.zhy.android.percent.support.PercentLinearLayout
         android:id="@+id/ll_dock"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:background="@color/launch_dock_bg"
         android:orientation="horizontal"
         android:padding="10dp"
-        app:layout_heightPercent="20%h"></LinearLayout>
+        app:layout_heightPercent="20%h">
+
+        <ImageView
+            android:id="@+id/iv_dock0_icon"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:contentDescription="@string/iv_main_dock_icon"
+            android:padding="10dp"
+            android:src="@mipmap/main_dock_add"
+            app:layout_heightPercent="60%h" />
+
+        <ImageView
+            android:id="@+id/iv_dock1_icon"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:contentDescription="@string/iv_main_dock_icon"
+            android:padding="10dp"
+            android:src="@mipmap/main_dock_add"
+            app:layout_heightPercent="60%h" />
+
+        <ImageView
+            android:id="@+id/iv_dock2_icon"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:contentDescription="@string/iv_main_dock_icon"
+            android:padding="10dp"
+            android:src="@mipmap/main_dock_add"
+            app:layout_heightPercent="60%h" />
+
+        <ImageView
+            android:id="@+id/iv_dock3_icon"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:contentDescription="@string/iv_main_dock_icon"
+            android:padding="10dp"
+            android:src="@mipmap/main_dock_add"
+            app:layout_heightPercent="60%h" />
+
+        <ImageView
+            android:id="@+id/iv_dock4_icon"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:contentDescription="@string/iv_main_dock_icon"
+            android:padding="10dp"
+            android:src="@mipmap/main_dock_add"
+            app:layout_heightPercent="60%h" />
+
+        <ImageView
+            android:id="@+id/iv_dock5_icon"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:contentDescription="@string/iv_main_dock_icon"
+            android:padding="10dp"
+            android:src="@mipmap/main_dock_add"
+            app:layout_heightPercent="60%h" />
+
+        <ImageView
+            android:id="@+id/iv_dock6_icon"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:contentDescription="@string/iv_main_dock_icon"
+            android:padding="10dp"
+            android:src="@mipmap/main_dock_add"
+            app:layout_heightPercent="60%h" />
+    </com.zhy.android.percent.support.PercentLinearLayout>
 </com.zhy.android.percent.support.PercentLinearLayout>

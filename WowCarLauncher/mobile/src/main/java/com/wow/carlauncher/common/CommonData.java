@@ -18,6 +18,8 @@ public class CommonData {
     public static final int REQUEST_SELECT_QQMUSIC_WIDGET1 = 10007;
     public static final int REQUEST_SELECT_QQMUSIC_WIDGET2 = 10008;
 
+    public static final int REQUEST_SELECT_MUSIC_PLUGIN = 10009;
+
     public static final String IDATA_PACKAGE_NAME = "PACKAGE_NAME";
 
     //dock的包名start

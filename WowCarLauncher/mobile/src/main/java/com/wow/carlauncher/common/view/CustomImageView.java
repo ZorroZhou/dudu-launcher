@@ -63,16 +63,18 @@ public class CustomImageView extends android.support.v7.widget.AppCompatImageVie
         int width = canvas.getWidth() - getPaddingLeft() - getPaddingRight();
         int height = canvas.getHeight() - getPaddingTop() - getPaddingBottom();
         Bitmap image = drawableToBitmap(getDrawable());
-        if (mIsCircle) {
-            Bitmap reSizeImage = reSizeImageC(image, width, height);
-            canvas.drawBitmap(createCircleImage(reSizeImage, width, height),
-                    getPaddingLeft(), getPaddingTop(), null);
+        if (image != null) {
+            if (mIsCircle) {
+                Bitmap reSizeImage = reSizeImageC(image, width, height);
+                canvas.drawBitmap(createCircleImage(reSizeImage, width, height),
+                        getPaddingLeft(), getPaddingTop(), null);
 
-        } else {
+            } else {
 
-            Bitmap reSizeImage = reSizeImage(image, width, height);
-            canvas.drawBitmap(createRoundImage(reSizeImage, width, height),
-                    getPaddingLeft(), getPaddingTop(), null);
+                Bitmap reSizeImage = reSizeImage(image, width, height);
+                canvas.drawBitmap(createRoundImage(reSizeImage, width, height),
+                        getPaddingLeft(), getPaddingTop(), null);
+            }
         }
     }
 
@@ -85,6 +87,9 @@ public class CustomImageView extends android.support.v7.widget.AppCompatImageVie
      * @return
      */
     private Bitmap createRoundImage(Bitmap source, int width, int height) {
+        if (source == null) {
+            return null;
+        }
         Paint paint = new Paint();
         paint.setAntiAlias(true);
         Bitmap target = Bitmap.createBitmap(width, height, Config.ARGB_8888);
@@ -161,6 +166,9 @@ public class CustomImageView extends android.support.v7.widget.AppCompatImageVie
      * @return
      */
     private Bitmap reSizeImage(Bitmap bitmap, int newWidth, int newHeight) {
+        if (bitmap == null) {
+            return null;
+        }
         int width = bitmap.getWidth();
         int height = bitmap.getHeight();
         // 计算出缩放比
@@ -182,6 +190,9 @@ public class CustomImageView extends android.support.v7.widget.AppCompatImageVie
      * @return
      */
     private Bitmap reSizeImageC(Bitmap bitmap, int newWidth, int newHeight) {
+        if (bitmap == null) {
+            return null;
+        }
         int width = bitmap.getWidth();
         int height = bitmap.getHeight();
         int x = (newWidth - width) / 2;

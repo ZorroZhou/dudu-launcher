@@ -17,24 +17,17 @@ public class PluginManage {
     private static final String TAG = "PluginManage";
 
     public static final String MUSIC = "MUSIC";
-    public static final String TIME = "TIME";
 
     private static Map<String, IPlugin> plugins;
 
     public static void init(Context context) {
         plugins = new ConcurrentHashMap<>();
         plugins.put(MUSIC, new MusicPlugin(context));
-        plugins.put(TIME, new TimePlugin(context));
     }
 
     public static MusicPlugin music() {
         Log.e(TAG, "MusicPlugin: " + plugins);
         return (MusicPlugin) plugins.get(MUSIC);
-    }
-
-    public static TimePlugin time() {
-        Log.e(TAG, "TimePlugin: " + plugins);
-        return (TimePlugin) plugins.get(TIME);
     }
 
     public static IPlugin getByName(String name) {

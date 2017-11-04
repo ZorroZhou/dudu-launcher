@@ -129,128 +129,7 @@ public class SetActivity extends BaseActivity {
         music_controller_select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Integer select = 0;
-                int selectId = SharedPreUtil.getSharedPreInteger(CommonData.SDATA_CURRENT_MUSIC_CONTROLLER, SYSTEM.getId());
-                for (int i = 0; i < MUSIC_CONTORLLERS.length; i++) {
-                    if (MusicControllerEnum.valueOfName(MUSIC_CONTORLLERS[i]).getId() == selectId) {
-                        select = i;
-                    }
-                }
-                final ThreadObj<Integer> obj = new ThreadObj<>(select);
-                AlertDialog dialog = new AlertDialog.Builder(mContext).setTitle("请选择音乐控制器").setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        final MusicControllerEnum controllerEnum = MusicControllerEnum.valueOfName(MUSIC_CONTORLLERS[obj.getObj()]);
-                        if (controllerEnum.equals(MusicControllerEnum.NETEASECLOUD)) {
-                            View content = View.inflate(mContext, R.layout.dialog_netease_cloud_music_widget_select, null);
-                            tv_select_widget1 = content.findViewById(R.id.widget1);
-                            tv_select_widget2 = content.findViewById(R.id.widget2);
-
-                            tv_select_widget1.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    selectWidgetRequest(REQUEST_SELECT_NCM_WIDGET1);
-                                }
-                            });
-                            tv_select_widget2.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    selectWidgetRequest(REQUEST_SELECT_NCM_WIDGET2);
-                                }
-                            });
-
-                            int id1 = SharedPreUtil.getSharedPreInteger(SDATA_MUSIC_PLUGIN_NCM_POPUP, -1);
-                            if (id1 != -1) {
-                                String msg = "1*4小组件，选择ID：" + id1;
-                                tv_select_widget1.setText(msg);
-                            }
-
-                            int id2 = SharedPreUtil.getSharedPreInteger(SDATA_MUSIC_PLUGIN_NCM_LANNCHER, -1);
-                            if (id2 != -1) {
-                                String msg = "2*4小组件，选择ID：" + id1;
-                                tv_select_widget2.setText(msg);
-                            }
-
-
-                            AlertDialog wangyixuanze = new AlertDialog.Builder(mContext).setTitle("请选择网易云音乐控件").setView(content)
-                                    .setNegativeButton("取消", null)
-                                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            int id1 = SharedPreUtil.getSharedPreInteger(SDATA_MUSIC_PLUGIN_NCM_POPUP, -1);
-                                            int id2 = SharedPreUtil.getSharedPreInteger(SDATA_MUSIC_PLUGIN_NCM_LANNCHER, -1);
-                                            if (id1 != -1 && id2 != -1) {
-                                                music_controller_select.setSummary(MUSIC_CONTORLLERS[obj.getObj()]);
-                                                SharedPreUtil.saveSharedPreInteger(CommonData.SDATA_CURRENT_MUSIC_CONTROLLER, controllerEnum.getId());
-                                                PluginManage.music().selectMusicController(controllerEnum);
-                                            } else {
-                                                showTip("没有选择组件");
-                                            }
-                                        }
-                                    }).create();
-                            wangyixuanze.show();
-                        } else if (controllerEnum.equals(MusicControllerEnum.QQMUSIC)) {
-                            View content = View.inflate(mContext, R.layout.dialog_qq_music_widget_select, null);
-                            tv_select_widget1 = content.findViewById(R.id.widget1);
-                            tv_select_widget2 = content.findViewById(R.id.widget2);
-
-                            tv_select_widget1.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    selectWidgetRequest(REQUEST_SELECT_QQMUSIC_WIDGET1);
-                                }
-                            });
-                            tv_select_widget2.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    selectWidgetRequest(REQUEST_SELECT_QQMUSIC_WIDGET2);
-                                }
-                            });
-
-                            int id1 = SharedPreUtil.getSharedPreInteger(SDATA_MUSIC_PLUGIN_QQMUSIC_POPUP, -1);
-                            if (id1 != -1) {
-                                String msg = "1*4小组件，选择ID：" + id1;
-                                tv_select_widget1.setText(msg);
-                            }
-
-                            int id2 = SharedPreUtil.getSharedPreInteger(SDATA_MUSIC_PLUGIN_QQMUSIC_LANNCHER, -1);
-                            if (id2 != -1) {
-                                String msg = "2*4小组件，选择ID：" + id1;
-                                tv_select_widget2.setText(msg);
-                            }
-
-
-                            AlertDialog wangyixuanze = new AlertDialog.Builder(mContext).setTitle("请选择QQ音乐控件").setView(content)
-                                    .setNegativeButton("取消", null)
-                                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            int id1 = SharedPreUtil.getSharedPreInteger(SDATA_MUSIC_PLUGIN_QQMUSIC_POPUP, -1);
-                                            int id2 = SharedPreUtil.getSharedPreInteger(SDATA_MUSIC_PLUGIN_QQMUSIC_LANNCHER, -1);
-                                            if (id1 != -1 && id2 != -1) {
-                                                music_controller_select.setSummary(MUSIC_CONTORLLERS[obj.getObj()]);
-                                                SharedPreUtil.saveSharedPreInteger(CommonData.SDATA_CURRENT_MUSIC_CONTROLLER, controllerEnum.getId());
-                                                PluginManage.music().selectMusicController(controllerEnum);
-                                            } else {
-                                                showTip("没有选择组件");
-                                            }
-                                        }
-                                    }).create();
-                            wangyixuanze.show();
-                        } else {
-                            music_controller_select.setSummary(MUSIC_CONTORLLERS[obj.getObj()]);
-                            SharedPreUtil.saveSharedPreInteger(CommonData.SDATA_CURRENT_MUSIC_CONTROLLER, controllerEnum.getId());
-                            PluginManage.music().selectMusicController(controllerEnum);
-                        }
-                    }
-                }).setSingleChoiceItems(MUSIC_CONTORLLERS, select, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        obj.setObj(which);
-                    }
-                }).create();
-                dialog.show();
+                startActivityForResult(new Intent(mContext, MusicPluginSetActivity.class), REQUEST_SELECT_MUSIC_PLUGIN);
             }
         });
 
@@ -328,51 +207,11 @@ public class SetActivity extends BaseActivity {
         appWidgetHost = new AppWidgetHost(getApplication(), APP_WIDGET_HOST_ID);
     }
 
-    private void selectWidgetRequest(int request) {
-        int widgetId = appWidgetHost.allocateAppWidgetId();
-        Intent pickIntent = new Intent(AppWidgetManager.ACTION_APPWIDGET_PICK);
-        pickIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
-        startActivityForResult(pickIntent, request);
-    }
-
-
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
-                case REQUEST_SELECT_NCM_WIDGET1: {
-                    int id = data.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1);
-                    if (id != -1) {
-                        SharedPreUtil.saveSharedPreInteger(SDATA_MUSIC_PLUGIN_NCM_POPUP, id);
-                        String msg = "1*4小组件，选择ID：" + id;
-                        tv_select_widget1.setText(msg);
-                    }
-                    break;
-                }
-                case REQUEST_SELECT_NCM_WIDGET2: {
-                    int id = data.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1);
-                    if (id != -1) {
-                        SharedPreUtil.saveSharedPreInteger(SDATA_MUSIC_PLUGIN_NCM_LANNCHER, id);
-                        String msg = "2*4小组件，选择ID：" + id;
-                        tv_select_widget2.setText(msg);
-                    }
-                    break;
-                }
-                case REQUEST_SELECT_QQMUSIC_WIDGET1: {
-                    int id = data.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1);
-                    if (id != -1) {
-                        SharedPreUtil.saveSharedPreInteger(SDATA_MUSIC_PLUGIN_QQMUSIC_POPUP, id);
-                        String msg = "1*4小组件，选择ID：" + id;
-                        tv_select_widget1.setText(msg);
-                    }
-                    break;
-                }
-                case REQUEST_SELECT_QQMUSIC_WIDGET2: {
-                    int id = data.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1);
-                    if (id != -1) {
-                        SharedPreUtil.saveSharedPreInteger(SDATA_MUSIC_PLUGIN_QQMUSIC_LANNCHER, id);
-                        String msg = "2*4小组件，选择ID：" + id;
-                        tv_select_widget2.setText(msg);
-                    }
+                case REQUEST_SELECT_MUSIC_PLUGIN: {
+                    music_controller_select.setSummary(MusicControllerEnum.valueOfId(SharedPreUtil.getSharedPreInteger(CommonData.SDATA_CURRENT_MUSIC_CONTROLLER, SYSTEM.getId())).getName());
                     break;
                 }
                 default:

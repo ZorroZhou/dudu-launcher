@@ -3,15 +3,9 @@ package com.wow.carlauncher.common;
 import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.view.Gravity;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.ImageView;
 
 import com.wow.carlauncher.CarLauncherApplication;
-import com.wow.carlauncher.R;
-import com.wow.carlauncher.activity.Launcher2Activity;
+import com.wow.carlauncher.activity.LauncherActivity;
 import com.wow.carlauncher.popupWindow.LoadWin;
 import com.wow.carlauncher.popupWindow.PopupWin;
 
@@ -30,7 +24,7 @@ public class ActivityLifecycleListener implements Application.ActivityLifecycleC
 
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-        if (activity instanceof Launcher2Activity) {
+        if (activity instanceof LauncherActivity) {
             loadWin.show();
         }
     }
@@ -43,7 +37,7 @@ public class ActivityLifecycleListener implements Application.ActivityLifecycleC
 
     @Override
     public void onActivityResumed(Activity activity) {
-        if (activity instanceof Launcher2Activity) {
+        if (activity instanceof LauncherActivity) {
             loadWin.hide();
         }
     }

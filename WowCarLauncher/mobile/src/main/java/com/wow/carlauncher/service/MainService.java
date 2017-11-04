@@ -6,7 +6,7 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 
 import com.wow.carlauncher.CarLauncherApplication;
-import com.wow.carlauncher.activity.Launcher2Activity;
+import com.wow.carlauncher.activity.LauncherActivity;
 import com.wow.carlauncher.popupWindow.PopupWin;
 
 /**
@@ -20,7 +20,7 @@ public class MainService extends Service {
     public void onCreate() {
         super.onCreate();
         if (getApplicationEx().checkActivity(0) == 0) {
-            Intent intent = new Intent(this, Launcher2Activity.class);
+            Intent intent = new Intent(this, LauncherActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         }

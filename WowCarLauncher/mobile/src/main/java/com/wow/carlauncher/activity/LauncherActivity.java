@@ -1,6 +1,5 @@
 package com.wow.carlauncher.activity;
 
-import android.app.LauncherActivity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -31,11 +30,8 @@ import com.wow.carlauncher.common.util.DateUtil;
 import com.wow.carlauncher.plugin.PluginManage;
 import com.wow.carlauncher.plugin.amap.WebService;
 import com.wow.carlauncher.plugin.amap.res.WeatherRes;
-import com.wow.carlauncher.plugin.time.TimeLauncherView;
-import com.wow.carlauncher.plugin.time.event.PEventTimeWeather;
 import com.wow.carlauncher.popupWindow.PopupWin;
 
-import org.greenrobot.eventbus.EventBus;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
@@ -46,7 +42,7 @@ import java.util.TimerTask;
 /**
  * Created by 10124 on 2017/10/26.
  */
-public class Launcher2Activity extends BaseActivity implements View.OnClickListener {
+public class LauncherActivity extends BaseActivity implements View.OnClickListener {
     private static final String TAG = "LanncherActivity";
 
     @ViewInject(R.id.item_1)
@@ -80,7 +76,7 @@ public class Launcher2Activity extends BaseActivity implements View.OnClickListe
     @Override
     public void init() {
         Log.e(TAG, "init!!!!!!!!!!!!!!!!!: " + this);
-        setContent(R.layout.activity_lanncher2);
+        setContent(R.layout.activity_lanncher);
         pm = getPackageManager();
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -171,9 +167,9 @@ public class Launcher2Activity extends BaseActivity implements View.OnClickListe
                 String time = DateUtil.dateToString(d, "HH:mm");
                 String date = DateUtil.dateToString(d, "yyyy年MM月dd日");
                 String week = DateUtil.getWeekOfDate(d);
-                Launcher2Activity.this.time.setText(time);
-                Launcher2Activity.this.date.setText(date);
-                Launcher2Activity.this.week.setText(week);
+                LauncherActivity.this.time.setText(time);
+                LauncherActivity.this.date.setText(date);
+                LauncherActivity.this.week.setText(week);
             }
         });
     }

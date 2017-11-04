@@ -53,7 +53,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.Launcher2Activity"
+            android:name=".activity.LauncherActivity"
             android:launchMode="singleInstance"
             android:screenOrientation="landscape">
             <intent-filter>

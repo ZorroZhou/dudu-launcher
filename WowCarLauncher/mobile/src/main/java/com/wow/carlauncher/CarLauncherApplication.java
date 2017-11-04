@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Intent;
 
 import com.wow.carlauncher.common.ActivityLifecycleListener;
+import com.wow.carlauncher.common.LocationManage;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.plugin.PluginManage;
 import com.wow.carlauncher.popupWindow.PopupWin;
@@ -24,6 +25,7 @@ public class CarLauncherApplication extends Application {
         SharedPreUtil.init(this);
         PluginManage.init(this);
         PopupWin.self().init(this);
+        LocationManage.self().init(this);
 
         registerActivityLifecycleCallbacks(new ActivityLifecycleListener(this));
 

@@ -12,9 +12,6 @@ import org.xutils.view.annotation.ViewInject;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
-    @ViewInject(R.id.open_lanncher)
-    private Button open_lanncher;
-
     @ViewInject(R.id.set)
     private Button set;
 
@@ -32,7 +29,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void initView() {
         setTitle("车载启动器");
-        open_lanncher.setOnClickListener(this);
         set.setOnClickListener(this);
         sys_set.setOnClickListener(this);
         test.setOnClickListener(this);

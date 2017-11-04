@@ -77,7 +77,6 @@ public class NeteaseCloudMusicPluginOld extends MusicController {
         launcherView.addView(launcherWidgetView, launcherViewLp);
 
         AppWidgetProviderInfo popupWidgetInfo = appWidgetManager.getAppWidgetInfo(popup);
-        Log.e(TAG, "NeteaseCloudMusicPluginOld: " + popupWidgetInfo);
         final View popupWidgetView = appWidgetHost.createView(context, popup, popupWidgetInfo);
         popupWidgetView.setPadding(0, 0, 0, 0);
         ergodicPopupView((ViewGroup) popupWidgetView);
@@ -242,8 +241,4 @@ public class NeteaseCloudMusicPluginOld extends MusicController {
         return popupView;
     }
 
-    @Override
-    public PopupViewProportion getPopupViewProportion() {
-        return new PopupViewProportion(1, 2f);
-    }
 }

@@ -81,7 +81,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         loadViewed = true;
         initView();
         loadData();
-
     }
 
     @Override

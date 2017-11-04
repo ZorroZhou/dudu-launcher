@@ -1,4 +1,4 @@
-package com.wow.carlauncher.plugin.amap.res;
+package com.wow.carlauncher.webservice.res;
 
 import java.util.List;
 

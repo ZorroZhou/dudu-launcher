@@ -420,9 +420,4 @@ public class NeteaseCloudMusicPlugin extends MusicController {
         }
         return popupView;
     }
-
-    @Override
-    public PopupViewProportion getPopupViewProportion() {
-        return new PopupViewProportion(1, 2f);
-    }
 }

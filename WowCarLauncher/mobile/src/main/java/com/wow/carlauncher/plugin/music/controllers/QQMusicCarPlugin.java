@@ -68,11 +68,6 @@ public class QQMusicCarPlugin extends MusicController {
         return qqMusicCarPopupView;
     }
 
-    @Override
-    public PopupViewProportion getPopupViewProportion() {
-        return new PopupViewProportion(1, 2);
-    }
-
     public void play() {
         sendEvent(WE_DRIVE_RESUME);
     }

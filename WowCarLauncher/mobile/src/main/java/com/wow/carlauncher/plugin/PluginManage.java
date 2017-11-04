@@ -3,8 +3,8 @@ package com.wow.carlauncher.plugin;
 import android.content.Context;
 import android.util.Log;
 
+import com.wow.carlauncher.plugin.controller.ControllerPlugin;
 import com.wow.carlauncher.plugin.music.MusicPlugin;
-import com.wow.carlauncher.plugin.time.TimePlugin;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -17,12 +17,19 @@ public class PluginManage {
     private static final String TAG = "PluginManage";
 
     public static final String MUSIC = "MUSIC";
+    public static final String CONTROLLER = "CONTROLLER";
 
     private static Map<String, IPlugin> plugins;
 
     public static void init(Context context) {
         plugins = new ConcurrentHashMap<>();
         plugins.put(MUSIC, new MusicPlugin(context));
+        plugins.put(CONTROLLER, new ControllerPlugin(context));
+    }
+
+    public static ControllerPlugin controller() {
+        Log.e(TAG, "MusicPlugin: " + plugins);
+        return (ControllerPlugin) plugins.get(CONTROLLER);
     }
 
     public static MusicPlugin music() {

@@ -7,9 +7,14 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.media.AudioManager;
 import android.os.Build;
+import android.os.Bundle;
+import android.os.Looper;
+import android.os.MessageQueue;
 import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -17,21 +22,23 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;
-import com.amap.api.location.AMapLocationClient;
-import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.wow.carlauncher.CarLauncherApplication;
 import com.wow.carlauncher.R;
-import com.wow.carlauncher.common.BaseActivity;
+import com.wow.carlauncher.common.LocationManage;
 import com.wow.carlauncher.common.WeatherIconUtil;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.DateUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.plugin.PluginManage;
-import com.wow.carlauncher.plugin.amap.WebService;
-import com.wow.carlauncher.plugin.amap.res.WeatherRes;
+import com.wow.carlauncher.webservice.WebService;
+import com.wow.carlauncher.webservice.res.WeatherRes;
+import com.wow.carlauncher.popupWindow.LoadWin;
 import com.wow.carlauncher.popupWindow.PopupWin;
 
 import org.xutils.view.annotation.ViewInject;
@@ -43,17 +50,15 @@ import java.util.TimerTask;
 
 import static com.wow.carlauncher.common.CommonData.*;
 
-/**
- * Created by 10124 on 2017/10/26.
- */
-public class LauncherActivity extends BaseActivity implements View.OnClickListener {
+public class LauncherActivity extends AppCompatActivity implements View.OnClickListener, View.OnLongClickListener {
     private static final String TAG = "LanncherActivity";
 
     @ViewInject(R.id.item_1)
     private LinearLayout item_1;
-
-    @ViewInject(R.id.iv_set)
-    private ImageView iv_set;
+    @ViewInject(R.id.item_2)
+    private LinearLayout item_2;
+    @ViewInject(R.id.item_3)
+    private LinearLayout item_3;
 
     @ViewInject(R.id.time)
     private TextView time;
@@ -103,54 +108,97 @@ public class LauncherActivity extends BaseActivity implements View.OnClickListen
     @ViewInject(R.id.iv_dock6)
     private ImageView iv_dock6;
 
-    @ViewInject(R.id.ll_all_apps)
-    private LinearLayout ll_all_apps;
+    @ViewInject(R.id.rl_quick)
+    private RelativeLayout rl_quick;
 
-    public AMapLocationClient mlocationClient;
-    public AMapLocationClientOption mLocationOption = null;
+    private Context mContext;
+
+    //高德地图的定位客户端
     private PackageManager pm;
+    private AudioManager audioManager;
+
+    private LoadWin loadWin;
+
+    private int oldVolume = -1;
 
     @Override
-    public void init() {
-        Log.e(TAG, "init!!!!!!!!!!!!!!!!!: " + this);
-        setContent(R.layout.activity_lanncher);
-        pm = getPackageManager();
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mContext = this;
 
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        checkPermission();
-        checkAppState();
-        registerReceiver(mHomeKeyEventReceiver, new IntentFilter(Intent.ACTION_CLOSE_SYSTEM_DIALOGS));
-
-
-        mlocationClient = new AMapLocationClient(mContext);
-
-        mLocationOption = new AMapLocationClientOption();
-        mlocationClient.setLocationListener(aMapLocationListener);
-        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
-        mLocationOption.setInterval(1000 * 60 * 20);
-        mlocationClient.setLocationOption(mLocationOption);
-        mlocationClient.startLocation();
-
+        //载入界面，防止出现卡的现象
+        loadWin = new LoadWin((CarLauncherApplication) getApplication());
+        loadWin.show();
+        Looper.myQueue().addIdleHandler(new MessageQueue.IdleHandler() {
+            @Override
+            public boolean queueIdle() {
+                Log.i("IdleHandler", "queueIdle");
+                init();
+                initView();
+                return false;
+            }
+        });
     }
 
-    @Override
+    public void init() {
+        Log.e(TAG, "init!!!!!!!!!!!!!!!!!: " + this);
+        pm = getPackageManager();
+        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        registerReceiver(mHomeKeyEventReceiver, new IntentFilter(Intent.ACTION_CLOSE_SYSTEM_DIALOGS));
+        LocationManage.self().addLocationListener(aMapLocationListener);
+    }
+
     public void initView() {
-        hideTitle();
-        if (PluginManage.music().getLauncherView().getParent() != null) {
-            ((ViewGroup) PluginManage.music().getLauncherView().getParent()).removeView(PluginManage.music().getLauncherView());
-        }
-        item_1.addView(PluginManage.music().getLauncherView(), LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-        iv_set.setOnClickListener(this);
+        setContentView(R.layout.activity_lanncher);
+        x.view().inject(this);
+        //这里要先添加事件，要不然ID重复，会导致读取的子view错误
+        ll_dock1.setOnLongClickListener(this);
+        ll_dock2.setOnLongClickListener(this);
+        ll_dock3.setOnLongClickListener(this);
+        ll_dock4.setOnLongClickListener(this);
+        ll_dock5.setOnLongClickListener(this);
+        ll_dock6.setOnLongClickListener(this);
+
         ll_dock1.setOnClickListener(this);
         ll_dock2.setOnClickListener(this);
         ll_dock3.setOnClickListener(this);
         ll_dock4.setOnClickListener(this);
         ll_dock5.setOnClickListener(this);
         ll_dock6.setOnClickListener(this);
-        ll_all_apps.setOnClickListener(this);
-        iv_set.setOnClickListener(this);
+        rl_quick.setOnClickListener(this);
+
+        findViewById(R.id.ll_all_apps).setOnClickListener(this);
+        findViewById(R.id.iv_up1).setOnClickListener(this);
+        findViewById(R.id.iv_up2).setOnClickListener(this);
+        findViewById(R.id.iv_set).setOnClickListener(this);
+        findViewById(R.id.btn_vu).setOnClickListener(this);
+        findViewById(R.id.btn_vd).setOnClickListener(this);
+        findViewById(R.id.btn_jy).setOnClickListener(this);
+        findViewById(R.id.btn_close_screen).setOnClickListener(this);
+
+
+        if (PluginManage.music().getLauncherView().getParent() != null) {
+            ((ViewGroup) PluginManage.music().getLauncherView().getParent()).removeView(PluginManage.music().getLauncherView());
+        }
+        item_1.addView(PluginManage.music().getLauncherView(), LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+
+        if (PluginManage.controller().getLauncherView().getParent() != null) {
+            ((ViewGroup) PluginManage.music().getLauncherView().getParent()).removeView(PluginManage.controller().getLauncherView());
+        }
+        item_3.addView(PluginManage.controller().getLauncherView(), LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+
 
         loadDock();
+        checkAppState();
+        checkPermission();
+        x.task().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                loadWin.hide();
+            }
+        }, 500);
     }
 
     private void loadDock() {
@@ -226,8 +274,75 @@ public class LauncherActivity extends BaseActivity implements View.OnClickListen
     }
 
     @Override
+    public boolean onLongClick(View view) {
+        switch (view.getId()) {
+            case R.id.ll_dock1: {
+                startActivityForResult(new Intent(this, AppSelectActivity.class), REQUEST_SELECT_APP_TO_DOCK1);
+                break;
+            }
+            case R.id.ll_dock2: {
+                startActivityForResult(new Intent(this, AppSelectActivity.class), REQUEST_SELECT_APP_TO_DOCK2);
+                break;
+            }
+            case R.id.ll_dock3: {
+                startActivityForResult(new Intent(this, AppSelectActivity.class), REQUEST_SELECT_APP_TO_DOCK3);
+                break;
+            }
+            case R.id.ll_dock4: {
+                startActivityForResult(new Intent(this, AppSelectActivity.class), REQUEST_SELECT_APP_TO_DOCK4);
+                break;
+            }
+            case R.id.ll_dock5: {
+                startActivityForResult(new Intent(this, AppSelectActivity.class), REQUEST_SELECT_APP_TO_DOCK5);
+                break;
+            }
+            case R.id.ll_dock6: {
+                startActivityForResult(new Intent(this, AppSelectActivity.class), REQUEST_SELECT_APP_TO_DOCK6);
+                break;
+            }
+        }
+        return false;
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.btn_close_screen: {
+                rl_quick.setVisibility(View.GONE);
+                startActivity(new Intent(this, LockActivity.class));
+                break;
+            }
+
+            case R.id.btn_jy: {
+                if (oldVolume == 0) {
+                    oldVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0, AudioManager.STREAM_MUSIC);
+                } else {
+                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, oldVolume, AudioManager.STREAM_MUSIC);
+                    oldVolume = 0;
+                }
+                break;
+            }
+            case R.id.btn_vu: {
+                audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_RAISE, AudioManager.FLAG_SHOW_UI);
+                break;
+            }
+            case R.id.btn_vd: {
+                audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_LOWER, AudioManager.FLAG_SHOW_UI);
+                break;
+            }
+            case R.id.rl_quick: {
+                rl_quick.setVisibility(View.GONE);
+                break;
+            }
+            case R.id.iv_up1: {
+                rl_quick.setVisibility(View.VISIBLE);
+                break;
+            }
+            case R.id.iv_up2: {
+                rl_quick.setVisibility(View.VISIBLE);
+                break;
+            }
             case R.id.iv_set: {
                 startActivity(new Intent(this, SetActivity.class));
                 break;
@@ -300,8 +415,11 @@ public class LauncherActivity extends BaseActivity implements View.OnClickListen
                     .setPositiveButton("前往设置", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
-                            startActivity(intent);
+                            //其实这个判断没什么卵用，但是不加会有警告
+                            if (Build.VERSION.SDK_INT >= 23) {
+                                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
+                                startActivity(intent);
+                            }
                         }
                     }).setNegativeButton("不在提示", null).show();
         }
@@ -371,6 +489,7 @@ public class LauncherActivity extends BaseActivity implements View.OnClickListen
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(mHomeKeyEventReceiver);
+        LocationManage.self().removeLocationListener(aMapLocationListener);
         if (timer != null) {
             timer.cancel();
             timer = null;
@@ -382,8 +501,23 @@ public class LauncherActivity extends BaseActivity implements View.OnClickListen
 
     }
 
+    private static Toast toast = null;
+
+    private void showTip(final String msg) {
+        this.runOnUiThread(new Runnable() {
+            public void run() {
+                if (toast == null) {
+                    toast = Toast.makeText(mContext, msg, Toast.LENGTH_SHORT);
+                } else {
+                    toast.cancel();
+                    toast = Toast.makeText(mContext, msg, Toast.LENGTH_SHORT);
+                }
+                toast.show();
+            }
+        });
+    }
+
     private void setTime() {
-        Log.e(TAG, "setTime: !!!!!!!!!!!!!!");
         x.task().autoPost(new Runnable() {
             @Override
             public void run() {
@@ -418,7 +552,7 @@ public class LauncherActivity extends BaseActivity implements View.OnClickListen
     private BroadcastReceiver mHomeKeyEventReceiver = new BroadcastReceiver() {
         String SYSTEM_REASON = "reason";
         String SYSTEM_HOME_KEY = "homekey";
-        String SYSTEM_HOME_KEY_LONG = "recentapps";
+        //String SYSTEM_HOME_KEY_LONG = "recentapps";
 
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -430,8 +564,6 @@ public class LauncherActivity extends BaseActivity implements View.OnClickListen
                     Intent i = new Intent(Intent.ACTION_MAIN, null);
                     i.addCategory(Intent.CATEGORY_HOME);
                     context.startActivity(i);
-                } else if (TextUtils.equals(reason, SYSTEM_HOME_KEY_LONG)) {
-                    //表示长按home键,显示最近使用的程序列表
                 }
             }
         }

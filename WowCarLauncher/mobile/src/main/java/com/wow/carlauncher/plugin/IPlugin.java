@@ -11,7 +11,5 @@ public interface IPlugin {
 
     View getPopupView();
 
-    PopupViewProportion getPopupViewProportion();
-
     void destroy();
 }

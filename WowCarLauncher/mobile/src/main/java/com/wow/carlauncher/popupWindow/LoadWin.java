@@ -62,6 +62,7 @@ public class LoadWin {
 
 
         popupWindow = new ImageView(context);
+        popupWindow.setScaleType(ImageView.ScaleType.FIT_XY);
         popupWindow.setImageResource(R.mipmap.background);
     }
 

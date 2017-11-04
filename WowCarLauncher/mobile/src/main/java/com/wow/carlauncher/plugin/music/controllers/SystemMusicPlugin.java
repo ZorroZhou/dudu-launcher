@@ -179,11 +179,6 @@ public class SystemMusicPlugin extends MusicController {
     }
 
     @Override
-    public PopupViewProportion getPopupViewProportion() {
-        return new PopupViewProportion(1, 2);
-    }
-
-    @Override
     public void destroy() {
         super.destroy();
         context.unregisterReceiver(mReceiver);

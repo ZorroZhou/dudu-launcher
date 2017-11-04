@@ -72,11 +72,6 @@ public class MusicPlugin implements IPlugin {
     }
 
     @Override
-    public PopupViewProportion getPopupViewProportion() {
-        return controller.getPopupViewProportion();
-    }
-
-    @Override
     public View getPopupView() {
         if (popupView == null) {
             popupView = new LinearLayout(context);

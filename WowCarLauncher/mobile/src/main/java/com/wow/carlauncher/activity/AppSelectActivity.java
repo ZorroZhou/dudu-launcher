@@ -43,7 +43,7 @@ public class AppSelectActivity extends BaseActivity implements AdapterView.OnIte
 
     @Override
     public void initView() {
-        setTitle("全部应用");
+        setTitle("应用选择");
 
         gridview.setAdapter(adapter);
         gridview.setOnItemClickListener(this);

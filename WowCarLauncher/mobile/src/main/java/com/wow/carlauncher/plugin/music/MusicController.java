@@ -23,6 +23,4 @@ public abstract class MusicController {
 
     public abstract View getPopupView();
 
-    public abstract PopupViewProportion getPopupViewProportion();
-
 }

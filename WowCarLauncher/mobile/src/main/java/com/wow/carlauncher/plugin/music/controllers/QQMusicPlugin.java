@@ -193,9 +193,4 @@ public class QQMusicPlugin extends MusicController {
         }
         return popupView;
     }
-
-    @Override
-    public PopupViewProportion getPopupViewProportion() {
-        return new PopupViewProportion(1, 2.5f);
-    }
 }

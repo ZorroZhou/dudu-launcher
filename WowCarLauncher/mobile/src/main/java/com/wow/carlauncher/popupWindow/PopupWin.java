@@ -178,7 +178,7 @@ public class PopupWin {
                 break;
             }
             iplugin = PluginManage.getByName(pluginNames[currentPluginIndex]);
-            if (iplugin != null && iplugin.getPopupViewProportion() != null) {
+            if (iplugin != null) {
                 break;
             }
         }
@@ -195,7 +195,7 @@ public class PopupWin {
             }
         } else {
             winparams.height = (int) (screenWidth * 0.15);
-            winparams.width = (int) (screenWidth * 0.15 * iplugin.getPopupViewProportion().w / iplugin.getPopupViewProportion().h + screenWidth * 0.15);
+            winparams.width = (int) (screenWidth * 0.45);
             plugin.setVisibility(View.VISIBLE);
             plugin.addView(iplugin.getPopupView(), pluginlp);
             popupWindow.setBackgroundResource(R.color.popup_show_plugin);

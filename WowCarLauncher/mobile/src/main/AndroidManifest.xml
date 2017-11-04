@@ -75,27 +75,35 @@
         <activity
             android:name=".activity.SystemSetActivity"
             android:screenOrientation="landscape" />
+        <activity
+            android:name=".activity.Lanncher2Activity"
+            android:screenOrientation="landscape" />
 
-        <receiver android:name=".receiver.ScreenReceiver">
+        <receiver
+            android:name=".receiver.ScreenReceiver"
+            android:exported="false">
             <intent-filter>
-                <action android:name="android.intent.action.SCREEN_ON"></action>
+                <action android:name="android.intent.action.SCREEN_ON" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".receiver.BootReceiver">
+        <receiver
+            android:name=".receiver.BootReceiver"
+            android:exported="false">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"></action>
+                <action android:name="com.nwd.ACTION_AFTER_BOOT_COMPLETED" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".receiver.MountReceiver">
+        <receiver
+            android:name=".receiver.MountReceiver"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.MEDIA_MOUNTED" />
                 <action android:name="android.intent.action.MEDIA_UNMOUNTED" />
-
-                <data android:scheme="file"></data>
             </intent-filter>
         </receiver>
 
-        <service android:name=".service.MainService"></service>
+        <service android:name=".service.MainService" />
     </application>
 
 </manifest>

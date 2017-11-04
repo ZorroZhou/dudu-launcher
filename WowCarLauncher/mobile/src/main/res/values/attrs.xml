@@ -15,4 +15,13 @@
         <attr name="listName" format="reference" />
         <attr name="listValue" format="reference" />
     </declare-styleable>
+
+    <declare-styleable name="Theme">
+        <attr name="customImageViewStyle" format="reference" />
+    </declare-styleable>
+    <!-- 自定义圆角ImageView -->
+    <declare-styleable name="CustomImageView">
+        <attr name="circle" format="boolean" />
+        <attr name="radius" format="dimension" />
+    </declare-styleable>
 </resources>

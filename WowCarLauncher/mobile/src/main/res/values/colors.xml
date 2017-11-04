@@ -20,4 +20,12 @@
     <color name="set_view_summary">#8a000000</color>
     <color name="set_view_disable">#43000000</color>
     <color name="item_mask">#32000000</color>
+
+    <color name="launch_color1">#5e606d</color>
+    <color name="launch_color2">#3095df</color>
+    <color name="launch_color3">#a7aab4</color>
+    <color name="launch_color4">#8dcd49</color>
+    <color name="launch_color5">#ea6072</color>
+
+    <color name="ncm_4_4_bg">#22000000</color>
 </resources>

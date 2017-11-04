@@ -7,7 +7,7 @@ import android.support.annotation.Nullable;
 
 import com.wow.carlauncher.CarLauncherApplication;
 import com.wow.carlauncher.activity.LanncherActivity;
-import com.wow.carlauncher.popupWindow.PopupWindow;
+import com.wow.carlauncher.popupWindow.PopupWin;
 
 /**
  * Created by 10124 on 2017/11/2.
@@ -34,7 +34,7 @@ public class MainService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        PopupWindow.self().checkShow(0);
+        PopupWin.self().checkShow(0);
         return START_REDELIVER_INTENT;
     }
 

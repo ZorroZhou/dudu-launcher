@@ -73,35 +73,6 @@ public class QQMusicCarPlugin extends MusicController {
         return new PopupViewProportion(1, 2);
     }
 
-//    //刷新计时器
-//    private Timer timer;
-//
-//    private void startUpdateTime() {
-//        stopUpdateTime();
-//        timer = new Timer();
-//        timer.scheduleAtFixedRate(new TimerTask() {
-//            @Override
-//            public void run() {
-//                requestMusicState();
-//            }
-//        }, 1000, 2000);
-//        requestMusicState();
-//    }
-//
-//    private void stopUpdateTime() {
-//        if (timer != null) {
-//            timer.cancel();
-//            timer = null;
-//        }
-//    }
-//
-//    private void requestMusicState() {
-//        Intent intent = new Intent("com.tencent.qqmusiccar.action");
-//        intent.setClassName(PACKAGE_NAME, CLASS_NAME);
-//        intent.setData(Uri.parse("qqmusiccar://asdasd?action=100"));
-//        context.sendBroadcast(intent);
-//    }
-
     public void play() {
         sendEvent(WE_DRIVE_RESUME);
     }

@@ -30,6 +30,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @ViewInject(R.id.sys_set)
     private Button sys_set;
 
+    @ViewInject(R.id.test)
+    private Button test;
 
     @Override
     public void init() {
@@ -42,6 +44,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         open_lanncher.setOnClickListener(this);
         set.setOnClickListener(this);
         sys_set.setOnClickListener(this);
+        test.setOnClickListener(this);
     }
 
     @Override
@@ -58,6 +61,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             }
             case R.id.sys_set: {
                 startActivity(new Intent(this, SystemSetActivity.class));
+                break;
+            }
+            case R.id.test: {
+                startActivity(new Intent(this, Lanncher2Activity.class));
                 break;
             }
         }

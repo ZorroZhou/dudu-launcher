@@ -138,7 +138,6 @@ public class NeteaseCloudMusicPlugin extends MusicController {
                         ViewGroup vg1 = (ViewGroup) bg.getChildAt(1);
                         if (vg1.getChildAt(2) instanceof ViewGroup) {
                             if (vg1.getChildAt(0) instanceof TextView) {
-                                Log.e(TAG, "onGlobalLayout: " + ((TextView) vg1.getChildAt(0)).getCompoundDrawables().length);
                                 for (Drawable d : ((TextView) vg1.getChildAt(0)).getCompoundDrawables()) {
                                     if (d != null) {
                                         ((TextView) vg1.getChildAt(0)).setCompoundDrawables(null, null, null, null);
@@ -218,7 +217,7 @@ public class NeteaseCloudMusicPlugin extends MusicController {
     private void ergodicLauncherView2(ViewGroup vg, int z) {
         //先处理背景
         for (int i = 0; i < vg.getChildCount(); i++) {
-            Log.e(TAG, z + "    ergodicLauncherView: " + vg.getChildAt(i) + "       " + i);
+            //Log.e(TAG, z + "    ergodicLauncherView: " + vg.getChildAt(i) + "       " + i);
             View v = vg.getChildAt(i);
             if (v instanceof ViewGroup) {
                 int zz = z + 1;

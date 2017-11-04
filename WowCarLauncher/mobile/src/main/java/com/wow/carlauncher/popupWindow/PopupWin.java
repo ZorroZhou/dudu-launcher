@@ -28,19 +28,19 @@ import static com.wow.carlauncher.common.CommonData.SDATA_POPUP_ALLOW_SHOW;
  * Created by 10124 on 2017/10/29.
  */
 
-public class PopupWindow {
-    private static final String TAG = "PopupWindow";
+public class PopupWin {
+    private static final String TAG = "PopupWin";
 
-    private static PopupWindow self;
+    private static PopupWin self;
 
-    public static PopupWindow self() {
+    public static PopupWin self() {
         if (self == null) {
-            self = new PopupWindow();
+            self = new PopupWin();
         }
         return self;
     }
 
-    private PopupWindow() {
+    private PopupWin() {
 
     }
 
@@ -50,7 +50,7 @@ public class PopupWindow {
     //窗口的布局参数
     private WindowManager.LayoutParams winparams;
     //是否展示了
-    private Boolean isShow = Boolean.valueOf(false);
+    private Boolean isShow = false;
     private CarLauncherApplication context;
     //窗口视图
     private View popupWindow;
@@ -123,9 +123,6 @@ public class PopupWindow {
                     if (!moveing) {
                         return false;
                     }
-//                    if (Math.abs(e.getRawX() - rx) < 10 && Math.abs(e.getRawY() - ry) < 10) {
-//                        return false;
-//                    }
                     winparams.x = (int) (e.getRawX() - tx);
                     winparams.y = (int) (e.getRawY() - ty);
                     wm.updateViewLayout(popupWindow, winparams);
@@ -134,39 +131,7 @@ public class PopupWindow {
                     if (!moveing) {
                         return false;
                     }
-//                    if (Math.abs(e.getRawX() - rx) < 10 && Math.abs(e.getRawY() - ry) < 10) {
-//                        return false;
-//                    }
                     moveing = false;
-//                    int cx = winparams.x + popupWindow.getWidth() / 2;
-//                    int cy = winparams.y + popupWindow.getHeight() / 2;
-//                    Log.e(TAG, "onTouch: " + cx + "--" + cy);
-//
-//                    if (cx < screenWidth / 2 && cy < screenHeight / 2) {
-//                        if (cx < cy) {
-//                            stopMoveByX();
-//                        } else {
-//                            stopMoveByY();
-//                        }
-//                    } else if (cx > screenWidth / 2 && cy < screenHeight / 2) {
-//                        if ((screenWidth - cx) < cy) {
-//                            stopMoveByX();
-//                        } else {
-//                            stopMoveByY();
-//                        }
-//                    } else if (cx < screenWidth / 2 && cy > screenHeight / 2) {
-//                        if (cx < (screenHeight - cy)) {
-//                            stopMoveByX();
-//                        } else {
-//                            stopMoveByY();
-//                        }
-//                    } else {
-//                        if ((screenWidth - cx) < (screenHeight - cy)) {
-//                            stopMoveByX();
-//                        } else {
-//                            stopMoveByY();
-//                        }
-//                    }
                     SharedPreUtil.saveSharedPreInteger(CommonData.SDATA_POPUP_WIN_X, winparams.x);
                     SharedPreUtil.saveSharedPreInteger(CommonData.SDATA_POPUP_WIN_Y, winparams.y);
                     return true;

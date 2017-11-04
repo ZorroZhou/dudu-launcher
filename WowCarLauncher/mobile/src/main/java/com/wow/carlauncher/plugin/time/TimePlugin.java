@@ -1,6 +1,7 @@
 package com.wow.carlauncher.plugin.time;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 
 import com.amap.api.location.AMapLocation;
@@ -24,6 +25,7 @@ import java.util.TimerTask;
  */
 
 public class TimePlugin implements IPlugin, AMapLocationListener {
+    private static final String TAG = "TimePlugin";
     protected Context context;
 
     private TimeLauncherView timePluginView;
@@ -97,6 +99,7 @@ public class TimePlugin implements IPlugin, AMapLocationListener {
 
     @Override
     public void onLocationChanged(final AMapLocation aMapLocation) {
+        Log.e(TAG, "onLocationChanged: " + aMapLocation);
         if (aMapLocation != null && aMapLocation.getErrorCode() == 0) {
             EventBus.getDefault().post(new PEventTimeWeather(aMapLocation.getDistrict(), null));
             WebService.getWeatherInfo(aMapLocation.getAdCode(), new WebService.CommonCallback<WeatherRes>() {

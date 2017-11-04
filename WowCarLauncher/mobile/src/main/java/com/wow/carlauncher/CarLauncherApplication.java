@@ -4,10 +4,9 @@ import android.app.Application;
 import android.content.Intent;
 
 import com.wow.carlauncher.common.ActivityLifecycleListener;
-import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.plugin.PluginManage;
-import com.wow.carlauncher.popupWindow.PopupWindow;
+import com.wow.carlauncher.popupWindow.PopupWin;
 import com.wow.carlauncher.service.MainService;
 
 import org.xutils.x;
@@ -24,9 +23,9 @@ public class CarLauncherApplication extends Application {
         x.Ext.init(this);
         SharedPreUtil.init(this);
         PluginManage.init(this);
-        PopupWindow.self().init(this);
+        PopupWin.self().init(this);
 
-        registerActivityLifecycleCallbacks(new ActivityLifecycleListener());
+        registerActivityLifecycleCallbacks(new ActivityLifecycleListener(this));
 
         Intent startIntent = new Intent(this, MainService.class);
         startService(startIntent);

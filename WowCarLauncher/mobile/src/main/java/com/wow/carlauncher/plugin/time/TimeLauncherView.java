@@ -5,12 +5,14 @@ import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
+import com.wow.carlauncher.common.WeatherIconUtil;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.DateUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
@@ -33,6 +35,7 @@ public class TimeLauncherView extends LinearLayout {
     private LayoutInflater inflater;
 
     private TextView time, date, week, tv_tianqi, tv_local;
+    private ImageView iv_tianqi;
 
     @Subscribe
     public void onEventMainThread(PEventTimeWeather event) {
@@ -43,6 +46,7 @@ public class TimeLauncherView extends LinearLayout {
         if (event.weather != null) {
             tv_local.setText(event.location);
             tv_tianqi.setText(event.weather.getWeather() + "  " + event.weather.getTemperature() + "℃");
+            iv_tianqi.setImageResource(WeatherIconUtil.getWeatherResId(event.weather.getWeather()));
         }
     }
 
@@ -78,6 +82,9 @@ public class TimeLauncherView extends LinearLayout {
         week = findViewById(R.id.week);
         tv_tianqi = findViewById(R.id.tv_tianqi);
         tv_local = findViewById(R.id.tv_local);
+
+        iv_tianqi = findViewById(R.id.iv_tianqi);
+
         linearLayout.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {

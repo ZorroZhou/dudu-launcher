@@ -1,5 +1,6 @@
 package com.wow.carlauncher.activity;
 
+import android.app.Dialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -11,12 +12,16 @@ import android.os.Build;
 import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -26,7 +31,7 @@ import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.plugin.PluginManage;
-import com.wow.carlauncher.popupWindow.PopupWindow;
+import com.wow.carlauncher.popupWindow.PopupWin;
 
 import org.xutils.view.annotation.ViewInject;
 
@@ -358,9 +363,7 @@ public class LanncherActivity extends BaseActivity implements View.OnClickListen
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                PopupWindow.self().checkShowApp(CommonUtil.getForegroundApp(mContext));
-                String selectapp = SharedPreUtil.getSharedPreString(CommonData.SDATA_POPUP_SHOW_APPS);
-
+                PopupWin.self().checkShowApp(CommonUtil.getForegroundApp(mContext));
             }
         }, 0, 1000);
     }

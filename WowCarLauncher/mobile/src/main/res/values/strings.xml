@@ -1,4 +1,5 @@
 <resources>
+
     <string name="app_name">车机优化</string>
     <string name="bg_main_btn_add">添加</string>
     <string name="bg_main_btn_all">全部</string>
@@ -22,14 +23,6 @@
     <string name="set_yes">是</string>
     <string name="set_no">否</string>
 
-    <string-array name="musicControllersName">
-        <item>系统默认播放器</item>
-        <item>网易云音乐（暂时无法显示歌词）</item>
-        <item>QQ音乐车载版（需要手动启动）</item>
-    </string-array>
-    <string-array name="musicControllersValue">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-    </string-array>
+    <string name="iv_content">图片</string>
+
 </resources>

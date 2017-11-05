@@ -7,6 +7,7 @@ import android.widget.LinearLayout;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.plugin.IPlugin;
+import com.wow.carlauncher.plugin.PluginManage;
 import com.wow.carlauncher.plugin.PopupViewProportion;
 import com.wow.carlauncher.plugin.music.controllers.NeteaseCloudMusicPlugin;
 import com.wow.carlauncher.plugin.music.controllers.QQMusicCarPlugin;
@@ -18,7 +19,9 @@ import com.wow.carlauncher.plugin.music.controllers.SystemMusicPlugin;
  */
 
 public class MusicPlugin implements IPlugin {
-    protected Context context;
+    private PluginManage pluginManage;
+
+    private Context context;
 
     private MusicController controller;
 
@@ -81,6 +84,10 @@ public class MusicPlugin implements IPlugin {
             popupView.addView(controller.getPopupView(), new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
         }
         return popupView;
+    }
+
+    public void setPluginManage(PluginManage pluginManage) {
+        this.pluginManage = pluginManage;
     }
 
     public void selectMusicController(MusicControllerEnum type) {

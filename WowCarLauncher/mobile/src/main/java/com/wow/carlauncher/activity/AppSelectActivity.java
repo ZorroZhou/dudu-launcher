@@ -10,16 +10,14 @@ import android.widget.GridView;
 import android.widget.ListView;
 
 import com.wow.carlauncher.R;
-import com.wow.carlauncher.activity.adapter.AllAppAdapter;
 import com.wow.carlauncher.activity.adapter.SelectAppAdapter;
 import com.wow.carlauncher.common.BaseActivity;
-import com.wow.carlauncher.common.util.CommonUtil;
-import com.wow.carlauncher.common.util.CommonUtil.AppInfo;
+import com.wow.carlauncher.common.util.AppUtil;
+import com.wow.carlauncher.common.util.AppUtil.AppInfo;
 
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.wow.carlauncher.common.CommonData.IDATA_PACKAGE_NAME;
@@ -60,7 +58,7 @@ public class AppSelectActivity extends BaseActivity implements AdapterView.OnIte
         x.task().run(new Runnable() {
             @Override
             public void run() {
-                final List<AppInfo> appInfos = CommonUtil.getAllApp(mContext);
+                final List<AppInfo> appInfos = AppUtil.getAllApp(mContext);
                 x.task().autoPost(new Runnable() {
                     @Override
                     public void run() {

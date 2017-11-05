@@ -14,19 +14,14 @@ import com.wow.carlauncher.popupWindow.PopupWin;
  */
 
 public class ActivityLifecycleListener implements Application.ActivityLifecycleCallbacks {
-    private LoadWin loadWin;
     private CarLauncherApplication application;
 
     public ActivityLifecycleListener(CarLauncherApplication application) {
         this.application = application;
-        loadWin = new LoadWin(application);
     }
 
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-        if (activity instanceof LauncherActivity) {
-            loadWin.show();
-        }
     }
 
     @Override
@@ -37,9 +32,6 @@ public class ActivityLifecycleListener implements Application.ActivityLifecycleC
 
     @Override
     public void onActivityResumed(Activity activity) {
-        if (activity instanceof LauncherActivity) {
-            loadWin.hide();
-        }
     }
 
     @Override

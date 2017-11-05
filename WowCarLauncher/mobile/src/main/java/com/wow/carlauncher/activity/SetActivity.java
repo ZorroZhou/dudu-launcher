@@ -9,8 +9,8 @@ import android.view.View;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.BaseActivity;
 import com.wow.carlauncher.common.CommonData;
-import com.wow.carlauncher.common.util.CommonUtil;
-import com.wow.carlauncher.common.util.CommonUtil.AppInfo;
+import com.wow.carlauncher.common.util.AppUtil;
+import com.wow.carlauncher.common.util.AppUtil.AppInfo;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.util.ThreadObj;
 import com.wow.carlauncher.common.view.SetView;
@@ -84,7 +84,7 @@ public class SetActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 String selectapp = SharedPreUtil.getSharedPreString(CommonData.SDATA_POPUP_SHOW_APPS);
-                final List<AppInfo> appInfos = CommonUtil.getAllApp(mContext);
+                final List<AppInfo> appInfos = AppUtil.getAllApp(mContext);
                 String[] items = new String[appInfos.size()];
                 final boolean[] checks = new boolean[appInfos.size()];
                 for (int i = 0; i < items.length; i++) {
@@ -131,7 +131,7 @@ public class SetActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 String selectapp = SharedPreUtil.getSharedPreString(CommonData.SDATA_HIDE_APPS);
-                final List<AppInfo> appInfos = CommonUtil.getAllApp(mContext);
+                final List<AppInfo> appInfos = AppUtil.getAllApp(mContext);
                 String[] items = new String[appInfos.size()];
                 final boolean[] checks = new boolean[appInfos.size()];
                 for (int i = 0; i < items.length; i++) {
@@ -168,7 +168,7 @@ public class SetActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 String selectapp = SharedPreUtil.getSharedPreString(CommonData.SDATA_TIME_PLUGIN_OPEN_APP);
-                final List<AppInfo> appInfos = CommonUtil.getAllApp(mContext);
+                final List<AppInfo> appInfos = AppUtil.getAllApp(mContext);
                 String[] items = new String[appInfos.size()];
                 int select = -1;
                 for (int i = 0; i < items.length; i++) {

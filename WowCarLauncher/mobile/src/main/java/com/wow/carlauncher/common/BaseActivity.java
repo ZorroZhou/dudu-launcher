@@ -12,9 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wow.carlauncher.R;
@@ -24,7 +22,6 @@ import org.xutils.x;
 /**
  * Created by 10124 on 2017/10/26.
  */
-
 public abstract class BaseActivity extends AppCompatActivity {
     protected BaseActivity mContext;
     protected Toolbar toolbar;

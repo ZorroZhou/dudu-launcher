@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.zhy.android.percent.support.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl_base"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:clickable="true">
+
+    <com.wow.carlauncher.common.view.CustomImageView
+        android:id="@+id/iv_cover"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/gd_bg"
+        app:radius="5dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,19 +21,21 @@
         app:layout_heightPercent="25%w">
 
         <Button
-            android:id="@+id/btn_jy"
+            android:id="@+id/btn_go_home"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="回家" />
 
         <Button
+            android:id="@+id/btn_search"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="搜索" />
 
         <Button
+            android:id="@+id/btn_go_company"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -34,7 +46,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="导航"
-        android:textColor="@android:color/white"
+        android:text="高德车机版"
         app:layout_textSizePercent="8%h" />
 </com.zhy.android.percent.support.PercentRelativeLayout>

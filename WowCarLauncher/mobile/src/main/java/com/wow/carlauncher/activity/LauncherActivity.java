@@ -32,6 +32,7 @@ import com.wow.carlauncher.CarLauncherApplication;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.LocationManage;
 import com.wow.carlauncher.common.WeatherIconUtil;
+import com.wow.carlauncher.common.util.AppUtil;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.DateUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
@@ -141,7 +142,6 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
     }
 
     public void init() {
-        Log.e(TAG, "init!!!!!!!!!!!!!!!!!: " + this);
         pm = getPackageManager();
         audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
 
@@ -179,20 +179,20 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
         findViewById(R.id.btn_close_screen).setOnClickListener(this);
 
 
-        if (PluginManage.music().getLauncherView().getParent() != null) {
-            ((ViewGroup) PluginManage.music().getLauncherView().getParent()).removeView(PluginManage.music().getLauncherView());
+        if (PluginManage.self().music().getLauncherView().getParent() != null) {
+            ((ViewGroup) PluginManage.self().music().getLauncherView().getParent()).removeView(PluginManage.self().music().getLauncherView());
         }
-        item_1.addView(PluginManage.music().getLauncherView(), LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        item_1.addView(PluginManage.self().music().getLauncherView(), LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
 
-        if (PluginManage.amapCar().getLauncherView().getParent() != null) {
-            ((ViewGroup) PluginManage.amapCar().getLauncherView().getParent()).removeView(PluginManage.amapCar().getLauncherView());
+        if (PluginManage.self().amapCar().getLauncherView().getParent() != null) {
+            ((ViewGroup) PluginManage.self().amapCar().getLauncherView().getParent()).removeView(PluginManage.self().amapCar().getLauncherView());
         }
-        item_2.addView(PluginManage.amapCar().getLauncherView(), LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        item_2.addView(PluginManage.self().amapCar().getLauncherView(), LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
 
-        if (PluginManage.controller().getLauncherView().getParent() != null) {
-            ((ViewGroup) PluginManage.music().getLauncherView().getParent()).removeView(PluginManage.controller().getLauncherView());
+        if (PluginManage.self().controller().getLauncherView().getParent() != null) {
+            ((ViewGroup) PluginManage.self().music().getLauncherView().getParent()).removeView(PluginManage.self().controller().getLauncherView());
         }
-        item_3.addView(PluginManage.controller().getLauncherView(), LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        item_3.addView(PluginManage.self().controller().getLauncherView(), LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
 
         loadDock();
         checkAppState();
@@ -257,6 +257,7 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
 
         String packname6 = SharedPreUtil.getSharedPreString(SDATA_DOCK6_CLASS);
         if (CommonUtil.isNotNull(packname6)) {
+            Log.e(TAG, "loadDock: " + packname6);
             try {
                 PackageInfo packageInfo = pm.getPackageInfo(packname6, 0);
                 iv_dock6.setImageDrawable(packageInfo.applicationInfo.loadIcon(pm));
@@ -437,7 +438,7 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void run() {
                 setTime();
-                PopupWin.self().checkShowApp(CommonUtil.getForegroundApp(mContext));
+                PopupWin.self().checkShowApp(AppUtil.getForegroundApp(mContext));
             }
         }, 1000 - System.currentTimeMillis() % 1000, 1000);
     }

@@ -6,6 +6,7 @@ import android.util.Log;
 import com.wow.carlauncher.plugin.amapcar.AMapCarPlugin;
 import com.wow.carlauncher.plugin.controller.ControllerPlugin;
 import com.wow.carlauncher.plugin.music.MusicPlugin;
+import com.wow.carlauncher.popupWindow.PopupWin;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -21,28 +22,44 @@ public class PluginManage {
     public static final String CONTROLLER = "CONTROLLER";
     public static final String AMAPCAR = "AMAPCAR";
 
-    private static Map<String, IPlugin> plugins;
 
-    public static void init(Context context) {
+    private static PluginManage self;
+
+    public static PluginManage self() {
+        if (self == null) {
+            self = new PluginManage();
+        }
+        return self;
+    }
+
+    private Map<String, IPlugin> plugins;
+
+    private PluginManage() {
+
+    }
+
+
+    public void init(Context context) {
         plugins = new ConcurrentHashMap<>();
         plugins.put(MUSIC, new MusicPlugin(context));
         plugins.put(CONTROLLER, new ControllerPlugin(context));
         plugins.put(AMAPCAR, new AMapCarPlugin(context));
     }
 
-    public static ControllerPlugin controller() {
+    public ControllerPlugin controller() {
         return (ControllerPlugin) plugins.get(CONTROLLER);
     }
 
-    public static MusicPlugin music() {
+    public MusicPlugin music() {
         return (MusicPlugin) plugins.get(MUSIC);
     }
 
-    public static AMapCarPlugin amapCar() {
+    public AMapCarPlugin amapCar() {
         return (AMapCarPlugin) plugins.get(AMAPCAR);
     }
 
-    public static IPlugin getByName(String name) {
+    public IPlugin getByName(String name) {
         return plugins.get(name);
     }
+
 }

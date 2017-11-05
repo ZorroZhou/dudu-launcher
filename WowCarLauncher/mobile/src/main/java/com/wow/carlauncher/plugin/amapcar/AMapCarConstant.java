@@ -5,6 +5,8 @@ package com.wow.carlauncher.plugin.amapcar;
  */
 
 public class AMapCarConstant {
+    public static final String AMAP_PACKAGE = "com.autonavi.amapauto";
+
     //接收消息使用的ACTION
     public static final String RECEIVE_ACTION = "AUTONAVI_STANDARD_BROADCAST_SEND";
     //发送消息使用的ACTION
@@ -20,6 +22,6 @@ public class AMapCarConstant {
 
     //搜索的标记
     public static final int REQUEST_SEARCH = 10036;
-
+    public static final String REQUEST_SEARCH_KEYWORDS = "KEYWORDS";
 
 }

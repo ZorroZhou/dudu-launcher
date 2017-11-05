@@ -14,8 +14,8 @@ import com.wow.carlauncher.R;
 import com.wow.carlauncher.activity.adapter.AllAppAdapter;
 import com.wow.carlauncher.common.BaseActivity;
 import com.wow.carlauncher.common.CommonData;
-import com.wow.carlauncher.common.util.CommonUtil;
-import com.wow.carlauncher.common.util.CommonUtil.AppInfo;
+import com.wow.carlauncher.common.util.AppUtil;
+import com.wow.carlauncher.common.util.AppUtil.AppInfo;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 
 import org.xutils.view.annotation.ViewInject;
@@ -65,7 +65,7 @@ public class AppMenuActivity extends BaseActivity implements AdapterView.OnItemC
             @Override
             public void run() {
                 adapter.clear();
-                final List<AppInfo> appInfos = CommonUtil.getAllApp(mContext);
+                final List<AppInfo> appInfos = AppUtil.getAllApp(mContext);
                 String selectapp = SharedPreUtil.getSharedPreString(CommonData.SDATA_HIDE_APPS);
                 List<AppInfo> hides = new ArrayList<>();
                 for (AppInfo appInfo : appInfos) {

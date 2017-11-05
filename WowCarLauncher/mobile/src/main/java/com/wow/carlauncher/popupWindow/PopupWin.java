@@ -177,7 +177,7 @@ public class PopupWin {
             if (currentPluginIndex == -1) {
                 break;
             }
-            iplugin = PluginManage.getByName(pluginNames[currentPluginIndex]);
+            iplugin = PluginManage.self().getByName(pluginNames[currentPluginIndex]);
             if (iplugin != null) {
                 break;
             }

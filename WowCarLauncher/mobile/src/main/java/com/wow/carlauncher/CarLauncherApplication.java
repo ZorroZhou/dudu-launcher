@@ -23,7 +23,7 @@ public class CarLauncherApplication extends Application {
 
         x.Ext.init(this);
         SharedPreUtil.init(this);
-        PluginManage.init(this);
+        PluginManage.self().init(this);
         PopupWin.self().init(this);
         LocationManage.self().init(this);
 

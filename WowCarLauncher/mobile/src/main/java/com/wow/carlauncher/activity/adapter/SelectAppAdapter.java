@@ -1,7 +1,6 @@
 package com.wow.carlauncher.activity.adapter;
 
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,7 @@ import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.BaseAdapterEx;
-import com.wow.carlauncher.common.util.CommonUtil.AppInfo;
+import com.wow.carlauncher.common.util.AppUtil.AppInfo;
 
 /**
  * Created by 10124 on 2017/10/28.
@@ -18,12 +17,10 @@ import com.wow.carlauncher.common.util.CommonUtil.AppInfo;
 
 public class SelectAppAdapter extends BaseAdapterEx<AppInfo> {
     private LayoutInflater inflate;
-    private PackageManager pm;
 
     public SelectAppAdapter(Context context) {
         super(context);
         inflate = LayoutInflater.from(context);
-        pm = context.getPackageManager();
     }
 
     @Override

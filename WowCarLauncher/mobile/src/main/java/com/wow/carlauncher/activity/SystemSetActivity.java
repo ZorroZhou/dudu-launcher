@@ -10,8 +10,8 @@ import android.view.View;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.BaseActivity;
-import com.wow.carlauncher.common.util.CommonUtil;
-import com.wow.carlauncher.common.util.CommonUtil.AppInfo;
+import com.wow.carlauncher.common.util.AppUtil;
+import com.wow.carlauncher.common.util.AppUtil.AppInfo;
 import com.wow.carlauncher.common.view.SetView;
 
 import org.xutils.view.annotation.ViewInject;
@@ -42,7 +42,7 @@ public class SystemSetActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 if (Build.VERSION.SDK_INT >= 23) {
-                    final List<AppInfo> appInfos = CommonUtil.getAllApp(mContext);
+                    final List<AppInfo> appInfos = AppUtil.getAllApp(mContext);
                     String[] items = new String[appInfos.size()];
                     for (int i = 0; i < items.length; i++) {
                         items[i] = appInfos.get(i).name + "(" + appInfos.get(i).packageName + ")";

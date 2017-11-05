@@ -152,8 +152,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/l_item_bg_black"
                 android:gravity="center"
-                android:orientation="vertical"
-                android:padding="10dp" />
+                android:orientation="vertical" />
 
             <LinearLayout
                 android:id="@+id/item_3"
@@ -166,8 +165,7 @@
                 android:layout_weight="1"
                 android:background="@drawable/l_item_bg_black"
                 android:gravity="center"
-                android:orientation="vertical"
-                android:padding="10dp" />
+                android:orientation="vertical" />
         </LinearLayout>
 
         <com.zhy.android.percent.support.PercentLinearLayout

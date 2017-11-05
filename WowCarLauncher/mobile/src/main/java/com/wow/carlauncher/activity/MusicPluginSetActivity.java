@@ -14,8 +14,8 @@ import android.widget.TextView;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.BaseActivity;
 import com.wow.carlauncher.common.CommonData;
-import com.wow.carlauncher.common.util.CommonUtil;
-import com.wow.carlauncher.common.util.CommonUtil.AppInfo;
+import com.wow.carlauncher.common.util.AppUtil;
+import com.wow.carlauncher.common.util.AppUtil.AppInfo;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.util.ThreadObj;
 import com.wow.carlauncher.common.view.SetView;
@@ -85,7 +85,7 @@ public class MusicPluginSetActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 SharedPreUtil.saveSharedPreInteger(CommonData.SDATA_CURRENT_MUSIC_CONTROLLER, nowMusicControllerEnum.getId());
-                PluginManage.music().selectMusicController(nowMusicControllerEnum);
+                PluginManage.self().music().selectMusicController(nowMusicControllerEnum);
                 setResult(RESULT_OK);
                 finish();
             }

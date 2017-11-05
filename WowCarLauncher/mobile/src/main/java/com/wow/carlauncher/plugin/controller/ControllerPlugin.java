@@ -18,7 +18,8 @@ import com.wow.carlauncher.plugin.PluginManage;
  */
 
 public class ControllerPlugin implements IPlugin, View.OnClickListener {
-    protected Context context;
+    private PluginManage pluginManage;
+    private Context context;
     private LinearLayout launcherView;
     private AudioManager audioManager;
     private int oldV = 0;
@@ -55,6 +56,11 @@ public class ControllerPlugin implements IPlugin, View.OnClickListener {
         if (launcherView.getParent() != null) {
             ((ViewGroup) launcherView.getParent()).removeView(launcherView);
         }
+    }
+
+    @Override
+    public void setPluginManage(PluginManage pluginManage) {
+        this.pluginManage = pluginManage;
     }
 
     @Override

@@ -28,8 +28,9 @@ public class MusicPlugin implements IPlugin {
     private LinearLayout launcherView;
     private LinearLayout popupView;
 
-    public MusicPlugin(Context context) {
+    public MusicPlugin(Context context, PluginManage pluginManage) {
         this.context = context;
+        this.pluginManage = pluginManage;
 
         MusicControllerEnum type = MusicControllerEnum.valueOfId(SharedPreUtil.getSharedPreInteger(CommonData.SDATA_CURRENT_MUSIC_CONTROLLER, MusicControllerEnum.SYSTEM.getId()));
         switch (type) {

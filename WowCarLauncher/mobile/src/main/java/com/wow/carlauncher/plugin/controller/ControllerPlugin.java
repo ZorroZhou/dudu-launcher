@@ -24,7 +24,8 @@ public class ControllerPlugin implements IPlugin, View.OnClickListener {
     private AudioManager audioManager;
     private int oldV = 0;
 
-    public ControllerPlugin(Context context) {
+    public ControllerPlugin(Context context, PluginManage pluginManage) {
+        this.pluginManage = pluginManage;
         this.context = context;
         audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
     }
@@ -56,11 +57,6 @@ public class ControllerPlugin implements IPlugin, View.OnClickListener {
         if (launcherView.getParent() != null) {
             ((ViewGroup) launcherView.getParent()).removeView(launcherView);
         }
-    }
-
-    @Override
-    public void setPluginManage(PluginManage pluginManage) {
-        this.pluginManage = pluginManage;
     }
 
     @Override

@@ -7,8 +7,6 @@ import android.view.View;
  */
 
 public interface IPlugin {
-    void setPluginManage(PluginManage pluginManage);
-
     View getLauncherView();
 
     View getPopupView();

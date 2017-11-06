@@ -24,16 +24,15 @@ public class AppUtil {
     public static boolean isInstall(Context context, String name) {
         PackageInfo packageInfo;
         try {
-            packageInfo = context.getPackageManager().getPackageInfo(
-                    "com.twitter.android", 0);
+            packageInfo = context.getPackageManager().getPackageInfo(name, 0);
         } catch (PackageManager.NameNotFoundException e) {
             packageInfo = null;
             e.printStackTrace();
         }
         if (packageInfo == null) {
-            return true;
-        } else {
             return false;
+        } else {
+            return true;
         }
     }
 

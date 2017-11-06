@@ -491,6 +491,12 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        PluginManage.self().setCurrentActivity(this);
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(mHomeKeyEventReceiver);

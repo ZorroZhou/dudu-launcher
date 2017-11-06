@@ -1,8 +1,10 @@
 package com.wow.carlauncher.plugin;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
+import com.wow.carlauncher.activity.LauncherActivity;
 import com.wow.carlauncher.plugin.amapcar.AMapCarPlugin;
 import com.wow.carlauncher.plugin.controller.ControllerPlugin;
 import com.wow.carlauncher.plugin.music.MusicPlugin;
@@ -22,7 +24,6 @@ public class PluginManage {
     public static final String CONTROLLER = "CONTROLLER";
     public static final String AMAPCAR = "AMAPCAR";
 
-
     private static PluginManage self;
 
     public static PluginManage self() {
@@ -33,17 +34,17 @@ public class PluginManage {
     }
 
     private Map<String, IPlugin> plugins;
+    private Activity currentActivity;
 
     private PluginManage() {
 
     }
 
-
     public void init(Context context) {
         plugins = new ConcurrentHashMap<>();
-        plugins.put(MUSIC, new MusicPlugin(context));
-        plugins.put(CONTROLLER, new ControllerPlugin(context));
-        plugins.put(AMAPCAR, new AMapCarPlugin(context));
+        plugins.put(MUSIC, new MusicPlugin(context, this));
+        plugins.put(CONTROLLER, new ControllerPlugin(context, this));
+        plugins.put(AMAPCAR, new AMapCarPlugin(context, this));
     }
 
     public ControllerPlugin controller() {
@@ -62,4 +63,11 @@ public class PluginManage {
         return plugins.get(name);
     }
 
+    public void setCurrentActivity(Activity activity) {
+        this.currentActivity = activity;
+    }
+
+    public Activity getCurrentActivity() {
+        return currentActivity;
+    }
 }

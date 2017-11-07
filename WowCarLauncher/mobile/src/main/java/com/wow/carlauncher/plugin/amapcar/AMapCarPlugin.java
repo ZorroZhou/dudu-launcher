@@ -53,7 +53,7 @@ public class AMapCarPlugin implements IPlugin, View.OnClickListener {
     private LinearLayout popupnavi;
 
     private RelativeLayout launcherView;
-    private LinearLayout launcherController;
+    private View launcherController;
     private ImageView launcherIcon;
 
     private AMapCartReceiver amapReceiver;

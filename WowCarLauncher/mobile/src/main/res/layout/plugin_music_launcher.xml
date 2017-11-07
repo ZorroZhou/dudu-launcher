@@ -66,7 +66,7 @@
                 android:layout_weight="1"
                 android:contentDescription="@string/iv_plugin_music_pre"
                 android:padding="5dp"
-                android:src="@drawable/l_bg_prew" />
+                android:src="@mipmap/ic_prev" />
 
             <ImageView
                 android:id="@+id/iv_play"
@@ -75,7 +75,7 @@
                 android:layout_weight="1"
                 android:contentDescription="@string/iv_plugin_music_play"
                 android:padding="5dp"
-                android:src="@mipmap/play" />
+                android:src="@mipmap/ic_play" />
 
             <ImageView
                 android:id="@+id/iv_next"
@@ -84,7 +84,7 @@
                 android:layout_weight="1"
                 android:contentDescription="@string/iv_plugin_music_next"
                 android:padding="5dp"
-                android:src="@drawable/l_bg_next" />
+                android:src="@mipmap/ic_next" />
         </com.zhy.android.percent.support.PercentLinearLayout>
     </com.zhy.android.percent.support.PercentRelativeLayout>
 </com.zhy.android.percent.support.PercentLinearLayout>

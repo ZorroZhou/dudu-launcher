@@ -22,7 +22,6 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="标题:"
-            android:textColor="#cccccc"
             android:textSize="17sp" />
         <!-- X号  -->
 

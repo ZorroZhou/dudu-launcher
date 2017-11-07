@@ -4,56 +4,91 @@
     android:id="@+id/rl_base"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/l_item_bg_blue"
     android:clickable="true">
 
-    <!--<com.wow.carlauncher.common.view.CustomImageView-->
-    <!--android:id="@+id/iv_cover"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:scaleType="centerCrop"-->
-    <!--android:background="@drawable/l_item_bg_transparent_black"-->
-    <!--app:radius="5dp" />-->
-
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/ll_controller"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
         app:layout_heightPercent="25%w">
 
-        <Button
-            android:id="@+id/btn_go_home"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="回家" />
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/btn_search"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="搜索" />
+            <com.zhy.android.percent.support.PercentLinearLayout
+                android:id="@+id/btn_go_home"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
 
-        <Button
-            android:id="@+id/btn_go_company"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="去公司" />
-    </LinearLayout>
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:src="@mipmap/ic_jia"
+                    app:layout_heightPercent="50%h"
+                    app:layout_widthPercent="50%h" />
+            </com.zhy.android.percent.support.PercentLinearLayout>
+
+            <com.zhy.android.percent.support.PercentLinearLayout
+                android:id="@+id/btn_search"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:src="@mipmap/ic_search"
+                    app:layout_heightPercent="50%h"
+                    app:layout_widthPercent="50%h" />
+            </com.zhy.android.percent.support.PercentLinearLayout>
+
+            <com.zhy.android.percent.support.PercentLinearLayout
+                android:id="@+id/btn_go_company"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:src="@mipmap/ic_gongsi"
+                    app:layout_heightPercent="50%h"
+                    app:layout_widthPercent="50%h" />
+            </com.zhy.android.percent.support.PercentLinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/l_bg_line1" />
+    </FrameLayout>
+
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:text="高德车机版" />
+        android:layout_marginTop="10dp"
+        android:text="高德车机版"
+        android:textColor="@android:color/white"
+        app:layout_textSizePercent="10%h" />
 
     <ImageView
         android:id="@+id/iv_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true" />
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_centerInParent="true"
+        android:scaleType="fitXY"
+        android:src="@mipmap/ic_amap"
+        app:layout_heightPercent="40%w"
+        app:layout_widthPercent="40%w" />
 </com.zhy.android.percent.support.PercentRelativeLayout>

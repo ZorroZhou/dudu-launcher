@@ -55,9 +55,9 @@ public class SysMusicLauncherView extends LinearLayout implements View.OnClickLi
     public void onEventMainThread(PEventMusicStateChange event) {
         playing = event.run;
         if (event.run) {
-            iv_play.setImageResource(R.mipmap.pause);
+            iv_play.setImageResource(R.mipmap.ic_pause);
         } else {
-            iv_play.setImageResource(R.mipmap.play);
+            iv_play.setImageResource(R.mipmap.ic_play);
         }
     }
 

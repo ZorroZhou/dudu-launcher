@@ -38,7 +38,7 @@ public class NeteaseCloudMusicPlugin extends MusicController {
 
     private RelativeLayout launcherView;
     private LinearLayout launcherHouse;
-    private ImageView launcherCover, launcherPlay;
+    private ImageView launcherCover, launcherIvPlay;
     private TextView launcherTitle, launcherTime, launcherArtist;
     private ProgressBar launcherProgress;
 
@@ -81,10 +81,10 @@ public class NeteaseCloudMusicPlugin extends MusicController {
         launcherTime = launcherView.findViewById(R.id.tv_time);
         launcherArtist = launcherView.findViewById(R.id.tv_artist);
         launcherProgress = launcherView.findViewById(R.id.pb_music);
-        launcherPlay = launcherView.findViewById(R.id.iv_play);
-        launcherPlay.setOnClickListener(launcherOnClickListener);
-        launcherView.findViewById(R.id.iv_prew).setOnClickListener(launcherOnClickListener);
-        launcherView.findViewById(R.id.iv_next).setOnClickListener(launcherOnClickListener);
+        launcherIvPlay = launcherView.findViewById(R.id.iv_play);
+        launcherView.findViewById(R.id.ll_play).setOnClickListener(launcherOnClickListener);
+        launcherView.findViewById(R.id.ll_prew).setOnClickListener(launcherOnClickListener);
+        launcherView.findViewById(R.id.ll_next).setOnClickListener(launcherOnClickListener);
 
         ergodicLauncherView((ViewGroup) launcherWidgetView);
 
@@ -143,7 +143,7 @@ public class NeteaseCloudMusicPlugin extends MusicController {
                     }
                     playClickTime = System.currentTimeMillis();
                     if (!isruning) {
-                        launcherPlay.setImageResource(R.mipmap.pause);
+                        launcherIvPlay.setImageResource(R.mipmap.ic_pause);
                         isruning = true;
                     }
                     break;
@@ -154,10 +154,10 @@ public class NeteaseCloudMusicPlugin extends MusicController {
                     }
                     playClickTime = System.currentTimeMillis();
                     if (!isruning) {
-                        launcherPlay.setImageResource(R.mipmap.pause);
+                        launcherIvPlay.setImageResource(R.mipmap.ic_pause);
                         isruning = true;
                     } else {
-                        launcherPlay.setImageResource(R.mipmap.play);
+                        launcherIvPlay.setImageResource(R.mipmap.ic_play);
                         isruning = false;
                     }
                     break;
@@ -168,7 +168,7 @@ public class NeteaseCloudMusicPlugin extends MusicController {
                     }
                     playClickTime = System.currentTimeMillis();
                     if (!isruning) {
-                        launcherPlay.setImageResource(R.mipmap.pause);
+                        launcherIvPlay.setImageResource(R.mipmap.ic_pause);
                         isruning = true;
                     }
                     break;
@@ -187,7 +187,7 @@ public class NeteaseCloudMusicPlugin extends MusicController {
                     }
                     playClickTime = System.currentTimeMillis();
                     if (!isruning) {
-                        popupPlay.setImageResource(R.mipmap.pause);
+                        popupPlay.setImageResource(R.mipmap.ic_pause);
                         isruning = true;
                     }
                     break;
@@ -198,10 +198,10 @@ public class NeteaseCloudMusicPlugin extends MusicController {
                     }
                     playClickTime = System.currentTimeMillis();
                     if (!isruning) {
-                        popupPlay.setImageResource(R.mipmap.pause);
+                        popupPlay.setImageResource(R.mipmap.ic_pause);
                         isruning = true;
                     } else {
-                        popupPlay.setImageResource(R.mipmap.play);
+                        popupPlay.setImageResource(R.mipmap.ic_play);
                         isruning = false;
                     }
                     break;
@@ -212,7 +212,7 @@ public class NeteaseCloudMusicPlugin extends MusicController {
                     }
                     playClickTime = System.currentTimeMillis();
                     if (!isruning) {
-                        popupPlay.setImageResource(R.mipmap.pause);
+                        popupPlay.setImageResource(R.mipmap.ic_pause);
                         isruning = true;
                     }
                     break;
@@ -248,12 +248,12 @@ public class NeteaseCloudMusicPlugin extends MusicController {
                 if (System.currentTimeMillis() - playClickTime > 2000) {
                     if (popupProgress.getProgress() != popupWidgetViewTimeLastUpdateValue) {
                         popupChangeTime = 0;
-                        popupPlay.setImageResource(R.mipmap.pause);
+                        popupPlay.setImageResource(R.mipmap.ic_pause);
                         isruning = true;
                     } else {
                         popupChangeTime++;
                         if (popupChangeTime > 2) {
-                            popupPlay.setImageResource(R.mipmap.play);
+                            popupPlay.setImageResource(R.mipmap.ic_play);
                             isruning = false;
                         }
                     }
@@ -337,12 +337,12 @@ public class NeteaseCloudMusicPlugin extends MusicController {
                 if (System.currentTimeMillis() - playClickTime > 2000) {
                     if (launcherProgress.getProgress() != launcherWidgetViewTimeLastUpdateValue) {
                         launcherChangeTime = 0;
-                        launcherPlay.setImageResource(R.mipmap.pause);
+                        launcherIvPlay.setImageResource(R.mipmap.ic_pause);
                         isruning = true;
                     } else {
                         launcherChangeTime++;
                         if (launcherChangeTime > 2) {
-                            launcherPlay.setImageResource(R.mipmap.play);
+                            launcherIvPlay.setImageResource(R.mipmap.ic_play);
                             isruning = false;
                         }
                     }

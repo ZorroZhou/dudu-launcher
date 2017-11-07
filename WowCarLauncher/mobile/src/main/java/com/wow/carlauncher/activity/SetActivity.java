@@ -48,6 +48,9 @@ public class SetActivity extends BaseActivity {
     @ViewInject(R.id.time_plugin_open_app_select)
     private SetView time_plugin_open_app_select;
 
+    @ViewInject(R.id.sv_about)
+    private SetView sv_about;
+
     @Override
     public void init() {
         setContent(R.layout.activity_set);
@@ -191,6 +194,13 @@ public class SetActivity extends BaseActivity {
                     }
                 }).create();
                 dialog.show();
+            }
+        });
+
+        sv_about.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(mContext, AboutActivity.class));
             }
         });
     }

@@ -7,6 +7,7 @@ import com.wow.carlauncher.common.ActivityLifecycleListener;
 import com.wow.carlauncher.common.LocationManage;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.plugin.PluginManage;
+import com.wow.carlauncher.popupWindow.ControllerWin;
 import com.wow.carlauncher.popupWindow.PopupWin;
 import com.wow.carlauncher.service.MainService;
 
@@ -25,6 +26,7 @@ public class CarLauncherApplication extends Application {
         SharedPreUtil.init(this);
         PluginManage.self().init(this);
         PopupWin.self().init(this);
+        ControllerWin.self().init(this);
         LocationManage.self().init(getApplicationContext());
 
         registerActivityLifecycleCallbacks(new ActivityLifecycleListener(this));

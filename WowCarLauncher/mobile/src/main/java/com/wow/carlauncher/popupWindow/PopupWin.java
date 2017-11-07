@@ -5,7 +5,6 @@ import android.graphics.PixelFormat;
 import android.os.Build;
 import android.provider.Settings;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
@@ -43,7 +42,6 @@ public class PopupWin {
     private PopupWin() {
 
     }
-
 
     //窗口管理器
     private WindowManager wm = null;
@@ -100,7 +98,7 @@ public class PopupWin {
         plugin = popupWindow.findViewById(R.id.ll_plugin);
 
         iv_open = popupWindow.findViewById(R.id.iv_open);
-        iv_open.setOnClickListener(openOnClickListener);
+        iv_open.setOnClickListener(onClickListener);
         iv_open.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -111,7 +109,7 @@ public class PopupWin {
         iv_open.setOnTouchListener(moveTouchListener);
 
         ll_menu = popupWindow.findViewById(R.id.ll_menu);
-        ll_menu.setOnClickListener(openOnClickListener);
+        ll_menu.setOnClickListener(onClickListener);
         ll_menu.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -121,7 +119,8 @@ public class PopupWin {
         });
         ll_menu.setOnTouchListener(moveTouchListener);
 
-        Log.e(TAG, "init: " + currentPluginIndex);
+        popupWindow.findViewById(R.id.iv_controller).setOnClickListener(onClickListener);
+
         showPlugin(false);
     }
 
@@ -220,10 +219,24 @@ public class PopupWin {
         }
     }
 
-    private View.OnClickListener openOnClickListener = new View.OnClickListener() {
+    private View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            showPlugin(true);
+            switch (v.getId()) {
+                case R.id.iv_open: {
+                    showPlugin(true);
+                    break;
+                }
+                case R.id.ll_menu: {
+                    showPlugin(true);
+                    break;
+                }
+                case R.id.iv_controller: {
+                    ControllerWin.self().show();
+                    break;
+                }
+
+            }
         }
     };
 

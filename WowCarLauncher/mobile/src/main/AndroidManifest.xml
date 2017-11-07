@@ -81,6 +81,9 @@
         <activity
             android:name=".activity.SystemSetActivity"
             android:screenOrientation="landscape" />
+        <activity
+            android:name=".activity.AboutActivity"
+            android:screenOrientation="landscape" />
 
         <receiver
             android:name=".receiver.BootReceiver"

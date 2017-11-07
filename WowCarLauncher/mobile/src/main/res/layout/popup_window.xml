@@ -28,7 +28,7 @@
             <ImageView
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:src="@mipmap/ic_xunhuan"
+                android:src="@mipmap/ic_move"
                 app:layout_heightPercent="70%h"
                 app:layout_widthPercent="70%h" />
         </com.zhy.android.percent.support.PercentLinearLayout>

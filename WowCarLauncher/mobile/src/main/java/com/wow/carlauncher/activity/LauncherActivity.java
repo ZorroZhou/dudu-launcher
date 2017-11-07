@@ -10,8 +10,6 @@ import android.content.pm.PackageManager;
 import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Looper;
-import android.os.MessageQueue;
 import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -28,7 +26,6 @@ import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationListener;
-import com.wow.carlauncher.CarLauncherApplication;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.LocationManage;
 import com.wow.carlauncher.common.WeatherIconUtil;
@@ -39,7 +36,6 @@ import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.plugin.PluginManage;
 import com.wow.carlauncher.webservice.WebService;
 import com.wow.carlauncher.webservice.res.WeatherRes;
-import com.wow.carlauncher.popupWindow.LoadWin;
 import com.wow.carlauncher.popupWindow.PopupWin;
 
 import org.xutils.view.annotation.ViewInject;

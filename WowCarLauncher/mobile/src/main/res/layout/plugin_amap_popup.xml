@@ -13,7 +13,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="高德地图车机版"
+            android:textColor="@android:color/white"
+            app:layout_textSizePercent="15%h" />
 
         <com.zhy.android.percent.support.PercentLinearLayout
             android:layout_width="match_parent"

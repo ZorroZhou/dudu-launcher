@@ -27,7 +27,7 @@ public class ControllerPlugin implements IPlugin, View.OnClickListener {
     public final static String TAG = "ControllerPlugin";
     private PluginManage pluginManage;
     private Context context;
-    private LinearLayout launcherView;
+    private View launcherView;
     private AudioManager audioManager;
     private int oldV = 0;
 
@@ -45,7 +45,7 @@ public class ControllerPlugin implements IPlugin, View.OnClickListener {
         context.registerReceiver(mReceiver, mFilter);
     }
 
-    private void initLauncherView(LinearLayout launcherView) {
+    private void initLauncherView(View launcherView) {
         launcherView.findViewById(R.id.btn_vu).setOnClickListener(this);
         launcherView.findViewById(R.id.btn_vd).setOnClickListener(this);
         launcherView.findViewById(R.id.btn_close_screen).setOnClickListener(this);
@@ -58,7 +58,7 @@ public class ControllerPlugin implements IPlugin, View.OnClickListener {
     @Override
     public View getLauncherView() {
         if (launcherView == null) {
-            launcherView = (LinearLayout) View.inflate(context, R.layout.plugin_controller_launcher, null);
+            launcherView = View.inflate(context, R.layout.plugin_controller_launcher, null);
             initLauncherView(launcherView);
         }
         return launcherView;

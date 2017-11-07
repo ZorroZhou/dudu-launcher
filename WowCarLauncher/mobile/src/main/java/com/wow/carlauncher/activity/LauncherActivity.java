@@ -135,7 +135,6 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         registerReceiver(mHomeKeyEventReceiver, new IntentFilter(Intent.ACTION_CLOSE_SYSTEM_DIALOGS));
-        LocationManage.self().addLocationListener(aMapLocationListener);
     }
 
     public void initView() {
@@ -185,6 +184,7 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
         loadDock();
         checkAppState();
         checkPermission();
+        LocationManage.self().addLocationListener(aMapLocationListener);
     }
 
     private void loadDock() {

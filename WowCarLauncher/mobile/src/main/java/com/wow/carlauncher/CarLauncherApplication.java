@@ -25,7 +25,7 @@ public class CarLauncherApplication extends Application {
         SharedPreUtil.init(this);
         PluginManage.self().init(this);
         PopupWin.self().init(this);
-        LocationManage.self().init(this);
+        LocationManage.self().init(getApplicationContext());
 
         registerActivityLifecycleCallbacks(new ActivityLifecycleListener(this));
 

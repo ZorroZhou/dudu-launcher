@@ -47,6 +47,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             }
             case R.id.test: {
                 startActivity(new Intent(this, LauncherActivity.class));
+                finish();
                 break;
             }
         }

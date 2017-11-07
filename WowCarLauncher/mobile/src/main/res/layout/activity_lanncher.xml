@@ -67,19 +67,21 @@
                 android:orientation="horizontal"
                 app:layout_widthPercent="50%w">
 
-                <LinearLayout
+                <com.zhy.android.percent.support.PercentLinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical|end"
+                    android:orientation="horizontal"
                     app:layout_widthPercent="40%w">
 
                     <ImageView
                         android:id="@+id/iv_tianqi"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_marginEnd="20dp"
-                        android:src="@mipmap/ic_default_big" />
-                </LinearLayout>
+                        android:padding="20dp"
+                        android:src="@mipmap/wic_no"
+                        app:layout_widthPercent="100%h" />
+                </com.zhy.android.percent.support.PercentLinearLayout>
 
                 <com.zhy.android.percent.support.PercentLinearLayout
                     android:layout_width="0dp"
@@ -117,7 +119,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_margin="20dp"
                 android:contentDescription="@string/iv_content"
-                android:src="@mipmap/ic_set"
+                android:src="@mipmap/ic_menu"
                 app:layout_heightPercent="20%h"
                 app:layout_widthPercent="20%h" />
         </com.zhy.android.percent.support.PercentRelativeLayout>
@@ -182,7 +184,9 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:contentDescription="@string/iv_content" />
+                android:contentDescription="@string/iv_content"
+                android:padding="5dp"
+                android:src="@mipmap/ic_up" />
 
             <com.zhy.android.percent.support.PercentLinearLayout
                 android:id="@+id/ll_dock1"
@@ -196,7 +200,7 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:contentDescription="@string/iv_main_dock_icon"
-                    android:src="@mipmap/main_dock_add"
+                    android:src="@mipmap/ic_add_app"
                     app:layout_heightPercent="70%h"
                     app:layout_widthPercent="70%h" />
             </com.zhy.android.percent.support.PercentLinearLayout>
@@ -213,7 +217,7 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:contentDescription="@string/iv_main_dock_icon"
-                    android:src="@mipmap/main_dock_add"
+                    android:src="@mipmap/ic_add_app"
                     app:layout_heightPercent="70%h"
                     app:layout_widthPercent="70%h" />
             </com.zhy.android.percent.support.PercentLinearLayout>
@@ -230,7 +234,7 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:contentDescription="@string/iv_main_dock_icon"
-                    android:src="@mipmap/main_dock_add"
+                    android:src="@mipmap/ic_add_app"
                     app:layout_heightPercent="70%h"
                     app:layout_widthPercent="70%h" />
             </com.zhy.android.percent.support.PercentLinearLayout>
@@ -247,7 +251,7 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:contentDescription="@string/iv_main_dock_icon"
-                    android:src="@mipmap/main_dock_add"
+                    android:src="@mipmap/ic_add_app"
                     app:layout_heightPercent="70%h"
                     app:layout_widthPercent="70%h" />
             </com.zhy.android.percent.support.PercentLinearLayout>
@@ -265,7 +269,7 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:contentDescription="@string/iv_main_dock_icon"
-                    android:src="@mipmap/main_dock_add"
+                    android:src="@mipmap/ic_add_app"
                     app:layout_heightPercent="70%h"
                     app:layout_widthPercent="70%h" />
             </com.zhy.android.percent.support.PercentLinearLayout>
@@ -282,7 +286,7 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:contentDescription="@string/iv_main_dock_icon"
-                    android:src="@mipmap/main_dock_add"
+                    android:src="@mipmap/ic_add_app"
                     app:layout_heightPercent="70%h"
                     app:layout_widthPercent="70%h" />
             </com.zhy.android.percent.support.PercentLinearLayout>
@@ -299,7 +303,7 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:contentDescription="@string/iv_main_dock_icon"
-                    android:src="@mipmap/apps"
+                    android:src="@mipmap/ic_apps"
                     app:layout_heightPercent="70%h"
                     app:layout_widthPercent="70%h" />
             </com.zhy.android.percent.support.PercentLinearLayout>
@@ -309,7 +313,9 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:contentDescription="@string/iv_content" />
+                android:contentDescription="@string/iv_content"
+                android:padding="5dp"
+                android:src="@mipmap/ic_up" />
         </com.zhy.android.percent.support.PercentLinearLayout>
     </com.zhy.android.percent.support.PercentLinearLayout>
 
@@ -319,7 +325,7 @@
         android:layout_height="match_parent"
         android:visibility="gone">
 
-        <com.zhy.android.percent.support.PercentLinearLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_alignParentBottom="true"
@@ -327,34 +333,66 @@
             android:orientation="horizontal"
             app:layout_heightPercent="20%h">
 
-            <Button
+            <com.zhy.android.percent.support.PercentLinearLayout
                 android:id="@+id/btn_vu"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="增大音量" />
+                android:gravity="center">
 
-            <Button
-                android:id="@+id/btn_vd"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="减小音量" />
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:src="@mipmap/ic_vol_jia"
+                    app:layout_heightPercent="50%h"
+                    app:layout_widthPercent="50%h" />
+            </com.zhy.android.percent.support.PercentLinearLayout>
 
-            <Button
+
+            <com.zhy.android.percent.support.PercentLinearLayout
                 android:id="@+id/btn_jy"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="静音" />
+                android:gravity="center">
 
-            <Button
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:src="@mipmap/ic_vol_jing"
+                    app:layout_heightPercent="50%h"
+                    app:layout_widthPercent="50%h" />
+            </com.zhy.android.percent.support.PercentLinearLayout>
+
+            <com.zhy.android.percent.support.PercentLinearLayout
+                android:id="@+id/btn_vd"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:src="@mipmap/ic_vol_jian"
+                    app:layout_heightPercent="50%h"
+                    app:layout_widthPercent="50%h" />
+            </com.zhy.android.percent.support.PercentLinearLayout>
+
+            <com.zhy.android.percent.support.PercentLinearLayout
                 android:id="@+id/btn_close_screen"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="关屏" />
+                android:gravity="center">
 
-        </com.zhy.android.percent.support.PercentLinearLayout>
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:src="@mipmap/ic_close_screen"
+                    app:layout_heightPercent="50%h"
+                    app:layout_widthPercent="50%h" />
+            </com.zhy.android.percent.support.PercentLinearLayout>
+        </LinearLayout>
     </com.zhy.android.percent.support.PercentRelativeLayout>
 </FrameLayout>

@@ -45,7 +45,7 @@ public class NeteaseCloudMusicPlugin extends MusicController {
 
     private RelativeLayout popupView;
     private LinearLayout popupHouse;
-    private ImageView popupPlay;
+    private ImageView popupIvPlay;
     private TextView popupTitle;
     private ProgressBar popupProgress;
 
@@ -97,10 +97,11 @@ public class NeteaseCloudMusicPlugin extends MusicController {
         popupHouse.addView(popupWidgetView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
         popupTitle = popupView.findViewById(R.id.tv_title);
         popupProgress = popupView.findViewById(R.id.pb_music);
-        popupPlay = popupView.findViewById(R.id.iv_play);
-        popupPlay.setOnClickListener(popupOnClickListener);
-        popupView.findViewById(R.id.iv_prew).setOnClickListener(popupOnClickListener);
-        popupView.findViewById(R.id.iv_next).setOnClickListener(popupOnClickListener);
+        popupIvPlay = popupView.findViewById(R.id.iv_play);
+        popupIvPlay.setOnClickListener(popupOnClickListener);
+        popupView.findViewById(R.id.ll_play).setOnClickListener(popupOnClickListener);
+        popupView.findViewById(R.id.ll_prew).setOnClickListener(popupOnClickListener);
+        popupView.findViewById(R.id.ll_next).setOnClickListener(popupOnClickListener);
 
         ergodicPopupView((ViewGroup) popupWidgetView);
         startUpdate();
@@ -187,7 +188,7 @@ public class NeteaseCloudMusicPlugin extends MusicController {
                     }
                     playClickTime = System.currentTimeMillis();
                     if (!isruning) {
-                        popupPlay.setImageResource(R.mipmap.ic_pause);
+                        popupIvPlay.setImageResource(R.mipmap.ic_pause);
                         isruning = true;
                     }
                     break;
@@ -198,10 +199,10 @@ public class NeteaseCloudMusicPlugin extends MusicController {
                     }
                     playClickTime = System.currentTimeMillis();
                     if (!isruning) {
-                        popupPlay.setImageResource(R.mipmap.ic_pause);
+                        popupIvPlay.setImageResource(R.mipmap.ic_pause);
                         isruning = true;
                     } else {
-                        popupPlay.setImageResource(R.mipmap.ic_play);
+                        popupIvPlay.setImageResource(R.mipmap.ic_play);
                         isruning = false;
                     }
                     break;
@@ -212,7 +213,7 @@ public class NeteaseCloudMusicPlugin extends MusicController {
                     }
                     playClickTime = System.currentTimeMillis();
                     if (!isruning) {
-                        popupPlay.setImageResource(R.mipmap.ic_pause);
+                        popupIvPlay.setImageResource(R.mipmap.ic_pause);
                         isruning = true;
                     }
                     break;
@@ -248,12 +249,12 @@ public class NeteaseCloudMusicPlugin extends MusicController {
                 if (System.currentTimeMillis() - playClickTime > 2000) {
                     if (popupProgress.getProgress() != popupWidgetViewTimeLastUpdateValue) {
                         popupChangeTime = 0;
-                        popupPlay.setImageResource(R.mipmap.ic_pause);
+                        popupIvPlay.setImageResource(R.mipmap.ic_pause);
                         isruning = true;
                     } else {
                         popupChangeTime++;
                         if (popupChangeTime > 2) {
-                            popupPlay.setImageResource(R.mipmap.ic_play);
+                            popupIvPlay.setImageResource(R.mipmap.ic_play);
                             isruning = false;
                         }
                     }

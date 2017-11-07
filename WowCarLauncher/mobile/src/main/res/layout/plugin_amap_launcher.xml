@@ -6,6 +6,26 @@
     android:layout_height="match_parent"
     android:clickable="true">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="高德车机版"
+        android:textColor="@android:color/white"
+        app:layout_textSizePercent="10%h" />
+
+    <ImageView
+        android:id="@+id/iv_icon"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_centerInParent="true"
+        android:scaleType="fitXY"
+        android:src="@mipmap/ic_amap"
+        app:layout_heightPercent="40%w"
+        app:layout_widthPercent="40%w" />
+
     <FrameLayout
         android:id="@+id/ll_controller"
         android:layout_width="match_parent"
@@ -70,25 +90,4 @@
             android:layout_height="1dp"
             android:background="@drawable/l_bg_line1" />
     </FrameLayout>
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:text="高德车机版"
-        android:textColor="@android:color/white"
-        app:layout_textSizePercent="10%h" />
-
-    <ImageView
-        android:id="@+id/iv_icon"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_centerInParent="true"
-        android:scaleType="fitXY"
-        android:src="@mipmap/ic_amap"
-        app:layout_heightPercent="40%w"
-        app:layout_widthPercent="40%w" />
 </com.zhy.android.percent.support.PercentRelativeLayout>

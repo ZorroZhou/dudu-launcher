@@ -160,6 +160,7 @@ public class AMapCarPlugin implements IPlugin, View.OnClickListener {
                         launcherController.setVisibility(View.GONE);
                     } else if (naviBean.getState() == 9 || naviBean.getState() == 11) {
                         launcherController.setVisibility(View.VISIBLE);
+                        launcherIcon.setImageResource(R.mipmap.ic_amap);
                     }
                 }
 

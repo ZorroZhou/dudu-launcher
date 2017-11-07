@@ -56,6 +56,7 @@ public class PopupWin {
     private View popupWindow;
     //打开按钮
     private ImageView iv_open;
+    private LinearLayout ll_menu;
     //插件试图
     private LinearLayout plugin;
     //插件布局
@@ -88,6 +89,8 @@ public class PopupWin {
         winparams.x = SharedPreUtil.getSharedPreInteger(CommonData.SDATA_POPUP_WIN_X, 0);
         winparams.y = SharedPreUtil.getSharedPreInteger(CommonData.SDATA_POPUP_WIN_Y, 0);
 
+        pluginlp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+
         currentPluginIndex = SharedPreUtil.getSharedPreInteger(CommonData.SDATA_POPUP_CURRENT_PLUGIN, -1);
         if (currentPluginIndex >= pluginNames.length || currentPluginIndex < -1) {
             currentPluginIndex = -1;
@@ -95,10 +98,8 @@ public class PopupWin {
 
         popupWindow = View.inflate(context, R.layout.popup_window, null);
         plugin = popupWindow.findViewById(R.id.ll_plugin);
+
         iv_open = popupWindow.findViewById(R.id.iv_open);
-
-        pluginlp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-
         iv_open.setOnClickListener(openOnClickListener);
         iv_open.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -107,62 +108,21 @@ public class PopupWin {
                 return false;
             }
         });
-        iv_open.setOnTouchListener(new View.OnTouchListener() {
-            private int tx, ty;
-            private int rx, ry;
+        iv_open.setOnTouchListener(moveTouchListener);
 
+        ll_menu = popupWindow.findViewById(R.id.ll_menu);
+        ll_menu.setOnClickListener(openOnClickListener);
+        ll_menu.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent e) {
-                if (e.getAction() == MotionEvent.ACTION_DOWN) {
-                    tx = (int) e.getX();
-                    ty = (int) e.getY();
-
-                    rx = (int) e.getRawX();
-                    ry = (int) e.getRawY();
-                } else if (e.getAction() == MotionEvent.ACTION_MOVE) {
-                    if (!moveing) {
-                        return false;
-                    }
-                    winparams.x = (int) (e.getRawX() - tx);
-                    winparams.y = (int) (e.getRawY() - ty);
-                    wm.updateViewLayout(popupWindow, winparams);
-                    return true;
-                } else if (e.getAction() == MotionEvent.ACTION_UP) {
-                    if (!moveing) {
-                        return false;
-                    }
-                    moveing = false;
-                    SharedPreUtil.saveSharedPreInteger(CommonData.SDATA_POPUP_WIN_X, winparams.x);
-                    SharedPreUtil.saveSharedPreInteger(CommonData.SDATA_POPUP_WIN_Y, winparams.y);
-                    return true;
-                }
+            public boolean onLongClick(View v) {
+                moveing = true;
                 return false;
             }
         });
+        ll_menu.setOnTouchListener(moveTouchListener);
+
         Log.e(TAG, "init: " + currentPluginIndex);
         showPlugin(false);
-    }
-
-    //根据X轴停靠
-    private void stopMoveByX() {
-        if (winparams.x + popupWindow.getWidth() / 2 < screenWidth / 2) {
-            winparams.x = 0;
-            wm.updateViewLayout(popupWindow, winparams);
-        } else {
-            winparams.x = screenWidth - popupWindow.getWidth();
-            wm.updateViewLayout(popupWindow, winparams);
-        }
-    }
-
-    //根据Y轴停靠
-    private void stopMoveByY() {
-        if (winparams.y + popupWindow.getHeight() / 2 < screenHeight / 2) {
-            winparams.y = 0;
-            wm.updateViewLayout(popupWindow, winparams);
-        } else {
-            winparams.y = screenHeight - popupWindow.getHeight();
-            wm.updateViewLayout(popupWindow, winparams);
-        }
     }
 
     private void showPlugin(boolean goNext) {
@@ -187,6 +147,9 @@ public class PopupWin {
 
         if (currentPluginIndex == -1) {
             plugin.setVisibility(View.GONE);
+            ll_menu.setVisibility(View.GONE);
+            iv_open.setVisibility(View.VISIBLE);
+
             winparams.width = (int) (screenWidth * 0.15);
             winparams.height = (int) (screenWidth * 0.15);
             popupWindow.setBackgroundResource(R.color.popup_hide_plugin);
@@ -194,9 +157,12 @@ public class PopupWin {
                 wm.updateViewLayout(popupWindow, winparams);
             }
         } else {
-            winparams.height = (int) (screenWidth * 0.15);
-            winparams.width = (int) (screenWidth * 0.45);
             plugin.setVisibility(View.VISIBLE);
+            ll_menu.setVisibility(View.VISIBLE);
+            iv_open.setVisibility(View.GONE);
+
+            winparams.height = (int) (screenWidth * 0.15);
+            winparams.width = (int) (screenWidth * 0.15 / 2 + screenWidth * 0.3);
             plugin.addView(iplugin.getPopupView(), pluginlp);
             popupWindow.setBackgroundResource(R.color.popup_show_plugin);
             if (isShow) {
@@ -258,6 +224,39 @@ public class PopupWin {
         @Override
         public void onClick(View v) {
             showPlugin(true);
+        }
+    };
+
+    private View.OnTouchListener moveTouchListener = new View.OnTouchListener() {
+        private int tx, ty;
+        private int rx, ry;
+
+        @Override
+        public boolean onTouch(View v, MotionEvent e) {
+            if (e.getAction() == MotionEvent.ACTION_DOWN) {
+                tx = (int) e.getX();
+                ty = (int) e.getY();
+
+                rx = (int) e.getRawX();
+                ry = (int) e.getRawY();
+            } else if (e.getAction() == MotionEvent.ACTION_MOVE) {
+                if (!moveing) {
+                    return false;
+                }
+                winparams.x = (int) (e.getRawX() - tx);
+                winparams.y = (int) (e.getRawY() - ty);
+                wm.updateViewLayout(popupWindow, winparams);
+                return true;
+            } else if (e.getAction() == MotionEvent.ACTION_UP) {
+                if (!moveing) {
+                    return false;
+                }
+                moveing = false;
+                SharedPreUtil.saveSharedPreInteger(CommonData.SDATA_POPUP_WIN_X, winparams.x);
+                SharedPreUtil.saveSharedPreInteger(CommonData.SDATA_POPUP_WIN_Y, winparams.y);
+                return true;
+            }
+            return false;
         }
     };
 }

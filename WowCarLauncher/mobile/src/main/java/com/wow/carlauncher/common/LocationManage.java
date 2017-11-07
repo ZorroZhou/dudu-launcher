@@ -29,6 +29,7 @@ public class LocationManage implements AMapLocationListener {
     private AMapLocationClientOption locationOption = null;
     private Context mContext;
     private List<AMapLocationListener> locationListeners;
+    private AMapLocation oldMapLocation;
 
     private LocationManage() {
 
@@ -46,11 +47,13 @@ public class LocationManage implements AMapLocationListener {
         locationOption.setInterval(1000 * 60 * 20);
         locationClient.setLocationOption(locationOption);
         locationClient.startLocation();
-
     }
 
     public void addLocationListener(AMapLocationListener locationListener) {
         locationListeners.add(locationListener);
+        if (oldMapLocation != null) {
+            locationListener.onLocationChanged(oldMapLocation);
+        }
     }
 
     public void removeLocationListener(AMapLocationListener locationListener) {
@@ -59,6 +62,7 @@ public class LocationManage implements AMapLocationListener {
 
     @Override
     public void onLocationChanged(AMapLocation aMapLocation) {
+        this.oldMapLocation = aMapLocation;
         for (AMapLocationListener locationListener : locationListeners) {
             locationListener.onLocationChanged(aMapLocation);
         }

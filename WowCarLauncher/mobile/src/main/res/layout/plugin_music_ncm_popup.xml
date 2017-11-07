@@ -19,32 +19,53 @@
         android:layout_alignParentBottom="true"
         app:layout_heightPercent="70%h">
 
-        <ImageView
-            android:id="@+id/iv_prew"
+        <com.zhy.android.percent.support.PercentLinearLayout
+            android:id="@+id/ll_prew"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:contentDescription="@string/iv_plugin_music_pre"
-            android:padding="5dp"
-            android:src="@mipmap/ic_prev" />
+            android:gravity="center">
 
-        <ImageView
-            android:id="@+id/iv_play"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:contentDescription="@string/iv_plugin_music_play"
-            android:padding="5dp"
-            android:src="@mipmap/ic_play" />
+            <ImageView
+                android:id="@+id/iv_prew"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:src="@mipmap/ic_prev"
+                app:layout_heightPercent="50%h"
+                app:layout_widthPercent="50%h" />
+        </com.zhy.android.percent.support.PercentLinearLayout>
 
-        <ImageView
-            android:id="@+id/iv_next"
+        <com.zhy.android.percent.support.PercentLinearLayout
+            android:id="@+id/ll_play"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:contentDescription="@string/iv_plugin_music_next"
-            android:padding="5dp"
-            android:src="@mipmap/ic_next" />
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/iv_play"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:src="@mipmap/ic_play"
+                app:layout_heightPercent="50%h"
+                app:layout_widthPercent="50%h" />
+        </com.zhy.android.percent.support.PercentLinearLayout>
+
+        <com.zhy.android.percent.support.PercentLinearLayout
+            android:id="@+id/ll_next"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/iv_next"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:src="@mipmap/ic_next"
+                app:layout_heightPercent="50%h"
+                app:layout_widthPercent="50%h" />
+        </com.zhy.android.percent.support.PercentLinearLayout>
     </com.zhy.android.percent.support.PercentLinearLayout>
 
     <ProgressBar

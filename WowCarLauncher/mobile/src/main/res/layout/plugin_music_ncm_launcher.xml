@@ -5,16 +5,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:text="网易云音乐"
-        android:textColor="@android:color/white"
-        app:layout_textSizePercent="10%h" />
-
     <LinearLayout
         android:id="@+id/ll_house"
         android:layout_width="1dp"
@@ -145,4 +135,14 @@
         android:text="@string/music_name"
         android:textColor="@android:color/white"
         app:layout_textSizePercent="8%h" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="网易云音乐"
+        android:textColor="@android:color/white"
+        app:layout_textSizePercent="10%h" />
 </com.zhy.android.percent.support.PercentRelativeLayout>

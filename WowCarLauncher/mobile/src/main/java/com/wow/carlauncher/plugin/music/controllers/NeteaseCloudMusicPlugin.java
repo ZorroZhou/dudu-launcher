@@ -4,12 +4,8 @@ import android.appwidget.AppWidgetHost;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProviderInfo;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -17,12 +13,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
-import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.util.ViewUtils;
-import com.wow.carlauncher.plugin.PopupViewProportion;
 import com.wow.carlauncher.plugin.music.MusicController;
-import com.wow.carlauncher.popupWindow.PopupWin;
 
 import org.xutils.x;
 
@@ -80,7 +73,7 @@ public class NeteaseCloudMusicPlugin extends MusicController {
         final View launcherWidgetView = appWidgetHost.createView(context, launcher, launcherWidgetInfo);
         launcherWidgetView.setPadding(0, 0, 0, 0);
 
-        launcherView = (RelativeLayout) View.inflate(context, R.layout.plugin_music_ncm_lanncher, null);
+        launcherView = (RelativeLayout) View.inflate(context, R.layout.plugin_music_ncm_launcher, null);
         launcherHouse = launcherView.findViewById(R.id.ll_house);
         launcherHouse.addView(launcherWidgetView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
         launcherCover = launcherView.findViewById(R.id.iv_cover);

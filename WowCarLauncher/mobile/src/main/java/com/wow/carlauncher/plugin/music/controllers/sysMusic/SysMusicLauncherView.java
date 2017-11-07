@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.util.CommonUtil;
-import com.wow.carlauncher.plugin.music.controllers.QQMusicCarPlugin;
 import com.wow.carlauncher.plugin.music.controllers.SystemMusicPlugin;
 import com.wow.carlauncher.plugin.music.event.PEventMusicInfoChange;
 import com.wow.carlauncher.plugin.music.event.PEventMusicStateChange;
@@ -82,7 +81,7 @@ public class SysMusicLauncherView extends LinearLayout implements View.OnClickLi
     }
 
     private void init() {
-        LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.plugin_music_lanncher, null);
+        LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.plugin_music_launcher, null);
         this.addView(linearLayout, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         iv_play = findViewById(R.id.iv_play);
         tv_title = findViewById(R.id.tv_title);

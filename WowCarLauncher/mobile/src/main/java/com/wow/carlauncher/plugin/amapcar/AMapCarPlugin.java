@@ -21,8 +21,6 @@ import com.wow.carlauncher.dialog.InputDialog;
 import com.wow.carlauncher.plugin.IPlugin;
 import com.wow.carlauncher.plugin.PluginManage;
 
-import org.xutils.x;
-
 import java.math.BigDecimal;
 
 import static com.wow.carlauncher.plugin.amapcar.AMapCarConstant.*;
@@ -219,7 +217,7 @@ public class AMapCarPlugin implements IPlugin, View.OnClickListener {
     @Override
     public View getLauncherView() {
         if (launcherView == null) {
-            launcherView = (RelativeLayout) View.inflate(context, R.layout.plugin_amap_lanncher, null);
+            launcherView = (RelativeLayout) View.inflate(context, R.layout.plugin_amap_launcher, null);
             initLauncherView(launcherView);
         }
         return launcherView;

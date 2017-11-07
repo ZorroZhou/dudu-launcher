@@ -1,31 +1,23 @@
 package com.wow.carlauncher.plugin.controller;
 
 import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothHeadset;
-import android.bluetooth.BluetoothProfile;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.media.AudioManager;
 import android.net.ConnectivityManager;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.activity.LockActivity;
-import com.wow.carlauncher.common.SystemBrightManager;
 import com.wow.carlauncher.common.util.AppUtil;
 import com.wow.carlauncher.plugin.IPlugin;
 import com.wow.carlauncher.plugin.PluginManage;
-
-import java.util.List;
 
 /**
  * Created by 10124 on 2017/11/4.
@@ -66,7 +58,7 @@ public class ControllerPlugin implements IPlugin, View.OnClickListener {
     @Override
     public View getLauncherView() {
         if (launcherView == null) {
-            launcherView = (LinearLayout) View.inflate(context, R.layout.plugin_controller, null);
+            launcherView = (LinearLayout) View.inflate(context, R.layout.plugin_controller_launcher, null);
             initLauncherView(launcherView);
         }
         return launcherView;

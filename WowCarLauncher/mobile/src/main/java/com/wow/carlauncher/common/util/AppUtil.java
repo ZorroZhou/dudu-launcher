@@ -10,17 +10,54 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static android.content.Context.WIFI_SERVICE;
+import static com.wow.carlauncher.common.util.AppUtil.NetWorkState.*;
+
 /**
  * Created by 10124 on 2017/11/5.
  */
 
 public class AppUtil {
+    public enum NetWorkState {
+        NETWORKSTATE_NONE, NETWORKSTATE_MOBILE, NETWORKSTATE_WIFI
+    }
+
+    public static NetWorkState getNetWorkState(Context context) {
+        // 得到连接管理器对象
+        ConnectivityManager connectivityManager = (ConnectivityManager) context
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetworkInfo = connectivityManager
+                .getActiveNetworkInfo();
+        if (activeNetworkInfo != null && activeNetworkInfo.isConnected()) {
+
+            if (activeNetworkInfo.getType() == (ConnectivityManager.TYPE_WIFI)) {
+                return NETWORKSTATE_WIFI;
+            } else if (activeNetworkInfo.getType() == (ConnectivityManager.TYPE_MOBILE)) {
+                return NETWORKSTATE_MOBILE;
+            }
+        } else {
+            return NETWORKSTATE_NONE;
+        }
+        return NETWORKSTATE_NONE;
+    }
+
+    public static String getConnectWifiSsid(Context context) {
+        WifiManager wifiManager = (WifiManager) context.getSystemService(WIFI_SERVICE);
+        WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+        return wifiInfo.getSSID().replace("\"", "");
+    }
+
     public static boolean isInstall(Context context, String name) {
         PackageInfo packageInfo;
         try {

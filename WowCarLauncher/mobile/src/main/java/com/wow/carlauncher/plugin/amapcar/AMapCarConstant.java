@@ -1,10 +1,20 @@
 package com.wow.carlauncher.plugin.amapcar;
 
+import com.wow.carlauncher.R;
+
 /**
  * Created by 10124 on 2017/11/4.
  */
 
 public class AMapCarConstant {
+    public static final int[] ICONS = {
+            R.mipmap.gddh_1, R.mipmap.gddh_2, R.mipmap.gddh_3,
+            R.mipmap.gddh_4, R.mipmap.gddh_5, R.mipmap.gddh_6,
+            R.mipmap.gddh_7, R.mipmap.gddh_8, R.mipmap.gddh_9,
+            R.mipmap.gddh_10, R.mipmap.gddh_11, R.mipmap.gddh_12,
+            R.mipmap.gddh_13, R.mipmap.gddh_14, R.mipmap.gddh_15,
+            R.mipmap.gddh_16, R.mipmap.gddh_17, R.mipmap.gddh_18, R.mipmap.gddh_19, R.mipmap.gddh_20};
+
     public static final String AMAP_PACKAGE = "com.autonavi.amapauto";
 
     //接收消息使用的ACTION
@@ -14,6 +24,8 @@ public class AMapCarConstant {
     //消息标记
     public static final String KEY_TYPE = "KEY_TYPE";
     public static final String EXTRA_TYPE = "EXTRA_TYPE";
+    public static final String EXTRA_STATE = "EXTRA_STATE";
+
 
     public static final String LON = "LON";
     public static final String LAT = "LAT";
@@ -57,4 +69,16 @@ public class AMapCarConstant {
     public static final int REQUEST_SET_HC_HOME = 0;
     public static final int REQUEST_SET_HC_COMP = 1;
 
+    //请求引导信息
+    public static final int REQUEST_NAVI_INFO = 10062;
+
+    //引导信息
+    public static final int NAVI_INFO = 10001;
+    public static final String NAVI_INFO_ICON = "ICON";
+    public static final String NAVI_INFO_SEG_REMAIN_DIS = "SEG_REMAIN_DIS";
+    public static final String NAVI_INFO_NEXT_ROAD_NAME = "NEXT_ROAD_NAME";
+    public static final String NAVI_INFO_ROUTE_REMAIN_DIS = "ROUTE_REMAIN_DIS";
+    public static final String NAVI_INFO_ROUTE_REMAIN_TIME = "ROUTE_REMAIN_TIME";
+    //状态信息
+    public static final int STATE_INFO = 10019;
 }

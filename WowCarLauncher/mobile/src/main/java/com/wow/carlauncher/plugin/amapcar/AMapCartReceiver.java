@@ -3,9 +3,12 @@ package com.wow.carlauncher.plugin.amapcar;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 
 import com.wow.carlauncher.common.BaseDialog;
+
+import org.xutils.x;
 
 import static com.wow.carlauncher.plugin.amapcar.AMapCarConstant.*;
 
@@ -22,10 +25,16 @@ public class AMapCartReceiver extends BroadcastReceiver {
     }
 
     @Override
-    public void onReceive(Context context, Intent intent) {
+    public void onReceive(Context context, final Intent intent) {
         String action = intent.getAction();
         if (action.equals(RECEIVE_ACTION)) {
             int key = intent.getIntExtra(KEY_TYPE, -1);
+            Bundle bundle = intent.getExtras();
+//            Log.i("Bundle Content", "start Key=" + key + "-----------------------------------");
+//            for (String k : bundle.keySet()) {
+//                Log.i("Bundle Content", "Key=" + k + ", content=" + bundle.get(k));
+//            }
+//            Log.i("Bundle Content", "end Key=" + key + "-----------------------------------");
             switch (key) {
                 case RESPONSE_DISTRICT: {
                     intent.getStringExtra(RESPONSE_DISTRICT_PRVINCE_NAME);
@@ -73,6 +82,37 @@ public class AMapCartReceiver extends BroadcastReceiver {
                             aMapCarPlugin.getAmapSend().naviToComp();
                         }
                     }
+                    break;
+                }
+                case NAVI_INFO: {
+                    x.task().autoPost(new Runnable() {
+                        @Override
+                        public void run() {
+                            NaviInfo naviBean2 = new NaviInfo(NaviInfo.TYPE_STATE);
+                            naviBean2.setState(8);
+                            aMapCarPlugin.refreshNaviInfo(naviBean2);
+
+                            NaviInfo naviBean = new NaviInfo(NaviInfo.TYPE_NAVI);
+                            naviBean.setDis(intent.getIntExtra(NAVI_INFO_SEG_REMAIN_DIS, -1));
+                            naviBean.setIcon(intent.getIntExtra(NAVI_INFO_ICON, -1));
+                            naviBean.setWroad(intent.getStringExtra(NAVI_INFO_NEXT_ROAD_NAME));
+                            naviBean.setRemainDis(intent.getIntExtra(NAVI_INFO_ROUTE_REMAIN_DIS, -1));
+                            naviBean.setRemainTime(intent.getIntExtra(NAVI_INFO_ROUTE_REMAIN_TIME, -1));
+                            aMapCarPlugin.refreshNaviInfo(naviBean);
+                        }
+                    });
+                    break;
+                }
+
+                case STATE_INFO: {
+                    x.task().autoPost(new Runnable() {
+                        @Override
+                        public void run() {
+                            NaviInfo naviBean = new NaviInfo(NaviInfo.TYPE_STATE);
+                            naviBean.setState(intent.getIntExtra(EXTRA_STATE, -1));
+                            aMapCarPlugin.refreshNaviInfo(naviBean);
+                        }
+                    });
                     break;
                 }
             }

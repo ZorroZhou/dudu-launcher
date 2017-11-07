@@ -1,15 +1,16 @@
 package com.wow.carlauncher.plugin.amapcar;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wow.carlauncher.R;
@@ -22,9 +23,7 @@ import com.wow.carlauncher.plugin.PluginManage;
 
 import org.xutils.x;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.math.BigDecimal;
 
 import static com.wow.carlauncher.plugin.amapcar.AMapCarConstant.*;
 
@@ -47,7 +46,17 @@ public class AMapCarPlugin implements IPlugin, View.OnClickListener {
         return context;
     }
 
+    private FrameLayout popupView;
+    private ImageView popupIcon;
+    private TextView popupdis;
+    private TextView popuproad;
+    private TextView popupmsg;
+    private LinearLayout popupcontroller;
+    private LinearLayout popupnavi;
+
     private RelativeLayout launcherView;
+    private LinearLayout launcherController;
+    private ImageView launcherIcon;
 
     private AMapCartReceiver amapReceiver;
     private AMapCartSend amapSend;
@@ -67,11 +76,27 @@ public class AMapCarPlugin implements IPlugin, View.OnClickListener {
         context.registerReceiver(amapReceiver, intentFilter);
     }
 
+    private void initPopupView(View view) {
+        popupIcon = view.findViewById(R.id.iv_icon);
+        popupdis = view.findViewById(R.id.tv_dis);
+        popuproad = view.findViewById(R.id.tv_road);
+        popupmsg = view.findViewById(R.id.tv_msg);
+        popupcontroller = view.findViewById(R.id.ll_controller);
+        popupnavi = view.findViewById(R.id.ll_navi);
+
+        view.findViewById(R.id.btn_search).setOnClickListener(this);
+        view.findViewById(R.id.btn_go_home).setOnClickListener(this);
+        view.findViewById(R.id.btn_go_company).setOnClickListener(this);
+    }
+
     private void initLauncherView(View view) {
         view.findViewById(R.id.rl_base).setOnClickListener(this);
         view.findViewById(R.id.btn_search).setOnClickListener(this);
         view.findViewById(R.id.btn_go_home).setOnClickListener(this);
         view.findViewById(R.id.btn_go_company).setOnClickListener(this);
+
+        launcherIcon = view.findViewById(R.id.iv_icon);
+        launcherController = view.findViewById(R.id.ll_controller);
     }
 
     @Override
@@ -117,14 +142,78 @@ public class AMapCarPlugin implements IPlugin, View.OnClickListener {
                 break;
             }
             case R.id.btn_go_company: {
-                if (!AppUtil.isInstall(context, AMAP_PACKAGE)) {
-                    Toast.makeText(context, "没有安装高德地图", Toast.LENGTH_SHORT).show();
-                    break;
-                }
-                amapSend.getComp();
+//                if (!AppUtil.isInstall(context, AMAP_PACKAGE)) {
+//                    Toast.makeText(context, "没有安装高德地图", Toast.LENGTH_SHORT).show();
+//                    break;
+//                }
+//                amapSend.getComp();
+                amapSend.testNavi();
                 break;
             }
         }
+    }
+
+    public void refreshNaviInfo(NaviInfo naviBean) {
+        Log.e(TAG, "refreshNaviInfo:" + naviBean);
+        switch (naviBean.getType()) {
+            case NaviInfo.TYPE_STATE: {
+                if (launcherController != null) {
+                    if (naviBean.getState() == 8 || naviBean.getState() == 10) {
+                        launcherController.setVisibility(View.GONE);
+                    } else if (naviBean.getState() == 9 || naviBean.getState() == 11) {
+                        launcherController.setVisibility(View.VISIBLE);
+                    }
+                }
+
+                if (popupcontroller != null && popupnavi != null) {
+                    if (naviBean.getState() == 8 || naviBean.getState() == 10) {
+                        popupcontroller.setVisibility(View.GONE);
+                        popupnavi.setVisibility(View.VISIBLE);
+                    } else if (naviBean.getState() == 9 || naviBean.getState() == 11) {
+                        popupcontroller.setVisibility(View.VISIBLE);
+                        popupnavi.setVisibility(View.GONE);
+                    }
+                }
+                break;
+            }
+            case NaviInfo.TYPE_NAVI: {
+                if (launcherIcon != null && naviBean.getIcon() - 1 >= 0 && naviBean.getIcon() - 1 < ICONS.length) {
+                    launcherIcon.setImageResource(ICONS[naviBean.getIcon() - 1]);
+                }
+
+                if (popupIcon != null && naviBean.getIcon() - 1 >= 0 && naviBean.getIcon() - 1 < ICONS.length) {
+                    popupIcon.setImageResource(ICONS[naviBean.getIcon() - 1]);
+                }
+                if (popupdis != null && naviBean.getDis() > -1) {
+                    if (naviBean.getDis() < 10) {
+                        popupdis.setText("现在");
+                    } else {
+                        if (naviBean.getDis() > 1000) {
+                            String msg = naviBean.getDis() / 1000 + "公里后";
+                            popupdis.setText(msg);
+                        } else {
+                            String msg = naviBean.getDis() + "米后";
+                            popupdis.setText(msg);
+                        }
+
+                    }
+                }
+                if (popuproad != null && CommonUtil.isNotNull(naviBean.getWroad())) {
+                    popuproad.setText(naviBean.getWroad());
+                }
+                if (popupmsg != null && naviBean.getRemainTime() > -1 && naviBean.getRemainDis() > -1) {
+                    if (naviBean.getRemainTime() == 0 || naviBean.getRemainDis() == 0) {
+                        popupmsg.setText("到达");
+                    } else {
+                        String msg = "剩余" + new BigDecimal(naviBean.getRemainDis() / 1000f).setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue() + "公里  " +
+                                naviBean.getRemainTime() / 60 + "分钟";
+                        popupmsg.setText(msg);
+                    }
+                }
+                break;
+            }
+        }
+
     }
 
     @Override
@@ -138,7 +227,11 @@ public class AMapCarPlugin implements IPlugin, View.OnClickListener {
 
     @Override
     public View getPopupView() {
-        return null;
+        if (popupView == null) {
+            popupView = (FrameLayout) View.inflate(context, R.layout.plugin_amap_popup, null);
+            initPopupView(popupView);
+        }
+        return popupView;
     }
 
     @Override

@@ -64,7 +64,7 @@ public class PopupWin {
     private int screenHeight = -1;
     //
     private int currentPluginIndex = -1;
-    private final String[] pluginNames = {PluginManage.MUSIC};
+    private final String[] pluginNames = {PluginManage.MUSIC, PluginManage.AMAPCAR};
 
     private boolean moveing = false;
 

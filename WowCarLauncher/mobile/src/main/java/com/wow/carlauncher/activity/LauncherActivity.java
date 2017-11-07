@@ -118,8 +118,6 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
     private PackageManager pm;
     private AudioManager audioManager;
 
-    private LoadWin loadWin;
-
     private int oldVolume = -1;
 
     @Override
@@ -127,18 +125,8 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         mContext = this;
 
-        //载入界面，防止出现卡的现象
-        loadWin = new LoadWin((CarLauncherApplication) getApplication());
-        loadWin.show();
-        Looper.myQueue().addIdleHandler(new MessageQueue.IdleHandler() {
-            @Override
-            public boolean queueIdle() {
-                Log.i("IdleHandler", "queueIdle");
-                init();
-                initView();
-                return false;
-            }
-        });
+        init();
+        initView();
     }
 
     public void init() {
@@ -197,12 +185,6 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
         loadDock();
         checkAppState();
         checkPermission();
-        x.task().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                loadWin.hide();
-            }
-        }, 500);
     }
 
     private void loadDock() {

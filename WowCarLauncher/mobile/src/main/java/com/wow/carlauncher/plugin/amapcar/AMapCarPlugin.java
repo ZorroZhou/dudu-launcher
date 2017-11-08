@@ -55,6 +55,10 @@ public class AMapCarPlugin implements IPlugin, View.OnClickListener {
     private RelativeLayout launcherView;
     private View launcherController;
     private ImageView launcherIcon;
+    private LinearLayout launchernavi;
+    private TextView launcherdis;
+    private TextView launcherroad;
+    private TextView launchermsg;
 
     private AMapCartReceiver amapReceiver;
     private AMapCartSend amapSend;
@@ -95,6 +99,10 @@ public class AMapCarPlugin implements IPlugin, View.OnClickListener {
 
         launcherIcon = view.findViewById(R.id.iv_icon);
         launcherController = view.findViewById(R.id.ll_controller);
+        launchernavi = view.findViewById(R.id.ll_navi);
+        launcherdis = view.findViewById(R.id.tv_dis);
+        launcherroad = view.findViewById(R.id.tv_road);
+        launchermsg = view.findViewById(R.id.tv_msg);
     }
 
     @Override
@@ -140,12 +148,11 @@ public class AMapCarPlugin implements IPlugin, View.OnClickListener {
                 break;
             }
             case R.id.btn_go_company: {
-//                if (!AppUtil.isInstall(context, AMAP_PACKAGE)) {
-//                    Toast.makeText(context, "没有安装高德地图", Toast.LENGTH_SHORT).show();
-//                    break;
-//                }
-//                amapSend.getComp();
-                amapSend.testNavi();
+                if (!AppUtil.isInstall(context, AMAP_PACKAGE)) {
+                    Toast.makeText(context, "没有安装高德地图", Toast.LENGTH_SHORT).show();
+                    break;
+                }
+                amapSend.getComp();
                 break;
             }
         }
@@ -158,8 +165,10 @@ public class AMapCarPlugin implements IPlugin, View.OnClickListener {
                 if (launcherController != null) {
                     if (naviBean.getState() == 8 || naviBean.getState() == 10) {
                         launcherController.setVisibility(View.GONE);
+                        launchernavi.setVisibility(View.VISIBLE);
                     } else if (naviBean.getState() == 9 || naviBean.getState() == 11) {
                         launcherController.setVisibility(View.VISIBLE);
+                        launchernavi.setVisibility(View.GONE);
                         launcherIcon.setImageResource(R.mipmap.ic_amap);
                     }
                 }
@@ -179,10 +188,38 @@ public class AMapCarPlugin implements IPlugin, View.OnClickListener {
                 if (launcherIcon != null && naviBean.getIcon() - 1 >= 0 && naviBean.getIcon() - 1 < ICONS.length) {
                     launcherIcon.setImageResource(ICONS[naviBean.getIcon() - 1]);
                 }
+                if (launcherdis != null && naviBean.getDis() > -1) {
+                    if (naviBean.getDis() < 10) {
+                        launcherdis.setText("现在");
+                    } else {
+                        if (naviBean.getDis() > 1000) {
+                            String msg = naviBean.getDis() / 1000 + "公里后";
+                            launcherdis.setText(msg);
+                        } else {
+                            String msg = naviBean.getDis() + "米后";
+                            launcherdis.setText(msg);
+                        }
+
+                    }
+                }
+                if (launcherroad != null && CommonUtil.isNotNull(naviBean.getWroad())) {
+                    launcherroad.setText(naviBean.getWroad());
+                }
+                if (launchermsg != null && naviBean.getRemainTime() > -1 && naviBean.getRemainDis() > -1) {
+                    if (naviBean.getRemainTime() == 0 || naviBean.getRemainDis() == 0) {
+                        launchermsg.setText("到达");
+                    } else {
+                        String msg = "剩余" + new BigDecimal(naviBean.getRemainDis() / 1000f).setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue() + "公里  " +
+                                naviBean.getRemainTime() / 60 + "分钟";
+                        launchermsg.setText(msg);
+                    }
+                }
+
 
                 if (popupIcon != null && naviBean.getIcon() - 1 >= 0 && naviBean.getIcon() - 1 < ICONS.length) {
                     popupIcon.setImageResource(ICONS[naviBean.getIcon() - 1]);
                 }
+
                 if (popupdis != null && naviBean.getDis() > -1) {
                     if (naviBean.getDis() < 10) {
                         popupdis.setText("现在");

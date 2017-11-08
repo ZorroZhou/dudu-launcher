@@ -223,7 +223,7 @@ public class SystemMusicPlugin extends MusicController {
                 PACKAGE_NAME = intent.getStringExtra("android.media.extra.PACKAGE_NAME");
             }
             if (intent.getStringExtra("artist") != null && intent.getStringExtra("track") != null) {
-                EventBus.getDefault().post(new PEventMusicInfoChange(null, intent.getStringExtra("track"), intent.getStringExtra("artist")));
+                EventBus.getDefault().post(new PEventMusicInfoChange(intent.getStringExtra("track"), intent.getStringExtra("artist"), 0, 0));
             }
             int playstate = intent.getIntExtra("playstate", -1);
             if (playstate == 3 || playstate == 4) {

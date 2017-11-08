@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
@@ -31,6 +32,7 @@ public class QQMusicCarPopupView extends LinearLayout implements View.OnClickLis
     private QQMusicCarPlugin controller;
     private boolean playing = false;
     private TextView tv_title;
+    private ProgressBar pb_music;
 
     @Subscribe
     public void onEventMainThread(final PEventMusicInfoChange event) {
@@ -41,6 +43,11 @@ public class QQMusicCarPopupView extends LinearLayout implements View.OnClickLis
                     tv_title.setText(event.title);
                 } else {
                     tv_title.setText("标题");
+                }
+
+                if (pb_music != null && event.curr_time > 0 && event.total_time > 0) {
+                    pb_music.setProgress(event.curr_time);
+                    pb_music.setMax(event.total_time);
                 }
             }
         });
@@ -76,27 +83,28 @@ public class QQMusicCarPopupView extends LinearLayout implements View.OnClickLis
     }
 
     private void init() {
-        LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.plugin_music_popup, null);
+        View linearLayout = inflater.inflate(R.layout.plugin_music_qcm_popup, null);
         this.addView(linearLayout, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         iv_play = findViewById(R.id.iv_play);
         tv_title = findViewById(R.id.tv_title);
+        pb_music = findViewById(R.id.pb_music);
 
-        iv_play.setOnClickListener(this);
-        findViewById(R.id.iv_prew).setOnClickListener(this);
-        findViewById(R.id.iv_next).setOnClickListener(this);
+        findViewById(R.id.ll_play).setOnClickListener(this);
+        findViewById(R.id.ll_prew).setOnClickListener(this);
+        findViewById(R.id.ll_next).setOnClickListener(this);
 
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.iv_prew: {
+            case R.id.ll_prew: {
                 if (controller != null) {
                     controller.pre();
                 }
                 break;
             }
-            case R.id.iv_play: {
+            case R.id.ll_play: {
                 if (controller != null) {
                     if (playing) {
                         controller.pause();
@@ -106,7 +114,7 @@ public class QQMusicCarPopupView extends LinearLayout implements View.OnClickLis
                 }
                 break;
             }
-            case R.id.iv_next: {
+            case R.id.ll_next: {
                 if (controller != null) {
                     controller.next();
                 }

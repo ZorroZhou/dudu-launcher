@@ -4,6 +4,7 @@ import android.appwidget.AppWidgetHost;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProviderInfo;
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -23,8 +24,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import static com.wow.carlauncher.common.CommonData.APP_WIDGET_HOST_ID;
-import static com.wow.carlauncher.common.CommonData.SDATA_MUSIC_PLUGIN_NCM_LANNCHER;
-import static com.wow.carlauncher.common.CommonData.SDATA_MUSIC_PLUGIN_NCM_POPUP;
+import static com.wow.carlauncher.common.CommonData.SDATA_MUSIC_PLUGIN_QQMUSIC_LANNCHER;
+import static com.wow.carlauncher.common.CommonData.SDATA_MUSIC_PLUGIN_QQMUSIC_POPUP;
 
 /**
  * Created by 10124 on 2017/10/26.
@@ -61,8 +62,8 @@ public class QQMusicPlugin extends MusicController {
         appWidgetManager = AppWidgetManager.getInstance(context);
         appWidgetHost.startListening();
 
-        int popup = SharedPreUtil.getSharedPreInteger(SDATA_MUSIC_PLUGIN_NCM_POPUP, -1);
-        int launcher = SharedPreUtil.getSharedPreInteger(SDATA_MUSIC_PLUGIN_NCM_LANNCHER, -1);
+        int popup = SharedPreUtil.getSharedPreInteger(SDATA_MUSIC_PLUGIN_QQMUSIC_POPUP, -1);
+        int launcher = SharedPreUtil.getSharedPreInteger(SDATA_MUSIC_PLUGIN_QQMUSIC_LANNCHER, -1);
         if (launcher == -1 || popup == -1) {
             return;
         }
@@ -73,7 +74,7 @@ public class QQMusicPlugin extends MusicController {
         final View launcherWidgetView = appWidgetHost.createView(context, launcher, launcherWidgetInfo);
         launcherWidgetView.setPadding(0, 0, 0, 0);
 
-        launcherView = (RelativeLayout) View.inflate(context, R.layout.plugin_music_ncm_launcher, null);
+        launcherView = (RelativeLayout) View.inflate(context, R.layout.plugin_music_qm_launcher, null);
         launcherHouse = launcherView.findViewById(R.id.ll_house);
         launcherHouse.addView(launcherWidgetView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
         launcherCover = launcherView.findViewById(R.id.iv_cover);
@@ -82,6 +83,7 @@ public class QQMusicPlugin extends MusicController {
         launcherArtist = launcherView.findViewById(R.id.tv_artist);
         launcherProgress = launcherView.findViewById(R.id.pb_music);
         launcherIvPlay = launcherView.findViewById(R.id.iv_play);
+
         launcherView.findViewById(R.id.ll_play).setOnClickListener(launcherOnClickListener);
         launcherView.findViewById(R.id.ll_prew).setOnClickListener(launcherOnClickListener);
         launcherView.findViewById(R.id.ll_next).setOnClickListener(launcherOnClickListener);
@@ -92,18 +94,19 @@ public class QQMusicPlugin extends MusicController {
         final View popupWidgetView = appWidgetHost.createView(context, popup, popupWidgetInfo);
         popupWidgetView.setPadding(0, 0, 0, 0);
 
-        popupView = (RelativeLayout) View.inflate(context, R.layout.plugin_music_ncm_popup, null);
+        popupView = (RelativeLayout) View.inflate(context, R.layout.plugin_music_qm_popup, null);
         popupHouse = popupView.findViewById(R.id.ll_house);
         popupHouse.addView(popupWidgetView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
         popupTitle = popupView.findViewById(R.id.tv_title);
         popupProgress = popupView.findViewById(R.id.pb_music);
         popupIvPlay = popupView.findViewById(R.id.iv_play);
-        popupIvPlay.setOnClickListener(popupOnClickListener);
+
         popupView.findViewById(R.id.ll_play).setOnClickListener(popupOnClickListener);
         popupView.findViewById(R.id.ll_prew).setOnClickListener(popupOnClickListener);
         popupView.findViewById(R.id.ll_next).setOnClickListener(popupOnClickListener);
 
         ergodicPopupView((ViewGroup) popupWidgetView);
+        ergodicView((ViewGroup) popupWidgetView, 0);
         startUpdate();
     }
 
@@ -134,55 +137,11 @@ public class QQMusicPlugin extends MusicController {
         appWidgetManager = null;
     }
 
-    private View.OnClickListener launcherOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.iv_prew: {
-                    if (launcherWidgetViewPrew != null) {
-                        launcherWidgetViewPrew.performClick();
-                    }
-                    playClickTime = System.currentTimeMillis();
-                    if (!isruning) {
-                        launcherIvPlay.setImageResource(R.mipmap.ic_pause);
-                        isruning = true;
-                    }
-                    break;
-                }
-                case R.id.iv_play: {
-                    if (launcherWidgetViewPlay != null) {
-                        launcherWidgetViewPlay.performClick();
-                    }
-                    playClickTime = System.currentTimeMillis();
-                    if (!isruning) {
-                        launcherIvPlay.setImageResource(R.mipmap.ic_pause);
-                        isruning = true;
-                    } else {
-                        launcherIvPlay.setImageResource(R.mipmap.ic_play);
-                        isruning = false;
-                    }
-                    break;
-                }
-                case R.id.iv_next: {
-                    if (launcherWidgetViewNext != null) {
-                        launcherWidgetViewNext.performClick();
-                    }
-                    playClickTime = System.currentTimeMillis();
-                    if (!isruning) {
-                        launcherIvPlay.setImageResource(R.mipmap.ic_pause);
-                        isruning = true;
-                    }
-                    break;
-                }
-            }
-        }
-    };
-
     private View.OnClickListener popupOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
-                case R.id.iv_prew: {
+                case R.id.ll_prew: {
                     if (popupWidgetViewPrew != null) {
                         popupWidgetViewPrew.performClick();
                     }
@@ -193,7 +152,7 @@ public class QQMusicPlugin extends MusicController {
                     }
                     break;
                 }
-                case R.id.iv_play: {
+                case R.id.ll_play: {
                     if (popupWidgetViewPlay != null) {
                         popupWidgetViewPlay.performClick();
                     }
@@ -207,7 +166,7 @@ public class QQMusicPlugin extends MusicController {
                     }
                     break;
                 }
-                case R.id.iv_next: {
+                case R.id.ll_next: {
                     if (popupWidgetViewNext != null) {
                         popupWidgetViewNext.performClick();
                     }
@@ -268,7 +227,7 @@ public class QQMusicPlugin extends MusicController {
         //先处理背景
         final ViewGroup bg = (ViewGroup) vg.getChildAt(0);
 
-        View v2 = ViewUtils.getDeepViewByIndex(bg, new int[]{1, 0});
+        View v2 = ViewUtils.getDeepViewByIndex(bg, new int[]{1, 0, 0});
         if (v2 instanceof TextView) {
             popupWidgetViewTitle = (TextView) v2;
             popupTitle.setText(popupWidgetViewTitle.getText());
@@ -280,17 +239,17 @@ public class QQMusicPlugin extends MusicController {
             popupProgress.setMax(popupWidgetViewProgressBar.getMax());
             popupProgress.setProgress(popupWidgetViewProgressBar.getProgress());
         }
-        View v6 = ViewUtils.getDeepViewByIndex(bg, new int[]{1, 2, 2});
+        View v6 = ViewUtils.getDeepViewByIndex(bg, new int[]{1, 2, 3});
         if (v6 instanceof ImageView) {
             popupWidgetViewPrew = (ImageView) v6;
         }
 
-        View v7 = ViewUtils.getDeepViewByIndex(bg, new int[]{1, 2, 3});
+        View v7 = ViewUtils.getDeepViewByIndex(bg, new int[]{1, 2, 4});
         if (v7 instanceof ImageView) {
             popupWidgetViewNext = (ImageView) v7;
         }
 
-        View v8 = ViewUtils.getDeepViewByIndex(bg, new int[]{1, 2, 1});
+        View v8 = ViewUtils.getDeepViewByIndex(bg, new int[]{1, 2, 2});
         if (v8 instanceof ImageView) {
             popupWidgetViewPlay = (ImageView) v8;
         }
@@ -309,11 +268,55 @@ public class QQMusicPlugin extends MusicController {
     //app:id/amr 歌曲名称的id
     //app:id/an0 作者的
     //app:id/amq 封面的id
-    private TextView launcherWidgetViewTitle, launcherWidgetViewArtist, launcherWidgetViewTime;
+    private TextView launcherWidgetViewTitle, launcherWidgetViewArtist;
     private ProgressBar launcherWidgetViewProgressBar;
     private ImageView launcherWidgetViewPrew, launcherWidgetViewNext, launcherWidgetViewPlay, launcherWidgetViewCover;
-    private int launcherWidgetViewTimeLastUpdateValue = 0;
+    private int launcherWidgetViewProgressLastUpdateValue = 0;
     private int launcherChangeTime = 0;
+
+    private View.OnClickListener launcherOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.ll_prew: {
+                    if (launcherWidgetViewPrew != null) {
+                        launcherWidgetViewPrew.performClick();
+                    }
+                    playClickTime = System.currentTimeMillis();
+                    if (!isruning) {
+                        launcherIvPlay.setImageResource(R.mipmap.ic_pause);
+                        isruning = true;
+                    }
+                    break;
+                }
+                case R.id.ll_play: {
+                    if (launcherWidgetViewPlay != null) {
+                        launcherWidgetViewPlay.performClick();
+                    }
+                    playClickTime = System.currentTimeMillis();
+                    if (!isruning) {
+                        launcherIvPlay.setImageResource(R.mipmap.ic_pause);
+                        isruning = true;
+                    } else {
+                        launcherIvPlay.setImageResource(R.mipmap.ic_play);
+                        isruning = false;
+                    }
+                    break;
+                }
+                case R.id.ll_next: {
+                    if (launcherWidgetViewNext != null) {
+                        launcherWidgetViewNext.performClick();
+                    }
+                    playClickTime = System.currentTimeMillis();
+                    if (!isruning) {
+                        launcherIvPlay.setImageResource(R.mipmap.ic_pause);
+                        isruning = true;
+                    }
+                    break;
+                }
+            }
+        }
+    };
 
     private void updateLauncherView() {
         x.task().autoPost(new Runnable() {
@@ -325,9 +328,6 @@ public class QQMusicPlugin extends MusicController {
                 if (launcherWidgetViewArtist != null) {
                     launcherArtist.setText(launcherWidgetViewArtist.getText());
                 }
-                if (launcherWidgetViewTime != null) {
-                    launcherTime.setText(launcherWidgetViewTime.getText());
-                }
                 if (launcherWidgetViewCover != null) {
                     launcherCover.setImageDrawable(launcherWidgetViewCover.getDrawable());
                 }
@@ -336,7 +336,7 @@ public class QQMusicPlugin extends MusicController {
                     launcherProgress.setMax(launcherWidgetViewProgressBar.getMax());
                 }
                 if (System.currentTimeMillis() - playClickTime > 2000) {
-                    if (launcherProgress.getProgress() != launcherWidgetViewTimeLastUpdateValue) {
+                    if (launcherProgress.getProgress() != launcherWidgetViewProgressLastUpdateValue) {
                         launcherChangeTime = 0;
                         launcherIvPlay.setImageResource(R.mipmap.ic_pause);
                         isruning = true;
@@ -347,55 +347,61 @@ public class QQMusicPlugin extends MusicController {
                             isruning = false;
                         }
                     }
-                    launcherWidgetViewTimeLastUpdateValue = launcherProgress.getProgress();
+                    launcherWidgetViewProgressLastUpdateValue = launcherProgress.getProgress();
                 }
             }
         });
     }
 
+    private void ergodicView(ViewGroup vg, int root) {
+        for (int i = 0; i < vg.getChildCount(); i++) {
+            Log.e("~!~!!!!!!!!!!!!!", root + ":" + vg.getChildAt(i) + ":" + i);
+            View v = vg.getChildAt(i);
+            //背景
+            if (v instanceof ViewGroup) {
+                int xx = root + 1;
+                ergodicView((ViewGroup) v, xx);
+            }
+        }
+    }
+
     private void ergodicLauncherView(final ViewGroup vg) {
         //先处理背景
         final ViewGroup bg = (ViewGroup) vg.getChildAt(0);
-        View v1 = ViewUtils.getDeepViewByIndex(bg, new int[]{1, 0});
+        View v1 = ViewUtils.getDeepViewByIndex(bg, new int[]{0, 0});
         if (v1 instanceof ImageView) {
             launcherWidgetViewCover = (ImageView) v1;
             launcherCover.setImageDrawable(launcherWidgetViewCover.getDrawable());
         }
-        View v2 = ViewUtils.getDeepViewByIndex(bg, new int[]{1, 1, 0});
+        View v2 = ViewUtils.getDeepViewByIndex(bg, new int[]{0, 1, 1});
         if (v2 instanceof TextView) {
             launcherWidgetViewTitle = (TextView) v2;
             launcherTitle.setText(launcherWidgetViewTitle.getText());
         }
-        View v3 = ViewUtils.getDeepViewByIndex(bg, new int[]{1, 1, 1, 0});
+        View v3 = ViewUtils.getDeepViewByIndex(bg, new int[]{0, 1, 2});
         if (v3 instanceof TextView) {
             launcherWidgetViewArtist = (TextView) v3;
             launcherArtist.setText(launcherWidgetViewArtist.getText());
         }
 
-        View v4 = ViewUtils.getDeepViewByIndex(bg, new int[]{1, 1, 1, 1});
-        if (v4 instanceof TextView) {
-            launcherWidgetViewTime = (TextView) v4;
-            launcherTime.setText(launcherWidgetViewTime.getText());
-        }
-        View v5 = ViewUtils.getDeepViewByIndex(bg, new int[]{1, 1, 2});
+        View v5 = ViewUtils.getDeepViewByIndex(bg, new int[]{1});
         if (v5 instanceof ProgressBar) {
             launcherWidgetViewProgressBar = (ProgressBar) v5;
             launcherProgress.setProgress(launcherWidgetViewProgressBar.getProgress());
             launcherProgress.setMax(launcherWidgetViewProgressBar.getMax());
         }
-        View v6 = ViewUtils.getDeepViewByIndex(bg, new int[]{1, 1, 3, 3});
+        View v6 = ViewUtils.getDeepViewByIndex(bg, new int[]{2, 3});
         if (v6 instanceof ImageView) {
             launcherWidgetViewPrew = (ImageView) v6;
         }
 
-        View v7 = ViewUtils.getDeepViewByIndex(bg, new int[]{1, 1, 3, 4});
-        if (v7 instanceof ImageView) {
-            launcherWidgetViewNext = (ImageView) v7;
-        }
-
-        View v8 = ViewUtils.getDeepViewByIndex(bg, new int[]{1, 1, 3, 2});
+        View v8 = ViewUtils.getDeepViewByIndex(bg, new int[]{2, 2});
         if (v8 instanceof ImageView) {
             launcherWidgetViewPlay = (ImageView) v8;
+        }
+        View v7 = ViewUtils.getDeepViewByIndex(bg, new int[]{2, 4});
+        if (v7 instanceof ImageView) {
+            launcherWidgetViewNext = (ImageView) v7;
         }
     }
 

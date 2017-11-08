@@ -48,10 +48,10 @@ public class ControllerPlugin implements IPlugin, View.OnClickListener {
     private void initLauncherView(View launcherView) {
         launcherView.findViewById(R.id.btn_vu).setOnClickListener(this);
         launcherView.findViewById(R.id.btn_vd).setOnClickListener(this);
-        launcherView.findViewById(R.id.btn_close_screen).setOnClickListener(this);
         launcherView.findViewById(R.id.btn_jy).setOnClickListener(this);
+        launcherView.findViewById(R.id.btn_close_screen).setOnClickListener(this);
+
         launcherWifi = launcherView.findViewById(R.id.tv_wifi);
-        Log.e(TAG, "initLauncherView: " + launcherWifi);
         refreshWifi();
     }
 
@@ -96,9 +96,9 @@ public class ControllerPlugin implements IPlugin, View.OnClickListener {
             case R.id.btn_jy: {
                 if (oldV == 0) {
                     oldV = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0, AudioManager.STREAM_MUSIC);
+                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0, AudioManager.FLAG_SHOW_UI);
                 } else {
-                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, oldV, AudioManager.STREAM_MUSIC);
+                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, oldV, AudioManager.FLAG_SHOW_UI);
                     oldV = 0;
                 }
                 break;

@@ -98,7 +98,7 @@ public class NeteaseCloudMusicPlugin extends MusicController {
         popupTitle = popupView.findViewById(R.id.tv_title);
         popupProgress = popupView.findViewById(R.id.pb_music);
         popupIvPlay = popupView.findViewById(R.id.iv_play);
-        popupIvPlay.setOnClickListener(popupOnClickListener);
+
         popupView.findViewById(R.id.ll_play).setOnClickListener(popupOnClickListener);
         popupView.findViewById(R.id.ll_prew).setOnClickListener(popupOnClickListener);
         popupView.findViewById(R.id.ll_next).setOnClickListener(popupOnClickListener);
@@ -138,7 +138,7 @@ public class NeteaseCloudMusicPlugin extends MusicController {
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
-                case R.id.iv_prew: {
+                case R.id.ll_prew: {
                     if (launcherWidgetViewPrew != null) {
                         launcherWidgetViewPrew.performClick();
                     }
@@ -149,7 +149,7 @@ public class NeteaseCloudMusicPlugin extends MusicController {
                     }
                     break;
                 }
-                case R.id.iv_play: {
+                case R.id.ll_play: {
                     if (launcherWidgetViewPlay != null) {
                         launcherWidgetViewPlay.performClick();
                     }
@@ -163,7 +163,7 @@ public class NeteaseCloudMusicPlugin extends MusicController {
                     }
                     break;
                 }
-                case R.id.iv_next: {
+                case R.id.ll_next: {
                     if (launcherWidgetViewNext != null) {
                         launcherWidgetViewNext.performClick();
                     }
@@ -182,7 +182,7 @@ public class NeteaseCloudMusicPlugin extends MusicController {
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
-                case R.id.iv_prew: {
+                case R.id.ll_prew: {
                     if (popupWidgetViewPrew != null) {
                         popupWidgetViewPrew.performClick();
                     }
@@ -193,7 +193,7 @@ public class NeteaseCloudMusicPlugin extends MusicController {
                     }
                     break;
                 }
-                case R.id.iv_play: {
+                case R.id.ll_play: {
                     if (popupWidgetViewPlay != null) {
                         popupWidgetViewPlay.performClick();
                     }
@@ -207,7 +207,7 @@ public class NeteaseCloudMusicPlugin extends MusicController {
                     }
                     break;
                 }
-                case R.id.iv_next: {
+                case R.id.ll_next: {
                     if (popupWidgetViewNext != null) {
                         popupWidgetViewNext.performClick();
                     }

@@ -1,8 +1,12 @@
 package com.wow.carlauncher.common;
 
+import android.util.Log;
+
 import com.wow.carlauncher.R;
 
 import java.util.Calendar;
+
+import static com.wow.carlauncher.plugin.controller.ControllerPlugin.TAG;
 
 /**
  * Created by 10124 on 2017/11/3.
@@ -91,7 +95,8 @@ public class WeatherIconUtil {
     }
 
     static boolean isNight() {
-        int i = Calendar.getInstance().get(Calendar.HOUR);
+        int i = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+        Log.e(TAG, "isNight: " + i);
         return (i < 6) || (i >= 18);
     }
 }

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -17,11 +18,14 @@ import com.wow.carlauncher.plugin.music.event.PEventMusicInfoChange;
 import com.wow.carlauncher.plugin.music.event.PEventMusicStateChange;
 
 import org.greenrobot.eventbus.EventBus;
+import org.xutils.x;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import static com.wow.carlauncher.plugin.controller.ControllerPlugin.TAG;
 
 /**
  * Created by 10124 on 2017/10/26.
@@ -49,7 +53,8 @@ public class QQMusicCarPlugin extends MusicController {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("com.tencent.qqmusiccar.action.PLAY_COMMAND_SEND_FOR_THIRD");
         this.context.registerReceiver(mReceiver, intentFilter);
-        //startUpdateTime();
+
+        refreshInfo();
     }
 
     @Override
@@ -89,7 +94,10 @@ public class QQMusicCarPlugin extends MusicController {
         intent.setClassName(PACKAGE_NAME, CLASS_NAME);
         intent.setData(Uri.parse("qqmusiccar://asdasd?action=20&m0=" + event));
         context.sendBroadcast(intent);
+        refreshInfo();
+    }
 
+    private void refreshInfo() {
         Intent intent2 = new Intent("com.tencent.qqmusiccar.action");
         intent2.setClassName(PACKAGE_NAME, CLASS_NAME);
         intent2.setData(Uri.parse("qqmusiccar://asdasd?action=100"));
@@ -99,7 +107,6 @@ public class QQMusicCarPlugin extends MusicController {
     @Override
     public void destroy() {
         super.destroy();
-        //stopUpdateTime();
         context.unregisterReceiver(mReceiver);
         if (qqMusicCarLauncherView.getParent() != null) {
             ((ViewGroup) qqMusicCarLauncherView.getParent()).removeView(qqMusicCarLauncherView);
@@ -125,16 +132,18 @@ public class QQMusicCarPlugin extends MusicController {
                             Map a = as.get(0);
                             artist = a.get("singer") + "";
                         }
-                        EventBus.getDefault().post(new PEventMusicInfoChange(null, title, artist));
-                        //Log.e("!!!!!!!!!!!!!!", "onReceive: " + d.get("state"));
+                        int curr_time = ((Double) d.get("curr_time")).intValue();
+                        int total_time = ((Double) d.get("total_time")).intValue();
+                        EventBus.getDefault().post(new PEventMusicInfoChange(title, artist, curr_time, total_time));
+                        Log.e("!!!!!!!!!!!!!!", "onReceive: " + d);
                         if (d.get("state") != null && (double) d.get("state") == 2) {
                             EventBus.getDefault().post(new PEventMusicStateChange(true));
-
-                            Intent intent2 = new Intent("com.tencent.qqmusiccar.action");
-                            intent2.setClassName(PACKAGE_NAME, CLASS_NAME);
-                            intent2.setData(Uri.parse("qqmusiccar://asdasd?action=100"));
-                            context.sendBroadcast(intent2);
-
+                            x.task().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    refreshInfo();
+                                }
+                            }, 500);
                         } else {
                             EventBus.getDefault().post(new PEventMusicStateChange(false));
                         }

@@ -5,16 +5,18 @@ package com.wow.carlauncher.plugin.music.event;
  */
 
 public class PEventMusicInfoChange {
-    public String cover;
     public String title;
     public String artist;
+    public int curr_time;
+    public int total_time;
 
     public PEventMusicInfoChange() {
     }
 
-    public PEventMusicInfoChange(String cover, String title, String artist) {
-        this.cover = cover;
+    public PEventMusicInfoChange(String title, String artist, int curr_time, int total_time) {
         this.title = title;
         this.artist = artist;
+        this.curr_time = curr_time;
+        this.total_time = total_time;
     }
 }

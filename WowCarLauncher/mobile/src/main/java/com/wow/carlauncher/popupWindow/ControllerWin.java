@@ -104,9 +104,9 @@ public class ControllerWin implements View.OnClickListener {
             case R.id.btn_jy: {
                 if (oldVolume == 0) {
                     oldVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0, AudioManager.STREAM_MUSIC);
+                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0, AudioManager.FLAG_SHOW_UI);
                 } else {
-                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, oldVolume, AudioManager.STREAM_MUSIC);
+                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, oldVolume, AudioManager.FLAG_SHOW_UI);
                     oldVolume = 0;
                 }
                 break;

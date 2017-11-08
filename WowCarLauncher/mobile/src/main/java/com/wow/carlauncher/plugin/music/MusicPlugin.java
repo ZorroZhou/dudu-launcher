@@ -8,10 +8,9 @@ import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.plugin.IPlugin;
 import com.wow.carlauncher.plugin.PluginManage;
-import com.wow.carlauncher.plugin.PopupViewProportion;
 import com.wow.carlauncher.plugin.music.controllers.NeteaseCloudMusicPlugin;
 import com.wow.carlauncher.plugin.music.controllers.QQMusicCarPlugin;
-import com.wow.carlauncher.plugin.music.controllers.QQMusicPlugin;
+import com.wow.carlauncher.plugin.music.controllers.QQMusicPluginOld;
 import com.wow.carlauncher.plugin.music.controllers.SystemMusicPlugin;
 
 /**
@@ -47,7 +46,7 @@ public class MusicPlugin implements IPlugin {
                 break;
             }
             case QQMUSIC: {
-                this.controller = new QQMusicPlugin(context);
+                this.controller = new QQMusicPluginOld(context);
                 break;
             }
             default:
@@ -109,7 +108,7 @@ public class MusicPlugin implements IPlugin {
                 break;
             }
             case QQMUSIC: {
-                this.controller = new QQMusicPlugin(context);
+                this.controller = new QQMusicPluginOld(context);
                 break;
             }
             default:

@@ -25,6 +25,6 @@ public class AboutActivity extends BaseActivity {
     @Override
     public void initView() {
         setTitle("系统设置");
-        about.setText("技术支持：QQ860913526.\n如有问题请反馈至qq邮箱");
+        about.setText("技术支持：QQ860913526.\nQQ交流群：109799213.\n如有问题请反馈至群或者qq邮箱");
     }
 }

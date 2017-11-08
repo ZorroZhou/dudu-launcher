@@ -81,7 +81,7 @@ public class SysMusicLauncherView extends LinearLayout implements View.OnClickLi
     }
 
     private void init() {
-        LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.plugin_music_launcher, null);
+        LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.plugin_music_qcm_launcher, null);
         this.addView(linearLayout, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         iv_play = findViewById(R.id.iv_play);
         tv_title = findViewById(R.id.tv_title);

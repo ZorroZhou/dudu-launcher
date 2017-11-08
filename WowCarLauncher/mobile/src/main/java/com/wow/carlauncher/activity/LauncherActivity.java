@@ -173,7 +173,7 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
         item_2.addView(PluginManage.self().amapCar().getLauncherView(), LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
 
         if (PluginManage.self().controller().getLauncherView().getParent() != null) {
-            ((ViewGroup) PluginManage.self().music().getLauncherView().getParent()).removeView(PluginManage.self().controller().getLauncherView());
+            ((ViewGroup) PluginManage.self().controller().getLauncherView().getParent()).removeView(PluginManage.self().controller().getLauncherView());
         }
         item_3.addView(PluginManage.self().controller().getLauncherView(), LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
 

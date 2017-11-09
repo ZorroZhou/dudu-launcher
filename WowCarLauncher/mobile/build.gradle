@@ -51,7 +51,7 @@ dependencies {
     compile 'com.android.support:support-v4:26.+'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
 
-    compile 'org.xutils:xutils:3.3.38'
+    compile 'org.xutils:xutils:3.0'
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.zhy:percent-support-extends:+'
     compile 'com.google.code.gson:gson:2.2.4'

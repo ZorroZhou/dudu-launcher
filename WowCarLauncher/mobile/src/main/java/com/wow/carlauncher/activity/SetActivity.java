@@ -96,7 +96,7 @@ public class SetActivity extends BaseActivity {
                 dialog.show();
             }
         });
-        music_controller_select.setSummary(CONSOLES[SharedPreUtil.getSharedPreInteger(SDATA_CONSOLE_MARK, SysConsoleImpl.MARK)]);
+        sv_console.setSummary(CONSOLES[SharedPreUtil.getSharedPreInteger(SDATA_CONSOLE_MARK, SysConsoleImpl.MARK)]);
 
         sv_allow_popup_window.setOnValueChangeListener(new SetView.OnValueChangeListener() {
             @Override

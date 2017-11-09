@@ -5,8 +5,6 @@ import android.app.Application;
 import android.os.Bundle;
 
 import com.wow.carlauncher.CarLauncherApplication;
-import com.wow.carlauncher.activity.LauncherActivity;
-import com.wow.carlauncher.popupWindow.LoadWin;
 import com.wow.carlauncher.popupWindow.PopupWin;
 
 /**

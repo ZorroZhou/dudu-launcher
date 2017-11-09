@@ -163,7 +163,7 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
         findViewById(R.id.ll_all_apps).setOnClickListener(this);
         findViewById(R.id.ll_controller).setOnClickListener(this);
         findViewById(R.id.iv_set).setOnClickListener(this);
-
+        findViewById(R.id.ll_time).setOnClickListener(this);
 
         if (PluginManage.self().music().getLauncherView().getParent() != null) {
             ((ViewGroup) PluginManage.self().music().getLauncherView().getParent()).removeView(PluginManage.self().music().getLauncherView());
@@ -293,6 +293,19 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.ll_time: {
+                String packname = SharedPreUtil.getSharedPreString(SDATA_TIME_PLUGIN_OPEN_APP);
+                if (!CommonUtil.isNull(packname)) {
+                    Intent appIntent = pm.getLaunchIntentForPackage(packname);
+                    if (appIntent != null) {
+                        appIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(appIntent);
+                    } else {
+                        showTip("APP丢失");
+                    }
+                }
+                break;
+            }
             case R.id.ll_controller: {
                 ConsoleWin.self().show();
                 break;

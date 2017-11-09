@@ -1,18 +1,19 @@
 package com.wow.carlauncher.common;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wow.carlauncher.R;
@@ -22,14 +23,16 @@ import org.xutils.x;
 /**
  * Created by 10124 on 2017/10/26.
  */
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends Activity {
     protected BaseActivity mContext;
-    protected Toolbar toolbar;
     private int conRes = 0;//内容资源文件
     private RelativeLayout content;
     private boolean loadViewed = false;//是否已经加载视图
     protected ProgressDialog progressDialog;
     protected ProgressInterruptListener progressInterruptListener;
+    private View toolbar;
+    private TextView title;
+    private View base;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,20 +49,19 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         super.setContentView(R.layout.activity_base);
 
+        base = findViewById(R.id.base);
+        toolbar = findViewById(R.id.toolbar);
+        title = findViewById(R.id.tv_title);
+        content = findViewById(R.id.b_content);
         //设置actionbar
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.iv_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
             }
         });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        content = (RelativeLayout) findViewById(R.id.b_content);
+
         View view = LayoutInflater.from(this).inflate(conRes, null);
         content.addView(view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
@@ -96,6 +98,14 @@ public abstract class BaseActivity extends AppCompatActivity {
         conRes = resId;
     }
 
+    protected void setBackground(Drawable drawable) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            base.setBackground(drawable);
+        } else {
+            base.setBackgroundDrawable(drawable);
+        }
+    }
+
     protected void hideTitle() {
         toolbar.setVisibility(View.GONE);
     }
@@ -108,7 +118,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (title == null) {
             return;
         }
-        toolbar.setTitle(title);
+        this.title.setText(title);
     }
 
     private Boolean showLoading = false;

@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.gson.Gson;
-import com.wow.carlauncher.plugin.PopupViewProportion;
 import com.wow.carlauncher.plugin.music.MusicController;
 import com.wow.carlauncher.plugin.music.controllers.qqMusicCar.QQMusicCarLauncherView;
 import com.wow.carlauncher.plugin.music.controllers.qqMusicCar.QQMusicCarPopupView;
@@ -22,10 +21,6 @@ import org.xutils.x;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import static com.wow.carlauncher.plugin.controller.ControllerPlugin.TAG;
 
 /**
  * Created by 10124 on 2017/10/26.

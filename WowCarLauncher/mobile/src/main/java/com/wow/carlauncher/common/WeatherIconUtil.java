@@ -6,7 +6,7 @@ import com.wow.carlauncher.R;
 
 import java.util.Calendar;
 
-import static com.wow.carlauncher.plugin.controller.ControllerPlugin.TAG;
+import static com.wow.carlauncher.plugin.console.ConsolePlugin.TAG;
 
 /**
  * Created by 10124 on 2017/11/3.

@@ -14,6 +14,7 @@ import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.widget.ImageView;
 
 import com.wow.carlauncher.R;
 
@@ -22,7 +23,7 @@ import com.wow.carlauncher.R;
  * @version 1.0<br>
  *          图片圆角实现
  */
-public class CustomImageView extends android.support.v7.widget.AppCompatImageView {
+public class CustomImageView extends ImageView {
     private Paint paint;
     private Paint paintBorder;
     private Bitmap mSrcBitmap;

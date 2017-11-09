@@ -9,6 +9,9 @@ import android.view.View;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.BaseActivity;
 import com.wow.carlauncher.common.CommonData;
+import com.wow.carlauncher.common.console.ConsoleManage;
+import com.wow.carlauncher.common.console.impl.NwdConsoleImpl;
+import com.wow.carlauncher.common.console.impl.SysConsoleImpl;
 import com.wow.carlauncher.common.util.AppUtil;
 import com.wow.carlauncher.common.util.AppUtil.AppInfo;
 import com.wow.carlauncher.common.util.SharedPreUtil;
@@ -51,6 +54,9 @@ public class SetActivity extends BaseActivity {
     @ViewInject(R.id.sv_about)
     private SetView sv_about;
 
+    @ViewInject(R.id.sv_console)
+    private SetView sv_console;
+
     @Override
     public void init() {
         setContent(R.layout.activity_set);
@@ -59,6 +65,39 @@ public class SetActivity extends BaseActivity {
     @Override
     public void initView() {
         setTitle("设置");
+
+        sv_console.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String[] CONSOLES = {"系统", "NWD"};
+                int select = SharedPreUtil.getSharedPreInteger(SDATA_CONSOLE_MARK, SysConsoleImpl.MARK);
+                final ThreadObj<Integer> obj = new ThreadObj<>(select);
+                AlertDialog dialog = new AlertDialog.Builder(mContext).setTitle("请选择控制器").setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        switch (obj.getObj()) {
+                            case SysConsoleImpl.MARK: {
+                                ConsoleManage.self().setConsole(new SysConsoleImpl(mContext));
+                                break;
+                            }
+                            case NwdConsoleImpl.MARK: {
+                                ConsoleManage.self().setConsole(new NwdConsoleImpl(mContext));
+                                break;
+                            }
+                        }
+                    }
+                }).setSingleChoiceItems(CONSOLES, select, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        obj.setObj(which);
+                    }
+                }).create();
+                dialog.show();
+            }
+        });
+
+
         sv_allow_popup_window.setOnValueChangeListener(new SetView.OnValueChangeListener() {
             @Override
             public void onValueChange(String newValue, String oldValue) {

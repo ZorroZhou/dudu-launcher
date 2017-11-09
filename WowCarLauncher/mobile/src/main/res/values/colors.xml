@@ -28,6 +28,7 @@
     <color name="launch_color5">#ea6072</color>
 
     <color name="ncm_4_4_bg">#22000000</color>
+    <color name="toolbar_bg">#99000000</color>
     <color name="launch_dock_bg">#99000000</color>
     <color name="launch_quick_bg">#000</color>
 </resources>

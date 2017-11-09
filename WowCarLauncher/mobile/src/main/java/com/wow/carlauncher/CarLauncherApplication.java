@@ -5,9 +5,10 @@ import android.content.Intent;
 
 import com.wow.carlauncher.common.ActivityLifecycleListener;
 import com.wow.carlauncher.common.LocationManage;
+import com.wow.carlauncher.common.console.ConsoleManage;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.plugin.PluginManage;
-import com.wow.carlauncher.popupWindow.ControllerWin;
+import com.wow.carlauncher.popupWindow.ConsoleWin;
 import com.wow.carlauncher.popupWindow.PopupWin;
 import com.wow.carlauncher.service.MainService;
 
@@ -24,9 +25,10 @@ public class CarLauncherApplication extends Application {
 
         x.Ext.init(this);
         SharedPreUtil.init(this);
+        ConsoleManage.self().init(this);
         PluginManage.self().init(this);
         PopupWin.self().init(this);
-        ControllerWin.self().init(this);
+        ConsoleWin.self().init(this);
         LocationManage.self().init(getApplicationContext());
 
         registerActivityLifecycleCallbacks(new ActivityLifecycleListener(this));

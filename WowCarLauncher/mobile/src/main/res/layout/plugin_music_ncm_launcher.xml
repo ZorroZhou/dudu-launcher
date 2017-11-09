@@ -88,8 +88,8 @@
         android:layout_above="@id/rl_bottom"
         android:indeterminateDrawable="@android:drawable/progress_indeterminate_horizontal"
         android:max="100"
-        android:paddingEnd="10dp"
-        android:paddingStart="10dp"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
         android:progressDrawable="@drawable/l_music_progress" />
 
     <TextView
@@ -97,12 +97,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@id/pb_music"
-        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:ellipsize="end"
         android:gravity="center_vertical"
         android:lines="1"
-        android:paddingEnd="20dp"
-        android:paddingStart="20dp"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"
         android:text="11/33"
         android:textColor="@android:color/white"
         app:layout_textSizePercent="6%h" />
@@ -112,12 +112,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@id/pb_music"
-        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
         android:layout_toLeftOf="@+id/tv_time"
         android:ellipsize="end"
         android:gravity="center_vertical"
         android:lines="1"
-        android:paddingStart="20dp"
+        android:paddingLeft="20dp"
         android:text="@string/music_album"
         android:textColor="@android:color/white"
         app:layout_textSizePercent="6%h" />
@@ -130,8 +130,8 @@
         android:ellipsize="end"
         android:gravity="center_vertical"
         android:lines="1"
-        android:paddingEnd="20dp"
-        android:paddingStart="20dp"
+        android:paddingRight="20dp"
+        android:paddingLeft="20dp"
         android:text="@string/music_name"
         android:textColor="@android:color/white"
         app:layout_textSizePercent="8%h" />

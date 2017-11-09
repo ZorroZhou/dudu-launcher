@@ -64,5 +64,8 @@ public class CommonData {
     //时间插件打开的APP
     public static final String SDATA_TIME_PLUGIN_OPEN_APP = "SDATA_TIME_PLUGIN_OPEN_APP";
 
+    //时间插件打开的APP
+    public static final String SDATA_CONSOLE_MARK = "SDATA_CONSOLE_MARK";
+
     public static final int APP_WIDGET_HOST_ID = 0x200;
 }

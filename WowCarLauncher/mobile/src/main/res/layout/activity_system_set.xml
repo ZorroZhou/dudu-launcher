@@ -44,6 +44,16 @@
                 st:type="buttonB" />
 
             <View style="@style/Interval" />
+
+
+            <com.wow.carlauncher.common.view.SetView
+                android:id="@+id/sv_sys_sdk"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                st:titleEx="查询sdk版本"
+                st:type="buttonB" />
+
+            <View style="@style/Interval" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

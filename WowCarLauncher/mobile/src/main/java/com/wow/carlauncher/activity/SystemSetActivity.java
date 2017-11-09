@@ -30,6 +30,10 @@ public class SystemSetActivity extends BaseActivity {
     @ViewInject(R.id.sv_sys_overlay)
     private SetView sv_sys_overlay;
 
+
+    @ViewInject(R.id.sv_sys_sdk)
+    private SetView sv_sys_sdk;
+
     @Override
     public void init() {
         setContent(R.layout.activity_system_set);
@@ -72,6 +76,13 @@ public class SystemSetActivity extends BaseActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Settings.ACTION_SECURITY_SETTINGS);
                 startActivity(intent);
+            }
+        });
+
+        sv_sys_sdk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showTip("当前SDK版本是" + Build.VERSION.SDK_INT);
             }
         });
     }

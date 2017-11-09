@@ -3,8 +3,6 @@ package com.wow.carlauncher.plugin.music;
 import android.content.Context;
 import android.view.View;
 
-import com.wow.carlauncher.plugin.PopupViewProportion;
-
 /**
  * Created by 10124 on 2017/10/26.
  */

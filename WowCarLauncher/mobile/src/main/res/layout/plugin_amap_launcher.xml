@@ -112,7 +112,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical|end"
-                android:paddingEnd="20dp"
+                android:paddingRight="20dp"
                 android:text="500米后"
                 app:layout_textSizePercent="60%h" />
 
@@ -122,7 +122,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical|start"
-                android:paddingStart="20dp"
+                android:paddingLeft="20dp"
                 android:text="胶州路"
                 app:layout_textSizePercent="60%h" />
         </com.zhy.android.percent.support.PercentLinearLayout>

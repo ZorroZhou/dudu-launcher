@@ -19,7 +19,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingStart="16dp"
+                android:paddingLeft="16dp"
                 android:paddingTop="16dp"
                 android:text="应用设置"
                 android:textColor="@color/colorPrimary"
@@ -35,6 +35,15 @@
             <View style="@style/Interval" />
 
             <com.wow.carlauncher.common.view.SetView
+                android:id="@+id/sv_console"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                st:titleEx="控制层实现（如声音）"
+                st:type="buttonB" />
+
+            <View style="@style/Interval" />
+
+            <com.wow.carlauncher.common.view.SetView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 st:titleEx="壁纸设置"
@@ -45,7 +54,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingStart="16dp"
+                android:paddingLeft="16dp"
                 android:paddingTop="16dp"
                 android:text="悬浮窗设置"
                 android:textColor="@color/colorPrimary"
@@ -85,7 +94,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingStart="16dp"
+                android:paddingLeft="16dp"
                 android:paddingTop="16dp"
                 android:text="音乐插件设置"
                 android:textColor="@color/colorPrimary"
@@ -103,7 +112,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingStart="16dp"
+                android:paddingLeft="16dp"
                 android:paddingTop="16dp"
                 android:text="时间设置"
                 android:textColor="@color/colorPrimary"
@@ -121,7 +130,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingStart="16dp"
+                android:paddingLeft="16dp"
                 android:paddingTop="16dp"
                 android:text="帮助"
                 android:textColor="@color/colorPrimary"

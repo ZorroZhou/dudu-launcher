@@ -1,6 +1,7 @@
 package com.wow.carlauncher.activity;
 
 import android.app.ProgressDialog;
+import android.app.WallpaperManager;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -45,6 +46,8 @@ public class AppSelectActivity extends BaseActivity implements AdapterView.OnIte
 
         gridview.setAdapter(adapter);
         gridview.setOnItemClickListener(this);
+
+        setBackground(WallpaperManager.getInstance(this).getDrawable());
     }
 
     @Override

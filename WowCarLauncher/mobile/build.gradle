@@ -51,8 +51,6 @@ dependencies {
     compile 'com.android.support:support-v4:26.+'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
 
-    compile(name: 'galleryPick', ext: 'aar')
-
     compile 'org.xutils:xutils:3.3.38'
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.zhy:percent-support-extends:+'

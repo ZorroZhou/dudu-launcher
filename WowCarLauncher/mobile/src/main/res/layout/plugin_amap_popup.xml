@@ -88,15 +88,15 @@
                 android:id="@+id/iv_icon"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
                 android:padding="10dp"
                 app:layout_widthPercent="100%h" />
 
             <com.zhy.android.percent.support.PercentLinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_alignParentEnd="true"
-                android:layout_toEndOf="@id/iv_icon"
+                android:layout_alignParentRight="true"
+                android:layout_toRightOf="@id/iv_icon"
                 android:orientation="vertical">
 
                 <TextView

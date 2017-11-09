@@ -232,7 +232,7 @@ public class PopupWin {
                     break;
                 }
                 case R.id.iv_controller: {
-                    ControllerWin.self().show();
+                    ConsoleWin.self().show();
                     break;
                 }
 

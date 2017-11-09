@@ -31,6 +31,7 @@ import com.amap.api.location.AMapLocationListener;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.LocationManage;
 import com.wow.carlauncher.common.WeatherIconUtil;
+import com.wow.carlauncher.common.console.ConsoleManage;
 import com.wow.carlauncher.common.util.AppUtil;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.DateUtil;
@@ -161,8 +162,7 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
         rl_quick.setOnClickListener(this);
 
         findViewById(R.id.ll_all_apps).setOnClickListener(this);
-        findViewById(R.id.iv_up1).setOnClickListener(this);
-        findViewById(R.id.iv_up2).setOnClickListener(this);
+        findViewById(R.id.iv_up).setOnClickListener(this);
         findViewById(R.id.iv_set).setOnClickListener(this);
         findViewById(R.id.btn_vu).setOnClickListener(this);
         findViewById(R.id.btn_vd).setOnClickListener(this);
@@ -304,28 +304,23 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
                 startActivity(new Intent(this, LockActivity.class));
                 break;
             }
-
-            case R.id.btn_jy: {
-                AppUtil.sendKeyCode(KeyEvent.KEYCODE_VOLUME_MUTE);
-                break;
-            }
             case R.id.btn_vu: {
-                AppUtil.sendKeyCode(KeyEvent.KEYCODE_VOLUME_UP);
+                ConsoleManage.self().incVolume();
                 break;
             }
             case R.id.btn_vd: {
-                AppUtil.sendKeyCode(KeyEvent.KEYCODE_VOLUME_DOWN);
+                ConsoleManage.self().decVolume();
+                break;
+            }
+            case R.id.btn_jy: {
+                ConsoleManage.self().mute();
                 break;
             }
             case R.id.rl_quick: {
                 rl_quick.setVisibility(View.GONE);
                 break;
             }
-            case R.id.iv_up1: {
-                rl_quick.setVisibility(View.VISIBLE);
-                break;
-            }
-            case R.id.iv_up2: {
+            case R.id.iv_up: {
                 rl_quick.setVisibility(View.VISIBLE);
                 break;
             }

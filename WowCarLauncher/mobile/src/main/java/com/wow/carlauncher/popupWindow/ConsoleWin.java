@@ -3,7 +3,6 @@ package com.wow.carlauncher.popupWindow;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PixelFormat;
-import android.media.AudioManager;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -14,6 +13,7 @@ import com.wow.carlauncher.CarLauncherApplication;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.activity.LockActivity;
 import com.wow.carlauncher.common.CommonData;
+import com.wow.carlauncher.common.console.ConsoleManage;
 import com.wow.carlauncher.common.util.AppUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 
@@ -21,17 +21,17 @@ import com.wow.carlauncher.common.util.SharedPreUtil;
  * Created by 10124 on 2017/11/7.
  */
 
-public class ControllerWin implements View.OnClickListener {
-    private static ControllerWin self;
+public class ConsoleWin implements View.OnClickListener {
+    private static ConsoleWin self;
 
-    public static ControllerWin self() {
+    public static ConsoleWin self() {
         if (self == null) {
-            self = new ControllerWin();
+            self = new ConsoleWin();
         }
         return self;
     }
 
-    private ControllerWin() {
+    private ConsoleWin() {
 
     }
 
@@ -100,16 +100,16 @@ public class ControllerWin implements View.OnClickListener {
                 context.startActivity(intent);
                 break;
             }
-            case R.id.btn_jy: {
-                AppUtil.sendKeyCode(KeyEvent.KEYCODE_VOLUME_MUTE);
-                break;
-            }
             case R.id.btn_vu: {
-                AppUtil.sendKeyCode(KeyEvent.KEYCODE_VOLUME_UP);
+                ConsoleManage.self().incVolume();
                 break;
             }
             case R.id.btn_vd: {
-                AppUtil.sendKeyCode(KeyEvent.KEYCODE_VOLUME_DOWN);
+                ConsoleManage.self().decVolume();
+                break;
+            }
+            case R.id.btn_jy: {
+                ConsoleManage.self().mute();
                 break;
             }
         }

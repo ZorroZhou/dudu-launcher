@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 
-import com.wow.carlauncher.plugin.PopupViewProportion;
 import com.wow.carlauncher.plugin.music.MusicController;
 import com.wow.carlauncher.plugin.music.controllers.qqMusicCar.QQMusicCarLauncherView;
 import com.wow.carlauncher.plugin.music.controllers.qqMusicCar.QQMusicCarPopupView;

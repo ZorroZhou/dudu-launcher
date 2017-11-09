@@ -1,21 +1,19 @@
-package com.wow.carlauncher.plugin.controller;
+package com.wow.carlauncher.plugin.console;
 
 import android.bluetooth.BluetoothAdapter;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.media.AudioManager;
 import android.net.ConnectivityManager;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.activity.LockActivity;
+import com.wow.carlauncher.common.console.ConsoleManage;
 import com.wow.carlauncher.common.util.AppUtil;
 import com.wow.carlauncher.plugin.IPlugin;
 import com.wow.carlauncher.plugin.PluginManage;
@@ -24,14 +22,14 @@ import com.wow.carlauncher.plugin.PluginManage;
  * Created by 10124 on 2017/11/4.
  */
 
-public class ControllerPlugin implements IPlugin, View.OnClickListener {
-    public final static String TAG = "ControllerPlugin";
+public class ConsolePlugin implements IPlugin, View.OnClickListener {
+    public final static String TAG = "ConsolePlugin";
     private PluginManage pluginManage;
     private Context context;
     private View launcherView;
     private TextView launcherWifi;
 
-    public ControllerPlugin(Context context, PluginManage pluginManage) {
+    public ConsolePlugin(Context context, PluginManage pluginManage) {
         this.pluginManage = pluginManage;
         this.context = context;
 
@@ -82,15 +80,15 @@ public class ControllerPlugin implements IPlugin, View.OnClickListener {
                 break;
             }
             case R.id.btn_vu: {
-                AppUtil.sendKeyCode(KeyEvent.KEYCODE_VOLUME_UP);
+                ConsoleManage.self().incVolume();
                 break;
             }
             case R.id.btn_vd: {
-                AppUtil.sendKeyCode(KeyEvent.KEYCODE_VOLUME_DOWN);
+                ConsoleManage.self().decVolume();
                 break;
             }
             case R.id.btn_jy: {
-                AppUtil.sendKeyCode(KeyEvent.KEYCODE_VOLUME_MUTE);
+                ConsoleManage.self().mute();
                 break;
             }
         }

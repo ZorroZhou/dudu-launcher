@@ -70,4 +70,9 @@ public class ConsoleManage extends IConsole {
     public void mute() {
         console.mute();
     }
+
+    @Override
+    public void taskList() {
+        console.taskList();
+    }
 }

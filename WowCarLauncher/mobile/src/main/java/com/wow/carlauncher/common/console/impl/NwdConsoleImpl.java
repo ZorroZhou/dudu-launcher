@@ -44,4 +44,9 @@ public class NwdConsoleImpl extends IConsole {
             mute = true;
         }
     }
+
+    @Override
+    public void taskList() {
+
+    }
 }

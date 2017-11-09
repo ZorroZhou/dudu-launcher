@@ -115,7 +115,7 @@ public class NeteaseCloudMusicPlugin extends MusicController {
                 updatePopupView();
                 updateLauncherView();
             }
-        }, 0, 500);
+        }, 0, 300);
     }
 
     private void stopUpdate() {
@@ -245,7 +245,6 @@ public class NeteaseCloudMusicPlugin extends MusicController {
                     popupProgress.setProgress(popupWidgetViewProgressBar.getProgress());
                 }
 
-
                 if (System.currentTimeMillis() - playClickTime > 2000) {
                     if (popupProgress.getProgress() != popupWidgetViewTimeLastUpdateValue) {
                         popupChangeTime = 0;
@@ -253,7 +252,7 @@ public class NeteaseCloudMusicPlugin extends MusicController {
                         isruning = true;
                     } else {
                         popupChangeTime++;
-                        if (popupChangeTime > 2) {
+                        if (popupChangeTime > 8) {
                             popupIvPlay.setImageResource(R.mipmap.ic_play);
                             isruning = false;
                         }
@@ -342,7 +341,7 @@ public class NeteaseCloudMusicPlugin extends MusicController {
                         isruning = true;
                     } else {
                         launcherChangeTime++;
-                        if (launcherChangeTime > 2) {
+                        if (launcherChangeTime > 8) {
                             launcherIvPlay.setImageResource(R.mipmap.ic_play);
                             isruning = false;
                         }

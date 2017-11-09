@@ -23,4 +23,6 @@ public abstract class IConsole {
     public abstract void incVolume();
 
     public abstract void mute();
+
+    public abstract void taskList();
 }

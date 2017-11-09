@@ -37,4 +37,9 @@ public class SysConsoleImpl extends IConsole {
         Log.e(TAG, "mute");
         AppUtil.sendKeyCode(KeyEvent.KEYCODE_VOLUME_MUTE);
     }
+
+    @Override
+    public void taskList() {
+        AppUtil.sendKeyCode(KeyEvent.KEYCODE_MENU);
+    }
 }

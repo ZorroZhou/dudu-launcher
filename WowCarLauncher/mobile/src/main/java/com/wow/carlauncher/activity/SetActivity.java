@@ -32,6 +32,7 @@ import static com.wow.carlauncher.plugin.music.MusicControllerEnum.*;
 
 public class SetActivity extends BaseActivity {
     private static final String TAG = "SetActivity";
+    private static final String[] CONSOLES = {"系统", "NWD"};
 
     @ViewInject(R.id.sv_popup_window_showtype)
     private SetView sv_popup_window_showtype;
@@ -69,7 +70,6 @@ public class SetActivity extends BaseActivity {
         sv_console.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String[] CONSOLES = {"系统", "NWD"};
                 int select = SharedPreUtil.getSharedPreInteger(SDATA_CONSOLE_MARK, SysConsoleImpl.MARK);
                 final ThreadObj<Integer> obj = new ThreadObj<>(select);
                 AlertDialog dialog = new AlertDialog.Builder(mContext).setTitle("请选择控制器").setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -96,7 +96,7 @@ public class SetActivity extends BaseActivity {
                 dialog.show();
             }
         });
-
+        music_controller_select.setSummary(CONSOLES[SharedPreUtil.getSharedPreInteger(SDATA_CONSOLE_MARK, SysConsoleImpl.MARK)]);
 
         sv_allow_popup_window.setOnValueChangeListener(new SetView.OnValueChangeListener() {
             @Override

@@ -37,6 +37,7 @@ import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.DateUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.plugin.PluginManage;
+import com.wow.carlauncher.popupWindow.ConsoleWin;
 import com.wow.carlauncher.webservice.WebService;
 import com.wow.carlauncher.webservice.res.WeatherRes;
 import com.wow.carlauncher.popupWindow.PopupWin;
@@ -108,9 +109,6 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
     @ViewInject(R.id.iv_dock6)
     private ImageView iv_dock6;
 
-    @ViewInject(R.id.rl_quick)
-    private RelativeLayout rl_quick;
-
     @ViewInject(R.id.fl_bg)
     private FrameLayout fl_bg;
 
@@ -159,15 +157,10 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
         ll_dock4.setOnClickListener(this);
         ll_dock5.setOnClickListener(this);
         ll_dock6.setOnClickListener(this);
-        rl_quick.setOnClickListener(this);
 
         findViewById(R.id.ll_all_apps).setOnClickListener(this);
-        findViewById(R.id.iv_up).setOnClickListener(this);
+        findViewById(R.id.ll_controller).setOnClickListener(this);
         findViewById(R.id.iv_set).setOnClickListener(this);
-        findViewById(R.id.btn_vu).setOnClickListener(this);
-        findViewById(R.id.btn_vd).setOnClickListener(this);
-        findViewById(R.id.btn_jy).setOnClickListener(this);
-        findViewById(R.id.btn_close_screen).setOnClickListener(this);
 
 
         if (PluginManage.self().music().getLauncherView().getParent() != null) {
@@ -299,29 +292,8 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btn_close_screen: {
-                rl_quick.setVisibility(View.GONE);
-                startActivity(new Intent(this, LockActivity.class));
-                break;
-            }
-            case R.id.btn_vu: {
-                ConsoleManage.self().incVolume();
-                break;
-            }
-            case R.id.btn_vd: {
-                ConsoleManage.self().decVolume();
-                break;
-            }
-            case R.id.btn_jy: {
-                ConsoleManage.self().mute();
-                break;
-            }
-            case R.id.rl_quick: {
-                rl_quick.setVisibility(View.GONE);
-                break;
-            }
-            case R.id.iv_up: {
-                rl_quick.setVisibility(View.VISIBLE);
+            case R.id.ll_controller: {
+                ConsoleWin.self().show();
                 break;
             }
             case R.id.iv_set: {

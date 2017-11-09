@@ -291,7 +291,6 @@
                 android:gravity="center">
 
                 <ImageView
-                    android:id="@+id/iv_all_apps"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:contentDescription="@string/iv_main_dock_icon"
@@ -300,91 +299,21 @@
                     app:layout_widthPercent="70%h" />
             </com.zhy.android.percent.support.PercentLinearLayout>
 
-            <ImageView
-                android:id="@+id/iv_up"
+            <com.zhy.android.percent.support.PercentLinearLayout
+                android:id="@+id/ll_controller"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:contentDescription="@string/iv_content"
-                android:padding="5dp"
-                android:src="@mipmap/ic_controller" />
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:contentDescription="@string/iv_main_dock_icon"
+                    android:src="@mipmap/ic_controller2"
+                    app:layout_heightPercent="70%h"
+                    app:layout_widthPercent="70%h" />
+            </com.zhy.android.percent.support.PercentLinearLayout>
         </com.zhy.android.percent.support.PercentLinearLayout>
     </com.zhy.android.percent.support.PercentLinearLayout>
-
-    <com.zhy.android.percent.support.PercentRelativeLayout
-        android:id="@+id/rl_quick"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_alignParentBottom="true"
-            android:background="@color/launch_quick_bg"
-            android:orientation="horizontal"
-            app:layout_heightPercent="20%h">
-
-            <com.zhy.android.percent.support.PercentLinearLayout
-                android:id="@+id/btn_vu"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center">
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:src="@mipmap/ic_vol_jia"
-                    app:layout_heightPercent="50%h"
-                    app:layout_widthPercent="50%h" />
-            </com.zhy.android.percent.support.PercentLinearLayout>
-
-
-            <com.zhy.android.percent.support.PercentLinearLayout
-                android:id="@+id/btn_jy"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center">
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:src="@mipmap/ic_vol_jing"
-                    app:layout_heightPercent="50%h"
-                    app:layout_widthPercent="50%h" />
-            </com.zhy.android.percent.support.PercentLinearLayout>
-
-            <com.zhy.android.percent.support.PercentLinearLayout
-                android:id="@+id/btn_vd"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center">
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:src="@mipmap/ic_vol_jian"
-                    app:layout_heightPercent="50%h"
-                    app:layout_widthPercent="50%h" />
-            </com.zhy.android.percent.support.PercentLinearLayout>
-
-            <com.zhy.android.percent.support.PercentLinearLayout
-                android:id="@+id/btn_close_screen"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center">
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:src="@mipmap/ic_close_screen"
-                    app:layout_heightPercent="50%h"
-                    app:layout_widthPercent="50%h" />
-            </com.zhy.android.percent.support.PercentLinearLayout>
-        </LinearLayout>
-    </com.zhy.android.percent.support.PercentRelativeLayout>
 </FrameLayout>

@@ -41,19 +41,8 @@
             android:value="d5e7bb2e7adc2e970d5ef05c379eb1bb" />
         <service android:name="com.amap.api.location.APSService" />
 
-        <!--<provider-->
-            <!--android:name="android.support.v4.content.FileProvider"-->
-            <!--android:authorities="com.yancy.gallerypickdemo.fileprovider"-->
-            <!--android:exported="false"-->
-            <!--android:grantUriPermissions="true">-->
-            <!--<meta-data-->
-                <!--android:name="android.support.FILE_PROVIDER_PATHS"-->
-                <!--android:resource="@xml/filepaths" />-->
-        <!--</provider>-->
-
         <activity
             android:name=".activity.MainActivity"
-            android:clearTaskOnLaunch="true"
             android:launchMode="singleTask"
             android:screenOrientation="landscape"
             android:stateNotNeeded="true">
@@ -64,7 +53,7 @@
         </activity>
         <activity
             android:name=".activity.LauncherActivity"
-            android:launchMode="singleInstance"
+            android:launchMode="singleTask"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -100,11 +89,22 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.USER_PRESENT" />
-                <action android:name="android.intent.action.SCREEN_ON" />
                 <action android:name="com.nwd.ACTION_AFTER_BOOT_COMPLETED" />
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+
+        <receiver
+            android:name=".receiver.HomeReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.SCREEN_ON" />
+                <action android:name="ACTION_INIT_FACTORY_SETTING_SUCCESS" />
+                <action android:name="com.nwd.action.ACTION_KEY_VALUE" />
+                <action android:name="com.nwd.action.ACTION_GOHOME" />
+            </intent-filter>
+        </receiver>
+
         <service android:name=".service.MainService" />
     </application>
 

@@ -12,7 +12,6 @@ import com.wow.carlauncher.plugin.music.controllers.NeteaseCloudMusicPlugin;
 import com.wow.carlauncher.plugin.music.controllers.QQMusicCarPlugin;
 import com.wow.carlauncher.plugin.music.controllers.QQMusicPlugin;
 import com.wow.carlauncher.plugin.music.controllers.SystemMusicPlugin;
-import com.wow.carlauncher.plugin.music.controllers.SystemMusicPluginOld;
 
 /**
  * Created by 10124 on 2017/10/26.
@@ -117,12 +116,16 @@ public class MusicPlugin implements IPlugin {
         }
         if (popupView != null) {
             popupView.removeAllViews();
-            popupView.addView(controller.getPopupView(), new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+            if (controller.getPopupView() != null) {
+                popupView.addView(controller.getPopupView(), new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+            }
         }
 
         if (launcherView != null) {
             launcherView.removeAllViews();
-            launcherView.addView(controller.getLauncherView(), new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+            if (controller.getLauncherView() != null) {
+                launcherView.addView(controller.getLauncherView(), new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+            }
         }
 
     }

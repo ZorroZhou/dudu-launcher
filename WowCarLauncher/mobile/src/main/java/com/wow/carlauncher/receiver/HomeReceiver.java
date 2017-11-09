@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import com.wow.carlauncher.activity.LauncherActivity;
 import com.wow.carlauncher.service.MainService;
 
 /**
@@ -11,11 +12,10 @@ import com.wow.carlauncher.service.MainService;
  */
 
 public class HomeReceiver extends BroadcastReceiver {
-    private static final String BOOT_COMPLETED = "android.intent.action.BOOT_COMPLETED";
-
     @Override
     public void onReceive(final Context context, Intent intent) {
-        Intent startIntent = new Intent(context, MainService.class);
-        context.startService(startIntent);
+        Intent startIntent = new Intent(context, LauncherActivity.class);
+        startIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(startIntent);
     }
 }

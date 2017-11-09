@@ -29,6 +29,7 @@ import cn.kuwo.autosdk.api.KWAPI;
  */
 
 public class KuwoMusicPlugin extends MusicController {
+    private static final String TAG = "KuwoMusicPlugin";
     private static final String PACKAGE_NAME = "com.tencent.qqmusiccar";
     private static final String CLASS_NAME = "com.tencent.qqmusiccar.app.reciver.BroadcastReceiverCenterForThird";
 
@@ -46,7 +47,8 @@ public class KuwoMusicPlugin extends MusicController {
 
     public KuwoMusicPlugin(Context context) {
         super(context);
-        mKwApi = KWAPI.createKWAPI(context, "wow");
+        mKwApi = KWAPI.createKWAPI(context, "com.wow.carlauncher");
+        Log.e(TAG, "KuwoMusicPlugin: " + mKwApi.getNowPlayingMusic());
     }
 
     @Override
@@ -67,6 +69,7 @@ public class KuwoMusicPlugin extends MusicController {
 
     public void play() {
         mKwApi.randomPlayMusic();
+        Log.e(TAG, "KuwoMusicPlugin: " + mKwApi.getNowPlayingMusic());
     }
 
     public void pause() {

@@ -25,7 +25,7 @@ import org.xutils.x;
  */
 
 public class KuwoMusicLauncherView extends LinearLayout implements View.OnClickListener {
-    private static final String TAG = "QQMusicCarLauncherView";
+    private static final String TAG = "KuwoMusicLauncherView";
 
     private LayoutInflater inflater;
 

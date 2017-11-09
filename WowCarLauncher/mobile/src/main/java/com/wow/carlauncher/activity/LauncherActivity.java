@@ -1,5 +1,6 @@
 package com.wow.carlauncher.activity;
 
+import android.Manifest;
 import android.app.WallpaperManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -11,6 +12,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -180,7 +182,6 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
 
         loadDock();
         checkAppState();
-        checkPermission();
         setWall();
         LocationManage.self().addLocationListener(aMapLocationListener);
     }
@@ -358,23 +359,6 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
                 startActivity(new Intent(this, AppMenuActivity.class));
                 break;
             }
-        }
-    }
-
-    private void checkPermission() {
-        if (Build.VERSION.SDK_INT >= 23 && !Settings.canDrawOverlays(this)) {
-            new AlertDialog.Builder(mContext).setTitle("系统提示")
-                    .setMessage("APP需要弹出窗口权限！取消后可在APP设置调整！")
-                    .setPositiveButton("前往设置", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            //其实这个判断没什么卵用，但是不加会有警告
-                            if (Build.VERSION.SDK_INT >= 23) {
-                                Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
-                                startActivity(intent);
-                            }
-                        }
-                    }).setNegativeButton("不在提示", null).show();
         }
     }
 

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
@@ -23,7 +24,7 @@ import org.xutils.x;
  */
 
 public class SysMusicLauncherView extends LinearLayout implements View.OnClickListener {
-    private static final String TAG = "QQMusicCarLauncherView";
+    private static final String TAG = "SysMusicLauncherView";
 
     private LayoutInflater inflater;
 
@@ -81,28 +82,28 @@ public class SysMusicLauncherView extends LinearLayout implements View.OnClickLi
     }
 
     private void init() {
-        LinearLayout linearLayout = (LinearLayout) inflater.inflate(R.layout.plugin_music_qcm_launcher, null);
+        View linearLayout = inflater.inflate(R.layout.plugin_music_sys_launcher, null);
         this.addView(linearLayout, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         iv_play = findViewById(R.id.iv_play);
         tv_title = findViewById(R.id.tv_title);
         tv_artist = findViewById(R.id.tv_artist);
 
-        iv_play.setOnClickListener(this);
-        findViewById(R.id.iv_prew).setOnClickListener(this);
-        findViewById(R.id.iv_next).setOnClickListener(this);
+        findViewById(R.id.ll_play).setOnClickListener(this);
+        findViewById(R.id.ll_prew).setOnClickListener(this);
+        findViewById(R.id.ll_next).setOnClickListener(this);
 
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.iv_prew: {
+            case R.id.ll_prew: {
                 if (controller != null) {
                     controller.pre();
                 }
                 break;
             }
-            case R.id.iv_play: {
+            case R.id.ll_play: {
                 if (controller != null) {
                     if (playing) {
                         controller.pause();
@@ -113,7 +114,7 @@ public class SysMusicLauncherView extends LinearLayout implements View.OnClickLi
                 Log.e(TAG, "onClick: " + controller);
                 break;
             }
-            case R.id.iv_next: {
+            case R.id.ll_next: {
                 if (controller != null) {
                     controller.next();
                 }

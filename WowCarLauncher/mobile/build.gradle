@@ -5,7 +5,7 @@ android {
     buildToolsVersion "26.0.1"
     defaultConfig {
         applicationId "com.wow.carlauncher"
-        minSdkVersion 18
+        minSdkVersion 14
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -36,15 +36,22 @@ android {
             //SHA256: 75:BD:A6:13:1C:F2:2B:0A:3B:06:34:A5:97:A3:87:86:46:1C:68:2A:20:6B:FC:07:33:BA:27:CC:98:D5:97:A9
         }
     }
+
+    repositories {
+        flatDir {
+            dirs 'libs'   // aar目录
+        }
+    }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
-    compile 'com.android.support:gridlayout-v7:26+'
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support:support-v4:26.+'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
+
+    compile(name: 'galleryPick', ext: 'aar')
 
     compile 'org.xutils:xutils:3.3.38'
     compile 'org.greenrobot:eventbus:3.0.0'

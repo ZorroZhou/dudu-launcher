@@ -1,5 +1,6 @@
 package com.wow.carlauncher.activity;
 
+import android.app.WallpaperManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -7,7 +8,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.media.AudioManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -15,9 +15,11 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -108,13 +110,14 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
     @ViewInject(R.id.rl_quick)
     private RelativeLayout rl_quick;
 
+    @ViewInject(R.id.fl_bg)
+    private FrameLayout fl_bg;
+
     private Context mContext;
 
     //高德地图的定位客户端
     private PackageManager pm;
-    private AudioManager audioManager;
-
-    private int oldVolume = -1;
+    private WallpaperManager wallManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,14 +126,19 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
 
         init();
         initView();
+
     }
 
     public void init() {
         pm = getPackageManager();
-        audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        wallManager = WallpaperManager.getInstance(this);
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        registerReceiver(mHomeKeyEventReceiver, new IntentFilter(Intent.ACTION_CLOSE_SYSTEM_DIALOGS));
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
+        intentFilter.addAction(Intent.ACTION_WALLPAPER_CHANGED);
+        registerReceiver(homeReceiver, intentFilter);
     }
 
     public void initView() {
@@ -180,6 +188,7 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
         loadDock();
         checkAppState();
         checkPermission();
+        setWall();
         LocationManage.self().addLocationListener(aMapLocationListener);
     }
 
@@ -297,21 +306,15 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
             }
 
             case R.id.btn_jy: {
-                if (oldVolume == 0) {
-                    oldVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0, AudioManager.FLAG_SHOW_UI);
-                } else {
-                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, oldVolume, AudioManager.FLAG_SHOW_UI);
-                    oldVolume = 0;
-                }
+                AppUtil.sendKeyCode(KeyEvent.KEYCODE_VOLUME_MUTE);
                 break;
             }
             case R.id.btn_vu: {
-                audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_RAISE, AudioManager.FLAG_SHOW_UI);
+                AppUtil.sendKeyCode(KeyEvent.KEYCODE_VOLUME_UP);
                 break;
             }
             case R.id.btn_vd: {
-                audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_LOWER, AudioManager.FLAG_SHOW_UI);
+                AppUtil.sendKeyCode(KeyEvent.KEYCODE_VOLUME_DOWN);
                 break;
             }
             case R.id.rl_quick: {
@@ -421,6 +424,16 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
         }, 1000 - System.currentTimeMillis() % 1000, 1000);
     }
 
+    private void setWall() {
+        if (fl_bg != null) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                fl_bg.setBackground(wallManager.getDrawable());
+            } else {
+                fl_bg.setBackgroundDrawable(wallManager.getDrawable());
+            }
+        }
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -477,7 +490,7 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(mHomeKeyEventReceiver);
+        unregisterReceiver(homeReceiver);
         LocationManage.self().removeLocationListener(aMapLocationListener);
         if (timer != null) {
             timer.cancel();
@@ -538,7 +551,7 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
             }
         }
     };
-    private BroadcastReceiver mHomeKeyEventReceiver = new BroadcastReceiver() {
+    private BroadcastReceiver homeReceiver = new BroadcastReceiver() {
         String SYSTEM_REASON = "reason";
         String SYSTEM_HOME_KEY = "homekey";
         //String SYSTEM_HOME_KEY_LONG = "recentapps";
@@ -554,6 +567,8 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
                     i.addCategory(Intent.CATEGORY_HOME);
                     context.startActivity(i);
                 }
+            } else if (intent.getAction().equals(Intent.ACTION_WALLPAPER_CHANGED)) {
+                setWall();
             }
         }
     };

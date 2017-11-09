@@ -19,7 +19,33 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="16dp"
+                android:paddingStart="16dp"
+                android:paddingTop="16dp"
+                android:text="应用设置"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp" />
+
+            <com.wow.carlauncher.common.view.SetView
+                android:id="@+id/sv_apps_hides"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                st:titleEx="APP菜单需要隐藏的项目"
+                st:type="buttonB" />
+
+            <View style="@style/Interval" />
+
+            <com.wow.carlauncher.common.view.SetView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                st:titleEx="壁纸设置"
+                st:type="buttonB" />
+
+            <View style="@style/Interval" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="16dp"
                 android:paddingTop="16dp"
                 android:text="悬浮窗设置"
                 android:textColor="@color/colorPrimary"
@@ -59,7 +85,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="16dp"
+                android:paddingStart="16dp"
                 android:paddingTop="16dp"
                 android:text="音乐插件设置"
                 android:textColor="@color/colorPrimary"
@@ -77,7 +103,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="16dp"
+                android:paddingStart="16dp"
                 android:paddingTop="16dp"
                 android:text="时间设置"
                 android:textColor="@color/colorPrimary"
@@ -95,25 +121,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="16dp"
-                android:paddingTop="16dp"
-                android:text="应用菜单设置"
-                android:textColor="@color/colorPrimary"
-                android:textSize="14sp" />
-
-            <com.wow.carlauncher.common.view.SetView
-                android:id="@+id/sv_apps_hides"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                st:titleEx="需要隐藏的APP"
-                st:type="buttonB" />
-
-            <View style="@style/Interval" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="16dp"
+                android:paddingStart="16dp"
                 android:paddingTop="16dp"
                 android:text="帮助"
                 android:textColor="@color/colorPrimary"

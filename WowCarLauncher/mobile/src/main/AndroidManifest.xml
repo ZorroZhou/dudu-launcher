@@ -41,6 +41,16 @@
             android:value="d5e7bb2e7adc2e970d5ef05c379eb1bb" />
         <service android:name="com.amap.api.location.APSService" />
 
+        <!--<provider-->
+            <!--android:name="android.support.v4.content.FileProvider"-->
+            <!--android:authorities="com.yancy.gallerypickdemo.fileprovider"-->
+            <!--android:exported="false"-->
+            <!--android:grantUriPermissions="true">-->
+            <!--<meta-data-->
+                <!--android:name="android.support.FILE_PROVIDER_PATHS"-->
+                <!--android:resource="@xml/filepaths" />-->
+        <!--</provider>-->
+
         <activity
             android:name=".activity.MainActivity"
             android:clearTaskOnLaunch="true"

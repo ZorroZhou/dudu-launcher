@@ -12,6 +12,7 @@ import com.wow.carlauncher.plugin.music.controllers.NeteaseCloudMusicPlugin;
 import com.wow.carlauncher.plugin.music.controllers.QQMusicCarPlugin;
 import com.wow.carlauncher.plugin.music.controllers.QQMusicPlugin;
 import com.wow.carlauncher.plugin.music.controllers.SystemMusicPlugin;
+import com.wow.carlauncher.plugin.music.controllers.SystemMusicPluginOld;
 
 /**
  * Created by 10124 on 2017/10/26.

@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.media.AudioManager;
 import android.net.ConnectivityManager;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -28,16 +29,11 @@ public class ControllerPlugin implements IPlugin, View.OnClickListener {
     private PluginManage pluginManage;
     private Context context;
     private View launcherView;
-    private AudioManager audioManager;
-    private int oldV = 0;
-
     private TextView launcherWifi;
 
     public ControllerPlugin(Context context, PluginManage pluginManage) {
         this.pluginManage = pluginManage;
         this.context = context;
-        audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-
 
         IntentFilter mFilter = new IntentFilter();
         mFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
@@ -86,21 +82,15 @@ public class ControllerPlugin implements IPlugin, View.OnClickListener {
                 break;
             }
             case R.id.btn_vu: {
-                audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_RAISE, AudioManager.FLAG_SHOW_UI);
+                AppUtil.sendKeyCode(KeyEvent.KEYCODE_VOLUME_UP);
                 break;
             }
             case R.id.btn_vd: {
-                audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_LOWER, AudioManager.FLAG_SHOW_UI);
+                AppUtil.sendKeyCode(KeyEvent.KEYCODE_VOLUME_DOWN);
                 break;
             }
             case R.id.btn_jy: {
-                if (oldV == 0) {
-                    oldV = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0, AudioManager.FLAG_SHOW_UI);
-                } else {
-                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, oldV, AudioManager.FLAG_SHOW_UI);
-                    oldV = 0;
-                }
+                AppUtil.sendKeyCode(KeyEvent.KEYCODE_VOLUME_MUTE);
                 break;
             }
         }

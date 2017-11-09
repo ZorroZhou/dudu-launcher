@@ -6,6 +6,7 @@ import android.graphics.PixelFormat;
 import android.media.AudioManager;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -13,6 +14,7 @@ import com.wow.carlauncher.CarLauncherApplication;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.activity.LockActivity;
 import com.wow.carlauncher.common.CommonData;
+import com.wow.carlauncher.common.util.AppUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 
 /**
@@ -41,12 +43,9 @@ public class ControllerWin implements View.OnClickListener {
     //窗口视图
     private View popupWindow;
     private boolean isShow = false;
-    private AudioManager audioManager;
-    private int oldVolume = -1;
 
     public void init(CarLauncherApplication context) {
         this.context = context;
-        audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
         wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 
         DisplayMetrics outMetrics = new DisplayMetrics();
@@ -102,21 +101,15 @@ public class ControllerWin implements View.OnClickListener {
                 break;
             }
             case R.id.btn_jy: {
-                if (oldVolume == 0) {
-                    oldVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0, AudioManager.FLAG_SHOW_UI);
-                } else {
-                    audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, oldVolume, AudioManager.FLAG_SHOW_UI);
-                    oldVolume = 0;
-                }
+                AppUtil.sendKeyCode(KeyEvent.KEYCODE_VOLUME_MUTE);
                 break;
             }
             case R.id.btn_vu: {
-                audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_RAISE, AudioManager.FLAG_SHOW_UI);
+                AppUtil.sendKeyCode(KeyEvent.KEYCODE_VOLUME_UP);
                 break;
             }
             case R.id.btn_vd: {
-                audioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC, AudioManager.ADJUST_LOWER, AudioManager.FLAG_SHOW_UI);
+                AppUtil.sendKeyCode(KeyEvent.KEYCODE_VOLUME_DOWN);
                 break;
             }
         }

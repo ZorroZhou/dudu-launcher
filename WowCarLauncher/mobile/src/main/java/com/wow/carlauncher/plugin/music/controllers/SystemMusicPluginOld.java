@@ -6,40 +6,45 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.net.Uri;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
 
-import com.google.gson.Gson;
+import com.wow.carlauncher.plugin.PopupViewProportion;
 import com.wow.carlauncher.plugin.music.MusicController;
+import com.wow.carlauncher.plugin.music.controllers.qqMusicCar.QQMusicCarLauncherView;
+import com.wow.carlauncher.plugin.music.controllers.qqMusicCar.QQMusicCarPopupView;
 import com.wow.carlauncher.plugin.music.controllers.sysMusic.SysMusicLauncherView;
 import com.wow.carlauncher.plugin.music.controllers.sysMusic.SysMusicPopupView;
 import com.wow.carlauncher.plugin.music.event.PEventMusicInfoChange;
 import com.wow.carlauncher.plugin.music.event.PEventMusicStateChange;
 
 import org.greenrobot.eventbus.EventBus;
-import org.xutils.x;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by 10124 on 2017/10/26.
  */
 
-public class SystemMusicPlugin extends MusicController {
-    private String PACKAGE_NAME = "com.tencent.qqmusiccar";
+public class SystemMusicPluginOld extends MusicController {
+    private static final String TAG = "SystemMusicPluginOld";
 
+    private String PACKAGE_NAME = null;
 
     private Map<String, String> clazzs;
-    private SysMusicLauncherView qqMusicCarLauncherView;
 
-    private SysMusicPopupView qqMusicCarPopupView;
+    private SysMusicLauncherView sysMusicLauncherView;
 
-    public SystemMusicPlugin(Context context) {
+    private SysMusicPopupView sysMusicPopupView;
+
+
+    public SystemMusicPluginOld(Context context) {
         super(context);
 
         IntentFilter intentFilter = new IntentFilter();
@@ -159,18 +164,24 @@ public class SystemMusicPlugin extends MusicController {
 
     @Override
     public View getLauncherView() {
-        if (qqMusicCarLauncherView == null) {
-            qqMusicCarLauncherView = new SysMusicLauncherView(context, this);
+        if (sysMusicLauncherView == null) {
+            //sysMusicLauncherView = new SysMusicLauncherView(context, this);
         }
-        return qqMusicCarLauncherView;
+        return sysMusicLauncherView;
     }
 
     @Override
     public View getPopupView() {
-        if (qqMusicCarPopupView == null) {
-            qqMusicCarPopupView = new SysMusicPopupView(context, this);
+        if (sysMusicPopupView == null) {
+            //sysMusicPopupView = new SysMusicPopupView(context, this);
         }
-        return qqMusicCarPopupView;
+        return sysMusicPopupView;
+    }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+        context.unregisterReceiver(mReceiver);
     }
 
     public void play() {
@@ -205,20 +216,9 @@ public class SystemMusicPlugin extends MusicController {
         context.sendOrderedBroadcast(localObject, null);
     }
 
-    @Override
-    public void destroy() {
-        super.destroy();
-        context.unregisterReceiver(mReceiver);
-        if (qqMusicCarLauncherView.getParent() != null) {
-            ((ViewGroup) qqMusicCarLauncherView.getParent()).removeView(qqMusicCarLauncherView);
-        }
-        if (qqMusicCarPopupView.getParent() != null) {
-            ((ViewGroup) qqMusicCarPopupView.getParent()).removeView(qqMusicCarPopupView);
-        }
-    }
-
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
         public void onReceive(Context paramAnonymousContext, Intent intent) {
+            //if ("com.android.music.playstatechanged".equals(intent.getAction())) {
             if (intent.getStringExtra("android.media.extra.PACKAGE_NAME") != null && clazzs.containsKey(intent.getStringExtra("android.media.extra.PACKAGE_NAME"))) {
                 PACKAGE_NAME = intent.getStringExtra("android.media.extra.PACKAGE_NAME");
             }
@@ -233,6 +233,7 @@ public class SystemMusicPlugin extends MusicController {
                     EventBus.getDefault().post(new PEventMusicStateChange(false));
                 }
             }
+            //}
         }
     };
 }

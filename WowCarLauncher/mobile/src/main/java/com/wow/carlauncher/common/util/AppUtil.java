@@ -1,6 +1,7 @@
 package com.wow.carlauncher.common.util;
 
 import android.app.ActivityManager;
+import android.app.Instrumentation;
 import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
 import android.content.ComponentName;
@@ -129,5 +130,22 @@ public class AppUtil {
         public String packageName;
         public Drawable icon;
         public String name;
+    }
+
+
+    public static void sendKeyCode(final int keyCode) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    // 创建一个Instrumentation对象
+                    Instrumentation inst = new Instrumentation();
+                    // 调用inst对象的按键模拟方法
+                    inst.sendKeyDownUpSync(keyCode);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 }

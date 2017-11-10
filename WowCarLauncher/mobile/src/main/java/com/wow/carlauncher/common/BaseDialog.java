@@ -47,7 +47,7 @@ public class BaseDialog extends Dialog {
         dialogWindow.setAttributes(layoutParams);
 
 
-        ImageView tv_cancel = findViewById(R.id.iv_cancel);
+        ImageView tv_cancel = (ImageView)findViewById(R.id.iv_cancel);
         tv_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,8 +55,8 @@ public class BaseDialog extends Dialog {
             }
         });
 
-        rl_content = findViewById(R.id.content);
-        ll_dialog_background = findViewById(R.id.ll_dialog_background);
+        rl_content = (RelativeLayout) findViewById(R.id.content);
+        ll_dialog_background = (LinearLayout) findViewById(R.id.ll_dialog_background);
     }
 
     //隐藏底部按钮,不显示
@@ -67,21 +67,21 @@ public class BaseDialog extends Dialog {
 
     //设置标题方法
     public BaseDialog setTitle(String title) {
-        TextView tv_title = findViewById(R.id.tv_title);
+        TextView tv_title = (TextView) findViewById(R.id.tv_title);
         tv_title.setText(title);
         return this;
     }
 
     //隐藏标题方法
     public BaseDialog hideTitle() {
-        TextView tv_title = findViewById(R.id.tv_title);
+        TextView tv_title = (TextView) findViewById(R.id.tv_title);
         tv_title.setVisibility(View.GONE);
         return this;
     }
 
     //隐藏标题方法
     public BaseDialog hideHeadLine() {
-        RelativeLayout headline = findViewById(R.id.rl_headline);
+        RelativeLayout headline = (RelativeLayout) findViewById(R.id.rl_headline);
         LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) headline.getLayoutParams();
         layoutParams.setMargins(0, 0, 0, 0);
         headline.setLayoutParams(layoutParams);
@@ -99,7 +99,7 @@ public class BaseDialog extends Dialog {
 
     // 设置内容布局
     public BaseDialog setMessage(String message) {
-        TextView tv_message = findViewById(R.id.tv_message);
+        TextView tv_message = (TextView) findViewById(R.id.tv_message);
         tv_message.setVisibility(View.VISIBLE);
         tv_message.setText(message);
         return this;
@@ -112,7 +112,7 @@ public class BaseDialog extends Dialog {
 
     // 确认按钮 监听
     public BaseDialog setBtn1(String text, final OnBtnClickListener onClickListener) {
-        Button btn1 = findViewById(R.id.btn1);
+        Button btn1 = (Button) findViewById(R.id.btn1);
         btn1.setVisibility(View.VISIBLE);
         btn1.setText(text);
         if (onClickListener != null) {
@@ -136,7 +136,7 @@ public class BaseDialog extends Dialog {
     }
 
     public BaseDialog setBtn2(String text, final OnBtnClickListener onClickListener) {
-        Button btn2 = findViewById(R.id.btn2);
+        Button btn2 = (Button) findViewById(R.id.btn2);
         btn2.setVisibility(View.VISIBLE);
         btn2.setText(text);
         if (onClickListener != null) {
@@ -161,7 +161,7 @@ public class BaseDialog extends Dialog {
 
     //取消按钮监听
     public BaseDialog setBtn3(String text, final OnBtnClickListener onClickListener) {
-        Button btn3 = findViewById(R.id.btn3);
+        Button btn3 = (Button) findViewById(R.id.btn3);
         btn3.setVisibility(View.VISIBLE);
         btn3.setText(text);
         if (onClickListener != null) {

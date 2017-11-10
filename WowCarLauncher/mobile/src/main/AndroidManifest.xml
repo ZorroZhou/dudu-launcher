@@ -101,6 +101,8 @@
                 <action android:name="ACTION_INIT_FACTORY_SETTING_SUCCESS" />
                 <action android:name="com.nwd.action.ACTION_KEY_VALUE" />
                 <action android:name="com.nwd.action.ACTION_GOHOME" />
+                <action android:name="com.nwd.ACTION_AFTER_BOOT_COMPLETED" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 

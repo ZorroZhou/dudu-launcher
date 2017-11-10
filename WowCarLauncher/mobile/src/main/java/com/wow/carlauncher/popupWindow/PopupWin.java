@@ -95,9 +95,9 @@ public class PopupWin {
         }
 
         popupWindow = View.inflate(context, R.layout.popup_window, null);
-        plugin = popupWindow.findViewById(R.id.ll_plugin);
+        plugin = (LinearLayout) popupWindow.findViewById(R.id.ll_plugin);
 
-        iv_open = popupWindow.findViewById(R.id.iv_open);
+        iv_open = (ImageView) popupWindow.findViewById(R.id.iv_open);
         iv_open.setOnClickListener(onClickListener);
         iv_open.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
@@ -108,7 +108,7 @@ public class PopupWin {
         });
         iv_open.setOnTouchListener(moveTouchListener);
 
-        ll_menu = popupWindow.findViewById(R.id.ll_menu);
+        ll_menu = (LinearLayout) popupWindow.findViewById(R.id.ll_menu);
         ll_menu.setOnClickListener(onClickListener);
         ll_menu.setOnLongClickListener(new View.OnLongClickListener() {
             @Override

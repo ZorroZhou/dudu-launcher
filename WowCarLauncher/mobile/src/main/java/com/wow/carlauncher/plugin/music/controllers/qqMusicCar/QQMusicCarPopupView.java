@@ -85,9 +85,9 @@ public class QQMusicCarPopupView extends LinearLayout implements View.OnClickLis
     private void init() {
         View linearLayout = inflater.inflate(R.layout.plugin_music_qcm_popup, null);
         this.addView(linearLayout, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
-        iv_play = findViewById(R.id.iv_play);
-        tv_title = findViewById(R.id.tv_title);
-        pb_music = findViewById(R.id.pb_music);
+        iv_play = (ImageView) findViewById(R.id.iv_play);
+        tv_title = (TextView) findViewById(R.id.tv_title);
+        pb_music = (ProgressBar) findViewById(R.id.pb_music);
 
         findViewById(R.id.ll_play).setOnClickListener(this);
         findViewById(R.id.ll_prew).setOnClickListener(this);

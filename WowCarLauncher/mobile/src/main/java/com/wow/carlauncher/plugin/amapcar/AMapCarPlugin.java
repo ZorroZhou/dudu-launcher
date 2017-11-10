@@ -24,6 +24,7 @@ import com.wow.carlauncher.plugin.PluginManage;
 import java.math.BigDecimal;
 
 import static com.wow.carlauncher.plugin.amapcar.AMapCarConstant.*;
+import static com.wow.carlauncher.plugin.amapcar.AMapCartReceiver.GETHC_NEXT_TO_NAVI;
 
 /**
  * Created by 10124 on 2017/11/4.
@@ -79,12 +80,12 @@ public class AMapCarPlugin implements IPlugin, View.OnClickListener {
     }
 
     private void initPopupView(View view) {
-        popupIcon = view.findViewById(R.id.iv_icon);
-        popupdis = view.findViewById(R.id.tv_dis);
-        popuproad = view.findViewById(R.id.tv_road);
-        popupmsg = view.findViewById(R.id.tv_msg);
-        popupcontroller = view.findViewById(R.id.ll_controller);
-        popupnavi = view.findViewById(R.id.ll_navi);
+        popupIcon = (ImageView) view.findViewById(R.id.iv_icon);
+        popupdis = (TextView) view.findViewById(R.id.tv_dis);
+        popuproad = (TextView) view.findViewById(R.id.tv_road);
+        popupmsg = (TextView) view.findViewById(R.id.tv_msg);
+        popupcontroller = (LinearLayout) view.findViewById(R.id.ll_controller);
+        popupnavi = (LinearLayout) view.findViewById(R.id.ll_navi);
 
         view.findViewById(R.id.btn_search).setOnClickListener(this);
         view.findViewById(R.id.btn_go_home).setOnClickListener(this);
@@ -97,12 +98,12 @@ public class AMapCarPlugin implements IPlugin, View.OnClickListener {
         view.findViewById(R.id.btn_go_home).setOnClickListener(this);
         view.findViewById(R.id.btn_go_company).setOnClickListener(this);
 
-        launcherIcon = view.findViewById(R.id.iv_icon);
+        launcherIcon = (ImageView) view.findViewById(R.id.iv_icon);
         launcherController = view.findViewById(R.id.ll_controller);
-        launchernavi = view.findViewById(R.id.ll_navi);
-        launcherdis = view.findViewById(R.id.tv_dis);
-        launcherroad = view.findViewById(R.id.tv_road);
-        launchermsg = view.findViewById(R.id.tv_msg);
+        launchernavi = (LinearLayout) view.findViewById(R.id.ll_navi);
+        launcherdis = (TextView) view.findViewById(R.id.tv_dis);
+        launcherroad = (TextView) view.findViewById(R.id.tv_road);
+        launchermsg = (TextView) view.findViewById(R.id.tv_msg);
     }
 
     @Override
@@ -144,6 +145,7 @@ public class AMapCarPlugin implements IPlugin, View.OnClickListener {
                     Toast.makeText(context, "没有安装高德地图", Toast.LENGTH_SHORT).show();
                     break;
                 }
+                amapReceiver.setGetHcNext(GETHC_NEXT_TO_NAVI);
                 amapSend.getHome();
                 break;
             }
@@ -152,6 +154,7 @@ public class AMapCarPlugin implements IPlugin, View.OnClickListener {
                     Toast.makeText(context, "没有安装高德地图", Toast.LENGTH_SHORT).show();
                     break;
                 }
+                amapReceiver.setGetHcNext(GETHC_NEXT_TO_NAVI);
                 amapSend.getComp();
                 break;
             }

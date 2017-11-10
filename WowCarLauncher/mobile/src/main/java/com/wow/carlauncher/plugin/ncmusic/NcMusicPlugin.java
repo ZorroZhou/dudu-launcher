@@ -1,4 +1,4 @@
-package com.wow.carlauncher.plugin.music.controllers;
+package com.wow.carlauncher.plugin.ncmusic;
 
 import android.appwidget.AppWidgetHost;
 import android.appwidget.AppWidgetManager;
@@ -13,9 +13,17 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.util.ViewUtils;
+import com.wow.carlauncher.plugin.IPlugin;
+import com.wow.carlauncher.plugin.PluginManage;
 import com.wow.carlauncher.plugin.music.MusicController;
+import com.wow.carlauncher.plugin.music.MusicControllerEnum;
+import com.wow.carlauncher.plugin.music.controllers.NeteaseCloudMusicPlugin;
+import com.wow.carlauncher.plugin.music.controllers.QQMusicCarPlugin;
+import com.wow.carlauncher.plugin.music.controllers.QQMusicPlugin;
+import com.wow.carlauncher.plugin.music.controllers.SystemMusicPlugin;
 
 import org.xutils.x;
 
@@ -30,7 +38,7 @@ import static com.wow.carlauncher.common.CommonData.SDATA_MUSIC_PLUGIN_NCM_POPUP
  * Created by 10124 on 2017/10/26.
  */
 
-public class NeteaseCloudMusicPlugin extends MusicController {
+public class NcMusicPlugin implements IPlugin {
     private final static String TAG = "NeteaseCloudMusicPlugin";
 
     private AppWidgetHost appWidgetHost;
@@ -54,9 +62,7 @@ public class NeteaseCloudMusicPlugin extends MusicController {
 
     private Timer timer;
 
-    public NeteaseCloudMusicPlugin(Context context) {
-        super(context);
-
+    public NcMusicPlugin(Context context) {
         appWidgetHost = new AppWidgetHost(context, APP_WIDGET_HOST_ID);
         appWidgetManager = AppWidgetManager.getInstance(context);
         appWidgetHost.startListening();
@@ -127,7 +133,6 @@ public class NeteaseCloudMusicPlugin extends MusicController {
 
     @Override
     public void destroy() {
-        super.destroy();
         stopUpdate();
         appWidgetHost.stopListening();
         appWidgetHost = null;

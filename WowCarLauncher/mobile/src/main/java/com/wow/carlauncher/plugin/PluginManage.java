@@ -20,6 +20,7 @@ public class PluginManage {
     public static final String MUSIC = "MUSIC";
     public static final String CONSOLE = "CONSOLE";
     public static final String AMAPCAR = "AMAPCAR";
+    public static final String NC_MUSIC = "NC_MUSIC";
 
     private static PluginManage self;
 

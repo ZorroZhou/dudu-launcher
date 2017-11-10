@@ -51,8 +51,8 @@ public abstract class BaseActivity extends Activity {
 
         base = findViewById(R.id.base);
         toolbar = findViewById(R.id.toolbar);
-        title = findViewById(R.id.tv_title);
-        content = findViewById(R.id.b_content);
+        title = (TextView) findViewById(R.id.tv_title);
+        content = (RelativeLayout) findViewById(R.id.b_content);
         //设置actionbar
         findViewById(R.id.iv_back).setOnClickListener(new View.OnClickListener() {
             @Override

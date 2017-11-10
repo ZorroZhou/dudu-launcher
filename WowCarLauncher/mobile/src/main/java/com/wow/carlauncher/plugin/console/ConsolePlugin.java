@@ -45,7 +45,7 @@ public class ConsolePlugin implements IPlugin, View.OnClickListener {
         launcherView.findViewById(R.id.btn_jy).setOnClickListener(this);
         launcherView.findViewById(R.id.btn_close_screen).setOnClickListener(this);
 
-        launcherWifi = launcherView.findViewById(R.id.tv_wifi);
+        launcherWifi = (TextView) launcherView.findViewById(R.id.tv_wifi);
         refreshWifi();
     }
 

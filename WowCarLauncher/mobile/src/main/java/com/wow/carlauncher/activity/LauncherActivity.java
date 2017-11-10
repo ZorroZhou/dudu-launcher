@@ -1,49 +1,45 @@
 package com.wow.carlauncher.activity;
 
-import android.Manifest;
 import android.app.WallpaperManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationListener;
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.LocationManage;
 import com.wow.carlauncher.common.WeatherIconUtil;
-import com.wow.carlauncher.common.console.ConsoleManage;
 import com.wow.carlauncher.common.util.AppUtil;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.DateUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
+import com.wow.carlauncher.event.LauncherDockLabelShowChangeEvent;
 import com.wow.carlauncher.plugin.PluginManage;
 import com.wow.carlauncher.popupWindow.ConsoleWin;
 import com.wow.carlauncher.webservice.WebService;
 import com.wow.carlauncher.webservice.res.WeatherRes;
 import com.wow.carlauncher.popupWindow.PopupWin;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
@@ -85,31 +81,49 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
     private LinearLayout ll_dock1;
     @ViewInject(R.id.iv_dock1)
     private ImageView iv_dock1;
+    @ViewInject(R.id.tv_dock1)
+    private TextView tv_dock1;
 
     @ViewInject(R.id.ll_dock2)
     private LinearLayout ll_dock2;
     @ViewInject(R.id.iv_dock2)
     private ImageView iv_dock2;
+    @ViewInject(R.id.tv_dock2)
+    private TextView tv_dock2;
 
     @ViewInject(R.id.ll_dock3)
     private LinearLayout ll_dock3;
     @ViewInject(R.id.iv_dock3)
     private ImageView iv_dock3;
+    @ViewInject(R.id.tv_dock3)
+    private TextView tv_dock3;
 
     @ViewInject(R.id.ll_dock4)
     private LinearLayout ll_dock4;
     @ViewInject(R.id.iv_dock4)
     private ImageView iv_dock4;
+    @ViewInject(R.id.tv_dock4)
+    private TextView tv_dock4;
 
     @ViewInject(R.id.ll_dock5)
     private LinearLayout ll_dock5;
     @ViewInject(R.id.iv_dock5)
     private ImageView iv_dock5;
+    @ViewInject(R.id.tv_dock5)
+    private TextView tv_dock5;
 
     @ViewInject(R.id.ll_dock6)
     private LinearLayout ll_dock6;
     @ViewInject(R.id.iv_dock6)
     private ImageView iv_dock6;
+    @ViewInject(R.id.tv_dock6)
+    private TextView tv_dock6;
+
+    @ViewInject(R.id.tv_app_appss)
+    private TextView tv_app_appss;
+
+    @ViewInject(R.id.tv_controller)
+    private TextView tv_controller;
 
     @ViewInject(R.id.fl_bg)
     private FrameLayout fl_bg;
@@ -140,6 +154,8 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
         intentFilter.addAction(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
         intentFilter.addAction(Intent.ACTION_WALLPAPER_CHANGED);
         registerReceiver(homeReceiver, intentFilter);
+
+        EventBus.getDefault().register(this);
     }
 
     public void initView() {
@@ -192,6 +208,7 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
             try {
                 PackageInfo packageInfo = pm.getPackageInfo(packname1, 0);
                 iv_dock1.setImageDrawable(packageInfo.applicationInfo.loadIcon(pm));
+                tv_dock1.setText(packageInfo.applicationInfo.loadLabel(pm));
             } catch (Exception e) {
                 SharedPreUtil.saveSharedPreString(SDATA_DOCK1_CLASS, null);
             }
@@ -201,6 +218,7 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
             try {
                 PackageInfo packageInfo = pm.getPackageInfo(packname2, 0);
                 iv_dock2.setImageDrawable(packageInfo.applicationInfo.loadIcon(pm));
+                tv_dock2.setText(packageInfo.applicationInfo.loadLabel(pm));
             } catch (Exception e) {
                 SharedPreUtil.saveSharedPreString(SDATA_DOCK2_CLASS, null);
             }
@@ -211,6 +229,7 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
             try {
                 PackageInfo packageInfo = pm.getPackageInfo(packname3, 0);
                 iv_dock3.setImageDrawable(packageInfo.applicationInfo.loadIcon(pm));
+                tv_dock3.setText(packageInfo.applicationInfo.loadLabel(pm));
             } catch (Exception e) {
                 SharedPreUtil.saveSharedPreString(SDATA_DOCK3_CLASS, null);
             }
@@ -221,6 +240,7 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
             try {
                 PackageInfo packageInfo = pm.getPackageInfo(packname4, 0);
                 iv_dock4.setImageDrawable(packageInfo.applicationInfo.loadIcon(pm));
+                tv_dock4.setText(packageInfo.applicationInfo.loadLabel(pm));
             } catch (Exception e) {
                 SharedPreUtil.saveSharedPreString(SDATA_DOCK4_CLASS, null);
             }
@@ -231,6 +251,7 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
             try {
                 PackageInfo packageInfo = pm.getPackageInfo(packname5, 0);
                 iv_dock5.setImageDrawable(packageInfo.applicationInfo.loadIcon(pm));
+                tv_dock5.setText(packageInfo.applicationInfo.loadLabel(pm));
             } catch (Exception e) {
                 SharedPreUtil.saveSharedPreString(SDATA_DOCK5_CLASS, null);
             }
@@ -242,10 +263,12 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
             try {
                 PackageInfo packageInfo = pm.getPackageInfo(packname6, 0);
                 iv_dock6.setImageDrawable(packageInfo.applicationInfo.loadIcon(pm));
+                tv_dock6.setText(packageInfo.applicationInfo.loadLabel(pm));
             } catch (Exception e) {
                 SharedPreUtil.saveSharedPreString(SDATA_DOCK6_CLASS, null);
             }
         }
+        dockLabelShow(SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_LAUNCHER_DOCK_LABEL_SHOW, true));
     }
 
     private void openDock(String clazz) {
@@ -496,6 +519,28 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
                 LauncherActivity.this.week.setText(week);
             }
         });
+    }
+
+    private void dockLabelShow(boolean show) {
+        int showFlag = View.GONE;
+        if (show) {
+            showFlag = View.VISIBLE;
+        } else {
+            showFlag = View.GONE;
+        }
+        tv_app_appss.setVisibility(showFlag);
+        tv_controller.setVisibility(showFlag);
+        tv_dock1.setVisibility(showFlag);
+        tv_dock2.setVisibility(showFlag);
+        tv_dock3.setVisibility(showFlag);
+        tv_dock4.setVisibility(showFlag);
+        tv_dock5.setVisibility(showFlag);
+        tv_dock6.setVisibility(showFlag);
+    }
+
+    @Subscribe
+    public void onEventMainThread(LauncherDockLabelShowChangeEvent event) {
+        dockLabelShow(event.show);
     }
 
     private AMapLocationListener aMapLocationListener = new AMapLocationListener() {

@@ -35,6 +35,15 @@
             <View style="@style/Interval" />
 
             <com.wow.carlauncher.common.view.SetView
+                android:id="@+id/sv_wall_set"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                st:titleEx="壁纸设置"
+                st:type="buttonB" />
+
+            <View style="@style/Interval" />
+
+            <com.wow.carlauncher.common.view.SetView
                 android:id="@+id/sv_console"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -44,10 +53,13 @@
             <View style="@style/Interval" />
 
             <com.wow.carlauncher.common.view.SetView
+                android:id="@+id/sv_launcher_show_dock_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                st:titleEx="壁纸设置"
-                st:type="buttonB" />
+                st:summary="@string/set_show"
+                st:summary2="@string/set_hide"
+                st:titleEx="展示dock标签"
+                st:type="switchB" />
 
             <View style="@style/Interval" />
 

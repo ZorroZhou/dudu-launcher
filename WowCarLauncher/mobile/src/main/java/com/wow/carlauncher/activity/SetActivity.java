@@ -17,8 +17,10 @@ import com.wow.carlauncher.common.util.AppUtil.AppInfo;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.util.ThreadObj;
 import com.wow.carlauncher.common.view.SetView;
+import com.wow.carlauncher.event.LauncherDockLabelShowChangeEvent;
 import com.wow.carlauncher.plugin.music.MusicControllerEnum;
 
+import org.greenrobot.eventbus.EventBus;
 import org.xutils.view.annotation.ViewInject;
 
 import java.util.List;
@@ -58,6 +60,12 @@ public class SetActivity extends BaseActivity {
     @ViewInject(R.id.sv_console)
     private SetView sv_console;
 
+    @ViewInject(R.id.sv_launcher_show_dock_label)
+    private SetView sv_launcher_show_dock_label;
+
+    @ViewInject(R.id.sv_wall_set)
+    private SetView sv_wall_set;
+
     @Override
     public void init() {
         setContent(R.layout.activity_set);
@@ -66,6 +74,26 @@ public class SetActivity extends BaseActivity {
     @Override
     public void initView() {
         setTitle("设置");
+        sv_wall_set.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showTip("请使用第三方看图软件直接将图片设置为安卓壁纸即可");
+            }
+        });
+
+        sv_launcher_show_dock_label.setOnValueChangeListener(new SetView.OnValueChangeListener() {
+            @Override
+            public void onValueChange(String newValue, String oldValue) {
+                if ("1".equals(newValue)) {
+                    SharedPreUtil.saveSharedPreBoolean(CommonData.SDATA_LAUNCHER_DOCK_LABEL_SHOW, true);
+                    EventBus.getDefault().post(new LauncherDockLabelShowChangeEvent(true));
+                } else {
+                    SharedPreUtil.saveSharedPreBoolean(CommonData.SDATA_LAUNCHER_DOCK_LABEL_SHOW, false);
+                    EventBus.getDefault().post(new LauncherDockLabelShowChangeEvent(false));
+                }
+            }
+        });
+        sv_launcher_show_dock_label.setChecked(SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_LAUNCHER_DOCK_LABEL_SHOW, true));
 
         sv_console.setOnClickListener(new View.OnClickListener() {
             @Override

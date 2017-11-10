@@ -18,10 +18,22 @@ import static com.wow.carlauncher.plugin.amapcar.AMapCarConstant.*;
 
 public class AMapCartReceiver extends BroadcastReceiver {
     private static final String TAG = "AMapCartReceiver";
+    public static final int GETHC_NEXT_TO_NONE = 0;
+    public static final int GETHC_NEXT_TO_NAVI = 1;
+
     private AMapCarPlugin aMapCarPlugin;
+
+
+    private int getHcNext = 0;
+    private long setGetHcNextTime = -1;
 
     AMapCartReceiver(AMapCarPlugin aMapCarPlugin) {
         this.aMapCarPlugin = aMapCarPlugin;
+    }
+
+    void setGetHcNext(int getHcNext) {
+        this.getHcNext = getHcNext;
+        setGetHcNextTime = System.currentTimeMillis();
     }
 
     @Override
@@ -61,7 +73,16 @@ public class AMapCartReceiver extends BroadcastReceiver {
                                     }).show();
                             return;
                         } else {
-                            aMapCarPlugin.getAmapSend().naviToHome();
+                            int next = GETHC_NEXT_TO_NONE;
+                            if (System.currentTimeMillis() - setGetHcNextTime < 2000) {
+                                next = getHcNext;
+                            }
+                            switch (next) {
+                                case GETHC_NEXT_TO_NAVI: {
+                                    aMapCarPlugin.getAmapSend().naviToHome();
+                                    break;
+                                }
+                            }
                         }
                     } else if (type == 2) {
                         if (lon == 0 || lat == 0) {
@@ -79,7 +100,16 @@ public class AMapCartReceiver extends BroadcastReceiver {
                                     }).show();
                             return;
                         } else {
-                            aMapCarPlugin.getAmapSend().naviToComp();
+                            int next = GETHC_NEXT_TO_NONE;
+                            if (System.currentTimeMillis() - setGetHcNextTime < 2000) {
+                                next = getHcNext;
+                            }
+                            switch (next) {
+                                case GETHC_NEXT_TO_NAVI: {
+                                    aMapCarPlugin.getAmapSend().naviToComp();
+                                    break;
+                                }
+                            }
                         }
                     }
                     break;

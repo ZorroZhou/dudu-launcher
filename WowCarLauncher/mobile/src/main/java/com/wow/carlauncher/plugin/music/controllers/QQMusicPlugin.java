@@ -75,14 +75,14 @@ public class QQMusicPlugin extends MusicController {
         launcherWidgetView.setPadding(0, 0, 0, 0);
 
         launcherView = (RelativeLayout) View.inflate(context, R.layout.plugin_music_qm_launcher, null);
-        launcherHouse = launcherView.findViewById(R.id.ll_house);
+        launcherHouse = (LinearLayout) launcherView.findViewById(R.id.ll_house);
         launcherHouse.addView(launcherWidgetView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-        launcherCover = launcherView.findViewById(R.id.iv_cover);
-        launcherTitle = launcherView.findViewById(R.id.tv_title);
-        launcherTime = launcherView.findViewById(R.id.tv_time);
-        launcherArtist = launcherView.findViewById(R.id.tv_artist);
-        launcherProgress = launcherView.findViewById(R.id.pb_music);
-        launcherIvPlay = launcherView.findViewById(R.id.iv_play);
+        launcherCover = (ImageView) launcherView.findViewById(R.id.iv_cover);
+        launcherTitle = (TextView) launcherView.findViewById(R.id.tv_title);
+        launcherTime = (TextView) launcherView.findViewById(R.id.tv_time);
+        launcherArtist = (TextView) launcherView.findViewById(R.id.tv_artist);
+        launcherProgress = (ProgressBar) launcherView.findViewById(R.id.pb_music);
+        launcherIvPlay = (ImageView) launcherView.findViewById(R.id.iv_play);
 
         launcherView.findViewById(R.id.ll_play).setOnClickListener(launcherOnClickListener);
         launcherView.findViewById(R.id.ll_prew).setOnClickListener(launcherOnClickListener);
@@ -95,11 +95,11 @@ public class QQMusicPlugin extends MusicController {
         popupWidgetView.setPadding(0, 0, 0, 0);
 
         popupView = (RelativeLayout) View.inflate(context, R.layout.plugin_music_qm_popup, null);
-        popupHouse = popupView.findViewById(R.id.ll_house);
+        popupHouse = (LinearLayout) popupView.findViewById(R.id.ll_house);
         popupHouse.addView(popupWidgetView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-        popupTitle = popupView.findViewById(R.id.tv_title);
-        popupProgress = popupView.findViewById(R.id.pb_music);
-        popupIvPlay = popupView.findViewById(R.id.iv_play);
+        popupTitle = (TextView) popupView.findViewById(R.id.tv_title);
+        popupProgress = (ProgressBar) popupView.findViewById(R.id.pb_music);
+        popupIvPlay = (ImageView) popupView.findViewById(R.id.iv_play);
 
         popupView.findViewById(R.id.ll_play).setOnClickListener(popupOnClickListener);
         popupView.findViewById(R.id.ll_prew).setOnClickListener(popupOnClickListener);

@@ -24,14 +24,14 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import static com.wow.carlauncher.common.CommonData.APP_WIDGET_HOST_ID;
-import static com.wow.carlauncher.common.CommonData.SDATA_MUSIC_PLUGIN_QQMUSIC_LANNCHER;
-import static com.wow.carlauncher.common.CommonData.SDATA_MUSIC_PLUGIN_QQMUSIC_POPUP;
+import static com.wow.carlauncher.common.CommonData.SDATA_MUSIC_PLUGIN_QQMUSIC_WIDGET2;
+import static com.wow.carlauncher.common.CommonData.SDATA_MUSIC_PLUGIN_QQMUSIC_WIDGET1;
 
 /**
  * Created by 10124 on 2017/10/26.
  */
 
-public class QQMusicPlugin extends MusicController {
+public class QQMusicPluginOld extends MusicController {
     private final static String TAG = "NeteaseCloudMusicPlugin";
 
     private AppWidgetHost appWidgetHost;
@@ -55,15 +55,15 @@ public class QQMusicPlugin extends MusicController {
 
     private Timer timer;
 
-    public QQMusicPlugin(Context context) {
+    public QQMusicPluginOld(Context context) {
         super(context);
 
         appWidgetHost = new AppWidgetHost(context, APP_WIDGET_HOST_ID);
         appWidgetManager = AppWidgetManager.getInstance(context);
         appWidgetHost.startListening();
 
-        int popup = SharedPreUtil.getSharedPreInteger(SDATA_MUSIC_PLUGIN_QQMUSIC_POPUP, -1);
-        int launcher = SharedPreUtil.getSharedPreInteger(SDATA_MUSIC_PLUGIN_QQMUSIC_LANNCHER, -1);
+        int popup = SharedPreUtil.getSharedPreInteger(SDATA_MUSIC_PLUGIN_QQMUSIC_WIDGET1, -1);
+        int launcher = SharedPreUtil.getSharedPreInteger(SDATA_MUSIC_PLUGIN_QQMUSIC_WIDGET2, -1);
         if (launcher == -1 || popup == -1) {
             return;
         }

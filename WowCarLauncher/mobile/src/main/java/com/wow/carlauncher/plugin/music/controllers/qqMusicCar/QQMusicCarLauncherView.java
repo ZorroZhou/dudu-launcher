@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.util.CommonUtil;
-import com.wow.carlauncher.plugin.music.controllers.QQMusicCarPlugin;
+import com.wow.carlauncher.plugin.music.controllers.QQMusicCarPluginOld;
 import com.wow.carlauncher.plugin.music.event.PEventMusicInfoChange;
 import com.wow.carlauncher.plugin.music.event.PEventMusicStateChange;
 
@@ -29,7 +29,7 @@ public class QQMusicCarLauncherView extends LinearLayout implements View.OnClick
     private LayoutInflater inflater;
 
     private ImageView iv_play;
-    private QQMusicCarPlugin controller;
+    private QQMusicCarPluginOld controller;
     private TextView tv_title, tv_artist;
     private ProgressBar pb_music;
     private boolean playing = false;
@@ -79,7 +79,7 @@ public class QQMusicCarLauncherView extends LinearLayout implements View.OnClick
         EventBus.getDefault().unregister(this);
     }
 
-    public QQMusicCarLauncherView(Context context, QQMusicCarPlugin controller) {
+    public QQMusicCarLauncherView(Context context, QQMusicCarPluginOld controller) {
         super(context);
         this.controller = controller;
         inflater = LayoutInflater.from(context);

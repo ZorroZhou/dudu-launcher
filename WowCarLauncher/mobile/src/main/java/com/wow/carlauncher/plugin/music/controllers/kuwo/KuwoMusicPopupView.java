@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.plugin.music.controllers.KuwoMusicPlugin;
-import com.wow.carlauncher.plugin.music.controllers.QQMusicCarPlugin;
 import com.wow.carlauncher.plugin.music.event.PEventMusicInfoChange;
 import com.wow.carlauncher.plugin.music.event.PEventMusicStateChange;
 

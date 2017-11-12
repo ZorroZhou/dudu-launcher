@@ -134,7 +134,7 @@
             android:orientation="horizontal"
             app:layout_heightPercent="60%h">
 
-            <LinearLayout
+            <FrameLayout
                 android:id="@+id/item_1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -146,7 +146,7 @@
                 android:gravity="center"
                 android:orientation="vertical" />
 
-            <LinearLayout
+            <FrameLayout
                 android:id="@+id/item_2"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -158,7 +158,7 @@
                 android:gravity="center"
                 android:orientation="vertical" />
 
-            <LinearLayout
+            <FrameLayout
                 android:id="@+id/item_3"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"

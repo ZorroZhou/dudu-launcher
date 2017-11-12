@@ -14,7 +14,7 @@ public class NwdConsoleImpl extends IConsole {
 
     private Intent mSetVolumeIntent = new Intent("com.nwd.action.ACTION_KEY_VALUE");
     private Intent mMuteIntent = new Intent("com.nwd.action.ACTION_SET_MUTE");
-    private boolean mute;
+    private boolean mute = false;
 
     public NwdConsoleImpl(Context context) {
         super(context);
@@ -46,7 +46,7 @@ public class NwdConsoleImpl extends IConsole {
     }
 
     @Override
-    public void taskList() {
+    public void clearTask() {
 
     }
 }

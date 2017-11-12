@@ -19,9 +19,12 @@ public class CommonData {
     public static final int REQUEST_SELECT_QQMUSIC_WIDGET1 = 10008;
     public static final int REQUEST_SELECT_QQMUSIC_WIDGET2 = 10009;
 
-    public static final int REQUEST_SELECT_MUSIC_PLUGIN = 10010;
-
     public static final String IDATA_PACKAGE_NAME = "PACKAGE_NAME";
+
+    //首页的插件
+    public static final String SDATA_ITEM1_PLUGIN = "SDATA_ITEM1_PLUGIN";
+    public static final String SDATA_ITEM2_PLUGIN = "SDATA_ITEM2_PLUGIN";
+    public static final String SDATA_ITEM3_PLUGIN = "SDATA_ITEM3_PLUGIN";
 
     //dock的包名start
     public static final String SDATA_DOCK1_CLASS = "DOCK1_BEAN";
@@ -54,14 +57,14 @@ public class CommonData {
     public static final String SDATA_HIDE_APPS = "SDATA_HIDE_APPS";
 
     //网易云音乐插件，弹出界面的展示的组件
-    public static final String SDATA_MUSIC_PLUGIN_NCM_POPUP = "SDATA_MUSIC_PLUGIN_NCM_POPUP";
+    public static final String SDATA_MUSIC_PLUGIN_NCM_WIDGET1 = "SDATA_MUSIC_PLUGIN_NCM_WIDGET1";
     //网易云音乐插件，主页界面的展示的组件
-    public static final String SDATA_MUSIC_PLUGIN_NCM_LANNCHER = "SDATA_MUSIC_PLUGIN_NCM_LANNCHER";
+    public static final String SDATA_MUSIC_PLUGIN_NCM_WIDGET2 = "SDATA_MUSIC_PLUGIN_NCM_WIDGET2";
 
     //QQ音乐插件，弹出界面的展示的组件
-    public static final String SDATA_MUSIC_PLUGIN_QQMUSIC_POPUP = "SDATA_MUSIC_PLUGIN_QQMUSIC_POPUP";
+    public static final String SDATA_MUSIC_PLUGIN_QQMUSIC_WIDGET1 = "SDATA_MUSIC_PLUGIN_QQMUSIC_WIDGET1";
     //QQ音乐插件，主页界面的展示的组件
-    public static final String SDATA_MUSIC_PLUGIN_QQMUSIC_LANNCHER = "SDATA_MUSIC_PLUGIN_QQMUSIC_LANNCHER";
+    public static final String SDATA_MUSIC_PLUGIN_QQMUSIC_WIDGET2 = "SDATA_MUSIC_PLUGIN_QQMUSIC_WIDGET2";
 
     //时间插件打开的APP
     public static final String SDATA_TIME_PLUGIN_OPEN_APP = "SDATA_TIME_PLUGIN_OPEN_APP";

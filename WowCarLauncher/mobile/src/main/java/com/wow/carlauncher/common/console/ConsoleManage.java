@@ -72,7 +72,7 @@ public class ConsoleManage extends IConsole {
     }
 
     @Override
-    public void taskList() {
-        console.taskList();
+    public void clearTask() {
+        console.clearTask();
     }
 }

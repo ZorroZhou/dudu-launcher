@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -15,23 +14,19 @@ import com.wow.carlauncher.R;
 import com.wow.carlauncher.activity.LockActivity;
 import com.wow.carlauncher.common.console.ConsoleManage;
 import com.wow.carlauncher.common.util.AppUtil;
-import com.wow.carlauncher.plugin.IPlugin;
+import com.wow.carlauncher.plugin.BasePlugin;
 import com.wow.carlauncher.plugin.PluginManage;
 
 /**
  * Created by 10124 on 2017/11/4.
  */
 
-public class ConsolePlugin implements IPlugin, View.OnClickListener {
+public class ConsolePlugin extends BasePlugin implements View.OnClickListener {
     public final static String TAG = "ConsolePlugin";
-    private PluginManage pluginManage;
-    private Context context;
-    private View launcherView;
     private TextView launcherWifi;
 
     public ConsolePlugin(Context context, PluginManage pluginManage) {
-        this.pluginManage = pluginManage;
-        this.context = context;
+        super(context, pluginManage);
 
         IntentFilter mFilter = new IntentFilter();
         mFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
@@ -39,7 +34,8 @@ public class ConsolePlugin implements IPlugin, View.OnClickListener {
         context.registerReceiver(mReceiver, mFilter);
     }
 
-    private void initLauncherView(View launcherView) {
+    public ViewGroup initLauncherView() {
+        ViewGroup launcherView = (ViewGroup) View.inflate(context, R.layout.plugin_controller_launcher, null);
         launcherView.findViewById(R.id.btn_vu).setOnClickListener(this);
         launcherView.findViewById(R.id.btn_vd).setOnClickListener(this);
         launcherView.findViewById(R.id.btn_jy).setOnClickListener(this);
@@ -47,28 +43,17 @@ public class ConsolePlugin implements IPlugin, View.OnClickListener {
 
         launcherWifi = (TextView) launcherView.findViewById(R.id.tv_wifi);
         refreshWifi();
-    }
-
-    @Override
-    public View getLauncherView() {
-        if (launcherView == null) {
-            launcherView = View.inflate(context, R.layout.plugin_controller_launcher, null);
-            initLauncherView(launcherView);
-        }
         return launcherView;
     }
 
     @Override
-    public View getPopupView() {
+    public ViewGroup initPopupView() {
         return null;
     }
 
     @Override
     public void destroy() {
-        if (launcherView.getParent() != null) {
-            ((ViewGroup) launcherView.getParent()).removeView(launcherView);
-        }
-
+        super.destroy();
         context.unregisterReceiver(mReceiver);
     }
 

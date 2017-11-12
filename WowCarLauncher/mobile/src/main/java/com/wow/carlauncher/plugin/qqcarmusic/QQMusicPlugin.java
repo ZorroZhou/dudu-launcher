@@ -1,5 +1,8 @@
-package com.wow.carlauncher.plugin.ncmusic;
+package com.wow.carlauncher.plugin.qqcarmusic;
 
+import android.appwidget.AppWidgetHost;
+import android.appwidget.AppWidgetManager;
+import android.appwidget.AppWidgetProviderInfo;
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
@@ -16,22 +19,32 @@ import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.util.ViewUtils;
 import com.wow.carlauncher.plugin.BasePlugin;
 import com.wow.carlauncher.plugin.PluginManage;
+import com.wow.carlauncher.plugin.music.MusicController;
 
 import org.xutils.x;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static com.wow.carlauncher.common.CommonData.SDATA_MUSIC_PLUGIN_NCM_WIDGET2;
+import static com.wow.carlauncher.common.CommonData.APP_WIDGET_HOST_ID;
 import static com.wow.carlauncher.common.CommonData.SDATA_MUSIC_PLUGIN_NCM_WIDGET1;
+import static com.wow.carlauncher.common.CommonData.SDATA_MUSIC_PLUGIN_QQMUSIC_WIDGET1;
+import static com.wow.carlauncher.common.CommonData.SDATA_MUSIC_PLUGIN_QQMUSIC_WIDGET2;
 
-public class NcMusicPlugin extends BasePlugin {
-    private final static String TAG = "NeteaseCloudMusicPlugin";
+/**
+ * Created by 10124 on 2017/10/26.
+ */
+
+public class QQMusicPlugin extends BasePlugin {
+    private final static String TAG = "QQMusicPlugin";
+
+    private LinearLayout launcherHouse;
     private ImageView launcherCover, launcherIvPlay;
     private TextView launcherTitle, launcherArtist;
     private ProgressBar launcherProgress;
 
 
+    private LinearLayout popupHouse;
     private ImageView popupIvPlay;
     private TextView popupTitle;
     private ProgressBar popupProgress;
@@ -41,14 +54,15 @@ public class NcMusicPlugin extends BasePlugin {
 
     private Timer timer;
 
-    public NcMusicPlugin(Context context, PluginManage pluginManage) {
+    public QQMusicPlugin(Context context, PluginManage pluginManage) {
         super(context, pluginManage);
 
-        int popup = SharedPreUtil.getSharedPreInteger(SDATA_MUSIC_PLUGIN_NCM_WIDGET1, -1);
-        int launcher = SharedPreUtil.getSharedPreInteger(SDATA_MUSIC_PLUGIN_NCM_WIDGET2, -1);
+        int popup = SharedPreUtil.getSharedPreInteger(SDATA_MUSIC_PLUGIN_QQMUSIC_WIDGET1, -1);
+        int launcher = SharedPreUtil.getSharedPreInteger(SDATA_MUSIC_PLUGIN_QQMUSIC_WIDGET2, -1);
         if (launcher == -1 || popup == -1) {
             return;
         }
+
         startUpdate();
     }
 
@@ -57,14 +71,10 @@ public class NcMusicPlugin extends BasePlugin {
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                if (popupView != null) {
-                    updatePopupView();
-                }
-                if (launcherView != null) {
-                    updateLauncherView();
-                }
+                updatePopupView();
+                updateLauncherView();
             }
-        }, 0, 100);
+        }, 0, 500);
     }
 
     private void stopUpdate() {
@@ -87,15 +97,16 @@ public class NcMusicPlugin extends BasePlugin {
     private int popupChangeTime = 0;
 
     public ViewGroup initPopupView() {
-        int popup = SharedPreUtil.getSharedPreInteger(SDATA_MUSIC_PLUGIN_NCM_WIDGET1, -1);
+        int popup = SharedPreUtil.getSharedPreInteger(SDATA_MUSIC_PLUGIN_QQMUSIC_WIDGET1, -1);
         if (popup == -1) {
             return new LinearLayout(context);
         }
+
         final View popupWidgetView = AppWidgetManage.self().getWidgetById(popup);
         popupWidgetView.setPadding(0, 0, 0, 0);
 
-        RelativeLayout popupView = (RelativeLayout) View.inflate(context, R.layout.plugin_music_ncm_popup, null);
-        LinearLayout popupHouse = (LinearLayout) popupView.findViewById(R.id.ll_house);
+        RelativeLayout popupView = (RelativeLayout) View.inflate(context, R.layout.plugin_music_qm_popup, null);
+        popupHouse = (LinearLayout) popupView.findViewById(R.id.ll_house);
         popupHouse.addView(popupWidgetView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
         popupTitle = (TextView) popupView.findViewById(R.id.tv_title);
         popupProgress = (ProgressBar) popupView.findViewById(R.id.pb_music);
@@ -165,6 +176,7 @@ public class NcMusicPlugin extends BasePlugin {
                     popupProgress.setProgress(popupWidgetViewProgressBar.getProgress());
                 }
 
+
                 if (System.currentTimeMillis() - playClickTime > 2000) {
                     if (popupProgress.getProgress() != popupWidgetViewTimeLastUpdateValue) {
                         popupChangeTime = 0;
@@ -172,7 +184,7 @@ public class NcMusicPlugin extends BasePlugin {
                         isruning = true;
                     } else {
                         popupChangeTime++;
-                        if (popupChangeTime > 30) {
+                        if (popupChangeTime > 2) {
                             popupIvPlay.setImageResource(R.mipmap.ic_play);
                             isruning = false;
                         }
@@ -187,7 +199,7 @@ public class NcMusicPlugin extends BasePlugin {
         //先处理背景
         final ViewGroup bg = (ViewGroup) vg.getChildAt(0);
 
-        View v2 = ViewUtils.getDeepViewByIndex(bg, new int[]{1, 0});
+        View v2 = ViewUtils.getDeepViewByIndex(bg, new int[]{1, 0, 0});
         if (v2 instanceof TextView) {
             popupWidgetViewTitle = (TextView) v2;
             popupTitle.setText(popupWidgetViewTitle.getText());
@@ -199,17 +211,17 @@ public class NcMusicPlugin extends BasePlugin {
             popupProgress.setMax(popupWidgetViewProgressBar.getMax());
             popupProgress.setProgress(popupWidgetViewProgressBar.getProgress());
         }
-        View v6 = ViewUtils.getDeepViewByIndex(bg, new int[]{1, 2, 2});
+        View v6 = ViewUtils.getDeepViewByIndex(bg, new int[]{1, 2, 3});
         if (v6 instanceof ImageView) {
             popupWidgetViewPrew = (ImageView) v6;
         }
 
-        View v7 = ViewUtils.getDeepViewByIndex(bg, new int[]{1, 2, 3});
+        View v7 = ViewUtils.getDeepViewByIndex(bg, new int[]{1, 2, 4});
         if (v7 instanceof ImageView) {
             popupWidgetViewNext = (ImageView) v7;
         }
 
-        View v8 = ViewUtils.getDeepViewByIndex(bg, new int[]{1, 2, 1});
+        View v8 = ViewUtils.getDeepViewByIndex(bg, new int[]{1, 2, 2});
         if (v8 instanceof ImageView) {
             popupWidgetViewPlay = (ImageView) v8;
         }
@@ -219,19 +231,21 @@ public class NcMusicPlugin extends BasePlugin {
     private TextView launcherWidgetViewTitle, launcherWidgetViewArtist;
     private ProgressBar launcherWidgetViewProgressBar;
     private ImageView launcherWidgetViewPrew, launcherWidgetViewNext, launcherWidgetViewPlay, launcherWidgetViewCover;
-    private int launcherWidgetViewTimeLastUpdateValue = 0;
+    private int launcherWidgetViewProgressLastUpdateValue = 0;
     private int launcherChangeTime = 0;
 
     public ViewGroup initLauncherView() {
-        int launcher = SharedPreUtil.getSharedPreInteger(SDATA_MUSIC_PLUGIN_NCM_WIDGET2, -1);
+        int launcher = SharedPreUtil.getSharedPreInteger(SDATA_MUSIC_PLUGIN_QQMUSIC_WIDGET2, -1);
         if (launcher == -1) {
             return new LinearLayout(context);
         }
+
         // 获取所选的Widget的AppWidgetProviderInfo信息
         final View launcherWidgetView = AppWidgetManage.self().getWidgetById(launcher);
+        launcherWidgetView.setPadding(0, 0, 0, 0);
 
-        RelativeLayout launcherView = (RelativeLayout) View.inflate(context, R.layout.plugin_music_ncm_launcher, null);
-        LinearLayout launcherHouse = (LinearLayout) launcherView.findViewById(R.id.ll_house);
+        RelativeLayout launcherView = (RelativeLayout) View.inflate(context, R.layout.plugin_music_qm_launcher, null);
+        launcherHouse = (LinearLayout) launcherView.findViewById(R.id.ll_house);
         launcherHouse.addView(launcherWidgetView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
         launcherCover = (ImageView) launcherView.findViewById(R.id.iv_cover);
         launcherTitle = (TextView) launcherView.findViewById(R.id.tv_title);
@@ -285,8 +299,6 @@ public class NcMusicPlugin extends BasePlugin {
         launcherView.findViewById(R.id.ll_prew).setOnClickListener(launcherOnClickListener);
         launcherView.findViewById(R.id.ll_next).setOnClickListener(launcherOnClickListener);
 
-        ergodicLauncherView2((ViewGroup) launcherWidgetView, 0);
-
         ergodicLauncherView((ViewGroup) launcherWidgetView);
         return launcherView;
     }
@@ -309,18 +321,18 @@ public class NcMusicPlugin extends BasePlugin {
                     launcherProgress.setMax(launcherWidgetViewProgressBar.getMax());
                 }
                 if (System.currentTimeMillis() - playClickTime > 2000) {
-                    if (launcherProgress.getProgress() != launcherWidgetViewTimeLastUpdateValue) {
+                    if (launcherProgress.getProgress() != launcherWidgetViewProgressLastUpdateValue) {
                         launcherChangeTime = 0;
                         launcherIvPlay.setImageResource(R.mipmap.ic_pause);
                         isruning = true;
                     } else {
                         launcherChangeTime++;
-                        if (launcherChangeTime > 30) {
+                        if (launcherChangeTime > 2) {
                             launcherIvPlay.setImageResource(R.mipmap.ic_play);
                             isruning = false;
                         }
                     }
-                    launcherWidgetViewTimeLastUpdateValue = launcherProgress.getProgress();
+                    launcherWidgetViewProgressLastUpdateValue = launcherProgress.getProgress();
                 }
             }
         });
@@ -329,56 +341,40 @@ public class NcMusicPlugin extends BasePlugin {
     private void ergodicLauncherView(final ViewGroup vg) {
         //先处理背景
         final ViewGroup bg = (ViewGroup) vg.getChildAt(0);
-        View v1 = ViewUtils.getDeepViewByIndex(bg, new int[]{1, 0});
+        View v1 = ViewUtils.getDeepViewByIndex(bg, new int[]{0, 0});
         if (v1 instanceof ImageView) {
             launcherWidgetViewCover = (ImageView) v1;
             launcherCover.setImageDrawable(launcherWidgetViewCover.getDrawable());
         }
-        View v2 = ViewUtils.getDeepViewByIndex(bg, new int[]{1, 1, 0});
+        View v2 = ViewUtils.getDeepViewByIndex(bg, new int[]{0, 1, 1});
         if (v2 instanceof TextView) {
             launcherWidgetViewTitle = (TextView) v2;
             launcherTitle.setText(launcherWidgetViewTitle.getText());
         }
-        View v3 = ViewUtils.getDeepViewByIndex(bg, new int[]{1, 1, 1, 0});
+        View v3 = ViewUtils.getDeepViewByIndex(bg, new int[]{0, 1, 2});
         if (v3 instanceof TextView) {
             launcherWidgetViewArtist = (TextView) v3;
             launcherArtist.setText(launcherWidgetViewArtist.getText());
         }
 
-        View v5 = ViewUtils.getDeepViewByIndex(bg, new int[]{1, 1, 2});
+        View v5 = ViewUtils.getDeepViewByIndex(bg, new int[]{1});
         if (v5 instanceof ProgressBar) {
             launcherWidgetViewProgressBar = (ProgressBar) v5;
             launcherProgress.setProgress(launcherWidgetViewProgressBar.getProgress());
             launcherProgress.setMax(launcherWidgetViewProgressBar.getMax());
         }
-        View v6 = ViewUtils.getDeepViewByIndex(bg, new int[]{1, 1, 3, 3});
+        View v6 = ViewUtils.getDeepViewByIndex(bg, new int[]{2, 3});
         if (v6 instanceof ImageView) {
             launcherWidgetViewPrew = (ImageView) v6;
         }
 
-        View v7 = ViewUtils.getDeepViewByIndex(bg, new int[]{1, 1, 3, 4});
-        if (v7 instanceof ImageView) {
-            launcherWidgetViewNext = (ImageView) v7;
-        }
-
-        View v8 = ViewUtils.getDeepViewByIndex(bg, new int[]{1, 1, 3, 2});
+        View v8 = ViewUtils.getDeepViewByIndex(bg, new int[]{2, 2});
         if (v8 instanceof ImageView) {
             launcherWidgetViewPlay = (ImageView) v8;
         }
-    }
-
-    private void ergodicLauncherView2(ViewGroup vg, int z) {
-        //先处理背景
-        for (int i = 0; i < vg.getChildCount(); i++) {
-            //if (z < 4) {
-            Log.e(TAG, z + "    ergodicLauncherView: " + vg.getChildAt(i) + "       " + i);
-            //}
-
-            View v = vg.getChildAt(i);
-            if (v instanceof ViewGroup) {
-                int zz = z + 1;
-                ergodicLauncherView2((ViewGroup) v, zz);
-            }
+        View v7 = ViewUtils.getDeepViewByIndex(bg, new int[]{2, 4});
+        if (v7 instanceof ImageView) {
+            launcherWidgetViewNext = (ImageView) v7;
         }
     }
 }

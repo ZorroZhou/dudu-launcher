@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:st="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <LinearLayout
+        android:id="@+id/ll_set"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="16dp"
+                android:paddingTop="16dp"
+                android:text="网易云音乐插件选择"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp" />
+
+
+            <com.wow.carlauncher.common.view.SetView
+                android:id="@+id/ncm_w1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                st:titleEx="音乐插件1*4"
+                st:type="buttonB" />
+
+            <View style="@style/Interval" />
+
+            <com.wow.carlauncher.common.view.SetView
+                android:id="@+id/ncm_w2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                st:titleEx="音乐插件2*4"
+                st:type="buttonB" />
+
+            <View style="@style/Interval" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="16dp"
+                android:paddingTop="16dp"
+                android:text="QQ音乐插件选择"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp" />
+
+
+            <com.wow.carlauncher.common.view.SetView
+                android:id="@+id/qqm_w1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                st:titleEx="音乐插件1*4"
+                st:type="buttonB" />
+
+            <View style="@style/Interval" />
+
+            <com.wow.carlauncher.common.view.SetView
+                android:id="@+id/qqm_w2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                st:titleEx="音乐插件2*4"
+                st:type="buttonB" />
+
+            <View style="@style/Interval" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

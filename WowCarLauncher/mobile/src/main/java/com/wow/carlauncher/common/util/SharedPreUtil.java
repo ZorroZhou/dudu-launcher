@@ -35,6 +35,15 @@ public class SharedPreUtil {
 
     /**
      * @param key 键
+     * @category 获取String键值对
+     */
+    public static String getSharedPreString(String key, String value) {
+        settings = context.getSharedPreferences(XML_Settings, Context.MODE_PRIVATE);
+        return settings.getString(key, value);
+    }
+
+    /**
+     * @param key 键
      * @return
      * @category 获取boolean键值对
      */

@@ -16,7 +16,7 @@ import com.wow.carlauncher.CarLauncherApplication;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.util.SharedPreUtil;
-import com.wow.carlauncher.plugin.IPlugin;
+import com.wow.carlauncher.plugin.BasePlugin;
 import com.wow.carlauncher.plugin.PluginManage;
 
 import org.xutils.x;
@@ -125,7 +125,7 @@ public class PopupWin {
     }
 
     private void showPlugin(boolean goNext) {
-        IPlugin iplugin = null;
+        BasePlugin iplugin = null;
         while (true) {
             if (goNext) {
                 currentPluginIndex = currentPluginIndex + 1;

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -18,7 +19,7 @@ import com.wow.carlauncher.common.BaseDialog;
 import com.wow.carlauncher.common.util.AppUtil;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.dialog.InputDialog;
-import com.wow.carlauncher.plugin.IPlugin;
+import com.wow.carlauncher.plugin.BasePlugin;
 import com.wow.carlauncher.plugin.PluginManage;
 
 import java.math.BigDecimal;
@@ -30,22 +31,9 @@ import static com.wow.carlauncher.plugin.amapcar.AMapCartReceiver.GETHC_NEXT_TO_
  * Created by 10124 on 2017/11/4.
  */
 
-public class AMapCarPlugin implements IPlugin, View.OnClickListener {
+public class AMapCarPlugin extends BasePlugin implements View.OnClickListener {
     public static final String TAG = "AMapCarPlugin";
 
-    private PluginManage pluginManage;
-
-    public PluginManage getPluginManage() {
-        return pluginManage;
-    }
-
-    private Context context;
-
-    public Context getContext() {
-        return context;
-    }
-
-    private FrameLayout popupView;
     private ImageView popupIcon;
     private TextView popupdis;
     private TextView popuproad;
@@ -53,7 +41,6 @@ public class AMapCarPlugin implements IPlugin, View.OnClickListener {
     private LinearLayout popupcontroller;
     private LinearLayout popupnavi;
 
-    private RelativeLayout launcherView;
     private View launcherController;
     private ImageView launcherIcon;
     private LinearLayout launchernavi;
@@ -69,8 +56,8 @@ public class AMapCarPlugin implements IPlugin, View.OnClickListener {
     }
 
     public AMapCarPlugin(Context context, PluginManage pluginManage) {
-        this.pluginManage = pluginManage;
-        this.context = context;
+        super(context, pluginManage);
+
         amapReceiver = new AMapCartReceiver(this);
         amapSend = new AMapCartSend(this);
 
@@ -79,31 +66,43 @@ public class AMapCarPlugin implements IPlugin, View.OnClickListener {
         context.registerReceiver(amapReceiver, intentFilter);
     }
 
-    private void initPopupView(View view) {
-        popupIcon = (ImageView) view.findViewById(R.id.iv_icon);
-        popupdis = (TextView) view.findViewById(R.id.tv_dis);
-        popuproad = (TextView) view.findViewById(R.id.tv_road);
-        popupmsg = (TextView) view.findViewById(R.id.tv_msg);
-        popupcontroller = (LinearLayout) view.findViewById(R.id.ll_controller);
-        popupnavi = (LinearLayout) view.findViewById(R.id.ll_navi);
+    public ViewGroup initLauncherView() {
+        RelativeLayout launcherView = (RelativeLayout) View.inflate(context, R.layout.plugin_amap_launcher, null);
+        launcherView.findViewById(R.id.rl_base).setOnClickListener(this);
+        launcherView.findViewById(R.id.btn_search).setOnClickListener(this);
+        launcherView.findViewById(R.id.btn_go_home).setOnClickListener(this);
+        launcherView.findViewById(R.id.btn_go_company).setOnClickListener(this);
 
-        view.findViewById(R.id.btn_search).setOnClickListener(this);
-        view.findViewById(R.id.btn_go_home).setOnClickListener(this);
-        view.findViewById(R.id.btn_go_company).setOnClickListener(this);
+        launcherIcon = (ImageView) launcherView.findViewById(R.id.iv_icon);
+        launcherController = launcherView.findViewById(R.id.ll_controller);
+        launchernavi = (LinearLayout) launcherView.findViewById(R.id.ll_navi);
+        launcherdis = (TextView) launcherView.findViewById(R.id.tv_dis);
+        launcherroad = (TextView) launcherView.findViewById(R.id.tv_road);
+        launchermsg = (TextView) launcherView.findViewById(R.id.tv_msg);
+        return launcherView;
     }
 
-    private void initLauncherView(View view) {
-        view.findViewById(R.id.rl_base).setOnClickListener(this);
-        view.findViewById(R.id.btn_search).setOnClickListener(this);
-        view.findViewById(R.id.btn_go_home).setOnClickListener(this);
-        view.findViewById(R.id.btn_go_company).setOnClickListener(this);
+    @Override
+    public ViewGroup initPopupView() {
+        FrameLayout popupView = (FrameLayout) View.inflate(context, R.layout.plugin_amap_popup, null);
 
-        launcherIcon = (ImageView) view.findViewById(R.id.iv_icon);
-        launcherController = view.findViewById(R.id.ll_controller);
-        launchernavi = (LinearLayout) view.findViewById(R.id.ll_navi);
-        launcherdis = (TextView) view.findViewById(R.id.tv_dis);
-        launcherroad = (TextView) view.findViewById(R.id.tv_road);
-        launchermsg = (TextView) view.findViewById(R.id.tv_msg);
+        popupIcon = (ImageView) popupView.findViewById(R.id.iv_icon);
+        popupdis = (TextView) popupView.findViewById(R.id.tv_dis);
+        popuproad = (TextView) popupView.findViewById(R.id.tv_road);
+        popupmsg = (TextView) popupView.findViewById(R.id.tv_msg);
+        popupcontroller = (LinearLayout) popupView.findViewById(R.id.ll_controller);
+        popupnavi = (LinearLayout) popupView.findViewById(R.id.ll_navi);
+
+        popupView.findViewById(R.id.btn_search).setOnClickListener(this);
+        popupView.findViewById(R.id.btn_go_home).setOnClickListener(this);
+        popupView.findViewById(R.id.btn_go_company).setOnClickListener(this);
+        return popupView;
+    }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+        context.unregisterReceiver(amapReceiver);
     }
 
     @Override
@@ -253,28 +252,5 @@ public class AMapCarPlugin implements IPlugin, View.OnClickListener {
             }
         }
 
-    }
-
-    @Override
-    public View getLauncherView() {
-        if (launcherView == null) {
-            launcherView = (RelativeLayout) View.inflate(context, R.layout.plugin_amap_launcher, null);
-            initLauncherView(launcherView);
-        }
-        return launcherView;
-    }
-
-    @Override
-    public View getPopupView() {
-        if (popupView == null) {
-            popupView = (FrameLayout) View.inflate(context, R.layout.plugin_amap_popup, null);
-            initPopupView(popupView);
-        }
-        return popupView;
-    }
-
-    @Override
-    public void destroy() {
-        context.unregisterReceiver(amapReceiver);
     }
 }

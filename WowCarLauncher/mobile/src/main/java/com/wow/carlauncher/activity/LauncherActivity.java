@@ -32,6 +32,8 @@ import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.DateUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.event.LauncherDockLabelShowChangeEvent;
+import com.wow.carlauncher.event.LauncherItemRefreshEvent;
+import com.wow.carlauncher.plugin.LauncherPluginEnum;
 import com.wow.carlauncher.plugin.PluginManage;
 import com.wow.carlauncher.popupWindow.ConsoleWin;
 import com.wow.carlauncher.webservice.WebService;
@@ -53,11 +55,11 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
     private static final String TAG = "LanncherActivity";
 
     @ViewInject(R.id.item_1)
-    private LinearLayout item_1;
+    private FrameLayout item_1;
     @ViewInject(R.id.item_2)
-    private LinearLayout item_2;
+    private FrameLayout item_2;
     @ViewInject(R.id.item_3)
-    private LinearLayout item_3;
+    private FrameLayout item_3;
 
     @ViewInject(R.id.time)
     private TextView time;
@@ -139,16 +141,10 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         mContext = this;
 
-        init();
-        initView();
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-    }
-
-    public void init() {
         pm = getPackageManager();
         wallManager = WallpaperManager.getInstance(this);
-
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
@@ -156,6 +152,18 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
         registerReceiver(homeReceiver, intentFilter);
 
         EventBus.getDefault().register(this);
+
+        initView();
+
+        loadDock();
+        loadItem();
+        checkAppState();
+        setWall();
+        LocationManage.self().addLocationListener(aMapLocationListener);
+    }
+
+    public void init() {
+
     }
 
     public void initView() {
@@ -180,27 +188,8 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
         findViewById(R.id.ll_controller).setOnClickListener(this);
         findViewById(R.id.iv_set).setOnClickListener(this);
         findViewById(R.id.ll_time).setOnClickListener(this);
-
-        if (PluginManage.self().music().getLauncherView().getParent() != null) {
-            ((ViewGroup) PluginManage.self().music().getLauncherView().getParent()).removeView(PluginManage.self().music().getLauncherView());
-        }
-        item_1.addView(PluginManage.self().music().getLauncherView(), LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-
-        if (PluginManage.self().amapCar().getLauncherView().getParent() != null) {
-            ((ViewGroup) PluginManage.self().amapCar().getLauncherView().getParent()).removeView(PluginManage.self().amapCar().getLauncherView());
-        }
-        item_2.addView(PluginManage.self().amapCar().getLauncherView(), LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-
-        if (PluginManage.self().controller().getLauncherView().getParent() != null) {
-            ((ViewGroup) PluginManage.self().controller().getLauncherView().getParent()).removeView(PluginManage.self().controller().getLauncherView());
-        }
-        item_3.addView(PluginManage.self().controller().getLauncherView(), LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-
-        loadDock();
-        checkAppState();
-        setWall();
-        LocationManage.self().addLocationListener(aMapLocationListener);
     }
+
 
     private void loadDock() {
         String packname1 = SharedPreUtil.getSharedPreString(SDATA_DOCK1_CLASS);
@@ -522,7 +511,7 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void dockLabelShow(boolean show) {
-        int showFlag = View.GONE;
+        int showFlag;
         if (show) {
             showFlag = View.VISIBLE;
         } else {
@@ -536,6 +525,31 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
         tv_dock4.setVisibility(showFlag);
         tv_dock5.setVisibility(showFlag);
         tv_dock6.setVisibility(showFlag);
+    }
+
+    private void loadItem() {
+        View item1 = PluginManage.self().getLauncherPlugin(LauncherPluginEnum.LAUNCHER_ITEM1).getLauncherView();
+        if (item1.getParent() != null) {
+            ((ViewGroup) item1.getParent()).removeView(item1);
+        }
+        item_1.addView(item1, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+
+        View item2 = PluginManage.self().getLauncherPlugin(LauncherPluginEnum.LAUNCHER_ITEM2).getLauncherView();
+        if (item2.getParent() != null) {
+            ((ViewGroup) item2.getParent()).removeView(item2);
+        }
+        item_2.addView(item2, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+
+        View item3 = PluginManage.self().getLauncherPlugin(LauncherPluginEnum.LAUNCHER_ITEM3).getLauncherView();
+        if (item3.getParent() != null) {
+            ((ViewGroup) item3.getParent()).removeView(item3);
+        }
+        item_3.addView(item3, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+    }
+
+    @Subscribe
+    public void onEventMainThread(LauncherItemRefreshEvent event) {
+        loadItem();
     }
 
     @Subscribe

@@ -1,161 +1,305 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:st="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="horizontal">
 
-    <LinearLayout
-        android:id="@+id/ll_set"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        android:orientation="vertical">
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="16dp"
-                android:paddingTop="16dp"
-                android:text="应用设置"
-                android:textColor="@color/colorPrimary"
-                android:textSize="14sp" />
+                android:background="@android:color/white"
+                android:orientation="vertical">
 
-            <com.wow.carlauncher.common.view.SetView
-                android:id="@+id/sv_apps_hides"
+                <com.wow.carlauncher.common.view.SetView
+                    android:id="@+id/sg_app"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    st:titleEx="应用设置"
+                    st:type="buttonB" />
+
+                <View style="@style/Interval" />
+
+                <com.wow.carlauncher.common.view.SetView
+                    android:id="@+id/sg_launcher"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    st:titleEx="桌面设置"
+                    st:type="buttonB" />
+
+                <View style="@style/Interval" />
+
+                <com.wow.carlauncher.common.view.SetView
+                    android:id="@+id/sg_popup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    st:titleEx="悬浮窗设置"
+                    st:type="buttonB" />
+
+                <View style="@style/Interval" />
+
+                <com.wow.carlauncher.common.view.SetView
+                    android:id="@+id/sg_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    st:titleEx="时间设置"
+                    st:type="buttonB" />
+
+                <View style="@style/Interval" />
+
+                <com.wow.carlauncher.common.view.SetView
+                    android:id="@+id/sg_help"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    st:titleEx="帮助"
+                    st:type="buttonB" />
+
+                <View style="@style/Interval" />
+            </LinearLayout>
+        </ScrollView>
+
+    </FrameLayout>
+
+    <View
+        android:layout_width="0.1dp"
+        android:layout_height="match_parent"
+        android:background="@color/main_interval_color" />
+
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                st:titleEx="APP菜单需要隐藏的项目"
-                st:type="buttonB" />
+                android:orientation="vertical">
 
-            <View style="@style/Interval" />
+                <LinearLayout
+                    android:id="@+id/ll_app"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-            <com.wow.carlauncher.common.view.SetView
-                android:id="@+id/sv_wall_set"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                st:titleEx="壁纸设置"
-                st:type="buttonB" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="16dp"
+                        android:paddingTop="16dp"
+                        android:text="APP设置"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="14sp" />
 
-            <View style="@style/Interval" />
+                    <com.wow.carlauncher.common.view.SetView
+                        android:id="@+id/sv_plugin_set"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        st:summary="所有插件的一些相关设置，如果不设置可能导致插件无法运行"
+                        st:titleEx="插件设置"
+                        st:type="buttonB" />
 
-            <com.wow.carlauncher.common.view.SetView
-                android:id="@+id/sv_console"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                st:titleEx="控制层实现（如声音）"
-                st:type="buttonB" />
+                    <View style="@style/Interval" />
 
-            <View style="@style/Interval" />
+                    <com.wow.carlauncher.common.view.SetView
+                        android:id="@+id/sv_apps_hides"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        st:summary="全部应用将隐藏选中的项目"
+                        st:titleEx="隐藏项目"
+                        st:type="buttonB" />
 
-            <com.wow.carlauncher.common.view.SetView
-                android:id="@+id/sv_launcher_show_dock_label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                st:summary="@string/set_show"
-                st:summary2="@string/set_hide"
-                st:titleEx="展示dock标签"
-                st:type="switchB" />
+                    <View style="@style/Interval" />
 
-            <View style="@style/Interval" />
+                    <com.wow.carlauncher.common.view.SetView
+                        android:id="@+id/sv_wall_set"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        st:titleEx="壁纸设置"
+                        st:type="buttonB" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="16dp"
-                android:paddingTop="16dp"
-                android:text="悬浮窗设置"
-                android:textColor="@color/colorPrimary"
-                android:textSize="14sp" />
+                    <View style="@style/Interval" />
 
-            <com.wow.carlauncher.common.view.SetView
-                android:id="@+id/sv_allow_popup_window"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                st:summary="@string/set_allow"
-                st:summary2="@string/set_ban"
-                st:titleEx="允许显示(如无法显示，请检查悬浮窗权限)"
-                st:type="switchB" />
+                    <com.wow.carlauncher.common.view.SetView
+                        android:id="@+id/sv_console"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        st:summary="如声音控制，一件清理等功能的实现，不同的车机可能处理方式不同。"
+                        st:titleEx="控制层实现"
+                        st:type="buttonB" />
 
-            <View style="@style/Interval" />
+                    <View style="@style/Interval" />
 
-            <com.wow.carlauncher.common.view.SetView
-                android:id="@+id/sv_popup_window_showtype"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                st:summary="@string/set_yes"
-                st:summary2="@string/set_no"
-                st:titleEx="悬浮窗全局展示"
-                st:type="checkB" />
+                    <com.wow.carlauncher.common.view.SetView
+                        android:id="@+id/sv_launcher_show_dock_label"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        st:summary="@string/set_show"
+                        st:summary2="@string/set_hide"
+                        st:titleEx="展示dock标签"
+                        st:type="switchB" />
 
-            <View style="@style/Interval" />
+                    <View style="@style/Interval" />
+                </LinearLayout>
 
-            <com.wow.carlauncher.common.view.SetView
-                android:id="@+id/sv_popup_window_showapps"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                st:titleEx="允许弹出悬浮框的APP"
-                st:type="buttonB" />
+                <LinearLayout
+                    android:id="@+id/ll_launcher"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
-            <View style="@style/Interval" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="16dp"
+                        android:paddingTop="16dp"
+                        android:text="桌面设置"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="14sp" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="16dp"
-                android:paddingTop="16dp"
-                android:text="音乐插件设置"
-                android:textColor="@color/colorPrimary"
-                android:textSize="14sp" />
+                    <com.wow.carlauncher.common.view.SetView
+                        android:id="@+id/sv_launcher_item1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        st:titleEx="桌面插件1"
+                        st:type="buttonB" />
 
-            <com.wow.carlauncher.common.view.SetView
-                android:id="@+id/music_controller_select"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                st:titleEx="选择音乐控制器"
-                st:type="buttonB" />
+                    <View style="@style/Interval" />
 
-            <View style="@style/Interval" />
+                    <com.wow.carlauncher.common.view.SetView
+                        android:id="@+id/sv_launcher_item2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        st:titleEx="桌面插件2"
+                        st:type="buttonB" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="16dp"
-                android:paddingTop="16dp"
-                android:text="时间设置"
-                android:textColor="@color/colorPrimary"
-                android:textSize="14sp" />
+                    <View style="@style/Interval" />
 
-            <com.wow.carlauncher.common.view.SetView
-                android:id="@+id/time_plugin_open_app_select"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                st:titleEx="时间位置点击打开的APP"
-                st:type="buttonB" />
+                    <com.wow.carlauncher.common.view.SetView
+                        android:id="@+id/sv_launcher_item3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        st:titleEx="桌面插件3"
+                        st:type="buttonB" />
 
-            <View style="@style/Interval" />
+                    <View style="@style/Interval" />
+                </LinearLayout>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="16dp"
-                android:paddingTop="16dp"
-                android:text="帮助"
-                android:textColor="@color/colorPrimary"
-                android:textSize="14sp" />
+                <LinearLayout
+                    android:id="@+id/ll_popup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
-            <com.wow.carlauncher.common.view.SetView
-                android:id="@+id/sv_about"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                st:titleEx="关于"
-                st:type="buttonB" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="16dp"
+                        android:paddingTop="16dp"
+                        android:text="悬浮框设置"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="14sp" />
 
-            <View style="@style/Interval" />
-        </LinearLayout>
-    </LinearLayout>
-</ScrollView>
+                    <com.wow.carlauncher.common.view.SetView
+                        android:id="@+id/sv_allow_popup_window"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        st:summary="@string/set_allow"
+                        st:summary2="@string/set_ban"
+                        st:titleEx="允许显示(如无法显示，请检查悬浮窗权限)"
+                        st:type="switchB" />
+
+                    <View style="@style/Interval" />
+
+                    <com.wow.carlauncher.common.view.SetView
+                        android:id="@+id/sv_popup_window_showtype"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        st:summary="@string/set_yes"
+                        st:summary2="@string/set_no"
+                        st:titleEx="悬浮窗全局展示"
+                        st:type="checkB" />
+
+                    <View style="@style/Interval" />
+
+                    <com.wow.carlauncher.common.view.SetView
+                        android:id="@+id/sv_popup_window_showapps"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        st:titleEx="允许弹出悬浮框的APP"
+                        st:type="buttonB" />
+
+                    <View style="@style/Interval" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="16dp"
+                        android:paddingTop="16dp"
+                        android:text="时间设置"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="14sp" />
+
+                    <com.wow.carlauncher.common.view.SetView
+                        android:id="@+id/time_plugin_open_app_select"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        st:titleEx="时间位置点击打开的APP"
+                        st:type="buttonB" />
+
+                    <View style="@style/Interval" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_help"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="16dp"
+                        android:paddingTop="16dp"
+                        android:text="帮助"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="14sp" />
+
+                    <com.wow.carlauncher.common.view.SetView
+                        android:id="@+id/sv_about"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        st:titleEx="关于"
+                        st:type="buttonB" />
+
+                    <View style="@style/Interval" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </FrameLayout>
+</LinearLayout>

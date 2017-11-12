@@ -24,6 +24,7 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
     <uses-permission
         android:name="android.permission.PACKAGE_USAGE_STATS"
         tools:ignore="ProtectedPermissions" />
@@ -74,7 +75,7 @@
             android:name=".activity.SetActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".activity.MusicPluginSetActivity"
+            android:name=".activity.PluginSetActivity"
             android:screenOrientation="landscape" />
         <activity
             android:name=".activity.SystemSetActivity"

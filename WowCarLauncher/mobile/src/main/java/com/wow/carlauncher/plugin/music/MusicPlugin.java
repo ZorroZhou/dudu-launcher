@@ -1,35 +1,28 @@
 package com.wow.carlauncher.plugin.music;
 
 import android.content.Context;
-import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.util.SharedPreUtil;
-import com.wow.carlauncher.plugin.IPlugin;
+import com.wow.carlauncher.plugin.BasePlugin;
 import com.wow.carlauncher.plugin.PluginManage;
 import com.wow.carlauncher.plugin.music.controllers.NeteaseCloudMusicPlugin;
-import com.wow.carlauncher.plugin.music.controllers.QQMusicCarPlugin;
-import com.wow.carlauncher.plugin.music.controllers.QQMusicPlugin;
+import com.wow.carlauncher.plugin.music.controllers.QQMusicCarPluginOld;
+import com.wow.carlauncher.plugin.music.controllers.QQMusicPluginOld;
 import com.wow.carlauncher.plugin.music.controllers.SystemMusicPlugin;
 
 /**
  * Created by 10124 on 2017/10/26.
  */
 
-public class MusicPlugin implements IPlugin {
-    private PluginManage pluginManage;
-
-    private Context context;
+public class MusicPlugin extends BasePlugin {
 
     private MusicController controller;
 
-    private LinearLayout launcherView;
-    private LinearLayout popupView;
-
     public MusicPlugin(Context context, PluginManage pluginManage) {
-        this.context = context;
-        this.pluginManage = pluginManage;
+        super(context, pluginManage);
 
         MusicControllerEnum type = MusicControllerEnum.valueOfId(SharedPreUtil.getSharedPreInteger(CommonData.SDATA_CURRENT_MUSIC_CONTROLLER, MusicControllerEnum.SYSTEM.getId()));
         switch (type) {
@@ -42,11 +35,11 @@ public class MusicPlugin implements IPlugin {
                 break;
             }
             case QQMUSICCAR: {
-                this.controller = new QQMusicCarPlugin(context);
+                this.controller = new QQMusicCarPluginOld(context);
                 break;
             }
             case QQMUSIC: {
-                this.controller = new QQMusicPlugin(context);
+                this.controller = new QQMusicPluginOld(context);
                 break;
             }
             default:
@@ -56,38 +49,28 @@ public class MusicPlugin implements IPlugin {
 
     @Override
     public void destroy() {
-        this.context = null;
-        if (controller != null) {
-            controller.destroy();
-        }
+        super.destroy();
+//        if (controller != null) {
+//            controller.destroy();
+//        }
     }
 
     @Override
-    public View getLauncherView() {
-        if (launcherView == null) {
-            launcherView = new LinearLayout(context);
-        }
-        launcherView.removeAllViews();
-        if (controller.getPopupView() != null) {
+    public ViewGroup initLauncherView() {
+        LinearLayout launcherView = new LinearLayout(context);
+        if (controller.getLauncherView() != null) {
             launcherView.addView(controller.getLauncherView(), new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
         }
         return launcherView;
     }
 
     @Override
-    public View getPopupView() {
-        if (popupView == null) {
-            popupView = new LinearLayout(context);
-        }
-        popupView.removeAllViews();
+    public ViewGroup initPopupView() {
+        LinearLayout popupView = new LinearLayout(context);
         if (controller.getPopupView() != null) {
             popupView.addView(controller.getPopupView(), new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
         }
         return popupView;
-    }
-
-    public void setPluginManage(PluginManage pluginManage) {
-        this.pluginManage = pluginManage;
     }
 
     public void selectMusicController(MusicControllerEnum type) {
@@ -104,11 +87,11 @@ public class MusicPlugin implements IPlugin {
                 break;
             }
             case QQMUSICCAR: {
-                this.controller = new QQMusicCarPlugin(context);
+                this.controller = new QQMusicCarPluginOld(context);
                 break;
             }
             case QQMUSIC: {
-                this.controller = new QQMusicPlugin(context);
+                this.controller = new QQMusicPluginOld(context);
                 break;
             }
             default:

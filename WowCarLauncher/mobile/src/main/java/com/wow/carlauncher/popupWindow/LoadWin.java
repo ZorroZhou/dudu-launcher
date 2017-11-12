@@ -5,22 +5,13 @@ import android.graphics.PixelFormat;
 import android.os.Build;
 import android.provider.Settings;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
-import android.view.MotionEvent;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import com.wow.carlauncher.CarLauncherApplication;
 import com.wow.carlauncher.R;
-import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.util.SharedPreUtil;
-import com.wow.carlauncher.plugin.IPlugin;
-import com.wow.carlauncher.plugin.PluginManage;
-
-import org.xutils.x;
 
 import static com.wow.carlauncher.common.CommonData.SDATA_POPUP_ALLOW_SHOW;
 

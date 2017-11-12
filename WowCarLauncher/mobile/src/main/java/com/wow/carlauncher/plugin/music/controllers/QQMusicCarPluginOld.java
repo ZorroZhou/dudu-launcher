@@ -26,7 +26,7 @@ import java.util.Map;
  * Created by 10124 on 2017/10/26.
  */
 
-public class QQMusicCarPlugin extends MusicController {
+public class QQMusicCarPluginOld extends MusicController {
     private static final String PACKAGE_NAME = "com.tencent.qqmusiccar";
     private static final String CLASS_NAME = "com.tencent.qqmusiccar.app.reciver.BroadcastReceiverCenterForThird";
 
@@ -41,7 +41,7 @@ public class QQMusicCarPlugin extends MusicController {
 
     private QQMusicCarPopupView qqMusicCarPopupView;
 
-    public QQMusicCarPlugin(Context context) {
+    public QQMusicCarPluginOld(Context context) {
         super(context);
         gson = new Gson();
 

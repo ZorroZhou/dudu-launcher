@@ -24,5 +24,5 @@ public abstract class IConsole {
 
     public abstract void mute();
 
-    public abstract void taskList();
+    public abstract void clearTask();
 }

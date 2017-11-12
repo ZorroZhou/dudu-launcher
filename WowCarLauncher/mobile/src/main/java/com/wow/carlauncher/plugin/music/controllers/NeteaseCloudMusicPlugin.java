@@ -23,8 +23,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import static com.wow.carlauncher.common.CommonData.APP_WIDGET_HOST_ID;
-import static com.wow.carlauncher.common.CommonData.SDATA_MUSIC_PLUGIN_NCM_LANNCHER;
-import static com.wow.carlauncher.common.CommonData.SDATA_MUSIC_PLUGIN_NCM_POPUP;
+import static com.wow.carlauncher.common.CommonData.SDATA_MUSIC_PLUGIN_NCM_WIDGET2;
+import static com.wow.carlauncher.common.CommonData.SDATA_MUSIC_PLUGIN_NCM_WIDGET1;
 
 /**
  * Created by 10124 on 2017/10/26.
@@ -61,8 +61,8 @@ public class NeteaseCloudMusicPlugin extends MusicController {
         appWidgetManager = AppWidgetManager.getInstance(context);
         appWidgetHost.startListening();
 
-        int popup = SharedPreUtil.getSharedPreInteger(SDATA_MUSIC_PLUGIN_NCM_POPUP, -1);
-        int launcher = SharedPreUtil.getSharedPreInteger(SDATA_MUSIC_PLUGIN_NCM_LANNCHER, -1);
+        int popup = SharedPreUtil.getSharedPreInteger(SDATA_MUSIC_PLUGIN_NCM_WIDGET1, -1);
+        int launcher = SharedPreUtil.getSharedPreInteger(SDATA_MUSIC_PLUGIN_NCM_WIDGET2, -1);
         if (launcher == -1 || popup == -1) {
             return;
         }

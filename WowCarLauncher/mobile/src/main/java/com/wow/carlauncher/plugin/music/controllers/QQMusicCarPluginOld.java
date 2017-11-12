@@ -13,8 +13,8 @@ import com.google.gson.Gson;
 import com.wow.carlauncher.plugin.music.MusicController;
 import com.wow.carlauncher.plugin.music.controllers.qqMusicCar.QQMusicCarLauncherView;
 import com.wow.carlauncher.plugin.music.controllers.qqMusicCar.QQMusicCarPopupView;
-import com.wow.carlauncher.plugin.music.event.PEventMusicInfoChange;
-import com.wow.carlauncher.plugin.music.event.PEventMusicStateChange;
+import com.wow.carlauncher.plugin.pevent.PEventMusicInfoChange;
+import com.wow.carlauncher.plugin.pevent.PEventMusicStateChange;
 
 import org.greenrobot.eventbus.EventBus;
 import org.xutils.x;

@@ -2,15 +2,15 @@ package com.wow.carlauncher.plugin;
 
 import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
 
 import com.wow.carlauncher.common.util.SharedPreUtil;
-import com.wow.carlauncher.event.LauncherDockLabelShowChangeEvent;
 import com.wow.carlauncher.event.LauncherItemRefreshEvent;
 import com.wow.carlauncher.plugin.amapcar.AMapCarPlugin;
 import com.wow.carlauncher.plugin.console.ConsolePlugin;
 import com.wow.carlauncher.plugin.music.MusicPlugin;
 import com.wow.carlauncher.plugin.ncmusic.NcMusicPlugin;
+import com.wow.carlauncher.plugin.qqmusic.QQMusicPlugin;
+import com.wow.carlauncher.plugin.qqcarmusic.QQMusicCarPlugin;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -24,12 +24,9 @@ import static com.wow.carlauncher.common.CommonData.*;
  */
 
 public class PluginManage {
-    private static final String TAG = "PluginManage";
-
     public static final String MUSIC = "MUSIC";
     public static final String CONSOLE = "CONSOLE";
     public static final String AMAPCAR = "AMAPCAR";
-    public static final String NC_MUSIC = "NC_MUSIC";
 
     private static PluginManage self;
 
@@ -181,6 +178,12 @@ public class PluginManage {
             }
             case NCMUSIC: {
                 return new NcMusicPlugin(context, this);
+            }
+            case QQMUSIC: {
+                return new QQMusicPlugin(context, this);
+            }
+            case QQCARMUSIC: {
+                return new QQMusicCarPlugin(context, this);
             }
         }
         return null;

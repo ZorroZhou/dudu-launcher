@@ -1,4 +1,4 @@
-package com.wow.carlauncher.plugin.music.event;
+package com.wow.carlauncher.plugin.pevent;
 
 /**
  * Created by 10124 on 2017/10/28.

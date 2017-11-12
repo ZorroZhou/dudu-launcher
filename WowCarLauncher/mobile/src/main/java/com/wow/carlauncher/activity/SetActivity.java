@@ -22,7 +22,6 @@ import com.wow.carlauncher.event.LauncherDockLabelShowChangeEvent;
 import com.wow.carlauncher.plugin.LauncherPluginEnum;
 import com.wow.carlauncher.plugin.PluginManage;
 import com.wow.carlauncher.plugin.PluginTypeEnum;
-import com.wow.carlauncher.plugin.music.MusicControllerEnum;
 
 import org.greenrobot.eventbus.EventBus;
 import org.xutils.view.annotation.ViewInject;
@@ -31,16 +30,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.wow.carlauncher.common.CommonData.*;
-import static com.wow.carlauncher.plugin.music.MusicControllerEnum.*;
-
-/**
- * Created by 10124 on 2017/10/26.
- */
 
 public class SetActivity extends BaseActivity {
     private static final String TAG = "SetActivity";
     private static final String[] CONSOLES = {"系统", "NWD"};
-    private static final PluginTypeEnum[] ALL_PLUGINS = {PluginTypeEnum.MUSIC, PluginTypeEnum.NCMUSIC, PluginTypeEnum.CONSOLE, PluginTypeEnum.AMAP};
+    private static final PluginTypeEnum[] ALL_PLUGINS = {PluginTypeEnum.MUSIC, PluginTypeEnum.NCMUSIC, PluginTypeEnum.CONSOLE, PluginTypeEnum.AMAP, PluginTypeEnum.QQMUSIC, PluginTypeEnum.QQCARMUSIC};
 
     @ViewInject(R.id.sv_popup_window_showtype)
     private SetView sv_popup_window_showtype;

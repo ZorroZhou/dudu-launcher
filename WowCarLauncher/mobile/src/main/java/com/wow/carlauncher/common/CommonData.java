@@ -1,10 +1,7 @@
 package com.wow.carlauncher.common;
 
-/**
- * Created by 10124 on 2017/10/29.
- */
-
 public class CommonData {
+    public static final String TAG = "WOW_CAR";
 
     public static final int REQUEST_SELECT_APP_TO_DOCK1 = 10000;
     public static final int REQUEST_SELECT_APP_TO_DOCK2 = 10001;

@@ -6,21 +6,17 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.net.Uri;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.gson.Gson;
 import com.wow.carlauncher.plugin.music.MusicController;
 import com.wow.carlauncher.plugin.music.controllers.sysMusic.SysMusicLauncherView;
 import com.wow.carlauncher.plugin.music.controllers.sysMusic.SysMusicPopupView;
-import com.wow.carlauncher.plugin.music.event.PEventMusicInfoChange;
-import com.wow.carlauncher.plugin.music.event.PEventMusicStateChange;
+import com.wow.carlauncher.plugin.pevent.PEventMusicInfoChange;
+import com.wow.carlauncher.plugin.pevent.PEventMusicStateChange;
 
 import org.greenrobot.eventbus.EventBus;
-import org.xutils.x;
 
 import java.util.HashMap;
 import java.util.List;

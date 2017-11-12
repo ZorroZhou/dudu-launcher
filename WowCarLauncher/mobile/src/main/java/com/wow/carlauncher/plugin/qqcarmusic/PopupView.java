@@ -1,7 +1,6 @@
-package com.wow.carlauncher.plugin.music.controllers.qqMusicCar;
+package com.wow.carlauncher.plugin.qqcarmusic;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,7 +10,6 @@ import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.util.CommonUtil;
-import com.wow.carlauncher.plugin.music.controllers.QQMusicCarPluginOld;
 import com.wow.carlauncher.plugin.pevent.PEventMusicInfoChange;
 import com.wow.carlauncher.plugin.pevent.PEventMusicStateChange;
 
@@ -23,16 +21,14 @@ import org.xutils.x;
  * Created by 10124 on 2017/10/28.
  */
 
-public class QQMusicCarLauncherView extends LinearLayout implements View.OnClickListener {
-    private static final String TAG = "QQMusicCarLauncherView";
-
+class PopupView extends LinearLayout implements View.OnClickListener {
     private LayoutInflater inflater;
 
     private ImageView iv_play;
-    private QQMusicCarPluginOld controller;
-    private TextView tv_title, tv_artist;
-    private ProgressBar pb_music;
+    private QQMusicCarPlugin controller;
     private boolean playing = false;
+    private TextView tv_title;
+    private ProgressBar pb_music;
 
     @Subscribe
     public void onEventMainThread(final PEventMusicInfoChange event) {
@@ -44,11 +40,7 @@ public class QQMusicCarLauncherView extends LinearLayout implements View.OnClick
                 } else {
                     tv_title.setText("标题");
                 }
-                if (tv_artist != null && CommonUtil.isNotNull(event.artist)) {
-                    tv_artist.setText(event.artist);
-                } else {
-                    tv_artist.setText("歌手");
-                }
+
                 if (pb_music != null && event.curr_time > 0 && event.total_time > 0) {
                     pb_music.setProgress(event.curr_time);
                     pb_music.setMax(event.total_time);
@@ -79,7 +71,7 @@ public class QQMusicCarLauncherView extends LinearLayout implements View.OnClick
         EventBus.getDefault().unregister(this);
     }
 
-    public QQMusicCarLauncherView(Context context, QQMusicCarPluginOld controller) {
+    public PopupView(Context context, QQMusicCarPlugin controller) {
         super(context);
         this.controller = controller;
         inflater = LayoutInflater.from(context);
@@ -87,11 +79,10 @@ public class QQMusicCarLauncherView extends LinearLayout implements View.OnClick
     }
 
     private void init() {
-        View linearLayout = inflater.inflate(R.layout.plugin_music_qcm_launcher, null);
+        View linearLayout = inflater.inflate(R.layout.plugin_music_qcm_popup, null);
         this.addView(linearLayout, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         iv_play = (ImageView) findViewById(R.id.iv_play);
         tv_title = (TextView) findViewById(R.id.tv_title);
-        tv_artist = (TextView) findViewById(R.id.tv_artist);
         pb_music = (ProgressBar) findViewById(R.id.pb_music);
 
         findViewById(R.id.ll_play).setOnClickListener(this);
@@ -117,7 +108,6 @@ public class QQMusicCarLauncherView extends LinearLayout implements View.OnClick
                         controller.play();
                     }
                 }
-                Log.e(TAG, "onClick: " + controller);
                 break;
             }
             case R.id.ll_next: {

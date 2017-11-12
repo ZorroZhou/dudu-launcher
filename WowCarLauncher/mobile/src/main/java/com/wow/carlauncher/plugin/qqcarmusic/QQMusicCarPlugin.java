@@ -1,17 +1,16 @@
-package com.wow.carlauncher.plugin.music.controllers;
+package com.wow.carlauncher.plugin.qqcarmusic;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.util.Log;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.gson.Gson;
-import com.wow.carlauncher.plugin.music.MusicController;
-import com.wow.carlauncher.plugin.music.controllers.kuwo.KuwoMusicLauncherView;
-import com.wow.carlauncher.plugin.music.controllers.kuwo.KuwoMusicPopupView;
+import com.wow.carlauncher.plugin.BasePlugin;
+import com.wow.carlauncher.plugin.PluginManage;
 import com.wow.carlauncher.plugin.pevent.PEventMusicInfoChange;
 import com.wow.carlauncher.plugin.pevent.PEventMusicStateChange;
 
@@ -21,14 +20,11 @@ import org.xutils.x;
 import java.util.List;
 import java.util.Map;
 
-import cn.kuwo.autosdk.api.KWAPI;
-
 /**
  * Created by 10124 on 2017/10/26.
  */
 
-public class KuwoMusicPlugin extends MusicController {
-    private static final String TAG = "KuwoMusicPlugin";
+public class QQMusicCarPlugin extends BasePlugin {
     private static final String PACKAGE_NAME = "com.tencent.qqmusiccar";
     private static final String CLASS_NAME = "com.tencent.qqmusiccar.app.reciver.BroadcastReceiverCenterForThird";
 
@@ -39,36 +35,33 @@ public class KuwoMusicPlugin extends MusicController {
 
     private Gson gson;
 
-    private KuwoMusicLauncherView launcherView;
+    private LauncherView qqMusicCarLauncherView;
 
-    private KuwoMusicPopupView popupView;
-    private KWAPI mKwApi;
+    private PopupView qqMusicCarPopupView;
 
-    public KuwoMusicPlugin(Context context) {
-        super(context);
-        mKwApi = KWAPI.createKWAPI(context, "com.wow.carlauncher");
-        Log.e(TAG, "KuwoMusicPlugin: " + mKwApi.getNowPlayingMusic());
+    public QQMusicCarPlugin(Context context, PluginManage pluginManage) {
+        super(context, pluginManage);
+        gson = new Gson();
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("com.tencent.qqmusiccar.action.PLAY_COMMAND_SEND_FOR_THIRD");
+        this.context.registerReceiver(mReceiver, intentFilter);
+
+        refreshInfo();
     }
 
     @Override
-    public View getLauncherView() {
-        if (launcherView == null) {
-            launcherView = new KuwoMusicLauncherView(context, this);
-        }
-        return launcherView;
+    public ViewGroup initLauncherView() {
+        return new LauncherView(context, this);
     }
 
     @Override
-    public View getPopupView() {
-        if (popupView == null) {
-            popupView = new KuwoMusicPopupView(context, this);
-        }
-        return popupView;
+    public ViewGroup initPopupView() {
+        return new PopupView(context, this);
     }
 
     public void play() {
-        mKwApi.randomPlayMusic();
-        Log.e(TAG, "KuwoMusicPlugin: " + mKwApi.getNowPlayingMusic());
+        sendEvent(WE_DRIVE_RESUME);
     }
 
     public void pause() {
@@ -102,11 +95,11 @@ public class KuwoMusicPlugin extends MusicController {
     public void destroy() {
         super.destroy();
         context.unregisterReceiver(mReceiver);
-        if (launcherView.getParent() != null) {
-            ((ViewGroup) launcherView.getParent()).removeView(launcherView);
+        if (qqMusicCarLauncherView.getParent() != null) {
+            ((ViewGroup) qqMusicCarLauncherView.getParent()).removeView(qqMusicCarLauncherView);
         }
-        if (popupView.getParent() != null) {
-            ((ViewGroup) popupView.getParent()).removeView(popupView);
+        if (qqMusicCarPopupView.getParent() != null) {
+            ((ViewGroup) qqMusicCarPopupView.getParent()).removeView(qqMusicCarPopupView);
         }
     }
 

@@ -1,8 +1,5 @@
-package com.wow.carlauncher.plugin.qqcarmusic;
+package com.wow.carlauncher.plugin.qqmusic;
 
-import android.appwidget.AppWidgetHost;
-import android.appwidget.AppWidgetManager;
-import android.appwidget.AppWidgetProviderInfo;
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
@@ -19,32 +16,23 @@ import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.util.ViewUtils;
 import com.wow.carlauncher.plugin.BasePlugin;
 import com.wow.carlauncher.plugin.PluginManage;
-import com.wow.carlauncher.plugin.music.MusicController;
 
 import org.xutils.x;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static com.wow.carlauncher.common.CommonData.APP_WIDGET_HOST_ID;
-import static com.wow.carlauncher.common.CommonData.SDATA_MUSIC_PLUGIN_NCM_WIDGET1;
 import static com.wow.carlauncher.common.CommonData.SDATA_MUSIC_PLUGIN_QQMUSIC_WIDGET1;
 import static com.wow.carlauncher.common.CommonData.SDATA_MUSIC_PLUGIN_QQMUSIC_WIDGET2;
-
-/**
- * Created by 10124 on 2017/10/26.
- */
+import static com.wow.carlauncher.common.CommonData.TAG;
 
 public class QQMusicPlugin extends BasePlugin {
-    private final static String TAG = "QQMusicPlugin";
 
-    private LinearLayout launcherHouse;
     private ImageView launcherCover, launcherIvPlay;
     private TextView launcherTitle, launcherArtist;
     private ProgressBar launcherProgress;
 
 
-    private LinearLayout popupHouse;
     private ImageView popupIvPlay;
     private TextView popupTitle;
     private ProgressBar popupProgress;
@@ -71,10 +59,14 @@ public class QQMusicPlugin extends BasePlugin {
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                updatePopupView();
-                updateLauncherView();
+                if (popupView != null) {
+                    updatePopupView();
+                }
+                if (launcherView != null) {
+                    updateLauncherView();
+                }
             }
-        }, 0, 500);
+        }, 0, 100);
     }
 
     private void stopUpdate() {
@@ -106,10 +98,11 @@ public class QQMusicPlugin extends BasePlugin {
         popupWidgetView.setPadding(0, 0, 0, 0);
 
         RelativeLayout popupView = (RelativeLayout) View.inflate(context, R.layout.plugin_music_qm_popup, null);
-        popupHouse = (LinearLayout) popupView.findViewById(R.id.ll_house);
+        LinearLayout popupHouse = (LinearLayout) popupView.findViewById(R.id.ll_house);
         popupHouse.addView(popupWidgetView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
         popupTitle = (TextView) popupView.findViewById(R.id.tv_title);
         popupProgress = (ProgressBar) popupView.findViewById(R.id.pb_music);
+        Log.e(TAG, "initPopupView: " + popup);
         popupIvPlay = (ImageView) popupView.findViewById(R.id.iv_play);
 
         View.OnClickListener popupOnClickListener = new View.OnClickListener() {
@@ -184,7 +177,7 @@ public class QQMusicPlugin extends BasePlugin {
                         isruning = true;
                     } else {
                         popupChangeTime++;
-                        if (popupChangeTime > 2) {
+                        if (popupChangeTime > 30) {
                             popupIvPlay.setImageResource(R.mipmap.ic_play);
                             isruning = false;
                         }
@@ -245,7 +238,7 @@ public class QQMusicPlugin extends BasePlugin {
         launcherWidgetView.setPadding(0, 0, 0, 0);
 
         RelativeLayout launcherView = (RelativeLayout) View.inflate(context, R.layout.plugin_music_qm_launcher, null);
-        launcherHouse = (LinearLayout) launcherView.findViewById(R.id.ll_house);
+        LinearLayout launcherHouse = (LinearLayout) launcherView.findViewById(R.id.ll_house);
         launcherHouse.addView(launcherWidgetView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
         launcherCover = (ImageView) launcherView.findViewById(R.id.iv_cover);
         launcherTitle = (TextView) launcherView.findViewById(R.id.tv_title);
@@ -327,7 +320,7 @@ public class QQMusicPlugin extends BasePlugin {
                         isruning = true;
                     } else {
                         launcherChangeTime++;
-                        if (launcherChangeTime > 2) {
+                        if (launcherChangeTime > 30) {
                             launcherIvPlay.setImageResource(R.mipmap.ic_play);
                             isruning = false;
                         }

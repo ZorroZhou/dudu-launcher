@@ -22,7 +22,6 @@ import com.wow.carlauncher.plugin.PluginManage;
  */
 
 public class ConsolePlugin extends BasePlugin implements View.OnClickListener {
-    public final static String TAG = "ConsolePlugin";
     private TextView launcherWifi;
 
     public ConsolePlugin(Context context, PluginManage pluginManage) {

@@ -6,14 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.plugin.music.controllers.SystemMusicPlugin;
-import com.wow.carlauncher.plugin.music.event.PEventMusicInfoChange;
-import com.wow.carlauncher.plugin.music.event.PEventMusicStateChange;
+import com.wow.carlauncher.plugin.pevent.PEventMusicInfoChange;
+import com.wow.carlauncher.plugin.pevent.PEventMusicStateChange;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

@@ -1,4 +1,4 @@
-package com.wow.carlauncher.plugin.music.controllers.qqMusicCar;
+package com.wow.carlauncher.plugin.qqcarmusic;
 
 import android.content.Context;
 import android.util.Log;
@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.util.CommonUtil;
-import com.wow.carlauncher.plugin.music.controllers.QQMusicCarPluginOld;
 import com.wow.carlauncher.plugin.pevent.PEventMusicInfoChange;
 import com.wow.carlauncher.plugin.pevent.PEventMusicStateChange;
 
@@ -19,17 +18,13 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.xutils.x;
 
-/**
- * Created by 10124 on 2017/10/28.
- */
+import static com.wow.carlauncher.common.CommonData.TAG;
 
-public class QQMusicCarLauncherView extends LinearLayout implements View.OnClickListener {
-    private static final String TAG = "QQMusicCarLauncherView";
-
+class LauncherView extends LinearLayout implements View.OnClickListener {
     private LayoutInflater inflater;
 
     private ImageView iv_play;
-    private QQMusicCarPluginOld controller;
+    private QQMusicCarPlugin controller;
     private TextView tv_title, tv_artist;
     private ProgressBar pb_music;
     private boolean playing = false;
@@ -79,7 +74,7 @@ public class QQMusicCarLauncherView extends LinearLayout implements View.OnClick
         EventBus.getDefault().unregister(this);
     }
 
-    public QQMusicCarLauncherView(Context context, QQMusicCarPluginOld controller) {
+    public LauncherView(Context context, QQMusicCarPlugin controller) {
         super(context);
         this.controller = controller;
         inflater = LayoutInflater.from(context);

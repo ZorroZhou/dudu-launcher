@@ -26,6 +26,7 @@ import com.wow.carlauncher.plugin.PluginTypeEnum;
 
 import org.greenrobot.eventbus.EventBus;
 import org.xutils.view.annotation.ViewInject;
+import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -396,7 +397,8 @@ public class SetActivity extends BaseActivity {
         sv_popup_showapps_sysmusic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setPopupPluginShowApp(SYSMUSIC);
+                showLoading("载入中", null);
+                setPopupPluginShowApp(SYSMUSIC, sv_popup_showapps_sysmusic);
             }
         });
         int p1 = getPopupPluginShowAppCount(SYSMUSIC);
@@ -405,7 +407,8 @@ public class SetActivity extends BaseActivity {
         sv_popup_showapps_ncmusic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setPopupPluginShowApp(NCMUSIC);
+                showLoading("载入中", null);
+                setPopupPluginShowApp(NCMUSIC, sv_popup_showapps_ncmusic);
             }
         });
         int p2 = getPopupPluginShowAppCount(NCMUSIC);
@@ -415,7 +418,8 @@ public class SetActivity extends BaseActivity {
         sv_popup_showapps_qqmusic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setPopupPluginShowApp(QQMUSIC);
+                showLoading("载入中", null);
+                setPopupPluginShowApp(QQMUSIC, sv_popup_showapps_qqmusic);
             }
         });
         int p3 = getPopupPluginShowAppCount(QQMUSIC);
@@ -425,7 +429,8 @@ public class SetActivity extends BaseActivity {
         sv_popup_showapps_qqmusiccar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setPopupPluginShowApp(QQCARMUSIC);
+                showLoading("载入中", null);
+                setPopupPluginShowApp(QQCARMUSIC, sv_popup_showapps_qqmusiccar);
             }
         });
         int p4 = getPopupPluginShowAppCount(QQCARMUSIC);
@@ -435,7 +440,8 @@ public class SetActivity extends BaseActivity {
         sv_popup_showapps_amap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setPopupPluginShowApp(AMAP);
+                showLoading("载入中", null);
+                setPopupPluginShowApp(AMAP, sv_popup_showapps_amap);
             }
         });
         int p5 = getPopupPluginShowAppCount(AMAP);
@@ -502,38 +508,54 @@ public class SetActivity extends BaseActivity {
         }
     }
 
-    private void setPopupPluginShowApp(final PluginTypeEnum popupPluginEnum) {
-        String selectapp = SharedPreUtil.getSharedPreString(CommonData.SDATA_POPUP_PLUGIN_SHOW_APPS + popupPluginEnum.getId());
-        final List<AppInfo> appInfos = AppUtil.getAllApp(mContext);
-        String[] items = new String[appInfos.size()];
-        final boolean[] checks = new boolean[appInfos.size()];
-        for (int i = 0; i < items.length; i++) {
-            items[i] = appInfos.get(i).name + "(" + appInfos.get(i).packageName + ")";
-            checks[i] = selectapp.contains("[" + appInfos.get(i).packageName + "]");
-        }
+    private void setPopupPluginShowApp(final PluginTypeEnum popupPluginEnum, final SetView setView) {
+        x.task().run(new Runnable() {
+            @Override
+            public void run() {
+                String selectapp = SharedPreUtil.getSharedPreString(CommonData.SDATA_POPUP_PLUGIN_SHOW_APPS + popupPluginEnum.getId());
+                final List<AppInfo> appInfos = AppUtil.getAllApp(mContext);
+                String[] items = new String[appInfos.size()];
+                final boolean[] checks = new boolean[appInfos.size()];
+                for (int i = 0; i < items.length; i++) {
+                    items[i] = appInfos.get(i).name + "(" + appInfos.get(i).packageName + ")";
+                    checks[i] = selectapp.contains("[" + appInfos.get(i).packageName + "]");
+                }
 
-        AlertDialog dialog = new AlertDialog.Builder(mContext).setTitle("请选择APP").setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                String selectapp = "";
-                for (int i = 0; i < appInfos.size(); i++) {
-                    if (checks[i]) {
-                        selectapp = selectapp + "[" + appInfos.get(i).packageName + "];";
+                final AlertDialog.Builder builder = new AlertDialog.Builder(mContext).setTitle("请选择APP").setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String selectapp = "";
+                        List<String> apps = new ArrayList<>();
+                        for (int i = 0; i < appInfos.size(); i++) {
+                            if (checks[i]) {
+                                selectapp = selectapp + "[" + appInfos.get(i).packageName + "];";
+                                apps.add(appInfos.get(i).packageName);
+                            }
+                        }
+                        if (selectapp.endsWith(";")) {
+                            selectapp = selectapp.substring(0, selectapp.length() - 1);
+                        }
+                        setView.setSummary(apps.size() == 0 ? "不使用" : apps.size() + "个APP使用");
+                        PluginManage.self().setPopupPluginShowApps(popupPluginEnum, apps);
+                        SharedPreUtil.saveSharedPreString(CommonData.SDATA_POPUP_PLUGIN_SHOW_APPS + popupPluginEnum.getId(), selectapp);
                     }
-                }
-                if (selectapp.endsWith(";")) {
-                    selectapp = selectapp.substring(0, selectapp.length() - 1);
-                }
-                SharedPreUtil.saveSharedPreString(CommonData.SDATA_POPUP_PLUGIN_SHOW_APPS + popupPluginEnum.getId(), selectapp);
+                }).setMultiChoiceItems(items, checks, new DialogInterface.OnMultiChoiceClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                        Log.e(TAG, "onClick: " + appInfos.get(which).name);
+                        checks[which] = isChecked;
+                    }
+                });
+
+                x.task().autoPost(new Runnable() {
+                    @Override
+                    public void run() {
+                        hideLoading();
+                        builder.create().show();
+                    }
+                });
             }
-        }).setMultiChoiceItems(items, checks, new DialogInterface.OnMultiChoiceClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                Log.e(TAG, "onClick: " + appInfos.get(which).name);
-                checks[which] = isChecked;
-            }
-        }).create();
-        dialog.show();
+        });
     }
 
     @ViewInject(R.id.time_plugin_open_app_select)

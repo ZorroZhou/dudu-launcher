@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:st="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_help"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="16dp"
+        android:paddingTop="16dp"
+        android:text="帮助"
+        android:textColor="@color/colorPrimary"
+        android:textSize="14sp" />
+
+    <com.wow.carlauncher.common.view.SetView
+        android:id="@+id/sv_about"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        st:titleEx="关于"
+        st:type="buttonB" />
+
+    <View style="@style/Interval" />
+</LinearLayout>

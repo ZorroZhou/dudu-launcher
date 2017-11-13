@@ -2,6 +2,9 @@ package com.wow.carlauncher.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
+import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
@@ -52,6 +55,7 @@ public class SetActivity extends BaseActivity {
         loadPopupSet();
         loadTimeSet();
         loadHelpSet();
+        loadSystemSet();
     }
 
     @ViewInject(R.id.sg_app)
@@ -64,6 +68,8 @@ public class SetActivity extends BaseActivity {
     private SetView sg_time;
     @ViewInject(R.id.sg_help)
     private SetView sg_help;
+    @ViewInject(R.id.sg_system_set)
+    private SetView sg_system_set;
 
     @ViewInject(R.id.ll_app)
     private LinearLayout ll_app;
@@ -75,6 +81,8 @@ public class SetActivity extends BaseActivity {
     private LinearLayout ll_time;
     @ViewInject(R.id.ll_help)
     private LinearLayout ll_help;
+    @ViewInject(R.id.ll_system_set)
+    private LinearLayout ll_system_set;
 
     private void loadSetGroup() {
         View.OnClickListener groupClick = new View.OnClickListener() {
@@ -85,6 +93,7 @@ public class SetActivity extends BaseActivity {
                 ll_popup.setVisibility(View.GONE);
                 ll_time.setVisibility(View.GONE);
                 ll_help.setVisibility(View.GONE);
+                ll_system_set.setVisibility(View.GONE);
                 switch (view.getId()) {
                     case R.id.sg_app: {
                         ll_app.setVisibility(View.VISIBLE);
@@ -106,6 +115,10 @@ public class SetActivity extends BaseActivity {
                         ll_help.setVisibility(View.VISIBLE);
                         break;
                     }
+                    case R.id.sg_system_set: {
+                        ll_system_set.setVisibility(View.VISIBLE);
+                        break;
+                    }
                     default: {
                         ll_app.setVisibility(View.VISIBLE);
                     }
@@ -118,6 +131,7 @@ public class SetActivity extends BaseActivity {
         sg_popup.setOnClickListener(groupClick);
         sg_time.setOnClickListener(groupClick);
         sg_help.setOnClickListener(groupClick);
+        sg_system_set.setOnClickListener(groupClick);
     }
 
     @ViewInject(R.id.sv_plugin_set)
@@ -603,6 +617,61 @@ public class SetActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(mContext, AboutActivity.class));
+            }
+        });
+    }
+
+    @ViewInject(R.id.sv_sys_anquan)
+    private SetView sv_sys_anquan;
+
+    @ViewInject(R.id.sv_sys_overlay)
+    private SetView sv_sys_overlay;
+
+    @ViewInject(R.id.sv_sys_sdk)
+    private SetView sv_sys_sdk;
+
+    private void loadSystemSet() {
+        sv_sys_overlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Build.VERSION.SDK_INT >= 23) {
+                    final List<AppInfo> appInfos = AppUtil.getAllApp(mContext);
+                    String[] items = new String[appInfos.size()];
+                    for (int i = 0; i < items.length; i++) {
+                        items[i] = appInfos.get(i).name + "(" + appInfos.get(i).packageName + ")";
+                    }
+
+                    AlertDialog dialog = new AlertDialog.Builder(mContext).setTitle("请选择APP").setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    }).setItems(items, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                                    Uri.parse("package:" + appInfos.get(which).packageName));
+                            startActivity(intent);
+                        }
+                    }).create();
+                    dialog.show();
+                } else {
+                    showTip("这个功能是安卓6.0以上才有的");
+                }
+            }
+        });
+
+        sv_sys_anquan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Settings.ACTION_SECURITY_SETTINGS);
+                startActivity(intent);
+            }
+        });
+
+        sv_sys_sdk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showTip("当前SDK版本是" + Build.VERSION.SDK_INT);
             }
         });
     }

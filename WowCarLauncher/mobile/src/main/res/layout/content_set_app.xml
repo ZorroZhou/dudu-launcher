@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:st="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_app"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="16dp"
+        android:paddingTop="16dp"
+        android:text="APP设置"
+        android:textColor="@color/colorPrimary"
+        android:textSize="14sp" />
+
+    <com.wow.carlauncher.common.view.SetView
+        android:id="@+id/sv_plugin_set"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        st:summary="所有插件的一些相关设置，如果不设置可能导致插件无法运行"
+        st:titleEx="插件设置"
+        st:type="buttonB" />
+
+    <View style="@style/Interval" />
+
+    <com.wow.carlauncher.common.view.SetView
+        android:id="@+id/sv_apps_hides"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        st:summary="全部应用将隐藏选中的项目"
+        st:titleEx="隐藏项目"
+        st:type="buttonB" />
+
+    <View style="@style/Interval" />
+
+    <com.wow.carlauncher.common.view.SetView
+        android:id="@+id/sv_wall_set"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        st:titleEx="壁纸设置"
+        st:type="buttonB" />
+
+    <View style="@style/Interval" />
+
+    <com.wow.carlauncher.common.view.SetView
+        android:id="@+id/sv_console"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        st:summary="如声音控制，一件清理等功能的实现，不同的车机可能处理方式不同。"
+        st:titleEx="控制层实现"
+        st:type="buttonB" />
+
+    <View style="@style/Interval" />
+
+    <com.wow.carlauncher.common.view.SetView
+        android:id="@+id/sv_launcher_show_dock_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        st:summary="@string/set_show"
+        st:summary2="@string/set_hide"
+        st:titleEx="展示dock标签"
+        st:type="switchB" />
+
+    <View style="@style/Interval" />
+</LinearLayout>

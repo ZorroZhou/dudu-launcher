@@ -78,9 +78,6 @@
             android:name=".activity.PluginSetActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".activity.SystemSetActivity"
-            android:screenOrientation="landscape" />
-        <activity
             android:name=".activity.AboutActivity"
             android:screenOrientation="landscape" />
 

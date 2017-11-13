@@ -68,10 +68,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 startActivity(new Intent(this, SetActivity.class));
                 break;
             }
-            case R.id.sys_set: {
-                startActivity(new Intent(this, SystemSetActivity.class));
-                break;
-            }
             case R.id.test: {
                 startActivity(new Intent(this, LauncherActivity.class));
                 finish();

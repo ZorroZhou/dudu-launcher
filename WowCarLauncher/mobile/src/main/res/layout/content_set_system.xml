@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:st="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_system_set"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="16dp"
+        android:paddingTop="16dp"
+        android:text="高大上的系统设置（通常被车机厂商隐藏的功能）"
+        android:textColor="@color/colorPrimary"
+        android:textSize="14sp" />
+
+    <com.wow.carlauncher.common.view.SetView
+        android:id="@+id/sv_sys_anquan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        st:summary="根据APP展示悬浮框需要打开用户统计功能，才能使用"
+        st:titleEx="系统安全设置界面"
+        st:type="buttonB" />
+
+    <View style="@style/Interval" />
+
+    <com.wow.carlauncher.common.view.SetView
+        android:id="@+id/sv_sys_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        st:titleEx="悬浮框权限设置页面"
+        st:type="buttonB" />
+
+    <View style="@style/Interval" />
+
+
+    <com.wow.carlauncher.common.view.SetView
+        android:id="@+id/sv_sys_sdk"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        st:titleEx="查询sdk版本"
+        st:type="buttonB" />
+
+    <View style="@style/Interval" />
+</LinearLayout>

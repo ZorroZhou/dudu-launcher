@@ -15,6 +15,7 @@ import com.wow.carlauncher.common.console.impl.NwdConsoleImpl;
 import com.wow.carlauncher.common.console.impl.SysConsoleImpl;
 import com.wow.carlauncher.common.util.AppUtil;
 import com.wow.carlauncher.common.util.AppUtil.AppInfo;
+import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.util.ThreadObj;
 import com.wow.carlauncher.common.view.SetView;
@@ -30,26 +31,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.wow.carlauncher.common.CommonData.*;
+import static com.wow.carlauncher.plugin.PluginTypeEnum.*;
 
 public class SetActivity extends BaseActivity {
     private static final String TAG = "SetActivity";
     private static final String[] CONSOLES = {"系统", "NWD"};
-    private static final PluginTypeEnum[] ALL_PLUGINS = {PluginTypeEnum.MUSIC, PluginTypeEnum.NCMUSIC, PluginTypeEnum.CONSOLE, PluginTypeEnum.AMAP, PluginTypeEnum.QQMUSIC, PluginTypeEnum.QQCARMUSIC};
-
-    @ViewInject(R.id.sv_popup_window_showtype)
-    private SetView sv_popup_window_showtype;
-
-    @ViewInject(R.id.sv_popup_window_showapps)
-    private SetView sv_popup_window_showapps;
-
-    @ViewInject(R.id.sv_allow_popup_window)
-    private SetView sv_allow_popup_window;
-
-    @ViewInject(R.id.time_plugin_open_app_select)
-    private SetView time_plugin_open_app_select;
-
-    @ViewInject(R.id.sv_about)
-    private SetView sv_about;
 
     @Override
     public void init() {
@@ -62,103 +48,9 @@ public class SetActivity extends BaseActivity {
         loadSetGroup();
         loadAppSet();
         loadLauncherSet();
-        sv_allow_popup_window.setOnValueChangeListener(new SetView.OnValueChangeListener() {
-            @Override
-            public void onValueChange(String newValue, String oldValue) {
-                if ("1".equals(newValue)) {
-                    SharedPreUtil.saveSharedPreBoolean(CommonData.SDATA_POPUP_ALLOW_SHOW, true);
-                } else {
-                    SharedPreUtil.saveSharedPreBoolean(CommonData.SDATA_POPUP_ALLOW_SHOW, false);
-                }
-            }
-        });
-        sv_allow_popup_window.setChecked(SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_POPUP_ALLOW_SHOW, true));
-
-        sv_popup_window_showtype.setOnValueChangeListener(new SetView.OnValueChangeListener() {
-            @Override
-            public void onValueChange(String newValue, String oldValue) {
-                if ("1".equals(newValue)) {
-                    SharedPreUtil.saveSharedPreBoolean(CommonData.SDATA_POPUP_SHOW_TYPE, true);
-                } else {
-                    SharedPreUtil.saveSharedPreBoolean(CommonData.SDATA_POPUP_SHOW_TYPE, false);
-                }
-            }
-        });
-        sv_popup_window_showtype.setChecked(SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_POPUP_SHOW_TYPE, true));
-
-        sv_popup_window_showapps.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String selectapp = SharedPreUtil.getSharedPreString(CommonData.SDATA_POPUP_SHOW_APPS);
-                final List<AppInfo> appInfos = AppUtil.getAllApp(mContext);
-                String[] items = new String[appInfos.size()];
-                final boolean[] checks = new boolean[appInfos.size()];
-                for (int i = 0; i < items.length; i++) {
-                    items[i] = appInfos.get(i).name + "(" + appInfos.get(i).packageName + ")";
-                    checks[i] = selectapp.contains("[" + appInfos.get(i).packageName + "]");
-                }
-
-                AlertDialog dialog = new AlertDialog.Builder(mContext).setTitle("请选择APP").setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String selectapp = "";
-                        for (int i = 0; i < appInfos.size(); i++) {
-                            if (checks[i]) {
-                                selectapp = selectapp + "[" + appInfos.get(i).packageName + "];";
-                            }
-                        }
-                        if (selectapp.endsWith(";")) {
-                            selectapp = selectapp.substring(0, selectapp.length() - 1);
-                        }
-                        SharedPreUtil.saveSharedPreString(CommonData.SDATA_POPUP_SHOW_APPS, selectapp);
-                    }
-                }).setMultiChoiceItems(items, checks, new DialogInterface.OnMultiChoiceClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                        Log.e(TAG, "onClick: " + appInfos.get(which).name);
-                        checks[which] = isChecked;
-                    }
-                }).create();
-                dialog.show();
-            }
-        });
-
-        time_plugin_open_app_select.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String selectapp = SharedPreUtil.getSharedPreString(CommonData.SDATA_TIME_PLUGIN_OPEN_APP);
-                final List<AppInfo> appInfos = AppUtil.getAllApp(mContext);
-                String[] items = new String[appInfos.size()];
-                int select = -1;
-                for (int i = 0; i < items.length; i++) {
-                    items[i] = appInfos.get(i).name + "(" + appInfos.get(i).packageName + ")";
-                    if (appInfos.get(i).packageName.equals(selectapp)) {
-                        select = i;
-                    }
-                }
-                Log.e(TAG, "onClick: " + items.length + " " + select);
-                final ThreadObj<Integer> obj = new ThreadObj<>(select);
-                AlertDialog dialog = new AlertDialog.Builder(mContext).setTitle("请选择APP").setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        SharedPreUtil.saveSharedPreString(CommonData.SDATA_TIME_PLUGIN_OPEN_APP, appInfos.get(obj.getObj()).packageName);
-                    }
-                }).setSingleChoiceItems(items, select, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        obj.setObj(which);
-                    }
-                }).create();
-                dialog.show();
-            }
-        });
-
-        sv_about.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(mContext, AboutActivity.class));
-            }
-        });
+        loadPopupSet();
+        loadTimeSet();
+        loadHelpSet();
     }
 
     @ViewInject(R.id.sg_app)
@@ -348,12 +240,12 @@ public class SetActivity extends BaseActivity {
     private SetView sv_launcher_item3;
 
     private void loadLauncherSet() {
-        PluginTypeEnum p1 = PluginTypeEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_ITEM1_PLUGIN, PluginTypeEnum.MUSIC.getId()));
+        PluginTypeEnum p1 = PluginTypeEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_ITEM1_PLUGIN, SYSMUSIC.getId()));
         sv_launcher_item1.setSummary("桌面左边框框使用的插件：" + p1.getName());
         sv_launcher_item1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PluginTypeEnum p = PluginTypeEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_ITEM1_PLUGIN, PluginTypeEnum.MUSIC.getId()));
+                PluginTypeEnum p = PluginTypeEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_ITEM1_PLUGIN, SYSMUSIC.getId()));
                 final PluginTypeEnum[] show = getLauncherPluginType(p);
                 String[] items = new String[show.length];
                 int select = 0;
@@ -445,7 +337,7 @@ public class SetActivity extends BaseActivity {
 
     private PluginTypeEnum[] getLauncherPluginType(PluginTypeEnum contain) {
         List<PluginTypeEnum> ps = new ArrayList<>();
-        PluginTypeEnum p1 = PluginTypeEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_ITEM1_PLUGIN, PluginTypeEnum.MUSIC.getId()));
+        PluginTypeEnum p1 = PluginTypeEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_ITEM1_PLUGIN, SYSMUSIC.getId()));
         PluginTypeEnum p2 = PluginTypeEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_ITEM2_PLUGIN, PluginTypeEnum.AMAP.getId()));
         PluginTypeEnum p3 = PluginTypeEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_ITEM3_PLUGIN, PluginTypeEnum.CONSOLE.getId()));
 
@@ -462,5 +354,232 @@ public class SetActivity extends BaseActivity {
             ps.add(p);
         }
         return ps.toArray(new PluginTypeEnum[ps.size()]);
+    }
+
+    @ViewInject(R.id.sv_allow_popup_window)
+    private SetView sv_allow_popup_window;
+
+    @ViewInject(R.id.sv_popup_showapps_sysmusic)
+    private SetView sv_popup_showapps_sysmusic;
+
+    @ViewInject(R.id.sv_popup_showapps_ncmusic)
+    private SetView sv_popup_showapps_ncmusic;
+
+    @ViewInject(R.id.sv_popup_showapps_qqmusic)
+    private SetView sv_popup_showapps_qqmusic;
+
+    @ViewInject(R.id.sv_popup_showapps_qqmusiccar)
+    private SetView sv_popup_showapps_qqmusiccar;
+
+    @ViewInject(R.id.sv_popup_showapps_amap)
+    private SetView sv_popup_showapps_amap;
+
+    @ViewInject(R.id.sv_popup_window_showapps)
+    private SetView sv_popup_window_showapps;
+
+    @ViewInject(R.id.sv_popup_window_showtype)
+    private SetView sv_popup_window_showtype;
+
+    private void loadPopupSet() {
+        sv_allow_popup_window.setOnValueChangeListener(new SetView.OnValueChangeListener() {
+            @Override
+            public void onValueChange(String newValue, String oldValue) {
+                if ("1".equals(newValue)) {
+                    SharedPreUtil.saveSharedPreBoolean(CommonData.SDATA_POPUP_ALLOW_SHOW, true);
+                } else {
+                    SharedPreUtil.saveSharedPreBoolean(CommonData.SDATA_POPUP_ALLOW_SHOW, false);
+                }
+            }
+        });
+        sv_allow_popup_window.setChecked(SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_POPUP_ALLOW_SHOW, true));
+
+        sv_popup_showapps_sysmusic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setPopupPluginShowApp(SYSMUSIC);
+            }
+        });
+        int p1 = getPopupPluginShowAppCount(SYSMUSIC);
+        sv_popup_showapps_sysmusic.setSummary(p1 == 0 ? "不使用" : p1 + "个APP使用");
+
+        sv_popup_showapps_ncmusic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setPopupPluginShowApp(NCMUSIC);
+            }
+        });
+        int p2 = getPopupPluginShowAppCount(NCMUSIC);
+        sv_popup_showapps_ncmusic.setSummary(p2 == 0 ? "不使用" : p2 + "个APP使用");
+
+
+        sv_popup_showapps_qqmusic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setPopupPluginShowApp(QQMUSIC);
+            }
+        });
+        int p3 = getPopupPluginShowAppCount(QQMUSIC);
+        sv_popup_showapps_qqmusic.setSummary(p3 == 0 ? "不使用" : p3 + "个APP使用");
+
+
+        sv_popup_showapps_qqmusiccar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setPopupPluginShowApp(QQCARMUSIC);
+            }
+        });
+        int p4 = getPopupPluginShowAppCount(QQCARMUSIC);
+        sv_popup_showapps_qqmusiccar.setSummary(p4 == 0 ? "不使用" : p4 + "个APP使用");
+
+
+        sv_popup_showapps_amap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setPopupPluginShowApp(AMAP);
+            }
+        });
+        int p5 = getPopupPluginShowAppCount(AMAP);
+        sv_popup_showapps_amap.setSummary(p5 == 0 ? "不使用" : p5 + "个APP使用");
+
+        sv_popup_window_showapps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String selectapp = SharedPreUtil.getSharedPreString(CommonData.SDATA_POPUP_SHOW_APPS);
+                final List<AppInfo> appInfos = AppUtil.getAllApp(mContext);
+                String[] items = new String[appInfos.size()];
+                final boolean[] checks = new boolean[appInfos.size()];
+                for (int i = 0; i < items.length; i++) {
+                    items[i] = appInfos.get(i).name + "(" + appInfos.get(i).packageName + ")";
+                    checks[i] = selectapp.contains("[" + appInfos.get(i).packageName + "]");
+                }
+
+                AlertDialog dialog = new AlertDialog.Builder(mContext).setTitle("请选择APP").setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String selectapp = "";
+                        for (int i = 0; i < appInfos.size(); i++) {
+                            if (checks[i]) {
+                                selectapp = selectapp + "[" + appInfos.get(i).packageName + "];";
+                            }
+                        }
+                        if (selectapp.endsWith(";")) {
+                            selectapp = selectapp.substring(0, selectapp.length() - 1);
+                        }
+                        SharedPreUtil.saveSharedPreString(CommonData.SDATA_POPUP_SHOW_APPS, selectapp);
+                    }
+                }).setMultiChoiceItems(items, checks, new DialogInterface.OnMultiChoiceClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                        Log.e(TAG, "onClick: " + appInfos.get(which).name);
+                        checks[which] = isChecked;
+                    }
+                }).create();
+                dialog.show();
+            }
+        });
+
+
+        sv_popup_window_showtype.setOnValueChangeListener(new SetView.OnValueChangeListener() {
+            @Override
+            public void onValueChange(String newValue, String oldValue) {
+                if ("1".equals(newValue)) {
+                    SharedPreUtil.saveSharedPreBoolean(CommonData.SDATA_POPUP_SHOW_TYPE, true);
+                } else {
+                    SharedPreUtil.saveSharedPreBoolean(CommonData.SDATA_POPUP_SHOW_TYPE, false);
+                }
+            }
+        });
+        sv_popup_window_showtype.setChecked(SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_POPUP_SHOW_TYPE, true));
+
+    }
+
+    private int getPopupPluginShowAppCount(final PluginTypeEnum pluginTypeEnum) {
+        String selectapp = SharedPreUtil.getSharedPreString(CommonData.SDATA_POPUP_PLUGIN_SHOW_APPS + pluginTypeEnum.getId());
+        if (CommonUtil.isNull(selectapp)) {
+            return 0;
+        } else {
+            return selectapp.split(";").length;
+        }
+    }
+
+    private void setPopupPluginShowApp(final PluginTypeEnum popupPluginEnum) {
+        String selectapp = SharedPreUtil.getSharedPreString(CommonData.SDATA_POPUP_PLUGIN_SHOW_APPS + popupPluginEnum.getId());
+        final List<AppInfo> appInfos = AppUtil.getAllApp(mContext);
+        String[] items = new String[appInfos.size()];
+        final boolean[] checks = new boolean[appInfos.size()];
+        for (int i = 0; i < items.length; i++) {
+            items[i] = appInfos.get(i).name + "(" + appInfos.get(i).packageName + ")";
+            checks[i] = selectapp.contains("[" + appInfos.get(i).packageName + "]");
+        }
+
+        AlertDialog dialog = new AlertDialog.Builder(mContext).setTitle("请选择APP").setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String selectapp = "";
+                for (int i = 0; i < appInfos.size(); i++) {
+                    if (checks[i]) {
+                        selectapp = selectapp + "[" + appInfos.get(i).packageName + "];";
+                    }
+                }
+                if (selectapp.endsWith(";")) {
+                    selectapp = selectapp.substring(0, selectapp.length() - 1);
+                }
+                SharedPreUtil.saveSharedPreString(CommonData.SDATA_POPUP_PLUGIN_SHOW_APPS + popupPluginEnum.getId(), selectapp);
+            }
+        }).setMultiChoiceItems(items, checks, new DialogInterface.OnMultiChoiceClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                Log.e(TAG, "onClick: " + appInfos.get(which).name);
+                checks[which] = isChecked;
+            }
+        }).create();
+        dialog.show();
+    }
+
+    @ViewInject(R.id.time_plugin_open_app_select)
+    private SetView time_plugin_open_app_select;
+
+    private void loadTimeSet() {
+        time_plugin_open_app_select.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String selectapp = SharedPreUtil.getSharedPreString(CommonData.SDATA_TIME_PLUGIN_OPEN_APP);
+                final List<AppInfo> appInfos = AppUtil.getAllApp(mContext);
+                String[] items = new String[appInfos.size()];
+                int select = -1;
+                for (int i = 0; i < items.length; i++) {
+                    items[i] = appInfos.get(i).name + "(" + appInfos.get(i).packageName + ")";
+                    if (appInfos.get(i).packageName.equals(selectapp)) {
+                        select = i;
+                    }
+                }
+                Log.e(TAG, "onClick: " + items.length + " " + select);
+                final ThreadObj<Integer> obj = new ThreadObj<>(select);
+                AlertDialog dialog = new AlertDialog.Builder(mContext).setTitle("请选择APP").setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        SharedPreUtil.saveSharedPreString(CommonData.SDATA_TIME_PLUGIN_OPEN_APP, appInfos.get(obj.getObj()).packageName);
+                    }
+                }).setSingleChoiceItems(items, select, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        obj.setObj(which);
+                    }
+                }).create();
+                dialog.show();
+            }
+        });
+    }
+
+    @ViewInject(R.id.sv_about)
+    private SetView sv_about;
+
+    private void loadHelpSet() {
+        sv_about.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(mContext, AboutActivity.class));
+            }
+        });
     }
 }

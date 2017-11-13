@@ -2,20 +2,14 @@
 <com.zhy.android.percent.support.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <ImageView
-        android:id="@+id/iv_open"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@mipmap/ic_popup_icon" />
+    android:layout_height="match_parent"
+    android:background="@color/popup_show_plugin">
 
     <LinearLayout
         android:id="@+id/ll_menu"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:visibility="gone"
         app:layout_widthPercent="50%h">
 
         <com.zhy.android.percent.support.PercentLinearLayout
@@ -53,8 +47,8 @@
         android:id="@+id/ll_plugin"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentEnd="true"
-        android:layout_toEndOf="@id/ll_menu"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@id/ll_menu"
         android:gravity="center"
         android:orientation="horizontal"
         android:visibility="gone" />

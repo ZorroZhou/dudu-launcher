@@ -211,7 +211,7 @@
                         android:layout_height="wrap_content"
                         android:paddingLeft="16dp"
                         android:paddingTop="16dp"
-                        android:text="悬浮框设置"
+                        android:text="悬浮框基本设置"
                         android:textColor="@color/colorPrimary"
                         android:textSize="14sp" />
 
@@ -241,7 +241,61 @@
                         android:id="@+id/sv_popup_window_showapps"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        st:titleEx="允许弹出悬浮框的APP"
+                        st:titleEx="要使用悬浮框的APP"
+                        st:type="buttonB" />
+
+                    <View style="@style/Interval" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="16dp"
+                        android:paddingTop="16dp"
+                        android:text="悬浮框插件设置"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="14sp" />
+
+                    <com.wow.carlauncher.common.view.SetView
+                        android:id="@+id/sv_popup_showapps_sysmusic"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        st:titleEx="系统音乐使用的APP"
+                        st:type="buttonB" />
+
+                    <View style="@style/Interval" />
+
+                    <com.wow.carlauncher.common.view.SetView
+                        android:id="@+id/sv_popup_showapps_ncmusic"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        st:titleEx="网易云音乐使用的APP"
+                        st:type="buttonB" />
+
+                    <View style="@style/Interval" />
+
+                    <com.wow.carlauncher.common.view.SetView
+                        android:id="@+id/sv_popup_showapps_qqmusic"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        st:titleEx="QQ音乐使用的APP"
+                        st:type="buttonB" />
+
+                    <View style="@style/Interval" />
+
+                    <com.wow.carlauncher.common.view.SetView
+                        android:id="@+id/sv_popup_showapps_qqmusiccar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        st:titleEx="QQ音乐车机版使用的APP"
+                        st:type="buttonB" />
+
+                    <View style="@style/Interval" />
+
+                    <com.wow.carlauncher.common.view.SetView
+                        android:id="@+id/sv_popup_showapps_amap"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        st:titleEx="高德地图车机版使用的APP"
                         st:type="buttonB" />
 
                     <View style="@style/Interval" />

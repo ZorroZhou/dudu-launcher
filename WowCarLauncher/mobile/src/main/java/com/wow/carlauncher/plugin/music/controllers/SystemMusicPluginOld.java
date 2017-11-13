@@ -26,7 +26,7 @@ import java.util.Map;
  * Created by 10124 on 2017/10/26.
  */
 
-public class SystemMusicPlugin extends MusicController {
+public class SystemMusicPluginOld extends MusicController {
     private String PACKAGE_NAME = "com.tencent.qqmusiccar";
 
 
@@ -35,7 +35,7 @@ public class SystemMusicPlugin extends MusicController {
 
     private SysMusicPopupView qqMusicCarPopupView;
 
-    public SystemMusicPlugin(Context context) {
+    public SystemMusicPluginOld(Context context) {
         super(context);
 
         IntentFilter intentFilter = new IntentFilter();

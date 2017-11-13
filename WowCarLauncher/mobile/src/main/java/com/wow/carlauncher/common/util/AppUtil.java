@@ -16,11 +16,13 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static com.wow.carlauncher.common.CommonData.*;
 import static android.content.Context.WIFI_SERVICE;
 import static com.wow.carlauncher.common.util.AppUtil.NetWorkState.*;
 
@@ -82,7 +84,6 @@ public class AppUtil {
             if (queryUsageStats == null || queryUsageStats.isEmpty()) {
                 return null;
             }
-
             UsageStats recentStats = null;
             for (UsageStats usageStats : queryUsageStats) {
                 if (recentStats == null || recentStats.getLastTimeUsed() < usageStats.getLastTimeUsed()) {

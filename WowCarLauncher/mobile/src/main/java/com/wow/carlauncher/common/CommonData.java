@@ -1,6 +1,10 @@
 package com.wow.carlauncher.common;
 
+import com.wow.carlauncher.plugin.PluginTypeEnum;
+
 public class CommonData {
+    public static final PluginTypeEnum[] ALL_PLUGINS = {PluginTypeEnum.SYSMUSIC, PluginTypeEnum.NCMUSIC, PluginTypeEnum.CONSOLE, PluginTypeEnum.AMAP, PluginTypeEnum.QQMUSIC, PluginTypeEnum.QQCARMUSIC};
+
     public static final String TAG = "WOW_CAR";
 
     public static final int REQUEST_SELECT_APP_TO_DOCK1 = 10000;
@@ -35,17 +39,17 @@ public class CommonData {
     public static final String SDATA_POPUP_WIN_X = "SDATA_POPUP_WIN_X";
     //悬浮框的Y坐标
     public static final String SDATA_POPUP_WIN_Y = "SDATA_POPUP_WIN_Y";
+    //悬浮框展示的APP
+    public static final String SDATA_POPUP_SHOW_APPS = "SDATA_POPUP_SHOW_APPS";
+    public static final String SDATA_POPUP_SHOW_TYPE = "SDATA_POPUP_SHOW_TYPE";
     //悬浮框当前的插件
-    public static final String SDATA_POPUP_CURRENT_PLUGIN = "SDATA_POPUP_CURRENT_PLUGIN";
-
+    public static final String SDATA_POPUP_CURRENT_PLUGIN = "SDATA_POPUP_CURRENT_PLUGIN_";
     //是否允许悬浮框展示
     public static final String SDATA_LAUNCHER_DOCK_LABEL_SHOW = "SDATA_LAUNCHER_DOCK_LABEL_SHOW";
     //是否允许悬浮框展示
     public static final String SDATA_POPUP_ALLOW_SHOW = "SDATA_POPUP_ALLOW_SHOW";
-    //悬浮框展示方式
-    public static final String SDATA_POPUP_SHOW_TYPE = "SDATA_POPUP_SHOW_TYPE";
     //悬浮框展示的APP
-    public static final String SDATA_POPUP_SHOW_APPS = "SDATA_POPUP_SHOW_APPS";
+    public static final String SDATA_POPUP_PLUGIN_SHOW_APPS = "SDATA_POPUP_PLUGIN_SHOW_APPS_";
 
     //当前的音乐控制器
     public static final String SDATA_CURRENT_MUSIC_CONTROLLER = "SDATA_CURRENT_MUSIC_CONTROLLER";

@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.util.CommonUtil;
-import com.wow.carlauncher.plugin.music.controllers.SystemMusicPlugin;
+import com.wow.carlauncher.plugin.music.controllers.SystemMusicPluginOld;
 import com.wow.carlauncher.plugin.pevent.PEventMusicInfoChange;
 import com.wow.carlauncher.plugin.pevent.PEventMusicStateChange;
 
@@ -28,7 +28,7 @@ public class SysMusicPopupView extends LinearLayout implements View.OnClickListe
     private LayoutInflater inflater;
 
     private ImageView iv_play;
-    private SystemMusicPlugin controller;
+    private SystemMusicPluginOld controller;
     private boolean playing = false;
     private TextView tv_title;
     private ProgressBar pb_music;
@@ -74,7 +74,7 @@ public class SysMusicPopupView extends LinearLayout implements View.OnClickListe
         EventBus.getDefault().unregister(this);
     }
 
-    public SysMusicPopupView(Context context, SystemMusicPlugin controller) {
+    public SysMusicPopupView(Context context, SystemMusicPluginOld controller) {
         super(context);
         this.controller = controller;
         inflater = LayoutInflater.from(context);

@@ -11,7 +11,7 @@ import com.wow.carlauncher.plugin.PluginManage;
 import com.wow.carlauncher.plugin.music.controllers.NeteaseCloudMusicPlugin;
 import com.wow.carlauncher.plugin.music.controllers.QQMusicCarPluginOld;
 import com.wow.carlauncher.plugin.music.controllers.QQMusicPluginOld;
-import com.wow.carlauncher.plugin.music.controllers.SystemMusicPlugin;
+import com.wow.carlauncher.plugin.music.controllers.SystemMusicPluginOld;
 
 /**
  * Created by 10124 on 2017/10/26.
@@ -27,7 +27,7 @@ public class MusicPlugin extends BasePlugin {
         MusicControllerEnum type = MusicControllerEnum.valueOfId(SharedPreUtil.getSharedPreInteger(CommonData.SDATA_CURRENT_MUSIC_CONTROLLER, MusicControllerEnum.SYSTEM.getId()));
         switch (type) {
             case SYSTEM: {
-                this.controller = new SystemMusicPlugin(context);
+                this.controller = new SystemMusicPluginOld(context);
                 break;
             }
             case NETEASECLOUD: {
@@ -79,7 +79,7 @@ public class MusicPlugin extends BasePlugin {
         }
         switch (type) {
             case SYSTEM: {
-                this.controller = new SystemMusicPlugin(context);
+                this.controller = new SystemMusicPluginOld(context);
                 break;
             }
             case NETEASECLOUD: {

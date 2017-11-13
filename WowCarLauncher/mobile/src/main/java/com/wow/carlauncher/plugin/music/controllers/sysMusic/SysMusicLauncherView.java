@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.util.CommonUtil;
-import com.wow.carlauncher.plugin.music.controllers.SystemMusicPlugin;
+import com.wow.carlauncher.plugin.music.controllers.SystemMusicPluginOld;
 import com.wow.carlauncher.plugin.pevent.PEventMusicInfoChange;
 import com.wow.carlauncher.plugin.pevent.PEventMusicStateChange;
 
@@ -28,7 +28,7 @@ public class SysMusicLauncherView extends LinearLayout implements View.OnClickLi
     private LayoutInflater inflater;
 
     private ImageView iv_play;
-    private SystemMusicPlugin controller;
+    private SystemMusicPluginOld controller;
     private TextView tv_title, tv_artist;
     private boolean playing = false;
 
@@ -73,7 +73,7 @@ public class SysMusicLauncherView extends LinearLayout implements View.OnClickLi
         EventBus.getDefault().unregister(this);
     }
 
-    public SysMusicLauncherView(Context context, SystemMusicPlugin controller) {
+    public SysMusicLauncherView(Context context, SystemMusicPluginOld controller) {
         super(context);
         this.controller = controller;
         inflater = LayoutInflater.from(context);

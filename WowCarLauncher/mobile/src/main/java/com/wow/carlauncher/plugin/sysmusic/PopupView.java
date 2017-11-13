@@ -1,4 +1,4 @@
-package com.wow.carlauncher.plugin.qqcarmusic;
+package com.wow.carlauncher.plugin.sysmusic;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.util.CommonUtil;
+import com.wow.carlauncher.plugin.music.controllers.SystemMusicPluginOld;
 import com.wow.carlauncher.plugin.pevent.PEventMusicInfoChange;
 import com.wow.carlauncher.plugin.pevent.PEventMusicStateChange;
 
@@ -21,11 +22,13 @@ import org.xutils.x;
  * Created by 10124 on 2017/10/28.
  */
 
-class PopupView extends LinearLayout implements View.OnClickListener {
+public class PopupView extends LinearLayout implements View.OnClickListener {
+    private static final String TAG = "PluginMusicView";
+
     private LayoutInflater inflater;
 
     private ImageView iv_play;
-    private QQMusicCarPlugin controller;
+    private SystemMusicPlugin controller;
     private boolean playing = false;
     private TextView tv_title;
     private ProgressBar pb_music;
@@ -73,7 +76,7 @@ class PopupView extends LinearLayout implements View.OnClickListener {
         EventBus.getDefault().unregister(this);
     }
 
-    public PopupView(Context context, QQMusicCarPlugin controller) {
+    public PopupView(Context context, SystemMusicPlugin controller) {
         super(context);
         this.controller = controller;
         inflater = LayoutInflater.from(context);
@@ -81,7 +84,7 @@ class PopupView extends LinearLayout implements View.OnClickListener {
     }
 
     private void init() {
-        View linearLayout = inflater.inflate(R.layout.plugin_music_qcm_popup, null);
+        View linearLayout = inflater.inflate(R.layout.plugin_music_sys_popup, null);
         this.addView(linearLayout, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         iv_play = (ImageView) findViewById(R.id.iv_play);
         tv_title = (TextView) findViewById(R.id.tv_title);

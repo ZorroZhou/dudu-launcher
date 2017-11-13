@@ -395,7 +395,6 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void run() {
                 setTime();
-                PopupWin.self().checkShowApp(AppUtil.getForegroundApp(mContext));
             }
         }, 1000 - System.currentTimeMillis() % 1000, 1000);
     }

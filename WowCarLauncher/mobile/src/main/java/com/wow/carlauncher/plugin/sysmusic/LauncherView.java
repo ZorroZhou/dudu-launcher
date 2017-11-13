@@ -1,15 +1,16 @@
-package com.wow.carlauncher.plugin.qqcarmusic;
+package com.wow.carlauncher.plugin.sysmusic;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.util.CommonUtil;
+import com.wow.carlauncher.plugin.music.controllers.SystemMusicPluginOld;
 import com.wow.carlauncher.plugin.pevent.PEventMusicInfoChange;
 import com.wow.carlauncher.plugin.pevent.PEventMusicStateChange;
 
@@ -21,31 +22,30 @@ import org.xutils.x;
  * Created by 10124 on 2017/10/28.
  */
 
-class PopupView extends LinearLayout implements View.OnClickListener {
+public class LauncherView extends LinearLayout implements View.OnClickListener {
+    private static final String TAG = "SysMusicLauncherView";
+
     private LayoutInflater inflater;
 
     private ImageView iv_play;
-    private QQMusicCarPlugin controller;
+    private SystemMusicPlugin controller;
+    private TextView tv_title, tv_artist;
     private boolean playing = false;
-    private TextView tv_title;
-    private ProgressBar pb_music;
 
     @Subscribe
     public void onEventMainThread(final PEventMusicInfoChange event) {
         x.task().autoPost(new Runnable() {
             @Override
             public void run() {
-                if (tv_title != null) {
-                    if (CommonUtil.isNotNull(event.title)) {
-                        tv_title.setText(event.title);
-                    } else {
-                        tv_title.setText("标题");
-                    }
+                if (tv_title != null && CommonUtil.isNotNull(event.title)) {
+                    tv_title.setText(event.title);
+                } else {
+                    tv_title.setText("标题");
                 }
-
-                if (pb_music != null && event.curr_time > 0 && event.total_time > 0) {
-                    pb_music.setProgress(event.curr_time);
-                    pb_music.setMax(event.total_time);
+                if (tv_artist != null && CommonUtil.isNotNull(event.artist)) {
+                    tv_artist.setText(event.artist);
+                } else {
+                    tv_artist.setText("歌手");
                 }
             }
         });
@@ -73,7 +73,7 @@ class PopupView extends LinearLayout implements View.OnClickListener {
         EventBus.getDefault().unregister(this);
     }
 
-    public PopupView(Context context, QQMusicCarPlugin controller) {
+    public LauncherView(Context context, SystemMusicPlugin controller) {
         super(context);
         this.controller = controller;
         inflater = LayoutInflater.from(context);
@@ -81,11 +81,11 @@ class PopupView extends LinearLayout implements View.OnClickListener {
     }
 
     private void init() {
-        View linearLayout = inflater.inflate(R.layout.plugin_music_qcm_popup, null);
+        View linearLayout = inflater.inflate(R.layout.plugin_music_sys_launcher, null);
         this.addView(linearLayout, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         iv_play = (ImageView) findViewById(R.id.iv_play);
         tv_title = (TextView) findViewById(R.id.tv_title);
-        pb_music = (ProgressBar) findViewById(R.id.pb_music);
+        tv_artist = (TextView) findViewById(R.id.tv_artist);
 
         findViewById(R.id.ll_play).setOnClickListener(this);
         findViewById(R.id.ll_prew).setOnClickListener(this);
@@ -110,6 +110,7 @@ class PopupView extends LinearLayout implements View.OnClickListener {
                         controller.play();
                     }
                 }
+                Log.e(TAG, "onClick: " + controller);
                 break;
             }
             case R.id.ll_next: {

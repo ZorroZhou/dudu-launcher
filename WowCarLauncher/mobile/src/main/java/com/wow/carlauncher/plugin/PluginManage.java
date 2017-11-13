@@ -2,32 +2,30 @@ package com.wow.carlauncher.plugin;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 
+import com.wow.carlauncher.common.CommonData;
+import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
+import com.wow.carlauncher.dialog.InputDialog;
 import com.wow.carlauncher.event.LauncherItemRefreshEvent;
 import com.wow.carlauncher.plugin.amapcar.AMapCarPlugin;
 import com.wow.carlauncher.plugin.console.ConsolePlugin;
-import com.wow.carlauncher.plugin.music.MusicPlugin;
 import com.wow.carlauncher.plugin.ncmusic.NcMusicPlugin;
 import com.wow.carlauncher.plugin.qqmusic.QQMusicPlugin;
 import com.wow.carlauncher.plugin.qqcarmusic.QQMusicCarPlugin;
+import com.wow.carlauncher.plugin.sysmusic.SystemMusicPlugin;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import static com.wow.carlauncher.common.CommonData.*;
 
-/**
- * Created by 10124 on 2017/10/26.
- */
-
 public class PluginManage {
-    public static final String MUSIC = "MUSIC";
-    public static final String CONSOLE = "CONSOLE";
-    public static final String AMAPCAR = "AMAPCAR";
-
     private static PluginManage self;
 
     public static PluginManage self() {
@@ -37,7 +35,6 @@ public class PluginManage {
         return self;
     }
 
-    private Map<String, BasePlugin> plugins;
     private Activity currentActivity;
     private Context context;
 
@@ -46,6 +43,9 @@ public class PluginManage {
     private BasePlugin launcherPlugins2;
     private BasePlugin launcherPlugins3;
 
+
+    private Map<Integer, List<String>> pluginShowApp;
+
     private PluginManage() {
 
     }
@@ -53,40 +53,88 @@ public class PluginManage {
     public void init(Context context) {
         this.context = context;
         allUsePlugins = new ConcurrentHashMap<>();
+        pluginShowApp = new ConcurrentHashMap<>();
 
-        plugins = new ConcurrentHashMap<>();
-
-        plugins.put(MUSIC, new MusicPlugin(context, this));
-        plugins.put(CONSOLE, new ConsolePlugin(context, this));
-        plugins.put(AMAPCAR, new AMapCarPlugin(context, this));
-
-        Integer name1 = SharedPreUtil.getSharedPreInteger(SDATA_ITEM1_PLUGIN, PluginTypeEnum.MUSIC.getId());
-        launcherPlugins1 = createPluginById(name1);
+        Integer id1 = SharedPreUtil.getSharedPreInteger(SDATA_ITEM1_PLUGIN, PluginTypeEnum.SYSMUSIC.getId());
+        launcherPlugins1 = createPlugin(PluginTypeEnum.getById(id1));
         if (launcherPlugins1 == null) {
-            launcherPlugins1 = createPluginById(PluginTypeEnum.MUSIC.getId());
+            launcherPlugins1 = createPlugin(PluginTypeEnum.SYSMUSIC);
         }
-        allUsePlugins.put(name1, launcherPlugins1);
+        allUsePlugins.put(id1, launcherPlugins1);
 
-        Integer name2 = SharedPreUtil.getSharedPreInteger(SDATA_ITEM2_PLUGIN, PluginTypeEnum.AMAP.getId());
-        launcherPlugins2 = createPluginById(name2);
+        Integer id2 = SharedPreUtil.getSharedPreInteger(SDATA_ITEM2_PLUGIN, PluginTypeEnum.AMAP.getId());
+        launcherPlugins2 = createPlugin(PluginTypeEnum.getById(id2));
         if (launcherPlugins2 == null) {
-            launcherPlugins2 = createPluginById(PluginTypeEnum.AMAP.getId());
+            launcherPlugins2 = createPlugin(PluginTypeEnum.AMAP);
         }
-        allUsePlugins.put(name2, launcherPlugins2);
+        allUsePlugins.put(id2, launcherPlugins2);
 
-        Integer name3 = SharedPreUtil.getSharedPreInteger(SDATA_ITEM3_PLUGIN, PluginTypeEnum.CONSOLE.getId());
-        launcherPlugins3 = createPluginById(name3);
+        Integer id3 = SharedPreUtil.getSharedPreInteger(SDATA_ITEM3_PLUGIN, PluginTypeEnum.CONSOLE.getId());
+        launcherPlugins3 = createPlugin(PluginTypeEnum.getById(id3));
         if (launcherPlugins3 == null) {
-            launcherPlugins3 = createPluginById(PluginTypeEnum.CONSOLE.getId());
+            launcherPlugins3 = createPlugin(PluginTypeEnum.CONSOLE);
         }
-        allUsePlugins.put(name3, launcherPlugins3);
+        allUsePlugins.put(id3, launcherPlugins3);
 
+        for (PluginTypeEnum pluginTypeEnum : ALL_PLUGINS) {
+            List<String> apps = new ArrayList<>();
+            String selectapp = SharedPreUtil.getSharedPreString(CommonData.SDATA_POPUP_PLUGIN_SHOW_APPS + pluginTypeEnum.getId());
+            if (CommonUtil.isNotNull(selectapp)) {
+                String[] apptemps = selectapp.split(";");
+                for (String apptemp : apptemps) {
+                    apps.add(apptemp.replace("[", "").replace("]", ""));
+                }
+            }
+            pluginShowApp.put(pluginTypeEnum.getId(), apps);
+            if (apps.size() > 0) {
+                allUsePlugins.put(pluginTypeEnum.getId(), createPlugin(pluginTypeEnum));
+            }
+        }
+        Log.e(TAG, "init: " + allUsePlugins);
     }
 
+    public PluginTypeEnum getPopupPlugin(String app, int currentPlugin, boolean next) {
+        long t1 = System.currentTimeMillis();
+        Log.e(TAG, "getPopupPlugin-0: " + app);
+        List<Integer> pluginIds = new ArrayList<>();
+        for (Integer key : pluginShowApp.keySet()) {
+            Log.e(TAG, "getPopupPlugin: " + app);
+            Log.e(TAG, "getPopupPlugin: " + pluginShowApp.get(key));
+            if (pluginShowApp.get(key).contains(app)) {
+                pluginIds.add(key);
+            }
+        }
+        Log.e(TAG, "getPopupPlugin0: " + pluginIds);
+        if (pluginIds.size() == 0) {
+            return null;
+        }
+        int index = pluginIds.indexOf(currentPlugin);
+        Log.e(TAG, "getPopupPlugin1: " + index);
+        if (next) {
+            index++;
+        }
+        Log.e(TAG, "getPopupPlugin2: " + index);
+        if (index >= pluginIds.size() || index < 0) {
+            return null;
+        }
+        Log.e(TAG, "getPopupPlugin3: " + index);
+        Integer pluginId = pluginIds.get(index);
+        Log.e(TAG, "getPopupPlugin4: " + (System.currentTimeMillis() - t1));
+        return PluginTypeEnum.getById(pluginId);
+    }
+
+    public BasePlugin getPlugin(PluginTypeEnum p) {
+        Log.e(TAG, "getPlugin: " + p);
+        Log.e(TAG, "getPlugin: " + allUsePlugins);
+        return allUsePlugins.get(p.getId());
+    }
+
+
+    //设置主页的插件
     public void setLauncherPlugin(LauncherPluginEnum pluginEnum, PluginTypeEnum pluginTypeEnum) {
         switch (pluginEnum) {
             case LAUNCHER_ITEM1: {
-                PluginTypeEnum p = PluginTypeEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_ITEM1_PLUGIN, PluginTypeEnum.MUSIC.getId()));
+                PluginTypeEnum p = PluginTypeEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_ITEM1_PLUGIN, PluginTypeEnum.SYSMUSIC.getId()));
                 if (!p.equals(pluginTypeEnum)) {
                     //先检测弹出框是不是使用了这个插件，如果没有使用，则直接销毁
                     launcherPlugins1.destroy();
@@ -94,7 +142,7 @@ public class PluginManage {
                     allUsePlugins.remove(p.getId());
                     BasePlugin plugin = allUsePlugins.get(pluginTypeEnum.getId());
                     if (plugin == null) {
-                        plugin = createPluginById(pluginTypeEnum.getId());
+                        plugin = createPlugin(pluginTypeEnum);
                     }
                     launcherPlugins1 = plugin;
                     allUsePlugins.put(pluginTypeEnum.getId(), launcherPlugins1);
@@ -114,7 +162,7 @@ public class PluginManage {
                     allUsePlugins.remove(p.getId());
                     BasePlugin plugin = allUsePlugins.get(pluginTypeEnum.getId());
                     if (plugin == null) {
-                        plugin = createPluginById(pluginTypeEnum.getId());
+                        plugin = createPlugin(pluginTypeEnum);
                     }
                     launcherPlugins2 = plugin;
                     allUsePlugins.put(pluginTypeEnum.getId(), launcherPlugins2);
@@ -135,7 +183,7 @@ public class PluginManage {
                     allUsePlugins.remove(p.getId());
                     BasePlugin plugin = allUsePlugins.get(pluginTypeEnum.getId());
                     if (plugin == null) {
-                        plugin = createPluginById(pluginTypeEnum.getId());
+                        plugin = createPlugin(pluginTypeEnum);
                     }
                     launcherPlugins3 = plugin;
                     allUsePlugins.put(pluginTypeEnum.getId(), launcherPlugins3);
@@ -149,6 +197,7 @@ public class PluginManage {
         }
     }
 
+    //获取主页的插件
     public BasePlugin getLauncherPlugin(LauncherPluginEnum pluginEnum) {
         switch (pluginEnum) {
             case LAUNCHER_ITEM1: {
@@ -164,11 +213,11 @@ public class PluginManage {
         return null;
     }
 
-
-    private BasePlugin createPluginById(Integer id) {
-        switch (PluginTypeEnum.getById(id)) {
-            case MUSIC: {
-                return new MusicPlugin(context, this);
+    //创建一个插件
+    private BasePlugin createPlugin(PluginTypeEnum pluginTypeEnum) {
+        switch (pluginTypeEnum) {
+            case SYSMUSIC: {
+                return new SystemMusicPlugin(context, this);
             }
             case CONSOLE: {
                 return new ConsolePlugin(context, this);
@@ -187,22 +236,6 @@ public class PluginManage {
             }
         }
         return null;
-    }
-
-    public ConsolePlugin controller() {
-        return (ConsolePlugin) plugins.get(CONSOLE);
-    }
-
-    public MusicPlugin music() {
-        return (MusicPlugin) plugins.get(MUSIC);
-    }
-
-    public AMapCarPlugin amapCar() {
-        return (AMapCarPlugin) plugins.get(AMAPCAR);
-    }
-
-    public BasePlugin getByName(String name) {
-        return plugins.get(name);
     }
 
     public void setCurrentActivity(Activity activity) {

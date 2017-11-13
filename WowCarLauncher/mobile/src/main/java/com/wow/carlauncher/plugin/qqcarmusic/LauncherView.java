@@ -34,15 +34,19 @@ class LauncherView extends LinearLayout implements View.OnClickListener {
         x.task().autoPost(new Runnable() {
             @Override
             public void run() {
-                if (tv_title != null && CommonUtil.isNotNull(event.title)) {
-                    tv_title.setText(event.title);
-                } else {
-                    tv_title.setText("标题");
+                if (tv_title != null) {
+                    if (CommonUtil.isNotNull(event.title)) {
+                        tv_title.setText(event.title);
+                    } else {
+                        tv_title.setText("标题");
+                    }
                 }
-                if (tv_artist != null && CommonUtil.isNotNull(event.artist)) {
-                    tv_artist.setText(event.artist);
-                } else {
-                    tv_artist.setText("歌手");
+                if (tv_artist != null) {
+                    if (CommonUtil.isNotNull(event.artist)) {
+                        tv_artist.setText(event.artist);
+                    } else {
+                        tv_artist.setText("歌手");
+                    }
                 }
                 if (pb_music != null && event.curr_time > 0 && event.total_time > 0) {
                     pb_music.setProgress(event.curr_time);

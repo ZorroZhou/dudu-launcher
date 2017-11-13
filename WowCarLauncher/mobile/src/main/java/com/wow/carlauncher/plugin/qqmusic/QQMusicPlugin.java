@@ -293,7 +293,6 @@ public class QQMusicPlugin extends BasePlugin {
         launcherView.findViewById(R.id.ll_next).setOnClickListener(launcherOnClickListener);
 
         ergodicLauncherView((ViewGroup) launcherWidgetView);
-        ergodicView((ViewGroup) launcherWidgetView, 0);
         return launcherView;
     }
 
@@ -371,16 +370,16 @@ public class QQMusicPlugin extends BasePlugin {
             launcherWidgetViewNext = (ImageView) v7;
         }
     }
-
-    private void ergodicView(ViewGroup vg, int root) {
-        for (int i = 0; i < vg.getChildCount(); i++) {
-            Log.e("~!~!!!!!!!!!!!!!", root + ":" + vg.getChildAt(i) + ":" + i);
-            View v = vg.getChildAt(i);
-            //背景
-            if (v instanceof ViewGroup) {
-                int xx = root + 1;
-                ergodicView((ViewGroup) v, xx);
-            }
-        }
-    }
+//
+//    private void ergodicView(ViewGroup vg, int root) {
+//        for (int i = 0; i < vg.getChildCount(); i++) {
+//            Log.e("~!~!!!!!!!!!!!!!", root + ":" + vg.getChildAt(i) + ":" + i);
+//            View v = vg.getChildAt(i);
+//            //背景
+//            if (v instanceof ViewGroup) {
+//                int xx = root + 1;
+//                ergodicView((ViewGroup) v, xx);
+//            }
+//        }
+//    }
 }

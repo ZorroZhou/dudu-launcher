@@ -261,7 +261,7 @@ public class SetActivity extends BaseActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         PluginManage.self().setLauncherPlugin(LauncherPluginEnum.LAUNCHER_ITEM1, show[obj.getObj()]);
-                        sv_launcher_item1.setSummary("桌面中间框框使用的插件：" + show[obj.getObj()].getName());
+                        sv_launcher_item1.setSummary("桌面左边框框使用的插件：" + show[obj.getObj()].getName());
                     }
                 }).setSingleChoiceItems(items, select, new DialogInterface.OnClickListener() {
                     @Override
@@ -293,6 +293,7 @@ public class SetActivity extends BaseActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         PluginManage.self().setLauncherPlugin(LauncherPluginEnum.LAUNCHER_ITEM2, show[obj.getObj()]);
+                        sv_launcher_item2.setSummary("桌面中间框框使用的插件：" + show[obj.getObj()].getName());
                     }
                 }).setSingleChoiceItems(items, select, new DialogInterface.OnClickListener() {
                     @Override
@@ -324,6 +325,7 @@ public class SetActivity extends BaseActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         PluginManage.self().setLauncherPlugin(LauncherPluginEnum.LAUNCHER_ITEM3, show[obj.getObj()]);
+                        sv_launcher_item3.setSummary("桌面右边框框使用的插件：" + show[obj.getObj()].getName());
                     }
                 }).setSingleChoiceItems(items, select, new DialogInterface.OnClickListener() {
                     @Override

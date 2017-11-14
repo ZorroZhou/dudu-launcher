@@ -12,6 +12,7 @@ import android.widget.ListView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.activity.adapter.SelectAppAdapter;
+import com.wow.carlauncher.common.AppInfoManage;
 import com.wow.carlauncher.common.BaseActivity;
 import com.wow.carlauncher.common.util.AppUtil;
 import com.wow.carlauncher.common.util.AppUtil.AppInfo;
@@ -61,7 +62,7 @@ public class AppSelectActivity extends BaseActivity implements AdapterView.OnIte
         x.task().run(new Runnable() {
             @Override
             public void run() {
-                final List<AppInfo> appInfos = AppUtil.getAllApp(mContext);
+                final List<AppInfo> appInfos = AppInfoManage.self().getAppInfos();
                 x.task().autoPost(new Runnable() {
                     @Override
                     public void run() {

@@ -9,7 +9,6 @@ import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.BaseActivity;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.view.SetView;
-import com.wow.carlauncher.plugin.music.MusicControllerEnum;
 
 import org.xutils.view.annotation.ViewInject;
 
@@ -22,18 +21,8 @@ import static com.wow.carlauncher.common.CommonData.SDATA_MUSIC_PLUGIN_NCM_WIDGE
 import static com.wow.carlauncher.common.CommonData.SDATA_MUSIC_PLUGIN_NCM_WIDGET1;
 import static com.wow.carlauncher.common.CommonData.SDATA_MUSIC_PLUGIN_QQMUSIC_WIDGET2;
 import static com.wow.carlauncher.common.CommonData.SDATA_MUSIC_PLUGIN_QQMUSIC_WIDGET1;
-import static com.wow.carlauncher.plugin.music.MusicControllerEnum.NETEASECLOUD;
-import static com.wow.carlauncher.plugin.music.MusicControllerEnum.QQMUSIC;
-import static com.wow.carlauncher.plugin.music.MusicControllerEnum.QQMUSICCAR;
-import static com.wow.carlauncher.plugin.music.MusicControllerEnum.SYSTEM;
-
-/**
- * Created by 10124 on 2017/10/26.
- */
 
 public class PluginSetActivity extends BaseActivity {
-    private static final String TAG = "PluginSetActivity";
-    private final static String[] MUSIC_CONTORLLERS = {SYSTEM.getName(), NETEASECLOUD.getName(), QQMUSICCAR.getName(), QQMUSIC.getName()};
 
 
     @ViewInject(R.id.ncm_w1)

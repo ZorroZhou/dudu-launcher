@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.common.AppInfoManage;
 import com.wow.carlauncher.common.BaseActivity;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.console.ConsoleManage;
@@ -166,7 +167,7 @@ public class SetActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 String selectapp = SharedPreUtil.getSharedPreString(CommonData.SDATA_HIDE_APPS);
-                final List<AppInfo> appInfos = AppUtil.getAllApp(mContext);
+                final List<AppInfo> appInfos = AppInfoManage.self().getAppInfos();
                 String[] items = new String[appInfos.size()];
                 final boolean[] checks = new boolean[appInfos.size()];
                 for (int i = 0; i < items.length; i++) {
@@ -467,7 +468,7 @@ public class SetActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 String selectapp = SharedPreUtil.getSharedPreString(CommonData.SDATA_POPUP_SHOW_APPS);
-                final List<AppInfo> appInfos = AppUtil.getAllApp(mContext);
+                final List<AppInfo> appInfos = AppInfoManage.self().getAppInfos();
                 String[] items = new String[appInfos.size()];
                 final boolean[] checks = new boolean[appInfos.size()];
                 for (int i = 0; i < items.length; i++) {
@@ -529,7 +530,7 @@ public class SetActivity extends BaseActivity {
             @Override
             public void run() {
                 String selectapp = SharedPreUtil.getSharedPreString(CommonData.SDATA_POPUP_PLUGIN_SHOW_APPS + popupPluginEnum.getId());
-                final List<AppInfo> appInfos = AppUtil.getAllApp(mContext);
+                final List<AppInfo> appInfos = AppInfoManage.self().getAppInfos();
                 String[] items = new String[appInfos.size()];
                 final boolean[] checks = new boolean[appInfos.size()];
                 for (int i = 0; i < items.length; i++) {
@@ -582,7 +583,7 @@ public class SetActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 String selectapp = SharedPreUtil.getSharedPreString(CommonData.SDATA_TIME_PLUGIN_OPEN_APP);
-                final List<AppInfo> appInfos = AppUtil.getAllApp(mContext);
+                final List<AppInfo> appInfos = AppInfoManage.self().getAppInfos();
                 String[] items = new String[appInfos.size()];
                 int select = -1;
                 for (int i = 0; i < items.length; i++) {
@@ -635,7 +636,7 @@ public class SetActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 if (Build.VERSION.SDK_INT >= 23) {
-                    final List<AppInfo> appInfos = AppUtil.getAllApp(mContext);
+                    final List<AppInfo> appInfos = AppInfoManage.self().getAppInfos();
                     String[] items = new String[appInfos.size()];
                     for (int i = 0; i < items.length; i++) {
                         items[i] = appInfos.get(i).name + "(" + appInfos.get(i).packageName + ")";

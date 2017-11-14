@@ -21,9 +21,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @ViewInject(R.id.set)
     private Button set;
 
-    @ViewInject(R.id.sys_set)
-    private Button sys_set;
-
     @ViewInject(R.id.test)
     private Button test;
 
@@ -36,7 +33,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     public void initView() {
         setTitle("车载启动器");
         set.setOnClickListener(this);
-        sys_set.setOnClickListener(this);
         test.setOnClickListener(this);
 
         checkPermission();

@@ -51,9 +51,6 @@ public class CommonData {
     //悬浮框展示的APP
     public static final String SDATA_POPUP_PLUGIN_SHOW_APPS = "SDATA_POPUP_PLUGIN_SHOW_APPS_";
 
-    //当前的音乐控制器
-    public static final String SDATA_CURRENT_MUSIC_CONTROLLER = "SDATA_CURRENT_MUSIC_CONTROLLER";
-
     //隐藏的APP的包名，格式：[包名],[包名],[包名],[包名]
     public static final String SDATA_HIDE_APPS = "SDATA_HIDE_APPS";
 

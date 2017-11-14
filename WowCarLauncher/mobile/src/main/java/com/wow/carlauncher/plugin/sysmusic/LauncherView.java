@@ -1,7 +1,6 @@
 package com.wow.carlauncher.plugin.sysmusic;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,7 +9,6 @@ import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.util.CommonUtil;
-import com.wow.carlauncher.plugin.music.controllers.SystemMusicPluginOld;
 import com.wow.carlauncher.plugin.pevent.PEventMusicInfoChange;
 import com.wow.carlauncher.plugin.pevent.PEventMusicStateChange;
 
@@ -23,8 +21,6 @@ import org.xutils.x;
  */
 
 public class LauncherView extends LinearLayout implements View.OnClickListener {
-    private static final String TAG = "SysMusicLauncherView";
-
     private LayoutInflater inflater;
 
     private ImageView iv_play;
@@ -110,7 +106,6 @@ public class LauncherView extends LinearLayout implements View.OnClickListener {
                         controller.play();
                     }
                 }
-                Log.e(TAG, "onClick: " + controller);
                 break;
             }
             case R.id.ll_next: {

@@ -7,14 +7,10 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.view.KeyEvent;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.wow.carlauncher.plugin.BasePlugin;
 import com.wow.carlauncher.plugin.PluginManage;
-import com.wow.carlauncher.plugin.music.MusicController;
-import com.wow.carlauncher.plugin.music.controllers.sysMusic.SysMusicLauncherView;
-import com.wow.carlauncher.plugin.music.controllers.sysMusic.SysMusicPopupView;
 import com.wow.carlauncher.plugin.pevent.PEventMusicInfoChange;
 import com.wow.carlauncher.plugin.pevent.PEventMusicStateChange;
 
@@ -24,18 +20,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by 10124 on 2017/10/26.
- */
-
 public class SystemMusicPlugin extends BasePlugin {
     private String PACKAGE_NAME = "com.tencent.qqmusiccar";
 
-
     private Map<String, String> clazzs;
-    private SysMusicLauncherView qqMusicCarLauncherView;
-
-    private SysMusicPopupView qqMusicCarPopupView;
 
     public SystemMusicPlugin(Context context, PluginManage pluginManage) {
         super(context, pluginManage);
@@ -165,19 +153,19 @@ public class SystemMusicPlugin extends BasePlugin {
         return new PopupView(context, this);
     }
 
-    public void play() {
+    void play() {
         sendEvent(KeyEvent.KEYCODE_MEDIA_PLAY);
     }
 
-    public void pause() {
+    void pause() {
         sendEvent(KeyEvent.KEYCODE_MEDIA_PAUSE);
     }
 
-    public void next() {
+    void next() {
         sendEvent(KeyEvent.KEYCODE_MEDIA_NEXT);
     }
 
-    public void pre() {
+    void pre() {
         sendEvent(KeyEvent.KEYCODE_MEDIA_PREVIOUS);
     }
 

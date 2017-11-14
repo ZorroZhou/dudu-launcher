@@ -16,11 +16,4 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="设置" />
-
-    <Button
-        android:id="@+id/sys_set"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="系统设置" />
-
 </LinearLayout>

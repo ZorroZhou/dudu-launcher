@@ -2,14 +2,17 @@ package com.wow.carlauncher.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.AppInfoManage;
@@ -25,12 +28,15 @@ import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.util.ThreadObj;
 import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.dialog.CityDialog;
+import com.wow.carlauncher.dialog.InputDialog;
 import com.wow.carlauncher.event.LauncherCityRefreshEvent;
 import com.wow.carlauncher.event.LauncherDockLabelShowChangeEvent;
+import com.wow.carlauncher.event.LauncherItemBackgroundRefreshEvent;
 import com.wow.carlauncher.event.PopupIsFullScreenRefreshEvent;
 import com.wow.carlauncher.plugin.LauncherPluginEnum;
 import com.wow.carlauncher.plugin.PluginEnum;
 import com.wow.carlauncher.plugin.PluginManage;
+import com.wow.carlauncher.popupWindow.PopupWin;
 
 import org.greenrobot.eventbus.EventBus;
 import org.xutils.view.annotation.ViewInject;
@@ -258,7 +264,99 @@ public class SetActivity extends BaseActivity {
     @ViewInject(R.id.sv_launcher_item3)
     private SetView sv_launcher_item3;
 
+    @ViewInject(R.id.sv_launcher_item1_bg)
+    private SetView sv_launcher_item1_bg;
+
+    @ViewInject(R.id.sv_launcher_item2_bg)
+    private SetView sv_launcher_item2_bg;
+
+    @ViewInject(R.id.sv_launcher_item3_bg)
+    private SetView sv_launcher_item3_bg;
+
+    @ViewInject(R.id.sv_launcher_dock_bg)
+    private SetView sv_launcher_dock_bg;
+
     private void loadLauncherSet() {
+        sv_launcher_dock_bg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new InputDialog(SetActivity.this)
+                        .setTitle("请输入颜色ARGB值:")
+                        .setBtn1("取消", null)
+                        .setBtn2("确定", new BaseDialog.OnBtnClickListener() {
+                            @Override
+                            public boolean onClick(BaseDialog dialog) {
+                                String text = ((EditText) dialog.findViewById(R.id.et_input)).getText().toString();
+                                SharedPreUtil.saveSharedPreString(SDATA_LAUNCHER_DOCK_BG_COLOR, text);
+                                sv_launcher_dock_bg.setSummary(text);
+                                EventBus.getDefault().post(new LauncherItemBackgroundRefreshEvent());
+                                return true;
+                            }
+                        }).show();
+            }
+        });
+        sv_launcher_dock_bg.setSummary(SharedPreUtil.getSharedPreString(SDATA_LAUNCHER_DOCK_BG_COLOR));
+
+        sv_launcher_item1_bg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new InputDialog(SetActivity.this)
+                        .setTitle("请输入颜色ARGB值:")
+                        .setBtn1("取消", null)
+                        .setBtn2("确定", new BaseDialog.OnBtnClickListener() {
+                            @Override
+                            public boolean onClick(BaseDialog dialog) {
+                                String text = ((EditText) dialog.findViewById(R.id.et_input)).getText().toString();
+                                SharedPreUtil.saveSharedPreString(SDATA_LAUNCHER_ITEM1_BG_COLOR, text);
+                                sv_launcher_item1_bg.setSummary(text);
+                                EventBus.getDefault().post(new LauncherItemBackgroundRefreshEvent());
+                                return true;
+                            }
+                        }).show();
+            }
+        });
+        sv_launcher_item1_bg.setSummary(SharedPreUtil.getSharedPreString(SDATA_LAUNCHER_ITEM1_BG_COLOR));
+
+        sv_launcher_item2_bg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new InputDialog(SetActivity.this)
+                        .setTitle("请输入颜色ARGB值:")
+                        .setBtn1("取消", null)
+                        .setBtn2("确定", new BaseDialog.OnBtnClickListener() {
+                            @Override
+                            public boolean onClick(BaseDialog dialog) {
+                                String text = ((EditText) dialog.findViewById(R.id.et_input)).getText().toString();
+                                SharedPreUtil.saveSharedPreString(SDATA_LAUNCHER_ITEM2_BG_COLOR, text);
+                                sv_launcher_item2_bg.setSummary(text);
+                                EventBus.getDefault().post(new LauncherItemBackgroundRefreshEvent());
+                                return true;
+                            }
+                        }).show();
+            }
+        });
+        sv_launcher_item2_bg.setSummary(SharedPreUtil.getSharedPreString(SDATA_LAUNCHER_ITEM2_BG_COLOR));
+
+        sv_launcher_item3_bg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new InputDialog(SetActivity.this)
+                        .setTitle("请输入颜色ARGB值:")
+                        .setBtn1("取消", null)
+                        .setBtn2("确定", new BaseDialog.OnBtnClickListener() {
+                            @Override
+                            public boolean onClick(BaseDialog dialog) {
+                                String text = ((EditText) dialog.findViewById(R.id.et_input)).getText().toString();
+                                SharedPreUtil.saveSharedPreString(SDATA_LAUNCHER_ITEM3_BG_COLOR, text);
+                                sv_launcher_item3_bg.setSummary(text);
+                                EventBus.getDefault().post(new LauncherItemBackgroundRefreshEvent());
+                                return true;
+                            }
+                        }).show();
+            }
+        });
+        sv_launcher_item3_bg.setSummary(SharedPreUtil.getSharedPreString(SDATA_LAUNCHER_ITEM3_BG_COLOR));
+
         PluginEnum p1 = PluginEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_ITEM1_PLUGIN, SYSMUSIC.getId()));
         sv_launcher_item1.setSummary("桌面左边框框使用的插件：" + p1.getName());
         sv_launcher_item1.setOnClickListener(new View.OnClickListener() {
@@ -407,8 +505,25 @@ public class SetActivity extends BaseActivity {
     @ViewInject(R.id.sv_popup_full_screen)
     private SetView sv_popup_full_screen;
 
+    @ViewInject(R.id.sv_popup_window_size)
+    private SetView sv_popup_window_size;
 
     private void loadPopupSet() {
+        sv_popup_window_size.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog dialog = new AlertDialog.Builder(mContext).setTitle("请选择APP").setItems(POPUP_SIZE, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        SharedPreUtil.saveSharedPreInteger(CommonData.SDATA_POPUP_SIZE, i);
+                        PopupWin.self().setRank(i + 1);
+                    }
+                }).create();
+                dialog.show();
+            }
+        });
+        sv_popup_window_size.setSummary(POPUP_SIZE[SharedPreUtil.getSharedPreInteger(CommonData.SDATA_POPUP_SIZE, 1)]);
+
         sv_popup_full_screen.setOnValueChangeListener(new SetView.OnValueChangeListener() {
             @Override
             public void onValueChange(String newValue, String oldValue) {

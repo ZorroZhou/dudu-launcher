@@ -5,6 +5,9 @@ import com.wow.carlauncher.plugin.PluginEnum;
 public class CommonData {
     public static final PluginEnum[] ALL_PLUGINS = {PluginEnum.SYSMUSIC, PluginEnum.NCMUSIC, PluginEnum.CONSOLE, PluginEnum.AMAP, PluginEnum.QQMUSIC, PluginEnum.QQCARMUSIC, PluginEnum.JIDOUMUSIC};
 
+    public static final String[] POPUP_SIZE = {"小", "中", "大"};
+
+
     public static final String TAG = "WOW_CAR";
     public static final String PACKAGE_NAME = "com.wow.carlauncher";
 
@@ -51,6 +54,7 @@ public class CommonData {
     public static final String SDATA_POPUP_ALLOW_SHOW = "SDATA_POPUP_ALLOW_SHOW";
 
     public static final String SDATA_POPUP_FULL_SCREEN = "SDATA_POPUP_FULL_SCREEN";
+    public static final String SDATA_POPUP_SIZE = "SDATA_POPUP_SIZE";
     //悬浮框展示的APP
     public static final String SDATA_POPUP_PLUGIN_SHOW_APPS = "SDATA_POPUP_PLUGIN_SHOW_APPS_";
 
@@ -74,6 +78,11 @@ public class CommonData {
     public static final String SDATA_CONSOLE_MARK = "SDATA_CONSOLE_MARK";
 
     public static final String SDATA_WEATHER_CITY = "SDATA_WEATHER_CITY";
+
+    public static final String SDATA_LAUNCHER_ITEM1_BG_COLOR = "SDATA_LAUNCHER_ITEM1_BG_COLOR";
+    public static final String SDATA_LAUNCHER_ITEM2_BG_COLOR = "SDATA_LAUNCHER_ITEM2_BG_COLOR";
+    public static final String SDATA_LAUNCHER_ITEM3_BG_COLOR = "SDATA_LAUNCHER_ITEM3_BG_COLOR";
+    public static final String SDATA_LAUNCHER_DOCK_BG_COLOR = "SDATA_LAUNCHER_DOCK_BG_COLOR";
 
     public static final int APP_WIDGET_HOST_ID = 0x200;
 }

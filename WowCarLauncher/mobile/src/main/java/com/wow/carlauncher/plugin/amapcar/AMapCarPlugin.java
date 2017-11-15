@@ -124,6 +124,7 @@ public class AMapCarPlugin extends BasePlugin implements View.OnClickListener {
                     break;
                 }
                 new InputDialog(pluginManage.getCurrentActivity())
+                        .setTitle("请输入目的地")
                         .setBtn1("取消", null)
                         .setBtn2("确定", new BaseDialog.OnBtnClickListener() {
                             @Override

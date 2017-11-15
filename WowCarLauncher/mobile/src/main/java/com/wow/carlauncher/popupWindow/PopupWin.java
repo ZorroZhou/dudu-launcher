@@ -64,6 +64,12 @@ public class PopupWin {
 
     private int rank = 2;
 
+    public void setRank(int rank) {
+        winparams.width = winparams.width / this.rank * rank;
+        winparams.height = winparams.height / this.rank * rank;
+        this.rank = rank;
+    }
+
     public void init(CarLauncherApplication context) {
         this.context = context;
         wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
@@ -106,7 +112,7 @@ public class PopupWin {
         if (SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_POPUP_FULL_SCREEN, true)) {
             winparams.flags = WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_FULLSCREEN;
         } else {
-            winparams.flags = WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE ;
+            winparams.flags = WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
         }
         if (isShow) {
             wm.updateViewLayout(popupWindow, winparams);

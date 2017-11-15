@@ -81,7 +81,7 @@ class PopupView extends LinearLayout implements View.OnClickListener {
     }
 
     private void init() {
-        View linearLayout = inflater.inflate(R.layout.plugin_music_jd_popup, null);
+        View linearLayout = inflater.inflate(R.layout.plugin_music_qcm_popup, null);
         this.addView(linearLayout, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         iv_play = (ImageView) findViewById(R.id.iv_play);
         tv_title = (TextView) findViewById(R.id.tv_title);

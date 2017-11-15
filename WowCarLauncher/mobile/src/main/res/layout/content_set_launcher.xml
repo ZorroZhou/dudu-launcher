@@ -42,4 +42,40 @@
         st:type="buttonB" />
 
     <View style="@style/Interval" />
+
+    <com.wow.carlauncher.common.view.SetView
+        android:id="@+id/sv_launcher_item1_bg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        st:titleEx="桌面插件1背景(#号开头)"
+        st:type="buttonB" />
+
+    <View style="@style/Interval" />
+
+    <com.wow.carlauncher.common.view.SetView
+        android:id="@+id/sv_launcher_item2_bg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        st:titleEx="桌面插件2背景(#号开头)"
+        st:type="buttonB" />
+
+    <View style="@style/Interval" />
+
+    <com.wow.carlauncher.common.view.SetView
+        android:id="@+id/sv_launcher_item3_bg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        st:titleEx="桌面插件3背景(#号开头)"
+        st:type="buttonB" />
+
+    <View style="@style/Interval" />
+
+    <com.wow.carlauncher.common.view.SetView
+        android:id="@+id/sv_launcher_dock_bg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        st:titleEx="桌面DOCK背景(#号开头)"
+        st:type="buttonB" />
+
+    <View style="@style/Interval" />
 </LinearLayout>

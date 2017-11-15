@@ -92,7 +92,7 @@ public class NcMusicPlugin extends BasePlugin {
             LinearLayout linearLayout = new LinearLayout(context);
             TextView textView = new TextView(context);
             textView.setPadding(20, 20, 20, 20);
-            textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
+            textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
             String msg = "请到系统设置-应用设置-插件设置选项,设置网易云音乐的1*4插件!";
             textView.setText(msg);
             linearLayout.addView(textView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
@@ -235,7 +235,7 @@ public class NcMusicPlugin extends BasePlugin {
             LinearLayout linearLayout = new LinearLayout(context);
             TextView textView = new TextView(context);
             textView.setPadding(20, 20, 20, 20);
-            textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
+            textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 20);
             String msg = "请到系统设置-应用设置-插件设置选项,设置网易云音乐的2*4插件!";
             textView.setText(msg);
             linearLayout.addView(textView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));

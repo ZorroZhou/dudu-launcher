@@ -10,7 +10,7 @@ public enum PluginEnum {
     AMAP("高德地图", 2),
     CONSOLE("控制中心", 3),
     NCMUSIC("网易云音乐", 4),
-    QQMUSIC("QQ音乐", 5),
+    QQMUSIC("QQ音乐手机版", 5),
     QQCARMUSIC("QQ音乐车机版", 6),
     JIDOUMUSIC("极豆音乐", 7);
 

@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -29,6 +31,7 @@ import com.wow.carlauncher.common.util.DateUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.event.LauncherCityRefreshEvent;
 import com.wow.carlauncher.event.LauncherDockLabelShowChangeEvent;
+import com.wow.carlauncher.event.LauncherItemBackgroundRefreshEvent;
 import com.wow.carlauncher.event.LauncherItemRefreshEvent;
 import com.wow.carlauncher.plugin.LauncherPluginEnum;
 import com.wow.carlauncher.plugin.PluginManage;
@@ -72,6 +75,9 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
 
     @ViewInject(R.id.iv_tianqi)
     private ImageView iv_tianqi;
+
+    @ViewInject(R.id.ll_dock)
+    private LinearLayout ll_dock;
 
     @ViewInject(R.id.ll_dock1)
     private LinearLayout ll_dock1;
@@ -149,10 +155,10 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
         EventBus.getDefault().register(this);
 
         initView();
-
         loadDock();
         loadItem();
-        setWall();
+        loadWall();
+        loadItemBackground();
         Log.e(TAG, "onCreate: !!!!!!!!!!!" + this);
     }
 
@@ -439,7 +445,7 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    private void setWall() {
+    private void loadWall() {
         if (fl_bg != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                 fl_bg.setBackground(wallManager.getDrawable());
@@ -447,6 +453,37 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
                 fl_bg.setBackgroundDrawable(wallManager.getDrawable());
             }
         }
+    }
+
+    private void loadItemBackground() {
+        try {
+            int c = Color.parseColor(SharedPreUtil.getSharedPreString(SDATA_LAUNCHER_ITEM1_BG_COLOR));
+            ((GradientDrawable) item_1.getBackground()).setColor(c);
+        } catch (Exception e) {
+            item_1.setBackgroundResource(R.drawable.l_item_bg_black);
+        }
+
+        try {
+            int c = Color.parseColor(SharedPreUtil.getSharedPreString(SDATA_LAUNCHER_ITEM2_BG_COLOR));
+            ((GradientDrawable) item_2.getBackground()).setColor(c);
+        } catch (Exception e) {
+            item_2.setBackgroundResource(R.drawable.l_item_bg_black);
+        }
+
+        try {
+            int c = Color.parseColor(SharedPreUtil.getSharedPreString(SDATA_LAUNCHER_ITEM3_BG_COLOR));
+            ((GradientDrawable) item_3.getBackground()).setColor(c);
+        } catch (Exception e) {
+            item_3.setBackgroundResource(R.drawable.l_item_bg_black);
+        }
+
+        try {
+            int c = Color.parseColor(SharedPreUtil.getSharedPreString(SDATA_LAUNCHER_DOCK_BG_COLOR));
+            ll_dock.setBackgroundColor(c);
+        } catch (Exception e) {
+            ll_dock.setBackgroundResource(R.color.launch_dock_bg);
+        }
+
     }
 
     @Override
@@ -616,6 +653,11 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
         dockLabelShow(event.show);
     }
 
+    @Subscribe
+    public void onEventMainThread(LauncherItemBackgroundRefreshEvent event) {
+        loadItemBackground();
+    }
+
     private BroadcastReceiver homeReceiver = new BroadcastReceiver() {
         String SYSTEM_REASON = "reason";
         String SYSTEM_HOME_KEY = "homekey";
@@ -632,7 +674,7 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
                     context.startActivity(i);
                 }
             } else if (intent.getAction().equals(Intent.ACTION_WALLPAPER_CHANGED)) {
-                setWall();
+                loadWall();
             }
         }
     };

@@ -6,6 +6,7 @@ import android.content.Intent;
 import com.wow.carlauncher.common.ActivityLifecycleListener;
 import com.wow.carlauncher.common.AppInfoManage;
 import com.wow.carlauncher.common.AppWidgetManage;
+import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.console.ConsoleManage;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.plugin.PluginManage;
@@ -15,6 +16,8 @@ import com.wow.carlauncher.service.MainService;
 
 
 import org.xutils.x;
+
+import static com.wow.carlauncher.common.CommonData.POPUP_SIZE;
 
 public class CarLauncherApplication extends Application {
     @Override
@@ -34,6 +37,8 @@ public class CarLauncherApplication extends Application {
         Intent startIntent = new Intent(this, MainService.class);
         startService(startIntent);
 
+        int size = SharedPreUtil.getSharedPreInteger(CommonData.SDATA_POPUP_SIZE, 1);
+        PopupWin.self().setRank(size + 1);
 
 //        public static final String UPDATE_INTERFACE = "com.ijidou.music.UPDATE_INTERFACE";
 //        public static final String UPDATE_MUSIC_INFO = "com.ijidou.action.UPDATE_MUSIC_INFO";

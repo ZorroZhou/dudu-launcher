@@ -19,7 +19,6 @@ import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.console.ConsoleManage;
 import com.wow.carlauncher.common.console.impl.NwdConsoleImpl;
 import com.wow.carlauncher.common.console.impl.SysConsoleImpl;
-import com.wow.carlauncher.common.util.AppUtil;
 import com.wow.carlauncher.common.util.AppUtil.AppInfo;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
@@ -28,9 +27,10 @@ import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.dialog.CityDialog;
 import com.wow.carlauncher.event.LauncherCityRefreshEvent;
 import com.wow.carlauncher.event.LauncherDockLabelShowChangeEvent;
+import com.wow.carlauncher.event.PopupIsFullScreenRefreshEvent;
 import com.wow.carlauncher.plugin.LauncherPluginEnum;
+import com.wow.carlauncher.plugin.PluginEnum;
 import com.wow.carlauncher.plugin.PluginManage;
-import com.wow.carlauncher.plugin.PluginTypeEnum;
 
 import org.greenrobot.eventbus.EventBus;
 import org.xutils.view.annotation.ViewInject;
@@ -40,7 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.wow.carlauncher.common.CommonData.*;
-import static com.wow.carlauncher.plugin.PluginTypeEnum.*;
+import static com.wow.carlauncher.plugin.PluginEnum.*;
 
 public class SetActivity extends BaseActivity {
     private static final String[] CONSOLES = {"系统", "NWD"};
@@ -259,13 +259,13 @@ public class SetActivity extends BaseActivity {
     private SetView sv_launcher_item3;
 
     private void loadLauncherSet() {
-        PluginTypeEnum p1 = PluginTypeEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_ITEM1_PLUGIN, SYSMUSIC.getId()));
+        PluginEnum p1 = PluginEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_ITEM1_PLUGIN, SYSMUSIC.getId()));
         sv_launcher_item1.setSummary("桌面左边框框使用的插件：" + p1.getName());
         sv_launcher_item1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PluginTypeEnum p = PluginTypeEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_ITEM1_PLUGIN, SYSMUSIC.getId()));
-                final PluginTypeEnum[] show = getLauncherPluginType(p);
+                PluginEnum p = PluginEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_ITEM1_PLUGIN, SYSMUSIC.getId()));
+                final PluginEnum[] show = getLauncherPluginType(p);
                 String[] items = new String[show.length];
                 int select = 0;
                 for (int i = 0; i < show.length; i++) {
@@ -291,13 +291,13 @@ public class SetActivity extends BaseActivity {
             }
         });
 
-        PluginTypeEnum p2 = PluginTypeEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_ITEM2_PLUGIN, PluginTypeEnum.AMAP.getId()));
+        PluginEnum p2 = PluginEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_ITEM2_PLUGIN, PluginEnum.AMAP.getId()));
         sv_launcher_item2.setSummary("桌面中间框框使用的插件：" + p2.getName());
         sv_launcher_item2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PluginTypeEnum p = PluginTypeEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_ITEM2_PLUGIN, PluginTypeEnum.AMAP.getId()));
-                final PluginTypeEnum[] show = getLauncherPluginType(p);
+                PluginEnum p = PluginEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_ITEM2_PLUGIN, PluginEnum.AMAP.getId()));
+                final PluginEnum[] show = getLauncherPluginType(p);
                 String[] items = new String[show.length];
                 int select = 0;
                 for (int i = 0; i < show.length; i++) {
@@ -323,13 +323,13 @@ public class SetActivity extends BaseActivity {
             }
         });
 
-        PluginTypeEnum p3 = PluginTypeEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_ITEM3_PLUGIN, PluginTypeEnum.CONSOLE.getId()));
+        PluginEnum p3 = PluginEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_ITEM3_PLUGIN, PluginEnum.CONSOLE.getId()));
         sv_launcher_item3.setSummary("桌面右边框框使用的插件：" + p3.getName());
         sv_launcher_item3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PluginTypeEnum p = PluginTypeEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_ITEM3_PLUGIN, PluginTypeEnum.CONSOLE.getId()));
-                final PluginTypeEnum[] show = getLauncherPluginType(p);
+                PluginEnum p = PluginEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_ITEM3_PLUGIN, PluginEnum.CONSOLE.getId()));
+                final PluginEnum[] show = getLauncherPluginType(p);
                 String[] items = new String[show.length];
                 int select = 0;
                 for (int i = 0; i < show.length; i++) {
@@ -356,13 +356,13 @@ public class SetActivity extends BaseActivity {
         });
     }
 
-    private PluginTypeEnum[] getLauncherPluginType(PluginTypeEnum contain) {
-        List<PluginTypeEnum> ps = new ArrayList<>();
-        PluginTypeEnum p1 = PluginTypeEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_ITEM1_PLUGIN, SYSMUSIC.getId()));
-        PluginTypeEnum p2 = PluginTypeEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_ITEM2_PLUGIN, PluginTypeEnum.AMAP.getId()));
-        PluginTypeEnum p3 = PluginTypeEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_ITEM3_PLUGIN, PluginTypeEnum.CONSOLE.getId()));
+    private PluginEnum[] getLauncherPluginType(PluginEnum contain) {
+        List<PluginEnum> ps = new ArrayList<>();
+        PluginEnum p1 = PluginEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_ITEM1_PLUGIN, SYSMUSIC.getId()));
+        PluginEnum p2 = PluginEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_ITEM2_PLUGIN, PluginEnum.AMAP.getId()));
+        PluginEnum p3 = PluginEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_ITEM3_PLUGIN, PluginEnum.CONSOLE.getId()));
 
-        for (PluginTypeEnum p : ALL_PLUGINS) {
+        for (PluginEnum p : ALL_PLUGINS) {
             if (p.equals(p1) && !p.equals(contain)) {
                 continue;
             }
@@ -374,7 +374,7 @@ public class SetActivity extends BaseActivity {
             }
             ps.add(p);
         }
-        return ps.toArray(new PluginTypeEnum[ps.size()]);
+        return ps.toArray(new PluginEnum[ps.size()]);
     }
 
     @ViewInject(R.id.sv_allow_popup_window)
@@ -400,10 +400,29 @@ public class SetActivity extends BaseActivity {
 
     @ViewInject(R.id.sv_popup_window_showtype)
     private SetView sv_popup_window_showtype;
+
     @ViewInject(R.id.sv_popup_showapps_jidoumusic)
     private SetView sv_popup_showapps_jidoumusic;
 
+    @ViewInject(R.id.sv_popup_full_screen)
+    private SetView sv_popup_full_screen;
+
+
     private void loadPopupSet() {
+        sv_popup_full_screen.setOnValueChangeListener(new SetView.OnValueChangeListener() {
+            @Override
+            public void onValueChange(String newValue, String oldValue) {
+                Log.e(TAG, "onValueChange: " + newValue);
+                if ("1".equals(newValue)) {
+                    SharedPreUtil.saveSharedPreBoolean(CommonData.SDATA_POPUP_FULL_SCREEN, true);
+                } else {
+                    SharedPreUtil.saveSharedPreBoolean(CommonData.SDATA_POPUP_FULL_SCREEN, false);
+                }
+                EventBus.getDefault().post(new PopupIsFullScreenRefreshEvent());
+            }
+        });
+        sv_popup_full_screen.setChecked(SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_POPUP_FULL_SCREEN, true));
+
         sv_allow_popup_window.setOnValueChangeListener(new SetView.OnValueChangeListener() {
             @Override
             public void onValueChange(String newValue, String oldValue) {
@@ -532,7 +551,7 @@ public class SetActivity extends BaseActivity {
 
     }
 
-    private int getPopupPluginShowAppCount(final PluginTypeEnum pluginTypeEnum) {
+    private int getPopupPluginShowAppCount(final PluginEnum pluginTypeEnum) {
         String selectapp = SharedPreUtil.getSharedPreString(CommonData.SDATA_POPUP_PLUGIN_SHOW_APPS + pluginTypeEnum.getId());
         if (CommonUtil.isNull(selectapp)) {
             return 0;
@@ -541,7 +560,7 @@ public class SetActivity extends BaseActivity {
         }
     }
 
-    private void setPopupPluginShowApp(final PluginTypeEnum popupPluginEnum, final SetView setView) {
+    private void setPopupPluginShowApp(final PluginEnum popupPluginEnum, final SetView setView) {
         x.task().run(new Runnable() {
             @Override
             public void run() {
@@ -641,6 +660,7 @@ public class SetActivity extends BaseActivity {
                             SharedPreUtil.saveSharedPreString(CommonData.SDATA_WEATHER_CITY, cityDialog.getmCurrentDistrictName());
                             dialog.dismiss();
                             EventBus.getDefault().post(new LauncherCityRefreshEvent());
+                            tianqi_city.setSummary(cityDialog.getmCurrentDistrictName());
                         } else {
                             showTip("请选择城市");
                         }
@@ -648,10 +668,9 @@ public class SetActivity extends BaseActivity {
                     }
                 });
                 cityDialog.show();
-
-                //EventBus.getDefault().post(new LauncherDockLabelShowChangeEvent(true));
             }
         });
+        tianqi_city.setSummary(SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_CITY));
     }
 
     @ViewInject(R.id.sv_about)

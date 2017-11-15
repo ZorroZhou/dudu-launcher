@@ -4,7 +4,7 @@ package com.wow.carlauncher.plugin;
  * Created by 10124 on 2017/10/30.
  */
 
-public enum PluginTypeEnum {
+public enum PluginEnum {
     UNKNOW("未知插件", -1),
     SYSMUSIC("系统音乐", 1),
     AMAP("高德地图", 2),
@@ -18,7 +18,7 @@ public enum PluginTypeEnum {
     private Integer id;
 
 
-    PluginTypeEnum(String name, Integer id) {
+    PluginEnum(String name, Integer id) {
         this.name = name;
         this.id = id;
     }
@@ -39,7 +39,7 @@ public enum PluginTypeEnum {
         this.id = id;
     }
 
-    public static PluginTypeEnum getById(Integer id) {
+    public static PluginEnum getById(Integer id) {
         switch (id) {
             case 1:
                 return SYSMUSIC;

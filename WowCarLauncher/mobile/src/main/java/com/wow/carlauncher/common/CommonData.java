@@ -1,9 +1,9 @@
 package com.wow.carlauncher.common;
 
-import com.wow.carlauncher.plugin.PluginTypeEnum;
+import com.wow.carlauncher.plugin.PluginEnum;
 
 public class CommonData {
-    public static final PluginTypeEnum[] ALL_PLUGINS = {PluginTypeEnum.SYSMUSIC, PluginTypeEnum.NCMUSIC, PluginTypeEnum.CONSOLE, PluginTypeEnum.AMAP, PluginTypeEnum.QQMUSIC, PluginTypeEnum.QQCARMUSIC, PluginTypeEnum.JIDOUMUSIC};
+    public static final PluginEnum[] ALL_PLUGINS = {PluginEnum.SYSMUSIC, PluginEnum.NCMUSIC, PluginEnum.CONSOLE, PluginEnum.AMAP, PluginEnum.QQMUSIC, PluginEnum.QQCARMUSIC, PluginEnum.JIDOUMUSIC};
 
     public static final String TAG = "WOW_CAR";
     public static final String PACKAGE_NAME = "com.wow.carlauncher";
@@ -49,6 +49,8 @@ public class CommonData {
     public static final String SDATA_LAUNCHER_DOCK_LABEL_SHOW = "SDATA_LAUNCHER_DOCK_LABEL_SHOW";
     //是否允许悬浮框展示
     public static final String SDATA_POPUP_ALLOW_SHOW = "SDATA_POPUP_ALLOW_SHOW";
+
+    public static final String SDATA_POPUP_FULL_SCREEN = "SDATA_POPUP_FULL_SCREEN";
     //悬浮框展示的APP
     public static final String SDATA_POPUP_PLUGIN_SHOW_APPS = "SDATA_POPUP_PLUGIN_SHOW_APPS_";
 

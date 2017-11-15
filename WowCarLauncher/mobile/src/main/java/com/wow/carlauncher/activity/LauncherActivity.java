@@ -133,6 +133,7 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         mContext = this;
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -151,10 +152,10 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
 
         loadDock();
         loadItem();
-        initTimer();
         setWall();
-        refreshWeather();
+        Log.e(TAG, "onCreate: !!!!!!!!!!!" + this);
     }
+
 
     public void initView() {
         setContentView(R.layout.activity_lanncher);
@@ -189,6 +190,7 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
                 iv_dock1.setImageDrawable(packageInfo.applicationInfo.loadIcon(pm));
                 tv_dock1.setText(packageInfo.applicationInfo.loadLabel(pm));
             } catch (Exception e) {
+                showTip("dock1加载失败:" + e.getMessage());
                 SharedPreUtil.saveSharedPreString(SDATA_DOCK1_CLASS, null);
             }
         }
@@ -199,6 +201,7 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
                 iv_dock2.setImageDrawable(packageInfo.applicationInfo.loadIcon(pm));
                 tv_dock2.setText(packageInfo.applicationInfo.loadLabel(pm));
             } catch (Exception e) {
+                showTip("dock2加载失败:" + e.getMessage());
                 SharedPreUtil.saveSharedPreString(SDATA_DOCK2_CLASS, null);
             }
         }
@@ -210,6 +213,7 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
                 iv_dock3.setImageDrawable(packageInfo.applicationInfo.loadIcon(pm));
                 tv_dock3.setText(packageInfo.applicationInfo.loadLabel(pm));
             } catch (Exception e) {
+                showTip("dock3加载失败:" + e.getMessage());
                 SharedPreUtil.saveSharedPreString(SDATA_DOCK3_CLASS, null);
             }
         }
@@ -221,6 +225,7 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
                 iv_dock4.setImageDrawable(packageInfo.applicationInfo.loadIcon(pm));
                 tv_dock4.setText(packageInfo.applicationInfo.loadLabel(pm));
             } catch (Exception e) {
+                showTip("dock4加载失败:" + e.getMessage());
                 SharedPreUtil.saveSharedPreString(SDATA_DOCK4_CLASS, null);
             }
         }
@@ -232,18 +237,19 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
                 iv_dock5.setImageDrawable(packageInfo.applicationInfo.loadIcon(pm));
                 tv_dock5.setText(packageInfo.applicationInfo.loadLabel(pm));
             } catch (Exception e) {
+                showTip("dock5加载失败:" + e.getMessage());
                 SharedPreUtil.saveSharedPreString(SDATA_DOCK5_CLASS, null);
             }
         }
 
         String packname6 = SharedPreUtil.getSharedPreString(SDATA_DOCK6_CLASS);
         if (CommonUtil.isNotNull(packname6)) {
-            Log.e(TAG, "loadDock: " + packname6);
             try {
                 PackageInfo packageInfo = pm.getPackageInfo(packname6, 0);
                 iv_dock6.setImageDrawable(packageInfo.applicationInfo.loadIcon(pm));
                 tv_dock6.setText(packageInfo.applicationInfo.loadLabel(pm));
             } catch (Exception e) {
+                showTip("dock5加载失败:" + e.getMessage());
                 SharedPreUtil.saveSharedPreString(SDATA_DOCK6_CLASS, null);
             }
         }
@@ -378,9 +384,11 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private Timer timer;
-    private int weatherUpdateInterval = 0;
+    private int weatherUpdateInterval = 60 * 30 - 3;
 
-    private void initTimer() {
+    private void startTimer() {
+        Log.e(TAG, "startTimer: ");
+        stopTimer();
         timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -395,6 +403,14 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
         }, 1000 - System.currentTimeMillis() % 1000, 1000);
     }
 
+    private void stopTimer() {
+        if (timer != null) {
+            Log.e(TAG, "stopTimer: ");
+            timer.cancel();
+            timer = null;
+        }
+    }
+
     private void refreshWeather() {
         if (CommonUtil.isNotNull(SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_CITY))) {
             WebService.getWeatherInfo(SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_CITY), new WebService.CommonCallback<WeatherRes>() {
@@ -403,7 +419,15 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
                     if (Integer.valueOf(1).equals(res.getStatus()) && res.getLives().size() > 0) {
                         tv_tianqi.setText(res.getLives().get(0).getWeather() + "  " + res.getLives().get(0).getTemperature() + "℃");
                         iv_tianqi.setImageResource(WeatherIconUtil.getWeatherResId(res.getLives().get(0).getWeather()));
-                        tv_tianqi2.setText("风力:" + res.getLives().get(0).getWindpower() + "级  空气湿度:" + res.getLives().get(0).getHumidity());
+                        String feng;
+                        String wd = res.getLives().get(0).getWinddirection();
+                        Log.e(TAG, "callback: " + wd);
+                        if (wd.equals("东北") || wd.equals("东") || wd.equals("东南") || wd.equals("南") || wd.equals("西南") || wd.equals("西") || wd.equals("西北") || wd.equals("北")) {
+                            feng = wd + "风:";
+                        } else {
+                            feng = "风力:";
+                        }
+                        tv_tianqi2.setText(feng + res.getLives().get(0).getWindpower() + "级  空气湿度:" + res.getLives().get(0).getHumidity());
                     } else {
                         tv_tianqi.setText("请检查网络");
                     }
@@ -479,13 +503,26 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        startTimer();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        stopTimer();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(homeReceiver);
-        if (timer != null) {
-            timer.cancel();
-            timer = null;
-        }
     }
 
     @Override
@@ -579,27 +616,9 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
         dockLabelShow(event.show);
     }
 
-    //    private AMapLocationListener aMapLocationListener = new AMapLocationListener() {
-//        @Override
-//        public void onLocationChanged(final AMapLocation aMapLocation) {
-//            if (aMapLocation != null && aMapLocation.getErrorCode() == 0) {
-//                tv_local.setText(aMapLocation.getDistrict());
-//                WebService.getWeatherInfo(aMapLocation.getAdCode(), new WebService.CommonCallback<WeatherRes>() {
-//                    @Override
-//                    public void callback(WeatherRes res) {
-//                        if (Integer.valueOf(1).equals(res.getStatus()) && res.getLives().size() > 0) {
-//                            tv_tianqi.setText(res.getLives().get(0).getWeather() + "  " + res.getLives().get(0).getTemperature() + "℃");
-//                            iv_tianqi.setImageResource(WeatherIconUtil.getWeatherResId(res.getLives().get(0).getWeather()));
-//                        }
-//                    }
-//                });
-//            }
-//        }
-//    };
     private BroadcastReceiver homeReceiver = new BroadcastReceiver() {
         String SYSTEM_REASON = "reason";
         String SYSTEM_HOME_KEY = "homekey";
-        //String SYSTEM_HOME_KEY_LONG = "recentapps";
 
         @Override
         public void onReceive(Context context, Intent intent) {

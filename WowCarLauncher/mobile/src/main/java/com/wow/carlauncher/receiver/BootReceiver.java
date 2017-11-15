@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
+import com.wow.carlauncher.activity.LauncherActivity;
 import com.wow.carlauncher.service.MainService;
 
 import org.xutils.x;
@@ -20,5 +21,9 @@ public class BootReceiver extends BroadcastReceiver {
     public void onReceive(final Context context, Intent intent) {
         Intent startIntent = new Intent(context, MainService.class);
         context.startService(startIntent);
+
+        Intent intent2 = new Intent(context, LauncherActivity.class);
+        intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent2);
     }
 }

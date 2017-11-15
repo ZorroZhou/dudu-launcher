@@ -28,6 +28,17 @@
     <View style="@style/Interval" />
 
     <com.wow.carlauncher.common.view.SetView
+        android:id="@+id/sv_popup_full_screen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        st:summary="@string/set_allow"
+        st:summary2="@string/set_ban"
+        st:titleEx="悬浮窗全屏显示"
+        st:type="switchB" />
+
+    <View style="@style/Interval" />
+
+    <com.wow.carlauncher.common.view.SetView
         android:id="@+id/sv_popup_window_showtype"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

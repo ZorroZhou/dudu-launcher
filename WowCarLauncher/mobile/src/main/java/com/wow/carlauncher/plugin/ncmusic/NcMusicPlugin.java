@@ -2,6 +2,7 @@ package com.wow.carlauncher.plugin.ncmusic;
 
 import android.content.Context;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -88,7 +89,14 @@ public class NcMusicPlugin extends BasePlugin {
     public ViewGroup initPopupView() {
         int popup = SharedPreUtil.getSharedPreInteger(SDATA_MUSIC_PLUGIN_NCM_WIDGET1, -1);
         if (popup == -1) {
-            return new LinearLayout(context);
+            LinearLayout linearLayout = new LinearLayout(context);
+            TextView textView = new TextView(context);
+            textView.setPadding(20, 20, 20, 20);
+            textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
+            String msg = "请到系统设置-应用设置-插件设置选项,设置网易云音乐的1*4插件!";
+            textView.setText(msg);
+            linearLayout.addView(textView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+            return linearLayout;
         }
         final View popupWidgetView = AppWidgetManage.self().getWidgetById(popup);
         popupWidgetView.setPadding(0, 0, 0, 0);
@@ -224,7 +232,14 @@ public class NcMusicPlugin extends BasePlugin {
     public ViewGroup initLauncherView() {
         int launcher = SharedPreUtil.getSharedPreInteger(SDATA_MUSIC_PLUGIN_NCM_WIDGET2, -1);
         if (launcher == -1) {
-            return new LinearLayout(context);
+            LinearLayout linearLayout = new LinearLayout(context);
+            TextView textView = new TextView(context);
+            textView.setPadding(20, 20, 20, 20);
+            textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 30);
+            String msg = "请到系统设置-应用设置-插件设置选项,设置网易云音乐的2*4插件!";
+            textView.setText(msg);
+            linearLayout.addView(textView, new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+            return linearLayout;
         }
         // 获取所选的Widget的AppWidgetProviderInfo信息
         final View launcherWidgetView = AppWidgetManage.self().getWidgetById(launcher);

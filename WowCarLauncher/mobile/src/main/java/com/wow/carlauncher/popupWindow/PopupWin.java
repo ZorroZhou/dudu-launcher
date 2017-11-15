@@ -17,12 +17,15 @@ import com.wow.carlauncher.CarLauncherApplication;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.util.AppUtil;
-import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
+import com.wow.carlauncher.event.LauncherItemRefreshEvent;
+import com.wow.carlauncher.event.PopupIsFullScreenRefreshEvent;
 import com.wow.carlauncher.plugin.BasePlugin;
 import com.wow.carlauncher.plugin.PluginManage;
-import com.wow.carlauncher.plugin.PluginTypeEnum;
+import com.wow.carlauncher.plugin.PluginEnum;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.xutils.x;
 
 import java.util.Timer;
@@ -65,6 +68,8 @@ public class PopupWin {
         this.context = context;
         wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 
+        EventBus.getDefault().register(this);
+
         DisplayMetrics outMetrics = new DisplayMetrics();
         wm.getDefaultDisplay().getMetrics(outMetrics);
         screenWidth = outMetrics.widthPixels;
@@ -72,7 +77,11 @@ public class PopupWin {
         winparams = new WindowManager.LayoutParams();
         // 类型
         winparams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
-        winparams.flags = WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN;
+        if (SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_POPUP_FULL_SCREEN, true)) {
+            winparams.flags = WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_FULLSCREEN;
+        } else {
+            winparams.flags = WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_FULLSCREEN;
+        }
         winparams.format = PixelFormat.TRANSLUCENT;
         winparams.width = (int) (screenWidth * 0.15 / 2 * rank);
         winparams.height = (int) (screenWidth * 0.15 / 2 * rank);
@@ -89,6 +98,19 @@ public class PopupWin {
         popupWindow.findViewById(R.id.ll_xunhuan).setOnClickListener(onClickListener);
         popupWindow.findViewById(R.id.ll_controller).setOnClickListener(onClickListener);
         popupWindow.findViewById(R.id.ll_home).setOnClickListener(onClickListener);
+    }
+
+    @Subscribe
+    public void onEventMainThread(PopupIsFullScreenRefreshEvent event) {
+        Log.e(TAG, "onEventMainThread: " + event);
+        if (SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_POPUP_FULL_SCREEN, true)) {
+            winparams.flags = WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_FULLSCREEN;
+        } else {
+            winparams.flags = WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE ;
+        }
+        if (isShow) {
+            wm.updateViewLayout(popupWindow, winparams);
+        }
     }
 
     private String nowApp = "";
@@ -149,7 +171,7 @@ public class PopupWin {
 
     private void showPlugin(boolean goNext) {
         Integer pluginId = SharedPreUtil.getSharedPreInteger(SDATA_POPUP_CURRENT_PLUGIN + nowApp, -1);
-        PluginTypeEnum pluginType = PluginManage.self().getPopupPlugin(nowApp, pluginId, goNext);
+        PluginEnum pluginType = PluginManage.self().getPopupPlugin(nowApp, pluginId, goNext);
         if (pluginType == null) {
             pluginHome.setVisibility(View.GONE);
 

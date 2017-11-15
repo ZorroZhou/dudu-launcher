@@ -17,6 +17,15 @@
         android:textSize="14sp" />
 
     <com.wow.carlauncher.common.view.SetView
+        android:id="@+id/sv_money"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        st:titleEx="打赏"
+        st:type="buttonB" />
+
+    <View style="@style/Interval" />
+
+    <com.wow.carlauncher.common.view.SetView
         android:id="@+id/sv_about"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -1,6 +1,7 @@
 package com.wow.carlauncher.common;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
@@ -10,6 +11,8 @@ import com.amap.api.location.AMapLocationListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import static com.wow.carlauncher.common.CommonData.TAG;
 
 /**
  * Created by 10124 on 2017/11/4.
@@ -29,7 +32,6 @@ public class LocationManage implements AMapLocationListener {
     private AMapLocationClientOption locationOption = null;
     private Context mContext;
     private List<AMapLocationListener> locationListeners;
-    private AMapLocation oldMapLocation;
 
     private LocationManage() {
 
@@ -44,16 +46,14 @@ public class LocationManage implements AMapLocationListener {
         locationOption = new AMapLocationClientOption();
         locationClient.setLocationListener(this);
         locationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
-        locationOption.setInterval(1000 * 60 * 20);
+        locationOption.setInterval(1000 * 60 * 5);
         locationClient.setLocationOption(locationOption);
         locationClient.startLocation();
     }
 
     public void addLocationListener(AMapLocationListener locationListener) {
         locationListeners.add(locationListener);
-        if (oldMapLocation != null) {
-            locationListener.onLocationChanged(oldMapLocation);
-        }
+        locationListener.onLocationChanged(locationClient.getLastKnownLocation());
     }
 
     public void removeLocationListener(AMapLocationListener locationListener) {
@@ -62,7 +62,7 @@ public class LocationManage implements AMapLocationListener {
 
     @Override
     public void onLocationChanged(AMapLocation aMapLocation) {
-        this.oldMapLocation = aMapLocation;
+        Log.e(TAG, "onLocationChanged: " + aMapLocation);
         for (AMapLocationListener locationListener : locationListeners) {
             locationListener.onLocationChanged(aMapLocation);
         }

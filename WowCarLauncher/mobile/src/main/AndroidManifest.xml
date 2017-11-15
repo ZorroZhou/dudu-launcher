@@ -39,11 +39,9 @@
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="d5e7bb2e7adc2e970d5ef05c379eb1bb" />
-        <service android:name="com.amap.api.location.APSService" />
 
         <activity
             android:name=".activity.MainActivity"
-            android:launchMode="singleTask"
             android:screenOrientation="landscape"
             android:stateNotNeeded="true">
             <intent-filter>
@@ -53,7 +51,7 @@
         </activity>
         <activity
             android:name=".activity.LauncherActivity"
-            android:launchMode="singleTask"
+            android:launchMode="singleInstance"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -59,6 +59,8 @@ public class PopupWin {
     private LinearLayout.LayoutParams pluginlp;
     private int screenWidth = -1;
 
+    private int rank = 2;
+
     public void init(CarLauncherApplication context) {
         this.context = context;
         wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
@@ -72,8 +74,8 @@ public class PopupWin {
         winparams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
         winparams.flags = WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN;
         winparams.format = PixelFormat.TRANSLUCENT;
-        winparams.width = (int) (screenWidth * 0.15);
-        winparams.height = (int) (screenWidth * 0.15);
+        winparams.width = (int) (screenWidth * 0.15 / 2 * rank);
+        winparams.height = (int) (screenWidth * 0.15 / 2 * rank);
         winparams.gravity = Gravity.TOP | Gravity.START;
         winparams.x = SharedPreUtil.getSharedPreInteger(CommonData.SDATA_POPUP_WIN_X, 0);
         winparams.y = SharedPreUtil.getSharedPreInteger(CommonData.SDATA_POPUP_WIN_Y, 0);
@@ -93,24 +95,26 @@ public class PopupWin {
 
     private void checkShowApp(final String app) {
         //如果APP是空的,则说明用户没有打开权限,则直接不显示了
-        if (CommonUtil.isNull(app)) {
-            x.task().autoPost(new Runnable() {
-                @Override
-                public void run() {
-                    popupWindow.setVisibility(View.GONE);
-                }
-            });
-        }
+//        if (CommonUtil.isNull(app)) {
+//            x.task().autoPost(new Runnable() {
+//                @Override
+//                public void run() {
+//                    popupWindow.setVisibility(View.GONE);
+//                }
+//            });
+//        }
         //如果不显示了,或者传进来的app参数是空的
         if (!isShow) {
             return;
         }
         //如果APP没切换,也不用处理了
-        if (nowApp.equals(app)) {
+        if (nowApp != null && nowApp.equals(app)) {
             return;
         }
         this.nowApp = app;
-        Log.e(TAG, "checkShowApp1: " + nowApp);
+        if (this.nowApp == null) {
+            this.nowApp = PACKAGE_NAME;
+        }
         x.task().autoPost(new Runnable() {
             @Override
             public void run() {
@@ -121,6 +125,8 @@ public class PopupWin {
                     } else {
                         popupWindow.setVisibility(View.GONE);
                     }
+                } else {
+                    popupWindow.setVisibility(View.VISIBLE);
                 }
                 if (popupWindow.getVisibility() == View.GONE) {
                     return;
@@ -129,8 +135,8 @@ public class PopupWin {
                 if (pluginId == -1) {
                     pluginHome.setVisibility(View.GONE);
 
-                    winparams.width = (int) (screenWidth * 0.15);
-                    winparams.height = (int) (screenWidth * 0.15);
+                    winparams.width = (int) (screenWidth * 0.15 / 2 * rank);
+                    winparams.height = (int) (screenWidth * 0.15 / 2 * rank);
                     if (isShow) {
                         wm.updateViewLayout(popupWindow, winparams);
                     }
@@ -147,8 +153,8 @@ public class PopupWin {
         if (pluginType == null) {
             pluginHome.setVisibility(View.GONE);
 
-            winparams.width = (int) (screenWidth * 0.15);
-            winparams.height = (int) (screenWidth * 0.15);
+            winparams.width = (int) (screenWidth * 0.15 / 2 * rank);
+            winparams.height = (int) (screenWidth * 0.15 / 2 * rank);
             if (isShow) {
                 wm.updateViewLayout(popupWindow, winparams);
             }
@@ -156,8 +162,8 @@ public class PopupWin {
         } else {
             pluginHome.setVisibility(View.VISIBLE);
 
-            winparams.height = (int) (screenWidth * 0.15);
-            winparams.width = (int) (screenWidth * 0.15 + screenWidth * 0.3);
+            winparams.height = (int) (screenWidth * 0.15 / 2 * rank);
+            winparams.width = (int) (screenWidth * 0.15 / 2 * rank + screenWidth * 0.3 / 2 * rank);
             if (isShow) {
                 wm.updateViewLayout(popupWindow, winparams);
             }

@@ -6,18 +6,18 @@ import android.content.pm.PackageManager;
 import android.util.Log;
 import android.view.KeyEvent;
 
-import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.console.IConsole;
 import com.wow.carlauncher.common.util.AppUtil;
 
 import java.util.List;
+
+import static com.wow.carlauncher.common.CommonData.TAG;
 
 /**
  * Created by 10124 on 2017/11/9.
  */
 
 public class SysConsoleImpl extends IConsole {
-    public static final String TAG = "SysConsoleImpl";
     public static final int MARK = 0;
 
     public SysConsoleImpl(Context context) {

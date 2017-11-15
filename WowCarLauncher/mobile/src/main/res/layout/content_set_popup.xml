@@ -100,4 +100,13 @@
         st:type="buttonB" />
 
     <View style="@style/Interval" />
+
+    <com.wow.carlauncher.common.view.SetView
+        android:id="@+id/sv_popup_showapps_jidoumusic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        st:titleEx="极豆音乐使用的APP"
+        st:type="buttonB" />
+
+    <View style="@style/Interval" />
 </LinearLayout>

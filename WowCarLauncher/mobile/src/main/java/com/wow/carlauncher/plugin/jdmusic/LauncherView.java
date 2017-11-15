@@ -1,4 +1,4 @@
-package com.wow.carlauncher.plugin.qqcarmusic;
+package com.wow.carlauncher.plugin.jdmusic;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -21,28 +21,29 @@ import org.xutils.x;
  * Created by 10124 on 2017/10/28.
  */
 
-class PopupView extends LinearLayout implements View.OnClickListener {
+public class LauncherView extends LinearLayout implements View.OnClickListener {
     private LayoutInflater inflater;
 
     private ImageView iv_play;
-    private QQMusicCarPlugin controller;
+    private JidouMusicPlugin controller;
+    private TextView tv_title, tv_artist;
     private boolean playing = false;
-    private TextView tv_title;
     private ProgressBar pb_music;
-
     @Subscribe
     public void onEventMainThread(final PEventMusicInfoChange event) {
         x.task().autoPost(new Runnable() {
             @Override
             public void run() {
-                if (tv_title != null) {
-                    if (CommonUtil.isNotNull(event.title)) {
-                        tv_title.setText(event.title);
-                    } else {
-                        tv_title.setText("标题");
-                    }
+                if (tv_title != null && CommonUtil.isNotNull(event.title)) {
+                    tv_title.setText(event.title);
+                } else {
+                    tv_title.setText("标题");
                 }
-
+                if (tv_artist != null && CommonUtil.isNotNull(event.artist)) {
+                    tv_artist.setText(event.artist);
+                } else {
+                    tv_artist.setText("歌手");
+                }
                 if (pb_music != null && event.curr_time > 0 && event.total_time > 0) {
                     pb_music.setProgress(event.curr_time);
                     pb_music.setMax(event.total_time);
@@ -73,7 +74,7 @@ class PopupView extends LinearLayout implements View.OnClickListener {
         EventBus.getDefault().unregister(this);
     }
 
-    public PopupView(Context context, QQMusicCarPlugin controller) {
+    public LauncherView(Context context, JidouMusicPlugin controller) {
         super(context);
         this.controller = controller;
         inflater = LayoutInflater.from(context);
@@ -81,10 +82,11 @@ class PopupView extends LinearLayout implements View.OnClickListener {
     }
 
     private void init() {
-        View linearLayout = inflater.inflate(R.layout.plugin_music_jd_popup, null);
+        View linearLayout = inflater.inflate(R.layout.plugin_music_jd_launcher, null);
         this.addView(linearLayout, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         iv_play = (ImageView) findViewById(R.id.iv_play);
         tv_title = (TextView) findViewById(R.id.tv_title);
+        tv_artist = (TextView) findViewById(R.id.tv_artist);
         pb_music = (ProgressBar) findViewById(R.id.pb_music);
 
         findViewById(R.id.ll_play).setOnClickListener(this);

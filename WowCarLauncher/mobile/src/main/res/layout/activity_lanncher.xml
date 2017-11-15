@@ -96,17 +96,17 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:gravity="bottom|start"
-                        android:text="等待温度数据"
+                        android:text="等待天气数据"
                         android:textColor="#fff"
                         app:layout_heightPercent="50%h"
                         app:layout_textSizePercent="20%h" />
 
                     <TextView
-                        android:id="@+id/tv_local"
+                        android:id="@+id/tv_tianqi2"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:gravity="top|start"
-                        android:text="等待定位"
+                        android:text="等待天气数据"
                         android:textColor="#fff"
                         app:layout_heightPercent="50%h"
                         app:layout_textSizePercent="20%h" />

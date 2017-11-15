@@ -1,4 +1,4 @@
-package com.wow.carlauncher.plugin.qqcarmusic;
+package com.wow.carlauncher.plugin.jdmusic;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -21,11 +21,13 @@ import org.xutils.x;
  * Created by 10124 on 2017/10/28.
  */
 
-class PopupView extends LinearLayout implements View.OnClickListener {
+public class PopupView extends LinearLayout implements View.OnClickListener {
+    private static final String TAG = "PluginMusicView";
+
     private LayoutInflater inflater;
 
     private ImageView iv_play;
-    private QQMusicCarPlugin controller;
+    private JidouMusicPlugin controller;
     private boolean playing = false;
     private TextView tv_title;
     private ProgressBar pb_music;
@@ -73,7 +75,7 @@ class PopupView extends LinearLayout implements View.OnClickListener {
         EventBus.getDefault().unregister(this);
     }
 
-    public PopupView(Context context, QQMusicCarPlugin controller) {
+    public PopupView(Context context, JidouMusicPlugin controller) {
         super(context);
         this.controller = controller;
         inflater = LayoutInflater.from(context);

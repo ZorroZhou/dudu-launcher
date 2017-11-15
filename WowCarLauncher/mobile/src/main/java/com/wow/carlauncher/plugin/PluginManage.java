@@ -11,6 +11,7 @@ import com.wow.carlauncher.dialog.InputDialog;
 import com.wow.carlauncher.event.LauncherItemRefreshEvent;
 import com.wow.carlauncher.plugin.amapcar.AMapCarPlugin;
 import com.wow.carlauncher.plugin.console.ConsolePlugin;
+import com.wow.carlauncher.plugin.jdmusic.JidouMusicPlugin;
 import com.wow.carlauncher.plugin.ncmusic.NcMusicPlugin;
 import com.wow.carlauncher.plugin.qqmusic.QQMusicPlugin;
 import com.wow.carlauncher.plugin.qqcarmusic.QQMusicCarPlugin;
@@ -266,6 +267,9 @@ public class PluginManage {
             }
             case QQCARMUSIC: {
                 return new QQMusicCarPlugin(context, this);
+            }
+            case JIDOUMUSIC: {
+                return new JidouMusicPlugin(context, this);
             }
         }
         return null;

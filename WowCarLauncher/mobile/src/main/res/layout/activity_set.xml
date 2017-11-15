@@ -52,7 +52,7 @@
                     android:id="@+id/sg_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    st:titleEx="时间设置"
+                    st:titleEx="时间和天气设置"
                     st:type="buttonB" />
 
                 <View style="@style/Interval" />

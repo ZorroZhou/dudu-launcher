@@ -5,7 +5,14 @@ package com.wow.carlauncher.plugin;
  */
 
 public enum PluginTypeEnum {
-    UNKNOW("未知插件", -1), SYSMUSIC("系统音乐", 1), AMAP("高德地图", 2), CONSOLE("控制中心", 3), NCMUSIC("网易云音乐", 4), QQMUSIC("QQ音乐", 5), QQCARMUSIC("QQ音乐车机版", 6);
+    UNKNOW("未知插件", -1),
+    SYSMUSIC("系统音乐", 1),
+    AMAP("高德地图", 2),
+    CONSOLE("控制中心", 3),
+    NCMUSIC("网易云音乐", 4),
+    QQMUSIC("QQ音乐", 5),
+    QQCARMUSIC("QQ音乐车机版", 6),
+    JIDOUMUSIC("极豆音乐", 7);
 
     private String name;
     private Integer id;
@@ -46,6 +53,8 @@ public enum PluginTypeEnum {
                 return QQMUSIC;
             case 6:
                 return QQCARMUSIC;
+            case 7:
+                return JIDOUMUSIC;
         }
         return UNKNOW;
     }

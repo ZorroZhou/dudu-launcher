@@ -1,17 +1,11 @@
 package com.wow.carlauncher;
 
 import android.app.Application;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.os.Bundle;
-import android.util.Log;
 
 import com.wow.carlauncher.common.ActivityLifecycleListener;
 import com.wow.carlauncher.common.AppInfoManage;
 import com.wow.carlauncher.common.AppWidgetManage;
-import com.wow.carlauncher.common.LocationManage;
 import com.wow.carlauncher.common.console.ConsoleManage;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.plugin.PluginManage;
@@ -19,7 +13,6 @@ import com.wow.carlauncher.popupWindow.ConsoleWin;
 import com.wow.carlauncher.popupWindow.PopupWin;
 import com.wow.carlauncher.service.MainService;
 
-import static com.wow.carlauncher.common.CommonData.*;
 
 import org.xutils.x;
 
@@ -36,8 +29,6 @@ public class CarLauncherApplication extends Application {
         PluginManage.self().init(this);
         PopupWin.self().init(this);
         ConsoleWin.self().init(this);
-        LocationManage.self().init(getApplicationContext());
-
         registerActivityLifecycleCallbacks(new ActivityLifecycleListener(this));
 
         Intent startIntent = new Intent(this, MainService.class);
@@ -51,21 +42,23 @@ public class CarLauncherApplication extends Application {
 //        public static final String UPDATE_PROGRESS = "com.ijidou.action.UPDATE_PROGRESS";
 //        public static final String UPDATE_USER_PLAY_STATUS = "com.ijidou.action.UPDATE_USER_PLAY_STATUS";
 
-        IntentFilter intentFilter = new IntentFilter("com.ijidou.action.UPDATE_MUSIC_INFO");
-        intentFilter.addAction("com.ijidou.action.UPDATE_INTERFACE");
-        intentFilter.addAction("com.ijidou.action.UPDATE_USER_PLAY_STATUS");
-        intentFilter.addAction("com.ijidou.action.UPDATE_NOTIFICATION");
-        intentFilter.addAction("com.ijidou.action.UPDATE_PROGRESS");
-        intentFilter.addAction("com.ijidou.action.UPDATE_PLAY_RECORD");
-        this.registerReceiver(new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                Bundle b = intent.getExtras();
-                for (String key : b.keySet()) {
-                    Log.e(TAG, key + ":" + b.get(key));
-                }
-            }
-        }, intentFilter);
+//        IntentFilter intentFilter = new IntentFilter("com.ijidou.action.UPDATE_MUSIC_INFO");
+//        intentFilter.addAction("com.ijidou.action.UPDATE_INTERFACE");
+//        intentFilter.addAction("com.ijidou.action.UPDATE_USER_PLAY_STATUS");
+//        intentFilter.addAction("com.ijidou.action.UPDATE_NOTIFICATION");
+//        intentFilter.addAction("com.ijidou.action.UPDATE_PROGRESS");
+//        intentFilter.addAction("com.ijidou.action.UPDATE_PLAY_RECORD");
+//        intentFilter.addAction("com.ijidou.card.music");
+//
+//        this.registerReceiver(new BroadcastReceiver() {
+//            @Override
+//            public void onReceive(Context context, Intent intent) {
+//                Bundle b = intent.getExtras();
+//                for (String key : b.keySet()) {
+//                    Log.e(TAG, key + ":" + b.get(key));
+//                }
+//            }
+//        }, intentFilter);
     }
 
     private int startedActivityCount = 0;

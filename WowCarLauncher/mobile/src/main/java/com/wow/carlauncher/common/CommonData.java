@@ -3,9 +3,10 @@ package com.wow.carlauncher.common;
 import com.wow.carlauncher.plugin.PluginTypeEnum;
 
 public class CommonData {
-    public static final PluginTypeEnum[] ALL_PLUGINS = {PluginTypeEnum.SYSMUSIC, PluginTypeEnum.NCMUSIC, PluginTypeEnum.CONSOLE, PluginTypeEnum.AMAP, PluginTypeEnum.QQMUSIC, PluginTypeEnum.QQCARMUSIC};
+    public static final PluginTypeEnum[] ALL_PLUGINS = {PluginTypeEnum.SYSMUSIC, PluginTypeEnum.NCMUSIC, PluginTypeEnum.CONSOLE, PluginTypeEnum.AMAP, PluginTypeEnum.QQMUSIC, PluginTypeEnum.QQCARMUSIC, PluginTypeEnum.JIDOUMUSIC};
 
     public static final String TAG = "WOW_CAR";
+    public static final String PACKAGE_NAME = "com.wow.carlauncher";
 
     public static final int REQUEST_SELECT_APP_TO_DOCK1 = 10000;
     public static final int REQUEST_SELECT_APP_TO_DOCK2 = 10001;
@@ -69,6 +70,8 @@ public class CommonData {
 
     //时间插件打开的APP
     public static final String SDATA_CONSOLE_MARK = "SDATA_CONSOLE_MARK";
+
+    public static final String SDATA_WEATHER_CITY = "SDATA_WEATHER_CITY";
 
     public static final int APP_WIDGET_HOST_ID = 0x200;
 }

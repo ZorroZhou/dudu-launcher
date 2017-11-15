@@ -26,7 +26,6 @@ import static com.wow.carlauncher.common.CommonData.SDATA_MUSIC_PLUGIN_NCM_WIDGE
 import static com.wow.carlauncher.common.CommonData.SDATA_MUSIC_PLUGIN_NCM_WIDGET1;
 
 public class NcMusicPlugin extends BasePlugin {
-    private final static String TAG = "NeteaseCloudMusicPlugin";
     private ImageView launcherCover, launcherIvPlay;
     private TextView launcherTitle, launcherArtist;
     private ProgressBar launcherProgress;

@@ -8,11 +8,13 @@ import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.AppInfoManage;
 import com.wow.carlauncher.common.BaseActivity;
+import com.wow.carlauncher.common.BaseDialog;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.console.ConsoleManage;
 import com.wow.carlauncher.common.console.impl.NwdConsoleImpl;
@@ -23,6 +25,8 @@ import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.util.ThreadObj;
 import com.wow.carlauncher.common.view.SetView;
+import com.wow.carlauncher.dialog.CityDialog;
+import com.wow.carlauncher.event.LauncherCityRefreshEvent;
 import com.wow.carlauncher.event.LauncherDockLabelShowChangeEvent;
 import com.wow.carlauncher.plugin.LauncherPluginEnum;
 import com.wow.carlauncher.plugin.PluginManage;
@@ -39,7 +43,6 @@ import static com.wow.carlauncher.common.CommonData.*;
 import static com.wow.carlauncher.plugin.PluginTypeEnum.*;
 
 public class SetActivity extends BaseActivity {
-    private static final String TAG = "SetActivity";
     private static final String[] CONSOLES = {"系统", "NWD"};
 
     @Override
@@ -397,6 +400,8 @@ public class SetActivity extends BaseActivity {
 
     @ViewInject(R.id.sv_popup_window_showtype)
     private SetView sv_popup_window_showtype;
+    @ViewInject(R.id.sv_popup_showapps_jidoumusic)
+    private SetView sv_popup_showapps_jidoumusic;
 
     private void loadPopupSet() {
         sv_allow_popup_window.setOnValueChangeListener(new SetView.OnValueChangeListener() {
@@ -463,6 +468,17 @@ public class SetActivity extends BaseActivity {
         });
         int p5 = getPopupPluginShowAppCount(AMAP);
         sv_popup_showapps_amap.setSummary(p5 == 0 ? "不使用" : p5 + "个APP使用");
+
+        sv_popup_showapps_jidoumusic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showLoading("载入中", null);
+                setPopupPluginShowApp(JIDOUMUSIC, sv_popup_showapps_jidoumusic);
+            }
+        });
+        int p6 = getPopupPluginShowAppCount(JIDOUMUSIC);
+        sv_popup_showapps_jidoumusic.setSummary(p6 == 0 ? "不使用" : p6 + "个APP使用");
+
 
         sv_popup_window_showapps.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -578,6 +594,10 @@ public class SetActivity extends BaseActivity {
     @ViewInject(R.id.time_plugin_open_app_select)
     private SetView time_plugin_open_app_select;
 
+
+    @ViewInject(R.id.tianqi_city)
+    private SetView tianqi_city;
+
     private void loadTimeSet() {
         time_plugin_open_app_select.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -608,16 +628,53 @@ public class SetActivity extends BaseActivity {
                 dialog.show();
             }
         });
+
+        tianqi_city.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final CityDialog cityDialog = new CityDialog(mContext);
+                cityDialog.setOkListener(new BaseDialog.OnBtnClickListener() {
+                    @Override
+                    public boolean onClick(BaseDialog dialog) {
+                        Log.e(TAG, "onClick: " + cityDialog.getmCurrentDistrictName());
+                        if (CommonUtil.isNotNull(cityDialog.getmCurrentDistrictName())) {
+                            SharedPreUtil.saveSharedPreString(CommonData.SDATA_WEATHER_CITY, cityDialog.getmCurrentDistrictName());
+                            dialog.dismiss();
+                            EventBus.getDefault().post(new LauncherCityRefreshEvent());
+                        } else {
+                            showTip("请选择城市");
+                        }
+                        return false;
+                    }
+                });
+                cityDialog.show();
+
+                //EventBus.getDefault().post(new LauncherDockLabelShowChangeEvent(true));
+            }
+        });
     }
 
     @ViewInject(R.id.sv_about)
     private SetView sv_about;
+
+    @ViewInject(R.id.sv_money)
+    private SetView sv_money;
 
     private void loadHelpSet() {
         sv_about.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(mContext, AboutActivity.class));
+            }
+        });
+
+        sv_money.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ImageView imageView = new ImageView(mContext);
+                imageView.setImageResource(R.mipmap.money);
+                AlertDialog dialog = new AlertDialog.Builder(mContext).setView(imageView).setTitle("支持我吧!").setPositiveButton("确定", null).create();
+                dialog.show();
             }
         });
     }

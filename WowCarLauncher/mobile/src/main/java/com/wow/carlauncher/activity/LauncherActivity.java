@@ -21,16 +21,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.amap.api.location.AMapLocation;
-import com.amap.api.location.AMapLocationListener;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
-import com.wow.carlauncher.common.LocationManage;
 import com.wow.carlauncher.common.WeatherIconUtil;
-import com.wow.carlauncher.common.util.AppUtil;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.DateUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
+import com.wow.carlauncher.event.LauncherCityRefreshEvent;
 import com.wow.carlauncher.event.LauncherDockLabelShowChangeEvent;
 import com.wow.carlauncher.event.LauncherItemRefreshEvent;
 import com.wow.carlauncher.plugin.LauncherPluginEnum;
@@ -38,7 +35,6 @@ import com.wow.carlauncher.plugin.PluginManage;
 import com.wow.carlauncher.popupWindow.ConsoleWin;
 import com.wow.carlauncher.webservice.WebService;
 import com.wow.carlauncher.webservice.res.WeatherRes;
-import com.wow.carlauncher.popupWindow.PopupWin;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -52,8 +48,6 @@ import java.util.TimerTask;
 import static com.wow.carlauncher.common.CommonData.*;
 
 public class LauncherActivity extends AppCompatActivity implements View.OnClickListener, View.OnLongClickListener {
-    private static final String TAG = "LanncherActivity";
-
     @ViewInject(R.id.item_1)
     private FrameLayout item_1;
     @ViewInject(R.id.item_2)
@@ -73,8 +67,8 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
     @ViewInject(R.id.tv_tianqi)
     private TextView tv_tianqi;
 
-    @ViewInject(R.id.tv_local)
-    private TextView tv_local;
+    @ViewInject(R.id.tv_tianqi2)
+    private TextView tv_tianqi2;
 
     @ViewInject(R.id.iv_tianqi)
     private ImageView iv_tianqi;
@@ -157,13 +151,9 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
 
         loadDock();
         loadItem();
-        checkAppState();
+        initTimer();
         setWall();
-        LocationManage.self().addLocationListener(aMapLocationListener);
-    }
-
-    public void init() {
-
+        refreshWeather();
     }
 
     public void initView() {
@@ -388,15 +378,41 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private Timer timer;
+    private int weatherUpdateInterval = 0;
 
-    private void checkAppState() {
+    private void initTimer() {
         timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 setTime();
+                if (weatherUpdateInterval == 60 * 30) {
+                    weatherUpdateInterval = 0;
+                    refreshWeather();
+                }
+                weatherUpdateInterval++;
             }
         }, 1000 - System.currentTimeMillis() % 1000, 1000);
+    }
+
+    private void refreshWeather() {
+        if (CommonUtil.isNotNull(SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_CITY))) {
+            WebService.getWeatherInfo(SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_CITY), new WebService.CommonCallback<WeatherRes>() {
+                @Override
+                public void callback(WeatherRes res) {
+                    if (Integer.valueOf(1).equals(res.getStatus()) && res.getLives().size() > 0) {
+                        tv_tianqi.setText(res.getLives().get(0).getWeather() + "  " + res.getLives().get(0).getTemperature() + "℃");
+                        iv_tianqi.setImageResource(WeatherIconUtil.getWeatherResId(res.getLives().get(0).getWeather()));
+                        tv_tianqi2.setText("风力:" + res.getLives().get(0).getWindpower() + "级  空气湿度:" + res.getLives().get(0).getHumidity());
+                    } else {
+                        tv_tianqi.setText("请检查网络");
+                    }
+                }
+            });
+        } else {
+            tv_tianqi.setText("请预先设置城市");
+            tv_tianqi2.setText("点击设置-时间和天气设置-天气定位进行设置");
+        }
     }
 
     private void setWall() {
@@ -466,7 +482,6 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(homeReceiver);
-        LocationManage.self().removeLocationListener(aMapLocationListener);
         if (timer != null) {
             timer.cancel();
             timer = null;
@@ -555,27 +570,32 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
     }
 
     @Subscribe
+    public void onEventMainThread(LauncherCityRefreshEvent event) {
+        refreshWeather();
+    }
+
+    @Subscribe
     public void onEventMainThread(LauncherDockLabelShowChangeEvent event) {
         dockLabelShow(event.show);
     }
 
-    private AMapLocationListener aMapLocationListener = new AMapLocationListener() {
-        @Override
-        public void onLocationChanged(final AMapLocation aMapLocation) {
-            if (aMapLocation != null && aMapLocation.getErrorCode() == 0) {
-                tv_local.setText(aMapLocation.getDistrict());
-                WebService.getWeatherInfo(aMapLocation.getAdCode(), new WebService.CommonCallback<WeatherRes>() {
-                    @Override
-                    public void callback(WeatherRes res) {
-                        if (Integer.valueOf(1).equals(res.getStatus()) && res.getLives().size() > 0) {
-                            tv_tianqi.setText(res.getLives().get(0).getWeather() + "  " + res.getLives().get(0).getTemperature() + "℃");
-                            iv_tianqi.setImageResource(WeatherIconUtil.getWeatherResId(res.getLives().get(0).getWeather()));
-                        }
-                    }
-                });
-            }
-        }
-    };
+    //    private AMapLocationListener aMapLocationListener = new AMapLocationListener() {
+//        @Override
+//        public void onLocationChanged(final AMapLocation aMapLocation) {
+//            if (aMapLocation != null && aMapLocation.getErrorCode() == 0) {
+//                tv_local.setText(aMapLocation.getDistrict());
+//                WebService.getWeatherInfo(aMapLocation.getAdCode(), new WebService.CommonCallback<WeatherRes>() {
+//                    @Override
+//                    public void callback(WeatherRes res) {
+//                        if (Integer.valueOf(1).equals(res.getStatus()) && res.getLives().size() > 0) {
+//                            tv_tianqi.setText(res.getLives().get(0).getWeather() + "  " + res.getLives().get(0).getTemperature() + "℃");
+//                            iv_tianqi.setImageResource(WeatherIconUtil.getWeatherResId(res.getLives().get(0).getWeather()));
+//                        }
+//                    }
+//                });
+//            }
+//        }
+//    };
     private BroadcastReceiver homeReceiver = new BroadcastReceiver() {
         String SYSTEM_REASON = "reason";
         String SYSTEM_HOME_KEY = "homekey";

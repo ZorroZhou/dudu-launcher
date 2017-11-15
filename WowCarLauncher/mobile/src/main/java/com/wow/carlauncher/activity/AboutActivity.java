@@ -12,8 +12,6 @@ import org.xutils.view.annotation.ViewInject;
  */
 
 public class AboutActivity extends BaseActivity {
-    private static final String TAG = "AboutActivity";
-
     @ViewInject(R.id.about)
     private TextView about;
 

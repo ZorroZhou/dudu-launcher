@@ -8,13 +8,12 @@ import java.util.Map;
 
 import static com.wow.carlauncher.plugin.amapcar.AMapCarConstant.*;
 
+import static com.wow.carlauncher.common.CommonData.TAG;
 /**
  * Created by 10124 on 2017/11/6.
  */
 
 class AMapCartSend {
-    private static final String TAG = "AMapCartReceiver";
-
     private AMapCarPlugin aMapCarPlugin;
 
     AMapCartSend(AMapCarPlugin aMapCarPlugin) {

@@ -11,13 +11,13 @@ import com.wow.carlauncher.common.BaseDialog;
 import org.xutils.x;
 
 import static com.wow.carlauncher.plugin.amapcar.AMapCarConstant.*;
+import static com.wow.carlauncher.common.CommonData.TAG;
 
 /**
  * Created by 10124 on 2017/11/6.
  */
 
 public class AMapCartReceiver extends BroadcastReceiver {
-    private static final String TAG = "AMapCartReceiver";
     public static final int GETHC_NEXT_TO_NONE = 0;
     public static final int GETHC_NEXT_TO_NAVI = 1;
 

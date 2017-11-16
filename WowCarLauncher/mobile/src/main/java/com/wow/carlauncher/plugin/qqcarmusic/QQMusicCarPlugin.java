@@ -28,16 +28,12 @@ public class QQMusicCarPlugin extends BasePlugin {
     private static final String PACKAGE_NAME = "com.tencent.qqmusiccar";
     private static final String CLASS_NAME = "com.tencent.qqmusiccar.app.reciver.BroadcastReceiverCenterForThird";
 
-    public static final int WE_DRIVE_NEXT = 3;
-    public static final int WE_DRIVE_PAUSE = 1;
-    public static final int WE_DRIVE_PRE = 2;
-    public static final int WE_DRIVE_RESUME = 0;
+    private static final int WE_DRIVE_NEXT = 3;
+    private static final int WE_DRIVE_PAUSE = 1;
+    private static final int WE_DRIVE_PRE = 2;
+    private static final int WE_DRIVE_RESUME = 0;
 
     private Gson gson;
-
-    private LauncherView qqMusicCarLauncherView;
-
-    private PopupView qqMusicCarPopupView;
 
     public QQMusicCarPlugin(Context context, PluginManage pluginManage) {
         super(context, pluginManage);
@@ -52,27 +48,31 @@ public class QQMusicCarPlugin extends BasePlugin {
 
     @Override
     public ViewGroup initLauncherView() {
-        return new LauncherView(context, this);
+        LauncherView launcherView = new LauncherView(context, this);
+        refreshInfo();
+        return launcherView;
     }
 
     @Override
     public ViewGroup initPopupView() {
-        return new PopupView(context, this);
+        PopupView view = new PopupView(context, this);
+        refreshInfo();
+        return view;
     }
 
-    public void play() {
+    void play() {
         sendEvent(WE_DRIVE_RESUME);
     }
 
-    public void pause() {
+    void pause() {
         sendEvent(WE_DRIVE_PAUSE);
     }
 
-    public void next() {
+    void next() {
         sendEvent(WE_DRIVE_NEXT);
     }
 
-    public void pre() {
+    void pre() {
         sendEvent(WE_DRIVE_PRE);
     }
 

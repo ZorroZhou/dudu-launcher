@@ -1,6 +1,7 @@
-package com.wow.carlauncher.plugin.jdmusic;
+package com.wow.carlauncher.plugin.common.music;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,72 +11,71 @@ import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.util.CommonUtil;
-import com.wow.carlauncher.plugin.pevent.PEventMusicInfoChange;
-import com.wow.carlauncher.plugin.pevent.PEventMusicStateChange;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 import org.xutils.x;
 
 /**
  * Created by 10124 on 2017/10/28.
  */
 
-public class PopupView extends LinearLayout implements View.OnClickListener {
-    private static final String TAG = "PluginMusicView";
-
+public class MusicPopupView extends LinearLayout implements View.OnClickListener, MusicView {
     private LayoutInflater inflater;
 
     private ImageView iv_play;
-    private JidouMusicPlugin controller;
+    private MusicController controller;
     private boolean playing = false;
     private TextView tv_title;
     private ProgressBar pb_music;
 
-    @Subscribe
-    public void onEventMainThread(final PEventMusicInfoChange event) {
+    public void refreshInfo(final String title, final String artist) {
         x.task().autoPost(new Runnable() {
             @Override
             public void run() {
                 if (tv_title != null) {
-                    if (CommonUtil.isNotNull(event.title)) {
-                        tv_title.setText(event.title);
+                    if (CommonUtil.isNotNull(title)) {
+                        tv_title.setText(title);
                     } else {
                         tv_title.setText("标题");
                     }
-                }
-
-                if (pb_music != null && event.curr_time > 0 && event.total_time > 0) {
-                    pb_music.setProgress(event.curr_time);
-                    pb_music.setMax(event.total_time);
                 }
             }
         });
     }
 
-    @Subscribe
-    public void onEventMainThread(PEventMusicStateChange event) {
-        playing = event.run;
-        if (event.run) {
-            iv_play.setImageResource(R.mipmap.ic_pause);
-        } else {
-            iv_play.setImageResource(R.mipmap.ic_play);
-        }
+    @Override
+    public void refreshProgress(final int curr_time, final int total_time) {
+        x.task().autoPost(new Runnable() {
+            @Override
+            public void run() {
+                if (pb_music != null && curr_time > 0 && total_time > 0) {
+                    pb_music.setProgress(curr_time);
+                    pb_music.setMax(total_time);
+                }
+            }
+        });
+
     }
 
     @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        EventBus.getDefault().register(this);
+    public void refreshCover(final Bitmap cover) {
+
     }
 
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        EventBus.getDefault().unregister(this);
+    public void refreshState(final boolean run) {
+        x.task().autoPost(new Runnable() {
+            @Override
+            public void run() {
+                playing = run;
+                if (run) {
+                    iv_play.setImageResource(R.mipmap.ic_pause);
+                } else {
+                    iv_play.setImageResource(R.mipmap.ic_play);
+                }
+            }
+        });
     }
 
-    public PopupView(Context context, JidouMusicPlugin controller) {
+    public MusicPopupView(Context context, MusicController controller) {
         super(context);
         this.controller = controller;
         inflater = LayoutInflater.from(context);
@@ -83,7 +83,7 @@ public class PopupView extends LinearLayout implements View.OnClickListener {
     }
 
     private void init() {
-        View linearLayout = inflater.inflate(R.layout.plugin_music_jd_popup, null);
+        View linearLayout = inflater.inflate(R.layout.plugin_music_com_popup, null);
         this.addView(linearLayout, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
         iv_play = (ImageView) findViewById(R.id.iv_play);
         tv_title = (TextView) findViewById(R.id.tv_title);

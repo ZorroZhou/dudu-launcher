@@ -3,7 +3,14 @@ package com.wow.carlauncher.common;
 import com.wow.carlauncher.plugin.PluginEnum;
 
 public class CommonData {
-    public static final PluginEnum[] ALL_PLUGINS = {PluginEnum.SYSMUSIC, PluginEnum.NCMUSIC, PluginEnum.CONSOLE, PluginEnum.AMAP, PluginEnum.QQMUSIC, PluginEnum.QQCARMUSIC, PluginEnum.JIDOUMUSIC};
+    public static final PluginEnum[] ALL_PLUGINS = {PluginEnum.SYSMUSIC,
+            PluginEnum.NCMUSIC,
+            PluginEnum.CONSOLE,
+            PluginEnum.AMAP,
+            PluginEnum.QQMUSIC,
+            PluginEnum.QQCARMUSIC,
+            PluginEnum.JIDOUMUSIC,
+            PluginEnum.POWERAMPMUSIC};
 
     public static final String[] POPUP_SIZE = {"小", "中", "大"};
 

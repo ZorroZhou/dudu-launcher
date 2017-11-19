@@ -4,7 +4,6 @@
     android:id="@+id/fl_bg"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/background"
     android:orientation="vertical">
 
     <com.zhy.android.percent.support.PercentLinearLayout

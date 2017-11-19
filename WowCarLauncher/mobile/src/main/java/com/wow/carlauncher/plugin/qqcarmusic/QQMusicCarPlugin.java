@@ -19,6 +19,10 @@ import org.xutils.x;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import static com.wow.carlauncher.common.CommonData.TAG;
 
 /**
  * Created by 10124 on 2017/10/26.
@@ -43,20 +47,18 @@ public class QQMusicCarPlugin extends BasePlugin {
         intentFilter.addAction("com.tencent.qqmusiccar.action.PLAY_COMMAND_SEND_FOR_THIRD");
         this.context.registerReceiver(mReceiver, intentFilter);
 
-        refreshInfo();
+        startUpdate();
     }
 
     @Override
     public ViewGroup initLauncherView() {
         LauncherView launcherView = new LauncherView(context, this);
-        refreshInfo();
         return launcherView;
     }
 
     @Override
     public ViewGroup initPopupView() {
         PopupView view = new PopupView(context, this);
-        refreshInfo();
         return view;
     }
 
@@ -81,10 +83,10 @@ public class QQMusicCarPlugin extends BasePlugin {
         intent.setClassName(PACKAGE_NAME, CLASS_NAME);
         intent.setData(Uri.parse("qqmusiccar://asdasd?action=20&m0=" + event));
         context.sendBroadcast(intent);
-        refreshInfo();
     }
 
     private void refreshInfo() {
+        waitMsg = true;
         Intent intent2 = new Intent("com.tencent.qqmusiccar.action");
         intent2.setClassName(PACKAGE_NAME, CLASS_NAME);
         intent2.setData(Uri.parse("qqmusiccar://asdasd?action=100"));
@@ -94,12 +96,35 @@ public class QQMusicCarPlugin extends BasePlugin {
     @Override
     public void destroy() {
         super.destroy();
+        stopUpdate();
         context.unregisterReceiver(mReceiver);
     }
 
+    private Timer timer;
+
+    private void startUpdate() {
+        stopUpdate();
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                refreshInfo();
+            }
+        }, 0, 1000);
+    }
+
+    private void stopUpdate() {
+        if (timer != null) {
+            timer.cancel();
+            timer = null;
+        }
+    }
+
+    private boolean waitMsg = false;
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
         public void onReceive(Context paramAnonymousContext, Intent intent) {
-            if (intent.getStringExtra("com.tencent.qqmusiccar.EXTRA_COMMAND_DATA") != null) {
+            if (intent.getStringExtra("com.tencent.qqmusiccar.EXTRA_COMMAND_DATA") != null && waitMsg) {
+                waitMsg = false;
                 String value = intent.getStringExtra("com.tencent.qqmusiccar.EXTRA_COMMAND_DATA");
                 try {
                     Map m = gson.fromJson(value, Map.class);
@@ -116,15 +141,8 @@ public class QQMusicCarPlugin extends BasePlugin {
                         int curr_time = ((Double) d.get("curr_time")).intValue();
                         int total_time = ((Double) d.get("total_time")).intValue();
                         EventBus.getDefault().post(new PEventMusicInfoChange(title, artist, curr_time, total_time));
-                        Log.e("!!!!!!!!!!!!!!", "onReceive: " + d);
                         if (d.get("state") != null && (double) d.get("state") == 2) {
                             EventBus.getDefault().post(new PEventMusicStateChange(true));
-                            x.task().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    refreshInfo();
-                                }
-                            }, 500);
                         } else {
                             EventBus.getDefault().post(new PEventMusicStateChange(false));
                         }

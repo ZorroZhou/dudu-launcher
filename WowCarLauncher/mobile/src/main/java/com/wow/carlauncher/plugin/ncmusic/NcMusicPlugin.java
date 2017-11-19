@@ -1,7 +1,6 @@
 package com.wow.carlauncher.plugin.ncmusic;
 
 import android.content.Context;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;

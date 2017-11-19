@@ -44,7 +44,8 @@
             android:name=".activity.LauncherActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|locale|screenLayout|mcc|mnc"
             android:launchMode="singleInstance"
-            android:screenOrientation="landscape">
+            android:screenOrientation="landscape"
+            android:theme="@style/LauncherTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

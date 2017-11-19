@@ -1,5 +1,6 @@
 package com.wow.carlauncher.activity;
 
+import android.app.Activity;
 import android.app.WallpaperManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -9,9 +10,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -50,7 +49,7 @@ import java.util.TimerTask;
 
 import static com.wow.carlauncher.common.CommonData.*;
 
-public class LauncherActivity extends AppCompatActivity implements View.OnClickListener, View.OnLongClickListener {
+public class LauncherActivity extends Activity implements View.OnClickListener, View.OnLongClickListener {
     @ViewInject(R.id.item_1)
     private FrameLayout item_1;
     @ViewInject(R.id.item_2)
@@ -149,7 +148,6 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
 
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
-        intentFilter.addAction(Intent.ACTION_WALLPAPER_CHANGED);
         registerReceiver(homeReceiver, intentFilter);
 
         EventBus.getDefault().register(this);
@@ -157,7 +155,6 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
         initView();
         loadDock();
         loadItem();
-        loadWall();
         loadItemBackground();
         Log.e(TAG, "onCreate: !!!!!!!!!!!" + this);
     }
@@ -390,7 +387,8 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private Timer timer;
-    private int weatherUpdateInterval = 60 * 30 - 3;
+    private int weatherUpdateInterval = 30;
+    private int yifenzhong = 1000 * 60;
 
     private void startTimer() {
         Log.e(TAG, "startTimer: ");
@@ -400,13 +398,15 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void run() {
                 setTime();
-                if (weatherUpdateInterval == 60 * 30) {
+                if (weatherUpdateInterval == 30) {
                     weatherUpdateInterval = 0;
                     refreshWeather();
                 }
                 weatherUpdateInterval++;
             }
-        }, 1000 - System.currentTimeMillis() % 1000, 1000);
+        }, yifenzhong - System.currentTimeMillis() % yifenzhong, yifenzhong);
+        setTime();
+        refreshWeather();
     }
 
     private void stopTimer() {
@@ -418,6 +418,7 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void refreshWeather() {
+        Log.e(TAG, "refreshWeather: !!!!!!!!!!");
         if (CommonUtil.isNotNull(SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_CITY))) {
             WebService.getWeatherInfo(SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_CITY), new WebService.CommonCallback<WeatherRes>() {
                 @Override
@@ -442,16 +443,6 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
         } else {
             tv_tianqi.setText("请预先设置城市");
             tv_tianqi2.setText("点击设置-时间和天气设置-天气定位进行设置");
-        }
-    }
-
-    private void loadWall() {
-        if (fl_bg != null) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                fl_bg.setBackground(wallManager.getDrawable());
-            } else {
-                fl_bg.setBackgroundDrawable(wallManager.getDrawable());
-            }
         }
     }
 
@@ -673,10 +664,7 @@ public class LauncherActivity extends AppCompatActivity implements View.OnClickL
                     i.addCategory(Intent.CATEGORY_HOME);
                     context.startActivity(i);
                 }
-            } else if (intent.getAction().equals(Intent.ACTION_WALLPAPER_CHANGED)) {
-                loadWall();
             }
         }
     };
-
 }

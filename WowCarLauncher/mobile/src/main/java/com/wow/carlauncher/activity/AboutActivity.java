@@ -24,10 +24,9 @@ public class AboutActivity extends BaseActivity {
     public void initView() {
         setTitle("系统设置");
         about.setText("新功能:\n" +
-                "1,增加了首页item背景设置,dock背景设置.\n" +
-                "2,增加了悬浮窗是否忽略状态栏高度的设置,以及悬浮框大小调节.\n" +
-                "3,对launcher的生命周期做了处理,防止出现一些不可预知的问题\n" +
-                "4,处理了天气的bug,同时去掉定位,改为直接选择城市\n" +
+                "1,增加Poweramp的插件支持.\n" +
+                "2,修复了qq音乐车机版插件的bug.\n" +
+                "3,减少了一些会导致卡的代码\n" +
                 "下一版本的规划:\n" +
                 "1,处理某些特殊车机的奇怪bug,比如dock图标无法显示\n" +
                 "2,添加酷我音乐车机版本的插件支持\n" +

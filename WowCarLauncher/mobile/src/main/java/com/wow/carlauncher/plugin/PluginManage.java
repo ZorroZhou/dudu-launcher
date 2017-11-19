@@ -12,6 +12,7 @@ import com.wow.carlauncher.plugin.amapcar.AMapCarPlugin;
 import com.wow.carlauncher.plugin.console.ConsolePlugin;
 import com.wow.carlauncher.plugin.jdmusic.JidouMusicPlugin;
 import com.wow.carlauncher.plugin.ncmusic.NcMusicPlugin;
+import com.wow.carlauncher.plugin.powerAmp.PowerAmpCarPlugin;
 import com.wow.carlauncher.plugin.qqmusic.QQMusicPlugin;
 import com.wow.carlauncher.plugin.qqcarmusic.QQMusicCarPlugin;
 import com.wow.carlauncher.plugin.sysmusic.SystemMusicPlugin;
@@ -70,7 +71,7 @@ public class PluginManage {
                 }
             }
             pluginShowApp.put(pluginTypeEnum.getId(), apps);
-            if (apps.size() > 0) {
+            if (apps.size() > 0 && !allUsePlugins.containsKey(pluginTypeEnum.getId())) {
                 allUsePlugins.put(pluginTypeEnum.getId(), createPlugin(pluginTypeEnum));
             }
         }
@@ -205,6 +206,9 @@ public class PluginManage {
             }
             case JIDOUMUSIC: {
                 return new JidouMusicPlugin(context, this);
+            }
+            case POWERAMPMUSIC: {
+                return new PowerAmpCarPlugin(context, this);
             }
         }
         return null;

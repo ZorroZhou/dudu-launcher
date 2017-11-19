@@ -13,6 +13,11 @@ import android.view.ViewGroup;
 
 import com.wow.carlauncher.plugin.BasePlugin;
 import com.wow.carlauncher.plugin.PluginManage;
+import com.wow.carlauncher.plugin.common.music.MusicComPlugin;
+import com.wow.carlauncher.plugin.common.music.MusicController;
+import com.wow.carlauncher.plugin.common.music.MusicLauncherView;
+import com.wow.carlauncher.plugin.common.music.MusicPopupView;
+import com.wow.carlauncher.plugin.common.music.MusicView;
 import com.wow.carlauncher.plugin.pevent.PEventMusicInfoChange;
 import com.wow.carlauncher.plugin.pevent.PEventMusicStateChange;
 
@@ -24,7 +29,7 @@ import java.util.Map;
 
 import static com.wow.carlauncher.common.CommonData.TAG;
 
-public class JidouMusicPlugin extends BasePlugin {
+public class JidouMusicPlugin extends MusicComPlugin implements MusicController {
     public JidouMusicPlugin(Context context, PluginManage pluginManage) {
         super(context, pluginManage);
 
@@ -36,28 +41,23 @@ public class JidouMusicPlugin extends BasePlugin {
     }
 
     @Override
-    public ViewGroup initLauncherView() {
-        return new LauncherView(context, this);
+    public String getName() {
+        return "极豆音乐";
     }
 
-    @Override
-    public ViewGroup initPopupView() {
-        return new PopupView(context, this);
-    }
-
-    void play() {
+    public void play() {
         sendEvent(KeyEvent.KEYCODE_MEDIA_PLAY);
     }
 
-    void pause() {
+    public void pause() {
         sendEvent(KeyEvent.KEYCODE_MEDIA_PAUSE);
     }
 
-    void next() {
+    public void next() {
         sendEvent(KeyEvent.KEYCODE_MEDIA_NEXT);
     }
 
-    void pre() {
+    public void pre() {
         sendEvent(KeyEvent.KEYCODE_MEDIA_PREVIOUS);
     }
 
@@ -86,17 +86,18 @@ public class JidouMusicPlugin extends BasePlugin {
         public void onReceive(Context paramAnonymousContext, Intent intent) {
             if (intent.getAction().equals("com.ijidou.card.music")) {
                 boolean music_status = intent.getBooleanExtra("music_status", false);
-                EventBus.getDefault().post(new PEventMusicStateChange(music_status));
+                EventBus.getDefault().post(new PEventMusicStateChange());
+                refreshState(music_status);
                 music_artist = intent.getStringExtra("music_artist");
                 music_title = intent.getStringExtra("music_title");
                 if (music_title != null && music_artist != null) {
-                    EventBus.getDefault().post(new PEventMusicInfoChange(music_title, music_artist, 0, 0));
+                    refreshInfo(music_title, music_artist);
                 }
             }
             if (intent.getAction().equals("com.ijidou.action.UPDATE_PROGRESS")) {
                 int elapse = intent.getIntExtra("elapse", 0);
                 int duration = intent.getIntExtra("duration", 0);
-                EventBus.getDefault().post(new PEventMusicInfoChange(music_title, music_artist, elapse, duration));
+                refreshProgress(elapse, duration);
             }
         }
     };

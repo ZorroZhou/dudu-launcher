@@ -53,7 +53,7 @@
         android:layout_height="wrap_content"
         st:summary="@string/set_yes"
         st:summary2="@string/set_no"
-        st:titleEx="悬浮窗是否忽略状态栏高度"
+        st:titleEx="悬浮窗是否全局显示"
         st:type="checkB" />
 
     <View style="@style/Interval" />
@@ -126,6 +126,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         st:titleEx="极豆音乐使用的APP"
+        st:type="buttonB" />
+
+    <View style="@style/Interval" />
+
+    <com.wow.carlauncher.common.view.SetView
+        android:id="@+id/sv_popup_showapps_pamusic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        st:titleEx="PowerAmp使用的APP"
         st:type="buttonB" />
 
     <View style="@style/Interval" />

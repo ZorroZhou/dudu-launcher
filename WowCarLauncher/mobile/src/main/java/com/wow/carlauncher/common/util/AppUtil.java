@@ -2,6 +2,7 @@ package com.wow.carlauncher.common.util;
 
 import android.app.ActivityManager;
 import android.app.Instrumentation;
+import android.app.WallpaperManager;
 import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
 import android.content.ComponentName;
@@ -148,5 +149,9 @@ public class AppUtil {
                 }
             }
         }).start();
+    }
+
+    public static boolean isLivingWallpaper(Context paramContext) {
+        return (WallpaperManager.getInstance(paramContext).getWallpaperInfo() != null);
     }
 }

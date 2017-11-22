@@ -2,7 +2,6 @@ package com.wow.carlauncher.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
@@ -12,8 +11,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
+import com.wow.frame.util.CommonUtil;
+import com.wow.frame.util.SharedPreUtil;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.AppInfoManage;
 import com.wow.carlauncher.common.BaseActivity;
@@ -22,10 +22,7 @@ import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.console.ConsoleManage;
 import com.wow.carlauncher.common.console.impl.NwdConsoleImpl;
 import com.wow.carlauncher.common.console.impl.SysConsoleImpl;
-import com.wow.carlauncher.common.util.AppUtil.AppInfo;
-import com.wow.carlauncher.common.util.CommonUtil;
-import com.wow.carlauncher.common.util.SharedPreUtil;
-import com.wow.carlauncher.common.util.ThreadObj;
+import com.wow.frame.util.AppUtil.AppInfo;
 import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.dialog.CityDialog;
 import com.wow.carlauncher.dialog.InputDialog;
@@ -37,6 +34,7 @@ import com.wow.carlauncher.plugin.LauncherPluginEnum;
 import com.wow.carlauncher.plugin.PluginEnum;
 import com.wow.carlauncher.plugin.PluginManage;
 import com.wow.carlauncher.popupWindow.PopupWin;
+import com.wow.frame.util.ThreadObj;
 
 import org.greenrobot.eventbus.EventBus;
 import org.xutils.view.annotation.ViewInject;

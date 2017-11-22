@@ -18,8 +18,9 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
-import com.wow.carlauncher.common.util.CommonUtil;
-import com.wow.carlauncher.common.util.ViewUtils;
+import com.wow.frame.util.CommonUtil;
+import com.wow.frame.util.ViewUtils;
+
 import static com.wow.carlauncher.common.CommonData.TAG;
 /**
  * Created by soap on 16/7/25.

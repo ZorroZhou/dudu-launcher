@@ -3,19 +3,15 @@ package com.wow.carlauncher.activity;
 import android.app.ProgressDialog;
 import android.app.WallpaperManager;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.ListView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.activity.adapter.SelectAppAdapter;
 import com.wow.carlauncher.common.AppInfoManage;
 import com.wow.carlauncher.common.BaseActivity;
-import com.wow.carlauncher.common.util.AppUtil;
-import com.wow.carlauncher.common.util.AppUtil.AppInfo;
+import com.wow.frame.util.AppUtil.AppInfo;
 
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;

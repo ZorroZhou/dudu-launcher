@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -14,8 +13,7 @@ import com.wow.carlauncher.R;
 import com.wow.carlauncher.activity.LockActivity;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.console.ConsoleManage;
-import com.wow.carlauncher.common.util.AppUtil;
-import com.wow.carlauncher.common.util.SharedPreUtil;
+import com.wow.frame.util.SharedPreUtil;
 
 /**
  * Created by 10124 on 2017/11/7.

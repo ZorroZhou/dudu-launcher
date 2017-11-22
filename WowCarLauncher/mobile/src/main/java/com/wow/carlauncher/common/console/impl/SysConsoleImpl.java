@@ -7,7 +7,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 
 import com.wow.carlauncher.common.console.IConsole;
-import com.wow.carlauncher.common.util.AppUtil;
+import com.wow.frame.util.AppUtil;
 
 import java.util.List;
 

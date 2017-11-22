@@ -2,9 +2,8 @@ package com.wow.carlauncher.common;
 
 import android.content.Context;
 
-import com.wow.carlauncher.common.util.AppUtil;
+import com.wow.frame.util.AppUtil;
 import com.wow.carlauncher.event.LauncherAppRefreshEvent;
-import com.wow.carlauncher.plugin.pevent.PEventMusicStateChange;
 
 import org.greenrobot.eventbus.EventBus;
 import org.xutils.x;

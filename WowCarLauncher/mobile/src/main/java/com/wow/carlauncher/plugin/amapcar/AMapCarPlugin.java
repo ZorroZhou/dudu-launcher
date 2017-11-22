@@ -16,11 +16,11 @@ import android.widget.Toast;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.BaseDialog;
-import com.wow.carlauncher.common.util.AppUtil;
-import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.dialog.InputDialog;
 import com.wow.carlauncher.plugin.BasePlugin;
 import com.wow.carlauncher.plugin.PluginManage;
+import com.wow.frame.util.AppUtil;
+import com.wow.frame.util.CommonUtil;
 
 import java.math.BigDecimal;
 

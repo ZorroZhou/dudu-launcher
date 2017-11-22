@@ -12,13 +12,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
-import com.wow.carlauncher.common.util.CommonUtil;
-import com.wow.carlauncher.plugin.pevent.PEventMusicInfoChange;
-import com.wow.carlauncher.plugin.pevent.PEventMusicStateChange;
-import com.wow.carlauncher.plugin.powerAmp.PowerAmpCarPlugin;
+import com.wow.frame.util.CommonUtil;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 import org.xutils.x;
 
 import static com.wow.carlauncher.common.CommonData.TAG;

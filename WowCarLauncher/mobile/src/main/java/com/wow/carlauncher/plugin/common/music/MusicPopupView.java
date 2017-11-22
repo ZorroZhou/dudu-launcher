@@ -10,7 +10,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
-import com.wow.carlauncher.common.util.CommonUtil;
+import com.wow.frame.util.CommonUtil;
 
 import org.xutils.x;
 

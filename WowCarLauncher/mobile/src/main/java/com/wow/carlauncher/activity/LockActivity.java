@@ -1,20 +1,13 @@
 package com.wow.carlauncher.activity;
 
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.amap.api.location.AMapLocationClient;
-import com.amap.api.location.AMapLocationClientOption;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.BaseActivity;
-import com.wow.carlauncher.common.util.CommonUtil;
-import com.wow.carlauncher.common.util.DateUtil;
-import com.wow.carlauncher.popupWindow.PopupWin;
+import com.wow.frame.util.DateUtil;
 
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;

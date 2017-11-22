@@ -2,9 +2,9 @@ package com.wow.carlauncher.common.console;
 
 import android.content.Context;
 
+import com.wow.frame.util.SharedPreUtil;
 import com.wow.carlauncher.common.console.impl.NwdConsoleImpl;
 import com.wow.carlauncher.common.console.impl.SysConsoleImpl;
-import com.wow.carlauncher.common.util.SharedPreUtil;
 
 import static com.wow.carlauncher.common.CommonData.SDATA_CONSOLE_MARK;
 

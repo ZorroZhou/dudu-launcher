@@ -11,12 +11,12 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.wow.frame.util.SharedPreUtil;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.AppWidgetManage;
-import com.wow.carlauncher.common.util.SharedPreUtil;
-import com.wow.carlauncher.common.util.ViewUtils;
 import com.wow.carlauncher.plugin.BasePlugin;
 import com.wow.carlauncher.plugin.PluginManage;
+import com.wow.frame.util.ViewUtils;
 
 import org.xutils.x;
 

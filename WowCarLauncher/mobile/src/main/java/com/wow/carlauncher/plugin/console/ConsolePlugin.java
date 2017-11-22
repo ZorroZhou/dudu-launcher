@@ -13,9 +13,9 @@ import android.widget.TextView;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.activity.LockActivity;
 import com.wow.carlauncher.common.console.ConsoleManage;
-import com.wow.carlauncher.common.util.AppUtil;
 import com.wow.carlauncher.plugin.BasePlugin;
 import com.wow.carlauncher.plugin.PluginManage;
+import com.wow.frame.util.AppUtil;
 
 /**
  * Created by 10124 on 2017/11/4.

@@ -10,16 +10,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
+import com.wow.frame.util.AppUtil.AppInfo;
+import com.wow.frame.util.SharedPreUtil;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.activity.adapter.AllAppAdapter;
 import com.wow.carlauncher.common.AppInfoManage;
 import com.wow.carlauncher.common.BaseActivity;
 import com.wow.carlauncher.common.CommonData;
-import com.wow.carlauncher.common.util.AppUtil.AppInfo;
-import com.wow.carlauncher.common.util.CommonUtil;
-import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.event.LauncherAppRefreshEvent;
-import com.wow.carlauncher.plugin.pevent.PEventMusicInfoChange;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

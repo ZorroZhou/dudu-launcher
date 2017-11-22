@@ -22,12 +22,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.wow.frame.util.CommonUtil;
+import com.wow.frame.util.DateUtil;
+import com.wow.frame.util.SharedPreUtil;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.WeatherIconUtil;
-import com.wow.carlauncher.common.util.CommonUtil;
-import com.wow.carlauncher.common.util.DateUtil;
-import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.event.LauncherCityRefreshEvent;
 import com.wow.carlauncher.event.LauncherDockLabelShowChangeEvent;
 import com.wow.carlauncher.event.LauncherItemBackgroundRefreshEvent;
@@ -35,8 +35,8 @@ import com.wow.carlauncher.event.LauncherItemRefreshEvent;
 import com.wow.carlauncher.plugin.LauncherPluginEnum;
 import com.wow.carlauncher.plugin.PluginManage;
 import com.wow.carlauncher.popupWindow.ConsoleWin;
-import com.wow.carlauncher.webservice.WebService;
-import com.wow.carlauncher.webservice.res.WeatherRes;
+import com.wow.carlauncher.common.amapWebservice.WebService;
+import com.wow.carlauncher.common.amapWebservice.res.WeatherRes;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

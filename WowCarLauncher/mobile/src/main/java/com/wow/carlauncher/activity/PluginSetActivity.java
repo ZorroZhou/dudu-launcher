@@ -5,9 +5,9 @@ import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.view.View;
 
+import com.wow.frame.util.SharedPreUtil;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.BaseActivity;
-import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.view.SetView;
 
 import org.xutils.view.annotation.ViewInject;

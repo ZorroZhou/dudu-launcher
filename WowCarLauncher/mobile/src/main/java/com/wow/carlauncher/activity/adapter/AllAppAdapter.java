@@ -7,15 +7,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.wow.frame.util.AppUtil;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.BaseAdapterEx;
-import com.wow.carlauncher.common.util.AppUtil.AppInfo;
 
 /**
  * Created by 10124 on 2017/10/28.
  */
 
-public class AllAppAdapter extends BaseAdapterEx<AppInfo> {
+public class AllAppAdapter extends BaseAdapterEx<AppUtil.AppInfo> {
     private LayoutInflater inflate;
 
     public AllAppAdapter(Context context) {
@@ -28,7 +28,7 @@ public class AllAppAdapter extends BaseAdapterEx<AppInfo> {
         if (convertView == null) {
             convertView = inflate.inflate(R.layout.item_grid_all_app, viewGroup, false);
         }
-        AppInfo model = items.get(position);
+        AppUtil.AppInfo model = items.get(position);
         if (!model.equals(convertView.getTag())) {
             ((TextView) convertView.findViewById(R.id.name)).setText(model.name);
             ((ImageView) convertView.findViewById(R.id.icon)).setImageDrawable(model.icon);

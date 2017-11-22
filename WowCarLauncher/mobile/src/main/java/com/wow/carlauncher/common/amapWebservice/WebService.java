@@ -1,10 +1,10 @@
-package com.wow.carlauncher.webservice;
+package com.wow.carlauncher.common.amapWebservice;
 
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.wow.carlauncher.webservice.res.BaseRes;
-import com.wow.carlauncher.webservice.res.WeatherRes;
+import com.wow.carlauncher.common.amapWebservice.res.BaseRes;
+import com.wow.carlauncher.common.amapWebservice.res.WeatherRes;
 
 import org.xutils.common.Callback;
 import org.xutils.http.HttpMethod;

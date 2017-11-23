@@ -12,12 +12,6 @@ import com.wow.carlauncher.popupWindow.PopupWin;
  */
 
 public class ActivityLifecycleListener implements Application.ActivityLifecycleCallbacks {
-    private CarLauncherApplication application;
-
-    public ActivityLifecycleListener(CarLauncherApplication application) {
-        this.application = application;
-    }
-
     @Override
     public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
     }

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
-import android.util.Log;
 import android.view.ViewGroup;
 
 import com.google.gson.Gson;
@@ -13,16 +12,14 @@ import com.wow.carlauncher.plugin.BasePlugin;
 import com.wow.carlauncher.plugin.PluginManage;
 import com.wow.carlauncher.plugin.pevent.PEventMusicInfoChange;
 import com.wow.carlauncher.plugin.pevent.PEventMusicStateChange;
+import com.wow.frame.SFrame;
 
 import org.greenrobot.eventbus.EventBus;
-import org.xutils.x;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import static com.wow.carlauncher.common.CommonData.TAG;
 
 /**
  * Created by 10124 on 2017/10/26.
@@ -41,7 +38,7 @@ public class QQMusicCarPlugin extends BasePlugin {
 
     public QQMusicCarPlugin(Context context, PluginManage pluginManage) {
         super(context, pluginManage);
-        gson = new Gson();
+        gson = SFrame.getGson();
 
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("com.tencent.qqmusiccar.action.PLAY_COMMAND_SEND_FOR_THIRD");

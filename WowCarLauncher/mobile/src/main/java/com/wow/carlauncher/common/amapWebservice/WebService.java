@@ -2,9 +2,9 @@ package com.wow.carlauncher.common.amapWebservice;
 
 import android.util.Log;
 
-import com.google.gson.Gson;
 import com.wow.carlauncher.common.amapWebservice.res.BaseRes;
 import com.wow.carlauncher.common.amapWebservice.res.WeatherRes;
+import com.wow.frame.SFrame;
 
 import org.xutils.common.Callback;
 import org.xutils.http.HttpMethod;
@@ -17,7 +17,6 @@ import org.xutils.x;
 
 public class WebService {
     private static final String TAG = "WebService";
-    private static Gson gson = new Gson();
     private static final String KEY = "31d8bdc3dd120568d55288e82737da61";
 
     public static void getWeatherInfo(String adcode, final CommonCallback commonCallback) {
@@ -27,7 +26,7 @@ public class WebService {
             public void onSuccess(String result) {
                 Log.e(TAG, "onSuccess: " + result);
                 if (commonCallback != null) {
-                    commonCallback.callback(gson.fromJson(result, WeatherRes.class));
+                    commonCallback.callback(SFrame.getGson().fromJson(result, WeatherRes.class));
                 }
             }
 

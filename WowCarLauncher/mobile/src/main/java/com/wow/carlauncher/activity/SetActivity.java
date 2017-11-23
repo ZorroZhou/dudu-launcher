@@ -1,17 +1,28 @@
 package com.wow.carlauncher.activity;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
 import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.wow.carAssistant.packet.response.common.GetAppUpdateRes;
+import com.wow.carlauncher.common.view.FlikerProgressBar;
+import com.wow.carlauncher.webservice.service.CommonService;
+import com.wow.frame.repertory.remote.WebServiceManage;
+import com.wow.frame.repertory.remote.WebTask;
+import com.wow.frame.repertory.remote.callback.SCallBack;
+import com.wow.frame.repertory.remote.callback.SProgressCallback;
+import com.wow.frame.util.AndroidUtil;
 import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.SharedPreUtil;
 import com.wow.carlauncher.R;
@@ -40,6 +51,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -805,6 +817,20 @@ public class SetActivity extends BaseActivity {
     @ViewInject(R.id.sv_money)
     private SetView sv_money;
 
+    @ViewInject(R.id.sv_get_newest)
+    private SetView sv_get_newest;
+
+    private WebTask<File> downloadUpdataTask;
+
+    private ProgressInterruptListener downloadUpdataTaskCancel = new ProgressInterruptListener() {
+        @Override
+        public void onProgressInterruptListener(ProgressDialog progressDialog) {
+            if (downloadUpdataTask != null) {
+                downloadUpdataTask.cancelTask();
+            }
+        }
+    };
+
     private void loadHelpSet() {
         sv_about.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -822,6 +848,89 @@ public class SetActivity extends BaseActivity {
                 dialog.show();
             }
         });
+
+        sv_get_newest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                WebServiceManage.getService(CommonService.class).checkUpdate().setCallback(new SCallBack<GetAppUpdateRes>() {
+                    @Override
+                    public void callback(boolean isok, String msg, final GetAppUpdateRes res) {
+                        if (isok) {
+                            final String version = AndroidUtil.getAppVersionCode(mContext);
+                            if (TextUtils.isEmpty(version)) {
+                                showTip("获取当前版本号失败");
+                                return;
+                            }
+                            if (res.getVersionCode() == null) {
+                                showTip("没有新版本发布");
+                                return;
+                            }
+                            if (res.getVersionCode() > Integer.parseInt(version)) {
+                                BaseDialog baseDialog = new BaseDialog(mContext);
+                                baseDialog.setGravityCenter();
+                                baseDialog.setTitle("版本更新");
+                                baseDialog.setMessage("最新版本为" + res.getVersionName() + ",是否更新?\n" + res.getNewMessage());
+                                baseDialog.setBtn1("下载", new BaseDialog.OnBtnClickListener() {
+                                    @Override
+                                    public boolean onClick(BaseDialog dialog) {
+                                        dialog.dismiss();
+                                        final String savePath = Environment.getExternalStorageDirectory() + "/" + res.getVersionName() + ".apk";
+                                        downloadUpdataTask = WebServiceManage.getService(CommonService.class).getAppUpdateFile(savePath);
+                                        showLoading("开始下载!", downloadUpdataTaskCancel);
+                                        downloadUpdataTask.setCallback(new SProgressCallback<File>() {
+                                            @Override
+                                            public void onProgress(float progress) {
+                                                if (progress > 0 && progress < 1)
+                                                    downloadResult(progress, savePath, null);
+                                            }
+
+                                            @Override
+                                            public void callback(boolean isok, String msg, File res) {
+                                                if (isok) {
+                                                    downloadResult(1f, savePath, savePath);
+                                                } else {
+                                                    downloadResult(-1f, savePath, msg);
+                                                }
+                                            }
+                                        });
+                                        return true;
+                                    }
+                                });
+                                baseDialog.setBtn2("取消", null);
+                                baseDialog.show();
+                            } else {
+                                showTip("已是最新版本");
+                            }
+
+                        } else {
+                            showTip("错误:" + msg);
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    public void downloadResult(float progress, String path, String msg) {
+        if (progress == -1) {
+            showTip(msg);
+            return;
+        }
+        if (progress >= 0 && progress < 1) {
+            showLoading("已经下载:" + (int) (progress * 100) + "%", downloadUpdataTaskCancel);
+        }
+        if (progress == 1) {
+            showTip("下载成功");
+            downloadUpdataTask = null;
+            hideLoading();
+            Intent intent = new Intent();
+            //执行动作
+            intent.setAction(Intent.ACTION_VIEW);
+            //执行的数据类型
+            Uri data = Uri.fromFile(new File(path + ".tmp"));
+            intent.setDataAndType(data, "application/vnd.android.package-archive");
+            startActivity(intent);
+        }
     }
 
     @ViewInject(R.id.sv_sys_anquan)
@@ -877,5 +986,13 @@ public class SetActivity extends BaseActivity {
                 showTip("当前SDK版本是" + Build.VERSION.SDK_INT);
             }
         });
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (downloadUpdataTask != null)
+            downloadUpdataTask.cancelTask();
     }
 }

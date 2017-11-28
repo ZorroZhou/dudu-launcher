@@ -2,6 +2,7 @@ package com.wow.carlauncher;
 
 import android.app.Application;
 import android.content.Intent;
+import android.content.IntentFilter;
 
 import com.wow.carlauncher.common.AppContext;
 import com.wow.frame.declare.SAppDeclare;

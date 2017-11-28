@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
+import com.wow.carlauncher.plugin.nwdmusic.NwdMusicPlugin;
 import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.SharedPreUtil;
 import com.wow.carlauncher.common.CommonData;
@@ -209,6 +210,9 @@ public class PluginManage {
             }
             case POWERAMPMUSIC: {
                 return new PowerAmpCarPlugin(context, this);
+            }
+            case NWDMUSIC: {
+                return new NwdMusicPlugin(context, this);
             }
         }
         return null;

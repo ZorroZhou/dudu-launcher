@@ -10,7 +10,8 @@ public class CommonData {
             PluginEnum.QQMUSIC,
             PluginEnum.QQCARMUSIC,
             PluginEnum.JIDOUMUSIC,
-            PluginEnum.POWERAMPMUSIC};
+            PluginEnum.POWERAMPMUSIC,
+            PluginEnum.NWDMUSIC};
 
     public static final String[] POPUP_SIZE = {"小", "中", "大"};
 

@@ -29,7 +29,7 @@ public class MusicLauncherView extends LinearLayout implements View.OnClickListe
     private boolean playing = false;
 
     public void refreshInfo(final String title, final String artist) {
-        x.task().autoPost(new Runnable() {
+        x.task().post(new Runnable() {
             @Override
             public void run() {
                 if (tv_title != null) {
@@ -51,7 +51,7 @@ public class MusicLauncherView extends LinearLayout implements View.OnClickListe
     }
 
     public void refreshProgress(final int curr_time, final int total_time) {
-        x.task().autoPost(new Runnable() {
+        x.task().post(new Runnable() {
             @Override
             public void run() {
                 if (pb_music != null && curr_time > 0 && total_time > 0) {
@@ -63,28 +63,32 @@ public class MusicLauncherView extends LinearLayout implements View.OnClickListe
     }
 
     public void refreshCover(final Bitmap cover) {
-        x.task().autoPost(new Runnable() {
+        x.task().post(new Runnable() {
             @Override
             public void run() {
-                if (fl_cover != null && cover != null) {
-                    fl_cover.setVisibility(VISIBLE);
-                    iv_cover.setImageBitmap(cover);
-                } else {
-                    fl_cover.setVisibility(GONE);
+                if (fl_cover != null) {
+                    if (cover != null) {
+                        fl_cover.setVisibility(VISIBLE);
+                        iv_cover.setImageBitmap(cover);
+                    } else {
+                        fl_cover.setVisibility(GONE);
+                    }
                 }
             }
         });
     }
 
     public void refreshState(final boolean run) {
-        x.task().autoPost(new Runnable() {
+        x.task().post(new Runnable() {
             @Override
             public void run() {
                 playing = run;
-                if (run) {
-                    iv_play.setImageResource(R.mipmap.ic_pause);
-                } else {
-                    iv_play.setImageResource(R.mipmap.ic_play);
+                if (iv_play != null) {
+                    if (run) {
+                        iv_play.setImageResource(R.mipmap.ic_pause);
+                    } else {
+                        iv_play.setImageResource(R.mipmap.ic_play);
+                    }
                 }
             }
         });
@@ -111,7 +115,6 @@ public class MusicLauncherView extends LinearLayout implements View.OnClickListe
         findViewById(R.id.ll_play).setOnClickListener(this);
         findViewById(R.id.ll_prew).setOnClickListener(this);
         findViewById(R.id.ll_next).setOnClickListener(this);
-
     }
 
     public void setName(String name) {

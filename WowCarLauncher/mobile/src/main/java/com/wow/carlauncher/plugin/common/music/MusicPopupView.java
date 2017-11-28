@@ -28,7 +28,7 @@ public class MusicPopupView extends LinearLayout implements View.OnClickListener
     private ProgressBar pb_music;
 
     public void refreshInfo(final String title, final String artist) {
-        x.task().autoPost(new Runnable() {
+        x.task().post(new Runnable() {
             @Override
             public void run() {
                 if (tv_title != null) {
@@ -44,7 +44,7 @@ public class MusicPopupView extends LinearLayout implements View.OnClickListener
 
     @Override
     public void refreshProgress(final int curr_time, final int total_time) {
-        x.task().autoPost(new Runnable() {
+        x.task().post(new Runnable() {
             @Override
             public void run() {
                 if (pb_music != null && curr_time > 0 && total_time > 0) {
@@ -62,14 +62,16 @@ public class MusicPopupView extends LinearLayout implements View.OnClickListener
     }
 
     public void refreshState(final boolean run) {
-        x.task().autoPost(new Runnable() {
+        x.task().post(new Runnable() {
             @Override
             public void run() {
-                playing = run;
-                if (run) {
-                    iv_play.setImageResource(R.mipmap.ic_pause);
-                } else {
-                    iv_play.setImageResource(R.mipmap.ic_play);
+                if (iv_play != null) {
+                    playing = run;
+                    if (run) {
+                        iv_play.setImageResource(R.mipmap.ic_pause);
+                    } else {
+                        iv_play.setImageResource(R.mipmap.ic_play);
+                    }
                 }
             }
         });

@@ -7,20 +7,16 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.view.KeyEvent;
-import android.view.ViewGroup;
 
-import com.wow.carlauncher.plugin.BasePlugin;
 import com.wow.carlauncher.plugin.PluginManage;
-import com.wow.carlauncher.plugin.pevent.PEventMusicInfoChange;
-import com.wow.carlauncher.plugin.pevent.PEventMusicStateChange;
-
-import org.greenrobot.eventbus.EventBus;
+import com.wow.carlauncher.plugin.common.music.MusicComPlugin;
+import com.wow.carlauncher.plugin.common.music.MusicController;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SystemMusicPlugin extends BasePlugin {
+public class SystemMusicPlugin extends MusicComPlugin implements MusicController {
     private String PACKAGE_NAME = "com.tencent.qqmusiccar";
 
     private Map<String, String> clazzs;
@@ -144,28 +140,23 @@ public class SystemMusicPlugin extends BasePlugin {
     }
 
     @Override
-    public ViewGroup initLauncherView() {
-        return new LauncherView(context, this);
+    public String getName() {
+        return "系统音乐";
     }
 
-    @Override
-    public ViewGroup initPopupView() {
-        return new PopupView(context, this);
-    }
-
-    void play() {
+    public void play() {
         sendEvent(KeyEvent.KEYCODE_MEDIA_PLAY);
     }
 
-    void pause() {
+    public void pause() {
         sendEvent(KeyEvent.KEYCODE_MEDIA_PAUSE);
     }
 
-    void next() {
+    public void next() {
         sendEvent(KeyEvent.KEYCODE_MEDIA_NEXT);
     }
 
-    void pre() {
+    public void pre() {
         sendEvent(KeyEvent.KEYCODE_MEDIA_PREVIOUS);
     }
 
@@ -197,14 +188,14 @@ public class SystemMusicPlugin extends BasePlugin {
                 PACKAGE_NAME = intent.getStringExtra("android.media.extra.PACKAGE_NAME");
             }
             if (intent.getStringExtra("artist") != null && intent.getStringExtra("track") != null) {
-                EventBus.getDefault().post(new PEventMusicInfoChange(intent.getStringExtra("track"), intent.getStringExtra("artist"), 0, 0));
+                refreshInfo(intent.getStringExtra("track"), intent.getStringExtra("artist"));
             }
             int playstate = intent.getIntExtra("playstate", -1);
             if (playstate == 3 || playstate == 4) {
                 if (playstate == 3) {
-                    EventBus.getDefault().post(new PEventMusicStateChange(true));
+                    refreshState(true);
                 } else {
-                    EventBus.getDefault().post(new PEventMusicStateChange(false));
+                    refreshState(false);
                 }
             }
         }

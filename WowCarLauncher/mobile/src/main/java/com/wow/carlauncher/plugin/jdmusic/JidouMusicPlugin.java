@@ -4,30 +4,13 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
-import android.view.ViewGroup;
 
-import com.wow.carlauncher.plugin.BasePlugin;
 import com.wow.carlauncher.plugin.PluginManage;
 import com.wow.carlauncher.plugin.common.music.MusicComPlugin;
 import com.wow.carlauncher.plugin.common.music.MusicController;
-import com.wow.carlauncher.plugin.common.music.MusicLauncherView;
-import com.wow.carlauncher.plugin.common.music.MusicPopupView;
-import com.wow.carlauncher.plugin.common.music.MusicView;
-import com.wow.carlauncher.plugin.pevent.PEventMusicInfoChange;
-import com.wow.carlauncher.plugin.pevent.PEventMusicStateChange;
 
 import org.greenrobot.eventbus.EventBus;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static com.wow.carlauncher.common.CommonData.TAG;
 
 public class JidouMusicPlugin extends MusicComPlugin implements MusicController {
     public JidouMusicPlugin(Context context, PluginManage pluginManage) {
@@ -86,7 +69,6 @@ public class JidouMusicPlugin extends MusicComPlugin implements MusicController 
         public void onReceive(Context paramAnonymousContext, Intent intent) {
             if (intent.getAction().equals("com.ijidou.card.music")) {
                 boolean music_status = intent.getBooleanExtra("music_status", false);
-                EventBus.getDefault().post(new PEventMusicStateChange());
                 refreshState(music_status);
                 music_artist = intent.getStringExtra("music_artist");
                 music_title = intent.getStringExtra("music_title");

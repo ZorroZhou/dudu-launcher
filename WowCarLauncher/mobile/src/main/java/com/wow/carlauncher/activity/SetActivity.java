@@ -521,6 +521,10 @@ public class SetActivity extends BaseActivity {
     @ViewInject(R.id.sv_popup_showapps_pamusic)
     private SetView sv_popup_showapps_pamusic;
 
+    @ViewInject(R.id.sv_popup_showapps_nwdmusic)
+    private SetView sv_popup_showapps_nwdmusic;
+
+
     private void loadPopupSet() {
         sv_popup_window_size.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -636,6 +640,15 @@ public class SetActivity extends BaseActivity {
         int p7 = getPopupPluginShowAppCount(POWERAMPMUSIC);
         sv_popup_showapps_pamusic.setSummary(p7 == 0 ? "不使用" : p7 + "个APP使用");
 
+        sv_popup_showapps_nwdmusic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showLoading("载入中", null);
+                setPopupPluginShowApp(NWDMUSIC, sv_popup_showapps_nwdmusic);
+            }
+        });
+        int p8 = getPopupPluginShowAppCount(NWDMUSIC);
+        sv_popup_showapps_nwdmusic.setSummary(p8 == 0 ? "不使用" : p7 + "个APP使用");
 
         sv_popup_window_showapps.setOnClickListener(new View.OnClickListener() {
             @Override

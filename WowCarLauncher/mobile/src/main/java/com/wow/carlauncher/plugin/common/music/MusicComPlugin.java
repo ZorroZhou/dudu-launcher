@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import com.wow.carlauncher.plugin.BasePlugin;
 import com.wow.carlauncher.plugin.PluginManage;
 
+import org.xutils.x;
+
 public abstract class MusicComPlugin extends BasePlugin implements MusicController, MusicView {
     private MusicView launcherView;
     private MusicView popupView;
@@ -32,7 +34,7 @@ public abstract class MusicComPlugin extends BasePlugin implements MusicControll
         return view;
     }
 
-    public void refreshInfo(String title, String artist) {
+    public void refreshInfo(final String title, final String artist) {
         if (launcherView != null) {
             launcherView.refreshInfo(title, artist);
         }
@@ -41,7 +43,7 @@ public abstract class MusicComPlugin extends BasePlugin implements MusicControll
         }
     }
 
-    public void refreshCover(Bitmap cover) {
+    public void refreshCover(final Bitmap cover) {
         if (launcherView != null) {
             launcherView.refreshCover(cover);
         }
@@ -59,7 +61,7 @@ public abstract class MusicComPlugin extends BasePlugin implements MusicControll
         }
     }
 
-    public void refreshState(boolean run) {
+    public void refreshState(final boolean run) {
         if (launcherView != null) {
             launcherView.refreshState(run);
         }

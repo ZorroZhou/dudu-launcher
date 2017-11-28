@@ -77,6 +77,15 @@
         android:textSize="14sp" />
 
     <com.wow.carlauncher.common.view.SetView
+        android:id="@+id/sv_popup_showapps_nwdmusic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        st:titleEx="NWD音乐使用的APP"
+        st:type="buttonB" />
+
+    <View style="@style/Interval" />
+
+    <com.wow.carlauncher.common.view.SetView
         android:id="@+id/sv_popup_showapps_sysmusic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

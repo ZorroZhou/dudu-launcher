@@ -418,32 +418,36 @@ public class LauncherActivity extends Activity implements View.OnClickListener, 
     }
 
     private void refreshWeather() {
-        Log.e(TAG, "refreshWeather: !!!!!!!!!!");
-        if (CommonUtil.isNotNull(SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_CITY))) {
-            WebService.getWeatherInfo(SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_CITY), new WebService.CommonCallback<WeatherRes>() {
-                @Override
-                public void callback(WeatherRes res) {
-                    if (Integer.valueOf(1).equals(res.getStatus()) && res.getLives().size() > 0) {
-                        tv_tianqi.setText(res.getLives().get(0).getWeather() + "  " + res.getLives().get(0).getTemperature() + "℃");
-                        iv_tianqi.setImageResource(WeatherIconUtil.getWeatherResId(res.getLives().get(0).getWeather()));
-                        String feng;
-                        String wd = res.getLives().get(0).getWinddirection();
-                        Log.e(TAG, "callback: " + wd);
-                        if (wd.equals("东北") || wd.equals("东") || wd.equals("东南") || wd.equals("南") || wd.equals("西南") || wd.equals("西") || wd.equals("西北") || wd.equals("北")) {
-                            feng = wd + "风:";
-                        } else {
-                            feng = "风力:";
+        x.task().autoPost(new Runnable() {
+            @Override
+            public void run() {
+                if (CommonUtil.isNotNull(SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_CITY))) {
+                    WebService.getWeatherInfo(SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_CITY), new WebService.CommonCallback<WeatherRes>() {
+                        @Override
+                        public void callback(WeatherRes res) {
+                            if (Integer.valueOf(1).equals(res.getStatus()) && res.getLives().size() > 0) {
+                                tv_tianqi.setText(res.getLives().get(0).getWeather() + "  " + res.getLives().get(0).getTemperature() + "℃");
+                                iv_tianqi.setImageResource(WeatherIconUtil.getWeatherResId(res.getLives().get(0).getWeather()));
+                                String feng;
+                                String wd = res.getLives().get(0).getWinddirection();
+                                Log.e(TAG, "callback: " + wd);
+                                if (wd.equals("东北") || wd.equals("东") || wd.equals("东南") || wd.equals("南") || wd.equals("西南") || wd.equals("西") || wd.equals("西北") || wd.equals("北")) {
+                                    feng = wd + "风:";
+                                } else {
+                                    feng = "风力:";
+                                }
+                                tv_tianqi2.setText(feng + res.getLives().get(0).getWindpower() + "级  空气湿度:" + res.getLives().get(0).getHumidity());
+                            } else {
+                                tv_tianqi.setText("请检查网络");
+                            }
                         }
-                        tv_tianqi2.setText(feng + res.getLives().get(0).getWindpower() + "级  空气湿度:" + res.getLives().get(0).getHumidity());
-                    } else {
-                        tv_tianqi.setText("请检查网络");
-                    }
+                    });
+                } else {
+                    tv_tianqi.setText("请预先设置城市");
+                    tv_tianqi2.setText("点击设置-时间和天气设置-天气定位进行设置");
                 }
-            });
-        } else {
-            tv_tianqi.setText("请预先设置城市");
-            tv_tianqi2.setText("点击设置-时间和天气设置-天气定位进行设置");
-        }
+            }
+        });
     }
 
     private void loadItemBackground() {

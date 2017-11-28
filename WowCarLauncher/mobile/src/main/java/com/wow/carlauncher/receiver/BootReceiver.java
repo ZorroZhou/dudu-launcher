@@ -25,5 +25,9 @@ public class BootReceiver extends BroadcastReceiver {
         Intent intent2 = new Intent(context, LauncherActivity.class);
         intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent2);
+
+        if ("android.intent.action.SCREEN_ON".equals(intent.getAction())) {
+            Toast.makeText(context, "!!!!!!!!!!", Toast.LENGTH_SHORT).show();
+        }
     }
 }

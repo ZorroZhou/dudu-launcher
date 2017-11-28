@@ -5,13 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
-import android.view.ViewGroup;
 
 import com.google.gson.Gson;
-import com.wow.carlauncher.plugin.BasePlugin;
 import com.wow.carlauncher.plugin.PluginManage;
-import com.wow.carlauncher.plugin.pevent.PEventMusicInfoChange;
-import com.wow.carlauncher.plugin.pevent.PEventMusicStateChange;
+import com.wow.carlauncher.plugin.common.music.MusicComPlugin;
+import com.wow.carlauncher.plugin.common.music.MusicController;
 import com.wow.frame.SFrame;
 
 import org.greenrobot.eventbus.EventBus;
@@ -25,7 +23,7 @@ import java.util.TimerTask;
  * Created by 10124 on 2017/10/26.
  */
 
-public class QQMusicCarPlugin extends BasePlugin {
+public class QQMusicCarPlugin extends MusicComPlugin implements MusicController {
     private static final String PACKAGE_NAME = "com.tencent.qqmusiccar";
     private static final String CLASS_NAME = "com.tencent.qqmusiccar.app.reciver.BroadcastReceiverCenterForThird";
 
@@ -47,32 +45,25 @@ public class QQMusicCarPlugin extends BasePlugin {
         startUpdate();
     }
 
-    @Override
-    public ViewGroup initLauncherView() {
-        LauncherView launcherView = new LauncherView(context, this);
-        return launcherView;
-    }
-
-    @Override
-    public ViewGroup initPopupView() {
-        PopupView view = new PopupView(context, this);
-        return view;
-    }
-
-    void play() {
+    public void play() {
         sendEvent(WE_DRIVE_RESUME);
     }
 
-    void pause() {
+    public void pause() {
         sendEvent(WE_DRIVE_PAUSE);
     }
 
-    void next() {
+    public void next() {
         sendEvent(WE_DRIVE_NEXT);
     }
 
-    void pre() {
+    public void pre() {
         sendEvent(WE_DRIVE_PRE);
+    }
+
+    @Override
+    public String getName() {
+        return "QQ音乐车机版";
     }
 
     private void sendEvent(int event) {
@@ -137,11 +128,12 @@ public class QQMusicCarPlugin extends BasePlugin {
                         }
                         int curr_time = ((Double) d.get("curr_time")).intValue();
                         int total_time = ((Double) d.get("total_time")).intValue();
-                        EventBus.getDefault().post(new PEventMusicInfoChange(title, artist, curr_time, total_time));
+                        refreshInfo(title, artist);
+                        refreshProgress(curr_time, total_time);
                         if (d.get("state") != null && (double) d.get("state") == 2) {
-                            EventBus.getDefault().post(new PEventMusicStateChange(true));
+                            refreshState(true);
                         } else {
-                            EventBus.getDefault().post(new PEventMusicStateChange(false));
+                            refreshState(false);
                         }
                     }
                 } catch (Exception e) {

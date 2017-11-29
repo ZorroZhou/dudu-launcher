@@ -11,7 +11,8 @@ public class CommonData {
             PluginEnum.QQCARMUSIC,
             PluginEnum.JIDOUMUSIC,
             PluginEnum.POWERAMPMUSIC,
-            PluginEnum.NWDMUSIC};
+            PluginEnum.NWDMUSIC,
+            PluginEnum.GPS};
 
     public static final String[] POPUP_SIZE = {"小", "中", "大"};
 
@@ -91,6 +92,8 @@ public class CommonData {
     public static final String SDATA_LAUNCHER_ITEM2_BG_COLOR = "SDATA_LAUNCHER_ITEM2_BG_COLOR";
     public static final String SDATA_LAUNCHER_ITEM3_BG_COLOR = "SDATA_LAUNCHER_ITEM3_BG_COLOR";
     public static final String SDATA_LAUNCHER_DOCK_BG_COLOR = "SDATA_LAUNCHER_DOCK_BG_COLOR";
+
+    public static final String SDATA_ALLOW_DEBUG_APP = "SDATA_ALLOW_DEBUG_APP";//是否接受开发中的APP包
 
     public static final int APP_WIDGET_HOST_ID = 0x200;
 }

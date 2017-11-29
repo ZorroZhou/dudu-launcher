@@ -192,6 +192,9 @@ public class PluginManage {
                 return new SystemMusicPlugin(context, this);
             }
             case CONSOLE: {
+                return new ConsolePlugin(context, this);
+            }
+            case GPS: {
                 return new GpsPlugin(context, this);
             }
             case AMAP: {

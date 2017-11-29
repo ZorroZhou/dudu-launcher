@@ -14,7 +14,8 @@ public enum PluginEnum {
     QQCARMUSIC("QQ音乐车机版", 6),
     JIDOUMUSIC("极豆音乐", 7),
     POWERAMPMUSIC("PowerAmp", 8),
-    NWDMUSIC("NWD音乐", 9);
+    NWDMUSIC("NWD音乐", 9),
+    GPS("GPS插件", 10);
     private String name;
     private Integer id;
 
@@ -60,6 +61,8 @@ public enum PluginEnum {
                 return POWERAMPMUSIC;
             case 9:
                 return NWDMUSIC;
+            case 10:
+                return GPS;
         }
         return UNKNOW;
     }

@@ -833,6 +833,9 @@ public class SetActivity extends BaseActivity {
     @ViewInject(R.id.sv_get_newest)
     private SetView sv_get_newest;
 
+    @ViewInject(R.id.sv_get_debug_newest)
+    private SetView sv_get_debug_newest;
+
     private WebTask<File> downloadUpdataTask;
 
     private ProgressInterruptListener downloadUpdataTaskCancel = new ProgressInterruptListener() {
@@ -845,6 +848,19 @@ public class SetActivity extends BaseActivity {
     };
 
     private void loadHelpSet() {
+        sv_get_debug_newest.setOnValueChangeListener(new SetView.OnValueChangeListener() {
+            @Override
+            public void onValueChange(String newValue, String oldValue) {
+                Log.e(TAG, "onValueChange: " + newValue);
+                if ("1".equals(newValue)) {
+                    SharedPreUtil.saveSharedPreBoolean(CommonData.SDATA_ALLOW_DEBUG_APP, true);
+                } else {
+                    SharedPreUtil.saveSharedPreBoolean(CommonData.SDATA_ALLOW_DEBUG_APP, false);
+                }
+            }
+        });
+        sv_get_debug_newest.setChecked(SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_ALLOW_DEBUG_APP, false));
+
         sv_about.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

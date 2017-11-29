@@ -26,6 +26,17 @@
     <View style="@style/Interval" />
 
     <com.wow.carlauncher.common.view.SetView
+        android:id="@+id/sv_get_debug_newest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        st:summary="接收debug包"
+        st:summary2="接收正式包"
+        st:titleEx="是否接收开发中的测试包"
+        st:type="switchB" />
+
+    <View style="@style/Interval" />
+
+    <com.wow.carlauncher.common.view.SetView
         android:id="@+id/sv_get_newest"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

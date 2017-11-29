@@ -4,19 +4,20 @@ import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
-import com.wow.carlauncher.plugin.nwdmusic.NwdMusicPlugin;
+import com.wow.carlauncher.plugin.gps.GpsPlugin;
+import com.wow.carlauncher.plugin.music.JidouMusicPlugin;
+import com.wow.carlauncher.plugin.music.NcMusicPlugin;
+import com.wow.carlauncher.plugin.music.NwdMusicPlugin;
+import com.wow.carlauncher.plugin.music.PowerAmpCarPlugin;
+import com.wow.carlauncher.plugin.music.QQMusicCarPlugin;
+import com.wow.carlauncher.plugin.music.QQMusicPlugin;
+import com.wow.carlauncher.plugin.music.SystemMusicPlugin;
 import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.SharedPreUtil;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.event.LauncherItemRefreshEvent;
 import com.wow.carlauncher.plugin.amapcar.AMapCarPlugin;
 import com.wow.carlauncher.plugin.console.ConsolePlugin;
-import com.wow.carlauncher.plugin.jdmusic.JidouMusicPlugin;
-import com.wow.carlauncher.plugin.ncmusic.NcMusicPlugin;
-import com.wow.carlauncher.plugin.powerAmp.PowerAmpCarPlugin;
-import com.wow.carlauncher.plugin.qqmusic.QQMusicPlugin;
-import com.wow.carlauncher.plugin.qqcarmusic.QQMusicCarPlugin;
-import com.wow.carlauncher.plugin.sysmusic.SystemMusicPlugin;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -191,7 +192,7 @@ public class PluginManage {
                 return new SystemMusicPlugin(context, this);
             }
             case CONSOLE: {
-                return new ConsolePlugin(context, this);
+                return new GpsPlugin(context, this);
             }
             case AMAP: {
                 return new AMapCarPlugin(context, this);

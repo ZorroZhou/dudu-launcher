@@ -16,6 +16,7 @@ import com.wow.frame.util.AppUtil.AppInfo;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.wow.carlauncher.common.CommonData.IDATA_PACKAGE_NAME;
@@ -58,7 +59,7 @@ public class AppSelectActivity extends BaseActivity implements AdapterView.OnIte
         x.task().run(new Runnable() {
             @Override
             public void run() {
-                final List<AppInfo> appInfos = AppInfoManage.self().getAppInfos();
+                final List<AppInfo> appInfos =new ArrayList<>(AppInfoManage.self().getAppInfos());
                 x.task().autoPost(new Runnable() {
                     @Override
                     public void run() {

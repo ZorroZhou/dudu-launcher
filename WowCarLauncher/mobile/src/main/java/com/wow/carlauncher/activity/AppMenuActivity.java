@@ -56,17 +56,11 @@ public class AppMenuActivity extends BaseActivity implements AdapterView.OnItemC
 
     @Override
     public void loadData() {
-        showLoading("加载中。。。。", new ProgressInterruptListener() {
-            @Override
-            public void onProgressInterruptListener(ProgressDialog progressDialog) {
-                finish();
-            }
-        });
         x.task().run(new Runnable() {
             @Override
             public void run() {
                 adapter.clear();
-                final List<AppInfo> appInfos = AppInfoManage.self().getAppInfos();
+                final List<AppInfo> appInfos = new ArrayList<>(AppInfoManage.self().getAppInfos());
                 String selectapp = SharedPreUtil.getSharedPreString(CommonData.SDATA_HIDE_APPS);
                 List<AppInfo> hides = new ArrayList<>();
                 for (AppInfo appInfo : appInfos) {
@@ -80,7 +74,6 @@ public class AppMenuActivity extends BaseActivity implements AdapterView.OnItemC
                     @Override
                     public void run() {
                         adapter.addItems(appInfos);
-                        hideLoading();
                     }
                 });
             }
@@ -124,7 +117,6 @@ public class AppMenuActivity extends BaseActivity implements AdapterView.OnItemC
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         showTip("卸载成功");
-        showLoading("加载中...", null);
     }
 
     @Subscribe

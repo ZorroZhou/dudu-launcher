@@ -1,6 +1,7 @@
 package com.wow.carlauncher.common;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.wow.frame.util.AppUtil;
 import com.wow.carlauncher.event.LauncherAppRefreshEvent;
@@ -9,6 +10,8 @@ import org.greenrobot.eventbus.EventBus;
 import org.xutils.x;
 
 import java.util.List;
+
+import static com.wow.carlauncher.common.CommonData.TAG;
 
 /**
  * Created by 10124 on 2017/11/13.

@@ -105,16 +105,11 @@ public class AppUtil {
         final List<ResolveInfo> apps = manager.queryIntentActivities(
                 mainIntent, 0);
         Collections.sort(apps, new ResolveInfo.DisplayNameComparator(manager));
-        if (apps != null) {
-            final int count = apps.size();
-            if (appInfos == null) {
-                appInfos = new ArrayList(count);
-            }
-            appInfos.clear();
-            for (int i = 0; i < count; i++) {
-                ResolveInfo info = apps.get(i);
-                appInfos.add(new AppInfo(info.activityInfo.loadIcon(manager), info.loadLabel(manager).toString(), info.activityInfo.applicationInfo.packageName));
-            }
+        final int count = apps.size();
+        appInfos.clear();
+        for (int i = 0; i < count; i++) {
+            ResolveInfo info = apps.get(i);
+            appInfos.add(new AppInfo(info.activityInfo.loadIcon(manager), info.loadLabel(manager).toString(), info.activityInfo.applicationInfo.packageName));
         }
         return appInfos;
     }
@@ -129,6 +124,15 @@ public class AppUtil {
         public String packageName;
         public Drawable icon;
         public String name;
+
+        @Override
+        public String toString() {
+            return "AppInfo{" +
+                    "packageName='" + packageName + '\'' +
+                    ", icon=" + icon +
+                    ", name='" + name + '\'' +
+                    '}';
+        }
     }
 
 

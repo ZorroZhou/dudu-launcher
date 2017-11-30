@@ -1,8 +1,10 @@
 package com.wow.carlauncher.webservice.service;
 
 import com.wow.carAssistant.packet.request.common.AppErrorRequest;
+import com.wow.carAssistant.packet.request.common.GetNewAppRequest;
 import com.wow.carAssistant.packet.response.common.GetAppUpdateRes;
 import com.wow.carAssistant.packet.response.common.Response;
+import com.wow.frame.SFrame;
 import com.wow.frame.repertory.remote.BaseWebService;
 import com.wow.frame.repertory.remote.ResultCheck;
 import com.wow.frame.repertory.remote.WebTask;
@@ -13,6 +15,7 @@ import org.xutils.http.RequestParams;
 import org.xutils.x;
 
 import java.io.File;
+import java.util.Map;
 
 
 /**
@@ -23,10 +26,16 @@ public class CommonService extends BaseWebService {
     /**
      * App检查更新
      */
-    private final static String getNewApp = "api/app/common/getNewApp";
+    private final static String getNewApp = "api/app/common/getNewApp1";
 
-    public WebTask<GetAppUpdateRes> checkUpdate() {
-        return request(getNewApp, null, null, GetAppUpdateRes.class);
+    public WebTask<GetAppUpdateRes> checkUpdate(boolean debug) {
+        GetNewAppRequest request = new GetNewAppRequest();
+        if (debug) {
+            request.setType(1);
+        } else {
+            request.setType(2);
+        }
+        return request(getNewApp, request, null, GetAppUpdateRes.class);
     }
 
     private final static String appError = "api/app/common/appError";
@@ -40,9 +49,16 @@ public class CommonService extends BaseWebService {
     /**
      * 下载文件
      */
-    private final static String getNewAppFile = "api/app/common/getNewAppFile";
+    private final static String getNewAppFile = "api/app/common/getNewAppFile1";
 
-    public WebTask<File> getAppUpdateFile(String savePath) {
+    public WebTask<File> getAppUpdateFile(String savePath, boolean debug) {
+        GetNewAppRequest request = new GetNewAppRequest();
+        if (debug) {
+            request.setType(1);
+        } else {
+            request.setType(2);
+        }
+
         final WebTask<File> task = new WebTask();
 
         File temp = new File(savePath);
@@ -51,6 +67,7 @@ public class CommonService extends BaseWebService {
         }
         RequestParams requestParams = getRequestParams(getServer() + getNewAppFile);
         requestParams.setSaveFilePath(savePath);
+        requestParams.setBodyContent(SFrame.getGson().toJson(request));
         task.setXhttpTask(x.http().get(requestParams, new Callback.ProgressCallback<File>() {
             @Override
             public void onWaiting() {

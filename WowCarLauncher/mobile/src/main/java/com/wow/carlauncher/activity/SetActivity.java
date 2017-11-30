@@ -1,12 +1,16 @@
 package com.wow.carlauncher.activity;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
@@ -881,7 +885,8 @@ public class SetActivity extends BaseActivity {
         sv_get_newest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                WebServiceManage.getService(CommonService.class).checkUpdate().setCallback(new SCallBack<GetAppUpdateRes>() {
+                verifyStoragePermissions(SetActivity.this);
+                WebServiceManage.getService(CommonService.class).checkUpdate(SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_ALLOW_DEBUG_APP, false)).setCallback(new SCallBack<GetAppUpdateRes>() {
                     @Override
                     public void callback(boolean isok, String msg, final GetAppUpdateRes res) {
                         if (isok) {
@@ -894,7 +899,16 @@ public class SetActivity extends BaseActivity {
                                 showTip("没有新版本发布");
                                 return;
                             }
-                            if (res.getVersionCode() > Integer.parseInt(version)) {
+                            boolean havenew;
+                            Log.e(TAG, "callback!!!!!!!!!!!!!!!: " + SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_ALLOW_DEBUG_APP, false));
+                            Log.e(TAG, "callback!!!!!!!!!!!!!!!: " + (res.getVersionCode() >= Integer.parseInt(version)));
+                            if (SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_ALLOW_DEBUG_APP, false)) {
+                                havenew = res.getVersionCode() >= Integer.parseInt(version);
+                            } else {
+                                havenew = res.getVersionCode() > Integer.parseInt(version);
+                            }
+
+                            if (havenew) {
                                 BaseDialog baseDialog = new BaseDialog(mContext);
                                 baseDialog.setGravityCenter();
                                 baseDialog.setTitle("版本更新");
@@ -904,7 +918,7 @@ public class SetActivity extends BaseActivity {
                                     public boolean onClick(BaseDialog dialog) {
                                         dialog.dismiss();
                                         final String savePath = Environment.getExternalStorageDirectory() + "/" + res.getVersionName() + ".apk";
-                                        downloadUpdataTask = WebServiceManage.getService(CommonService.class).getAppUpdateFile(savePath);
+                                        downloadUpdataTask = WebServiceManage.getService(CommonService.class).getAppUpdateFile(savePath, SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_ALLOW_DEBUG_APP, false));
                                         showLoading("开始下载!", downloadUpdataTaskCancel);
                                         downloadUpdataTask.setCallback(new SProgressCallback<File>() {
                                             @Override
@@ -1023,5 +1037,30 @@ public class SetActivity extends BaseActivity {
         super.onDestroy();
         if (downloadUpdataTask != null)
             downloadUpdataTask.cancelTask();
+    }
+
+    private static final int REQUEST_EXTERNAL_STORAGE = 1;
+    private static String[] PERMISSIONS_STORAGE = {
+            Manifest.permission.READ_EXTERNAL_STORAGE,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE};
+
+    /**
+     * * Checks if the app has permission to write to device storage
+     * *
+     * * If the app does not has permission then the user will be prompted to
+     * * grant permissions
+     * *
+     * * @param activity
+     */
+    public static void verifyStoragePermissions(Activity activity) {
+        // Check if we have write permission
+        int permission = ActivityCompat.checkSelfPermission(activity,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            // We don't have permission so prompt the user
+            ActivityCompat.requestPermissions(activity, PERMISSIONS_STORAGE,
+                    REQUEST_EXTERNAL_STORAGE);
+        }
     }
 }

@@ -62,7 +62,7 @@ public class GpsPlugin extends BasePlugin implements AMapLocationListener {
 
     @Override
     public void onLocationChanged(AMapLocation aMapLocation) {
-        if (aMapLocation.getErrorCode() == AMapLocation.LOCATION_SUCCESS && aMapLocation.getGpsAccuracyStatus() == AMapLocation.GPS_ACCURACY_GOOD) {
+        if (aMapLocation.getErrorCode() == AMapLocation.LOCATION_SUCCESS) {
             Log.e(TAG, "onLocationChanged: !!");
             tv_noinfo.setVisibility(View.GONE);
 

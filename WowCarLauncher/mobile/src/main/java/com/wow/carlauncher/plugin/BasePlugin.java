@@ -3,56 +3,55 @@ package com.wow.carlauncher.plugin;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+
+import com.wow.carlauncher.plugin.amapcar.AMapCarPluginListener;
+
+import org.xutils.x;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Created by 10124 on 2017/10/26.
  */
 
-public abstract class BasePlugin {
-    protected ViewGroup launcherView;
-    protected ViewGroup popupView;
-    protected PluginManage pluginManage;
+public class BasePlugin<L> {
     protected Context context;
-
-    public PluginManage getPluginManage() {
-        return pluginManage;
-    }
 
     public Context getContext() {
         return context;
     }
 
-    public BasePlugin(Context context, PluginManage pluginManage) {
-        this.pluginManage = pluginManage;
+    public BasePlugin() {
+    }
+
+    public void init(Context context) {
         this.context = context;
     }
 
-    public View getLauncherView() {
-        if (launcherView == null) {
-            launcherView = initLauncherView();
-        }
-        return launcherView;
+    private List<L> listeners = Collections.synchronizedList(new ArrayList<L>());
+
+    public void addListener(L l) {
+        listeners.add(l);
     }
 
-    public View getPopupView() {
-        if (popupView == null) {
-            popupView = initPopupView();
-        }
-        return popupView;
+    public void removeListener(L l) {
+        listeners.remove(l);
     }
 
-    public void destroy() {
-        if (launcherView != null && launcherView.getParent() != null) {
-            ((ViewGroup) launcherView.getParent()).removeView(launcherView);
-        }
-
-        if (popupView != null && popupView.getParent() != null) {
-            ((ViewGroup) popupView.getParent()).removeView(popupView);
-        }
+    public void runListener(final ListenerRuner<L> runer) {
+        x.task().autoPost(new Runnable() {
+            @Override
+            public void run() {
+                for (L l : listeners) {
+                    runer.run(l);
+                }
+            }
+        });
     }
 
-    public abstract ViewGroup initLauncherView();
-
-    public abstract ViewGroup initPopupView();
+    public interface ListenerRuner<L> {
+        void run(L l);
+    }
 }

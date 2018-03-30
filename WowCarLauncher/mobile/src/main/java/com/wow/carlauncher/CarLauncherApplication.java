@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 
 import com.wow.carlauncher.common.AppContext;
+import com.wow.carlauncher.plugin.amapcar.AMapCarPlugin;
 import com.wow.frame.declare.SAppDeclare;
 import com.wow.carlauncher.common.ActivityLifecycleListener;
 import com.wow.carlauncher.service.MainService;

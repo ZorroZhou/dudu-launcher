@@ -3,6 +3,10 @@ package com.wow.carlauncher.activity;
 import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -15,12 +19,16 @@ import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.wow.carAssistant.packet.response.common.GetAppUpdateRes;
-import com.wow.carlauncher.common.view.FlikerProgressBar;
+import com.wow.carlauncher.dialog.ListDialog;
+import com.wow.carlauncher.plugin.fk.FangkongPlugin;
+import com.wow.carlauncher.plugin.music.MusicControllerEnum;
+import com.wow.carlauncher.plugin.music.MusicPlugin;
 import com.wow.carlauncher.webservice.service.CommonService;
 import com.wow.frame.repertory.remote.WebServiceManage;
 import com.wow.frame.repertory.remote.WebTask;
@@ -40,30 +48,32 @@ import com.wow.carlauncher.common.console.impl.SysConsoleImpl;
 import com.wow.frame.util.AppUtil.AppInfo;
 import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.dialog.CityDialog;
-import com.wow.carlauncher.dialog.InputDialog;
 import com.wow.carlauncher.event.LauncherCityRefreshEvent;
 import com.wow.carlauncher.event.LauncherDockLabelShowChangeEvent;
-import com.wow.carlauncher.event.LauncherItemBackgroundRefreshEvent;
 import com.wow.carlauncher.event.PopupIsFullScreenRefreshEvent;
-import com.wow.carlauncher.plugin.LauncherPluginEnum;
-import com.wow.carlauncher.plugin.PluginEnum;
-import com.wow.carlauncher.plugin.PluginManage;
 import com.wow.carlauncher.popupWindow.PopupWin;
 import com.wow.frame.util.ThreadObj;
 
 import org.greenrobot.eventbus.EventBus;
 import org.xutils.view.annotation.ViewInject;
-import org.xutils.x;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.bluetooth.BluetoothDevice.DEVICE_TYPE_DUAL;
+import static android.bluetooth.BluetoothDevice.DEVICE_TYPE_LE;
 import static com.wow.carlauncher.common.CommonData.*;
-import static com.wow.carlauncher.plugin.PluginEnum.*;
 
 public class SetActivity extends BaseActivity {
     private static final String[] CONSOLES = {"系统", "NWD"};
+    public static final MusicControllerEnum[] ALL_MUSIC_PLUGINS = {MusicControllerEnum.SYSMUSIC,
+//            MusicControllerEnum.NCMUSIC,
+//            MusicControllerEnum.QQMUSIC,
+            MusicControllerEnum.QQCARMUSIC,
+            MusicControllerEnum.JIDOUMUSIC,
+            MusicControllerEnum.POWERAMPMUSIC,
+            MusicControllerEnum.NWDMUSIC};
 
     @Override
     public void init() {
@@ -75,7 +85,7 @@ public class SetActivity extends BaseActivity {
         setTitle("设置");
         loadSetGroup();
         loadAppSet();
-        loadLauncherSet();
+        loadFangkongSet();
         loadPopupSet();
         loadTimeSet();
         loadHelpSet();
@@ -84,8 +94,6 @@ public class SetActivity extends BaseActivity {
 
     @ViewInject(R.id.sg_app)
     private SetView sg_app;
-    @ViewInject(R.id.sg_launcher)
-    private SetView sg_launcher;
     @ViewInject(R.id.sg_popup)
     private SetView sg_popup;
     @ViewInject(R.id.sg_time)
@@ -94,11 +102,11 @@ public class SetActivity extends BaseActivity {
     private SetView sg_help;
     @ViewInject(R.id.sg_system_set)
     private SetView sg_system_set;
+    @ViewInject(R.id.sg_fangkong)
+    private SetView sg_fangkong;
 
     @ViewInject(R.id.ll_app)
     private LinearLayout ll_app;
-    @ViewInject(R.id.ll_launcher)
-    private LinearLayout ll_launcher;
     @ViewInject(R.id.ll_popup)
     private LinearLayout ll_popup;
     @ViewInject(R.id.ll_time)
@@ -107,24 +115,22 @@ public class SetActivity extends BaseActivity {
     private LinearLayout ll_help;
     @ViewInject(R.id.ll_system_set)
     private LinearLayout ll_system_set;
+    @ViewInject(R.id.ll_fangkong)
+    private LinearLayout ll_fangkong;
 
     private void loadSetGroup() {
         View.OnClickListener groupClick = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ll_app.setVisibility(View.GONE);
-                ll_launcher.setVisibility(View.GONE);
                 ll_popup.setVisibility(View.GONE);
                 ll_time.setVisibility(View.GONE);
                 ll_help.setVisibility(View.GONE);
                 ll_system_set.setVisibility(View.GONE);
+                ll_fangkong.setVisibility(View.GONE);
                 switch (view.getId()) {
                     case R.id.sg_app: {
                         ll_app.setVisibility(View.VISIBLE);
-                        break;
-                    }
-                    case R.id.sg_launcher: {
-                        ll_launcher.setVisibility(View.VISIBLE);
                         break;
                     }
                     case R.id.sg_popup: {
@@ -133,6 +139,10 @@ public class SetActivity extends BaseActivity {
                     }
                     case R.id.sg_time: {
                         ll_time.setVisibility(View.VISIBLE);
+                        break;
+                    }
+                    case R.id.sg_fangkong: {
+                        ll_fangkong.setVisibility(View.VISIBLE);
                         break;
                     }
                     case R.id.sg_help: {
@@ -151,12 +161,15 @@ public class SetActivity extends BaseActivity {
         };
 
         sg_app.setOnClickListener(groupClick);
-        sg_launcher.setOnClickListener(groupClick);
         sg_popup.setOnClickListener(groupClick);
         sg_time.setOnClickListener(groupClick);
         sg_help.setOnClickListener(groupClick);
         sg_system_set.setOnClickListener(groupClick);
+        sg_fangkong.setOnClickListener(groupClick);
     }
+
+    @ViewInject(R.id.sv_plugin_select)
+    private SetView sv_plugin_select;
 
     @ViewInject(R.id.sv_plugin_set)
     private SetView sv_plugin_set;
@@ -174,6 +187,41 @@ public class SetActivity extends BaseActivity {
     private SetView sv_launcher_show_dock_label;
 
     private void loadAppSet() {
+
+        MusicControllerEnum p1 = MusicControllerEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_MUSIC_CONTROLLER, MusicControllerEnum.SYSMUSIC.getId()));
+        sv_plugin_select.setSummary("音乐播放器使用的控制器：" + p1.getName());
+        sv_plugin_select.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MusicControllerEnum p = MusicControllerEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_MUSIC_CONTROLLER, MusicControllerEnum.SYSMUSIC.getId()));
+                final MusicControllerEnum[] show = getLauncherPluginType(p);
+                String[] items = new String[show.length];
+                int select = 0;
+                for (int i = 0; i < show.length; i++) {
+                    items[i] = show[i].getName();
+                    if (show[i].equals(p)) {
+                        select = i;
+                    }
+                }
+                final ThreadObj<Integer> obj = new ThreadObj<>(select);
+                AlertDialog dialog = new AlertDialog.Builder(mContext).setTitle("请选择插件").setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        SharedPreUtil.saveSharedPreInteger(SDATA_MUSIC_CONTROLLER, show[obj.getObj()].getId());
+                        MusicPlugin.self().setController(show[obj.getObj()]);
+                        sv_plugin_select.setSummary("音乐播放器使用的控制器：" + show[obj.getObj()].getName());
+                    }
+                }).setSingleChoiceItems(items, select, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        obj.setObj(which);
+                    }
+                }).create();
+                dialog.show();
+            }
+        });
+
+
         sv_plugin_set.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -269,243 +317,98 @@ public class SetActivity extends BaseActivity {
         sv_launcher_show_dock_label.setChecked(SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_LAUNCHER_DOCK_LABEL_SHOW, true));
     }
 
-    @ViewInject(R.id.sv_launcher_item1)
-    private SetView sv_launcher_item1;
 
-    @ViewInject(R.id.sv_launcher_item2)
-    private SetView sv_launcher_item2;
+    private MusicControllerEnum[] getLauncherPluginType(MusicControllerEnum contain) {
+        List<MusicControllerEnum> ps = new ArrayList<>();
+        MusicControllerEnum p1 = MusicControllerEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_MUSIC_CONTROLLER, MusicControllerEnum.SYSMUSIC.getId()));
 
-    @ViewInject(R.id.sv_launcher_item3)
-    private SetView sv_launcher_item3;
-
-    @ViewInject(R.id.sv_launcher_item1_bg)
-    private SetView sv_launcher_item1_bg;
-
-    @ViewInject(R.id.sv_launcher_item2_bg)
-    private SetView sv_launcher_item2_bg;
-
-    @ViewInject(R.id.sv_launcher_item3_bg)
-    private SetView sv_launcher_item3_bg;
-
-    @ViewInject(R.id.sv_launcher_dock_bg)
-    private SetView sv_launcher_dock_bg;
-
-    private void loadLauncherSet() {
-        sv_launcher_dock_bg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new InputDialog(SetActivity.this)
-                        .setTitle("请输入颜色ARGB值:")
-                        .setBtn1("取消", null)
-                        .setBtn2("确定", new BaseDialog.OnBtnClickListener() {
-                            @Override
-                            public boolean onClick(BaseDialog dialog) {
-                                String text = ((EditText) dialog.findViewById(R.id.et_input)).getText().toString();
-                                SharedPreUtil.saveSharedPreString(SDATA_LAUNCHER_DOCK_BG_COLOR, text);
-                                sv_launcher_dock_bg.setSummary(text);
-                                EventBus.getDefault().post(new LauncherItemBackgroundRefreshEvent());
-                                return true;
-                            }
-                        }).show();
-            }
-        });
-        sv_launcher_dock_bg.setSummary(SharedPreUtil.getSharedPreString(SDATA_LAUNCHER_DOCK_BG_COLOR));
-
-        sv_launcher_item1_bg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new InputDialog(SetActivity.this)
-                        .setTitle("请输入颜色ARGB值:")
-                        .setBtn1("取消", null)
-                        .setBtn2("确定", new BaseDialog.OnBtnClickListener() {
-                            @Override
-                            public boolean onClick(BaseDialog dialog) {
-                                String text = ((EditText) dialog.findViewById(R.id.et_input)).getText().toString();
-                                SharedPreUtil.saveSharedPreString(SDATA_LAUNCHER_ITEM1_BG_COLOR, text);
-                                sv_launcher_item1_bg.setSummary(text);
-                                EventBus.getDefault().post(new LauncherItemBackgroundRefreshEvent());
-                                return true;
-                            }
-                        }).show();
-            }
-        });
-        sv_launcher_item1_bg.setSummary(SharedPreUtil.getSharedPreString(SDATA_LAUNCHER_ITEM1_BG_COLOR));
-
-        sv_launcher_item2_bg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new InputDialog(SetActivity.this)
-                        .setTitle("请输入颜色ARGB值:")
-                        .setBtn1("取消", null)
-                        .setBtn2("确定", new BaseDialog.OnBtnClickListener() {
-                            @Override
-                            public boolean onClick(BaseDialog dialog) {
-                                String text = ((EditText) dialog.findViewById(R.id.et_input)).getText().toString();
-                                SharedPreUtil.saveSharedPreString(SDATA_LAUNCHER_ITEM2_BG_COLOR, text);
-                                sv_launcher_item2_bg.setSummary(text);
-                                EventBus.getDefault().post(new LauncherItemBackgroundRefreshEvent());
-                                return true;
-                            }
-                        }).show();
-            }
-        });
-        sv_launcher_item2_bg.setSummary(SharedPreUtil.getSharedPreString(SDATA_LAUNCHER_ITEM2_BG_COLOR));
-
-        sv_launcher_item3_bg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new InputDialog(SetActivity.this)
-                        .setTitle("请输入颜色ARGB值:")
-                        .setBtn1("取消", null)
-                        .setBtn2("确定", new BaseDialog.OnBtnClickListener() {
-                            @Override
-                            public boolean onClick(BaseDialog dialog) {
-                                String text = ((EditText) dialog.findViewById(R.id.et_input)).getText().toString();
-                                SharedPreUtil.saveSharedPreString(SDATA_LAUNCHER_ITEM3_BG_COLOR, text);
-                                sv_launcher_item3_bg.setSummary(text);
-                                EventBus.getDefault().post(new LauncherItemBackgroundRefreshEvent());
-                                return true;
-                            }
-                        }).show();
-            }
-        });
-        sv_launcher_item3_bg.setSummary(SharedPreUtil.getSharedPreString(SDATA_LAUNCHER_ITEM3_BG_COLOR));
-
-        PluginEnum p1 = PluginEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_ITEM1_PLUGIN, SYSMUSIC.getId()));
-        sv_launcher_item1.setSummary("桌面左边框框使用的插件：" + p1.getName());
-        sv_launcher_item1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                PluginEnum p = PluginEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_ITEM1_PLUGIN, SYSMUSIC.getId()));
-                final PluginEnum[] show = getLauncherPluginType(p);
-                String[] items = new String[show.length];
-                int select = 0;
-                for (int i = 0; i < show.length; i++) {
-                    items[i] = show[i].getName();
-                    if (show[i].equals(p)) {
-                        select = i;
-                    }
-                }
-                final ThreadObj<Integer> obj = new ThreadObj<>(select);
-                AlertDialog dialog = new AlertDialog.Builder(mContext).setTitle("请选择插件").setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        PluginManage.self().setLauncherPlugin(LauncherPluginEnum.LAUNCHER_ITEM1, show[obj.getObj()]);
-                        sv_launcher_item1.setSummary("桌面左边框框使用的插件：" + show[obj.getObj()].getName());
-                    }
-                }).setSingleChoiceItems(items, select, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        obj.setObj(which);
-                    }
-                }).create();
-                dialog.show();
-            }
-        });
-
-        PluginEnum p2 = PluginEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_ITEM2_PLUGIN, PluginEnum.AMAP.getId()));
-        sv_launcher_item2.setSummary("桌面中间框框使用的插件：" + p2.getName());
-        sv_launcher_item2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                PluginEnum p = PluginEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_ITEM2_PLUGIN, PluginEnum.AMAP.getId()));
-                final PluginEnum[] show = getLauncherPluginType(p);
-                String[] items = new String[show.length];
-                int select = 0;
-                for (int i = 0; i < show.length; i++) {
-                    items[i] = show[i].getName();
-                    if (show[i].equals(p)) {
-                        select = i;
-                    }
-                }
-                final ThreadObj<Integer> obj = new ThreadObj<>(select);
-                AlertDialog dialog = new AlertDialog.Builder(mContext).setTitle("请选择插件").setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        PluginManage.self().setLauncherPlugin(LauncherPluginEnum.LAUNCHER_ITEM2, show[obj.getObj()]);
-                        sv_launcher_item2.setSummary("桌面中间框框使用的插件：" + show[obj.getObj()].getName());
-                    }
-                }).setSingleChoiceItems(items, select, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        obj.setObj(which);
-                    }
-                }).create();
-                dialog.show();
-            }
-        });
-
-        PluginEnum p3 = PluginEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_ITEM3_PLUGIN, PluginEnum.CONSOLE.getId()));
-        sv_launcher_item3.setSummary("桌面右边框框使用的插件：" + p3.getName());
-        sv_launcher_item3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                PluginEnum p = PluginEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_ITEM3_PLUGIN, PluginEnum.CONSOLE.getId()));
-                final PluginEnum[] show = getLauncherPluginType(p);
-                String[] items = new String[show.length];
-                int select = 0;
-                for (int i = 0; i < show.length; i++) {
-                    items[i] = show[i].getName();
-                    if (show[i].equals(p)) {
-                        select = i;
-                    }
-                }
-                final ThreadObj<Integer> obj = new ThreadObj<>(select);
-                AlertDialog dialog = new AlertDialog.Builder(mContext).setTitle("请选择插件").setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        PluginManage.self().setLauncherPlugin(LauncherPluginEnum.LAUNCHER_ITEM3, show[obj.getObj()]);
-                        sv_launcher_item3.setSummary("桌面右边框框使用的插件：" + show[obj.getObj()].getName());
-                    }
-                }).setSingleChoiceItems(items, select, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        obj.setObj(which);
-                    }
-                }).create();
-                dialog.show();
-            }
-        });
-    }
-
-    private PluginEnum[] getLauncherPluginType(PluginEnum contain) {
-        List<PluginEnum> ps = new ArrayList<>();
-        PluginEnum p1 = PluginEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_ITEM1_PLUGIN, SYSMUSIC.getId()));
-        PluginEnum p2 = PluginEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_ITEM2_PLUGIN, PluginEnum.AMAP.getId()));
-        PluginEnum p3 = PluginEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_ITEM3_PLUGIN, PluginEnum.CONSOLE.getId()));
-
-        for (PluginEnum p : ALL_PLUGINS) {
+        for (MusicControllerEnum p : ALL_MUSIC_PLUGINS) {
             if (p.equals(p1) && !p.equals(contain)) {
-                continue;
-            }
-            if (p.equals(p2) && !p.equals(contain)) {
-                continue;
-            }
-            if (p.equals(p3) && !p.equals(contain)) {
                 continue;
             }
             ps.add(p);
         }
-        return ps.toArray(new PluginEnum[ps.size()]);
+        return ps.toArray(new MusicControllerEnum[ps.size()]);
     }
+
+    @ViewInject(R.id.sv_fangkong_select)
+    private SetView sv_fangkong_select;
+
+    @ViewInject(R.id.sv_fangkong_impl_select)
+    private SetView sv_fangkong_impl_select;
+
+    private void loadFangkongSet() {
+        String address = SharedPreUtil.getSharedPreString(CommonData.SDATA_FANGKONG_ADDRESS);
+        if (CommonUtil.isNotNull(address)) {
+            sv_fangkong_select.setSummary("绑定了设备:" + SharedPreUtil.getSharedPreString(CommonData.SDATA_FANGKONG_Name) + "  地址:" + address);
+        } else {
+            sv_fangkong_select.setSummary("没有绑定蓝牙设备");
+        }
+        sv_fangkong_select.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final ThreadObj<ListDialog> listTemp = new ThreadObj<>();
+
+                final List<BluetoothDevice> devices = new ArrayList<>();
+                BluetoothManager mBluetoothManager = (BluetoothManager) getApplication().getSystemService(Context.BLUETOOTH_SERVICE);
+                final BluetoothAdapter bluetoothAdapter = mBluetoothManager.getAdapter();
+                final BluetoothAdapter.LeScanCallback callback = new BluetoothAdapter.LeScanCallback() {
+                    @Override
+                    public void onLeScan(BluetoothDevice bluetoothDevice, int index, byte[] bytes) {
+                        if (bluetoothDevice != null)
+                            System.out.println(bluetoothDevice.getName() + "--" + bluetoothDevice.getAddress() + " " + bluetoothDevice.getType());
+                        if (bluetoothDevice == null || bluetoothDevice.getName() == null || (bluetoothDevice.getType() != DEVICE_TYPE_LE && bluetoothDevice.getType() != DEVICE_TYPE_DUAL)) {
+                            return;
+                        }
+                        boolean have = false;
+                        for (BluetoothDevice device : devices) {
+                            if (device.getAddress().equals(device.getAddress())) {
+                                have = true;
+                                break;
+                            }
+                        }
+                        if (!have) {
+                            devices.add(bluetoothDevice);
+                            String[] items = new String[devices.size()];
+                            for (int i = 0; i < items.length; i++) {
+                                items[i] = devices.get(i).getName() + ":" + devices.get(i).getAddress();
+                            }
+                            listTemp.getObj().getListView().setAdapter(new ArrayAdapter<String>(SetActivity.this, android.R.layout.simple_list_item_1, items));
+                        }
+                    }
+                };
+                final ListDialog dialog = new ListDialog(mContext);
+                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialogInterface) {
+                        bluetoothAdapter.stopLeScan(callback);
+                    }
+                });
+                dialog.setTitle("请选择一个蓝牙设备");
+                dialog.show();
+                listTemp.setObj(dialog);
+                bluetoothAdapter.startLeScan(callback);
+
+                dialog.getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        dialog.dismiss();
+                        BluetoothDevice device = devices.get(i);
+                        SharedPreUtil.saveSharedPreString(CommonData.SDATA_FANGKONG_ADDRESS, device.getAddress());
+                        SharedPreUtil.saveSharedPreString(CommonData.SDATA_FANGKONG_Name, device.getName());
+
+                        sv_fangkong_select.setSummary("绑定了设备:" + device.getName() + "  地址:" + device.getAddress());
+
+                        FangkongPlugin.self().connectFangkong();
+                    }
+                });
+            }
+        });
+    }
+
 
     @ViewInject(R.id.sv_allow_popup_window)
     private SetView sv_allow_popup_window;
-
-    @ViewInject(R.id.sv_popup_showapps_sysmusic)
-    private SetView sv_popup_showapps_sysmusic;
-
-    @ViewInject(R.id.sv_popup_showapps_ncmusic)
-    private SetView sv_popup_showapps_ncmusic;
-
-    @ViewInject(R.id.sv_popup_showapps_qqmusic)
-    private SetView sv_popup_showapps_qqmusic;
-
-    @ViewInject(R.id.sv_popup_showapps_qqmusiccar)
-    private SetView sv_popup_showapps_qqmusiccar;
-
-    @ViewInject(R.id.sv_popup_showapps_amap)
-    private SetView sv_popup_showapps_amap;
 
     @ViewInject(R.id.sv_popup_window_showapps)
     private SetView sv_popup_window_showapps;
@@ -513,21 +416,11 @@ public class SetActivity extends BaseActivity {
     @ViewInject(R.id.sv_popup_window_showtype)
     private SetView sv_popup_window_showtype;
 
-    @ViewInject(R.id.sv_popup_showapps_jidoumusic)
-    private SetView sv_popup_showapps_jidoumusic;
-
     @ViewInject(R.id.sv_popup_full_screen)
     private SetView sv_popup_full_screen;
 
     @ViewInject(R.id.sv_popup_window_size)
     private SetView sv_popup_window_size;
-
-    @ViewInject(R.id.sv_popup_showapps_pamusic)
-    private SetView sv_popup_showapps_pamusic;
-
-    @ViewInject(R.id.sv_popup_showapps_nwdmusic)
-    private SetView sv_popup_showapps_nwdmusic;
-
 
     private void loadPopupSet() {
         sv_popup_window_size.setOnClickListener(new View.OnClickListener() {
@@ -570,89 +463,6 @@ public class SetActivity extends BaseActivity {
             }
         });
         sv_allow_popup_window.setChecked(SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_POPUP_ALLOW_SHOW, true));
-
-        sv_popup_showapps_sysmusic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showLoading("载入中", null);
-                setPopupPluginShowApp(SYSMUSIC, sv_popup_showapps_sysmusic);
-            }
-        });
-        int p1 = getPopupPluginShowAppCount(SYSMUSIC);
-        sv_popup_showapps_sysmusic.setSummary(p1 == 0 ? "不使用" : p1 + "个APP使用");
-
-        sv_popup_showapps_ncmusic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showLoading("载入中", null);
-                setPopupPluginShowApp(NCMUSIC, sv_popup_showapps_ncmusic);
-            }
-        });
-        int p2 = getPopupPluginShowAppCount(NCMUSIC);
-        sv_popup_showapps_ncmusic.setSummary(p2 == 0 ? "不使用" : p2 + "个APP使用");
-
-
-        sv_popup_showapps_qqmusic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showLoading("载入中", null);
-                setPopupPluginShowApp(QQMUSIC, sv_popup_showapps_qqmusic);
-            }
-        });
-        int p3 = getPopupPluginShowAppCount(QQMUSIC);
-        sv_popup_showapps_qqmusic.setSummary(p3 == 0 ? "不使用" : p3 + "个APP使用");
-
-
-        sv_popup_showapps_qqmusiccar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showLoading("载入中", null);
-                setPopupPluginShowApp(QQCARMUSIC, sv_popup_showapps_qqmusiccar);
-            }
-        });
-        int p4 = getPopupPluginShowAppCount(QQCARMUSIC);
-        sv_popup_showapps_qqmusiccar.setSummary(p4 == 0 ? "不使用" : p4 + "个APP使用");
-
-
-        sv_popup_showapps_amap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showLoading("载入中", null);
-                setPopupPluginShowApp(AMAP, sv_popup_showapps_amap);
-            }
-        });
-        int p5 = getPopupPluginShowAppCount(AMAP);
-        sv_popup_showapps_amap.setSummary(p5 == 0 ? "不使用" : p5 + "个APP使用");
-
-        sv_popup_showapps_jidoumusic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showLoading("载入中", null);
-                setPopupPluginShowApp(JIDOUMUSIC, sv_popup_showapps_jidoumusic);
-            }
-        });
-        int p6 = getPopupPluginShowAppCount(JIDOUMUSIC);
-        sv_popup_showapps_jidoumusic.setSummary(p6 == 0 ? "不使用" : p6 + "个APP使用");
-
-        sv_popup_showapps_pamusic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showLoading("载入中", null);
-                setPopupPluginShowApp(POWERAMPMUSIC, sv_popup_showapps_pamusic);
-            }
-        });
-        int p7 = getPopupPluginShowAppCount(POWERAMPMUSIC);
-        sv_popup_showapps_pamusic.setSummary(p7 == 0 ? "不使用" : p7 + "个APP使用");
-
-        sv_popup_showapps_nwdmusic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showLoading("载入中", null);
-                setPopupPluginShowApp(NWDMUSIC, sv_popup_showapps_nwdmusic);
-            }
-        });
-        int p8 = getPopupPluginShowAppCount(NWDMUSIC);
-        sv_popup_showapps_nwdmusic.setSummary(p8 == 0 ? "不使用" : p7 + "个APP使用");
 
         sv_popup_window_showapps.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -706,64 +516,6 @@ public class SetActivity extends BaseActivity {
 
     }
 
-    private int getPopupPluginShowAppCount(final PluginEnum pluginTypeEnum) {
-        String selectapp = SharedPreUtil.getSharedPreString(CommonData.SDATA_POPUP_PLUGIN_SHOW_APPS + pluginTypeEnum.getId());
-        if (CommonUtil.isNull(selectapp)) {
-            return 0;
-        } else {
-            return selectapp.split(";").length;
-        }
-    }
-
-    private void setPopupPluginShowApp(final PluginEnum popupPluginEnum, final SetView setView) {
-        x.task().run(new Runnable() {
-            @Override
-            public void run() {
-                String selectapp = SharedPreUtil.getSharedPreString(CommonData.SDATA_POPUP_PLUGIN_SHOW_APPS + popupPluginEnum.getId());
-                final List<AppInfo> appInfos = new ArrayList<>(AppInfoManage.self().getAppInfos());
-                String[] items = new String[appInfos.size()];
-                final boolean[] checks = new boolean[appInfos.size()];
-                for (int i = 0; i < items.length; i++) {
-                    items[i] = appInfos.get(i).name + "(" + appInfos.get(i).packageName + ")";
-                    checks[i] = selectapp.contains("[" + appInfos.get(i).packageName + "]");
-                }
-
-                final AlertDialog.Builder builder = new AlertDialog.Builder(mContext).setTitle("请选择APP").setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String selectapp = "";
-                        List<String> apps = new ArrayList<>();
-                        for (int i = 0; i < appInfos.size(); i++) {
-                            if (checks[i]) {
-                                selectapp = selectapp + "[" + appInfos.get(i).packageName + "];";
-                                apps.add(appInfos.get(i).packageName);
-                            }
-                        }
-                        if (selectapp.endsWith(";")) {
-                            selectapp = selectapp.substring(0, selectapp.length() - 1);
-                        }
-                        setView.setSummary(apps.size() == 0 ? "不使用" : apps.size() + "个APP使用");
-                        PluginManage.self().setPopupPluginShowApps(popupPluginEnum, apps);
-                        SharedPreUtil.saveSharedPreString(CommonData.SDATA_POPUP_PLUGIN_SHOW_APPS + popupPluginEnum.getId(), selectapp);
-                    }
-                }).setMultiChoiceItems(items, checks, new DialogInterface.OnMultiChoiceClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                        Log.e(TAG, "onClick: " + appInfos.get(which).name);
-                        checks[which] = isChecked;
-                    }
-                });
-
-                x.task().autoPost(new Runnable() {
-                    @Override
-                    public void run() {
-                        hideLoading();
-                        builder.create().show();
-                    }
-                });
-            }
-        });
-    }
 
     @ViewInject(R.id.time_plugin_open_app_select)
     private SetView time_plugin_open_app_select;

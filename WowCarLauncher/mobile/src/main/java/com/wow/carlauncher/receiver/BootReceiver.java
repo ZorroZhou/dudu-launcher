@@ -15,19 +15,17 @@ import org.xutils.x;
  */
 
 public class BootReceiver extends BroadcastReceiver {
-    private static final String BOOT_COMPLETED = "android.intent.action.BOOT_COMPLETED";
-
+    private static boolean bootSuccess=false;
     @Override
     public void onReceive(final Context context, Intent intent) {
-        Intent startIntent = new Intent(context, MainService.class);
-        context.startService(startIntent);
+        if(!bootSuccess){
+            bootSuccess=true;
+            Intent startIntent = new Intent(context, MainService.class);
+            context.startService(startIntent);
 
-        Intent intent2 = new Intent(context, LauncherActivity.class);
-        intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent2);
-
-        if ("android.intent.action.SCREEN_ON".equals(intent.getAction())) {
-            Toast.makeText(context, "!!!!!!!!!!", Toast.LENGTH_SHORT).show();
+            Intent intent2 = new Intent(context, LauncherActivity.class);
+            intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent2);
         }
     }
 }

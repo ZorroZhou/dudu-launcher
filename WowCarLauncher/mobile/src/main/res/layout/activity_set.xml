@@ -31,10 +31,10 @@
                 <View style="@style/Interval" />
 
                 <com.wow.carlauncher.common.view.SetView
-                    android:id="@+id/sg_launcher"
+                    android:id="@+id/sg_fangkong"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    st:titleEx="桌面设置"
+                    st:titleEx="方控设置"
                     st:type="buttonB" />
 
                 <View style="@style/Interval" />
@@ -101,7 +101,7 @@
                 <include layout="@layout/content_set_app" />
 
                 <include
-                    layout="@layout/content_set_launcher"
+                    layout="@layout/content_set_fangkong"
                     android:visibility="gone" />
 
                 <include

@@ -1,19 +1,16 @@
 package com.wow.carlauncher.common;
 
 import android.app.Application;
-import android.app.LauncherActivity;
-import android.content.Intent;
-import android.os.Handler;
-import android.text.TextUtils;
-import android.util.Log;
 
+import com.inuker.bluetooth.library.BluetoothClient;
 import com.wow.carlauncher.CarLauncherApplication;
-import com.wow.carlauncher.activity.LockActivity;
 import com.wow.carlauncher.common.console.ConsoleManage;
-import com.wow.carlauncher.plugin.PluginManage;
+import com.wow.carlauncher.plugin.amapcar.AMapCarPlugin;
+import com.wow.carlauncher.plugin.fk.FangkongPlugin;
+import com.wow.carlauncher.plugin.fk.FangkongPluginListener;
+import com.wow.carlauncher.plugin.music.MusicPlugin;
 import com.wow.carlauncher.popupWindow.ConsoleWin;
 import com.wow.carlauncher.popupWindow.PopupWin;
-import com.wow.carlauncher.service.MainService;
 import com.wow.carlauncher.webservice.AppWsInfo;
 import com.wow.carlauncher.webservice.service.CommonService;
 import com.wow.frame.SFrame;
@@ -23,8 +20,6 @@ import com.wow.frame.repertory.remote.WebServiceInfo;
 import com.wow.frame.repertory.remote.WebServiceManage;
 import com.wow.frame.util.AndroidUtil;
 import com.wow.frame.util.SharedPreUtil;
-
-import org.xutils.x;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -46,6 +41,11 @@ public class AppContext implements SWebServiceDeclare, SAppDeclare {
 
     private CarLauncherApplication application;
 
+    private BluetoothClient bluetoothClient;
+    public BluetoothClient getBluetoothClient() {
+        return bluetoothClient;
+    }
+
     private AppContext() {
 
     }
@@ -54,15 +54,28 @@ public class AppContext implements SWebServiceDeclare, SAppDeclare {
         this.application = app;
         SFrame.init(this);
 
+        bluetoothClient = new BluetoothClient(app);
+
+        AMapCarPlugin.self().init(app);
+        MusicPlugin.self().init(app);
+        FangkongPlugin.self().init(app);
+
         AppInfoManage.self().init(app);
         AppWidgetManage.self().init(app);
         ConsoleManage.self().init(app);
-        PluginManage.self().init(app);
         PopupWin.self().init(app);
         ConsoleWin.self().init(app);
 
         int size = SharedPreUtil.getSharedPreInteger(CommonData.SDATA_POPUP_SIZE, 1);
         PopupWin.self().setRank(size + 1);
+
+        FangkongPlugin.self().addListener(new FangkongPluginListener() {
+            @Override
+            public void connect(boolean success) {
+
+            }
+        });
+
 
         handerException();
     }

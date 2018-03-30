@@ -75,4 +75,14 @@ public class ConsoleManage extends IConsole {
     public void clearTask() {
         console.clearTask();
     }
+
+    @Override
+    public void callAnswer() {
+        console.callAnswer();
+    }
+
+    @Override
+    public void callHangup() {
+        console.callHangup();
+    }
 }

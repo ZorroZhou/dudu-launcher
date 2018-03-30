@@ -5,17 +5,27 @@
     android:layout_height="match_parent"
     android:background="@color/popup_show_plugin">
 
-    <LinearLayout
+    <com.zhy.android.percent.support.PercentLinearLayout
         android:id="@+id/ll_menu"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        app:layout_widthPercent="100%h">
+        app:layout_widthPercent="150%h">
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="11:11"
+            android:textColor="@android:color/white"
+            app:layout_textSizePercent="20%h" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:orientation="horizontal">
 
             <com.zhy.android.percent.support.PercentLinearLayout
@@ -29,44 +39,6 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:src="@mipmap/ic_move"
-                    app:layout_heightPercent="70%h"
-                    app:layout_widthPercent="70%h" />
-            </com.zhy.android.percent.support.PercentLinearLayout>
-
-            <com.zhy.android.percent.support.PercentLinearLayout
-                android:id="@+id/ll_home"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center">
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:src="@mipmap/ic_home"
-                    app:layout_heightPercent="70%h"
-                    app:layout_widthPercent="70%h" />
-            </com.zhy.android.percent.support.PercentLinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-
-            <com.zhy.android.percent.support.PercentLinearLayout
-                android:id="@+id/ll_controller"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center">
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:src="@mipmap/ic_controller"
                     app:layout_heightPercent="70%h"
                     app:layout_widthPercent="70%h" />
             </com.zhy.android.percent.support.PercentLinearLayout>
@@ -86,7 +58,7 @@
                     app:layout_widthPercent="70%h" />
             </com.zhy.android.percent.support.PercentLinearLayout>
         </LinearLayout>
-    </LinearLayout>
+    </com.zhy.android.percent.support.PercentLinearLayout>
 
     <com.zhy.android.percent.support.PercentLinearLayout
         android:id="@+id/ll_plugin"

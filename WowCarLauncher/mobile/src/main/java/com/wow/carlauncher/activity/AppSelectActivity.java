@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.app.WallpaperManager;
 import android.content.Intent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
@@ -33,6 +34,8 @@ public class AppSelectActivity extends BaseActivity implements AdapterView.OnIte
 
     @Override
     public void init() {
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContent(R.layout.activity_select_app);
 
         adapter = new SelectAppAdapter(this);

@@ -19,11 +19,8 @@ public class MainService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        if (getApplicationEx().checkActivity(0) == 0) {
-            Intent intent = new Intent(this, LauncherActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent);
-        }
+
+
     }
 
     @Nullable

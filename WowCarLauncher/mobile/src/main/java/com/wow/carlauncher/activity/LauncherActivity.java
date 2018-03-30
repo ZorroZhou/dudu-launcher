@@ -1,27 +1,42 @@
 package com.wow.carlauncher.activity;
 
 import android.app.Activity;
-import android.app.WallpaperManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
+import com.amap.api.maps2d.AMapUtils;
+import com.amap.api.maps2d.model.LatLng;
+import com.wow.carlauncher.plugin.amapcar.AMapCarPlugin;
+import com.wow.carlauncher.plugin.amapcar.AMapCarPluginListener;
+import com.wow.carlauncher.plugin.amapcar.NaviInfo;
+import com.wow.carlauncher.plugin.fk.FangkongPlugin;
+import com.wow.carlauncher.plugin.fk.FangkongPluginListener;
+import com.wow.carlauncher.plugin.music.MusicPlugin;
+import com.wow.carlauncher.plugin.music.MusicPluginListener;
+import com.wow.frame.util.AppUtil;
 import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.DateUtil;
 import com.wow.frame.util.SharedPreUtil;
@@ -32,9 +47,6 @@ import com.wow.carlauncher.event.LauncherCityRefreshEvent;
 import com.wow.carlauncher.event.LauncherDockLabelShowChangeEvent;
 import com.wow.carlauncher.event.LauncherItemBackgroundRefreshEvent;
 import com.wow.carlauncher.event.LauncherItemRefreshEvent;
-import com.wow.carlauncher.plugin.LauncherPluginEnum;
-import com.wow.carlauncher.plugin.PluginManage;
-import com.wow.carlauncher.popupWindow.ConsoleWin;
 import com.wow.carlauncher.common.amapWebservice.WebService;
 import com.wow.carlauncher.common.amapWebservice.res.WeatherRes;
 
@@ -43,19 +55,26 @@ import org.greenrobot.eventbus.Subscribe;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import static com.wow.carlauncher.common.CommonData.*;
+import static com.wow.carlauncher.plugin.amapcar.AMapCarConstant.AMAP_PACKAGE;
+import static com.wow.carlauncher.plugin.amapcar.AMapCarConstant.ICONS;
 
-public class LauncherActivity extends Activity implements View.OnClickListener, View.OnLongClickListener {
-    @ViewInject(R.id.item_1)
-    private FrameLayout item_1;
+public class LauncherActivity extends Activity implements View.OnClickListener, View.OnLongClickListener,
+        AMapCarPluginListener,
+        MusicPluginListener,
+        AMapLocationListener,
+        FangkongPluginListener {
+    @ViewInject(R.id.item_music)
+    private FrameLayout item_music;
     @ViewInject(R.id.item_2)
     private FrameLayout item_2;
-    @ViewInject(R.id.item_3)
-    private FrameLayout item_3;
+    @ViewInject(R.id.item_amap)
+    private FrameLayout item_amap;
 
     @ViewInject(R.id.time)
     private TextView time;
@@ -113,27 +132,19 @@ public class LauncherActivity extends Activity implements View.OnClickListener, 
     @ViewInject(R.id.tv_dock5)
     private TextView tv_dock5;
 
-    @ViewInject(R.id.ll_dock6)
-    private LinearLayout ll_dock6;
-    @ViewInject(R.id.iv_dock6)
-    private ImageView iv_dock6;
-    @ViewInject(R.id.tv_dock6)
-    private TextView tv_dock6;
-
     @ViewInject(R.id.tv_app_appss)
     private TextView tv_app_appss;
 
-    @ViewInject(R.id.tv_controller)
-    private TextView tv_controller;
+    @ViewInject(R.id.iv_fangkong_state)
+    private ImageView iv_fangkong_state;
 
-    @ViewInject(R.id.fl_bg)
-    private FrameLayout fl_bg;
 
     private Context mContext;
 
     //高德地图的定位客户端
     private PackageManager pm;
-    private WallpaperManager wallManager;
+
+    private AMapLocationClient locationClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,7 +155,6 @@ public class LauncherActivity extends Activity implements View.OnClickListener, 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         pm = getPackageManager();
-        wallManager = WallpaperManager.getInstance(this);
 
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
@@ -156,9 +166,49 @@ public class LauncherActivity extends Activity implements View.OnClickListener, 
         loadDock();
         loadItem();
         loadItemBackground();
-        Log.e(TAG, "onCreate: !!!!!!!!!!!" + this);
+        loadLoaction();
+
+        FangkongPlugin.self().addListener(this);
+        MusicPlugin.self().addListener(this);
+        AMapCarPlugin.self().addListener(this);
     }
 
+    private long lastTime = -1;
+    private double lastLat = -1, lastLng = -1;
+
+    private void loadLoaction() {
+        locationClient = new AMapLocationClient(getApplicationContext());
+
+        AMapLocationClientOption locationOption = new AMapLocationClientOption();
+        locationClient.setLocationListener(this);
+        locationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Device_Sensors);
+        locationOption.setInterval(100);
+        locationOption.setGpsFirst(true);
+        locationOption.setNeedAddress(false);
+        locationOption.setSensorEnable(true);
+        locationClient.setLocationOption(locationOption);
+        locationClient.startLocation();
+    }
+
+    @Override
+    public void onLocationChanged(AMapLocation aMapLocation) {
+        if (aMapLocation.getErrorCode() == AMapLocation.LOCATION_SUCCESS && aMapLocation.getLocationType() == AMapLocation.LOCATION_TYPE_GPS) {
+            if (lastLat == -1 || lastTime == -1 || lastLng == -1) {
+                lastLat = aMapLocation.getLatitude();
+                lastLng = aMapLocation.getLongitude();
+                lastTime = System.currentTimeMillis();
+                return;
+            }
+
+            int speed = (int) (AMapUtils.calculateLineDistance(new LatLng(lastLat, lastLng), new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude())) / ((System.currentTimeMillis() - lastTime) / 1000 / 60 / 60)) / 1000;
+
+            tv_speed.setText(speed + "");
+
+            lastLat = aMapLocation.getLatitude();
+            lastLng = aMapLocation.getLongitude();
+            lastTime = System.currentTimeMillis();
+        }
+    }
 
     public void initView() {
         setContentView(R.layout.activity_lanncher);
@@ -169,17 +219,14 @@ public class LauncherActivity extends Activity implements View.OnClickListener, 
         ll_dock3.setOnLongClickListener(this);
         ll_dock4.setOnLongClickListener(this);
         ll_dock5.setOnLongClickListener(this);
-        ll_dock6.setOnLongClickListener(this);
 
         ll_dock1.setOnClickListener(this);
         ll_dock2.setOnClickListener(this);
         ll_dock3.setOnClickListener(this);
         ll_dock4.setOnClickListener(this);
         ll_dock5.setOnClickListener(this);
-        ll_dock6.setOnClickListener(this);
 
         findViewById(R.id.ll_all_apps).setOnClickListener(this);
-        findViewById(R.id.ll_controller).setOnClickListener(this);
         findViewById(R.id.iv_set).setOnClickListener(this);
         findViewById(R.id.ll_time).setOnClickListener(this);
     }
@@ -244,18 +291,6 @@ public class LauncherActivity extends Activity implements View.OnClickListener, 
                 SharedPreUtil.saveSharedPreString(SDATA_DOCK5_CLASS, null);
             }
         }
-
-        String packname6 = SharedPreUtil.getSharedPreString(SDATA_DOCK6_CLASS);
-        if (CommonUtil.isNotNull(packname6)) {
-            try {
-                PackageInfo packageInfo = pm.getPackageInfo(packname6, 0);
-                iv_dock6.setImageDrawable(packageInfo.applicationInfo.loadIcon(pm));
-                tv_dock6.setText(packageInfo.applicationInfo.loadLabel(pm));
-            } catch (Exception e) {
-                showTip("dock5加载失败:" + e.getMessage());
-                SharedPreUtil.saveSharedPreString(SDATA_DOCK6_CLASS, null);
-            }
-        }
         dockLabelShow(SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_LAUNCHER_DOCK_LABEL_SHOW, true));
     }
 
@@ -293,10 +328,6 @@ public class LauncherActivity extends Activity implements View.OnClickListener, 
                 startActivityForResult(new Intent(this, AppSelectActivity.class), REQUEST_SELECT_APP_TO_DOCK5);
                 break;
             }
-            case R.id.ll_dock6: {
-                startActivityForResult(new Intent(this, AppSelectActivity.class), REQUEST_SELECT_APP_TO_DOCK6);
-                break;
-            }
         }
         return false;
     }
@@ -315,10 +346,6 @@ public class LauncherActivity extends Activity implements View.OnClickListener, 
                         showTip("APP丢失");
                     }
                 }
-                break;
-            }
-            case R.id.ll_controller: {
-                ConsoleWin.self().show();
                 break;
             }
             case R.id.iv_set: {
@@ -365,15 +392,6 @@ public class LauncherActivity extends Activity implements View.OnClickListener, 
                 String packname = SharedPreUtil.getSharedPreString(SDATA_DOCK5_CLASS);
                 if (CommonUtil.isNull(packname)) {
                     startActivityForResult(new Intent(this, AppSelectActivity.class), REQUEST_SELECT_APP_TO_DOCK5);
-                } else {
-                    openDock(packname);
-                }
-                break;
-            }
-            case R.id.ll_dock6: {
-                String packname = SharedPreUtil.getSharedPreString(SDATA_DOCK6_CLASS);
-                if (CommonUtil.isNull(packname)) {
-                    startActivityForResult(new Intent(this, AppSelectActivity.class), REQUEST_SELECT_APP_TO_DOCK6);
                 } else {
                     openDock(packname);
                 }
@@ -453,30 +471,26 @@ public class LauncherActivity extends Activity implements View.OnClickListener, 
     private void loadItemBackground() {
         try {
             int c = Color.parseColor(SharedPreUtil.getSharedPreString(SDATA_LAUNCHER_ITEM1_BG_COLOR));
-            ((GradientDrawable) item_1.getBackground()).setColor(c);
+            ((GradientDrawable) item_music.getBackground()).setColor(c);
         } catch (Exception e) {
-            item_1.setBackgroundResource(R.drawable.l_item_bg_black);
         }
 
         try {
             int c = Color.parseColor(SharedPreUtil.getSharedPreString(SDATA_LAUNCHER_ITEM2_BG_COLOR));
             ((GradientDrawable) item_2.getBackground()).setColor(c);
         } catch (Exception e) {
-            item_2.setBackgroundResource(R.drawable.l_item_bg_black);
         }
 
         try {
             int c = Color.parseColor(SharedPreUtil.getSharedPreString(SDATA_LAUNCHER_ITEM3_BG_COLOR));
-            ((GradientDrawable) item_3.getBackground()).setColor(c);
+            ((GradientDrawable) item_amap.getBackground()).setColor(c);
         } catch (Exception e) {
-            item_3.setBackgroundResource(R.drawable.l_item_bg_black);
         }
 
         try {
             int c = Color.parseColor(SharedPreUtil.getSharedPreString(SDATA_LAUNCHER_DOCK_BG_COLOR));
             ll_dock.setBackgroundColor(c);
         } catch (Exception e) {
-            ll_dock.setBackgroundResource(R.color.launch_dock_bg);
         }
 
     }
@@ -519,19 +533,6 @@ public class LauncherActivity extends Activity implements View.OnClickListener, 
                 loadDock();
             }
         }
-        if (requestCode == REQUEST_SELECT_APP_TO_DOCK6) {
-            if (resultCode == RESULT_OK) {
-                String packName = data.getStringExtra(IDATA_PACKAGE_NAME);
-                SharedPreUtil.saveSharedPreString(SDATA_DOCK6_CLASS, packName);
-                loadDock();
-            }
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        PluginManage.self().setCurrentActivity(this);
     }
 
     @Override
@@ -555,6 +556,9 @@ public class LauncherActivity extends Activity implements View.OnClickListener, 
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(homeReceiver);
+        locationClient.stopLocation();
+        locationClient.unRegisterLocationListener(this);
+        locationClient = null;
     }
 
     @Override
@@ -601,36 +605,239 @@ public class LauncherActivity extends Activity implements View.OnClickListener, 
             showFlag = View.GONE;
         }
         tv_app_appss.setVisibility(showFlag);
-        tv_controller.setVisibility(showFlag);
         tv_dock1.setVisibility(showFlag);
         tv_dock2.setVisibility(showFlag);
         tv_dock3.setVisibility(showFlag);
         tv_dock4.setVisibility(showFlag);
         tv_dock5.setVisibility(showFlag);
-        tv_dock6.setVisibility(showFlag);
     }
 
+    //高德地图的视图
+    private View amapController;
+    private ImageView amapIcon;
+    private LinearLayout amapnavi;
+    private TextView amapdis;
+    private TextView amaproad;
+    private TextView amapmsg;
+
+
+    private ImageView music_iv_play, music_iv_cover;
+    private TextView music_tv_title, music_tv_time;
+    private ProgressBar music_pb_music;
+
+    private TextView tv_speed;
+
     private void loadItem() {
-        View item1 = PluginManage.self().getLauncherPlugin(LauncherPluginEnum.LAUNCHER_ITEM1).getLauncherView();
-        if (item1.getParent() != null) {
-            ((ViewGroup) item1.getParent()).removeView(item1);
-        }
-        item_1.removeAllViews();
-        item_1.addView(item1, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        FrameLayout item1 = (FrameLayout) View.inflate(this, R.layout.plugin_car_info, null);
+        item_2.addView(item1, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
 
-        View item2 = PluginManage.self().getLauncherPlugin(LauncherPluginEnum.LAUNCHER_ITEM2).getLauncherView();
-        if (item2.getParent() != null) {
-            ((ViewGroup) item2.getParent()).removeView(item2);
-        }
-        item_2.removeAllViews();
-        item_2.addView(item2, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        tv_speed = (TextView) item_music.findViewById(R.id.tv_speed);
 
-        View item3 = PluginManage.self().getLauncherPlugin(LauncherPluginEnum.LAUNCHER_ITEM3).getLauncherView();
-        if (item3.getParent() != null) {
-            ((ViewGroup) item3.getParent()).removeView(item3);
+        View.OnClickListener musicclick = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch (view.getId()) {
+                    case R.id.ll_prew: {
+                        MusicPlugin.self().pre();
+                        break;
+                    }
+                    case R.id.iv_play: {
+                        MusicPlugin.self().playOrPause();
+                        break;
+                    }
+                    case R.id.ll_next: {
+                        MusicPlugin.self().next();
+                        break;
+                    }
+                }
+            }
+        };
+
+        RelativeLayout musicView = (RelativeLayout) View.inflate(this, R.layout.plugin_music_launcher, null);
+        item_music.addView(musicView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+
+        music_iv_play = (ImageView) item_music.findViewById(R.id.iv_play);
+        music_tv_title = (TextView) item_music.findViewById(R.id.tv_title);
+        music_iv_cover = (ImageView) item_music.findViewById(R.id.iv_cover);
+        music_tv_time = (TextView) item_music.findViewById(R.id.tv_time);
+        music_pb_music = (ProgressBar) item_music.findViewById(R.id.pb_music);
+
+        item_music.findViewById(R.id.iv_play).setOnClickListener(musicclick);
+        item_music.findViewById(R.id.ll_prew).setOnClickListener(musicclick);
+        item_music.findViewById(R.id.ll_next).setOnClickListener(musicclick);
+
+        //高德地图的界面
+        View.OnClickListener amapclick = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch (view.getId()) {
+                    case R.id.rl_base: {
+                        Intent appIntent = LauncherActivity.this.getPackageManager().getLaunchIntentForPackage(AMAP_PACKAGE);
+                        if (appIntent == null) {
+                            Toast.makeText(LauncherActivity.this, "没有安装高德地图", Toast.LENGTH_SHORT).show();
+                            break;
+                        }
+                        appIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        LauncherActivity.this.startActivity(appIntent);
+                        break;
+                    }
+                    case R.id.btn_go_home: {
+                        if (!AppUtil.isInstall(LauncherActivity.this, AMAP_PACKAGE)) {
+                            Toast.makeText(LauncherActivity.this, "没有安装高德地图", Toast.LENGTH_SHORT).show();
+                            break;
+                        }
+                        AMapCarPlugin.self().getHome();
+                        break;
+                    }
+                    case R.id.btn_go_company: {
+                        if (!AppUtil.isInstall(LauncherActivity.this, AMAP_PACKAGE)) {
+                            Toast.makeText(LauncherActivity.this, "没有安装高德地图", Toast.LENGTH_SHORT).show();
+                            break;
+                        }
+                        AMapCarPlugin.self().getComp();
+                        break;
+                    }
+                }
+            }
+        };
+
+        RelativeLayout amapView = (RelativeLayout) View.inflate(this, R.layout.plugin_amap_launcher, null);
+        amapView.findViewById(R.id.rl_base).setOnClickListener(amapclick);
+        amapView.findViewById(R.id.btn_go_home).setOnClickListener(amapclick);
+        amapView.findViewById(R.id.btn_go_company).setOnClickListener(amapclick);
+
+        amapIcon = (ImageView) amapView.findViewById(R.id.iv_icon);
+        amapController = amapView.findViewById(R.id.ll_controller);
+        amapnavi = (LinearLayout) amapView.findViewById(R.id.ll_navi);
+        amapdis = (TextView) amapView.findViewById(R.id.tv_dis);
+        amaproad = (TextView) amapView.findViewById(R.id.tv_road);
+        amapmsg = (TextView) amapView.findViewById(R.id.tv_msg);
+
+        item_amap.addView(amapView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+    }
+
+    @Override
+    public void refreshNaviInfo(NaviInfo naviBean) {
+        Log.e(TAG, "refreshNaviInfo:" + naviBean);
+        switch (naviBean.getType()) {
+            case NaviInfo.TYPE_STATE: {
+                if (amapController != null) {
+                    if (naviBean.getState() == 8 || naviBean.getState() == 10) {
+                        amapController.setVisibility(View.GONE);
+                        amapnavi.setVisibility(View.VISIBLE);
+                    } else if (naviBean.getState() == 9 || naviBean.getState() == 11) {
+                        amapController.setVisibility(View.VISIBLE);
+                        amapnavi.setVisibility(View.GONE);
+                        amapIcon.setImageResource(R.mipmap.ic_amap);
+                    }
+                }
+                break;
+            }
+            case NaviInfo.TYPE_NAVI: {
+                if (amapIcon != null && naviBean.getIcon() - 1 >= 0 && naviBean.getIcon() - 1 < ICONS.length) {
+                    amapIcon.setImageResource(ICONS[naviBean.getIcon() - 1]);
+                }
+                if (amapdis != null && naviBean.getDis() > -1) {
+                    if (naviBean.getDis() < 10) {
+                        amapdis.setText("现在");
+                    } else {
+                        if (naviBean.getDis() > 1000) {
+                            String msg = naviBean.getDis() / 1000 + "公里后";
+                            amapdis.setText(msg);
+                        } else {
+                            String msg = naviBean.getDis() + "米后";
+                            amapdis.setText(msg);
+                        }
+
+                    }
+                }
+                if (amaproad != null && CommonUtil.isNotNull(naviBean.getWroad())) {
+                    amaproad.setText(naviBean.getWroad());
+                }
+                if (amapmsg != null && naviBean.getRemainTime() > -1 && naviBean.getRemainDis() > -1) {
+                    if (naviBean.getRemainTime() == 0 || naviBean.getRemainDis() == 0) {
+                        amapmsg.setText("到达");
+                    } else {
+                        String msg = "剩余" + new BigDecimal(naviBean.getRemainDis() / 1000f).setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue() + "公里  " +
+                                naviBean.getRemainTime() / 60 + "分钟";
+                        amapmsg.setText(msg);
+                    }
+                }
+                break;
+            }
         }
-        item_3.removeAllViews();
-        item_3.addView(item3, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+    }
+
+    public void refreshInfo(final String title, final String artist) {
+        x.task().post(new Runnable() {
+            @Override
+            public void run() {
+                if (music_tv_title != null) {
+                    if (CommonUtil.isNotNull(title)) {
+                        music_tv_title.setText(title);
+                    } else {
+                        music_tv_title.setText("标题");
+                    }
+                }
+            }
+        });
+    }
+
+    public void refreshProgress(final int curr_time, final int total_time) {
+        x.task().post(new Runnable() {
+            @Override
+            public void run() {
+                if (music_pb_music != null && curr_time > 0 && total_time > 0) {
+                    music_pb_music.setProgress(curr_time);
+                    music_pb_music.setMax(total_time);
+                }
+
+                if (music_tv_time != null) {
+                    int tt = total_time / 1000;
+                    int cc = curr_time / 1000;
+                    music_tv_time.setText(cc + ":" + tt);
+                }
+            }
+        });
+    }
+
+    public void refreshCover(final Bitmap cover) {
+        x.task().post(new Runnable() {
+            @Override
+            public void run() {
+                if (cover != null) {
+                    music_iv_cover.setImageBitmap(cover);
+                } else {
+
+                }
+            }
+        });
+    }
+
+    public void refreshState(final boolean run) {
+        x.task().post(new Runnable() {
+            @Override
+            public void run() {
+                if (music_iv_play != null) {
+                    if (run) {
+                        music_iv_play.setImageResource(R.mipmap.ic_pause);
+                    } else {
+                        music_iv_play.setImageResource(R.mipmap.ic_play);
+                    }
+                }
+            }
+        });
+    }
+
+    @Override
+    public void connect(boolean success) {
+        if (success) {
+            Toast.makeText(getApplication(), "方控连接成功", Toast.LENGTH_LONG).show();
+            iv_fangkong_state.setImageResource(R.mipmap.fanglong_connect);
+        } else {
+            iv_fangkong_state.setImageResource(R.mipmap.fanglong_disconnect);
+        }
+        System.out.println("连接状态:" + success);
     }
 
     @Subscribe

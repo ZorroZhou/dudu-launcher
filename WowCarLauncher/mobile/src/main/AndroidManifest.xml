@@ -88,9 +88,16 @@
 
                 <action android:name="com.nwd.ACTION_AFTER_BOOT_COMPLETED" />
                 <action android:name="com.nwd.action.ACTION_GOHOME" />
+                <action android:name="com.nwd.action.ACTION_MCU_STATE_CHANGE"/>
+                <action android:name="com.android.systemui.statusBar.Translucent"/>
+                <action android:name="action_update_time"/>
             </intent-filter>
         </receiver>
-
+        <receiver android:exported="true" android:name=".receiver.NetChangeReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+            </intent-filter>
+        </receiver>
         <receiver
             android:name=".receiver.AppInstallReceiver"
             android:label="@string/app_name">

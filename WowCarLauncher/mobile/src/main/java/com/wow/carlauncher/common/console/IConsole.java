@@ -25,4 +25,8 @@ public abstract class IConsole {
     public abstract void mute();
 
     public abstract void clearTask();
+
+    public abstract void callAnswer();
+
+    public abstract void callHangup();
 }

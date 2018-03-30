@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
@@ -37,6 +38,8 @@ public class AppMenuActivity extends BaseActivity implements AdapterView.OnItemC
 
     @Override
     public void init() {
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContent(R.layout.activity_all_app);
         adapter = new AllAppAdapter(this);
         pm = getPackageManager();

@@ -5,10 +5,10 @@ android {
     buildToolsVersion '25.0.0'
     defaultConfig {
         applicationId "com.wow.carlauncher"
-        minSdkVersion 14
+        minSdkVersion 18
         targetSdkVersion 24
-        versionCode 5
-        versionName "1.005"
+        versionCode 6
+        versionName "1.100"
     }
     buildTypes {
         release {
@@ -55,5 +55,5 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
 
     compile 'com.zhy:percent-support-extends:+'
-
+    compile 'com.inuker.bluetooth:library:1.4.0'
 }

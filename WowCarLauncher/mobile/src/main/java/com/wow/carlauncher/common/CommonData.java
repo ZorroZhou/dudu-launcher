@@ -1,19 +1,6 @@
 package com.wow.carlauncher.common;
 
-import com.wow.carlauncher.plugin.PluginEnum;
-
 public class CommonData {
-    public static final PluginEnum[] ALL_PLUGINS = {PluginEnum.SYSMUSIC,
-            PluginEnum.NCMUSIC,
-            PluginEnum.CONSOLE,
-            PluginEnum.AMAP,
-            PluginEnum.QQMUSIC,
-            PluginEnum.QQCARMUSIC,
-            PluginEnum.JIDOUMUSIC,
-            PluginEnum.POWERAMPMUSIC,
-            PluginEnum.NWDMUSIC,
-            PluginEnum.GPS};
-
     public static final String[] POPUP_SIZE = {"小", "中", "大"};
 
 
@@ -25,7 +12,6 @@ public class CommonData {
     public static final int REQUEST_SELECT_APP_TO_DOCK3 = 10002;
     public static final int REQUEST_SELECT_APP_TO_DOCK4 = 10003;
     public static final int REQUEST_SELECT_APP_TO_DOCK5 = 10004;
-    public static final int REQUEST_SELECT_APP_TO_DOCK6 = 10005;
 
     public static final int REQUEST_SELECT_NCM_WIDGET1 = 10006;
     public static final int REQUEST_SELECT_NCM_WIDGET2 = 10007;
@@ -36,17 +22,17 @@ public class CommonData {
     public static final String IDATA_PACKAGE_NAME = "PACKAGE_NAME";
 
     //首页的插件
-    public static final String SDATA_ITEM1_PLUGIN = "SDATA_ITEM1_PLUGIN";
-    public static final String SDATA_ITEM2_PLUGIN = "SDATA_ITEM2_PLUGIN";
-    public static final String SDATA_ITEM3_PLUGIN = "SDATA_ITEM3_PLUGIN";
+    public static final String SDATA_MUSIC_CONTROLLER = "SDATA_MUSIC_CONTROLLER";
 
+    //方控的地址
+    public static final String SDATA_FANGKONG_Name = "SDATA_FANGKONG_Name";
+    public static final String SDATA_FANGKONG_ADDRESS = "SDATA_FANGKONG_ADDRESS";
     //dock的包名start
     public static final String SDATA_DOCK1_CLASS = "DOCK1_BEAN";
     public static final String SDATA_DOCK2_CLASS = "DOCK2_BEAN";
     public static final String SDATA_DOCK3_CLASS = "DOCK3_BEAN";
     public static final String SDATA_DOCK4_CLASS = "DOCK4_BEAN";
     public static final String SDATA_DOCK5_CLASS = "DOCK5_BEAN";
-    public static final String SDATA_DOCK6_CLASS = "DOCK6_BEAN";
     //dock的包名end
     //悬浮框的X坐标
     public static final String SDATA_POPUP_WIN_X = "SDATA_POPUP_WIN_X";

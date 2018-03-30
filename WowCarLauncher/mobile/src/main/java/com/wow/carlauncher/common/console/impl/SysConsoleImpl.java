@@ -71,4 +71,15 @@ public class SysConsoleImpl extends IConsole {
             Log.i(TAG, "清理进程数量为 : " + count + 1);
         }
     }
+
+    @Override
+    public void callAnswer() {
+
+    }
+
+    @Override
+    public void callHangup() {
+
+    }
+
 }

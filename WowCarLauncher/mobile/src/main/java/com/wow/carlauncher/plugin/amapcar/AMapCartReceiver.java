@@ -3,19 +3,13 @@ package com.wow.carlauncher.plugin.amapcar;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
+import android.widget.Toast;
 
-import com.wow.carlauncher.common.BaseDialog;
+import com.wow.carlauncher.plugin.BasePlugin;
 
 import org.xutils.x;
 
 import static com.wow.carlauncher.plugin.amapcar.AMapCarConstant.*;
-import static com.wow.carlauncher.common.CommonData.TAG;
-
-/**
- * Created by 10124 on 2017/11/6.
- */
 
 public class AMapCartReceiver extends BroadcastReceiver {
     public static final int GETHC_NEXT_TO_NONE = 0;
@@ -39,14 +33,8 @@ public class AMapCartReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, final Intent intent) {
         String action = intent.getAction();
-        if (action.equals(RECEIVE_ACTION)) {
+        if (RECEIVE_ACTION.equals(action)) {
             int key = intent.getIntExtra(KEY_TYPE, -1);
-            Bundle bundle = intent.getExtras();
-//            Log.i("Bundle Content", "start Key=" + key + "-----------------------------------");
-//            for (String k : bundle.keySet()) {
-//                Log.i("Bundle Content", "Key=" + k + ", content=" + bundle.get(k));
-//            }
-//            Log.i("Bundle Content", "end Key=" + key + "-----------------------------------");
             switch (key) {
                 case RESPONSE_DISTRICT: {
                     intent.getStringExtra(RESPONSE_DISTRICT_PRVINCE_NAME);
@@ -59,18 +47,7 @@ public class AMapCartReceiver extends BroadcastReceiver {
                     int type = intent.getIntExtra(CATEGORY, -1);
                     if (type == 1) {
                         if (lon == 0 || lat == 0) {
-                            new BaseDialog(aMapCarPlugin.getPluginManage().getCurrentActivity())
-                                    .setTitle("提示")
-                                    .setGravityCenter()
-                                    .setMessage("没有设置家的信息，是否前往设置")
-                                    .setBtn1("取消", null)
-                                    .setBtn2("确定", new BaseDialog.OnBtnClickListener() {
-                                        @Override
-                                        public boolean onClick(BaseDialog dialog) {
-                                            aMapCarPlugin.getAmapSend().toHomeSet();
-                                            return true;
-                                        }
-                                    }).show();
+                            Toast.makeText(context, "没有设置家的位置,请打开高德进行设置", Toast.LENGTH_SHORT).show();
                             return;
                         } else {
                             int next = GETHC_NEXT_TO_NONE;
@@ -79,25 +56,14 @@ public class AMapCartReceiver extends BroadcastReceiver {
                             }
                             switch (next) {
                                 case GETHC_NEXT_TO_NAVI: {
-                                    aMapCarPlugin.getAmapSend().naviToHome();
+                                    aMapCarPlugin.naviToHome();
                                     break;
                                 }
                             }
                         }
                     } else if (type == 2) {
                         if (lon == 0 || lat == 0) {
-                            new BaseDialog(aMapCarPlugin.getPluginManage().getCurrentActivity())
-                                    .setTitle("提示")
-                                    .setGravityCenter()
-                                    .setMessage("没有设置公司的信息，是否前往设置")
-                                    .setBtn1("取消", null)
-                                    .setBtn2("确定", new BaseDialog.OnBtnClickListener() {
-                                        @Override
-                                        public boolean onClick(BaseDialog dialog) {
-                                            aMapCarPlugin.getAmapSend().toCompSet();
-                                            return true;
-                                        }
-                                    }).show();
+                            Toast.makeText(context, "没有设置公司的位置,请打开高德进行设置", Toast.LENGTH_SHORT).show();
                             return;
                         } else {
                             int next = GETHC_NEXT_TO_NONE;
@@ -106,7 +72,7 @@ public class AMapCartReceiver extends BroadcastReceiver {
                             }
                             switch (next) {
                                 case GETHC_NEXT_TO_NAVI: {
-                                    aMapCarPlugin.getAmapSend().naviToComp();
+                                    aMapCarPlugin.naviToComp();
                                     break;
                                 }
                             }

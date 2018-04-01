@@ -45,9 +45,10 @@
             android:gravity="center">
 
             <ImageView
+                android:id="@+id/iv_light"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@mipmap/che_light_on" />
+                android:src="@mipmap/che_light_off" />
         </com.zhy.android.percent.support.PercentLinearLayout>
     </LinearLayout>
 </com.zhy.android.percent.support.PercentFrameLayout>

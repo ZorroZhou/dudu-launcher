@@ -71,12 +71,13 @@ public class FangkongPlugin extends BasePlugin<FangkongPluginListener> {
                     fangkongProtocol = new YiLianProtocol(fkaddress, context);
                     break;
             }
-            Toast.makeText(getContext(), "尝试使用:" + p1.getName() + " 协议连接方控", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "尝试使用:" + p1.getName() + " 协议连接方控", Toast.LENGTH_SHORT).show();
 
             AppContext.self().getBluetoothClient().connect(fangkongProtocol.getAddress(), options, new BleConnectResponse() {
                 @Override
                 public void onResponse(int code, BleGattProfile data) {
                     if (code == REQUEST_SUCCESS) {
+                        Toast.makeText(context, "方控连接成功", Toast.LENGTH_SHORT).show();
                         AppContext.self().getBluetoothClient().notify(fangkongProtocol.getAddress(),
                                 fangkongProtocol.getService(),
                                 fangkongProtocol.getCharacter(),
@@ -116,6 +117,8 @@ public class FangkongPlugin extends BasePlugin<FangkongPluginListener> {
                     }
                 }
             });
+        } else {
+            Toast.makeText(context, "请到设置里进行方控的绑定", Toast.LENGTH_SHORT).show();
         }
     }
 

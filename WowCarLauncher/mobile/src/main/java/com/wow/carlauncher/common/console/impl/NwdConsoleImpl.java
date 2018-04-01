@@ -35,11 +35,11 @@ public class NwdConsoleImpl extends IConsole {
     @Override
     public synchronized void mute() {
         if (mute) {
-            this.mMuteIntent.putExtra("extra_mute", true);
+            this.mMuteIntent.putExtra("extra_mute", false);
             this.context.sendBroadcast(this.mMuteIntent);
             mute = false;
         } else {
-            this.mMuteIntent.putExtra("extra_mute", false);
+            this.mMuteIntent.putExtra("extra_mute", true);
             this.context.sendBroadcast(this.mMuteIntent);
             mute = true;
         }

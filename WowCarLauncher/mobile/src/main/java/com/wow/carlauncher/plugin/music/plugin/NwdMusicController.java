@@ -42,11 +42,13 @@ public class NwdMusicController extends MusicController {
 
     public void next() {
         sendEvent(CMD_NEXT);
+        sendEvent(CMD_RESUME);
         musicView.refreshState(true);
     }
 
     public void pre() {
         sendEvent(CMD_PRE);
+        sendEvent(CMD_RESUME);
         musicView.refreshState(true);
     }
 

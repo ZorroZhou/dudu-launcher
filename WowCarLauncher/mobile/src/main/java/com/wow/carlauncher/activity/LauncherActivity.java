@@ -11,6 +11,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.text.TextPaint;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -29,6 +30,7 @@ import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps2d.AMapUtils;
 import com.amap.api.maps2d.model.LatLng;
+import com.wow.carlauncher.common.nwd.SettingTableKey;
 import com.wow.carlauncher.plugin.amapcar.AMapCarPlugin;
 import com.wow.carlauncher.plugin.amapcar.AMapCarPluginListener;
 import com.wow.carlauncher.plugin.amapcar.NaviInfo;
@@ -187,27 +189,63 @@ public class LauncherActivity extends Activity implements View.OnClickListener, 
         locationOption.setSensorEnable(true);
         locationClient.setLocationOption(locationOption);
         locationClient.startLocation();
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("com.nwd.action.ACTION_NO_SOURCE_DEVICE_CHANGE");
+        this.registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(final Context context, final Intent intent) {
+                if ("com.nwd.action.ACTION_NO_SOURCE_DEVICE_CHANGE".equals(intent.getAction())) {
+                    x.task().autoPost(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (iv_light != null) {
+                                if ((0x2 & SettingTableKey.getIntValue(context.getContentResolver(), "mcu_no_source_device_state")) == 2) {
+                                    iv_light.setImageResource(R.mipmap.che_light_on);
+                                } else {
+                                    iv_light.setImageResource(R.mipmap.che_light_off);
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+        }, intentFilter);
     }
 
     @Override
-    public void onLocationChanged(AMapLocation aMapLocation) {
+    public void onLocationChanged(final AMapLocation aMapLocation) {
         try {
             if (aMapLocation.getErrorCode() == AMapLocation.LOCATION_SUCCESS && aMapLocation.getLocationType() == AMapLocation.LOCATION_TYPE_GPS) {
-                if (lastLat == -1 || lastTime == -1 || lastLng == -1) {
-                    lastLat = aMapLocation.getLatitude();
-                    lastLng = aMapLocation.getLongitude();
-                    lastTime = System.currentTimeMillis();
-                    return;
-                }
+                x.task().autoPost(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (aMapLocation.getSpeed() < 3) {
+                            tv_speed.setText(0 + "");
+                        } else {
+                            tv_speed.setText(aMapLocation.getSpeed() + "");
+                        }
+                    }
+                });
 
-                int speed = (int) (AMapUtils.calculateLineDistance(new LatLng(lastLat, lastLng), new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude())) / ((System.currentTimeMillis() - lastTime) / 1000 / 60 / 60)) / 1000;
-                if (speed > 0 && speed < 200) {
-                    tv_speed.setText(speed + "");
-                }
 
-                lastLat = aMapLocation.getLatitude();
-                lastLng = aMapLocation.getLongitude();
-                lastTime = System.currentTimeMillis();
+//                System.out.println("!!!!!!" + lastTime);
+//                System.out.println("!!!!" + aMapLocation.getSpeed());
+//                if (lastLat == -1 || lastTime == -1 || lastLng == -1) {
+//                    lastLat = aMapLocation.getLatitude();
+//                    lastLng = aMapLocation.getLongitude();
+//                    lastTime = System.currentTimeMillis();
+//                    return;
+//                }
+//
+//                int speed = (int) (AMapUtils.calculateLineDistance(new LatLng(lastLat, lastLng), new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude())) / ((System.currentTimeMillis() - lastTime) / 1000 / 60 / 60)) / 1000;
+//                if (speed > 0 && speed < 200) {
+//                    tv_speed.setText(aMapLocation.getSpeed()+"");
+//                }
+//                System.out.println("!!!!!!----" + speed);
+//                lastLat = aMapLocation.getLatitude();
+//                lastLng = aMapLocation.getLongitude();
+//                lastTime = System.currentTimeMillis();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -637,13 +675,14 @@ public class LauncherActivity extends Activity implements View.OnClickListener, 
     private ProgressBar music_pb_music;
 
     private TextView tv_speed;
+    private ImageView iv_light;
 
     private void loadItem() {
         FrameLayout itemInfo = (FrameLayout) View.inflate(this, R.layout.plugin_car_info, null);
         item_info.addView(itemInfo, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
 
         tv_speed = (TextView) itemInfo.findViewById(R.id.tv_speed);
-
+        iv_light = (ImageView) itemInfo.findViewById(R.id.iv_light);
 
         View.OnClickListener musicclick = new View.OnClickListener() {
             @Override
@@ -844,7 +883,7 @@ public class LauncherActivity extends Activity implements View.OnClickListener, 
     @Override
     public void connect(boolean success) {
         if (success) {
-            Toast.makeText(getApplication(), "方控连接成功", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplication(), "方控连接成功", Toast.LENGTH_SHORT).show();
             iv_fangkong_state.setImageResource(R.mipmap.fanglong_connect);
         } else {
             iv_fangkong_state.setImageResource(R.mipmap.fanglong_disconnect);

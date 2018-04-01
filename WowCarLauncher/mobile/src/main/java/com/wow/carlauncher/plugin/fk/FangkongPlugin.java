@@ -17,6 +17,8 @@ import com.wow.frame.util.SharedPreUtil;
 import java.util.UUID;
 
 import static com.inuker.bluetooth.library.Constants.REQUEST_SUCCESS;
+import static com.inuker.bluetooth.library.Constants.STATUS_CONNECTED;
+import static com.wow.carlauncher.common.CommonData.SDATA_FANGKONG_CONTROLLER;
 
 /**
  * Created by 10124 on 2017/11/4.
@@ -41,8 +43,7 @@ public class FangkongPlugin extends BasePlugin<FangkongPluginListener> {
 
     public void init(Context context) {
         super.init(context);
-        Toast.makeText(getContext(), "尝试连接方控", Toast.LENGTH_LONG).show();
-        connectFangkong();
+        connect();
 
         options = new BleConnectOptions.Builder()
                 .setConnectRetry(Integer.MAX_VALUE)
@@ -50,19 +51,27 @@ public class FangkongPlugin extends BasePlugin<FangkongPluginListener> {
                 .setServiceDiscoverRetry(Integer.MAX_VALUE)
                 .setServiceDiscoverTimeout(2000)  // 发现服务超时20s
                 .build();
-
-
     }
 
     private FangkongProtocol fangkongProtocol;
 
-    public synchronized void connectFangkong() {
+    public synchronized void connect() {
         if (fangkongProtocol != null) {
             AppContext.self().getBluetoothClient().disconnect(fangkongProtocol.getAddress());
         }
         final String fkaddress = SharedPreUtil.getSharedPreString(CommonData.SDATA_FANGKONG_ADDRESS);
         if (CommonUtil.isNotNull(fkaddress)) {
-            fangkongProtocol = new YiLianProtocol(fkaddress, context);
+            FangkongProtocolEnum p1 = FangkongProtocolEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_FANGKONG_CONTROLLER, FangkongProtocolEnum.YLFK.getId()));
+            switch (p1) {
+                case YLFK: {
+                    fangkongProtocol = new YiLianProtocol(fkaddress, context);
+                    break;
+                }
+                default:
+                    fangkongProtocol = new YiLianProtocol(fkaddress, context);
+                    break;
+            }
+            Toast.makeText(getContext(), "尝试使用:" + p1.getName() + " 协议连接方控", Toast.LENGTH_LONG).show();
 
             AppContext.self().getBluetoothClient().connect(fangkongProtocol.getAddress(), options, new BleConnectResponse() {
                 @Override
@@ -92,17 +101,28 @@ public class FangkongPlugin extends BasePlugin<FangkongPluginListener> {
                                     }
                                 });
                     } else {
-                        runListener(new ListenerRuner<FangkongPluginListener>() {
-                            @Override
-                            public void run(FangkongPluginListener fangkongPluginListener) {
-                                fangkongPluginListener.connect(false);
-                            }
-                        });
+                        if (AppContext.self().getBluetoothClient().getConnectStatus(fangkongProtocol.getAddress()) != STATUS_CONNECTED) {
+                            runListener(new ListenerRuner<FangkongPluginListener>() {
+                                @Override
+                                public void run(FangkongPluginListener fangkongPluginListener) {
+                                    fangkongPluginListener.connect(false);
+                                }
+                            });
+                            Toast.makeText(context, "方控连接失败,正在重连", Toast.LENGTH_SHORT).show();
+                            connect();
+                        } else {
+                            Toast.makeText(context, "方控已经连接", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
             });
         }
     }
 
+    public synchronized void disconnect() {
+        if (fangkongProtocol != null) {
+            AppContext.self().getBluetoothClient().disconnect(fangkongProtocol.getAddress());
+        }
+    }
 
 }

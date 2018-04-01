@@ -77,7 +77,7 @@ public class AppContext implements SWebServiceDeclare, SAppDeclare {
         });
 
 
-        handerException();
+       // handerException();
     }
 
     @Override

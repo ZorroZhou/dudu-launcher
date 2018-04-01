@@ -27,6 +27,7 @@ import android.widget.LinearLayout;
 import com.wow.carAssistant.packet.response.common.GetAppUpdateRes;
 import com.wow.carlauncher.dialog.ListDialog;
 import com.wow.carlauncher.plugin.fk.FangkongPlugin;
+import com.wow.carlauncher.plugin.fk.FangkongProtocolEnum;
 import com.wow.carlauncher.plugin.music.MusicControllerEnum;
 import com.wow.carlauncher.plugin.music.MusicPlugin;
 import com.wow.carlauncher.webservice.service.CommonService;
@@ -67,13 +68,12 @@ import static com.wow.carlauncher.common.CommonData.*;
 
 public class SetActivity extends BaseActivity {
     private static final String[] CONSOLES = {"系统", "NWD"};
-    public static final MusicControllerEnum[] ALL_MUSIC_PLUGINS = {MusicControllerEnum.SYSMUSIC,
-//            MusicControllerEnum.NCMUSIC,
-//            MusicControllerEnum.QQMUSIC,
+    public static final MusicControllerEnum[] ALL_MUSIC_CONTROLLER = {MusicControllerEnum.SYSMUSIC,
             MusicControllerEnum.QQCARMUSIC,
             MusicControllerEnum.JIDOUMUSIC,
             MusicControllerEnum.POWERAMPMUSIC,
             MusicControllerEnum.NWDMUSIC};
+    public static final FangkongProtocolEnum[] ALL_FANGKONG_CONTROLLER = {FangkongProtocolEnum.YLFK};
 
     @Override
     public void init() {
@@ -194,7 +194,7 @@ public class SetActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 MusicControllerEnum p = MusicControllerEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_MUSIC_CONTROLLER, MusicControllerEnum.SYSMUSIC.getId()));
-                final MusicControllerEnum[] show = getLauncherPluginType(p);
+                final MusicControllerEnum[] show = ALL_MUSIC_CONTROLLER;
                 String[] items = new String[show.length];
                 int select = 0;
                 for (int i = 0; i < show.length; i++) {
@@ -318,29 +318,62 @@ public class SetActivity extends BaseActivity {
     }
 
 
-    private MusicControllerEnum[] getLauncherPluginType(MusicControllerEnum contain) {
-        List<MusicControllerEnum> ps = new ArrayList<>();
-        MusicControllerEnum p1 = MusicControllerEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_MUSIC_CONTROLLER, MusicControllerEnum.SYSMUSIC.getId()));
-
-        for (MusicControllerEnum p : ALL_MUSIC_PLUGINS) {
-            if (p.equals(p1) && !p.equals(contain)) {
-                continue;
-            }
-            ps.add(p);
-        }
-        return ps.toArray(new MusicControllerEnum[ps.size()]);
-    }
-
     @ViewInject(R.id.sv_fangkong_select)
     private SetView sv_fangkong_select;
 
     @ViewInject(R.id.sv_fangkong_impl_select)
     private SetView sv_fangkong_impl_select;
 
+    @ViewInject(R.id.sv_fangkong_disconnect)
+    private SetView sv_fangkong_disconnect;
+
+
     private void loadFangkongSet() {
+        FangkongProtocolEnum p1 = FangkongProtocolEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_FANGKONG_CONTROLLER, FangkongProtocolEnum.YLFK.getId()));
+        sv_fangkong_impl_select.setSummary("方控使用的协议：" + p1.getName());
+        sv_fangkong_impl_select.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FangkongProtocolEnum p = FangkongProtocolEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_FANGKONG_CONTROLLER, FangkongProtocolEnum.YLFK.getId()));
+                final FangkongProtocolEnum[] show = ALL_FANGKONG_CONTROLLER;
+                String[] items = new String[show.length];
+                int select = 0;
+                for (int i = 0; i < show.length; i++) {
+                    items[i] = show[i].getName();
+                    if (show[i].equals(p)) {
+                        select = i;
+                    }
+                }
+                final ThreadObj<Integer> obj = new ThreadObj<>(select);
+                AlertDialog dialog = new AlertDialog.Builder(mContext).setTitle("请选择协议").setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        SharedPreUtil.saveSharedPreInteger(SDATA_FANGKONG_CONTROLLER, show[obj.getObj()].getId());
+                        FangkongPlugin.self().connect();
+                        sv_plugin_select.setSummary("方控使用的协议：" + show[obj.getObj()].getName());
+                    }
+                }).setSingleChoiceItems(items, select, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        obj.setObj(which);
+                    }
+                }).create();
+                dialog.show();
+            }
+        });
+
+
+        sv_fangkong_disconnect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FangkongPlugin.self().disconnect();
+            }
+        });
+
+
         String address = SharedPreUtil.getSharedPreString(CommonData.SDATA_FANGKONG_ADDRESS);
         if (CommonUtil.isNotNull(address)) {
-            sv_fangkong_select.setSummary("绑定了设备:" + SharedPreUtil.getSharedPreString(CommonData.SDATA_FANGKONG_Name) + "  地址:" + address);
+            sv_fangkong_select.setSummary("绑定了设备:" + SharedPreUtil.getSharedPreString(CommonData.SDATA_FANGKONG_NAME) + "  地址:" + address);
         } else {
             sv_fangkong_select.setSummary("没有绑定蓝牙设备");
         }
@@ -395,17 +428,16 @@ public class SetActivity extends BaseActivity {
                         dialog.dismiss();
                         BluetoothDevice device = devices.get(i);
                         SharedPreUtil.saveSharedPreString(CommonData.SDATA_FANGKONG_ADDRESS, device.getAddress());
-                        SharedPreUtil.saveSharedPreString(CommonData.SDATA_FANGKONG_Name, device.getName());
+                        SharedPreUtil.saveSharedPreString(CommonData.SDATA_FANGKONG_NAME, device.getName());
 
                         sv_fangkong_select.setSummary("绑定了设备:" + device.getName() + "  地址:" + device.getAddress());
 
-                        FangkongPlugin.self().connectFangkong();
+                        FangkongPlugin.self().connect();
                     }
                 });
             }
         });
     }
-
 
     @ViewInject(R.id.sv_allow_popup_window)
     private SetView sv_allow_popup_window;

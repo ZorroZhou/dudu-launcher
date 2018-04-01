@@ -2,10 +2,7 @@ package com.wow.carlauncher.common.console.impl;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.RemoteException;
 
-import com.bt.BTController;
-import com.bt.BTFeature;
 import com.wow.carlauncher.common.console.IConsole;
 
 /**
@@ -19,11 +16,8 @@ public class NwdConsoleImpl extends IConsole {
     private Intent mMuteIntent = new Intent("com.nwd.action.ACTION_SET_MUTE");
     private boolean mute = false;
 
-    private BTController controller;
-
     public NwdConsoleImpl(Context context) {
         super(context);
-        controller = BTController.getInstance(context);
     }
 
     @Override
@@ -58,19 +52,13 @@ public class NwdConsoleImpl extends IConsole {
 
     @Override
     public void callAnswer() {
-        try {
-            controller.getFeature().answerCall();
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+        this.mSetVolumeIntent.putExtra("extra_key_value", (byte) 21);
+        this.context.sendBroadcast(this.mSetVolumeIntent);
     }
 
     @Override
     public void callHangup() {
-        try {
-            controller.getFeature().cancelCall();
-        } catch (RemoteException e) {
-            e.printStackTrace();
-        }
+        this.mSetVolumeIntent.putExtra("extra_key_value", (byte) 22);
+        this.context.sendBroadcast(this.mSetVolumeIntent);
     }
 }

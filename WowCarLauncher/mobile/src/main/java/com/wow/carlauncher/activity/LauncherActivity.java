@@ -72,7 +72,7 @@ public class LauncherActivity extends Activity implements View.OnClickListener, 
     @ViewInject(R.id.item_music)
     private FrameLayout item_music;
     @ViewInject(R.id.item_2)
-    private FrameLayout item_2;
+    private FrameLayout item_info;
     @ViewInject(R.id.item_amap)
     private FrameLayout item_amap;
 
@@ -138,7 +138,6 @@ public class LauncherActivity extends Activity implements View.OnClickListener, 
     @ViewInject(R.id.iv_fangkong_state)
     private ImageView iv_fangkong_state;
 
-
     private Context mContext;
 
     //高德地图的定位客户端
@@ -192,21 +191,26 @@ public class LauncherActivity extends Activity implements View.OnClickListener, 
 
     @Override
     public void onLocationChanged(AMapLocation aMapLocation) {
-        if (aMapLocation.getErrorCode() == AMapLocation.LOCATION_SUCCESS && aMapLocation.getLocationType() == AMapLocation.LOCATION_TYPE_GPS) {
-            if (lastLat == -1 || lastTime == -1 || lastLng == -1) {
+        try {
+            if (aMapLocation.getErrorCode() == AMapLocation.LOCATION_SUCCESS && aMapLocation.getLocationType() == AMapLocation.LOCATION_TYPE_GPS) {
+                if (lastLat == -1 || lastTime == -1 || lastLng == -1) {
+                    lastLat = aMapLocation.getLatitude();
+                    lastLng = aMapLocation.getLongitude();
+                    lastTime = System.currentTimeMillis();
+                    return;
+                }
+
+                int speed = (int) (AMapUtils.calculateLineDistance(new LatLng(lastLat, lastLng), new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude())) / ((System.currentTimeMillis() - lastTime) / 1000 / 60 / 60)) / 1000;
+                if (speed > 0 && speed < 200) {
+                    tv_speed.setText(speed + "");
+                }
+
                 lastLat = aMapLocation.getLatitude();
                 lastLng = aMapLocation.getLongitude();
                 lastTime = System.currentTimeMillis();
-                return;
             }
-
-            int speed = (int) (AMapUtils.calculateLineDistance(new LatLng(lastLat, lastLng), new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude())) / ((System.currentTimeMillis() - lastTime) / 1000 / 60 / 60)) / 1000;
-
-            tv_speed.setText(speed + "");
-
-            lastLat = aMapLocation.getLatitude();
-            lastLng = aMapLocation.getLongitude();
-            lastTime = System.currentTimeMillis();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -226,6 +230,8 @@ public class LauncherActivity extends Activity implements View.OnClickListener, 
         ll_dock4.setOnClickListener(this);
         ll_dock5.setOnClickListener(this);
 
+
+        findViewById(R.id.ll_fangkong).setOnClickListener(this);
         findViewById(R.id.ll_all_apps).setOnClickListener(this);
         findViewById(R.id.iv_set).setOnClickListener(this);
         findViewById(R.id.ll_time).setOnClickListener(this);
@@ -401,6 +407,11 @@ public class LauncherActivity extends Activity implements View.OnClickListener, 
                 startActivity(new Intent(this, AppMenuActivity.class));
                 break;
             }
+            case R.id.ll_fangkong: {
+                FangkongPlugin.self().connect();
+                break;
+
+            }
         }
     }
 
@@ -477,7 +488,7 @@ public class LauncherActivity extends Activity implements View.OnClickListener, 
 
         try {
             int c = Color.parseColor(SharedPreUtil.getSharedPreString(SDATA_LAUNCHER_ITEM2_BG_COLOR));
-            ((GradientDrawable) item_2.getBackground()).setColor(c);
+            ((GradientDrawable) item_info.getBackground()).setColor(c);
         } catch (Exception e) {
         }
 
@@ -628,10 +639,11 @@ public class LauncherActivity extends Activity implements View.OnClickListener, 
     private TextView tv_speed;
 
     private void loadItem() {
-        FrameLayout item1 = (FrameLayout) View.inflate(this, R.layout.plugin_car_info, null);
-        item_2.addView(item1, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        FrameLayout itemInfo = (FrameLayout) View.inflate(this, R.layout.plugin_car_info, null);
+        item_info.addView(itemInfo, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
 
-        tv_speed = (TextView) item_music.findViewById(R.id.tv_speed);
+        tv_speed = (TextView) itemInfo.findViewById(R.id.tv_speed);
+
 
         View.OnClickListener musicclick = new View.OnClickListener() {
             @Override
@@ -656,15 +668,15 @@ public class LauncherActivity extends Activity implements View.OnClickListener, 
         RelativeLayout musicView = (RelativeLayout) View.inflate(this, R.layout.plugin_music_launcher, null);
         item_music.addView(musicView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
 
-        music_iv_play = (ImageView) item_music.findViewById(R.id.iv_play);
-        music_tv_title = (TextView) item_music.findViewById(R.id.tv_title);
-        music_iv_cover = (ImageView) item_music.findViewById(R.id.iv_cover);
-        music_tv_time = (TextView) item_music.findViewById(R.id.tv_time);
-        music_pb_music = (ProgressBar) item_music.findViewById(R.id.pb_music);
+        music_iv_play = (ImageView) musicView.findViewById(R.id.iv_play);
+        music_tv_title = (TextView) musicView.findViewById(R.id.tv_title);
+        music_iv_cover = (ImageView) musicView.findViewById(R.id.iv_cover);
+        music_tv_time = (TextView) musicView.findViewById(R.id.tv_time);
+        music_pb_music = (ProgressBar) musicView.findViewById(R.id.pb_music);
 
-        item_music.findViewById(R.id.iv_play).setOnClickListener(musicclick);
-        item_music.findViewById(R.id.ll_prew).setOnClickListener(musicclick);
-        item_music.findViewById(R.id.ll_next).setOnClickListener(musicclick);
+        musicView.findViewById(R.id.iv_play).setOnClickListener(musicclick);
+        musicView.findViewById(R.id.ll_prew).setOnClickListener(musicclick);
+        musicView.findViewById(R.id.ll_next).setOnClickListener(musicclick);
 
         //高德地图的界面
         View.OnClickListener amapclick = new View.OnClickListener() {

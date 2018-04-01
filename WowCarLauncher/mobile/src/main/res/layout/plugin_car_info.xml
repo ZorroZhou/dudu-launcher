@@ -24,7 +24,7 @@
                 android:maxLines="1"
                 android:text="0"
                 android:textColor="@android:color/white"
-                app:layout_textSizePercent="40%h" />
+                app:layout_textSizePercent="50%h" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -34,7 +34,7 @@
                 android:maxLines="1"
                 android:text="KM/H"
                 android:textColor="@android:color/white"
-                app:layout_textSizePercent="25%h" />
+                app:layout_textSizePercent="20%h" />
         </com.zhy.android.percent.support.PercentLinearLayout>
 
         <com.zhy.android.percent.support.PercentLinearLayout

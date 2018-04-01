@@ -45,7 +45,11 @@ public class BasePlugin<L> {
             @Override
             public void run() {
                 for (L l : listeners) {
-                    runer.run(l);
+                    try {
+                        runer.run(l);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });

@@ -28,7 +28,9 @@
     <uses-permission
         android:name="android.permission.PACKAGE_USAGE_STATS"
         tools:ignore="ProtectedPermissions" />
-
+    <uses-feature
+        android:name="android.hardware.bluetooth_le"
+        android:required="true" />
     <application
         android:name=".CarLauncherApplication"
         android:allowBackup="true"
@@ -36,10 +38,14 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="d5e7bb2e7adc2e970d5ef05c379eb1bb" />
         <service android:name="com.amap.api.location.APSService"/>
+
+        <service
+            android:name="com.inuker.bluetooth.library.BluetoothService" />
 
         <activity
             android:name=".activity.LauncherActivity"

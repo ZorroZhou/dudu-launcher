@@ -16,6 +16,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -139,9 +140,11 @@ public class PopupWin {
 
         @Override
         public void refreshProgress(int curr_time, int total_time) {
-            ProgressBar progressBar = ((ProgressBar) musicView().findViewById(R.id.pb_music));
-            progressBar.setProgress(curr_time);
-            progressBar.setMax(total_time);
+            if (total_time > 0) {
+                ProgressBar progressBar = ((ProgressBar) musicView().findViewById(R.id.pb_music));
+                progressBar.setProgress(curr_time);
+                progressBar.setMax(total_time);
+            }
         }
 
         @Override
@@ -164,13 +167,11 @@ public class PopupWin {
         public void refreshNaviInfo(NaviInfo naviBean) {
             ImageView popupIcon = (ImageView) amapView.findViewById(R.id.iv_icon);
             TextView popupdis = (TextView) amapView.findViewById(R.id.tv_dis);
-            TextView popuproad = (TextView) amapView.findViewById(R.id.tv_road);
             TextView popupmsg = (TextView) amapView.findViewById(R.id.tv_msg);
             LinearLayout popupcontroller = (LinearLayout) amapView.findViewById(R.id.ll_controller);
-            LinearLayout popupnavi = (LinearLayout) amapView.findViewById(R.id.ll_navi);
+            RelativeLayout popupnavi = (RelativeLayout) amapView.findViewById(R.id.ll_navi);
             switch (naviBean.getType()) {
                 case NaviInfo.TYPE_STATE: {
-
                     if (popupcontroller != null && popupnavi != null) {
                         if (naviBean.getState() == 8 || naviBean.getState() == 10) {
                             popupcontroller.setVisibility(View.GONE);
@@ -186,24 +187,21 @@ public class PopupWin {
                     if (popupIcon != null && naviBean.getIcon() - 1 >= 0 && naviBean.getIcon() - 1 < ICONS.length) {
                         popupIcon.setImageResource(ICONS[naviBean.getIcon() - 1]);
                     }
-
                     if (popupdis != null && naviBean.getDis() > -1) {
+                        String msg = "";
                         if (naviBean.getDis() < 10) {
-                            popupdis.setText("现在");
+                            msg = "现在";
                         } else {
                             if (naviBean.getDis() > 1000) {
-                                String msg = naviBean.getDis() / 1000 + "公里后";
-                                popupdis.setText(msg);
+                                msg = naviBean.getDis() / 1000 + "公里后";
                             } else {
-                                String msg = naviBean.getDis() + "米后";
-                                popupdis.setText(msg);
+                                msg = naviBean.getDis() + "米后";
                             }
-
                         }
+                        msg = msg + naviBean.getWroad();
+                        popupdis.setText(msg);
                     }
-                    if (popuproad != null && CommonUtil.isNotNull(naviBean.getWroad())) {
-                        popuproad.setText(naviBean.getWroad());
-                    }
+
                     if (popupmsg != null && naviBean.getRemainTime() > -1 && naviBean.getRemainDis() > -1) {
                         if (naviBean.getRemainTime() == 0 || naviBean.getRemainDis() == 0) {
                             popupmsg.setText("到达");
@@ -281,7 +279,7 @@ public class PopupWin {
     }
 
     private void showPlugin(boolean goNext) {
-        Integer pluginId = SharedPreUtil.getSharedPreInteger(SDATA_POPUP_CURRENT_PLUGIN, 1);
+        int pluginId = SharedPreUtil.getSharedPreInteger(SDATA_POPUP_CURRENT_PLUGIN, 1);
         if (goNext) {
             if (pluginId >= 3) {
                 pluginId = 1;

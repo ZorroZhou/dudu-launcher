@@ -21,11 +21,13 @@ public class CommonData {
 
     public static final String IDATA_PACKAGE_NAME = "PACKAGE_NAME";
 
-    //首页的插件
+    //音乐播放器的控制器
     public static final String SDATA_MUSIC_CONTROLLER = "SDATA_MUSIC_CONTROLLER";
 
+    //音乐播放器的控制器
+    public static final String SDATA_FANGKONG_CONTROLLER = "SDATA_FANGKONG_CONTROLLER";
     //方控的地址
-    public static final String SDATA_FANGKONG_Name = "SDATA_FANGKONG_Name";
+    public static final String SDATA_FANGKONG_NAME = "SDATA_FANGKONG_NAME";
     public static final String SDATA_FANGKONG_ADDRESS = "SDATA_FANGKONG_ADDRESS";
     //dock的包名start
     public static final String SDATA_DOCK1_CLASS = "DOCK1_BEAN";

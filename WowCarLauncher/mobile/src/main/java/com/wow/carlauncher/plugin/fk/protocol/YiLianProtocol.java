@@ -73,6 +73,7 @@ public class YiLianProtocol extends FangkongProtocol {
                         context.startActivity(intent);
                         break;
                     case BTN_RIGHT_BOTTOM_LONG_CLICK:
+                        ConsoleManage.self().callHangup();
                         break;
                     case BTN_CENTER_LONG_CLICK:
                         break;

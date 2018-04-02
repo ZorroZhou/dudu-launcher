@@ -7,7 +7,6 @@ import android.content.IntentFilter;
 
 import com.wow.carlauncher.plugin.music.MusicController;
 import com.wow.carlauncher.plugin.music.MusicPlugin;
-import com.wow.carlauncher.plugin.music.MusicPluginListener;
 
 /**
  * Created by 10124 on 2017/10/26.
@@ -42,13 +41,11 @@ public class NwdMusicController extends MusicController {
 
     public void next() {
         sendEvent(CMD_NEXT);
-        sendEvent(CMD_RESUME);
         musicView.refreshState(true);
     }
 
     public void pre() {
         sendEvent(CMD_PRE);
-        sendEvent(CMD_RESUME);
         musicView.refreshState(true);
     }
 

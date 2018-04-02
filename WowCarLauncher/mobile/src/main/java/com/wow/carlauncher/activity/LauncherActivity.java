@@ -220,10 +220,11 @@ public class LauncherActivity extends Activity implements View.OnClickListener, 
                 x.task().autoPost(new Runnable() {
                     @Override
                     public void run() {
-                        if (aMapLocation.getSpeed() < 3) {
-                            tv_speed.setText(0 + "");
+                        int speed=(int)(aMapLocation.getSpeed()/1000*60*60);
+                        if (speed < 1) {
+                            tv_speed.setText("0");
                         } else {
-                            tv_speed.setText(aMapLocation.getSpeed() + "");
+                            tv_speed.setText(String.valueOf(speed));
                         }
                     }
                 });

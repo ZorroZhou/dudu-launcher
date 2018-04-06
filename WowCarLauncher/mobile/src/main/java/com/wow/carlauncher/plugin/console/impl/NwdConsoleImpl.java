@@ -1,9 +1,9 @@
-package com.wow.carlauncher.common.console.impl;
+package com.wow.carlauncher.plugin.console.impl;
 
 import android.content.Context;
 import android.content.Intent;
 
-import com.wow.carlauncher.common.console.IConsole;
+import com.wow.carlauncher.plugin.console.IConsole;
 
 /**
  * Created by 10124 on 2017/11/9.

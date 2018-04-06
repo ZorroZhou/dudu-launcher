@@ -7,7 +7,7 @@ import android.content.IntentFilter;
 import android.widget.Toast;
 
 import com.google.common.primitives.Shorts;
-import com.wow.carlauncher.common.console.ConsoleManage;
+import com.wow.carlauncher.plugin.console.ConsoleManage;
 import com.wow.carlauncher.plugin.SimulateDoubleClickUtil;
 import com.wow.carlauncher.plugin.fk.FangkongProtocol;
 import com.wow.carlauncher.plugin.music.MusicPlugin;
@@ -48,11 +48,10 @@ public class YiLianProtocol extends FangkongProtocol {
 
 
         IntentFilter localIntentFilter = new IntentFilter();
-        localIntentFilter.addAction("com.bt.ACTION_BT_END_CALL");
-        localIntentFilter.addAction("com.bt.ACTION_BT_BEGIN_CALL_ONLINE");
-        localIntentFilter.addAction("com.bt.ACTION_BT_INCOMING_CALL");
-        localIntentFilter.addAction("com.bt.ACTION_BT_OUTGOING_CALL");
-
+        localIntentFilter.addAction(ACTION_BT_END_CALL);
+        localIntentFilter.addAction(ACTION_BT_BEGIN_CALL_ONLINE);
+        localIntentFilter.addAction(ACTION_BT_INCOMING_CALL);
+        localIntentFilter.addAction(ACTION_BT_OUTGOING_CALL);
         context.registerReceiver(new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {

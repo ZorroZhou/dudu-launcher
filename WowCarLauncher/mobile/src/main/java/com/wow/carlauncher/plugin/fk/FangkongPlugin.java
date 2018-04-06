@@ -55,7 +55,13 @@ public class FangkongPlugin extends BasePlugin<FangkongPluginListener> {
 
     private FangkongProtocol fangkongProtocol;
 
+    private boolean isConnect = false;
+
     public synchronized void connect() {
+        if (isConnect) {
+            return;
+        }
+        isConnect = true;
         if (fangkongProtocol != null) {
             AppContext.self().getBluetoothClient().disconnect(fangkongProtocol.getAddress());
         }
@@ -76,6 +82,7 @@ public class FangkongPlugin extends BasePlugin<FangkongPluginListener> {
             AppContext.self().getBluetoothClient().connect(fangkongProtocol.getAddress(), options, new BleConnectResponse() {
                 @Override
                 public void onResponse(int code, BleGattProfile data) {
+                    isConnect = false;
                     if (code == REQUEST_SUCCESS) {
                         Toast.makeText(context, "方控连接成功", Toast.LENGTH_SHORT).show();
                         AppContext.self().getBluetoothClient().notify(fangkongProtocol.getAddress(),
@@ -118,6 +125,7 @@ public class FangkongPlugin extends BasePlugin<FangkongPluginListener> {
                 }
             });
         } else {
+            isConnect = false;
             Toast.makeText(context, "请到设置里进行方控的绑定", Toast.LENGTH_SHORT).show();
         }
     }

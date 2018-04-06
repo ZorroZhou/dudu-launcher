@@ -1,4 +1,4 @@
-package com.wow.carlauncher.common.console.impl;
+package com.wow.carlauncher.plugin.console.impl;
 
 import android.app.ActivityManager;
 import android.content.Context;
@@ -6,7 +6,7 @@ import android.content.pm.PackageManager;
 import android.util.Log;
 import android.view.KeyEvent;
 
-import com.wow.carlauncher.common.console.IConsole;
+import com.wow.carlauncher.plugin.console.IConsole;
 import com.wow.frame.util.AppUtil;
 
 import java.util.List;

@@ -6,8 +6,6 @@ import android.appwidget.AppWidgetProviderInfo;
 import android.content.Context;
 import android.view.View;
 
-import com.wow.carlauncher.common.console.ConsoleManage;
-
 import static com.wow.carlauncher.common.CommonData.APP_WIDGET_HOST_ID;
 
 /**

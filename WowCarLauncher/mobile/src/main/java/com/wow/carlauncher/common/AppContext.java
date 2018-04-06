@@ -4,7 +4,7 @@ import android.app.Application;
 
 import com.inuker.bluetooth.library.BluetoothClient;
 import com.wow.carlauncher.CarLauncherApplication;
-import com.wow.carlauncher.common.console.ConsoleManage;
+import com.wow.carlauncher.plugin.console.ConsoleManage;
 import com.wow.carlauncher.plugin.amapcar.AMapCarPlugin;
 import com.wow.carlauncher.plugin.fk.FangkongPlugin;
 import com.wow.carlauncher.plugin.fk.FangkongPluginListener;

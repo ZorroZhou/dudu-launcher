@@ -14,6 +14,8 @@ import com.wow.carlauncher.plugin.fk.protocol.YiLianProtocol;
 import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.SharedPreUtil;
 
+import org.xutils.x;
+
 import java.util.UUID;
 
 import static com.inuker.bluetooth.library.Constants.REQUEST_SUCCESS;
@@ -77,8 +79,6 @@ public class FangkongPlugin extends BasePlugin<FangkongPluginListener> {
                     fangkongProtocol = new YiLianProtocol(fkaddress, context);
                     break;
             }
-            Toast.makeText(getContext(), "尝试使用:" + p1.getName() + " 协议连接方控", Toast.LENGTH_SHORT).show();
-
             AppContext.self().getBluetoothClient().connect(fangkongProtocol.getAddress(), options, new BleConnectResponse() {
                 @Override
                 public void onResponse(int code, BleGattProfile data) {
@@ -116,8 +116,12 @@ public class FangkongPlugin extends BasePlugin<FangkongPluginListener> {
                                     fangkongPluginListener.connect(false);
                                 }
                             });
-                            Toast.makeText(context, "方控连接失败,正在重连", Toast.LENGTH_SHORT).show();
-                            connect();
+                            x.task().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    connect();
+                                }
+                            }, 200);
                         } else {
                             Toast.makeText(context, "方控已经连接", Toast.LENGTH_SHORT).show();
                         }

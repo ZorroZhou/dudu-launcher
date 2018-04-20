@@ -38,6 +38,8 @@ import com.wow.carlauncher.plugin.fk.FangkongPlugin;
 import com.wow.carlauncher.plugin.fk.FangkongPluginListener;
 import com.wow.carlauncher.plugin.music.MusicPlugin;
 import com.wow.carlauncher.plugin.music.MusicPluginListener;
+import com.wow.carlauncher.plugin.obd.ObdPlugin;
+import com.wow.carlauncher.plugin.obd.ObdPluginListener;
 import com.wow.frame.util.AppUtil;
 import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.DateUtil;
@@ -172,6 +174,23 @@ public class LauncherActivity extends Activity implements View.OnClickListener, 
         FangkongPlugin.self().addListener(this);
         MusicPlugin.self().addListener(this);
         AMapCarPlugin.self().addListener(this);
+
+        ObdPlugin.self().addListener(new ObdPluginListener() {
+            @Override
+            public void connect(boolean success) {
+                System.out.println("ooooo!!!:" + success);
+            }
+
+            @Override
+            public void carRunningInfo(Integer speed, Integer rev, Integer waterTemp, Float residualOil, Float oilConsumption) {
+                System.out.println("ooooo!!!:" + speed + "--" + rev + "--" + waterTemp + "--" + residualOil + "--" + oilConsumption);
+            }
+
+            @Override
+            public void carTirePressureInfo(Float lFTirePressure, Integer lFTemp, Float rFTirePressure, Integer rFTemp, Float lBTirePressure, Integer lBTemp, Float rBTirePressure, Integer rBTemp) {
+                System.out.println("ooooo!!!:" + lFTirePressure + "--" + lFTemp + "--" + rFTirePressure + "--" + rFTemp + "--" + lBTirePressure + "--" + lBTemp + "--" + rBTirePressure + "--" + rBTemp);
+            }
+        });
     }
 
     private long lastTime = -1;
@@ -220,7 +239,7 @@ public class LauncherActivity extends Activity implements View.OnClickListener, 
                 x.task().autoPost(new Runnable() {
                     @Override
                     public void run() {
-                        int speed=(int)(aMapLocation.getSpeed()/1000*60*60);
+                        int speed = (int) (aMapLocation.getSpeed() / 1000 * 60 * 60);
                         if (speed < 1) {
                             tv_speed.setText("0");
                         } else {
@@ -447,6 +466,7 @@ public class LauncherActivity extends Activity implements View.OnClickListener, 
                 break;
             }
             case R.id.ll_fangkong: {
+                FangkongPlugin.self().setReConnectAble(true);
                 FangkongPlugin.self().connect();
                 break;
 

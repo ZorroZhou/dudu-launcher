@@ -24,11 +24,17 @@ public class CommonData {
     //音乐播放器的控制器
     public static final String SDATA_MUSIC_CONTROLLER = "SDATA_MUSIC_CONTROLLER";
 
-    //音乐播放器的控制器
+    //方控的控制器
     public static final String SDATA_FANGKONG_CONTROLLER = "SDATA_FANGKONG_CONTROLLER";
     //方控的地址
     public static final String SDATA_FANGKONG_NAME = "SDATA_FANGKONG_NAME";
     public static final String SDATA_FANGKONG_ADDRESS = "SDATA_FANGKONG_ADDRESS";
+
+    //方控的控制器
+    public static final String SDATA_OBD_CONTROLLER = "SDATA_OBD_CONTROLLER";
+    //OBD的地址
+    public static final String SDATA_OBD_NAME = "SDATA_OBD_NAME";
+    public static final String SDATA_OBD_ADDRESS = "SDATA_OBD_ADDRESS";
     //dock的包名start
     public static final String SDATA_DOCK1_CLASS = "DOCK1_BEAN";
     public static final String SDATA_DOCK2_CLASS = "DOCK2_BEAN";

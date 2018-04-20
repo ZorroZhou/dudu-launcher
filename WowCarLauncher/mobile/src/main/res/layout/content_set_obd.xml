@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:st="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_obd"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="16dp"
+        android:paddingTop="16dp"
+        android:text="OBD设置"
+        android:textColor="@color/colorPrimary"
+        android:textSize="14sp" />
+
+    <com.wow.carlauncher.common.view.SetView
+        android:id="@+id/sv_obd_select"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        st:summary="没有绑定OBD"
+        st:titleEx="OBD绑定"
+        st:type="buttonB" />
+
+    <View style="@style/Interval" />
+
+    <com.wow.carlauncher.common.view.SetView
+        android:id="@+id/sv_obd_disconnect"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        st:titleEx="断开OBD"
+        st:type="buttonB" />
+
+    <View style="@style/Interval" />
+
+    <com.wow.carlauncher.common.view.SetView
+        android:id="@+id/sv_obd_impl_select"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        st:titleEx="OBD协议"
+        st:type="buttonB" />
+
+</LinearLayout>

@@ -30,6 +30,8 @@ import com.wow.carlauncher.plugin.fk.FangkongPlugin;
 import com.wow.carlauncher.plugin.fk.FangkongProtocolEnum;
 import com.wow.carlauncher.plugin.music.MusicControllerEnum;
 import com.wow.carlauncher.plugin.music.MusicPlugin;
+import com.wow.carlauncher.plugin.obd.ObdPlugin;
+import com.wow.carlauncher.plugin.obd.ObdProtocolEnum;
 import com.wow.carlauncher.webservice.service.CommonService;
 import com.wow.frame.repertory.remote.WebServiceManage;
 import com.wow.frame.repertory.remote.WebTask;
@@ -75,6 +77,8 @@ public class SetActivity extends BaseActivity {
             MusicControllerEnum.NWDMUSIC};
     public static final FangkongProtocolEnum[] ALL_FANGKONG_CONTROLLER = {FangkongProtocolEnum.YLFK};
 
+    public static final ObdProtocolEnum[] ALL_OBD_CONTROLLER = {ObdProtocolEnum.YJ_TYB};
+
     @Override
     public void init() {
         setContent(R.layout.activity_set);
@@ -117,6 +121,8 @@ public class SetActivity extends BaseActivity {
     private LinearLayout ll_system_set;
     @ViewInject(R.id.ll_fangkong)
     private LinearLayout ll_fangkong;
+    @ViewInject(R.id.ll_obd)
+    private LinearLayout ll_obd;
 
     private void loadSetGroup() {
         View.OnClickListener groupClick = new View.OnClickListener() {
@@ -128,6 +134,8 @@ public class SetActivity extends BaseActivity {
                 ll_help.setVisibility(View.GONE);
                 ll_system_set.setVisibility(View.GONE);
                 ll_fangkong.setVisibility(View.GONE);
+                ll_obd.setVisibility(View.GONE);
+
                 switch (view.getId()) {
                     case R.id.sg_app: {
                         ll_app.setVisibility(View.VISIBLE);
@@ -151,6 +159,10 @@ public class SetActivity extends BaseActivity {
                     }
                     case R.id.sg_system_set: {
                         ll_system_set.setVisibility(View.VISIBLE);
+                        break;
+                    }
+                    case R.id.sg_obd: {
+                        ll_obd.setVisibility(View.VISIBLE);
                         break;
                     }
                     default: {
@@ -349,6 +361,7 @@ public class SetActivity extends BaseActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         SharedPreUtil.saveSharedPreInteger(SDATA_FANGKONG_CONTROLLER, show[obj.getObj()].getId());
+                        FangkongPlugin.self().setReConnectAble(true);
                         FangkongPlugin.self().connect();
                         sv_plugin_select.setSummary("方控使用的协议：" + show[obj.getObj()].getName());
                     }
@@ -366,6 +379,7 @@ public class SetActivity extends BaseActivity {
         sv_fangkong_disconnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                FangkongPlugin.self().setReConnectAble(false);
                 FangkongPlugin.self().disconnect();
             }
         });
@@ -432,12 +446,135 @@ public class SetActivity extends BaseActivity {
 
                         sv_fangkong_select.setSummary("绑定了设备:" + device.getName() + "  地址:" + device.getAddress());
 
+                        FangkongPlugin.self().setReConnectAble(true);
                         FangkongPlugin.self().connect();
                     }
                 });
             }
         });
     }
+
+    @ViewInject(R.id.sv_obd_select)
+    private SetView sv_obd_select;
+
+    @ViewInject(R.id.sv_obd_impl_select)
+    private SetView sv_obd_impl_select;
+
+    @ViewInject(R.id.sv_obd_disconnect)
+    private SetView sv_obd_disconnect;
+
+
+    private void loadObdSet() {
+        ObdProtocolEnum p1 = ObdProtocolEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_OBD_CONTROLLER, ObdProtocolEnum.YJ_TYB.getId()));
+        sv_obd_impl_select.setSummary("OBD使用的协议：" + p1.getName());
+        sv_obd_impl_select.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ObdProtocolEnum p = ObdProtocolEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_OBD_CONTROLLER, ObdProtocolEnum.YJ_TYB.getId()));
+                final ObdProtocolEnum[] show = ALL_OBD_CONTROLLER;
+                String[] items = new String[show.length];
+                int select = 0;
+                for (int i = 0; i < show.length; i++) {
+                    items[i] = show[i].getName();
+                    if (show[i].equals(p)) {
+                        select = i;
+                    }
+                }
+                final ThreadObj<Integer> obj = new ThreadObj<>(select);
+                AlertDialog dialog = new AlertDialog.Builder(mContext).setTitle("请选择协议").setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        SharedPreUtil.saveSharedPreInteger(SDATA_OBD_CONTROLLER, show[obj.getObj()].getId());
+                        sv_plugin_select.setSummary("OBD使用的协议：" + show[obj.getObj()].getName());
+                        ObdPlugin.self().start();
+                    }
+                }).setSingleChoiceItems(items, select, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        obj.setObj(which);
+                    }
+                }).create();
+                dialog.show();
+            }
+        });
+
+
+        sv_obd_disconnect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ObdPlugin.self().stop();
+            }
+        });
+
+
+        String address = SharedPreUtil.getSharedPreString(CommonData.SDATA_OBD_ADDRESS);
+        if (CommonUtil.isNotNull(address)) {
+            sv_obd_select.setSummary("绑定了设备:" + SharedPreUtil.getSharedPreString(CommonData.SDATA_OBD_NAME) + "  地址:" + address);
+        } else {
+            sv_obd_select.setSummary("没有绑定蓝牙设备");
+        }
+        sv_obd_select.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final ThreadObj<ListDialog> listTemp = new ThreadObj<>();
+
+                final List<BluetoothDevice> devices = new ArrayList<>();
+                BluetoothManager mBluetoothManager = (BluetoothManager) getApplication().getSystemService(Context.BLUETOOTH_SERVICE);
+                final BluetoothAdapter bluetoothAdapter = mBluetoothManager.getAdapter();
+                final BluetoothAdapter.LeScanCallback callback = new BluetoothAdapter.LeScanCallback() {
+                    @Override
+                    public void onLeScan(BluetoothDevice bluetoothDevice, int index, byte[] bytes) {
+                        if (bluetoothDevice != null)
+                            System.out.println(bluetoothDevice.getName() + "--" + bluetoothDevice.getAddress() + " " + bluetoothDevice.getType());
+                        if (bluetoothDevice == null || bluetoothDevice.getName() == null || (bluetoothDevice.getType() != DEVICE_TYPE_LE && bluetoothDevice.getType() != DEVICE_TYPE_DUAL)) {
+                            return;
+                        }
+                        boolean have = false;
+                        for (BluetoothDevice device : devices) {
+                            if (device.getAddress().equals(device.getAddress())) {
+                                have = true;
+                                break;
+                            }
+                        }
+                        if (!have) {
+                            devices.add(bluetoothDevice);
+                            String[] items = new String[devices.size()];
+                            for (int i = 0; i < items.length; i++) {
+                                items[i] = devices.get(i).getName() + ":" + devices.get(i).getAddress();
+                            }
+                            listTemp.getObj().getListView().setAdapter(new ArrayAdapter<String>(SetActivity.this, android.R.layout.simple_list_item_1, items));
+                        }
+                    }
+                };
+                final ListDialog dialog = new ListDialog(mContext);
+                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialogInterface) {
+                        bluetoothAdapter.stopLeScan(callback);
+                    }
+                });
+                dialog.setTitle("请选择一个蓝牙设备");
+                dialog.show();
+                listTemp.setObj(dialog);
+                bluetoothAdapter.startLeScan(callback);
+
+                dialog.getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        dialog.dismiss();
+                        BluetoothDevice device = devices.get(i);
+                        SharedPreUtil.saveSharedPreString(CommonData.SDATA_OBD_ADDRESS, device.getAddress());
+                        SharedPreUtil.saveSharedPreString(CommonData.SDATA_OBD_NAME, device.getName());
+
+                        sv_fangkong_select.setSummary("绑定了设备:" + device.getName() + "  地址:" + device.getAddress());
+
+                        ObdPlugin.self().start();
+                    }
+                });
+            }
+        });
+    }
+
 
     @ViewInject(R.id.sv_allow_popup_window)
     private SetView sv_allow_popup_window;

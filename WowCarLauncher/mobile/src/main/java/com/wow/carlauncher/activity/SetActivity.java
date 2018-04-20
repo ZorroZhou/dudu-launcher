@@ -93,6 +93,7 @@ public class SetActivity extends BaseActivity {
         loadPopupSet();
         loadTimeSet();
         loadHelpSet();
+        loadObdSet();
         loadSystemSet();
     }
 
@@ -108,6 +109,8 @@ public class SetActivity extends BaseActivity {
     private SetView sg_system_set;
     @ViewInject(R.id.sg_fangkong)
     private SetView sg_fangkong;
+    @ViewInject(R.id.sg_obd)
+    private SetView sg_obd;
 
     @ViewInject(R.id.ll_app)
     private LinearLayout ll_app;
@@ -178,6 +181,7 @@ public class SetActivity extends BaseActivity {
         sg_help.setOnClickListener(groupClick);
         sg_system_set.setOnClickListener(groupClick);
         sg_fangkong.setOnClickListener(groupClick);
+        sg_obd.setOnClickListener(groupClick);
     }
 
     @ViewInject(R.id.sv_plugin_select)
@@ -566,7 +570,7 @@ public class SetActivity extends BaseActivity {
                         SharedPreUtil.saveSharedPreString(CommonData.SDATA_OBD_ADDRESS, device.getAddress());
                         SharedPreUtil.saveSharedPreString(CommonData.SDATA_OBD_NAME, device.getName());
 
-                        sv_fangkong_select.setSummary("绑定了设备:" + device.getName() + "  地址:" + device.getAddress());
+                        sv_obd_select.setSummary("绑定了设备:" + device.getName() + "  地址:" + device.getAddress());
 
                         ObdPlugin.self().start();
                     }

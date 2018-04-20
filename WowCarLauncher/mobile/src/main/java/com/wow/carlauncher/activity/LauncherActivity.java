@@ -182,8 +182,8 @@ public class LauncherActivity extends Activity implements View.OnClickListener, 
             }
 
             @Override
-            public void carRunningInfo(Integer speed, Integer rev, Integer waterTemp, Float residualOil, Float oilConsumption) {
-                System.out.println("ooooo!!!:" + speed + "--" + rev + "--" + waterTemp + "--" + residualOil + "--" + oilConsumption);
+            public void carRunningInfo(Integer speed, Integer rev, Integer waterTemp, Float oilConsumption) {
+                System.out.println("ooooo!!!:" + speed + "--" + rev + "--" + waterTemp + "--" + oilConsumption);
             }
 
             @Override

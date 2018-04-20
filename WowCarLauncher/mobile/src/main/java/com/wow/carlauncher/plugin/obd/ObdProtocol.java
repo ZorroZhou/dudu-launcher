@@ -34,8 +34,10 @@ public abstract class ObdProtocol {
     protected ObdPluginListener listener;
     protected ObdTaskManage obdTaskManage;//Obd的任务列队
 
-    private String address;
+    protected String address;
     private BleConnectOptions options;
+
+    protected boolean connected = false;
 
     public ObdProtocol(Context context, String address, ObdPluginListener listener) {
         this.address = address;
@@ -85,6 +87,7 @@ public abstract class ObdProtocol {
         if (isConnecting || address == null) {
             return;
         }
+        connected = false;
         isConnecting = true;
         AppContext.self().getBluetoothClient().registerConnectStatusListener(address, bleConnectStatusListener);
         AppContext.self().getBluetoothClient().connect(address, options, new BleConnectResponse() {
@@ -110,6 +113,7 @@ public abstract class ObdProtocol {
                                         connectCallback(false);
                                     }
                                     isConnecting = false;
+                                    connected = true;
                                 }
                             });
                 } else {

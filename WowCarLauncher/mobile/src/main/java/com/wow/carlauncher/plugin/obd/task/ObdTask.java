@@ -5,9 +5,20 @@ package com.wow.carlauncher.plugin.obd.task;
  */
 
 public abstract class ObdTask {
+    private boolean haveData = false;
+
+    public boolean haveData() {
+        return haveData;
+    }
+
+    protected void markNoData() {
+        haveData = false;
+    }
+
     private boolean success = false;
 
     protected void markSuccess() {
+        haveData = true;
         success = true;
     }
 

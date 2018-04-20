@@ -21,6 +21,7 @@ import java.util.UUID;
 
 import static com.inuker.bluetooth.library.Constants.REQUEST_SUCCESS;
 import static com.inuker.bluetooth.library.Constants.STATUS_CONNECTED;
+import static com.inuker.bluetooth.library.Constants.STATUS_DEVICE_CONNECTED;
 import static com.wow.carlauncher.common.CommonData.SDATA_FANGKONG_CONTROLLER;
 
 /**
@@ -127,7 +128,7 @@ public class FangkongPlugin extends BasePlugin<FangkongPluginListener> {
                                     }
                                 });
                     } else {
-                        if (AppContext.self().getBluetoothClient().getConnectStatus(fangkongProtocol.getAddress()) != STATUS_CONNECTED) {
+                        if (AppContext.self().getBluetoothClient().getConnectStatus(fangkongProtocol.getAddress()) != STATUS_DEVICE_CONNECTED) {
                             connectCallback(false);
                         } else {
                             Toast.makeText(context, "方控已经连接", Toast.LENGTH_SHORT).show();

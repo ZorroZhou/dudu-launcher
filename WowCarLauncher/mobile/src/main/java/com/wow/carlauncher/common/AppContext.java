@@ -9,6 +9,7 @@ import com.wow.carlauncher.plugin.amapcar.AMapCarPlugin;
 import com.wow.carlauncher.plugin.fk.FangkongPlugin;
 import com.wow.carlauncher.plugin.fk.FangkongPluginListener;
 import com.wow.carlauncher.plugin.music.MusicPlugin;
+import com.wow.carlauncher.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.popupWindow.ConsoleWin;
 import com.wow.carlauncher.popupWindow.PopupWin;
 import com.wow.carlauncher.webservice.AppWsInfo;
@@ -59,6 +60,7 @@ public class AppContext implements SWebServiceDeclare, SAppDeclare {
         AMapCarPlugin.self().init(app);
         MusicPlugin.self().init(app);
         FangkongPlugin.self().init(app);
+        ObdPlugin.self().init(app);
 
         AppInfoManage.self().init(app);
         AppWidgetManage.self().init(app);

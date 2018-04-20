@@ -11,7 +11,6 @@ public interface ObdPluginListener {
     void carRunningInfo(Integer speed,
                         Integer rev,
                         Integer waterTemp,
-                        Float residualOil,
                         Float oilConsumption);
 
     //汽车胎压回掉

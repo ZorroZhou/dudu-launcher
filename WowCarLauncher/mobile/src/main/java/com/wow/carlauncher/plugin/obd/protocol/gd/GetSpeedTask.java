@@ -1,8 +1,12 @@
 package com.wow.carlauncher.plugin.obd.protocol.gd;
 
+import android.util.Log;
+
+import com.google.common.primitives.Shorts;
 import com.wow.carlauncher.plugin.obd.ObdUtil;
 import com.wow.carlauncher.plugin.obd.task.ObdTask;
 
+import static com.wow.carlauncher.common.CommonData.TAG;
 import static com.wow.carlauncher.plugin.obd.protocol.gd.CommonCmd.*;
 
 /**
@@ -27,12 +31,15 @@ public class GetSpeedTask extends ObdTask {
     public void writeRes(byte[] message) {
         String msg = new String(message);
         if (msg.endsWith(CMD_RES_END) && msg.startsWith(CMD_RES_SPEED)) {
-            msg = msg.replace(CMD_RES_END, "").replace(CMD_RES_SPEED, "");
-            speed = ObdUtil.hexToByte(msg);
-            markSuccess();
+            msg = msg.replace(CMD_RES_END, "").replace(CMD_RES_SPEED, "").replace(" ", "");
+            if (msg.length() > 2) {
+                speed = ObdUtil.hexToByte(msg.substring(0, 2));
+                markSuccess();
+            }
         } else if (msg.endsWith(CMD_RES_END) && msg.startsWith(CMD_RES_NO_DATA)) {
             speed = 0;
             markSuccess();
+            markNoData();
         }
     }
 }

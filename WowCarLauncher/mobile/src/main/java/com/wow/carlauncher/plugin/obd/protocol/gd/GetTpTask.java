@@ -55,7 +55,5 @@ public class GetTpTask extends ObdTask {
             tp = -10000F;
             temp = -10000;
         }
-
-        byte[] xxx = "2010203890".getBytes();
     }
 }

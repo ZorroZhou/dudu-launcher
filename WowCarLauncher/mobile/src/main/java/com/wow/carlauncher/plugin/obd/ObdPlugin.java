@@ -50,11 +50,11 @@ public class ObdPlugin extends BasePlugin<ObdPluginListener> {
         }
 
         @Override
-        public void carRunningInfo(final Integer speed, final Integer rev, final Integer waterTemp, final Float residualOil, final Float oilConsumption) {
+        public void carRunningInfo(final Integer speed, final Integer rev, final Integer waterTemp, final Float oilConsumption) {
             runListener(new ListenerRuner<ObdPluginListener>() {
                 @Override
                 public void run(ObdPluginListener obdPluginListener) {
-                    obdPluginListener.carRunningInfo(speed, rev, waterTemp, residualOil, oilConsumption);
+                    obdPluginListener.carRunningInfo(speed, rev, waterTemp, oilConsumption);
                 }
             });
         }

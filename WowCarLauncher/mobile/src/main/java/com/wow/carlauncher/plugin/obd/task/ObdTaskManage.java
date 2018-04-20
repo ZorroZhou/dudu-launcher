@@ -31,7 +31,7 @@ public class ObdTaskManage {
     private void runTask() {
         if (currentTask == null && !taskArrayDeque.isEmpty()) {
             currentTask = taskArrayDeque.pop();
-            taskCallBack.write(currentTask.getReqWarp());
+            taskCallBack.write(currentTask);
         }
     }
 
@@ -52,7 +52,7 @@ public class ObdTaskManage {
     }
 
     public interface TaskCallBack {
-        void write(byte[] msg);
+        void write(ObdTask task);
 
         void taskOver(ObdTask task);
     }

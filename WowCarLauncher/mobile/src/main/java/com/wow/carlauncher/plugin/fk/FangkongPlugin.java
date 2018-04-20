@@ -144,7 +144,8 @@ public class FangkongPlugin extends BasePlugin<FangkongPluginListener> {
                 }
             });
         } else {
-            Toast.makeText(context, "请到设置里进行方控的绑定", Toast.LENGTH_SHORT).show();
+            reConnectAble = false;
+            connectCallback(false);
             isConnecting = false;
         }
     }

@@ -341,8 +341,8 @@ public class SetActivity extends BaseActivity {
     @ViewInject(R.id.sv_fangkong_impl_select)
     private SetView sv_fangkong_impl_select;
 
-    @ViewInject(R.id.sv_fangkong_disconnect)
-    private SetView sv_fangkong_disconnect;
+    @ViewInject(R.id.sv_fangkong_remove)
+    private SetView sv_fangkong_remove;
 
 
     private void loadFangkongSet() {
@@ -380,9 +380,11 @@ public class SetActivity extends BaseActivity {
         });
 
 
-        sv_fangkong_disconnect.setOnClickListener(new View.OnClickListener() {
+        sv_fangkong_remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                SharedPreUtil.saveSharedPreString(CommonData.SDATA_FANGKONG_ADDRESS, null);
+                SharedPreUtil.saveSharedPreString(CommonData.SDATA_FANGKONG_NAME, null);
                 FangkongPlugin.self().disconnect();
             }
         });

@@ -27,10 +27,10 @@
     <View style="@style/Interval" />
 
     <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_fangkong_disconnect"
+        android:id="@+id/sv_fangkong_remove"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        st:titleEx="断开方控"
+        st:titleEx="清理方控绑定"
         st:type="buttonB" />
 
     <View style="@style/Interval" />

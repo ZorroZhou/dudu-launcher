@@ -24,35 +24,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.amap.api.location.AMapLocation;
-import com.amap.api.location.AMapLocationClient;
-import com.amap.api.location.AMapLocationClientOption;
-import com.amap.api.location.AMapLocationListener;
-import com.amap.api.maps2d.AMapUtils;
-import com.amap.api.maps2d.model.LatLng;
-import com.wow.carlauncher.common.nwd.SettingTableKey;
-import com.wow.carlauncher.plugin.amapcar.AMapCarPlugin;
-import com.wow.carlauncher.plugin.amapcar.AMapCarPluginListener;
-import com.wow.carlauncher.plugin.amapcar.NaviInfo;
 import com.wow.carlauncher.plugin.fk.FangkongPlugin;
-import com.wow.carlauncher.plugin.fk.FangkongPluginListener;
-import com.wow.carlauncher.plugin.music.MusicPlugin;
-import com.wow.carlauncher.plugin.music.MusicPluginListener;
 import com.wow.carlauncher.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.plugin.obd.ObdPluginListener;
-import com.wow.frame.util.AppUtil;
 import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.DateUtil;
 import com.wow.frame.util.SharedPreUtil;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
-import com.wow.carlauncher.common.WeatherIconUtil;
-import com.wow.carlauncher.event.LauncherCityRefreshEvent;
 import com.wow.carlauncher.event.LauncherDockLabelShowChangeEvent;
-import com.wow.carlauncher.event.LauncherItemBackgroundRefreshEvent;
-import com.wow.carlauncher.event.LauncherItemRefreshEvent;
-import com.wow.carlauncher.common.amapWebservice.WebService;
-import com.wow.carlauncher.common.amapWebservice.res.WeatherRes;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -68,35 +48,10 @@ import static com.wow.carlauncher.common.CommonData.*;
 import static com.wow.carlauncher.plugin.amapcar.AMapCarConstant.AMAP_PACKAGE;
 import static com.wow.carlauncher.plugin.amapcar.AMapCarConstant.ICONS;
 
-public class LauncherActivity extends Activity implements View.OnClickListener, View.OnLongClickListener,
-        AMapCarPluginListener,
-        MusicPluginListener,
-        AMapLocationListener,
-        FangkongPluginListener {
-    @ViewInject(R.id.item_music)
-    private FrameLayout item_music;
-    @ViewInject(R.id.item_2)
-    private FrameLayout item_info;
-    @ViewInject(R.id.item_amap)
-    private FrameLayout item_amap;
+public class LauncherActivity extends Activity implements View.OnClickListener, View.OnLongClickListener {
 
     @ViewInject(R.id.time)
     private TextView time;
-
-    @ViewInject(R.id.date)
-    private TextView date;
-
-    @ViewInject(R.id.week)
-    private TextView week;
-
-    @ViewInject(R.id.tv_tianqi)
-    private TextView tv_tianqi;
-
-    @ViewInject(R.id.tv_tianqi2)
-    private TextView tv_tianqi2;
-
-    @ViewInject(R.id.iv_tianqi)
-    private ImageView iv_tianqi;
 
     @ViewInject(R.id.ll_dock)
     private LinearLayout ll_dock;
@@ -147,8 +102,6 @@ public class LauncherActivity extends Activity implements View.OnClickListener, 
     //高德地图的定位客户端
     private PackageManager pm;
 
-    private AMapLocationClient locationClient;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -167,13 +120,6 @@ public class LauncherActivity extends Activity implements View.OnClickListener, 
 
         initView();
         loadDock();
-        loadItem();
-        loadItemBackground();
-        loadLoaction();
-
-        FangkongPlugin.self().addListener(this);
-        MusicPlugin.self().addListener(this);
-        AMapCarPlugin.self().addListener(this);
 
         ObdPlugin.self().addListener(new ObdPluginListener() {
             @Override
@@ -191,85 +137,6 @@ public class LauncherActivity extends Activity implements View.OnClickListener, 
                 System.out.println("ooooo!!!:" + lFTirePressure + "--" + lFTemp + "--" + rFTirePressure + "--" + rFTemp + "--" + lBTirePressure + "--" + lBTemp + "--" + rBTirePressure + "--" + rBTemp);
             }
         });
-    }
-
-    private long lastTime = -1;
-    private double lastLat = -1, lastLng = -1;
-
-    private void loadLoaction() {
-        locationClient = new AMapLocationClient(getApplicationContext());
-
-        AMapLocationClientOption locationOption = new AMapLocationClientOption();
-        locationClient.setLocationListener(this);
-        locationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Device_Sensors);
-        locationOption.setInterval(100);
-        locationOption.setGpsFirst(true);
-        locationOption.setNeedAddress(false);
-        locationOption.setSensorEnable(true);
-        locationClient.setLocationOption(locationOption);
-        locationClient.startLocation();
-
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction("com.nwd.action.ACTION_NO_SOURCE_DEVICE_CHANGE");
-        this.registerReceiver(new BroadcastReceiver() {
-            @Override
-            public void onReceive(final Context context, final Intent intent) {
-                if ("com.nwd.action.ACTION_NO_SOURCE_DEVICE_CHANGE".equals(intent.getAction())) {
-                    x.task().autoPost(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (iv_light != null) {
-                                if ((0x2 & SettingTableKey.getIntValue(context.getContentResolver(), "mcu_no_source_device_state")) == 2) {
-                                    iv_light.setImageResource(R.mipmap.che_light_on);
-                                } else {
-                                    iv_light.setImageResource(R.mipmap.che_light_off);
-                                }
-                            }
-                        }
-                    });
-                }
-            }
-        }, intentFilter);
-    }
-
-    @Override
-    public void onLocationChanged(final AMapLocation aMapLocation) {
-        try {
-            if (aMapLocation.getErrorCode() == AMapLocation.LOCATION_SUCCESS && aMapLocation.getLocationType() == AMapLocation.LOCATION_TYPE_GPS) {
-                x.task().autoPost(new Runnable() {
-                    @Override
-                    public void run() {
-                        int speed = (int) (aMapLocation.getSpeed() / 1000 * 60 * 60);
-                        if (speed < 1) {
-                            tv_speed.setText("0");
-                        } else {
-                            tv_speed.setText(String.valueOf(speed));
-                        }
-                    }
-                });
-
-
-//                System.out.println("!!!!!!" + lastTime);
-//                System.out.println("!!!!" + aMapLocation.getSpeed());
-//                if (lastLat == -1 || lastTime == -1 || lastLng == -1) {
-//                    lastLat = aMapLocation.getLatitude();
-//                    lastLng = aMapLocation.getLongitude();
-//                    lastTime = System.currentTimeMillis();
-//                    return;
-//                }
-//
-//                int speed = (int) (AMapUtils.calculateLineDistance(new LatLng(lastLat, lastLng), new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude())) / ((System.currentTimeMillis() - lastTime) / 1000 / 60 / 60)) / 1000;
-//                if (speed > 0 && speed < 200) {
-//                    tv_speed.setText(aMapLocation.getSpeed()+"");
-//                }
-//                System.out.println("!!!!!!----" + speed);
-//                lastLat = aMapLocation.getLatitude();
-//                lastLng = aMapLocation.getLongitude();
-//                lastTime = System.currentTimeMillis();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     public void initView() {
@@ -466,8 +333,6 @@ public class LauncherActivity extends Activity implements View.OnClickListener, 
                 break;
             }
             case R.id.ll_fangkong: {
-                FangkongPlugin.self().setReConnectAble(true);
-                FangkongPlugin.self().connect();
                 break;
 
             }
@@ -475,7 +340,6 @@ public class LauncherActivity extends Activity implements View.OnClickListener, 
     }
 
     private Timer timer;
-    private int weatherUpdateInterval = 30;
     private int yifenzhong = 1000 * 60;
 
     private void startTimer() {
@@ -486,15 +350,9 @@ public class LauncherActivity extends Activity implements View.OnClickListener, 
             @Override
             public void run() {
                 setTime();
-                if (weatherUpdateInterval == 30) {
-                    weatherUpdateInterval = 0;
-                    refreshWeather();
-                }
-                weatherUpdateInterval++;
             }
         }, yifenzhong - System.currentTimeMillis() % yifenzhong, yifenzhong);
         setTime();
-        refreshWeather();
     }
 
     private void stopTimer() {
@@ -503,66 +361,6 @@ public class LauncherActivity extends Activity implements View.OnClickListener, 
             timer.cancel();
             timer = null;
         }
-    }
-
-    private void refreshWeather() {
-        x.task().autoPost(new Runnable() {
-            @Override
-            public void run() {
-                if (CommonUtil.isNotNull(SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_CITY))) {
-                    WebService.getWeatherInfo(SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_CITY), new WebService.CommonCallback<WeatherRes>() {
-                        @Override
-                        public void callback(WeatherRes res) {
-                            if (Integer.valueOf(1).equals(res.getStatus()) && res.getLives().size() > 0) {
-                                tv_tianqi.setText(res.getLives().get(0).getWeather() + "  " + res.getLives().get(0).getTemperature() + "℃");
-                                iv_tianqi.setImageResource(WeatherIconUtil.getWeatherResId(res.getLives().get(0).getWeather()));
-                                String feng;
-                                String wd = res.getLives().get(0).getWinddirection();
-                                Log.e(TAG, "callback: " + wd);
-                                if (wd.equals("东北") || wd.equals("东") || wd.equals("东南") || wd.equals("南") || wd.equals("西南") || wd.equals("西") || wd.equals("西北") || wd.equals("北")) {
-                                    feng = wd + "风:";
-                                } else {
-                                    feng = "风力:";
-                                }
-                                tv_tianqi2.setText(feng + res.getLives().get(0).getWindpower() + "级  空气湿度:" + res.getLives().get(0).getHumidity());
-                            } else {
-                                tv_tianqi.setText("请检查网络");
-                            }
-                        }
-                    });
-                } else {
-                    tv_tianqi.setText("请预先设置城市");
-                    tv_tianqi2.setText("点击设置-时间和天气设置-天气定位进行设置");
-                }
-            }
-        });
-    }
-
-    private void loadItemBackground() {
-        try {
-            int c = Color.parseColor(SharedPreUtil.getSharedPreString(SDATA_LAUNCHER_ITEM1_BG_COLOR));
-            ((GradientDrawable) item_music.getBackground()).setColor(c);
-        } catch (Exception e) {
-        }
-
-        try {
-            int c = Color.parseColor(SharedPreUtil.getSharedPreString(SDATA_LAUNCHER_ITEM2_BG_COLOR));
-            ((GradientDrawable) item_info.getBackground()).setColor(c);
-        } catch (Exception e) {
-        }
-
-        try {
-            int c = Color.parseColor(SharedPreUtil.getSharedPreString(SDATA_LAUNCHER_ITEM3_BG_COLOR));
-            ((GradientDrawable) item_amap.getBackground()).setColor(c);
-        } catch (Exception e) {
-        }
-
-        try {
-            int c = Color.parseColor(SharedPreUtil.getSharedPreString(SDATA_LAUNCHER_DOCK_BG_COLOR));
-            ll_dock.setBackgroundColor(c);
-        } catch (Exception e) {
-        }
-
     }
 
     @Override
@@ -626,9 +424,6 @@ public class LauncherActivity extends Activity implements View.OnClickListener, 
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(homeReceiver);
-        locationClient.stopLocation();
-        locationClient.unRegisterLocationListener(this);
-        locationClient = null;
     }
 
     @Override
@@ -657,12 +452,7 @@ public class LauncherActivity extends Activity implements View.OnClickListener, 
             @Override
             public void run() {
                 Date d = new Date();
-                String time = DateUtil.dateToString(d, "HH:mm");
-                String date = DateUtil.dateToString(d, "yyyy年MM月dd日");
-                String week = DateUtil.getWeekOfDate(d);
-                LauncherActivity.this.time.setText(time);
-                LauncherActivity.this.date.setText(date);
-                LauncherActivity.this.week.setText(week);
+                LauncherActivity.this.time.setText(DateUtil.dateToString(d, "HH:mm   " + DateUtil.getWeekOfDate(d) + " yyyy/MM/dd "));
             }
         });
     }
@@ -682,254 +472,9 @@ public class LauncherActivity extends Activity implements View.OnClickListener, 
         tv_dock5.setVisibility(showFlag);
     }
 
-    //高德地图的视图
-    private View amapController;
-    private ImageView amapIcon;
-    private LinearLayout amapnavi;
-    private TextView amapdis;
-    private TextView amaproad;
-    private TextView amapmsg;
-
-
-    private ImageView music_iv_play, music_iv_cover;
-    private TextView music_tv_title, music_tv_time;
-    private ProgressBar music_pb_music;
-
-    private TextView tv_speed;
-    private ImageView iv_light;
-
-    private void loadItem() {
-        FrameLayout itemInfo = (FrameLayout) View.inflate(this, R.layout.plugin_car_info, null);
-        item_info.addView(itemInfo, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-
-        tv_speed = (TextView) itemInfo.findViewById(R.id.tv_speed);
-        iv_light = (ImageView) itemInfo.findViewById(R.id.iv_light);
-
-        View.OnClickListener musicclick = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                switch (view.getId()) {
-                    case R.id.ll_prew: {
-                        MusicPlugin.self().pre();
-                        break;
-                    }
-                    case R.id.iv_play: {
-                        MusicPlugin.self().playOrPause();
-                        break;
-                    }
-                    case R.id.ll_next: {
-                        MusicPlugin.self().next();
-                        break;
-                    }
-                }
-            }
-        };
-
-        RelativeLayout musicView = (RelativeLayout) View.inflate(this, R.layout.plugin_music_launcher, null);
-        item_music.addView(musicView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-
-        music_iv_play = (ImageView) musicView.findViewById(R.id.iv_play);
-        music_tv_title = (TextView) musicView.findViewById(R.id.tv_title);
-        music_iv_cover = (ImageView) musicView.findViewById(R.id.iv_cover);
-        music_tv_time = (TextView) musicView.findViewById(R.id.tv_time);
-        music_pb_music = (ProgressBar) musicView.findViewById(R.id.pb_music);
-
-        musicView.findViewById(R.id.iv_play).setOnClickListener(musicclick);
-        musicView.findViewById(R.id.ll_prew).setOnClickListener(musicclick);
-        musicView.findViewById(R.id.ll_next).setOnClickListener(musicclick);
-
-        //高德地图的界面
-        View.OnClickListener amapclick = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                switch (view.getId()) {
-                    case R.id.rl_base: {
-                        Intent appIntent = LauncherActivity.this.getPackageManager().getLaunchIntentForPackage(AMAP_PACKAGE);
-                        if (appIntent == null) {
-                            Toast.makeText(LauncherActivity.this, "没有安装高德地图", Toast.LENGTH_SHORT).show();
-                            break;
-                        }
-                        appIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        LauncherActivity.this.startActivity(appIntent);
-                        break;
-                    }
-                    case R.id.btn_go_home: {
-                        if (!AppUtil.isInstall(LauncherActivity.this, AMAP_PACKAGE)) {
-                            Toast.makeText(LauncherActivity.this, "没有安装高德地图", Toast.LENGTH_SHORT).show();
-                            break;
-                        }
-                        AMapCarPlugin.self().getHome();
-                        break;
-                    }
-                    case R.id.btn_go_company: {
-                        if (!AppUtil.isInstall(LauncherActivity.this, AMAP_PACKAGE)) {
-                            Toast.makeText(LauncherActivity.this, "没有安装高德地图", Toast.LENGTH_SHORT).show();
-                            break;
-                        }
-                        AMapCarPlugin.self().getComp();
-                        break;
-                    }
-                }
-            }
-        };
-
-        RelativeLayout amapView = (RelativeLayout) View.inflate(this, R.layout.plugin_amap_launcher, null);
-        amapView.findViewById(R.id.rl_base).setOnClickListener(amapclick);
-        amapView.findViewById(R.id.btn_go_home).setOnClickListener(amapclick);
-        amapView.findViewById(R.id.btn_go_company).setOnClickListener(amapclick);
-
-        amapIcon = (ImageView) amapView.findViewById(R.id.iv_icon);
-        amapController = amapView.findViewById(R.id.ll_controller);
-        amapnavi = (LinearLayout) amapView.findViewById(R.id.ll_navi);
-        amapdis = (TextView) amapView.findViewById(R.id.tv_dis);
-        amaproad = (TextView) amapView.findViewById(R.id.tv_road);
-        amapmsg = (TextView) amapView.findViewById(R.id.tv_msg);
-
-        item_amap.addView(amapView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-    }
-
-    @Override
-    public void refreshNaviInfo(NaviInfo naviBean) {
-        Log.e(TAG, "refreshNaviInfo:" + naviBean);
-        switch (naviBean.getType()) {
-            case NaviInfo.TYPE_STATE: {
-                if (amapController != null) {
-                    if (naviBean.getState() == 8 || naviBean.getState() == 10) {
-                        amapController.setVisibility(View.GONE);
-                        amapnavi.setVisibility(View.VISIBLE);
-                    } else if (naviBean.getState() == 9 || naviBean.getState() == 11) {
-                        amapController.setVisibility(View.VISIBLE);
-                        amapnavi.setVisibility(View.GONE);
-                        amapIcon.setImageResource(R.mipmap.ic_amap);
-                    }
-                }
-                break;
-            }
-            case NaviInfo.TYPE_NAVI: {
-                if (amapIcon != null && naviBean.getIcon() - 1 >= 0 && naviBean.getIcon() - 1 < ICONS.length) {
-                    amapIcon.setImageResource(ICONS[naviBean.getIcon() - 1]);
-                }
-                if (amapdis != null && naviBean.getDis() > -1) {
-                    if (naviBean.getDis() < 10) {
-                        amapdis.setText("现在");
-                    } else {
-                        if (naviBean.getDis() > 1000) {
-                            String msg = naviBean.getDis() / 1000 + "公里后";
-                            amapdis.setText(msg);
-                        } else {
-                            String msg = naviBean.getDis() + "米后";
-                            amapdis.setText(msg);
-                        }
-
-                    }
-                }
-                if (amaproad != null && CommonUtil.isNotNull(naviBean.getWroad())) {
-                    amaproad.setText(naviBean.getWroad());
-                }
-                if (amapmsg != null && naviBean.getRemainTime() > -1 && naviBean.getRemainDis() > -1) {
-                    if (naviBean.getRemainTime() == 0 || naviBean.getRemainDis() == 0) {
-                        amapmsg.setText("到达");
-                    } else {
-                        String msg = "剩余" + new BigDecimal(naviBean.getRemainDis() / 1000f).setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue() + "公里  " +
-                                naviBean.getRemainTime() / 60 + "分钟";
-                        amapmsg.setText(msg);
-                    }
-                }
-                break;
-            }
-        }
-    }
-
-    public void refreshInfo(final String title, final String artist) {
-        x.task().post(new Runnable() {
-            @Override
-            public void run() {
-                if (music_tv_title != null) {
-                    if (CommonUtil.isNotNull(title)) {
-                        music_tv_title.setText(title);
-                    } else {
-                        music_tv_title.setText("标题");
-                    }
-                }
-            }
-        });
-    }
-
-    public void refreshProgress(final int curr_time, final int total_time) {
-        x.task().post(new Runnable() {
-            @Override
-            public void run() {
-                if (music_pb_music != null && curr_time > 0 && total_time > 0) {
-                    music_pb_music.setProgress(curr_time);
-                    music_pb_music.setMax(total_time);
-                }
-
-                if (music_tv_time != null) {
-                    int tt = total_time / 1000;
-                    int cc = curr_time / 1000;
-                    music_tv_time.setText(cc + ":" + tt);
-                }
-            }
-        });
-    }
-
-    public void refreshCover(final Bitmap cover) {
-        x.task().post(new Runnable() {
-            @Override
-            public void run() {
-                if (cover != null) {
-                    music_iv_cover.setImageBitmap(cover);
-                } else {
-
-                }
-            }
-        });
-    }
-
-    public void refreshState(final boolean run) {
-        x.task().post(new Runnable() {
-            @Override
-            public void run() {
-                if (music_iv_play != null) {
-                    if (run) {
-                        music_iv_play.setImageResource(R.mipmap.ic_pause);
-                    } else {
-                        music_iv_play.setImageResource(R.mipmap.ic_play);
-                    }
-                }
-            }
-        });
-    }
-
-    @Override
-    public void connect(boolean success) {
-        if (success) {
-            Toast.makeText(getApplication(), "方控连接成功", Toast.LENGTH_SHORT).show();
-            iv_fangkong_state.setImageResource(R.mipmap.fanglong_connect);
-        } else {
-            iv_fangkong_state.setImageResource(R.mipmap.fanglong_disconnect);
-        }
-        System.out.println("连接状态:" + success);
-    }
-
-    @Subscribe
-    public void onEventMainThread(LauncherItemRefreshEvent event) {
-        loadItem();
-    }
-
-    @Subscribe
-    public void onEventMainThread(LauncherCityRefreshEvent event) {
-        refreshWeather();
-    }
-
     @Subscribe
     public void onEventMainThread(LauncherDockLabelShowChangeEvent event) {
         dockLabelShow(event.show);
-    }
-
-    @Subscribe
-    public void onEventMainThread(LauncherItemBackgroundRefreshEvent event) {
-        loadItemBackground();
     }
 
     private BroadcastReceiver homeReceiver = new BroadcastReceiver() {

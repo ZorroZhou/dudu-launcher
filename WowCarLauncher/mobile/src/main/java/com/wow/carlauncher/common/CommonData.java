@@ -82,11 +82,6 @@ public class CommonData {
 
     public static final String SDATA_WEATHER_CITY = "SDATA_WEATHER_CITY";
 
-    public static final String SDATA_LAUNCHER_ITEM1_BG_COLOR = "SDATA_LAUNCHER_ITEM1_BG_COLOR";
-    public static final String SDATA_LAUNCHER_ITEM2_BG_COLOR = "SDATA_LAUNCHER_ITEM2_BG_COLOR";
-    public static final String SDATA_LAUNCHER_ITEM3_BG_COLOR = "SDATA_LAUNCHER_ITEM3_BG_COLOR";
-    public static final String SDATA_LAUNCHER_DOCK_BG_COLOR = "SDATA_LAUNCHER_DOCK_BG_COLOR";
-
     public static final String SDATA_ALLOW_DEBUG_APP = "SDATA_ALLOW_DEBUG_APP";//是否接受开发中的APP包
 
     public static final int APP_WIDGET_HOST_ID = 0x200;

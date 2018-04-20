@@ -69,6 +69,7 @@ public class GoodDriverTPProtocol extends ObdProtocol {
         });
     }
 
+
     private long mark = 0L;
     private boolean reset = false;
 
@@ -119,6 +120,10 @@ public class GoodDriverTPProtocol extends ObdProtocol {
     public void receiveMessage(byte[] message) {
         Log.d(TAG, "!!!!!!!!!!!!!!!收到消息:" + new String(message));
         obdTaskManage.writeRes(message);
+    }
+
+    public boolean supportTp() {
+        return true;
     }
 
     @Override

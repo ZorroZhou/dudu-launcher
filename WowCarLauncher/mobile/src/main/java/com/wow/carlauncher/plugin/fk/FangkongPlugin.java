@@ -61,11 +61,7 @@ public class FangkongPlugin extends BasePlugin<FangkongPluginListener> {
 
     private boolean isConnecting = false;//是否是连接中
 
-    private boolean reConnectAble = true;    //允许重连
-
-    public void setReConnectAble(boolean reConnectAble) {
-        this.reConnectAble = reConnectAble;
-    }
+    private boolean reConnectAble = false;    //允许重连
 
     private final BleConnectStatusListener bleConnectStatusListener = new BleConnectStatusListener() {
 
@@ -78,28 +74,39 @@ public class FangkongPlugin extends BasePlugin<FangkongPluginListener> {
         }
     };
 
+    private FangkongProtocol.ChangeModelCallBack changeModelCallBack = new FangkongProtocol.ChangeModelCallBack() {
+        @Override
+        public void changeModel(final String name) {
+            runListener(new ListenerRuner<FangkongPluginListener>() {
+                @Override
+                public void run(FangkongPluginListener fangkongPluginListener) {
+                    fangkongPluginListener.changeModel(name);
+                }
+            });
+        }
+    };
+
 
     public synchronized void connect() {
         if (isConnecting) {
             return;
         }
         isConnecting = true;
-        if (fangkongProtocol != null) {
-            AppContext.self().getBluetoothClient().disconnect(fangkongProtocol.getAddress());
-            AppContext.self().getBluetoothClient().unregisterConnectStatusListener(fangkongProtocol.getAddress(), bleConnectStatusListener);
-        }
+        disconnect();
+
         final String fkaddress = SharedPreUtil.getSharedPreString(CommonData.SDATA_FANGKONG_ADDRESS);
         if (CommonUtil.isNotNull(fkaddress)) {
             FangkongProtocolEnum p1 = FangkongProtocolEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_FANGKONG_CONTROLLER, FangkongProtocolEnum.YLFK.getId()));
             switch (p1) {
                 case YLFK: {
-                    fangkongProtocol = new YiLianProtocol(fkaddress, context);
+                    fangkongProtocol = new YiLianProtocol(fkaddress, context, changeModelCallBack);
                     break;
                 }
                 default:
-                    fangkongProtocol = new YiLianProtocol(fkaddress, context);
+                    fangkongProtocol = new YiLianProtocol(fkaddress, context, changeModelCallBack);
                     break;
             }
+            reConnectAble = true;
             AppContext.self().getBluetoothClient().registerConnectStatusListener(fangkongProtocol.getAddress(), bleConnectStatusListener);
             AppContext.self().getBluetoothClient().connect(fangkongProtocol.getAddress(), options, new BleConnectResponse() {
                 @Override
@@ -147,6 +154,7 @@ public class FangkongPlugin extends BasePlugin<FangkongPluginListener> {
         if (fangkongProtocol != null) {
             AppContext.self().getBluetoothClient().unregisterConnectStatusListener(fangkongProtocol.getAddress(), bleConnectStatusListener);
             AppContext.self().getBluetoothClient().disconnect(fangkongProtocol.getAddress());
+            connectCallback(false);
         }
     }
 
@@ -158,14 +166,16 @@ public class FangkongPlugin extends BasePlugin<FangkongPluginListener> {
             }
         });
         if (!success) {
-            x.task().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    if (reConnectAble) {
+            if (reConnectAble) {
+                x.task().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+
                         connect();
+
                     }
-                }
-            }, 200);
+                }, 200);
+            }
         }
     }
 }

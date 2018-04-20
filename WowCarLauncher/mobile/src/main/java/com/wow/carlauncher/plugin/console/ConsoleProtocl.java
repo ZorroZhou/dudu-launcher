@@ -2,19 +2,19 @@ package com.wow.carlauncher.plugin.console;
 
 import android.content.Context;
 
+import com.wow.carlauncher.plugin.BasePlugin;
+
 /**
  * Created by 10124 on 2017/10/26.
  */
 
-public abstract class IConsole {
+public abstract class ConsoleProtocl {
     protected Context context;
+    protected ConsoleListener listener;
 
-    public IConsole() {
-
-    }
-
-    public IConsole(Context context) {
+    public ConsoleProtocl(Context context, ConsoleListener listener) {
         this.context = context;
+        this.listener = listener;
     }
 
     public abstract void decVolume();
@@ -28,4 +28,6 @@ public abstract class IConsole {
     public abstract void callAnswer();
 
     public abstract void callHangup();
+
+    public abstract void destroy();
 }

@@ -98,4 +98,11 @@ public class ObdPlugin extends BasePlugin<ObdPluginListener> {
         }
     }
 
+    public boolean supportTp() {
+        if (obdProtocol != null) {
+            return obdProtocol.supportTp();
+        }
+        return false;
+    }
+
 }

@@ -6,4 +6,6 @@ package com.wow.carlauncher.plugin.fk;
 
 public interface FangkongPluginListener {
     void connect(boolean success);
+
+    void changeModel(String name);
 }

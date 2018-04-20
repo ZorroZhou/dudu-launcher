@@ -4,10 +4,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.widget.Toast;
 
 import com.google.common.primitives.Shorts;
-import com.wow.carlauncher.plugin.console.ConsoleManage;
+import com.wow.carlauncher.plugin.console.ConsolePlugin;
 import com.wow.carlauncher.plugin.SimulateDoubleClickUtil;
 import com.wow.carlauncher.plugin.fk.FangkongProtocol;
 import com.wow.carlauncher.plugin.music.MusicPlugin;
@@ -42,8 +41,8 @@ public class YiLianProtocol extends FangkongProtocol {
 
     private SimulateDoubleClickUtil<Short> doubleClick;
 
-    public YiLianProtocol(String address, Context context) {
-        super(address, context);
+    public YiLianProtocol(String address, Context context, ChangeModelCallBack changeModelCallBack) {
+        super(address, context, changeModelCallBack);
         doubleClick = new SimulateDoubleClickUtil<>();
 
 
@@ -66,6 +65,8 @@ public class YiLianProtocol extends FangkongProtocol {
                 }
             }
         }, localIntentFilter);
+
+        changeModelCallBack.changeModel("模式" + moshi);
     }
 
     @Override
@@ -75,16 +76,16 @@ public class YiLianProtocol extends FangkongProtocol {
             if (isCalling) {
                 switch (cmd) {
                     case BTN_LEFT_TOP_CLICK:
-                        ConsoleManage.self().decVolume();
+                        ConsolePlugin.self().decVolume();
                         break;
                     case BTN_RIGHT_TOP_CLICK:
-                        ConsoleManage.self().incVolume();
+                        ConsolePlugin.self().incVolume();
                         break;
                     case BTN_LEFT_BOTTOM_CLICK:
-                        ConsoleManage.self().callAnswer();
+                        ConsolePlugin.self().callAnswer();
                         break;
                     case BTN_RIGHT_BOTTOM_CLICK:
-                        ConsoleManage.self().callHangup();
+                        ConsolePlugin.self().callHangup();
                         break;
                     case BTN_CENTER_CLICK:
                         Intent home = new Intent(Intent.ACTION_MAIN);
@@ -99,10 +100,10 @@ public class YiLianProtocol extends FangkongProtocol {
                         MusicPlugin.self().next();
                         break;
                     case BTN_LEFT_BOTTOM_LONG_CLICK:
-                        ConsoleManage.self().callAnswer();
+                        ConsolePlugin.self().callAnswer();
                         break;
                     case BTN_RIGHT_BOTTOM_LONG_CLICK:
-                        ConsoleManage.self().callHangup();
+                        ConsolePlugin.self().callHangup();
                         break;
                     case BTN_CENTER_LONG_CLICK:
                         isCalling = false;
@@ -112,13 +113,13 @@ public class YiLianProtocol extends FangkongProtocol {
                 if (moshi == 1) {
                     switch (cmd) {
                         case BTN_LEFT_TOP_CLICK:
-                            ConsoleManage.self().decVolume();
+                            ConsolePlugin.self().decVolume();
                             break;
                         case BTN_RIGHT_TOP_CLICK:
-                            ConsoleManage.self().incVolume();
+                            ConsolePlugin.self().incVolume();
                             break;
                         case BTN_LEFT_BOTTOM_CLICK:
-                            ConsoleManage.self().mute();
+                            ConsolePlugin.self().mute();
                             break;
                         case BTN_RIGHT_BOTTOM_CLICK:
                             setBtnRightBottomClick();
@@ -139,7 +140,7 @@ public class YiLianProtocol extends FangkongProtocol {
 
                             break;
                         case BTN_RIGHT_BOTTOM_LONG_CLICK:
-                            ConsoleManage.self().callHangup();
+                            ConsolePlugin.self().callHangup();
                             break;
                         case BTN_CENTER_LONG_CLICK:
 
@@ -154,7 +155,7 @@ public class YiLianProtocol extends FangkongProtocol {
                             MusicPlugin.self().next();
                             break;
                         case BTN_LEFT_BOTTOM_CLICK:
-                            ConsoleManage.self().mute();
+                            ConsolePlugin.self().mute();
                             break;
                         case BTN_RIGHT_BOTTOM_CLICK:
                             setBtnRightBottomClick();
@@ -217,7 +218,7 @@ public class YiLianProtocol extends FangkongProtocol {
                 }
             }
         }
-        Toast.makeText(context, "切换到模式:" + moshi, Toast.LENGTH_SHORT).show();
+        changeModelCallBack.changeModel("模式" + moshi);
     }
 
     public UUID getService() {

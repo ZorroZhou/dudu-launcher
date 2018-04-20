@@ -54,6 +54,9 @@ public abstract class ObdProtocol {
         obdTaskManage = new ObdTaskManage();
     }
 
+    //是否支持胎压
+    public abstract boolean supportTp();
+
     public abstract void run();
 
     public void stop() {

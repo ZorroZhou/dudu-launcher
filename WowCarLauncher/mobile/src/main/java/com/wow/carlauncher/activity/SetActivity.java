@@ -26,6 +26,7 @@ import android.widget.LinearLayout;
 
 import com.wow.carAssistant.packet.response.common.GetAppUpdateRes;
 import com.wow.carlauncher.dialog.ListDialog;
+import com.wow.carlauncher.plugin.console.ConsoleProtoclEnum;
 import com.wow.carlauncher.plugin.fk.FangkongPlugin;
 import com.wow.carlauncher.plugin.fk.FangkongProtocolEnum;
 import com.wow.carlauncher.plugin.music.MusicControllerEnum;
@@ -45,7 +46,7 @@ import com.wow.carlauncher.common.AppInfoManage;
 import com.wow.carlauncher.common.BaseActivity;
 import com.wow.carlauncher.common.BaseDialog;
 import com.wow.carlauncher.common.CommonData;
-import com.wow.carlauncher.plugin.console.ConsoleManage;
+import com.wow.carlauncher.plugin.console.ConsolePlugin;
 import com.wow.carlauncher.plugin.console.impl.NwdConsoleImpl;
 import com.wow.carlauncher.plugin.console.impl.SysConsoleImpl;
 import com.wow.frame.util.AppUtil.AppInfo;
@@ -298,11 +299,11 @@ public class SetActivity extends BaseActivity {
                         dialog.dismiss();
                         switch (obj.getObj()) {
                             case SysConsoleImpl.MARK: {
-                                ConsoleManage.self().setConsole(new SysConsoleImpl(mContext));
+                                SharedPreUtil.saveSharedPreInteger(SDATA_CONSOLE_MARK, ConsoleProtoclEnum.SYSTEM.getId());
                                 break;
                             }
                             case NwdConsoleImpl.MARK: {
-                                ConsoleManage.self().setConsole(new NwdConsoleImpl(mContext));
+                                SharedPreUtil.saveSharedPreInteger(SDATA_CONSOLE_MARK, ConsoleProtoclEnum.NWD.getId());
                                 break;
                             }
                         }
@@ -365,7 +366,6 @@ public class SetActivity extends BaseActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         SharedPreUtil.saveSharedPreInteger(SDATA_FANGKONG_CONTROLLER, show[obj.getObj()].getId());
-                        FangkongPlugin.self().setReConnectAble(true);
                         FangkongPlugin.self().connect();
                         sv_plugin_select.setSummary("方控使用的协议：" + show[obj.getObj()].getName());
                     }
@@ -383,7 +383,6 @@ public class SetActivity extends BaseActivity {
         sv_fangkong_disconnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                FangkongPlugin.self().setReConnectAble(false);
                 FangkongPlugin.self().disconnect();
             }
         });
@@ -450,7 +449,6 @@ public class SetActivity extends BaseActivity {
 
                         sv_fangkong_select.setSummary("绑定了设备:" + device.getName() + "  地址:" + device.getAddress());
 
-                        FangkongPlugin.self().setReConnectAble(true);
                         FangkongPlugin.self().connect();
                     }
                 });

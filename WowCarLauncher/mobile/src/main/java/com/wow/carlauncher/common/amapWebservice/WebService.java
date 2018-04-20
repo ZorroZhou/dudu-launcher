@@ -17,7 +17,7 @@ import org.xutils.x;
 
 public class WebService {
     private static final String TAG = "WebService";
-    private static final String KEY = "31d8bdc3dd120568d55288e82737da61";
+    private static final String KEY = "b8a80f002ec3fe70454a4c013eaabbb7";
 
     public static void getWeatherInfo(String adcode, final CommonCallback commonCallback) {
         RequestParams params = new RequestParams("http://restapi.amap.com/v3/weather/weatherInfo?key=" + KEY + "&city=" + adcode);

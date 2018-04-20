@@ -6,7 +6,8 @@ import android.content.pm.PackageManager;
 import android.util.Log;
 import android.view.KeyEvent;
 
-import com.wow.carlauncher.plugin.console.IConsole;
+import com.wow.carlauncher.plugin.console.ConsoleListener;
+import com.wow.carlauncher.plugin.console.ConsoleProtocl;
 import com.wow.frame.util.AppUtil;
 
 import java.util.List;
@@ -17,11 +18,11 @@ import static com.wow.carlauncher.common.CommonData.TAG;
  * Created by 10124 on 2017/11/9.
  */
 
-public class SysConsoleImpl extends IConsole {
+public class SysConsoleImpl extends ConsoleProtocl {
     public static final int MARK = 0;
 
-    public SysConsoleImpl(Context context) {
-        super(context);
+    public SysConsoleImpl(Context context, ConsoleListener listener) {
+        super(context, listener);
     }
 
     @Override
@@ -82,4 +83,8 @@ public class SysConsoleImpl extends IConsole {
 
     }
 
+    @Override
+    public void destroy() {
+
+    }
 }

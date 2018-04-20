@@ -4,10 +4,9 @@ import android.app.Application;
 
 import com.inuker.bluetooth.library.BluetoothClient;
 import com.wow.carlauncher.CarLauncherApplication;
-import com.wow.carlauncher.plugin.console.ConsoleManage;
+import com.wow.carlauncher.plugin.console.ConsolePlugin;
 import com.wow.carlauncher.plugin.amapcar.AMapCarPlugin;
 import com.wow.carlauncher.plugin.fk.FangkongPlugin;
-import com.wow.carlauncher.plugin.fk.FangkongPluginListener;
 import com.wow.carlauncher.plugin.music.MusicPlugin;
 import com.wow.carlauncher.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.popupWindow.ConsoleWin;
@@ -43,6 +42,7 @@ public class AppContext implements SWebServiceDeclare, SAppDeclare {
     private CarLauncherApplication application;
 
     private BluetoothClient bluetoothClient;
+
     public BluetoothClient getBluetoothClient() {
         return bluetoothClient;
     }
@@ -64,22 +64,13 @@ public class AppContext implements SWebServiceDeclare, SAppDeclare {
 
         AppInfoManage.self().init(app);
         AppWidgetManage.self().init(app);
-        ConsoleManage.self().init(app);
+        ConsolePlugin.self().init(app);
         PopupWin.self().init(app);
         ConsoleWin.self().init(app);
 
         int size = SharedPreUtil.getSharedPreInteger(CommonData.SDATA_POPUP_SIZE, 1);
         PopupWin.self().setRank(size + 1);
 
-        FangkongPlugin.self().addListener(new FangkongPluginListener() {
-            @Override
-            public void connect(boolean success) {
-
-            }
-        });
-
-
-       // handerException();
     }
 
     @Override

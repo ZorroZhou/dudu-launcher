@@ -12,7 +12,7 @@ import com.wow.carlauncher.CarLauncherApplication;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.activity.LockActivity;
 import com.wow.carlauncher.common.CommonData;
-import com.wow.carlauncher.plugin.console.ConsoleManage;
+import com.wow.carlauncher.plugin.console.ConsolePlugin;
 import com.wow.frame.util.SharedPreUtil;
 
 /**
@@ -99,15 +99,15 @@ public class ConsoleWin implements View.OnClickListener {
                 break;
             }
             case R.id.btn_vu: {
-                ConsoleManage.self().incVolume();
+                ConsolePlugin.self().incVolume();
                 break;
             }
             case R.id.btn_vd: {
-                ConsoleManage.self().decVolume();
+                ConsolePlugin.self().decVolume();
                 break;
             }
             case R.id.btn_jy: {
-                ConsoleManage.self().mute();
+                ConsolePlugin.self().mute();
                 break;
             }
         }

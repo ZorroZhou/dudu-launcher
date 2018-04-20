@@ -4,177 +4,61 @@
     android:id="@+id/fl_bg"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/wallpaper_01"
+    android:background="#000"
     android:orientation="vertical">
-
-    <com.zhy.android.percent.support.PercentLinearLayout
+    <!--390  50 285 60-->
+    <com.zhy.android.percent.support.PercentRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
+        <com.zhy.android.percent.support.PercentRelativeLayout
+            android:id="@+id/ll_top"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_alignParentTop="true"
             android:orientation="horizontal"
-            app:layout_heightPercent="20%h">
+            android:padding="10dp"
+            app:layout_heightPercent="12.8%h">
 
-            <com.zhy.android.percent.support.PercentRelativeLayout
-                android:layout_width="match_parent"
+            <com.zhy.android.percent.support.PercentLinearLayout
+                android:id="@+id/ll_time"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_margin="10dp">
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="20dp"
+                android:orientation="horizontal">
 
-                <com.zhy.android.percent.support.PercentLinearLayout
-                    android:id="@+id/ll_time"
+                <TextView
+                    android:id="@+id/time"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="10dp"
-                    android:orientation="horizontal">
+                    android:gravity="center_vertical|end"
+                    android:textColor="#fff"
+                    app:layout_textSizePercent="60%h" />
+            </com.zhy.android.percent.support.PercentLinearLayout>
 
-                    <TextView
-                        android:id="@+id/time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginRight="20dp"
-                        android:gravity="center_vertical|end"
-                        android:textColor="#fff"
-                        app:layout_textSizePercent="70%h" />
-
-                    <com.zhy.android.percent.support.PercentLinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/date"
-                            android:layout_width="wrap_content"
-                            android:layout_height="0dp"
-                            android:gravity="bottom|start"
-                            android:textColor="#fff"
-                            app:layout_heightPercent="50%h"
-                            app:layout_textSizePercent="25%h" />
-
-                        <TextView
-                            android:id="@+id/week"
-                            android:layout_width="wrap_content"
-                            android:layout_height="0dp"
-                            android:gravity="top|start"
-                            android:textColor="#fff"
-                            app:layout_heightPercent="50%h"
-                            app:layout_textSizePercent="25%h" />
-                    </com.zhy.android.percent.support.PercentLinearLayout>
-                </com.zhy.android.percent.support.PercentLinearLayout>
-
-                <com.zhy.android.percent.support.PercentLinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="30dp"
-                    android:orientation="horizontal">
-
-                    <com.zhy.android.percent.support.PercentLinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical|end"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:id="@+id/iv_tianqi"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:padding="10dp"
-                            android:src="@mipmap/wic_no"
-                            app:layout_widthPercent="100%h" />
-                    </com.zhy.android.percent.support.PercentLinearLayout>
-
-                    <com.zhy.android.percent.support.PercentLinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/tv_tianqi"
-                            android:layout_width="wrap_content"
-                            android:layout_height="0dp"
-                            android:gravity="bottom|start"
-                            android:lines="1"
-                            android:text="等待天气数据"
-                            android:textColor="#fff"
-                            app:layout_heightPercent="50%h"
-                            app:layout_textSizePercent="25%h" />
-
-                        <TextView
-                            android:id="@+id/tv_tianqi2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="0dp"
-                            android:gravity="top|start"
-                            android:lines="1"
-                            android:text="等待天气数据"
-                            android:textColor="#fff"
-                            app:layout_heightPercent="50%h"
-                            app:layout_textSizePercent="25%h" />
-                    </com.zhy.android.percent.support.PercentLinearLayout>
-                </com.zhy.android.percent.support.PercentLinearLayout>
-
-                <ImageView
-                    android:id="@+id/iv_set"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_margin="10dp"
-                    android:contentDescription="@string/iv_content"
-                    android:src="@mipmap/ic_menu"
-                    app:layout_heightPercent="30%h"
-                    app:layout_widthPercent="30%h" />
-            </com.zhy.android.percent.support.PercentRelativeLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_main"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:baselineAligned="false"
-            android:orientation="horizontal"
-            android:paddingBottom="20dp"
-            android:paddingLeft="40dp"
-            android:paddingRight="40dp"
-            app:layout_heightPercent="64%h">
-
-            <FrameLayout
-                android:id="@+id/item_music"
+            <ImageView
+                android:id="@+id/iv_set"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical" />
-
-
-            <FrameLayout
-                android:id="@+id/item_2"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical" />
-
-            <FrameLayout
-                android:id="@+id/item_amap"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical" />
-        </LinearLayout>
+                android:layout_height="0dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/iv_content"
+                android:src="@mipmap/ic_menu"
+                app:layout_heightPercent="60%h"
+                app:layout_widthPercent="60%h" />
+        </com.zhy.android.percent.support.PercentRelativeLayout>
 
         <com.zhy.android.percent.support.PercentLinearLayout
             android:id="@+id/ll_dock"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_alignParentBottom="true"
             android:background="@color/launch_dock_bg"
             android:gravity="center"
             android:orientation="horizontal"
-            app:layout_heightPercent="16.5%h">
+            app:layout_heightPercent="15.3%h">
 
             <com.zhy.android.percent.support.PercentLinearLayout
                 android:id="@+id/ll_dock1"
@@ -379,5 +263,60 @@
 
             </com.zhy.android.percent.support.PercentRelativeLayout>
         </com.zhy.android.percent.support.PercentLinearLayout>
-    </com.zhy.android.percent.support.PercentLinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ll_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/ll_dock"
+            android:layout_below="@id/ll_top"
+            android:baselineAligned="false"
+            android:orientation="horizontal"
+            android:paddingBottom="30dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp">
+
+
+            <com.wow.carlauncher.activity.launcher.LDeviceView
+                android:id="@+id/item_2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp" />
+
+            <com.wow.carlauncher.activity.launcher.LMusicView
+                android:id="@+id/item_music"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp" />
+
+            <com.wow.carlauncher.activity.launcher.LAMapView
+                android:id="@+id/item_amap"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp" />
+
+            <com.wow.carlauncher.activity.launcher.LWeatherView
+                android:id="@+id/item_music2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp" />
+        </LinearLayout>
+    </com.zhy.android.percent.support.PercentRelativeLayout>
 </FrameLayout>

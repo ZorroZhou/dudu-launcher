@@ -191,7 +191,6 @@ public class SystemMusicController extends MusicController {
                     Boolean playstate = intent.getBooleanExtra("playstate", false);
                     musicView.refreshState(playstate);
                 } catch (Exception e) {
-                    e.printStackTrace();
                 }
                 try {
                     int playstate = intent.getIntExtra("playstate", -1);
@@ -203,7 +202,6 @@ public class SystemMusicController extends MusicController {
                         }
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
                 }
 
                 try {

@@ -15,8 +15,8 @@ public class CarLauncherApplication extends Application implements SAppDeclare {
     @Override
     public void onCreate() {
         super.onCreate();
-        CrashUtil crashUtil = CrashUtil.getInstance();
-        crashUtil.init(this);
+//        CrashUtil crashUtil = CrashUtil.getInstance();
+//        crashUtil.init(this);
         AppContext.self().init(this);
 
         registerActivityLifecycleCallbacks(new ActivityLifecycleListener());

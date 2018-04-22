@@ -7,6 +7,8 @@ import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
 
+import org.xutils.x;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;

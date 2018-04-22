@@ -1,4 +1,4 @@
-package com.wow.carlauncher.plugin.obd.task;
+package com.wow.carlauncher.plugin.obd;
 
 /**
  * Created by 10124 on 2018/4/19.

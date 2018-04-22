@@ -32,4 +32,8 @@ public abstract class FangkongProtocol {
     public interface ChangeModelCallBack {
         void changeModel(String name);
     }
+
+    public abstract void destroy();
+
+    public abstract String getModelName();
 }

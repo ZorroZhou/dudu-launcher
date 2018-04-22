@@ -1,19 +1,22 @@
 package com.wow.frame.util;
 
 public class FormatUtils {
-    public static String bytesToHexString(byte[] paramArrayOfByte) {
-        StringBuilder localStringBuilder = new StringBuilder("");
-        if ((paramArrayOfByte == null) || (paramArrayOfByte.length <= 0))
+    public static String bytesToHexString(byte[] src) {
+        StringBuilder stringBuilder = new StringBuilder("");
+        if (src == null || src.length <= 0) {
             return null;
-        for (int i = 0; ; i++) {
-            if (i >= paramArrayOfByte.length)
-                return localStringBuilder.toString();
-            String str = Integer.toHexString(0xFF & paramArrayOfByte[i]);
-            if (str.length() < 2)
-                localStringBuilder.append(0);
-            localStringBuilder.append(str);
         }
+        for (byte aSrc : src) {
+            int v = aSrc & 0xFF;
+            String hv = Integer.toHexString(v);
+            if (hv.length() < 2) {
+                stringBuilder.append(0);
+            }
+            stringBuilder.append(hv).append(" ");
+        }
+        return stringBuilder.toString();
     }
+
     public static int bytesToInt(byte[] bytes) {
         int number = bytes[0] & 0xFF;
         // "|="按位或赋值。
@@ -35,16 +38,16 @@ public class FormatUtils {
 
     /**
      * 将int数值转换为占四个字节的byte数组，本方法适用于(低位在前，高位在后)的顺序
+     *
      * @param value 要转换的int值
      * @return byte数组
      */
-    public static byte[] intToBytes( int value )
-    {
+    public static byte[] intToBytes(int value) {
         byte[] src = new byte[4];
-        src[3] =  (byte) ((value>>24) & 0xFF);
-        src[2] =  (byte) ((value>>16) & 0xFF);
-        src[1] =  (byte) ((value>>8) & 0xFF);
-        src[0] =  (byte) (value & 0xFF);
+        src[3] = (byte) ((value >> 24) & 0xFF);
+        src[2] = (byte) ((value >> 16) & 0xFF);
+        src[1] = (byte) ((value >> 8) & 0xFF);
+        src[0] = (byte) (value & 0xFF);
         return src;
     }
 }

@@ -1,4 +1,4 @@
-package com.wow.carlauncher.activity.launcher;
+package com.wow.carlauncher.activity.launcher.view;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,11 +15,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wow.carlauncher.R;
-import com.wow.carlauncher.activity.LauncherActivity;
 import com.wow.carlauncher.plugin.amapcar.AMapCarPlugin;
 import com.wow.carlauncher.plugin.amapcar.AMapCarPluginListener;
 import com.wow.carlauncher.plugin.amapcar.NaviInfo;
-import com.wow.carlauncher.plugin.music.MusicPlugin;
 import com.wow.frame.util.AppUtil;
 import com.wow.frame.util.CommonUtil;
 

@@ -2,8 +2,9 @@ package com.wow.carlauncher.common;
 
 import android.app.Application;
 
-import com.inuker.bluetooth.library.BluetoothClient;
 import com.wow.carlauncher.CarLauncherApplication;
+import com.wow.carlauncher.common.ex.BleManageEx;
+import com.wow.carlauncher.common.ex.ToastEx;
 import com.wow.carlauncher.plugin.console.ConsolePlugin;
 import com.wow.carlauncher.plugin.amapcar.AMapCarPlugin;
 import com.wow.carlauncher.plugin.fk.FangkongPlugin;
@@ -41,11 +42,11 @@ public class AppContext implements SWebServiceDeclare, SAppDeclare {
 
     private CarLauncherApplication application;
 
-    private BluetoothClient bluetoothClient;
-
-    public BluetoothClient getBluetoothClient() {
-        return bluetoothClient;
-    }
+//    private BluetoothClient bluetoothClient;
+//
+//    public BluetoothClient getBluetoothClient() {
+//        return bluetoothClient;
+//    }
 
     private AppContext() {
 
@@ -55,7 +56,15 @@ public class AppContext implements SWebServiceDeclare, SAppDeclare {
         this.application = app;
         SFrame.init(this);
 
-        bluetoothClient = new BluetoothClient(app);
+        //通知工具
+        ToastEx.self().init(app);
+        //蓝牙客户端
+        BleManageEx.self().init(app);
+        BleManageEx.self().startSearch();
+
+
+
+
 
         AMapCarPlugin.self().init(app);
         MusicPlugin.self().init(app);

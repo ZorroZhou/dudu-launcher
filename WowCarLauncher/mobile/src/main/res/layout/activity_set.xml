@@ -107,31 +107,48 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <include layout="@layout/content_set_app" />
+                <com.wow.carlauncher.activity.set.view.SAppView
+                    android:id="@+id/ll_app"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
 
-                <include
-                    layout="@layout/content_set_fangkong"
+                <com.wow.carlauncher.activity.set.view.SFangKongView
+                    android:id="@+id/ll_fangkong"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:visibility="gone" />
 
-                <include
-                    layout="@layout/content_set_popup"
+                <com.wow.carlauncher.activity.set.view.SObdView
+                    android:id="@+id/ll_obd"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:visibility="gone" />
 
-                <include
-                    layout="@layout/content_set_time"
+                <com.wow.carlauncher.activity.set.view.SPopupView
+                    android:id="@+id/ll_popup"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:visibility="gone" />
 
-                <include
-                    layout="@layout/content_set_help"
+                <com.wow.carlauncher.activity.set.view.STimeView
+                    android:id="@+id/ll_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:visibility="gone" />
 
-                <include
-                    layout="@layout/content_set_system"
+                <com.wow.carlauncher.activity.set.view.SHelpView
+                    android:id="@+id/ll_help"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:visibility="gone" />
 
-                <include
-                    layout="@layout/content_set_obd"
+                <com.wow.carlauncher.activity.set.view.SSystemView
+                    android:id="@+id/ll_system_set"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:visibility="gone" />
+
+
             </LinearLayout>
         </ScrollView>
     </FrameLayout>

@@ -4,9 +4,13 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.util.Log;
 
+import com.wow.carlauncher.common.ex.ToastEx;
 import com.wow.carlauncher.plugin.console.ConsoleListener;
 import com.wow.carlauncher.plugin.console.ConsoleProtocl;
+
+import static com.wow.carlauncher.common.CommonData.TAG;
 
 /**
  * Created by 10124 on 2017/11/9.
@@ -33,6 +37,8 @@ public class NwdConsoleImpl extends ConsoleProtocl {
         localIntentFilter.addAction(ACTION_BT_INCOMING_CALL);
         localIntentFilter.addAction(ACTION_BT_OUTGOING_CALL);
         context.registerReceiver(callBroadcastReceiver, localIntentFilter);
+
+        Log.d(TAG, "nwd console init");
     }
 
     private BroadcastReceiver callBroadcastReceiver = new BroadcastReceiver() {
@@ -77,7 +83,7 @@ public class NwdConsoleImpl extends ConsoleProtocl {
 
     @Override
     public void clearTask() {
-
+        ToastEx.self().show("不支持的指令");
     }
 
     @Override
@@ -95,5 +101,7 @@ public class NwdConsoleImpl extends ConsoleProtocl {
     @Override
     public void destroy() {
         context.unregisterReceiver(callBroadcastReceiver);
+
+        Log.d(TAG, "nwd console destroy");
     }
 }

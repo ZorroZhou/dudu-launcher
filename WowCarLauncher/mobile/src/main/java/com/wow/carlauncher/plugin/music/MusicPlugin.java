@@ -58,7 +58,7 @@ public class MusicPlugin extends BasePlugin<MusicPluginListener> {
                 break;
         }
         if(musicController!=null){
-            musicController.init(context, this);
+            musicController.init(getContext(), this);
         }
     }
 

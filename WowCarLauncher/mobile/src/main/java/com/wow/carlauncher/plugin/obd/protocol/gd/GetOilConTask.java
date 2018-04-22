@@ -1,8 +1,6 @@
 package com.wow.carlauncher.plugin.obd.protocol.gd;
 
-import com.google.common.primitives.Shorts;
-import com.wow.carlauncher.plugin.obd.ObdUtil;
-import com.wow.carlauncher.plugin.obd.task.ObdTask;
+import com.wow.carlauncher.plugin.obd.ObdTask;
 
 import static com.wow.carlauncher.plugin.obd.protocol.gd.CommonCmd.CMD_RES_END;
 import static com.wow.carlauncher.plugin.obd.protocol.gd.CommonCmd.CMD_RES_NO_DATA;
@@ -12,8 +10,14 @@ import static com.wow.carlauncher.plugin.obd.protocol.gd.CommonCmd.CMD_RES_NO_DA
  */
 
 public class GetOilConTask extends ObdTask {
-    private static final String CMD_REQ = "015E";//2F
-    private static final String CMD_RES = "415E";
+    private static final String CMD_REQ = "012F";//2F
+    private static final String CMD_RES = "412F";
+
+    private int oil = 0;
+
+    public int getOil() {
+        return oil;
+    }
 
     @Override
     public String getReqMessage() {
@@ -24,7 +28,11 @@ public class GetOilConTask extends ObdTask {
     public void writeRes(byte[] message) {
         String msg = new String(message);
         if (msg.endsWith(CMD_RES_END) && msg.startsWith(CMD_RES)) {
-            markSuccess();
+            msg = msg.substring(4, 6);
+            if (msg.length() >= 2) {
+                oil = (int) (Integer.parseInt(msg.substring(0, 2), 16) / 256f * 100);
+                markSuccess();
+            }
         } else if (msg.endsWith(CMD_RES_END) && msg.startsWith(CMD_RES_NO_DATA)) {
             markSuccess();
             markNoData();

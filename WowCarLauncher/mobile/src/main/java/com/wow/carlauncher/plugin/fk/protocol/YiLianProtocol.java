@@ -4,14 +4,18 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.util.Log;
 
 import com.google.common.primitives.Shorts;
+import com.wow.carlauncher.plugin.console.ConsoleListener;
 import com.wow.carlauncher.plugin.console.ConsolePlugin;
 import com.wow.carlauncher.plugin.SimulateDoubleClickUtil;
 import com.wow.carlauncher.plugin.fk.FangkongProtocol;
 import com.wow.carlauncher.plugin.music.MusicPlugin;
 
 import java.util.UUID;
+
+import static com.wow.carlauncher.common.CommonData.TAG;
 
 /**
  * Created by 10124 on 2018/3/28.
@@ -29,11 +33,6 @@ public class YiLianProtocol extends FangkongProtocol {
     private static final short BTN_RIGHT_BOTTOM_LONG_CLICK = -23806;
     private static final short BTN_CENTER_LONG_CLICK = -23792;
 
-    public static final String ACTION_BT_BEGIN_CALL_ONLINE = "com.bt.ACTION_BT_BEGIN_CALL_ONLINE";
-    public static final String ACTION_BT_END_CALL = "com.bt.ACTION_BT_END_CALL";
-    public static final String ACTION_BT_INCOMING_CALL = "com.bt.ACTION_BT_INCOMING_CALL";
-    public static final String ACTION_BT_OUTGOING_CALL = "com.bt.ACTION_BT_OUTGOING_CALL";
-
     private int moshi = 1;
 
     //标记是否是在打电话
@@ -44,30 +43,16 @@ public class YiLianProtocol extends FangkongProtocol {
     public YiLianProtocol(String address, Context context, ChangeModelCallBack changeModelCallBack) {
         super(address, context, changeModelCallBack);
         doubleClick = new SimulateDoubleClickUtil<>();
-
-
-        IntentFilter localIntentFilter = new IntentFilter();
-        localIntentFilter.addAction(ACTION_BT_END_CALL);
-        localIntentFilter.addAction(ACTION_BT_BEGIN_CALL_ONLINE);
-        localIntentFilter.addAction(ACTION_BT_INCOMING_CALL);
-        localIntentFilter.addAction(ACTION_BT_OUTGOING_CALL);
-        context.registerReceiver(new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                if (ACTION_BT_BEGIN_CALL_ONLINE.equals(intent.getAction())) {
-                    isCalling = true;
-                } else if (ACTION_BT_INCOMING_CALL.equals(intent.getAction())) {
-                    isCalling = true;
-                } else if (ACTION_BT_OUTGOING_CALL.equals(intent.getAction())) {
-                    isCalling = true;
-                } else if (ACTION_BT_END_CALL.equals(intent.getAction())) {
-                    isCalling = false;
-                }
-            }
-        }, localIntentFilter);
-
-        changeModelCallBack.changeModel("模式" + moshi);
+        ConsolePlugin.self().addListener(listener);
+        Log.d(TAG, "yilian protocol init");
     }
+
+    private ConsoleListener listener = new ConsoleListener() {
+        @Override
+        public void callState(boolean calling) {
+            isCalling = calling;
+        }
+    };
 
     @Override
     public void receiveMessage(byte[] message) {
@@ -200,6 +185,7 @@ public class YiLianProtocol extends FangkongProtocol {
     private int oldmodel = -1;
 
     private void modelSwitch(boolean dclick) {
+        Log.d(TAG, "modelSwitch: " + dclick);
         if (dclick) {
             if (moshi == 2 || moshi == 1) {
                 oldmodel = moshi;
@@ -208,6 +194,7 @@ public class YiLianProtocol extends FangkongProtocol {
                 moshi = oldmodel;
             }
         } else {
+            Log.d(TAG, "modelSwitch: " + moshi);
             if (moshi == 3) {
                 moshi = oldmodel;
             } else {
@@ -227,5 +214,15 @@ public class YiLianProtocol extends FangkongProtocol {
 
     public UUID getCharacter() {
         return UUID.fromString("00004b59-0000-1000-8000-00805f9b34fb");
+    }
+
+    @Override
+    public void destroy() {
+        ConsolePlugin.self().removeListener(listener);
+        Log.d(TAG, "yilian protocol destroy");
+    }
+
+    public String getModelName() {
+        return "模式" + moshi;
     }
 }

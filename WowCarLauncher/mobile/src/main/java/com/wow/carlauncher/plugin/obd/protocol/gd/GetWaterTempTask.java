@@ -1,7 +1,7 @@
 package com.wow.carlauncher.plugin.obd.protocol.gd;
 
 import com.wow.carlauncher.plugin.obd.ObdUtil;
-import com.wow.carlauncher.plugin.obd.task.ObdTask;
+import com.wow.carlauncher.plugin.obd.ObdTask;
 
 import static com.wow.carlauncher.plugin.obd.protocol.gd.CommonCmd.CMD_RES_END;
 import static com.wow.carlauncher.plugin.obd.protocol.gd.CommonCmd.CMD_RES_NO_DATA;
@@ -28,8 +28,8 @@ public class GetWaterTempTask extends ObdTask {
     public void writeRes(byte[] message) {
         String msg = new String(message);
         if (msg.endsWith(CMD_RES_END) && msg.startsWith(CMD_RES)) {
-            msg = msg.replace(CMD_RES_END, "").replace(CMD_RES, "").replace(" ", "");
-            if (msg.length() > 2) {
+            msg = msg.substring(4, 6);
+            if (msg.length() >= 2) {
                 temp = ObdUtil.hexToByte(msg.substring(0, 2)) - 40;
                 markSuccess();
             }

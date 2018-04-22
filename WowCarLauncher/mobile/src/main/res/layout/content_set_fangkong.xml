@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:st="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/ll_fangkong"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@android:color/white"
@@ -30,7 +29,7 @@
         android:id="@+id/sv_fangkong_remove"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        st:titleEx="清理方控绑定"
+        st:titleEx="删除方控绑定"
         st:type="buttonB" />
 
     <View style="@style/Interval" />

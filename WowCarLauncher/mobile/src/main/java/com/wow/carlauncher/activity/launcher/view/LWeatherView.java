@@ -1,4 +1,4 @@
-package com.wow.carlauncher.activity.launcher;
+package com.wow.carlauncher.activity.launcher.view;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

@@ -45,7 +45,7 @@
         <service android:name="com.amap.api.location.APSService"/>
 
         <activity
-            android:name=".activity.LauncherActivity"
+            android:name=".activity.launcher.LauncherActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|locale|screenLayout|mcc|mnc"
             android:launchMode="singleInstance"
             android:screenOrientation="landscape">
@@ -67,7 +67,7 @@
             android:name=".activity.AppMenuActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".activity.SetActivity"
+            android:name=".activity.set.SetActivity"
             android:screenOrientation="landscape" />
         <activity
             android:name=".activity.PluginSetActivity"

@@ -209,7 +209,6 @@ public class SystemMusicController extends MusicController {
                         musicView.refreshInfo(intent.getStringExtra("track"), intent.getStringExtra("artist"));
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
                 }
             }
 

@@ -2,8 +2,6 @@ package com.wow.carlauncher.plugin.console;
 
 import android.content.Context;
 
-import com.wow.carlauncher.plugin.BasePlugin;
-
 /**
  * Created by 10124 on 2017/10/26.
  */

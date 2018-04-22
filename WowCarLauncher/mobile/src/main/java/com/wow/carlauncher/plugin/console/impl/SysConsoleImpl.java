@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.util.Log;
 import android.view.KeyEvent;
 
+import com.wow.carlauncher.common.ex.ToastEx;
 import com.wow.carlauncher.plugin.console.ConsoleListener;
 import com.wow.carlauncher.plugin.console.ConsoleProtocl;
 import com.wow.frame.util.AppUtil;
@@ -23,23 +24,25 @@ public class SysConsoleImpl extends ConsoleProtocl {
 
     public SysConsoleImpl(Context context, ConsoleListener listener) {
         super(context, listener);
+
+        Log.d(TAG, "system console init");
     }
 
     @Override
     public void decVolume() {
-        Log.e(TAG, "decVolume");
+        Log.e(TAG, "system console decVolume");
         AppUtil.sendKeyCode(KeyEvent.KEYCODE_VOLUME_DOWN);
     }
 
     @Override
     public void incVolume() {
-        Log.e(TAG, "incVolume");
+        Log.e(TAG, "system console incVolume");
         AppUtil.sendKeyCode(KeyEvent.KEYCODE_VOLUME_UP);
     }
 
     @Override
     public void mute() {
-        Log.e(TAG, "mute");
+        Log.e(TAG, "system console mute");
         AppUtil.sendKeyCode(KeyEvent.KEYCODE_VOLUME_MUTE);
     }
 
@@ -75,16 +78,18 @@ public class SysConsoleImpl extends ConsoleProtocl {
 
     @Override
     public void callAnswer() {
-
+        Log.e(TAG, "system console callAnswer");
+        ToastEx.self().show("不支持的指令");
     }
 
     @Override
     public void callHangup() {
-
+        Log.e(TAG, "system console callHangup");
+        ToastEx.self().show("不支持的指令");
     }
 
     @Override
     public void destroy() {
-
+        Log.d(TAG, "system console destroy");
     }
 }

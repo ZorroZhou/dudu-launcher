@@ -1,10 +1,8 @@
 package com.wow.carlauncher.plugin;
 
 import android.content.Context;
-import android.view.View;
-import android.view.ViewGroup;
 
-import com.wow.carlauncher.plugin.amapcar.AMapCarPluginListener;
+import com.wow.carlauncher.common.ex.ContextEx;
 
 import org.xutils.x;
 
@@ -16,18 +14,12 @@ import java.util.List;
  * Created by 10124 on 2017/10/26.
  */
 
-public class BasePlugin<L> {
-    protected Context context;
-
-    public Context getContext() {
-        return context;
-    }
-
+public class BasePlugin<L> extends ContextEx {
     public BasePlugin() {
     }
 
     public void init(Context context) {
-        this.context = context;
+        setContext(context);
     }
 
     private List<L> listeners = Collections.synchronizedList(new ArrayList<L>());

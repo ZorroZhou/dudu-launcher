@@ -55,5 +55,5 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
 
     compile 'com.zhy:percent-support-extends:+'
-    compile 'com.inuker.bluetooth:library:1.4.0'
+    compile 'com.inuker.bluetooth:library:+'
 }

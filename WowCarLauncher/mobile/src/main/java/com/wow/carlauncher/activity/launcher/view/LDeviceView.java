@@ -1,4 +1,4 @@
-package com.wow.carlauncher.activity.launcher;
+package com.wow.carlauncher.activity.launcher.view;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -9,14 +9,13 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.wow.carlauncher.R;
-import com.wow.carlauncher.common.AppContext;
 import com.wow.carlauncher.common.CommonData;
+import com.wow.carlauncher.common.ex.BleManageEx;
 import com.wow.carlauncher.plugin.fk.FangkongPlugin;
 import com.wow.carlauncher.plugin.fk.FangkongPluginListener;
-import com.wow.carlauncher.plugin.music.MusicPlugin;
+import com.wow.carlauncher.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.plugin.obd.ObdPluginListener;
 import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.SharedPreUtil;
@@ -59,6 +58,33 @@ public class LDeviceView extends FrameLayout implements View.OnClickListener {
     @ViewInject(R.id.ll_obd)
     private LinearLayout ll_obd;
 
+    @ViewInject(R.id.tv_tp_lf)
+    private TextView tv_tp_lf;
+
+    @ViewInject(R.id.tv_tp_rf)
+    private TextView tv_tp_rf;
+
+    @ViewInject(R.id.tv_tp_rb)
+    private TextView tv_tp_rb;
+
+    @ViewInject(R.id.tv_tp_lb)
+    private TextView tv_tp_lb;
+
+    @ViewInject(R.id.tv_tp_title)
+    private TextView tv_tp_title;
+
+    @ViewInject(R.id.tv_zs)
+    private TextView tv_zs;
+
+    @ViewInject(R.id.tv_cs)
+    private TextView tv_cs;
+
+    @ViewInject(R.id.tv_sw)
+    private TextView tv_sw;
+
+    @ViewInject(R.id.tv_youliang)
+    private TextView tv_youliang;
+
     private void initView() {
         LinearLayout amapView = (LinearLayout) View.inflate(getContext(), R.layout.plugin_device_launcher, null);
         this.addView(amapView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
@@ -73,38 +99,36 @@ public class LDeviceView extends FrameLayout implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.fl_fangkong: {
-                Log.d(TAG, "onClick: 重连方控");
-                FangkongPlugin.self().connect();
-                break;
-            }
-            case R.id.ll_obd: {
-                Log.d(TAG, "onClick: 重连OBD");
-                break;
-            }
-        }
+
     }
 
     private void refreshFangkongState() {
         String address = SharedPreUtil.getSharedPreString(CommonData.SDATA_FANGKONG_ADDRESS);
         if (CommonUtil.isNotNull(address)) {
-            if (AppContext.self().getBluetoothClient().getConnectStatus(address) != STATUS_DEVICE_CONNECTED) {
+            if (BleManageEx.self().client().getConnectStatus(address) == STATUS_DEVICE_CONNECTED) {
                 tv_fangkongname.setText("方控(已连接)");
-                tv_fangkongmoshi.setVisibility(VISIBLE);
+                tv_fangkongmoshi.setText(FangkongPlugin.self().getModelName());
             } else {
                 tv_fangkongname.setText("方控(未连接)");
+                tv_fangkongmoshi.setText("");
             }
         } else {
             tv_fangkongname.setText("方控(未绑定)");
+            tv_fangkongmoshi.setText("");
         }
     }
 
     private void refreshObdState() {
         String address = SharedPreUtil.getSharedPreString(CommonData.SDATA_OBD_ADDRESS);
         if (CommonUtil.isNotNull(address)) {
-            if (AppContext.self().getBluetoothClient().getConnectStatus(address) != STATUS_DEVICE_CONNECTED) {
+            Log.d(TAG, "refreshObdState: " + BleManageEx.self().client().getConnectStatus(address) + " " + STATUS_DEVICE_CONNECTED);
+            if (BleManageEx.self().client().getConnectStatus(address) == STATUS_DEVICE_CONNECTED) {
                 tv_obdname.setText("OBD(已连接)");
+                if (ObdPlugin.self().supportTp()) {
+                    tv_tp_title.setText("胎压数据:");
+                } else {
+                    tv_tp_title.setText("胎压数据(不支持):");
+                }
             } else {
                 tv_obdname.setText("OBD(未连接)");
             }
@@ -116,17 +140,43 @@ public class LDeviceView extends FrameLayout implements View.OnClickListener {
     private ObdPluginListener obdPluginListener = new ObdPluginListener() {
         @Override
         public void connect(boolean success) {
+            Log.d(TAG, "connect: " + success);
             refreshObdState();
         }
 
         @Override
-        public void carRunningInfo(Integer speed, Integer rev, Integer waterTemp, Float oilConsumption) {
-
+        public void carRunningInfo(Integer speed, Integer rev, Integer waterTemp, Integer oilConsumption) {
+            if (speed != null) {
+                tv_cs.setText("车速:" + speed + "KM/H");
+            }
+            if (rev != null) {
+                tv_zs.setText("转速:" + rev + "R/S");
+            }
+            if (waterTemp != null) {
+                tv_sw.setText("水温:" + waterTemp + "℃");
+            }
+            if (oilConsumption != null) {
+                tv_youliang.setText("油量:" + oilConsumption + "%");
+            }
         }
 
         @Override
         public void carTirePressureInfo(Float lFTirePressure, Integer lFTemp, Float rFTirePressure, Integer rFTemp, Float lBTirePressure, Integer lBTemp, Float rBTirePressure, Integer rBTemp) {
+            if (lFTirePressure != null && lFTemp != null) {
+                tv_tp_lf.setText(String.format("%.1f", lFTirePressure) + "/" + lFTemp + "℃");
+            }
 
+            if (rFTirePressure != null && rFTemp != null) {
+                tv_tp_rf.setText(String.format("%.1f", rFTirePressure) + "/" + rFTemp + "℃");
+            }
+
+            if (lBTirePressure != null && lBTemp != null) {
+                tv_tp_lb.setText(String.format("%.1f", lBTirePressure) + "/" + lBTemp + "℃");
+            }
+
+            if (rBTirePressure != null && rBTemp != null) {
+                tv_tp_rb.setText(String.format("%.1f", rBTirePressure) + "/" + rBTemp + "℃");
+            }
         }
     };
 
@@ -146,6 +196,7 @@ public class LDeviceView extends FrameLayout implements View.OnClickListener {
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         FangkongPlugin.self().addListener(fangkongPluginListener);
+        ObdPlugin.self().addListener(obdPluginListener);
         refreshFangkongState();
     }
 
@@ -153,5 +204,6 @@ public class LDeviceView extends FrameLayout implements View.OnClickListener {
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         FangkongPlugin.self().removeListener(fangkongPluginListener);
+        ObdPlugin.self().removeListener(obdPluginListener);
     }
 }

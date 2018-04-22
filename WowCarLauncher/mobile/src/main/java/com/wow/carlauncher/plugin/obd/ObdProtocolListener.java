@@ -4,8 +4,10 @@ package com.wow.carlauncher.plugin.obd;
  * Created by 10124 on 2018/3/29.
  */
 
-public interface ObdPluginListener {
-    void connect(boolean success);
+public interface ObdProtocolListener {
+    void write(byte[] req);
+
+    boolean isConnect();
 
     //汽车运行信息回掉
     void carRunningInfo(Integer speed,

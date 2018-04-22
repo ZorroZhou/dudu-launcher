@@ -6,7 +6,6 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 
 import com.wow.carlauncher.CarLauncherApplication;
-import com.wow.carlauncher.activity.LauncherActivity;
 import com.wow.carlauncher.popupWindow.PopupWin;
 
 /**

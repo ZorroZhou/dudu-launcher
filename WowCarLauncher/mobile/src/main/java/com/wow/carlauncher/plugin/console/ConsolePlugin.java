@@ -29,7 +29,7 @@ public class ConsolePlugin extends BasePlugin<ConsoleListener> {
     }
 
     public void init(Context context) {
-        this.context = context;
+        super.init(context);
         loadConsole();
     }
 

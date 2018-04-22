@@ -55,8 +55,8 @@ public class AMapCarPlugin extends BasePlugin<AMapCarPluginListener> {
     }
 
     public void naviToHome() {
-        if (!AppUtil.isInstall(context, AMAP_PACKAGE)) {
-            Toast.makeText(context, "没有安装高德地图", Toast.LENGTH_SHORT).show();
+        if (!AppUtil.isInstall(getContext(), AMAP_PACKAGE)) {
+            Toast.makeText(getContext(), "没有安装高德地图", Toast.LENGTH_SHORT).show();
             return;
         }
         Map<String, Object> param = new HashMap<>();
@@ -66,8 +66,8 @@ public class AMapCarPlugin extends BasePlugin<AMapCarPluginListener> {
     }
 
     public void getHome() {
-        if (!AppUtil.isInstall(context, AMAP_PACKAGE)) {
-            Toast.makeText(context, "没有安装高德地图", Toast.LENGTH_SHORT).show();
+        if (!AppUtil.isInstall(getContext(), AMAP_PACKAGE)) {
+            Toast.makeText(getContext(), "没有安装高德地图", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -101,8 +101,8 @@ public class AMapCarPlugin extends BasePlugin<AMapCarPluginListener> {
 //    }
 
     public void naviToComp() {
-        if (!AppUtil.isInstall(context, AMAP_PACKAGE)) {
-            Toast.makeText(context, "没有安装高德地图", Toast.LENGTH_SHORT).show();
+        if (!AppUtil.isInstall(getContext(), AMAP_PACKAGE)) {
+            Toast.makeText(getContext(), "没有安装高德地图", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -113,8 +113,8 @@ public class AMapCarPlugin extends BasePlugin<AMapCarPluginListener> {
     }
 
     public void getComp() {
-        if (!AppUtil.isInstall(context, AMAP_PACKAGE)) {
-            Toast.makeText(context, "没有安装高德地图", Toast.LENGTH_SHORT).show();
+        if (!AppUtil.isInstall(getContext(), AMAP_PACKAGE)) {
+            Toast.makeText(getContext(), "没有安装高德地图", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -147,6 +147,6 @@ public class AMapCarPlugin extends BasePlugin<AMapCarPluginListener> {
                 }
             }
         }
-        context.sendBroadcast(intent);
+        getContext().sendBroadcast(intent);
     }
 }

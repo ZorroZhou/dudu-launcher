@@ -1,6 +1,6 @@
 package com.wow.carlauncher.plugin.obd.protocol.gd;
 
-import com.wow.carlauncher.plugin.obd.task.ObdTask;
+import com.wow.carlauncher.plugin.obd.ObdTask;
 
 import static com.wow.carlauncher.plugin.obd.protocol.gd.CommonCmd.CMD_RES_END;
 

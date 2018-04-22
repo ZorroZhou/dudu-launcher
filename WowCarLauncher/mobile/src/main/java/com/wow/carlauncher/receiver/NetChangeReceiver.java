@@ -3,9 +3,7 @@ package com.wow.carlauncher.receiver;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.widget.Toast;
 
-import com.wow.carlauncher.activity.LauncherActivity;
 import com.wow.carlauncher.service.MainService;
 
 /**

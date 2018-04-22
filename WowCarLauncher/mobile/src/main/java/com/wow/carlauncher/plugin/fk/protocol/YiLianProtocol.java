@@ -11,6 +11,7 @@ import com.wow.carlauncher.plugin.console.ConsoleListener;
 import com.wow.carlauncher.plugin.console.ConsolePlugin;
 import com.wow.carlauncher.plugin.SimulateDoubleClickUtil;
 import com.wow.carlauncher.plugin.fk.FangkongProtocol;
+import com.wow.carlauncher.plugin.fk.FangkongProtocolListener;
 import com.wow.carlauncher.plugin.music.MusicPlugin;
 
 import java.util.UUID;
@@ -40,7 +41,7 @@ public class YiLianProtocol extends FangkongProtocol {
 
     private SimulateDoubleClickUtil<Short> doubleClick;
 
-    public YiLianProtocol(String address, Context context, ChangeModelCallBack changeModelCallBack) {
+    public YiLianProtocol(String address, Context context, FangkongProtocolListener changeModelCallBack) {
         super(address, context, changeModelCallBack);
         doubleClick = new SimulateDoubleClickUtil<>();
         ConsolePlugin.self().addListener(listener);

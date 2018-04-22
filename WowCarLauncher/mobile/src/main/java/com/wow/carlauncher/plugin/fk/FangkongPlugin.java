@@ -105,7 +105,7 @@ public class FangkongPlugin extends BasePlugin<FangkongPluginListener> {
         }
     };
 
-    private FangkongProtocol.ChangeModelCallBack changeModelCallBack = new FangkongProtocol.ChangeModelCallBack() {
+    private FangkongProtocolListener changeModelCallBack = new FangkongProtocolListener() {
         @Override
         public void changeModel(final String name) {
             runListener(new ListenerRuner<FangkongPluginListener>() {
@@ -114,6 +114,11 @@ public class FangkongPlugin extends BasePlugin<FangkongPluginListener> {
                     fangkongPluginListener.changeModel(name);
                 }
             });
+        }
+
+        @Override
+        public void batteryLevel(Integer level, Integer total) {
+            
         }
     };
 

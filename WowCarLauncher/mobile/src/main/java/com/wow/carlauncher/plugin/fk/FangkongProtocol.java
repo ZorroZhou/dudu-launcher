@@ -11,13 +11,13 @@ import java.util.UUID;
 public abstract class FangkongProtocol {
     private String address;
     protected Context context;
-    protected ChangeModelCallBack changeModelCallBack;
+    protected FangkongProtocolListener changeModelCallBack;
 
     public String getAddress() {
         return address;
     }
 
-    public FangkongProtocol(String address, Context context, ChangeModelCallBack changeModelCallBack) {
+    public FangkongProtocol(String address, Context context, FangkongProtocolListener changeModelCallBack) {
         this.address = address;
         this.changeModelCallBack = changeModelCallBack;
         this.context = context;
@@ -28,10 +28,6 @@ public abstract class FangkongProtocol {
     public abstract UUID getService();
 
     public abstract UUID getCharacter();
-
-    public interface ChangeModelCallBack {
-        void changeModel(String name);
-    }
 
     public abstract void destroy();
 

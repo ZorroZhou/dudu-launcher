@@ -14,6 +14,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.activity.launcher.view.LBaseView;
 import com.wow.carlauncher.activity.set.SetActivity;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.ex.BleManageEx;
@@ -40,7 +41,7 @@ import static com.wow.carlauncher.common.CommonData.SDATA_FANGKONG_CONTROLLER;
  * Created by 10124 on 2018/4/22.
  */
 
-public class SFangKongView extends FrameLayout {
+public class SFangKongView extends LBaseView {
     public static final FangkongProtocolEnum[] ALL_FANGKONG_CONTROLLER = {FangkongProtocolEnum.YLFK};
 
     public SFangKongView(@NonNull Context context) {

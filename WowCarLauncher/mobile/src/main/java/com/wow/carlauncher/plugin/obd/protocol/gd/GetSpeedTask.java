@@ -27,9 +27,8 @@ public class GetSpeedTask extends ObdTask {
     public void writeRes(byte[] message) {
         String msg = new String(message);
         if (msg.endsWith(CMD_RES_END) && msg.startsWith(CMD_RES_SPEED)) {
-            msg = msg.substring(4, 6);
-            if (msg.length() >= 2) {
-                speed = ObdUtil.hexToByte(msg.substring(0, 2));
+            if (msg.length() >= 6) {
+                speed = Integer.parseInt(msg.substring(4, 6));
                 markSuccess();
             }
         } else if (msg.endsWith(CMD_RES_END) && msg.startsWith(CMD_RES_NO_DATA)) {

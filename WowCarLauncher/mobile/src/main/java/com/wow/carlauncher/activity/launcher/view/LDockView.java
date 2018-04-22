@@ -98,7 +98,7 @@ public class LDockView extends LinearLayout implements View.OnClickListener {
     private void initView() {
         pm = getContext().getPackageManager();
 
-        LinearLayout amapView = (LinearLayout) View.inflate(getContext(), R.layout.content_dock, null);
+        LinearLayout amapView = (LinearLayout) View.inflate(getContext(), R.layout.content_l_dock, null);
         this.addView(amapView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
 
         x.view().inject(this);

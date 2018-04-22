@@ -28,9 +28,8 @@ public class GetOilConTask extends ObdTask {
     public void writeRes(byte[] message) {
         String msg = new String(message);
         if (msg.endsWith(CMD_RES_END) && msg.startsWith(CMD_RES)) {
-            msg = msg.substring(4, 6);
-            if (msg.length() >= 2) {
-                oil = (int) (Integer.parseInt(msg.substring(0, 2), 16) / 256f * 100);
+            if (msg.length() >= 6) {
+                oil = (int) (Integer.parseInt(msg.substring(4, 6), 16) / 256f * 100);
                 markSuccess();
             }
         } else if (msg.endsWith(CMD_RES_END) && msg.startsWith(CMD_RES_NO_DATA)) {

@@ -26,8 +26,6 @@ import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.DateUtil;
 import com.wow.frame.util.SharedPreUtil;
 import com.wow.carlauncher.R;
-import com.wow.carlauncher.common.CommonData;
-import com.wow.carlauncher.event.LauncherDockLabelShowChangeEvent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

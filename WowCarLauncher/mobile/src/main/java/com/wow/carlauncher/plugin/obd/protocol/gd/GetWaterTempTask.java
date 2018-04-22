@@ -28,9 +28,8 @@ public class GetWaterTempTask extends ObdTask {
     public void writeRes(byte[] message) {
         String msg = new String(message);
         if (msg.endsWith(CMD_RES_END) && msg.startsWith(CMD_RES)) {
-            msg = msg.substring(4, 6);
-            if (msg.length() >= 2) {
-                temp = ObdUtil.hexToByte(msg.substring(0, 2)) - 40;
+            if (msg.length() >= 6) {
+                temp = Integer.parseInt(msg.substring(4, 6)) - 40;
                 markSuccess();
             }
         } else if (msg.endsWith(CMD_RES_END) && msg.startsWith(CMD_RES_NO_DATA)) {

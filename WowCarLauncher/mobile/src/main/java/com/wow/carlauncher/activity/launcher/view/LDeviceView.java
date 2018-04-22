@@ -13,13 +13,18 @@ import android.widget.TextView;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.ex.BleManageEx;
+import com.wow.carlauncher.event.LauncherAppRefreshEvent;
 import com.wow.carlauncher.plugin.fk.FangkongPlugin;
 import com.wow.carlauncher.plugin.fk.FangkongPluginListener;
 import com.wow.carlauncher.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.plugin.obd.ObdPluginListener;
+import com.wow.carlauncher.plugin.obd.evnet.PObdEventCarInfo;
+import com.wow.carlauncher.plugin.obd.evnet.PObdEventCarTp;
+import com.wow.carlauncher.plugin.obd.evnet.PObdEventConnect;
 import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.SharedPreUtil;
 
+import org.greenrobot.eventbus.Subscribe;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
@@ -30,7 +35,7 @@ import static com.wow.carlauncher.common.CommonData.TAG;
  * Created by 10124 on 2018/4/20.
  */
 
-public class LDeviceView extends FrameLayout implements View.OnClickListener {
+public class LDeviceView extends LBaseView implements View.OnClickListener {
 
     public LDeviceView(@NonNull Context context) {
         super(context);
@@ -134,6 +139,46 @@ public class LDeviceView extends FrameLayout implements View.OnClickListener {
             }
         } else {
             tv_obdname.setText("OBD(未绑定)");
+        }
+    }
+
+    @Subscribe
+    public void onEventMainThread(PObdEventConnect event) {
+        refreshObdState();
+    }
+
+    @Subscribe
+    public void onEventMainThread(PObdEventCarInfo event) {
+        if (event.getSpeed() != null) {
+            tv_cs.setText("车速:" + event.getSpeed() + "KM/H");
+        }
+        if (event.getRev() != null) {
+            tv_zs.setText("转速:" + event.getRev() + "R/S");
+        }
+        if (event.getWaterTemp() != null) {
+            tv_sw.setText("水温:" + event.getWaterTemp() + "℃");
+        }
+        if (event.getOilConsumption() != null) {
+            tv_youliang.setText("油量:" + event.getOilConsumption() + "%");
+        }
+    }
+
+    @Subscribe
+    public void onEventMainThread(PObdEventCarTp event) {
+        if (event.getlFTirePressure() != null && event.getlFTemp() != null) {
+            tv_tp_lf.setText(String.format("%.1f", event.getlFTirePressure()) + "/" + event.getlFTemp() + "℃");
+        }
+
+        if (event.getrFTirePressure() != null && event.getrFTemp() != null) {
+            tv_tp_rf.setText(String.format("%.1f", event.getrFTirePressure()) + "/" + event.getrFTemp() + "℃");
+        }
+
+        if (event.getlBTemp() != null && event.getlBTirePressure() != null) {
+            tv_tp_lb.setText(String.format("%.1f", event.getlBTirePressure()) + "/" + event.getlBTemp() + "℃");
+        }
+
+        if (event.getrBTirePressure() != null && event.getrBTemp() != null) {
+            tv_tp_rb.setText(String.format("%.1f", event.getrBTirePressure()) + "/" + event.getrBTemp() + "℃");
         }
     }
 

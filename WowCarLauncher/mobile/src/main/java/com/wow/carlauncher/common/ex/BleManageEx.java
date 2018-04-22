@@ -8,8 +8,11 @@ import android.content.Context;
 import android.util.Log;
 
 import com.inuker.bluetooth.library.BluetoothClient;
+import com.wow.carlauncher.common.ex.event.BleEventDeviceChange;
+import com.wow.carlauncher.common.ex.event.BleEventSearch;
 import com.wow.frame.util.CommonUtil;
 
+import org.greenrobot.eventbus.EventBus;
 import org.xutils.x;
 
 import java.util.ArrayList;
@@ -97,6 +100,8 @@ public class BleManageEx extends ContextEx {
                 Log.d(TAG, "run: !!!!!!!!!!!!!!!!!!!!!开始扫描蓝牙");
                 bluetoothAdapter.startLeScan(callback);
                 startClearTimer();
+
+                EventBus.getDefault().post(new BleEventSearch().setSearch(true));
             }
         });
     }
@@ -107,6 +112,8 @@ public class BleManageEx extends ContextEx {
         }
         bluetoothAdapter.stopLeScan(callback);
         stopClearTimer();
+
+        EventBus.getDefault().post(new BleEventSearch().setSearch(false));
     }
 
     public void forceCallBack() {
@@ -163,6 +170,7 @@ public class BleManageEx extends ContextEx {
 
     private void callListener() {
         Log.d(TAG, "callListener: 下发一下蓝牙设备列表");
+
         x.task().post(new Runnable() {
             @Override
             public void run() {
@@ -170,6 +178,9 @@ public class BleManageEx extends ContextEx {
                 for (BluetoothDeviceEx device : bluetoothDevices) {
                     devices.add(device.bluetoothDevice);
                 }
+                //这里要支持两种方式的下发
+                EventBus.getDefault().post(new BleEventDeviceChange().setBluetoothDevices(devices));
+
                 x.task().autoPost(new Runnable() {
                     @Override
                     public void run() {

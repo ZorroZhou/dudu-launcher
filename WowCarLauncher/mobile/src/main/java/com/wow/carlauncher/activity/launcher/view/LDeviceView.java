@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.ex.BleManageEx;
-import com.wow.carlauncher.event.LauncherAppRefreshEvent;
 import com.wow.carlauncher.plugin.fk.FangkongPlugin;
 import com.wow.carlauncher.plugin.fk.FangkongPluginListener;
 import com.wow.carlauncher.plugin.obd.ObdPlugin;

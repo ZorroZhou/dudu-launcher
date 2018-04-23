@@ -1,6 +1,5 @@
 package com.wow.carlauncher.activity;
 
-import android.app.ProgressDialog;
 import android.app.WallpaperManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -18,7 +17,7 @@ import com.wow.carlauncher.activity.adapter.AllAppAdapter;
 import com.wow.carlauncher.common.AppInfoManage;
 import com.wow.carlauncher.common.BaseActivity;
 import com.wow.carlauncher.common.CommonData;
-import com.wow.carlauncher.event.LauncherAppRefreshEvent;
+import com.wow.carlauncher.activity.launcher.event.LauncherAppRefreshEvent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

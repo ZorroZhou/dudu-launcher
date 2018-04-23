@@ -17,8 +17,7 @@ import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.WeatherIconUtil;
 import com.wow.carlauncher.common.amapWebservice.WebService;
 import com.wow.carlauncher.common.amapWebservice.res.WeatherRes;
-import com.wow.carlauncher.event.LauncherCityRefreshEvent;
-import com.wow.carlauncher.plugin.music.MusicPlugin;
+import com.wow.carlauncher.activity.launcher.event.LauncherCityRefreshEvent;
 import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.SharedPreUtil;
 

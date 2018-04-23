@@ -1,25 +1,7 @@
 package com.wow.carlauncher.activity.set;
 
-import android.Manifest;
-import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.os.Build;
-import android.os.Environment;
-import android.provider.Settings;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AlertDialog;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 
-import com.wow.carAssistant.packet.response.common.GetAppUpdateRes;
-import com.wow.carlauncher.activity.AboutActivity;
 import com.wow.carlauncher.activity.set.view.SAppView;
 import com.wow.carlauncher.activity.set.view.SFangKongView;
 import com.wow.carlauncher.activity.set.view.SHelpView;
@@ -27,33 +9,11 @@ import com.wow.carlauncher.activity.set.view.SObdView;
 import com.wow.carlauncher.activity.set.view.SPopupView;
 import com.wow.carlauncher.activity.set.view.SSystemView;
 import com.wow.carlauncher.activity.set.view.STimeView;
-import com.wow.carlauncher.webservice.service.CommonService;
-import com.wow.frame.repertory.remote.WebServiceManage;
-import com.wow.frame.repertory.remote.WebTask;
-import com.wow.frame.repertory.remote.callback.SCallBack;
-import com.wow.frame.repertory.remote.callback.SProgressCallback;
-import com.wow.frame.util.AndroidUtil;
-import com.wow.frame.util.CommonUtil;
-import com.wow.frame.util.SharedPreUtil;
 import com.wow.carlauncher.R;
-import com.wow.carlauncher.common.AppInfoManage;
 import com.wow.carlauncher.common.BaseActivity;
-import com.wow.carlauncher.common.BaseDialog;
-import com.wow.carlauncher.common.CommonData;
-import com.wow.frame.util.AppUtil.AppInfo;
 import com.wow.carlauncher.common.view.SetView;
-import com.wow.carlauncher.dialog.CityDialog;
-import com.wow.carlauncher.event.LauncherCityRefreshEvent;
-import com.wow.frame.util.ThreadObj;
 
-import org.greenrobot.eventbus.EventBus;
 import org.xutils.view.annotation.ViewInject;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.wow.carlauncher.common.CommonData.*;
 
 public class SetActivity extends BaseActivity {
     @Override

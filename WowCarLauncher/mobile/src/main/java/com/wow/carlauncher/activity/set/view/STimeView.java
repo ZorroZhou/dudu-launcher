@@ -18,7 +18,7 @@ import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.ex.ToastEx;
 import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.dialog.CityDialog;
-import com.wow.carlauncher.event.LauncherCityRefreshEvent;
+import com.wow.carlauncher.activity.launcher.event.LauncherCityRefreshEvent;
 import com.wow.carlauncher.plugin.obd.ObdProtocolEnum;
 import com.wow.frame.util.AppUtil;
 import com.wow.frame.util.CommonUtil;

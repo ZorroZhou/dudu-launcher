@@ -12,7 +12,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.activity.PluginSetActivity;
@@ -20,7 +19,7 @@ import com.wow.carlauncher.common.AppInfoManage;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.ex.ToastEx;
 import com.wow.carlauncher.common.view.SetView;
-import com.wow.carlauncher.event.LauncherDockLabelShowChangeEvent;
+import com.wow.carlauncher.activity.launcher.event.LauncherDockLabelShowChangeEvent;
 import com.wow.carlauncher.plugin.console.ConsolePlugin;
 import com.wow.carlauncher.plugin.console.ConsoleProtoclEnum;
 import com.wow.carlauncher.plugin.music.MusicControllerEnum;

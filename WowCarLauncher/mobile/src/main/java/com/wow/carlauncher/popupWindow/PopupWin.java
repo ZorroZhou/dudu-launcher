@@ -32,7 +32,7 @@ import com.wow.frame.util.SharedPreUtil;
 import com.wow.carlauncher.CarLauncherApplication;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
-import com.wow.carlauncher.event.PopupIsFullScreenRefreshEvent;
+import com.wow.carlauncher.activity.launcher.event.PopupIsFullScreenRefreshEvent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

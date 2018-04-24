@@ -18,7 +18,7 @@ import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.ex.ToastEx;
 import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.dialog.CityDialog;
-import com.wow.carlauncher.activity.launcher.event.LauncherCityRefreshEvent;
+import com.wow.carlauncher.activity.launcher.event.LEventCityRefresh;
 import com.wow.carlauncher.plugin.obd.ObdProtocolEnum;
 import com.wow.frame.util.AppUtil;
 import com.wow.frame.util.CommonUtil;
@@ -105,7 +105,7 @@ public class STimeView extends FrameLayout {
                         if (CommonUtil.isNotNull(cityDialog.getmCurrentDistrictName())) {
                             SharedPreUtil.saveSharedPreString(CommonData.SDATA_WEATHER_CITY, cityDialog.getmCurrentDistrictName());
                             dialog.dismiss();
-                            EventBus.getDefault().post(new LauncherCityRefreshEvent());
+                            EventBus.getDefault().post(new LEventCityRefresh());
                             tianqi_city.setSummary(cityDialog.getmCurrentDistrictName());
                         } else {
                             ToastEx.self().show("请选择城市");

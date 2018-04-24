@@ -9,7 +9,7 @@ import android.provider.Settings;
 import android.util.Log;
 
 import com.wow.carlauncher.common.ex.ToastEx;
-import com.wow.carlauncher.plugin.console.ConsoleListener;
+import com.wow.carlauncher.plugin.console.ConsoleProtoclListener;
 import com.wow.carlauncher.plugin.console.ConsoleProtocl;
 
 import static com.wow.carlauncher.common.CommonData.TAG;
@@ -31,7 +31,7 @@ public class NwdConsoleImpl extends ConsoleProtocl {
     private Intent mMuteIntent = new Intent("com.nwd.action.ACTION_SET_MUTE");
     private boolean mute = false;
 
-    public NwdConsoleImpl(Context context, final ConsoleListener listener) {
+    public NwdConsoleImpl(Context context, final ConsoleProtoclListener listener) {
         super(context, listener);
 
         IntentFilter localIntentFilter = new IntentFilter();
@@ -70,7 +70,9 @@ public class NwdConsoleImpl extends ConsoleProtocl {
         public void onReceive(final Context context, final Intent intent) {
             if ("com.nwd.action.ACTION_NO_SOURCE_DEVICE_CHANGE".equals(intent.getAction())) {
                 if ((0x2 & getIntValue(context.getContentResolver(), NO_SOURCE_DEVICE_STATE)) == 2) {
+                    listener.lightState(true);
                 } else {
+                    listener.lightState(false);
                 }
             }
         }

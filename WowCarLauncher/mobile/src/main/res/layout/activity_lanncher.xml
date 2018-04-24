@@ -21,6 +21,10 @@
             android:padding="10dp"
             app:layout_heightPercent="12.8%h">
 
+            <com.wow.carlauncher.activity.launcher.view.LPromptView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
             <com.zhy.android.percent.support.PercentLinearLayout
                 android:id="@+id/ll_time"
                 android:layout_width="wrap_content"
@@ -38,16 +42,16 @@
                     app:layout_textSizePercent="60%h" />
             </com.zhy.android.percent.support.PercentLinearLayout>
 
-            <ImageView
-                android:id="@+id/iv_set"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:contentDescription="@string/iv_content"
-                android:src="@mipmap/ic_menu"
-                app:layout_heightPercent="60%h"
-                app:layout_widthPercent="60%h" />
+            <!--<ImageView-->
+                <!--android:id="@+id/iv_set"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="0dp"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:contentDescription="@string/iv_content"-->
+                <!--android:src="@mipmap/ic_menu"-->
+                <!--app:layout_heightPercent="60%h"-->
+                <!--app:layout_widthPercent="60%h" />-->
         </com.zhy.android.percent.support.PercentRelativeLayout>
 
         <com.wow.carlauncher.activity.launcher.view.LDockView

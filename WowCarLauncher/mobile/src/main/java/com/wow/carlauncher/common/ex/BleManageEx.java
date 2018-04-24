@@ -127,8 +127,8 @@ public class BleManageEx extends ContextEx {
         for (BluetoothDeviceEx device : bluetoothDevices) {
             if (device.bluetoothDevice.getAddress().equals(bluetoothDevice.getAddress())) {
                 bluetoothDevices.remove(device);
+                break;
             }
-            break;
         }
     }
 
@@ -180,31 +180,8 @@ public class BleManageEx extends ContextEx {
                 }
                 //这里要支持两种方式的下发
                 EventBus.getDefault().post(new BleEventDeviceChange().setBluetoothDevices(devices));
-
-                x.task().autoPost(new Runnable() {
-                    @Override
-                    public void run() {
-                        for (BleDeviceSearchListener l : listeners) {
-                            try {
-                                l.deviceListChange(devices);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                });
             }
         });
-    }
-
-    private List<BleDeviceSearchListener> listeners = Collections.synchronizedList(new ArrayList<BleDeviceSearchListener>());
-
-    public void addListener(BleDeviceSearchListener l) {
-        listeners.add(l);
-    }
-
-    public void removeListener(BleDeviceSearchListener l) {
-        listeners.remove(l);
     }
 
     class BluetoothDeviceEx {

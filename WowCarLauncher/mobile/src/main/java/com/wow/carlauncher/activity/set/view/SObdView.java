@@ -18,6 +18,7 @@ import com.wow.carlauncher.activity.set.SetActivity;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.ex.BleManageEx;
 import com.wow.carlauncher.common.ex.ToastEx;
+import com.wow.carlauncher.common.ex.event.BleEventDeviceChange;
 import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.dialog.ListDialog;
 import com.wow.carlauncher.plugin.console.ConsoleProtoclEnum;
@@ -28,6 +29,8 @@ import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.SharedPreUtil;
 import com.wow.frame.util.ThreadObj;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
@@ -127,11 +130,12 @@ public class SObdView extends FrameLayout {
                 final ThreadObj<ListDialog> listTemp = new ThreadObj<>();
 
                 final List<BluetoothDevice> devices = new ArrayList<>();
-                final BleManageEx.BleDeviceSearchListener listener = new BleManageEx.BleDeviceSearchListener() {
-                    @Override
-                    public void deviceListChange(List<BluetoothDevice> bluetoothDevices) {
+
+                final Object listener = new Object() {
+                    @Subscribe
+                    public void onEventMainThread(BleEventDeviceChange event) {
                         devices.clear();
-                        devices.addAll(bluetoothDevices);
+                        devices.addAll(event.getBluetoothDevices());
 
                         String[] items = new String[devices.size()];
                         for (int i = 0; i < items.length; i++) {
@@ -141,15 +145,16 @@ public class SObdView extends FrameLayout {
                         listTemp.getObj().getListView().setAdapter(new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, items));
                     }
                 };
-                BleManageEx.self().addListener(listener);
+                EventBus.getDefault().register(listener);
 
                 final ListDialog dialog = new ListDialog(getContext());
                 dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialogInterface) {
-                        BleManageEx.self().removeListener(listener);
+                        EventBus.getDefault().unregister(listener);
                     }
                 });
+
                 dialog.setTitle("请选择一个蓝牙设备");
                 dialog.show();
                 listTemp.setObj(dialog);

@@ -15,7 +15,7 @@ import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.AppInfoManage;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.view.SetView;
-import com.wow.carlauncher.activity.launcher.event.PopupIsFullScreenRefreshEvent;
+import com.wow.carlauncher.popupWindow.event.PEventFSRefresh;
 import com.wow.carlauncher.popupWindow.PopupWin;
 import com.wow.frame.util.AppUtil;
 import com.wow.frame.util.SharedPreUtil;
@@ -92,7 +92,7 @@ public class SPopupView extends FrameLayout {
                 } else {
                     SharedPreUtil.saveSharedPreBoolean(CommonData.SDATA_POPUP_FULL_SCREEN, false);
                 }
-                EventBus.getDefault().post(new PopupIsFullScreenRefreshEvent());
+                EventBus.getDefault().post(new PEventFSRefresh());
             }
         });
         sv_popup_full_screen.setChecked(SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_POPUP_FULL_SCREEN, true));

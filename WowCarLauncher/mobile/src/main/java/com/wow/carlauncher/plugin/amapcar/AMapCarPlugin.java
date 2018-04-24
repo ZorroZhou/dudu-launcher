@@ -45,15 +45,6 @@ public class AMapCarPlugin extends BasePlugin<AMapCarPluginListener> {
 
     private AMapCartReceiver amapReceiver;
 
-    public void refreshNaviInfo(final NaviInfo naviBean) {
-        runListener(new ListenerRuner<AMapCarPluginListener>() {
-            @Override
-            public void run(AMapCarPluginListener aMapCarPluginListener) {
-                aMapCarPluginListener.refreshNaviInfo(naviBean);
-            }
-        });
-    }
-
     public void naviToHome() {
         if (!AppUtil.isInstall(getContext(), AMAP_PACKAGE)) {
             Toast.makeText(getContext(), "没有安装高德地图", Toast.LENGTH_SHORT).show();

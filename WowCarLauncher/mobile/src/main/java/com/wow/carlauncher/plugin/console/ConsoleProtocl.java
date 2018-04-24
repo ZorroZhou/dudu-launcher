@@ -8,9 +8,9 @@ import android.content.Context;
 
 public abstract class ConsoleProtocl {
     protected Context context;
-    protected ConsoleListener listener;
+    protected ConsoleProtoclListener listener;
 
-    public ConsoleProtocl(Context context, ConsoleListener listener) {
+    public ConsoleProtocl(Context context, ConsoleProtoclListener listener) {
         this.context = context;
         this.listener = listener;
     }

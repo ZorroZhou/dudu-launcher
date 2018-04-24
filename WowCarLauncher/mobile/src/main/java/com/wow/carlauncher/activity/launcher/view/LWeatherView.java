@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -17,7 +16,7 @@ import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.WeatherIconUtil;
 import com.wow.carlauncher.common.amapWebservice.WebService;
 import com.wow.carlauncher.common.amapWebservice.res.WeatherRes;
-import com.wow.carlauncher.activity.launcher.event.LauncherCityRefreshEvent;
+import com.wow.carlauncher.activity.launcher.event.LEventCityRefresh;
 import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.SharedPreUtil;
 
@@ -35,7 +34,7 @@ import static com.wow.carlauncher.common.CommonData.TAG;
  * Created by 10124 on 2018/4/20.
  */
 
-public class LWeatherView extends FrameLayout {
+public class LWeatherView extends LBaseView {
     @ViewInject(R.id.iv_tianqi)
     private ImageView iv_tianqi;
 
@@ -71,14 +70,12 @@ public class LWeatherView extends FrameLayout {
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        EventBus.getDefault().register(this);
         startTimer();
     }
 
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        EventBus.getDefault().unregister(this);
         stopTimer();
     }
 
@@ -145,7 +142,7 @@ public class LWeatherView extends FrameLayout {
     }
 
     @Subscribe
-    public void onEventMainThread(LauncherCityRefreshEvent event) {
+    public void onEventMainThread(LEventCityRefresh event) {
         refreshWeather();
     }
 }

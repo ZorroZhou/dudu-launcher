@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.wow.carlauncher.common.ex.ContextEx;
 
+import org.greenrobot.eventbus.EventBus;
 import org.xutils.x;
 
 import java.util.ArrayList;

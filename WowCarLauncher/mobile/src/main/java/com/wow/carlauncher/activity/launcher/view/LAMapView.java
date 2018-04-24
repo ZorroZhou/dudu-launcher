@@ -18,8 +18,13 @@ import com.wow.carlauncher.R;
 import com.wow.carlauncher.plugin.amapcar.AMapCarPlugin;
 import com.wow.carlauncher.plugin.amapcar.AMapCarPluginListener;
 import com.wow.carlauncher.plugin.amapcar.NaviInfo;
+import com.wow.carlauncher.plugin.amapcar.event.PAmapEventNavInfo;
+import com.wow.carlauncher.plugin.amapcar.event.PAmapEventState;
+import com.wow.carlauncher.plugin.music.event.PMusicEventCover;
 import com.wow.frame.util.AppUtil;
 import com.wow.frame.util.CommonUtil;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import java.math.BigDecimal;
 
@@ -31,7 +36,7 @@ import static com.wow.carlauncher.plugin.amapcar.AMapCarConstant.ICONS;
  * Created by 10124 on 2018/4/20.
  */
 
-public class LAMapView extends FrameLayout implements AMapCarPluginListener {
+public class LAMapView extends LBaseView {
 
     public LAMapView(@NonNull Context context) {
         super(context);
@@ -99,65 +104,47 @@ public class LAMapView extends FrameLayout implements AMapCarPluginListener {
         amapmsg = (TextView) amapView.findViewById(R.id.tv_msg);
     }
 
-    @Override
-    public void refreshNaviInfo(NaviInfo naviBean) {
-        Log.e(TAG, "refreshNaviInfo:" + naviBean);
-        switch (naviBean.getType()) {
-            case NaviInfo.TYPE_STATE: {
-                if (amapController != null) {
-                    if (naviBean.getState() == 8 || naviBean.getState() == 10) {
-                        amapController.setVisibility(View.GONE);
-                        amapnavi.setVisibility(View.VISIBLE);
-                    } else if (naviBean.getState() == 9 || naviBean.getState() == 11) {
-                        amapController.setVisibility(View.VISIBLE);
-                        amapnavi.setVisibility(View.GONE);
-                        amapIcon.setImageResource(R.mipmap.ic_amap);
-                    }
-                }
-                break;
-            }
-            case NaviInfo.TYPE_NAVI: {
-                if (amapIcon != null && naviBean.getIcon() - 1 >= 0 && naviBean.getIcon() - 1 < ICONS.length) {
-                    amapIcon.setImageResource(ICONS[naviBean.getIcon() - 1]);
-                }
-                if (amaproad != null && CommonUtil.isNotNull(naviBean.getWroad())) {
-                    String msg = "";
-                    if (naviBean.getDis() < 10) {
-                        msg = msg + "现在";
-                    } else {
-                        if (naviBean.getDis() > 1000) {
-                            msg = msg + naviBean.getDis() / 1000 + "公里后";
-                        } else {
-                            msg = msg + naviBean.getDis() + "米后";
-                        }
-                    }
-                    msg = msg + naviBean.getWroad();
-                    amaproad.setText(msg);
-                }
-                if (amapmsg != null && naviBean.getRemainTime() > -1 && naviBean.getRemainDis() > -1) {
-                    if (naviBean.getRemainTime() == 0 || naviBean.getRemainDis() == 0) {
-                        amapmsg.setText("到达");
-                    } else {
-                        String msg = "剩余" + new BigDecimal(naviBean.getRemainDis() / 1000f).setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue() + "公里  " +
-                                naviBean.getRemainTime() / 60 + "分钟";
-                        amapmsg.setText(msg);
-                    }
-                }
-                break;
+    @Subscribe
+    public void onEventMainThread(final PAmapEventState event) {
+        if (amapController != null) {
+            if (event.getState() == 8 || event.getState() == 10) {
+                amapController.setVisibility(View.GONE);
+                amapnavi.setVisibility(View.VISIBLE);
+            } else if (event.getState() == 9 || event.getState() == 11) {
+                amapController.setVisibility(View.VISIBLE);
+                amapnavi.setVisibility(View.GONE);
+                amapIcon.setImageResource(R.mipmap.ic_amap);
             }
         }
     }
 
-    @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        AMapCarPlugin.self().addListener(this);
+    @Subscribe
+    public void onEventMainThread(final PAmapEventNavInfo event) {
+        if (amapIcon != null && event.getIcon() - 1 >= 0 && event.getIcon() - 1 < ICONS.length) {
+            amapIcon.setImageResource(ICONS[event.getIcon() - 1]);
+        }
+        if (amaproad != null && CommonUtil.isNotNull(event.getWroad())) {
+            String msg = "";
+            if (event.getDis() < 10) {
+                msg = msg + "现在";
+            } else {
+                if (event.getDis() > 1000) {
+                    msg = msg + event.getDis() / 1000 + "公里后";
+                } else {
+                    msg = msg + event.getDis() + "米后";
+                }
+            }
+            msg = msg + event.getWroad();
+            amaproad.setText(msg);
+        }
+        if (amapmsg != null && event.getRemainTime() > -1 && event.getRemainDis() > -1) {
+            if (event.getRemainTime() == 0 || event.getRemainDis() == 0) {
+                amapmsg.setText("到达");
+            } else {
+                String msg = "剩余" + new BigDecimal(event.getRemainDis() / 1000f).setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue() + "公里  " +
+                        event.getRemainTime() / 60 + "分钟";
+                amapmsg.setText(msg);
+            }
+        }
     }
-
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        AMapCarPlugin.self().removeListener(this);
-    }
-
 }

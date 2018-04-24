@@ -6,7 +6,10 @@ import android.content.Intent;
 import android.widget.Toast;
 
 import com.wow.carlauncher.plugin.BasePlugin;
+import com.wow.carlauncher.plugin.amapcar.event.PAmapEventNavInfo;
+import com.wow.carlauncher.plugin.amapcar.event.PAmapEventState;
 
+import org.greenrobot.eventbus.EventBus;
 import org.xutils.x;
 
 import static com.wow.carlauncher.plugin.amapcar.AMapCarConstant.*;
@@ -84,17 +87,13 @@ public class AMapCartReceiver extends BroadcastReceiver {
                     x.task().autoPost(new Runnable() {
                         @Override
                         public void run() {
-                            NaviInfo naviBean2 = new NaviInfo(NaviInfo.TYPE_STATE);
-                            naviBean2.setState(8);
-                            aMapCarPlugin.refreshNaviInfo(naviBean2);
-
-                            NaviInfo naviBean = new NaviInfo(NaviInfo.TYPE_NAVI);
-                            naviBean.setDis(intent.getIntExtra(NAVI_INFO_SEG_REMAIN_DIS, -1));
-                            naviBean.setIcon(intent.getIntExtra(NAVI_INFO_ICON, -1));
-                            naviBean.setWroad(intent.getStringExtra(NAVI_INFO_NEXT_ROAD_NAME));
-                            naviBean.setRemainDis(intent.getIntExtra(NAVI_INFO_ROUTE_REMAIN_DIS, -1));
-                            naviBean.setRemainTime(intent.getIntExtra(NAVI_INFO_ROUTE_REMAIN_TIME, -1));
-                            aMapCarPlugin.refreshNaviInfo(naviBean);
+                            EventBus.getDefault().post(new PAmapEventState().setState(8));
+                            EventBus.getDefault().post(new PAmapEventNavInfo()
+                                    .setDis(intent.getIntExtra(NAVI_INFO_SEG_REMAIN_DIS, -1))
+                                    .setIcon(intent.getIntExtra(NAVI_INFO_ICON, -1))
+                                    .setWroad(intent.getStringExtra(NAVI_INFO_NEXT_ROAD_NAME))
+                                    .setRemainDis(intent.getIntExtra(NAVI_INFO_ROUTE_REMAIN_DIS, -1))
+                                    .setRemainTime(intent.getIntExtra(NAVI_INFO_ROUTE_REMAIN_TIME, -1)));
                         }
                     });
                     break;
@@ -104,9 +103,7 @@ public class AMapCartReceiver extends BroadcastReceiver {
                     x.task().autoPost(new Runnable() {
                         @Override
                         public void run() {
-                            NaviInfo naviBean = new NaviInfo(NaviInfo.TYPE_STATE);
-                            naviBean.setState(intent.getIntExtra(EXTRA_STATE, -1));
-                            aMapCarPlugin.refreshNaviInfo(naviBean);
+                            EventBus.getDefault().post(new PAmapEventState().setState(intent.getIntExtra(EXTRA_STATE, -1)));
                         }
                     });
                     break;

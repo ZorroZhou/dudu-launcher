@@ -16,6 +16,8 @@ import com.wow.carlauncher.common.ex.ToastEx;
 import com.wow.carlauncher.common.ex.event.BleEventDeviceChange;
 import com.wow.carlauncher.common.ex.event.BleEventSearch;
 import com.wow.carlauncher.plugin.BasePlugin;
+import com.wow.carlauncher.plugin.fk.event.PFkEventConnect;
+import com.wow.carlauncher.plugin.fk.event.PFkEventModel;
 import com.wow.carlauncher.plugin.fk.protocol.YiLianProtocol;
 import com.wow.carlauncher.plugin.obd.evnet.PObdEventCarTp;
 import com.wow.frame.util.CommonUtil;
@@ -57,33 +59,15 @@ public class FangkongPlugin extends BasePlugin<FangkongPluginListener> {
 
     public void init(Context context) {
         super.init(context);
-        EventBus.getDefault().register(this);
-        
+
         options = new BleConnectOptions.Builder()
                 .setConnectRetry(Integer.MAX_VALUE)
                 .setConnectTimeout(5000)   // 连接超时5s
                 .setServiceDiscoverRetry(Integer.MAX_VALUE)
                 .setServiceDiscoverTimeout(5000)  // 发现服务超时5s
                 .build();
-
+        EventBus.getDefault().register(this);
         BleManageEx.self().forceCallBack();
-    }
-
-    @Subscribe
-    public void onEventAsync(final BleEventDeviceChange event) {
-        String fkaddress = SharedPreUtil.getSharedPreString(CommonData.SDATA_FANGKONG_ADDRESS);
-        if (CommonUtil.isNotNull(fkaddress)) {
-            boolean have = false;
-            for (BluetoothDevice device : event.getBluetoothDevices()) {
-                if (device.getAddress().equals(fkaddress)) {
-                    have = true;
-                }
-            }
-            if (have) {
-                Log.d(TAG, "扫描到绑定的方控: " + fkaddress);
-                connect();
-            }
-        }
     }
 
     private FangkongProtocol fangkongProtocol;
@@ -95,9 +79,9 @@ public class FangkongPlugin extends BasePlugin<FangkongPluginListener> {
             //允许重连,同时是断开连接了,同时方控是由参数的,同时是方控的地址
             if (mac.equals(fangkongProtocol.getAddress())) {
                 if (status == STATUS_CONNECTED) {
-                    connectCallback(true);
+                    EventBus.getDefault().post(new PFkEventConnect().setConnected(true));
                 } else {
-                    connectCallback(false);
+                    EventBus.getDefault().post(new PFkEventConnect().setConnected(false));
                 }
             }
         }
@@ -106,12 +90,7 @@ public class FangkongPlugin extends BasePlugin<FangkongPluginListener> {
     private FangkongProtocolListener changeModelCallBack = new FangkongProtocolListener() {
         @Override
         public void changeModel(final String name) {
-            runListener(new ListenerRuner<FangkongPluginListener>() {
-                @Override
-                public void run(FangkongPluginListener fangkongPluginListener) {
-                    fangkongPluginListener.changeModel(name);
-                }
-            });
+            EventBus.getDefault().post(new PFkEventModel().setModelName(name));
         }
 
         @Override
@@ -183,25 +162,28 @@ public class FangkongPlugin extends BasePlugin<FangkongPluginListener> {
         if (fangkongProtocol != null) {
             BleManageEx.self().client().unregisterConnectStatusListener(fangkongProtocol.getAddress(), bleConnectStatusListener);
             BleManageEx.self().client().disconnect(fangkongProtocol.getAddress());
-            connectCallback(false);
+            EventBus.getDefault().post(new PFkEventConnect().setConnected(false));
         }
-    }
-
-    private void connectCallback(final boolean success) {
-        x.task().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                runListener(new ListenerRuner<FangkongPluginListener>() {
-                    @Override
-                    public void run(FangkongPluginListener fangkongPluginListener) {
-                        fangkongPluginListener.connect(success);
-                    }
-                });
-            }
-        }, 50);
     }
 
     public String getModelName() {
         return fangkongProtocol.getModelName();
+    }
+
+    @Subscribe
+    public void onEventAsync(final BleEventDeviceChange event) {
+        String fkaddress = SharedPreUtil.getSharedPreString(CommonData.SDATA_FANGKONG_ADDRESS);
+        if (CommonUtil.isNotNull(fkaddress)) {
+            boolean have = false;
+            for (BluetoothDevice device : event.getBluetoothDevices()) {
+                if (device.getAddress().equals(fkaddress)) {
+                    have = true;
+                }
+            }
+            if (have) {
+                Log.d(TAG, "扫描到绑定的方控: " + fkaddress);
+                connect();
+            }
+        }
     }
 }

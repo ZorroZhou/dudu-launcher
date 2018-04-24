@@ -25,9 +25,11 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission
         android:name="android.permission.PACKAGE_USAGE_STATS"
         tools:ignore="ProtectedPermissions" />
+
     <uses-feature
         android:name="android.hardware.bluetooth_le"
         android:required="true" />
@@ -42,7 +44,7 @@
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="d5e7bb2e7adc2e970d5ef05c379eb1bb" />
-        <service android:name="com.amap.api.location.APSService"/>
+        <service android:name="com.amap.api.location.APSService" />
 
         <activity
             android:name=".activity.launcher.LauncherActivity"
@@ -90,14 +92,18 @@
 
                 <action android:name="com.nwd.ACTION_AFTER_BOOT_COMPLETED" />
                 <action android:name="com.nwd.action.ACTION_GOHOME" />
-                <action android:name="com.nwd.action.ACTION_MCU_STATE_CHANGE"/>
-                <action android:name="com.android.systemui.statusBar.Translucent"/>
-                <action android:name="action_update_time"/>
+                <action android:name="com.nwd.action.ACTION_MCU_STATE_CHANGE" />
+                <action android:name="com.android.systemui.statusBar.Translucent" />
+                <action android:name="action_update_time" />
             </intent-filter>
         </receiver>
-        <receiver android:exported="true" android:name=".receiver.NetChangeReceiver">
+        <receiver
+            android:name=".receiver.NetChangeReceiver"
+            android:exported="true">
             <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+                <action
+                    android:name="android.net.conn.CONNECTIVITY_CHANGE"
+                    tools:ignore="BatteryLife" />
             </intent-filter>
         </receiver>
         <receiver

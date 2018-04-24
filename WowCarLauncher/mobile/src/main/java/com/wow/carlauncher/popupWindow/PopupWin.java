@@ -1,8 +1,8 @@
 package com.wow.carlauncher.popupWindow;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
 import android.os.Build;
 import android.provider.Settings;
@@ -21,10 +21,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wow.carlauncher.plugin.amapcar.AMapCarPlugin;
-import com.wow.carlauncher.plugin.amapcar.AMapCarPluginListener;
-import com.wow.carlauncher.plugin.amapcar.NaviInfo;
+import com.wow.carlauncher.plugin.amapcar.event.PAmapEventNavInfo;
+import com.wow.carlauncher.plugin.amapcar.event.PAmapEventState;
 import com.wow.carlauncher.plugin.music.MusicPlugin;
-import com.wow.carlauncher.plugin.music.MusicPluginListener;
+import com.wow.carlauncher.plugin.music.event.PMusicEventInfo;
+import com.wow.carlauncher.plugin.music.event.PMusicEventProgress;
+import com.wow.carlauncher.plugin.music.event.PMusicEventState;
 import com.wow.frame.util.AppUtil;
 import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.DateUtil;
@@ -32,7 +34,7 @@ import com.wow.frame.util.SharedPreUtil;
 import com.wow.carlauncher.CarLauncherApplication;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
-import com.wow.carlauncher.activity.launcher.event.PopupIsFullScreenRefreshEvent;
+import com.wow.carlauncher.popupWindow.event.PEventFSRefresh;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -47,13 +49,13 @@ import static com.wow.carlauncher.common.CommonData.*;
 import static com.wow.carlauncher.plugin.amapcar.AMapCarConstant.*;
 
 public class PopupWin {
-    private static PopupWin self;
+    private static class SingletonHolder {
+        @SuppressLint("StaticFieldLeak")
+        private static PopupWin instance = new PopupWin();
+    }
 
     public static PopupWin self() {
-        if (self == null) {
-            self = new PopupWin();
-        }
-        return self;
+        return PopupWin.SingletonHolder.instance;
     }
 
     private PopupWin() {
@@ -85,7 +87,6 @@ public class PopupWin {
     }
 
     public void init(CarLauncherApplication context) {
-
 
         this.context = context;
         wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
@@ -122,103 +123,11 @@ public class PopupWin {
 
         popupWindow.findViewById(R.id.ll_yidong).setOnTouchListener(moveTouchListener);
         popupWindow.findViewById(R.id.ll_xunhuan).setOnClickListener(onClickListener);
-
-        MusicPlugin.self().addListener(musicPluginListener);
-        AMapCarPlugin.self().addListener(aMapCarPluginListener);
     }
 
-    private MusicPluginListener musicPluginListener = new MusicPluginListener() {
-        @Override
-        public void refreshInfo(String title, String artist) {
-            if (CommonUtil.isNotNull(title)) {
-                ((TextView) musicView().findViewById(R.id.tv_title)).setText(title);
-            } else {
-                ((TextView) musicView().findViewById(R.id.tv_title)).setText("标题");
-            }
-
-        }
-
-        @Override
-        public void refreshProgress(int curr_time, int total_time) {
-            if (total_time > 0) {
-                ProgressBar progressBar = ((ProgressBar) musicView().findViewById(R.id.pb_music));
-                progressBar.setProgress(curr_time);
-                progressBar.setMax(total_time);
-            }
-        }
-
-        @Override
-        public void refreshCover(Bitmap cover) {
-
-        }
-
-        @Override
-        public void refreshState(boolean run) {
-            if (!run) {
-                ((ImageView) musicView().findViewById(R.id.iv_play)).setImageResource(R.mipmap.ic_play);
-            } else {
-                ((ImageView) musicView().findViewById(R.id.iv_play)).setImageResource(R.mipmap.ic_pause);
-            }
-        }
-    };
-
-    private AMapCarPluginListener aMapCarPluginListener = new AMapCarPluginListener() {
-        @Override
-        public void refreshNaviInfo(NaviInfo naviBean) {
-            ImageView popupIcon = (ImageView) amapView.findViewById(R.id.iv_icon);
-            TextView popupdis = (TextView) amapView.findViewById(R.id.tv_dis);
-            TextView popupmsg = (TextView) amapView.findViewById(R.id.tv_msg);
-            LinearLayout popupcontroller = (LinearLayout) amapView.findViewById(R.id.ll_controller);
-            RelativeLayout popupnavi = (RelativeLayout) amapView.findViewById(R.id.ll_navi);
-            switch (naviBean.getType()) {
-                case NaviInfo.TYPE_STATE: {
-                    if (popupcontroller != null && popupnavi != null) {
-                        if (naviBean.getState() == 8 || naviBean.getState() == 10) {
-                            popupcontroller.setVisibility(View.GONE);
-                            popupnavi.setVisibility(View.VISIBLE);
-                        } else if (naviBean.getState() == 9 || naviBean.getState() == 11) {
-                            popupcontroller.setVisibility(View.VISIBLE);
-                            popupnavi.setVisibility(View.GONE);
-                        }
-                    }
-                    break;
-                }
-                case NaviInfo.TYPE_NAVI: {
-                    if (popupIcon != null && naviBean.getIcon() - 1 >= 0 && naviBean.getIcon() - 1 < ICONS.length) {
-                        popupIcon.setImageResource(ICONS[naviBean.getIcon() - 1]);
-                    }
-                    if (popupdis != null && naviBean.getDis() > -1) {
-                        String msg = "";
-                        if (naviBean.getDis() < 10) {
-                            msg = "现在";
-                        } else {
-                            if (naviBean.getDis() > 1000) {
-                                msg = naviBean.getDis() / 1000 + "公里后";
-                            } else {
-                                msg = naviBean.getDis() + "米后";
-                            }
-                        }
-                        msg = msg + naviBean.getWroad();
-                        popupdis.setText(msg);
-                    }
-
-                    if (popupmsg != null && naviBean.getRemainTime() > -1 && naviBean.getRemainDis() > -1) {
-                        if (naviBean.getRemainTime() == 0 || naviBean.getRemainDis() == 0) {
-                            popupmsg.setText("到达");
-                        } else {
-                            String msg = "剩余" + new BigDecimal(naviBean.getRemainDis() / 1000f).setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue() + "公里  " +
-                                    naviBean.getRemainTime() / 60 + "分钟";
-                            popupmsg.setText(msg);
-                        }
-                    }
-                    break;
-                }
-            }
-        }
-    };
 
     @Subscribe
-    public void onEventMainThread(PopupIsFullScreenRefreshEvent event) {
+    public void onEventMainThread(PEventFSRefresh event) {
         Log.e(TAG, "onEventMainThread: " + event);
         if (SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_POPUP_FULL_SCREEN, true)) {
             winparams.flags = WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_FULLSCREEN;
@@ -438,6 +347,7 @@ public class PopupWin {
     private View.OnTouchListener moveTouchListener = new View.OnTouchListener() {
         private int tx, ty;
 
+        @SuppressLint("ClickableViewAccessibility")
         @Override
         public boolean onTouch(View v, MotionEvent e) {
             if (e.getAction() == MotionEvent.ACTION_DOWN) {
@@ -467,5 +377,81 @@ public class PopupWin {
                 tv_time.setText(datetime);
             }
         });
+    }
+
+    @Subscribe
+    public void onEventMainThread(final PMusicEventInfo event) {
+        if (CommonUtil.isNotNull(event.getTitle())) {
+            ((TextView) musicView().findViewById(R.id.tv_title)).setText(event.getTitle());
+        } else {
+            ((TextView) musicView().findViewById(R.id.tv_title)).setText("标题");
+        }
+    }
+
+    @Subscribe
+    public void onEventMainThread(final PMusicEventProgress event) {
+        if (event.getTotalTime() > 0) {
+            ProgressBar progressBar = ((ProgressBar) musicView().findViewById(R.id.pb_music));
+            progressBar.setProgress(event.getCurrTime());
+            progressBar.setMax(event.getTotalTime());
+        }
+    }
+
+    @Subscribe
+    public void onEventMainThread(final PMusicEventState event) {
+        if (!event.isRun()) {
+            ((ImageView) musicView().findViewById(R.id.iv_play)).setImageResource(R.mipmap.ic_play);
+        } else {
+            ((ImageView) musicView().findViewById(R.id.iv_play)).setImageResource(R.mipmap.ic_pause);
+        }
+    }
+
+    @Subscribe
+    public void onEventMainThread(final PAmapEventState event) {
+        LinearLayout popupcontroller = (LinearLayout) amapView.findViewById(R.id.ll_controller);
+        RelativeLayout popupnavi = (RelativeLayout) amapView.findViewById(R.id.ll_navi);
+        if (popupcontroller != null && popupnavi != null) {
+            if (event.getState() == 8 || event.getState() == 10) {
+                popupcontroller.setVisibility(View.GONE);
+                popupnavi.setVisibility(View.VISIBLE);
+            } else if (event.getState() == 9 || event.getState() == 11) {
+                popupcontroller.setVisibility(View.VISIBLE);
+                popupnavi.setVisibility(View.GONE);
+            }
+        }
+    }
+
+    @Subscribe
+    public void onEventMainThread(final PAmapEventNavInfo event) {
+        ImageView popupIcon = (ImageView) amapView.findViewById(R.id.iv_icon);
+        TextView popupdis = (TextView) amapView.findViewById(R.id.tv_dis);
+        TextView popupmsg = (TextView) amapView.findViewById(R.id.tv_msg);
+        if (popupIcon != null && event.getIcon() - 1 >= 0 && event.getIcon() - 1 < ICONS.length) {
+            popupIcon.setImageResource(ICONS[event.getIcon() - 1]);
+        }
+        if (popupdis != null && event.getDis() > -1) {
+            String msg = "";
+            if (event.getDis() < 10) {
+                msg = "现在";
+            } else {
+                if (event.getDis() > 1000) {
+                    msg = event.getDis() / 1000 + "公里后";
+                } else {
+                    msg = event.getDis() + "米后";
+                }
+            }
+            msg = msg + event.getWroad();
+            popupdis.setText(msg);
+        }
+
+        if (popupmsg != null && event.getRemainTime() > -1 && event.getRemainDis() > -1) {
+            if (event.getRemainTime() == 0 || event.getRemainDis() == 0) {
+                popupmsg.setText("到达");
+            } else {
+                String msg = "剩余" + new BigDecimal(event.getRemainDis() / 1000f).setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue() + "公里  " +
+                        event.getRemainTime() / 60 + "分钟";
+                popupmsg.setText(msg);
+            }
+        }
     }
 }

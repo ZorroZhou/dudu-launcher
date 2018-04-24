@@ -70,7 +70,7 @@ public class LauncherActivity extends Activity implements View.OnClickListener, 
         setContentView(R.layout.activity_lanncher);
         x.view().inject(this);
 
-        findViewById(R.id.iv_set).setOnClickListener(this);
+        //findViewById(R.id.iv_set).setOnClickListener(this);
         findViewById(R.id.ll_time).setOnClickListener(this);
 
         ll_dock.findViewById(R.id.ll_dock1).setOnLongClickListener(this);
@@ -123,10 +123,10 @@ public class LauncherActivity extends Activity implements View.OnClickListener, 
                 }
                 break;
             }
-            case R.id.iv_set: {
-                startActivity(new Intent(this, SetActivity.class));
-                break;
-            }
+//            case R.id.iv_set: {
+//                startActivity(new Intent(this, SetActivity.class));
+//                break;
+//            }
         }
     }
 

@@ -14,7 +14,8 @@ import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.ex.BleManageEx;
 import com.wow.carlauncher.plugin.fk.FangkongPlugin;
-import com.wow.carlauncher.plugin.fk.FangkongPluginListener;
+import com.wow.carlauncher.plugin.fk.event.PFkEventConnect;
+import com.wow.carlauncher.plugin.fk.event.PFkEventModel;
 import com.wow.carlauncher.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.plugin.obd.ObdPluginListener;
 import com.wow.carlauncher.plugin.obd.evnet.PObdEventCarInfo;
@@ -141,6 +142,23 @@ public class LDeviceView extends LBaseView implements View.OnClickListener {
         }
     }
 
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        refreshFangkongState();
+        refreshObdState();
+    }
+
+    @Subscribe
+    public void onEventMainThread(final PFkEventConnect event) {
+        refreshFangkongState();
+    }
+
+    @Subscribe
+    public void onEventMainThread(final PFkEventModel event) {
+        tv_fangkongmoshi.setText(event.getModelName());
+    }
+
     @Subscribe
     public void onEventMainThread(PObdEventConnect event) {
         refreshObdState();
@@ -181,73 +199,4 @@ public class LDeviceView extends LBaseView implements View.OnClickListener {
         }
     }
 
-    private ObdPluginListener obdPluginListener = new ObdPluginListener() {
-        @Override
-        public void connect(boolean success) {
-            Log.d(TAG, "connect: " + success);
-            refreshObdState();
-        }
-
-        @Override
-        public void carRunningInfo(Integer speed, Integer rev, Integer waterTemp, Integer oilConsumption) {
-            if (speed != null) {
-                tv_cs.setText("车速:" + speed + "KM/H");
-            }
-            if (rev != null) {
-                tv_zs.setText("转速:" + rev + "R/S");
-            }
-            if (waterTemp != null) {
-                tv_sw.setText("水温:" + waterTemp + "℃");
-            }
-            if (oilConsumption != null) {
-                tv_youliang.setText("油量:" + oilConsumption + "%");
-            }
-        }
-
-        @Override
-        public void carTirePressureInfo(Float lFTirePressure, Integer lFTemp, Float rFTirePressure, Integer rFTemp, Float lBTirePressure, Integer lBTemp, Float rBTirePressure, Integer rBTemp) {
-            if (lFTirePressure != null && lFTemp != null) {
-                tv_tp_lf.setText(String.format("%.1f", lFTirePressure) + "/" + lFTemp + "℃");
-            }
-
-            if (rFTirePressure != null && rFTemp != null) {
-                tv_tp_rf.setText(String.format("%.1f", rFTirePressure) + "/" + rFTemp + "℃");
-            }
-
-            if (lBTirePressure != null && lBTemp != null) {
-                tv_tp_lb.setText(String.format("%.1f", lBTirePressure) + "/" + lBTemp + "℃");
-            }
-
-            if (rBTirePressure != null && rBTemp != null) {
-                tv_tp_rb.setText(String.format("%.1f", rBTirePressure) + "/" + rBTemp + "℃");
-            }
-        }
-    };
-
-    private FangkongPluginListener fangkongPluginListener = new FangkongPluginListener() {
-        @Override
-        public void connect(boolean success) {
-            refreshFangkongState();
-        }
-
-        @Override
-        public void changeModel(String name) {
-            tv_fangkongmoshi.setText(name);
-        }
-    };
-
-    @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        FangkongPlugin.self().addListener(fangkongPluginListener);
-        ObdPlugin.self().addListener(obdPluginListener);
-        refreshFangkongState();
-    }
-
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        FangkongPlugin.self().removeListener(fangkongPluginListener);
-        ObdPlugin.self().removeListener(obdPluginListener);
-    }
 }

@@ -1,18 +1,21 @@
 package com.wow.carlauncher.plugin.fk.protocol;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.util.Log;
 
 import com.google.common.primitives.Shorts;
-import com.wow.carlauncher.plugin.console.ConsoleListener;
+import com.wow.carlauncher.common.ex.event.BleEventDeviceChange;
+import com.wow.carlauncher.plugin.console.ConsoleProtoclListener;
 import com.wow.carlauncher.plugin.console.ConsolePlugin;
 import com.wow.carlauncher.plugin.SimulateDoubleClickUtil;
+import com.wow.carlauncher.plugin.console.event.PConsoleEventCallState;
 import com.wow.carlauncher.plugin.fk.FangkongProtocol;
 import com.wow.carlauncher.plugin.fk.FangkongProtocolListener;
 import com.wow.carlauncher.plugin.music.MusicPlugin;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.UUID;
 
@@ -44,16 +47,15 @@ public class YiLianProtocol extends FangkongProtocol {
     public YiLianProtocol(String address, Context context, FangkongProtocolListener changeModelCallBack) {
         super(address, context, changeModelCallBack);
         doubleClick = new SimulateDoubleClickUtil<>();
-        ConsolePlugin.self().addListener(listener);
+        EventBus.getDefault().register(this);
+
         Log.d(TAG, "yilian protocol init");
     }
 
-    private ConsoleListener listener = new ConsoleListener() {
-        @Override
-        public void callState(boolean calling) {
-            isCalling = calling;
-        }
-    };
+    @Subscribe
+    public void onEventAsync(final PConsoleEventCallState event) {
+        isCalling = event.isCalling();
+    }
 
     @Override
     public void receiveMessage(byte[] message) {
@@ -219,7 +221,7 @@ public class YiLianProtocol extends FangkongProtocol {
 
     @Override
     public void destroy() {
-        ConsolePlugin.self().removeListener(listener);
+        EventBus.getDefault().unregister(this);
         Log.d(TAG, "yilian protocol destroy");
     }
 

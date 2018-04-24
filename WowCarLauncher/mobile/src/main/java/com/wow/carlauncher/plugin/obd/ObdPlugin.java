@@ -14,11 +14,14 @@ import com.inuker.bluetooth.library.model.BleGattProfile;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.ex.BleManageEx;
 import com.wow.carlauncher.common.ex.ToastEx;
+import com.wow.carlauncher.common.ex.event.BleEventDeviceChange;
 import com.wow.carlauncher.plugin.BasePlugin;
 import com.wow.carlauncher.plugin.obd.protocol.GoodDriverTPProtocol;
 import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.SharedPreUtil;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.xutils.x;
 
 import java.util.List;
@@ -28,6 +31,7 @@ import static com.inuker.bluetooth.library.Constants.REQUEST_SUCCESS;
 import static com.inuker.bluetooth.library.Constants.STATUS_CONNECTED;
 import static com.inuker.bluetooth.library.Constants.STATUS_DEVICE_CONNECTED;
 import static com.wow.carlauncher.common.CommonData.SDATA_OBD_CONTROLLER;
+import static com.wow.carlauncher.common.CommonData.TAG;
 
 /**
  * Created by 10124 on 2017/11/4.
@@ -115,33 +119,7 @@ public class ObdPlugin extends BasePlugin<ObdPluginListener> {
                 .setServiceDiscoverRetry(Integer.MAX_VALUE)
                 .setServiceDiscoverTimeout(5000)  // 发现服务超时5s
                 .build();
-
-        BleManageEx.self().addListener(new BleManageEx.BleDeviceSearchListener() {
-            @Override
-            public void deviceListChange(final List<BluetoothDevice> bluetoothDevices) {
-                x.task().post(new Runnable() {
-                    @Override
-                    public void run() {
-                        String fkaddress = SharedPreUtil.getSharedPreString(CommonData.SDATA_OBD_ADDRESS);
-                        Log.d(TAG, "obdaddress: " + fkaddress);
-                        Log.d(TAG, "obdaddress: " + bluetoothDevices);
-                        if (CommonUtil.isNotNull(fkaddress)) {
-                            boolean have = false;
-                            for (BluetoothDevice device : bluetoothDevices) {
-                                if (device.getAddress().equals(fkaddress)) {
-                                    have = true;
-                                }
-                            }
-                            if (have) {
-                                Log.d(TAG, "扫描到绑定的OBD: " + fkaddress);
-                                connect();
-                            }
-                        }
-                    }
-                });
-            }
-        });
-
+        EventBus.getDefault().register(this);
         BleManageEx.self().forceCallBack();
     }
 
@@ -247,4 +225,21 @@ public class ObdPlugin extends BasePlugin<ObdPluginListener> {
         return false;
     }
 
+
+    @Subscribe
+    public void onEventAsync(final BleEventDeviceChange event) {
+        String fkaddress = SharedPreUtil.getSharedPreString(CommonData.SDATA_FANGKONG_ADDRESS);
+        if (CommonUtil.isNotNull(fkaddress)) {
+            boolean have = false;
+            for (BluetoothDevice device : event.getBluetoothDevices()) {
+                if (device.getAddress().equals(fkaddress)) {
+                    have = true;
+                }
+            }
+            if (have) {
+                Log.d(TAG, "扫描到绑定的方控: " + fkaddress);
+                connect();
+            }
+        }
+    }
 }

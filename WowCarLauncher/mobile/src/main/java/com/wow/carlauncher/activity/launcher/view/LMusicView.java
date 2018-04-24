@@ -14,17 +14,23 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.plugin.fk.event.PFkEventConnect;
 import com.wow.carlauncher.plugin.music.MusicPlugin;
 import com.wow.carlauncher.plugin.music.MusicPluginListener;
+import com.wow.carlauncher.plugin.music.event.PMusicEventCover;
+import com.wow.carlauncher.plugin.music.event.PMusicEventInfo;
+import com.wow.carlauncher.plugin.music.event.PMusicEventProgress;
+import com.wow.carlauncher.plugin.music.event.PMusicEventState;
 import com.wow.frame.util.CommonUtil;
 
+import org.greenrobot.eventbus.Subscribe;
 import org.xutils.x;
 
 /**
  * Created by 10124 on 2018/4/20.
  */
 
-public class LMusicView extends FrameLayout implements MusicPluginListener {
+public class LMusicView extends LBaseView {
 
     public LMusicView(@NonNull Context context) {
         super(context);
@@ -77,78 +83,48 @@ public class LMusicView extends FrameLayout implements MusicPluginListener {
         musicView.findViewById(R.id.ll_next).setOnClickListener(musicclick);
     }
 
+    @Subscribe
+    public void onEventMainThread(final PMusicEventCover event) {
+        if (event.getCover() != null) {
+            music_iv_cover.setImageBitmap(event.getCover());
+        } else {
 
-    public void refreshInfo(final String title, final String artist) {
-        x.task().post(new Runnable() {
-            @Override
-            public void run() {
-                if (music_tv_title != null) {
-                    if (CommonUtil.isNotNull(title)) {
-                        music_tv_title.setText(title);
-                    } else {
-                        music_tv_title.setText("标题");
-                    }
-                }
+        }
+    }
+
+    @Subscribe
+    public void onEventMainThread(final PMusicEventInfo event) {
+        if (music_tv_title != null) {
+            if (CommonUtil.isNotNull(event.getTitle())) {
+                music_tv_title.setText(event.getTitle());
+            } else {
+                music_tv_title.setText("标题");
             }
-        });
+        }
     }
 
-    public void refreshProgress(final int curr_time, final int total_time) {
-        x.task().post(new Runnable() {
-            @Override
-            public void run() {
-                if (music_pb_music != null && curr_time > 0 && total_time > 0) {
-                    music_pb_music.setProgress(curr_time);
-                    music_pb_music.setMax(total_time);
-                }
+    @Subscribe
+    public void onEventMainThread(final PMusicEventProgress event) {
+        if (music_pb_music != null && event.getCurrTime() > 0 && event.getTotalTime() > 0) {
+            music_pb_music.setProgress(event.getCurrTime());
+            music_pb_music.setMax(event.getTotalTime());
+        }
 
-                if (music_tv_time != null) {
-                    int tt = total_time / 1000;
-                    int cc = curr_time / 1000;
-                    music_tv_time.setText(cc + ":" + tt);
-                }
+        if (music_tv_time != null) {
+            int tt = event.getTotalTime() / 1000;
+            int cc = event.getCurrTime() / 1000;
+            music_tv_time.setText(cc + ":" + tt);
+        }
+    }
+
+    @Subscribe
+    public void onEventMainThread(final PMusicEventState event) {
+        if (music_iv_play != null) {
+            if (event.isRun()) {
+                music_iv_play.setImageResource(R.mipmap.ic_pause);
+            } else {
+                music_iv_play.setImageResource(R.mipmap.ic_play);
             }
-        });
+        }
     }
-
-    public void refreshCover(final Bitmap cover) {
-        x.task().post(new Runnable() {
-            @Override
-            public void run() {
-                if (cover != null) {
-                    music_iv_cover.setImageBitmap(cover);
-                } else {
-
-                }
-            }
-        });
-    }
-
-    public void refreshState(final boolean run) {
-        x.task().post(new Runnable() {
-            @Override
-            public void run() {
-                if (music_iv_play != null) {
-                    if (run) {
-                        music_iv_play.setImageResource(R.mipmap.ic_pause);
-                    } else {
-                        music_iv_play.setImageResource(R.mipmap.ic_play);
-                    }
-                }
-            }
-        });
-    }
-
-    @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        MusicPlugin.self().addListener(this);
-    }
-
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        MusicPlugin.self().removeListener(this);
-    }
-
 }

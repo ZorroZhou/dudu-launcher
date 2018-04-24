@@ -7,7 +7,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 
 import com.wow.carlauncher.common.ex.ToastEx;
-import com.wow.carlauncher.plugin.console.ConsoleListener;
+import com.wow.carlauncher.plugin.console.ConsoleProtoclListener;
 import com.wow.carlauncher.plugin.console.ConsoleProtocl;
 import com.wow.frame.util.AppUtil;
 
@@ -22,7 +22,7 @@ import static com.wow.carlauncher.common.CommonData.TAG;
 public class SysConsoleImpl extends ConsoleProtocl {
     public static final int MARK = 0;
 
-    public SysConsoleImpl(Context context, ConsoleListener listener) {
+    public SysConsoleImpl(Context context, ConsoleProtoclListener listener) {
         super(context, listener);
 
         Log.d(TAG, "system console init");

@@ -1,43 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.zhy.android.percent.support.PercentLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@android:color/white"
-    android:orientation="vertical">
+    android:layout_height="match_parent"
+    android:background="#000"
+    android:gravity="right"
+    android:orientation="horizontal"
+    tools:ignore="RtlHardcoded">
 
     <ImageView
         android:id="@+id/iv_carinfo_tp"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_heightPercent="80%h"
-        app:layout_widthPercent="80%h" />
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/app_name"
+        android:src="@mipmap/ic_l_tp"
+        android:visibility="gone"
+        app:layout_widthPercent="100%h" />
 
     <ImageView
         android:id="@+id/iv_obd"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_heightPercent="80%h"
-        app:layout_widthPercent="80%h" />
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/app_name"
+        android:src="@mipmap/ic_l_obd"
+        android:visibility="gone"
+        app:layout_widthPercent="100%h" />
 
     <ImageView
         android:id="@+id/iv_fk"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_heightPercent="80%h"
-        app:layout_widthPercent="80%h" />
-
-    <ImageView
-        android:id="@+id/iv_ble"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_heightPercent="80%h"
-        app:layout_widthPercent="80%h" />
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/app_name"
+        android:src="@mipmap/ic_l_fk"
+        android:visibility="gone"
+        app:layout_widthPercent="100%h" />
 
     <ImageView
         android:id="@+id/iv_wifi"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_heightPercent="80%h"
-        app:layout_widthPercent="80%h" />
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/app_name"
+        android:src="@mipmap/ic_l_wifi"
+        android:visibility="gone"
+        app:layout_widthPercent="100%h" />
+
+    <ImageView
+        android:id="@+id/iv_set"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/app_name"
+        android:src="@mipmap/ic_l_set"
+        app:layout_widthPercent="100%h" />
 </com.zhy.android.percent.support.PercentLinearLayout>

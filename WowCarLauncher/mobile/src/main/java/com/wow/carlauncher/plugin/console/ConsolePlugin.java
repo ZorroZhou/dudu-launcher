@@ -3,19 +3,21 @@ package com.wow.carlauncher.plugin.console;
 import android.content.Context;
 
 import com.wow.carlauncher.plugin.BasePlugin;
-import com.wow.carlauncher.plugin.fk.FangkongProtocolEnum;
+import com.wow.carlauncher.plugin.console.event.PConsoleEventCallState;
+import com.wow.carlauncher.plugin.console.event.PConsoleEventLightState;
 import com.wow.frame.util.SharedPreUtil;
 import com.wow.carlauncher.plugin.console.impl.NwdConsoleImpl;
 import com.wow.carlauncher.plugin.console.impl.SysConsoleImpl;
 
+import org.greenrobot.eventbus.EventBus;
+
 import static com.wow.carlauncher.common.CommonData.SDATA_CONSOLE_MARK;
-import static com.wow.carlauncher.common.CommonData.SDATA_FANGKONG_CONTROLLER;
 
 /**
  * Created by 10124 on 2017/11/9.
  */
 
-public class ConsolePlugin extends BasePlugin<ConsoleListener> {
+public class ConsolePlugin extends BasePlugin<ConsoleProtoclListener> {
     private static ConsolePlugin self;
 
     public static ConsolePlugin self() {
@@ -33,15 +35,15 @@ public class ConsolePlugin extends BasePlugin<ConsoleListener> {
         loadConsole();
     }
 
-    private ConsoleListener consoleListener = new ConsoleListener() {
+    private ConsoleProtoclListener consoleListener = new ConsoleProtoclListener() {
         @Override
         public void callState(final boolean calling) {
-            runListener(new ListenerRuner<ConsoleListener>() {
-                @Override
-                public void run(ConsoleListener consoleListener) {
-                    consoleListener.callState(calling);
-                }
-            });
+            EventBus.getDefault().post(new PConsoleEventCallState().setCalling(calling));
+        }
+
+        @Override
+        public void lightState(boolean lightState) {
+            EventBus.getDefault().post(new PConsoleEventLightState().setOpen(lightState));
         }
     };
 

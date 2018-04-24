@@ -4,12 +4,18 @@ import android.content.Context;
 import android.graphics.Bitmap;
 
 import com.wow.carlauncher.plugin.BasePlugin;
+import com.wow.carlauncher.plugin.music.event.PMusicEventCover;
+import com.wow.carlauncher.plugin.music.event.PMusicEventInfo;
+import com.wow.carlauncher.plugin.music.event.PMusicEventProgress;
+import com.wow.carlauncher.plugin.music.event.PMusicEventState;
 import com.wow.carlauncher.plugin.music.plugin.JidouMusicController;
 import com.wow.carlauncher.plugin.music.plugin.NwdMusicController;
 import com.wow.carlauncher.plugin.music.plugin.PowerAmpCarController;
 import com.wow.carlauncher.plugin.music.plugin.QQMusicCarController;
 import com.wow.carlauncher.plugin.music.plugin.SystemMusicController;
 import com.wow.frame.util.SharedPreUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import static com.wow.carlauncher.common.CommonData.SDATA_MUSIC_CONTROLLER;
 
@@ -57,47 +63,27 @@ public class MusicPlugin extends BasePlugin<MusicPluginListener> {
                 musicController = new PowerAmpCarController();
                 break;
         }
-        if(musicController!=null){
+        if (musicController != null) {
             musicController.init(getContext(), this);
         }
     }
 
 
     public void refreshInfo(final String title, final String artist) {
-        runListener(new ListenerRuner<MusicPluginListener>() {
-            @Override
-            public void run(MusicPluginListener musicPluginListener) {
-                musicPluginListener.refreshInfo(title, artist);
-            }
-        });
+        EventBus.getDefault().post(new PMusicEventInfo().setArtist(artist).setTitle(title));
     }
 
     public void refreshCover(final Bitmap cover) {
-        runListener(new ListenerRuner<MusicPluginListener>() {
-            @Override
-            public void run(MusicPluginListener musicPluginListener) {
-                musicPluginListener.refreshCover(cover);
-            }
-        });
+        EventBus.getDefault().post(new PMusicEventCover().setCover(cover));
     }
 
     public void refreshProgress(final int curr_time, final int total_tim) {
-        runListener(new ListenerRuner<MusicPluginListener>() {
-            @Override
-            public void run(MusicPluginListener musicPluginListener) {
-                musicPluginListener.refreshProgress(curr_time, total_tim);
-            }
-        });
+        EventBus.getDefault().post(new PMusicEventProgress().setCurrTime(curr_time).setTotalTime(total_tim));
     }
 
     public void refreshState(final boolean run) {
         playing = run;
-        runListener(new ListenerRuner<MusicPluginListener>() {
-            @Override
-            public void run(MusicPluginListener musicPluginListener) {
-                musicPluginListener.refreshState(run);
-            }
-        });
+        EventBus.getDefault().post(new PMusicEventState().setRun(run));
     }
 
     public void playOrPause() {

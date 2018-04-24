@@ -42,8 +42,8 @@ import static com.wow.carlauncher.common.CommonData.*;
 
 public class LauncherActivity extends Activity implements View.OnClickListener, View.OnLongClickListener {
 
-    @ViewInject(R.id.time)
-    private TextView time;
+    @ViewInject(R.id.tv_time)
+    private TextView tv_time;
 
     @ViewInject(R.id.ll_dock)
     private LDockView ll_dock;
@@ -73,7 +73,7 @@ public class LauncherActivity extends Activity implements View.OnClickListener, 
         x.view().inject(this);
 
         //findViewById(R.id.iv_set).setOnClickListener(this);
-        findViewById(R.id.ll_time).setOnClickListener(this);
+        findViewById(R.id.tv_time).setOnClickListener(this);
 
         ll_dock.findViewById(R.id.ll_dock1).setOnLongClickListener(this);
         ll_dock.findViewById(R.id.ll_dock2).setOnLongClickListener(this);
@@ -159,7 +159,7 @@ public class LauncherActivity extends Activity implements View.OnClickListener, 
             @Override
             public void run() {
                 Date d = new Date();
-                LauncherActivity.this.time.setText(DateUtil.dateToString(d, "HH:mm   " + DateUtil.getWeekOfDate(d) + " yyyy/MM/dd "));
+                LauncherActivity.this.tv_time.setText(DateUtil.dateToString(d, "HH:mm   " + DateUtil.getWeekOfDate(d) + " yyyy/MM/dd "));
             }
         });
     }

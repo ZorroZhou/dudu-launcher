@@ -100,7 +100,7 @@ public class GoodDriverTPProtocol extends ObdProtocol {
             } else if (task instanceof GetRevTask) {
                 GetRevTask t = (GetRevTask) task;
                 if (t.getRev() > 500) {
-                    infoMark = 10;
+                    infoMark = 1;
                 }
                 listener.carRunningInfo(null, t.getRev(), null, null);
             } else if (task instanceof GetWaterTempTask) {

@@ -21,7 +21,7 @@
             android:layout_height="0dp"
             android:layout_centerHorizontal="true"
             android:scaleType="fitCenter"
-            android:src="@mipmap/ic_amap"
+            android:src="@mipmap/ic_app_nav"
             app:layout_heightPercent="60%h"
             app:layout_marginTopPercent="15%h"
             app:layout_widthPercent="60%h" />

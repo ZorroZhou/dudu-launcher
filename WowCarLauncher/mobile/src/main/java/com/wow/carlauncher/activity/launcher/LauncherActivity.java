@@ -1,12 +1,14 @@
 package com.wow.carlauncher.activity.launcher;
 
 import android.app.Activity;
+import android.app.WallpaperManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -78,6 +80,12 @@ public class LauncherActivity extends Activity implements View.OnClickListener, 
         ll_dock.findViewById(R.id.ll_dock3).setOnLongClickListener(this);
         ll_dock.findViewById(R.id.ll_dock4).setOnLongClickListener(this);
         ll_dock.findViewById(R.id.ll_dock5).setOnLongClickListener(this);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            findViewById(R.id.fl_bg).setBackground(WallpaperManager.getInstance(this).getDrawable());
+        } else {
+            findViewById(R.id.fl_bg).setBackgroundDrawable(WallpaperManager.getInstance(this).getDrawable());
+        }
     }
 
     @Override

@@ -13,7 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_alignParentTop="true"
-        android:background="@mipmap/nav_icon_bg"
         app:layout_heightPercent="100%w">
 
         <ImageView

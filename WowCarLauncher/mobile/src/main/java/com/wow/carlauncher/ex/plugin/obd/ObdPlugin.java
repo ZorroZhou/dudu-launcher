@@ -67,7 +67,6 @@ public class ObdPlugin extends ContextEx {
 
         @Override
         public boolean isConnect() {
-            Log.d(TAG, "检查是否连接: " + Constants.getStatusText(BleManage.self().client().getConnectStatus(obdProtocol.getAddress())));
             if (obdProtocol != null && BleManage.self().client().getConnectStatus(obdProtocol.getAddress()) == STATUS_DEVICE_CONNECTED) {
                 return true;
             }
@@ -116,7 +115,6 @@ public class ObdPlugin extends ContextEx {
                 .setServiceDiscoverTimeout(5000)  // 发现服务超时5s
                 .build();
         EventBus.getDefault().register(this);
-        BleManage.self().forceCallBack();
     }
 
     private boolean connecting = false;
@@ -173,7 +171,6 @@ public class ObdPlugin extends ContextEx {
                             });
                 } else {
                     connecting = false;
-                    BleManage.self().forceCallBack();
                     Log.d(TAG, "onResponse: 方控连接失败!!!");
                 }
             }
@@ -213,7 +210,6 @@ public class ObdPlugin extends ContextEx {
 
     @Subscribe
     public void onEventAsync(final MTimeHSecondEvent event) {
-        Log.d(TAG, "方控检查连接情况! ");
         String fkaddress = SharedPreUtil.getSharedPreString(CommonData.SDATA_OBD_ADDRESS);
         if (CommonUtil.isNotNull(fkaddress) && BleManage.self().client().getConnectStatus(fkaddress) != STATUS_DEVICE_CONNECTED) {
             connect();

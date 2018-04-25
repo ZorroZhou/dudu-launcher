@@ -64,7 +64,6 @@ public class FangkongPlugin extends ContextEx {
                 .setServiceDiscoverTimeout(5000)  // 发现服务超时5s
                 .build();
         EventBus.getDefault().register(this);
-        BleManage.self().forceCallBack();
     }
 
     private FangkongProtocol fangkongProtocol;
@@ -148,7 +147,6 @@ public class FangkongPlugin extends ContextEx {
                             });
                 } else {
                     connecting = false;
-                    BleManage.self().forceCallBack();
                     Log.d(TAG, "onResponse: 方控连接失败!!!");
                 }
             }
@@ -169,7 +167,6 @@ public class FangkongPlugin extends ContextEx {
 
     @Subscribe
     public void onEventAsync(final MTimeHSecondEvent event) {
-        Log.d(TAG, "方控检查连接情况! ");
         String fkaddress = SharedPreUtil.getSharedPreString(CommonData.SDATA_FANGKONG_ADDRESS);
         if (CommonUtil.isNotNull(fkaddress) && BleManage.self().client().getConnectStatus(fkaddress) != STATUS_DEVICE_CONNECTED) {
             connect();

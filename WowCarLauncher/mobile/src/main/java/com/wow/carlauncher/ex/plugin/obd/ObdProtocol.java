@@ -67,7 +67,7 @@ public abstract class ObdProtocol {
         this.taskArrayDeque.clear();
     }
 
-    protected boolean writeRes(byte[] msg) {
+    protected boolean setTaskRes(String msg) {
         if (currentTask != null) {
             currentTask.writeRes(msg);
             taskOver(currentTask);

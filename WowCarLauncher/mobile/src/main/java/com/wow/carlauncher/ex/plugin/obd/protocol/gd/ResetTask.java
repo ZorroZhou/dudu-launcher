@@ -15,7 +15,7 @@ public class ResetTask extends ObdTask {
     }
 
     @Override
-    public void writeRes(byte[] message) {
+    public void writeRes(String message) {
         markSuccess();
     }
 }

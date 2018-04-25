@@ -408,49 +408,53 @@ public class PopupWin {
 
     @Subscribe
     public void onEventMainThread(final PAmapEventState event) {
-        LinearLayout popupcontroller = (LinearLayout) amapView.findViewById(R.id.ll_controller);
-        RelativeLayout popupnavi = (RelativeLayout) amapView.findViewById(R.id.ll_navi);
-        if (popupcontroller != null && popupnavi != null) {
-            if (event.getState() == 8 || event.getState() == 10) {
-                popupcontroller.setVisibility(View.GONE);
-                popupnavi.setVisibility(View.VISIBLE);
-            } else if (event.getState() == 9 || event.getState() == 11) {
-                popupcontroller.setVisibility(View.VISIBLE);
-                popupnavi.setVisibility(View.GONE);
+        if (amapView != null) {
+            LinearLayout popupcontroller = (LinearLayout) amapView.findViewById(R.id.ll_controller);
+            RelativeLayout popupnavi = (RelativeLayout) amapView.findViewById(R.id.ll_navi);
+            if (popupcontroller != null && popupnavi != null) {
+                if (event.getState() == 8 || event.getState() == 10) {
+                    popupcontroller.setVisibility(View.GONE);
+                    popupnavi.setVisibility(View.VISIBLE);
+                } else if (event.getState() == 9 || event.getState() == 11) {
+                    popupcontroller.setVisibility(View.VISIBLE);
+                    popupnavi.setVisibility(View.GONE);
+                }
             }
         }
     }
 
     @Subscribe
     public void onEventMainThread(final PAmapEventNavInfo event) {
-        ImageView popupIcon = (ImageView) amapView.findViewById(R.id.iv_icon);
-        TextView popupdis = (TextView) amapView.findViewById(R.id.tv_dis);
-        TextView popupmsg = (TextView) amapView.findViewById(R.id.tv_msg);
-        if (popupIcon != null && event.getIcon() - 1 >= 0 && event.getIcon() - 1 < ICONS.length) {
-            popupIcon.setImageResource(ICONS[event.getIcon() - 1]);
-        }
-        if (popupdis != null && event.getDis() > -1) {
-            String msg = "";
-            if (event.getDis() < 10) {
-                msg = "现在";
-            } else {
-                if (event.getDis() > 1000) {
-                    msg = event.getDis() / 1000 + "公里后";
-                } else {
-                    msg = event.getDis() + "米后";
-                }
+        if (amapView != null) {
+            ImageView popupIcon = (ImageView) amapView.findViewById(R.id.iv_icon);
+            TextView popupdis = (TextView) amapView.findViewById(R.id.tv_dis);
+            TextView popupmsg = (TextView) amapView.findViewById(R.id.tv_msg);
+            if (popupIcon != null && event.getIcon() - 1 >= 0 && event.getIcon() - 1 < ICONS.length) {
+                popupIcon.setImageResource(ICONS[event.getIcon() - 1]);
             }
-            msg = msg + event.getWroad();
-            popupdis.setText(msg);
-        }
+            if (popupdis != null && event.getDis() > -1) {
+                String msg = "";
+                if (event.getDis() < 10) {
+                    msg = "现在";
+                } else {
+                    if (event.getDis() > 1000) {
+                        msg = event.getDis() / 1000 + "公里后";
+                    } else {
+                        msg = event.getDis() + "米后";
+                    }
+                }
+                msg = msg + event.getWroad();
+                popupdis.setText(msg);
+            }
 
-        if (popupmsg != null && event.getRemainTime() > -1 && event.getRemainDis() > -1) {
-            if (event.getRemainTime() == 0 || event.getRemainDis() == 0) {
-                popupmsg.setText("到达");
-            } else {
-                String msg = "剩余" + new BigDecimal(event.getRemainDis() / 1000f).setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue() + "公里  " +
-                        event.getRemainTime() / 60 + "分钟";
-                popupmsg.setText(msg);
+            if (popupmsg != null && event.getRemainTime() > -1 && event.getRemainDis() > -1) {
+                if (event.getRemainTime() == 0 || event.getRemainDis() == 0) {
+                    popupmsg.setText("到达");
+                } else {
+                    String msg = "剩余" + new BigDecimal(event.getRemainDis() / 1000f).setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue() + "公里  " +
+                            event.getRemainTime() / 60 + "分钟";
+                    popupmsg.setText(msg);
+                }
             }
         }
     }

@@ -13,11 +13,12 @@ import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
+import com.inuker.bluetooth.library.search.SearchResult;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
+import com.wow.carlauncher.ex.manage.ble.MySearchResponse;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
-import com.wow.carlauncher.ex.manage.ble.event.BleEventDeviceChange;
 import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.dialog.ListDialog;
 import com.wow.carlauncher.ex.plugin.fk.FangkongPlugin;
@@ -26,8 +27,6 @@ import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.SharedPreUtil;
 import com.wow.frame.util.ThreadObj;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
@@ -90,7 +89,6 @@ public class SFangKongView extends FrameLayout {
                     public void onClick(DialogInterface dialog, int which) {
                         SharedPreUtil.saveSharedPreInteger(SDATA_FANGKONG_CONTROLLER, show[obj.getObj()].getId());
                         FangkongPlugin.self().disconnect();
-                        BleManage.self().forceCallBack();
                         sv_fangkong_impl_select.setSummary("方控使用的协议：" + show[obj.getObj()].getName());
                     }
                 }).setSingleChoiceItems(items, select, new DialogInterface.OnClickListener() {
@@ -126,27 +124,33 @@ public class SFangKongView extends FrameLayout {
             public void onClick(View view) {
                 final ThreadObj<ListDialog> listTemp = new ThreadObj<>();
                 final List<BluetoothDevice> devices = new ArrayList<>();
-                final Object listener = new Object() {
-                    @Subscribe
-                    public void onEventMainThread(BleEventDeviceChange event) {
-                        devices.clear();
-                        devices.addAll(event.getBluetoothDevices());
-
-                        String[] items = new String[devices.size()];
-                        for (int i = 0; i < items.length; i++) {
-                            BluetoothDevice bluetoothDevice = devices.get(i);
-                            items[i] = bluetoothDevice.getName() + ":" + bluetoothDevice.getAddress();
+                BleManage.self().searchBle(new MySearchResponse() {
+                    @Override
+                    public void onDeviceFounded(SearchResult device) {
+                        boolean have = false;
+                        for (BluetoothDevice d : devices) {
+                            if (d.getAddress().equals(device.getAddress())) {
+                                have = true;
+                                break;
+                            }
                         }
-                        listTemp.getObj().getListView().setAdapter(new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, items));
+                        if (!have) {
+                            devices.add(device.device);
+                            String[] items = new String[devices.size()];
+                            for (int i = 0; i < items.length; i++) {
+                                BluetoothDevice bluetoothDevice = devices.get(i);
+                                items[i] = bluetoothDevice.getName() + ":" + bluetoothDevice.getAddress();
+                            }
+                            listTemp.getObj().getListView().setAdapter(new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, items));
+                        }
                     }
-                };
-                EventBus.getDefault().register(listener);
-                
+                });
+
                 final ListDialog dialog = new ListDialog(getContext());
                 dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                     @Override
                     public void onDismiss(DialogInterface dialogInterface) {
-                        EventBus.getDefault().unregister(listener);
+                        BleManage.self().stopSearch();
                     }
                 });
                 dialog.setTitle("请选择一个蓝牙设备");
@@ -158,17 +162,11 @@ public class SFangKongView extends FrameLayout {
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         dialog.dismiss();
                         BluetoothDevice device = devices.get(i);
-                        BleManage.self().removeDevice(device);
-
                         SharedPreUtil.saveSharedPreString(CommonData.SDATA_FANGKONG_ADDRESS, device.getAddress());
                         SharedPreUtil.saveSharedPreString(CommonData.SDATA_FANGKONG_NAME, device.getName());
                         sv_fangkong_select.setSummary("绑定了设备:" + device.getName() + "  地址:" + device.getAddress());
-
-                        BleManage.self().forceCallBack();
                     }
                 });
-
-                BleManage.self().forceCallBack();
             }
         });
     }

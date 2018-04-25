@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -39,6 +40,7 @@ import static com.wow.carlauncher.common.CommonData.SDATA_DOCK3_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK4_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK5_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_TIME_PLUGIN_OPEN_APP;
+import static com.wow.carlauncher.common.CommonData.TAG;
 
 /**
  * Created by 10124 on 2018/4/22.
@@ -133,6 +135,7 @@ public class LDockView extends LinearLayout implements View.OnClickListener {
         if (CommonUtil.isNotNull(packname1)) {
             try {
                 PackageInfo packageInfo = pm.getPackageInfo(packname1, 0);
+                Log.d(TAG, "loadDock: " + packageInfo.packageName);
                 iv_dock1.setImageDrawable(packageInfo.applicationInfo.loadIcon(pm));
                 tv_dock1.setText(packageInfo.applicationInfo.loadLabel(pm));
             } catch (Exception e) {

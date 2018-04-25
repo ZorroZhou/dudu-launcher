@@ -63,8 +63,6 @@ public class AppContext implements SWebServiceDeclare, SAppDeclare {
         TimeManage.self().init(app);
         //蓝牙客户端
         BleManage.self().init(app);
-        BleManage.self().startSearch();
-
 
         AMapCarPlugin.self().init(app);
         MusicPlugin.self().init(app);

@@ -18,6 +18,8 @@ import com.wow.carlauncher.ex.manage.ble.BleManage;
 import com.wow.carlauncher.ex.manage.ble.event.BleEventSearch;
 import com.wow.carlauncher.event.EventWifiState;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventConnect;
+import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
+import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarTp;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventConnect;
 import com.wow.frame.util.DateUtil;
 import com.wow.frame.util.NetWorkUtil;
@@ -96,18 +98,18 @@ public class LPromptView extends LBaseView {
     }
 
     private void refreshBleState() {
-        if (BleManage.self().isSearching()) {
-            iv_ble.setVisibility(VISIBLE);
-        } else {
-            iv_ble.setVisibility(INVISIBLE);
-        }
+//        if (BleManage.self().isSearching()) {
+//            iv_ble.setVisibility(VISIBLE);
+//        } else {
+//            iv_ble.setVisibility(GONE);
+//        }
     }
 
     private void refreshWifiState() {
         if (NetWorkUtil.isWifiConnected(getContext())) {
             iv_wifi.setVisibility(VISIBLE);
         } else {
-            iv_wifi.setVisibility(INVISIBLE);
+            iv_wifi.setVisibility(GONE);
         }
     }
 
@@ -166,18 +168,24 @@ public class LPromptView extends LBaseView {
     @Subscribe
     public void onEventMainThread(final PFkEventConnect event) {
         if (event.isConnected()) {
-            iv_obd.setVisibility(VISIBLE);
+            iv_fk.setVisibility(VISIBLE);
         } else {
-            iv_obd.setVisibility(INVISIBLE);
+            iv_fk.setVisibility(GONE);
         }
     }
 
     @Subscribe
     public void onEventMainThread(final PObdEventConnect event) {
         if (event.isConnected()) {
-            iv_fk.setVisibility(VISIBLE);
+            iv_obd.setVisibility(VISIBLE);
+            if (ObdPlugin.self().supportTp()) {
+                iv_carinfo_tp.setVisibility(VISIBLE);
+            } else {
+                iv_carinfo_tp.setVisibility(GONE);
+            }
         } else {
-            iv_fk.setVisibility(INVISIBLE);
+            iv_obd.setVisibility(GONE);
+            iv_carinfo_tp.setVisibility(GONE);
         }
     }
 
@@ -186,17 +194,40 @@ public class LPromptView extends LBaseView {
         if (event.isUsable()) {
             iv_wifi.setVisibility(VISIBLE);
         } else {
-            iv_wifi.setVisibility(INVISIBLE);
+            iv_wifi.setVisibility(GONE);
         }
     }
 
     @Subscribe
     public void onEventMainThread(final BleEventSearch event) {
-        Log.d(TAG, "onEventMainThread: asdfasdads!!!!!!!!!!!!!!!!!");
         if (event.isSearch()) {
             iv_ble.setVisibility(VISIBLE);
         } else {
-            iv_ble.setVisibility(INVISIBLE);
+            iv_ble.setVisibility(GONE);
+        }
+    }
+
+    @Subscribe
+    public void onEventMainThread(final PObdEventCarTp event) {
+        iv_carinfo_tp.setVisibility(VISIBLE);
+        boolean warn = false;
+        if (event.getlBTirePressure() != null && event.getlBTirePressure() < 2) {
+            warn = true;
+        }
+        if (event.getlFTirePressure() != null && event.getlFTirePressure() < 2) {
+            warn = true;
+        }
+        if (event.getrBTirePressure() != null && event.getrBTirePressure() < 2) {
+            warn = true;
+        }
+        if (event.getrBTirePressure() != null && event.getrBTirePressure() < 2) {
+            warn = true;
+        }
+
+        if (warn) {
+            iv_carinfo_tp.setImageResource(R.mipmap.ic_l_tp_warn);
+        } else {
+            iv_carinfo_tp.setImageResource(R.mipmap.ic_l_tp);
         }
     }
 }

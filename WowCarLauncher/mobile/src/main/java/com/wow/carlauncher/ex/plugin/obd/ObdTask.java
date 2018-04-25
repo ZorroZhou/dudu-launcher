@@ -32,6 +32,6 @@ public abstract class ObdTask {
 
     public abstract String getReqMessage();
 
-    public abstract void writeRes(byte[] msg);
+    public abstract void writeRes(String msg);
 
 }

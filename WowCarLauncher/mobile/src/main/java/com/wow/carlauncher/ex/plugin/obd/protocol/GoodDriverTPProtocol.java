@@ -27,9 +27,13 @@ import static com.wow.carlauncher.ex.plugin.obd.protocol.gd.GetTpTask.RF;
 
 public class GoodDriverTPProtocol extends ObdProtocol {
     private boolean running = false;
+    private StringBuffer resMessageTemp;
 
     public GoodDriverTPProtocol(Context context, String address, final ObdProtocolListener listener) {
         super(context, address, listener);
+
+        //单独用来处理粘包的,太扯淡了
+        this.resMessageTemp = new StringBuffer();
     }
 
 
@@ -39,6 +43,7 @@ public class GoodDriverTPProtocol extends ObdProtocol {
 
     @Override
     public void run() {
+        resMessageTemp.setLength(0);
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -84,10 +89,13 @@ public class GoodDriverTPProtocol extends ObdProtocol {
     }
 
     @Override
-    public void receiveMessage(byte[] message) {
-        Log.d(TAG, "!!!!!!!!!!!!!!!收到消息:" + new String(message));
-        if (!writeRes(message)) {
-            Log.d(TAG, "receiveMessage: 这不是个任务包");
+    public synchronized void receiveMessage(byte[] message) {
+        resMessageTemp.append(new String(message));
+        if (resMessageTemp.indexOf(">") > -1) {
+            //拿出来消息进行回掉
+            setTaskRes(resMessageTemp.substring(0, resMessageTemp.indexOf(">")));
+            //从缓存拿走消息
+            resMessageTemp.delete(0, resMessageTemp.indexOf(">") + 1);
         }
     }
 

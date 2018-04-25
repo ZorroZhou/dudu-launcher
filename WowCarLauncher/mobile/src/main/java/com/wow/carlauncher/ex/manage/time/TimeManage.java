@@ -8,6 +8,8 @@ import com.wow.carlauncher.ex.ContextEx;
 import com.wow.carlauncher.ex.manage.time.event.MTimeHSecondEvent;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -46,9 +48,13 @@ public class TimeManage extends ContextEx {
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                postEvent(new MTimeHSecondEvent());
+                if (EventBus.getDefault().hasSubscriberForEvent(MTimeHSecondEvent.class)) {
+                    postEvent(new MTimeHSecondEvent());
+                }
                 if (timeMark % 2 == 0) {
-                    postEvent(new MTimeSecondEvent());
+                    if (EventBus.getDefault().hasSubscriberForEvent(MTimeSecondEvent.class)) {
+                        postEvent(new MTimeSecondEvent());
+                    }
                 }
                 timeMark++;
             }

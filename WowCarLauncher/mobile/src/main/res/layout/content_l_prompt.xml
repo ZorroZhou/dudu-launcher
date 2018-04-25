@@ -18,7 +18,7 @@
             android:layout_height="match_parent"
             android:contentDescription="@string/app_name"
             android:src="@mipmap/ic_l_tp"
-            android:visibility="invisible"
+            android:visibility="gone"
             app:layout_widthPercent="100%h" />
 
         <ImageView
@@ -27,7 +27,7 @@
             android:layout_height="match_parent"
             android:contentDescription="@string/app_name"
             android:src="@mipmap/ic_l_obd"
-            android:visibility="invisible"
+            android:visibility="gone"
             app:layout_widthPercent="100%h" />
 
         <ImageView
@@ -36,7 +36,7 @@
             android:layout_height="match_parent"
             android:contentDescription="@string/app_name"
             android:src="@mipmap/ic_l_fk"
-            android:visibility="invisible"
+            android:visibility="gone"
             app:layout_widthPercent="100%h" />
 
         <ImageView
@@ -45,7 +45,7 @@
             android:layout_height="match_parent"
             android:contentDescription="@string/app_name"
             android:src="@mipmap/ic_l_ble"
-            android:visibility="invisible"
+            android:visibility="gone"
             app:layout_widthPercent="100%h" />
 
         <ImageView
@@ -54,7 +54,7 @@
             android:layout_height="match_parent"
             android:contentDescription="@string/app_name"
             android:src="@mipmap/ic_l_wifi"
-            android:visibility="invisible"
+            android:visibility="gone"
             app:layout_widthPercent="100%h" />
 
         <ImageView

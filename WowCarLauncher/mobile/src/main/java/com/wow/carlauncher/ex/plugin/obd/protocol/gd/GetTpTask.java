@@ -42,18 +42,12 @@ public class GetTpTask extends ObdTask {
     }
 
     @Override
-    public void writeRes(byte[] message) {
-        String msg = new String(message);
-        if (msg.startsWith(mark + "") && msg.endsWith(CMD_RES_END)) {
-            byte[] msgByte = msg.getBytes();
-            float f1 = ((float) Integer.parseInt(new String(new byte[]{msgByte[3]}), 16)) / 10.0F + Integer.parseInt(new String(new byte[]{msgByte[4], msgByte[5]}), 16);
-            tp = (float) (f1 / 14.5);
-            int k = Integer.parseInt(new String(new byte[]{msgByte[6], msgByte[7]}), 16);
-            temp = k - 40;
-            markSuccess();
-        } else {
-            tp = -10000F;
-            temp = -10000;
-        }
+    public void writeRes(String msg) {
+        byte[] msgByte = msg.getBytes();
+        float f1 = ((float) Integer.parseInt(new String(new byte[]{msgByte[3]}), 16)) / 10.0F + Integer.parseInt(new String(new byte[]{msgByte[4], msgByte[5]}), 16);
+        tp = (float) (f1 / 14.5);
+        int k = Integer.parseInt(new String(new byte[]{msgByte[6], msgByte[7]}), 16);
+        temp = k - 40;
+        markSuccess();
     }
 }

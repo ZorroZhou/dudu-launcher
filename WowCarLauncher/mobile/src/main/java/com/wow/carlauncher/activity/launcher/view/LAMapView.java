@@ -13,9 +13,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wow.carlauncher.R;
-import com.wow.carlauncher.plugin.amapcar.AMapCarPlugin;
-import com.wow.carlauncher.plugin.amapcar.event.PAmapEventNavInfo;
-import com.wow.carlauncher.plugin.amapcar.event.PAmapEventState;
+import com.wow.carlauncher.plugin11.amapcar.AMapCarPlugin;
+import com.wow.carlauncher.plugin11.amapcar.event.PAmapEventNavInfo;
+import com.wow.carlauncher.plugin11.amapcar.event.PAmapEventState;
 import com.wow.frame.util.AppUtil;
 import com.wow.frame.util.CommonUtil;
 
@@ -26,8 +26,8 @@ import org.xutils.view.annotation.ViewInject;
 import java.math.BigDecimal;
 
 import static com.wow.carlauncher.common.CommonData.TAG;
-import static com.wow.carlauncher.plugin.amapcar.AMapCarConstant.AMAP_PACKAGE;
-import static com.wow.carlauncher.plugin.amapcar.AMapCarConstant.ICONS;
+import static com.wow.carlauncher.plugin11.amapcar.AMapCarConstant.AMAP_PACKAGE;
+import static com.wow.carlauncher.plugin11.amapcar.AMapCarConstant.ICONS;
 
 /**
  * Created by 10124 on 2018/4/20.

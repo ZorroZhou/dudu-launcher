@@ -17,8 +17,8 @@ import com.wow.carlauncher.activity.set.SetActivity;
 import com.wow.carlauncher.ex.manage.BleManage;
 import com.wow.carlauncher.ex.manage.event.BleEventSearch;
 import com.wow.carlauncher.event.EventWifiState;
-import com.wow.carlauncher.plugin.fk.event.PFkEventConnect;
-import com.wow.carlauncher.plugin.obd.evnet.PObdEventConnect;
+import com.wow.carlauncher.plugin11.fk.event.PFkEventConnect;
+import com.wow.carlauncher.plugin11.obd.evnet.PObdEventConnect;
 import com.wow.frame.util.DateUtil;
 import com.wow.frame.util.NetWorkUtil;
 

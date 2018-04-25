@@ -3,7 +3,7 @@ package com.wow.carlauncher.common;
 import android.annotation.SuppressLint;
 import android.content.Context;
 
-import com.wow.carlauncher.common.ex.ContextEx;
+import com.wow.carlauncher.ex.ContextEx;
 
 import java.util.Timer;
 import java.util.TimerTask;

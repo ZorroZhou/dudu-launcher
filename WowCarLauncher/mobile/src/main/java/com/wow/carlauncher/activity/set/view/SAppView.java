@@ -14,7 +14,6 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.wow.carlauncher.R;
-import com.wow.carlauncher.activity.PluginSetActivity;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
@@ -65,9 +64,6 @@ public class SAppView extends FrameLayout {
 
     @ViewInject(R.id.sv_plugin_select)
     private SetView sv_plugin_select;
-
-    @ViewInject(R.id.sv_plugin_set)
-    private SetView sv_plugin_set;
 
     @ViewInject(R.id.sv_wall_set)
     private SetView sv_wall_set;
@@ -122,13 +118,6 @@ public class SAppView extends FrameLayout {
             }
         });
 
-
-        sv_plugin_set.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getActivity().startActivity(new Intent(getContext(), PluginSetActivity.class));
-            }
-        });
         sv_wall_set.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

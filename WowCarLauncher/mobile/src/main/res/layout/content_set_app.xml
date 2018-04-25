@@ -14,21 +14,13 @@
         android:text="APP设置"
         android:textColor="@color/colorPrimary"
         android:textSize="14sp" />
+
     <com.wow.carlauncher.common.view.SetView
         android:id="@+id/sv_plugin_select"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         st:summary="音乐插件的实现选择,可使用APP控制第三方音乐播放器"
         st:titleEx="音乐播放器控制器选择"
-        st:type="buttonB" />
-
-    <View style="@style/Interval" />
-    <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_plugin_set"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        st:summary="网易云音乐和QQ音乐的插件设置,不设置将无法使用"
-        st:titleEx="音乐插件设置"
         st:type="buttonB" />
 
     <View style="@style/Interval" />

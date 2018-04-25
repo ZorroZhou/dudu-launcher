@@ -315,15 +315,18 @@ public class PopupWin {
     //显示方法
     private void show() {
         if (Build.VERSION.SDK_INT >= 23 && !Settings.canDrawOverlays(context)) {
+            Log.d(TAG, "show: 333333333333");
             return;
         }
         if (!SharedPreUtil.getSharedPreBoolean(SDATA_POPUP_ALLOW_SHOW, true)) {
+            Log.d(TAG, "show: 222222222222");
             return;
         }
         if (!isShow) {
             wm.addView(popupWindow, winparams);
             isShow = true;
         }
+        Log.d(TAG, "show: !!!!!!!!!!!!!!!!");
         timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override

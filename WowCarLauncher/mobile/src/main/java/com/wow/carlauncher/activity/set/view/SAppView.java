@@ -17,7 +17,7 @@ import com.wow.carlauncher.R;
 import com.wow.carlauncher.activity.PluginSetActivity;
 import com.wow.carlauncher.common.AppInfoManage;
 import com.wow.carlauncher.common.CommonData;
-import com.wow.carlauncher.common.ex.ToastManage;
+import com.wow.carlauncher.ex.manage.ToastManage;
 import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.activity.launcher.event.LauncherDockLabelShowChangeEvent;
 import com.wow.carlauncher.plugin.console.ConsolePlugin;

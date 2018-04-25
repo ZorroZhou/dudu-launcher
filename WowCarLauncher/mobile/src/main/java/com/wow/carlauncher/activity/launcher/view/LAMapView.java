@@ -16,7 +16,6 @@ import com.wow.carlauncher.R;
 import com.wow.carlauncher.plugin.amapcar.AMapCarPlugin;
 import com.wow.carlauncher.plugin.amapcar.event.PAmapEventNavInfo;
 import com.wow.carlauncher.plugin.amapcar.event.PAmapEventState;
-import com.wow.carlauncher.plugin.music.MusicPlugin;
 import com.wow.frame.util.AppUtil;
 import com.wow.frame.util.CommonUtil;
 

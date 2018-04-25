@@ -14,8 +14,8 @@ import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.activity.set.SetActivity;
-import com.wow.carlauncher.common.ex.BleManage;
-import com.wow.carlauncher.common.ex.event.BleEventSearch;
+import com.wow.carlauncher.ex.manage.BleManage;
+import com.wow.carlauncher.ex.manage.event.BleEventSearch;
 import com.wow.carlauncher.event.EventWifiState;
 import com.wow.carlauncher.plugin.fk.event.PFkEventConnect;
 import com.wow.carlauncher.plugin.obd.evnet.PObdEventConnect;

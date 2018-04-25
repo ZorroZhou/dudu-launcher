@@ -7,12 +7,10 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.plugin.music.MusicPlugin;
-import com.wow.carlauncher.plugin.music.event.PMusicEventCover;
 import com.wow.carlauncher.plugin.music.event.PMusicEventInfo;
 import com.wow.carlauncher.plugin.music.event.PMusicEventState;
 import com.wow.frame.util.CommonUtil;

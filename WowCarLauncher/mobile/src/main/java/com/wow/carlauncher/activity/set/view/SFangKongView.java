@@ -15,9 +15,9 @@ import android.widget.LinearLayout;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
-import com.wow.carlauncher.common.ex.BleManage;
-import com.wow.carlauncher.common.ex.ToastManage;
-import com.wow.carlauncher.common.ex.event.BleEventDeviceChange;
+import com.wow.carlauncher.ex.manage.BleManage;
+import com.wow.carlauncher.ex.manage.ToastManage;
+import com.wow.carlauncher.ex.manage.event.BleEventDeviceChange;
 import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.dialog.ListDialog;
 import com.wow.carlauncher.plugin.fk.FangkongPlugin;

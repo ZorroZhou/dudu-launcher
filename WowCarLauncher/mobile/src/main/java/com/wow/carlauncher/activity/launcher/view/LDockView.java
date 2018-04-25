@@ -18,7 +18,7 @@ import com.wow.carlauncher.activity.AppMenuActivity;
 import com.wow.carlauncher.activity.AppSelectActivity;
 import com.wow.carlauncher.activity.set.SetActivity;
 import com.wow.carlauncher.common.CommonData;
-import com.wow.carlauncher.common.ex.ToastManage;
+import com.wow.carlauncher.ex.manage.ToastManage;
 import com.wow.carlauncher.activity.launcher.event.LauncherDockLabelShowChangeEvent;
 import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.SharedPreUtil;

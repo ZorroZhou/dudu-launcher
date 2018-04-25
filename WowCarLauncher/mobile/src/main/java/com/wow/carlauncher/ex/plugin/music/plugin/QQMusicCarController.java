@@ -14,6 +14,7 @@ import com.wow.frame.SFrame;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 import java.util.Map;
@@ -82,7 +83,7 @@ public class QQMusicCarController extends MusicController {
         context.unregisterReceiver(mReceiver);
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(final MTimeSecondEvent event) {
         refreshInfo();
     }

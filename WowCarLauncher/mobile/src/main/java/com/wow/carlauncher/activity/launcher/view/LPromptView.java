@@ -24,6 +24,7 @@ import com.wow.frame.util.DateUtil;
 import com.wow.frame.util.NetWorkUtil;
 
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
@@ -102,13 +103,13 @@ public class LPromptView extends LBaseView {
         return (Activity) getContext();
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(final MTimeSecondEvent event) {
         Date d = new Date();
-        LPromptView.this.tv_time.setText(DateUtil.dateToString(d, "HH:mm   " + DateUtil.getWeekOfDate(d) + " yyyy/MM/dd "));
+        this.tv_time.setText(DateUtil.dateToString(d, "HH:mm   " + DateUtil.getWeekOfDate(d) + " yyyy/MM/dd "));
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(final PFkEventConnect event) {
         if (event.isConnected()) {
             iv_fk.setVisibility(VISIBLE);
@@ -117,7 +118,7 @@ public class LPromptView extends LBaseView {
         }
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(final PObdEventConnect event) {
         if (event.isConnected()) {
             iv_obd.setVisibility(VISIBLE);
@@ -132,7 +133,7 @@ public class LPromptView extends LBaseView {
         }
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(final EventWifiState event) {
         if (event.isUsable()) {
             iv_wifi.setVisibility(VISIBLE);
@@ -141,7 +142,7 @@ public class LPromptView extends LBaseView {
         }
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(final PObdEventCarTp event) {
         iv_carinfo_tp.setVisibility(VISIBLE);
         boolean warn = false;

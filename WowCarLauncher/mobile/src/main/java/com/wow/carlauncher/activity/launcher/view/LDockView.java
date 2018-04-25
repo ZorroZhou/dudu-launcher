@@ -27,6 +27,7 @@ import com.wow.frame.util.SharedPreUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
@@ -285,7 +286,7 @@ public class LDockView extends LinearLayout implements View.OnClickListener {
         tv_dock5.setVisibility(showFlag);
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(LauncherDockLabelShowChangeEvent event) {
         dockLabelShow(event.show);
     }

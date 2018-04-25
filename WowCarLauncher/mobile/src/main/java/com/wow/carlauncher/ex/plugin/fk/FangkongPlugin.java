@@ -1,9 +1,7 @@
 package com.wow.carlauncher.ex.plugin.fk;
 
-import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.inuker.bluetooth.library.Constants;
 import com.inuker.bluetooth.library.connect.listener.BleConnectStatusListener;
@@ -14,9 +12,8 @@ import com.inuker.bluetooth.library.model.BleGattProfile;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.ex.ContextEx;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
-import com.wow.carlauncher.ex.manage.time.event.MTimeHSecondEvent;
+import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
-import com.wow.carlauncher.ex.manage.ble.event.BleEventDeviceChange;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventConnect;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventModel;
 import com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol;
@@ -25,6 +22,7 @@ import com.wow.frame.util.SharedPreUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.UUID;
 
@@ -64,6 +62,9 @@ public class FangkongPlugin extends ContextEx {
                 .setServiceDiscoverRetry(Integer.MAX_VALUE)
                 .setServiceDiscoverTimeout(5000)  // 发现服务超时5s
                 .build();
+
+        connect();
+        
         EventBus.getDefault().register(this);
     }
 
@@ -167,8 +168,8 @@ public class FangkongPlugin extends ContextEx {
         return fangkongProtocol.getModelName();
     }
 
-    @Subscribe
-    public void onEventAsync(final MTimeHSecondEvent event) {
+    @Subscribe(threadMode = ThreadMode.ASYNC)
+    public void onEventAsync(final MTimeSecondEvent event) {
         String fkaddress = SharedPreUtil.getSharedPreString(CommonData.SDATA_FANGKONG_ADDRESS);
         if (CommonUtil.isNotNull(fkaddress) && BleManage.self().client().getConnectStatus(fkaddress) != STATUS_DEVICE_CONNECTED) {
             connect();

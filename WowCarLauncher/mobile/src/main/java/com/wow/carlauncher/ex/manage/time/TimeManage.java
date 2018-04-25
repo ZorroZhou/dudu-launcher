@@ -6,7 +6,6 @@ import android.util.Log;
 
 import com.wow.carlauncher.ex.ContextEx;
 import com.wow.carlauncher.ex.manage.time.event.MTime30MinuteEvent;
-import com.wow.carlauncher.ex.manage.time.event.MTimeHSecondEvent;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 
 import org.greenrobot.eventbus.EventBus;
@@ -39,7 +38,7 @@ public class TimeManage extends ContextEx {
         startTimer();
     }
 
-    private final static int HELF_SECOND = 500;
+    private final static int SECOND = 1000;
     private Timer timer;
     private long timeMark = 0L;
 
@@ -49,15 +48,10 @@ public class TimeManage extends ContextEx {
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                if (EventBus.getDefault().hasSubscriberForEvent(MTimeHSecondEvent.class)) {
-                    postEvent(new MTimeHSecondEvent());
+                if (EventBus.getDefault().hasSubscriberForEvent(MTimeSecondEvent.class)) {
+                    postEvent(new MTimeSecondEvent());
                 }
-                if (timeMark % 2 == 0) {
-                    if (EventBus.getDefault().hasSubscriberForEvent(MTimeSecondEvent.class)) {
-                        postEvent(new MTimeSecondEvent());
-                    }
-                }
-                if (timeMark % (2 * 60 * 30) == 0) {
+                if (timeMark % (60 * 30) == 0) {
                     if (EventBus.getDefault().hasSubscriberForEvent(MTime30MinuteEvent.class)) {
                         postEvent(new MTime30MinuteEvent());
                     }
@@ -65,7 +59,7 @@ public class TimeManage extends ContextEx {
                 System.gc();
                 timeMark++;
             }
-        }, HELF_SECOND, HELF_SECOND);
+        }, SECOND, SECOND);
     }
 
     private void stopTimer() {

@@ -16,6 +16,7 @@ import com.wow.carlauncher.ex.plugin.music.event.PMusicEventState;
 import com.wow.frame.util.CommonUtil;
 
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
@@ -64,7 +65,7 @@ public class LMusicView extends LBaseView {
         }
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(final PMusicEventInfo event) {
         if (music_tv_title != null) {
             if (CommonUtil.isNotNull(event.getTitle())) {
@@ -75,7 +76,7 @@ public class LMusicView extends LBaseView {
         }
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(final PMusicEventState event) {
         if (music_iv_play != null) {
             if (event.isRun()) {

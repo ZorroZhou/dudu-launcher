@@ -15,6 +15,7 @@ import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.SharedPreUtil;
 
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.view.annotation.ViewInject;
 
 import java.util.Locale;
@@ -87,12 +88,12 @@ public class CarInfoActivity extends BaseActivity {
         }
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(PObdEventConnect event) {
         refreshObdState();
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(PObdEventCarInfo event) {
         if (event.getSpeed() != null) {
             String msg = "车速:" + event.getSpeed() + "KM/H";
@@ -112,7 +113,7 @@ public class CarInfoActivity extends BaseActivity {
         }
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(PObdEventCarTp event) {
         if (event.getlFTirePressure() != null && event.getlFTemp() != null) {
             String msg = "左前轮:" + String.format(Locale.CHINA, "%.1f", event.getlFTirePressure()) + "/" + event.getlFTemp() + "℃";

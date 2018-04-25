@@ -13,7 +13,7 @@ import com.inuker.bluetooth.library.model.BleGattProfile;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.ex.ContextEx;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
-import com.wow.carlauncher.ex.manage.time.event.MTimeHSecondEvent;
+import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarInfo;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarTp;
@@ -24,6 +24,7 @@ import com.wow.frame.util.SharedPreUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.UUID;
 
@@ -142,16 +143,20 @@ public class ObdPlugin extends ContextEx {
 
     public void init(Context context) {
         setContext(context);
+
+        currentPObdEventCarInfo = new PObdEventCarInfo();
+        currentPObdEventCarTp = new PObdEventCarTp();
+
         options = new BleConnectOptions.Builder()
                 .setConnectRetry(Integer.MAX_VALUE)
                 .setConnectTimeout(5000)   // 连接超时5s
                 .setServiceDiscoverRetry(Integer.MAX_VALUE)
                 .setServiceDiscoverTimeout(5000)  // 发现服务超时5s
                 .build();
-        EventBus.getDefault().register(this);
 
-        currentPObdEventCarInfo = new PObdEventCarInfo();
-        currentPObdEventCarTp = new PObdEventCarTp();
+        connect();
+
+        EventBus.getDefault().register(this);
     }
 
     private boolean connecting = false;
@@ -245,8 +250,8 @@ public class ObdPlugin extends ContextEx {
         return false;
     }
 
-    @Subscribe
-    public void onEventAsync(final MTimeHSecondEvent event) {
+    @Subscribe(threadMode = ThreadMode.ASYNC)
+    public void onEventAsync(final MTimeSecondEvent event) {
         String fkaddress = SharedPreUtil.getSharedPreString(CommonData.SDATA_OBD_ADDRESS);
         if (CommonUtil.isNotNull(fkaddress) && BleManage.self().client().getConnectStatus(fkaddress) != STATUS_DEVICE_CONNECTED) {
             connect();

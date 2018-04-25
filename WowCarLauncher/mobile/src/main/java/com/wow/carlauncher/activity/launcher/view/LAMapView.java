@@ -20,6 +20,7 @@ import com.wow.frame.util.AppUtil;
 import com.wow.frame.util.CommonUtil;
 
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
@@ -91,7 +92,7 @@ public class LAMapView extends LBaseView {
         }
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(final PAmapEventState event) {
         if (amapController != null) {
             if (event.getState() == 8 || event.getState() == 10) {
@@ -109,7 +110,7 @@ public class LAMapView extends LBaseView {
         }
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(final PAmapEventNavInfo event) {
         if (amapIcon != null && event.getIcon() - 1 >= 0 && event.getIcon() - 1 < ICONS.length) {
             amapIcon.setImageResource(ICONS[event.getIcon() - 1]);

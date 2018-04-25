@@ -38,6 +38,7 @@ import com.wow.carlauncher.popupWindow.event.PEventFSRefresh;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.x;
 
 import java.math.BigDecimal;
@@ -291,6 +292,7 @@ public class PopupWin {
         if (context.checkActivity(count) > 0) {
             hide();
         } else {
+            Log.d(TAG, "checkShow: 请求打开悬浮窗");
             show();
         }
     }
@@ -379,7 +381,7 @@ public class PopupWin {
         });
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(final PMusicEventInfo event) {
         if (CommonUtil.isNotNull(event.getTitle())) {
             ((TextView) musicView().findViewById(R.id.tv_title)).setText(event.getTitle());
@@ -388,7 +390,7 @@ public class PopupWin {
         }
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(final PMusicEventProgress event) {
         if (event.getTotalTime() > 0) {
             ProgressBar progressBar = ((ProgressBar) musicView().findViewById(R.id.pb_music));
@@ -397,16 +399,16 @@ public class PopupWin {
         }
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(final PMusicEventState event) {
         if (!event.isRun()) {
-            ((ImageView) musicView().findViewById(R.id.iv_play)).setImageResource(R.mipmap.ic_play);
+            ((ImageView) musicView().findViewById(R.id.iv_play)).setImageResource(R.mipmap.ic_play2);
         } else {
-            ((ImageView) musicView().findViewById(R.id.iv_play)).setImageResource(R.mipmap.ic_pause);
+            ((ImageView) musicView().findViewById(R.id.iv_play)).setImageResource(R.mipmap.ic_pause2);
         }
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(final PAmapEventState event) {
         if (amapView != null) {
             LinearLayout popupcontroller = (LinearLayout) amapView.findViewById(R.id.ll_controller);
@@ -423,7 +425,7 @@ public class PopupWin {
         }
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(final PAmapEventNavInfo event) {
         if (amapView != null) {
             ImageView popupIcon = (ImageView) amapView.findViewById(R.id.iv_icon);

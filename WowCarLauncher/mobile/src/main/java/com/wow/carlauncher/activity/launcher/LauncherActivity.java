@@ -22,6 +22,7 @@ import com.wow.carlauncher.R;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
@@ -151,7 +152,7 @@ public class LauncherActivity extends Activity {
         EventBus.getDefault().unregister(this);
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(PConsoleEventLightState event) {
         if (event.isOpen()) {
             fl_bg.setBackgroundResource(R.mipmap.bg_l_midnight);

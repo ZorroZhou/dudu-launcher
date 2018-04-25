@@ -14,6 +14,7 @@ import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.UUID;
 
@@ -50,7 +51,7 @@ public class YiLianProtocol extends FangkongProtocol {
         Log.d(TAG, "yilian protocol init");
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.ASYNC)
     public void onEventAsync(final PConsoleEventCallState event) {
         isCalling = event.isCalling();
     }

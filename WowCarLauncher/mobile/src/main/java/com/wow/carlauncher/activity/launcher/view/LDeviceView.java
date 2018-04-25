@@ -24,6 +24,7 @@ import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.SharedPreUtil;
 
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.view.annotation.ViewInject;
 
 import static com.inuker.bluetooth.library.Constants.STATUS_DEVICE_CONNECTED;
@@ -144,22 +145,22 @@ public class LDeviceView extends LBaseView implements View.OnClickListener {
         refreshObdState();
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(final PFkEventConnect event) {
         refreshFangkongState();
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(final PFkEventModel event) {
         tv_fangkongmoshi.setText(event.getModelName());
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(PObdEventConnect event) {
         refreshObdState();
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(PObdEventCarInfo event) {
         if (event.getSpeed() != null) {
             tv_cs.setText("车速:" + event.getSpeed() + "KM/H");
@@ -175,7 +176,7 @@ public class LDeviceView extends LBaseView implements View.OnClickListener {
         }
     }
 
-    @Subscribe
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(PObdEventCarTp event) {
         if (event.getlFTirePressure() != null && event.getlFTemp() != null) {
             tv_tp_lf.setText(String.format("%.1f", event.getlFTirePressure()) + "/" + event.getlFTemp() + "℃");

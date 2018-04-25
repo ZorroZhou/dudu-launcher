@@ -19,7 +19,7 @@ import static com.wow.carlauncher.ex.plugin.amapcar.AMapCartReceiver.GETHC_NEXT_
  * Created by 10124 on 2017/11/4.
  */
 
-public class AMapCarPlugin extends BasePlugin<AMapCarPluginListener> {
+public class AMapCarPlugin extends BasePlugin {
     public static final String TAG = "AMapCarPlugin";
     private static AMapCarPlugin self;
 

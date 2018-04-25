@@ -16,6 +16,9 @@ import com.wow.carlauncher.ex.manage.BleManage;
 import com.wow.carlauncher.ex.manage.ToastManage;
 import com.wow.carlauncher.ex.manage.event.BleEventDeviceChange;
 import com.wow.carlauncher.ex.plugin.BasePlugin;
+import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarInfo;
+import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarTp;
+import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventConnect;
 import com.wow.carlauncher.ex.plugin.obd.protocol.GoodDriverTPProtocol;
 import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.SharedPreUtil;
@@ -35,7 +38,7 @@ import static com.wow.carlauncher.common.CommonData.SDATA_OBD_CONTROLLER;
  * Created by 10124 on 2017/11/4.
  */
 
-public class ObdPlugin extends BasePlugin<ObdPluginListener> {
+public class ObdPlugin extends BasePlugin {
     public static final String TAG = "WOW_CAR_OBD";
 
     private static ObdPlugin self;
@@ -72,12 +75,7 @@ public class ObdPlugin extends BasePlugin<ObdPluginListener> {
 
         @Override
         public void carRunningInfo(final Integer speed, final Integer rev, final Integer waterTemp, final Integer oilConsumption) {
-            runListener(new ListenerRuner<ObdPluginListener>() {
-                @Override
-                public void run(ObdPluginListener obdPluginListener) {
-                    obdPluginListener.carRunningInfo(speed, rev, waterTemp, oilConsumption);
-                }
-            });
+            postEvent(new PObdEventCarInfo().setSpeed(speed).setRev(rev).setWaterTemp(waterTemp).setOilConsumption(oilConsumption));
         }
 
         @Override
@@ -85,12 +83,11 @@ public class ObdPlugin extends BasePlugin<ObdPluginListener> {
                                         final Float rFTirePressure, final Integer rFTemp,
                                         final Float lBTirePressure, final Integer lBTemp,
                                         final Float rBTirePressure, final Integer rBTemp) {
-            runListener(new ListenerRuner<ObdPluginListener>() {
-                @Override
-                public void run(ObdPluginListener obdPluginListener) {
-                    obdPluginListener.carTirePressureInfo(lFTirePressure, lFTemp, rFTirePressure, rFTemp, lBTirePressure, lBTemp, rBTirePressure, rBTemp);
-                }
-            });
+            postEvent(new PObdEventCarTp()
+                    .setlBTirePressure(lBTirePressure).setlBTemp(lBTemp)
+                    .setlFTirePressure(lFTirePressure).setlFTemp(lFTemp)
+                    .setrBTirePressure(rBTirePressure).setrBTemp(rBTemp)
+                    .setrFTirePressure(rFTirePressure).setrFTemp(rFTemp));
         }
     };
 
@@ -203,17 +200,7 @@ public class ObdPlugin extends BasePlugin<ObdPluginListener> {
     }
 
     private void connectCallback(final boolean success) {
-        x.task().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                runListener(new ListenerRuner<ObdPluginListener>() {
-                    @Override
-                    public void run(ObdPluginListener listener) {
-                        listener.connect(success);
-                    }
-                });
-            }
-        }, 50);
+        postEvent(new PObdEventConnect().setConnected(success));
     }
 
     public boolean supportTp() {

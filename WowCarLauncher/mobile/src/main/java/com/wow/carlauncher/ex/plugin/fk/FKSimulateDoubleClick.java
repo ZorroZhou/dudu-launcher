@@ -1,4 +1,4 @@
-package com.wow.carlauncher.ex.plugin;
+package com.wow.carlauncher.ex.plugin.fk;
 
 import org.xutils.x;
 
@@ -9,12 +9,12 @@ import java.util.concurrent.ConcurrentHashMap;
  * Created by 10124 on 2018/4/1.
  */
 
-public class SimulateDoubleClickUtil<KEY> {
+public class FKSimulateDoubleClick<KEY> {
     private Map<KEY, Long> cache;
     private Map<KEY, Runnable> runner;
 
 
-    public SimulateDoubleClickUtil() {
+    public FKSimulateDoubleClick() {
         cache = new ConcurrentHashMap<>();
         runner = new ConcurrentHashMap<>();
     }

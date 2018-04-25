@@ -17,7 +17,7 @@ import static com.wow.carlauncher.common.CommonData.SDATA_CONSOLE_MARK;
  * Created by 10124 on 2017/11/9.
  */
 
-public class ConsolePlugin extends BasePlugin<ConsoleProtoclListener> {
+public class ConsolePlugin extends BasePlugin {
     private static ConsolePlugin self;
 
     public static ConsolePlugin self() {

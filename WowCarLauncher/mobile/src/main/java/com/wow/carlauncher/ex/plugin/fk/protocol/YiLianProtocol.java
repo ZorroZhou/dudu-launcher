@@ -5,9 +5,8 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.google.common.primitives.Shorts;
-import com.wow.carlauncher.ex.manage.event.BleEventDeviceChange;
 import com.wow.carlauncher.ex.plugin.console.ConsolePlugin;
-import com.wow.carlauncher.ex.plugin.SimulateDoubleClickUtil;
+import com.wow.carlauncher.ex.plugin.fk.FKSimulateDoubleClick;
 import com.wow.carlauncher.ex.plugin.console.event.PConsoleEventCallState;
 import com.wow.carlauncher.ex.plugin.fk.FangkongProtocol;
 import com.wow.carlauncher.ex.plugin.fk.FangkongProtocolListener;
@@ -41,11 +40,11 @@ public class YiLianProtocol extends FangkongProtocol {
     //标记是否是在打电话
     private boolean isCalling = false;
 
-    private SimulateDoubleClickUtil<Short> doubleClick;
+    private FKSimulateDoubleClick<Short> doubleClick;
 
     public YiLianProtocol(String address, Context context, FangkongProtocolListener changeModelCallBack) {
         super(address, context, changeModelCallBack);
-        doubleClick = new SimulateDoubleClickUtil<>();
+        doubleClick = new FKSimulateDoubleClick<>();
         EventBus.getDefault().register(this);
 
         Log.d(TAG, "yilian protocol init");

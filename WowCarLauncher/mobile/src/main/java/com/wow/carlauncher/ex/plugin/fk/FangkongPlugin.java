@@ -36,7 +36,7 @@ import static com.wow.carlauncher.common.CommonData.TAG;
  * Created by 10124 on 2017/11/4.
  */
 
-public class FangkongPlugin extends BasePlugin<FangkongPluginListener> {
+public class FangkongPlugin extends BasePlugin {
 
     private static FangkongPlugin self;
 

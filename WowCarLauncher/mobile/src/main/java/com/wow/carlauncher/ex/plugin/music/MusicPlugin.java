@@ -19,7 +19,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import static com.wow.carlauncher.common.CommonData.SDATA_MUSIC_CONTROLLER;
 
-public class MusicPlugin extends BasePlugin<MusicPluginListener> {
+public class MusicPlugin extends BasePlugin{
     private static MusicPlugin self;
 
     public static MusicPlugin self() {

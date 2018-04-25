@@ -15,8 +15,8 @@ import android.widget.LinearLayout;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
-import com.wow.carlauncher.common.ex.BleManageEx;
-import com.wow.carlauncher.common.ex.ToastEx;
+import com.wow.carlauncher.common.ex.BleManage;
+import com.wow.carlauncher.common.ex.ToastManage;
 import com.wow.carlauncher.common.ex.event.BleEventDeviceChange;
 import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.dialog.ListDialog;
@@ -90,7 +90,7 @@ public class SFangKongView extends FrameLayout {
                     public void onClick(DialogInterface dialog, int which) {
                         SharedPreUtil.saveSharedPreInteger(SDATA_FANGKONG_CONTROLLER, show[obj.getObj()].getId());
                         FangkongPlugin.self().disconnect();
-                        BleManageEx.self().forceCallBack();
+                        BleManage.self().forceCallBack();
                         sv_fangkong_impl_select.setSummary("方控使用的协议：" + show[obj.getObj()].getName());
                     }
                 }).setSingleChoiceItems(items, select, new DialogInterface.OnClickListener() {
@@ -110,7 +110,7 @@ public class SFangKongView extends FrameLayout {
                 SharedPreUtil.saveSharedPreString(CommonData.SDATA_FANGKONG_ADDRESS, null);
                 SharedPreUtil.saveSharedPreString(CommonData.SDATA_FANGKONG_NAME, null);
                 FangkongPlugin.self().disconnect();
-                ToastEx.self().show("方控绑定已删除");
+                ToastManage.self().show("方控绑定已删除");
             }
         });
 
@@ -158,17 +158,17 @@ public class SFangKongView extends FrameLayout {
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         dialog.dismiss();
                         BluetoothDevice device = devices.get(i);
-                        BleManageEx.self().removeDevice(device);
+                        BleManage.self().removeDevice(device);
 
                         SharedPreUtil.saveSharedPreString(CommonData.SDATA_FANGKONG_ADDRESS, device.getAddress());
                         SharedPreUtil.saveSharedPreString(CommonData.SDATA_FANGKONG_NAME, device.getName());
                         sv_fangkong_select.setSummary("绑定了设备:" + device.getName() + "  地址:" + device.getAddress());
 
-                        BleManageEx.self().forceCallBack();
+                        BleManage.self().forceCallBack();
                     }
                 });
 
-                BleManageEx.self().forceCallBack();
+                BleManage.self().forceCallBack();
             }
         });
     }

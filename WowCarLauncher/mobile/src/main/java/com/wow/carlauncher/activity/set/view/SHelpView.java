@@ -23,13 +23,11 @@ import android.widget.LinearLayout;
 import com.wow.carAssistant.packet.response.common.GetAppUpdateRes;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.activity.AboutActivity;
-import com.wow.carlauncher.activity.set.SetActivity;
-import com.wow.carlauncher.common.BaseActivity;
-import com.wow.carlauncher.common.BaseDialog;
+import com.wow.carlauncher.common.base.BaseActivity;
+import com.wow.carlauncher.common.base.BaseDialog;
 import com.wow.carlauncher.common.CommonData;
-import com.wow.carlauncher.common.ex.ToastEx;
+import com.wow.carlauncher.common.ex.ToastManage;
 import com.wow.carlauncher.common.view.SetView;
-import com.wow.carlauncher.plugin.music.MusicPlugin;
 import com.wow.carlauncher.webservice.service.CommonService;
 import com.wow.frame.repertory.remote.WebServiceManage;
 import com.wow.frame.repertory.remote.WebTask;
@@ -145,11 +143,11 @@ public class SHelpView extends FrameLayout {
                         if (isok) {
                             final String version = AndroidUtil.getAppVersionCode(getContext());
                             if (TextUtils.isEmpty(version)) {
-                                ToastEx.self().show("获取当前版本号失败");
+                                ToastManage.self().show("获取当前版本号失败");
                                 return;
                             }
                             if (res.getVersionCode() == null) {
-                                ToastEx.self().show("没有新版本发布");
+                                ToastManage.self().show("没有新版本发布");
                                 return;
                             }
                             boolean havenew;
@@ -195,11 +193,11 @@ public class SHelpView extends FrameLayout {
                                 baseDialog.setBtn2("取消", null);
                                 baseDialog.show();
                             } else {
-                                ToastEx.self().show("已是最新版本");
+                                ToastManage.self().show("已是最新版本");
                             }
 
                         } else {
-                            ToastEx.self().show("错误:" + msg);
+                            ToastManage.self().show("错误:" + msg);
                         }
                     }
                 });
@@ -209,14 +207,14 @@ public class SHelpView extends FrameLayout {
 
     public void downloadResult(float progress, String path, String msg) {
         if (progress == -1) {
-            ToastEx.self().show(msg);
+            ToastManage.self().show(msg);
             return;
         }
         if (progress >= 0 && progress < 1) {
             showLoading("已经下载:" + (int) (progress * 100) + "%", downloadUpdataTaskCancel);
         }
         if (progress == 1) {
-            ToastEx.self().show("下载成功");
+            ToastManage.self().show("下载成功");
             downloadUpdataTask = null;
             hideLoading();
             Intent intent = new Intent();

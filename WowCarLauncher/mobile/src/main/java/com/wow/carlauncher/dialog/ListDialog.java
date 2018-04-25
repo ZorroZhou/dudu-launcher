@@ -4,7 +4,7 @@ import android.content.Context;
 import android.widget.ListView;
 
 import com.wow.carlauncher.R;
-import com.wow.carlauncher.common.BaseDialog;
+import com.wow.carlauncher.common.base.BaseDialog;
 
 /**
  * Created by 10124 on 2018/3/29.

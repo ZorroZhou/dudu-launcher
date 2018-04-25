@@ -8,7 +8,7 @@ import android.content.IntentFilter;
 import android.provider.Settings;
 import android.util.Log;
 
-import com.wow.carlauncher.common.ex.ToastEx;
+import com.wow.carlauncher.common.ex.ToastManage;
 import com.wow.carlauncher.plugin.console.ConsoleProtoclListener;
 import com.wow.carlauncher.plugin.console.ConsoleProtocl;
 
@@ -105,7 +105,7 @@ public class NwdConsoleImpl extends ConsoleProtocl {
 
     @Override
     public void clearTask() {
-        ToastEx.self().show("不支持的指令");
+        ToastManage.self().show("不支持的指令");
     }
 
     @Override

@@ -6,7 +6,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
-import com.wow.carlauncher.common.BaseActivity;
+import com.wow.carlauncher.common.base.BaseActivity;
 import com.wow.frame.util.DateUtil;
 
 import org.xutils.view.annotation.ViewInject;

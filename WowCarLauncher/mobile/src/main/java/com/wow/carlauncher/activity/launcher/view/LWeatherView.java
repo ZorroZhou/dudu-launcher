@@ -5,11 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
@@ -21,7 +17,6 @@ import com.wow.carlauncher.activity.launcher.event.LEventCityRefresh;
 import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.SharedPreUtil;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
@@ -59,10 +54,7 @@ public class LWeatherView extends LBaseView {
     }
 
     private void initView() {
-        View view = View.inflate(getContext(), R.layout.plugin_weather_launcher, null);
-        this.addView(view, FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
-
-        x.view().inject(this);
+        addContent(R.layout.content_l_weather);
     }
 
     @Override

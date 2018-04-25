@@ -10,7 +10,7 @@ import com.wow.carlauncher.activity.set.view.SPopupView;
 import com.wow.carlauncher.activity.set.view.SSystemView;
 import com.wow.carlauncher.activity.set.view.STimeView;
 import com.wow.carlauncher.R;
-import com.wow.carlauncher.common.BaseActivity;
+import com.wow.carlauncher.common.base.BaseActivity;
 import com.wow.carlauncher.common.view.SetView;
 
 import org.xutils.view.annotation.ViewInject;

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.zhy.android.percent.support.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/base"
     android:layout_width="match_parent"
@@ -10,9 +10,10 @@
     <com.zhy.android.percent.support.PercentRelativeLayout
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="0dp"
         android:background="@color/toolbar_bg"
-        android:fitsSystemWindows="true">
+        android:fitsSystemWindows="true"
+        app:layout_heightPercent="15%h">
 
         <ImageView
             android:id="@+id/iv_back"
@@ -36,5 +37,6 @@
         android:id="@+id/b_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
         android:layout_below="@+id/toolbar" />
-</LinearLayout>
+</com.zhy.android.percent.support.PercentRelativeLayout>

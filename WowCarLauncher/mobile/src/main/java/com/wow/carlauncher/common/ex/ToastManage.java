@@ -10,17 +10,17 @@ import org.xutils.x;
  * Created by 10124 on 2018/4/21.
  */
 
-public class ToastEx extends ContextEx {
+public class ToastManage extends ContextEx {
     private static class SingletonHolder {
         @SuppressLint("StaticFieldLeak")
-        private static ToastEx instance = new ToastEx();
+        private static ToastManage instance = new ToastManage();
     }
 
-    public static ToastEx self() {
+    public static ToastManage self() {
         return SingletonHolder.instance;
     }
 
-    private ToastEx() {
+    private ToastManage() {
         super();
     }
 

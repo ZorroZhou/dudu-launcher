@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.res.AssetManager;
 
 import com.wow.carlauncher.R;
-import com.wow.carlauncher.common.BaseDialog;
+import com.wow.carlauncher.common.base.BaseDialog;
 import com.wow.carlauncher.common.city.model.CityModel;
 import com.wow.carlauncher.common.city.model.DistrictModel;
 import com.wow.carlauncher.common.city.model.ProvinceModel;

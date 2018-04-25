@@ -7,24 +7,22 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.plugin.amapcar.AMapCarPlugin;
-import com.wow.carlauncher.plugin.amapcar.AMapCarPluginListener;
-import com.wow.carlauncher.plugin.amapcar.NaviInfo;
 import com.wow.carlauncher.plugin.amapcar.event.PAmapEventNavInfo;
 import com.wow.carlauncher.plugin.amapcar.event.PAmapEventState;
-import com.wow.carlauncher.plugin.music.event.PMusicEventCover;
+import com.wow.carlauncher.plugin.music.MusicPlugin;
 import com.wow.frame.util.AppUtil;
 import com.wow.frame.util.CommonUtil;
 
 import org.greenrobot.eventbus.Subscribe;
+import org.xutils.view.annotation.Event;
+import org.xutils.view.annotation.ViewInject;
 
 import java.math.BigDecimal;
 
@@ -40,71 +38,58 @@ public class LAMapView extends LBaseView {
 
     public LAMapView(@NonNull Context context) {
         super(context);
-        initView();
+        addContent(R.layout.content_l_amap);
     }
 
     public LAMapView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        initView();
+        addContent(R.layout.content_l_amap);
     }
 
+    @ViewInject(R.id.ll_controller)
     private View amapController;
+    @ViewInject(R.id.iv_icon)
     private ImageView amapIcon;
+    @ViewInject(R.id.ll_navi)
     private LinearLayout amapnavi;
+    @ViewInject(R.id.tv_road)
     private TextView amaproad;
+    @ViewInject(R.id.tv_msg)
     private TextView amapmsg;
-
+    @ViewInject(R.id.rl_base)
     private View rl_base;
 
-    private void initView() {
-        RelativeLayout amapView = (RelativeLayout) View.inflate(getContext(), R.layout.plugin_amap_launcher, null);
-        this.addView(amapView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-
-        View.OnClickListener amapclick = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                switch (view.getId()) {
-                    case R.id.rl_base: {
-                        Intent appIntent = getContext().getPackageManager().getLaunchIntentForPackage(AMAP_PACKAGE);
-                        if (appIntent == null) {
-                            Toast.makeText(getContext(), "没有安装高德地图", Toast.LENGTH_SHORT).show();
-                            break;
-                        }
-                        appIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        getContext().startActivity(appIntent);
-                        break;
-                    }
-                    case R.id.btn_go_home: {
-                        if (!AppUtil.isInstall(getContext(), AMAP_PACKAGE)) {
-                            Toast.makeText(getContext(), "没有安装高德地图", Toast.LENGTH_SHORT).show();
-                            break;
-                        }
-                        AMapCarPlugin.self().getHome();
-                        break;
-                    }
-                    case R.id.btn_go_company: {
-                        if (!AppUtil.isInstall(getContext(), AMAP_PACKAGE)) {
-                            Toast.makeText(getContext(), "没有安装高德地图", Toast.LENGTH_SHORT).show();
-                            break;
-                        }
-                        AMapCarPlugin.self().getComp();
-                        break;
-                    }
+    @Event(value = {R.id.rl_base, R.id.btn_go_home, R.id.btn_go_company})
+    private void clickEvent(View view) {
+        Log.d(TAG, "clickEvent: " + view);
+        switch (view.getId()) {
+            case R.id.rl_base: {
+                Intent appIntent = getContext().getPackageManager().getLaunchIntentForPackage(AMAP_PACKAGE);
+                if (appIntent == null) {
+                    Toast.makeText(getContext(), "没有安装高德地图", Toast.LENGTH_SHORT).show();
+                    break;
                 }
+                appIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                getContext().startActivity(appIntent);
+                break;
             }
-        };
-
-
-        amapView.findViewById(R.id.rl_base).setOnClickListener(amapclick);
-        amapView.findViewById(R.id.btn_go_home).setOnClickListener(amapclick);
-        amapView.findViewById(R.id.btn_go_company).setOnClickListener(amapclick);
-
-        amapIcon = (ImageView) amapView.findViewById(R.id.iv_icon);
-        amapController = amapView.findViewById(R.id.ll_controller);
-        amapnavi = (LinearLayout) amapView.findViewById(R.id.ll_navi);
-        amaproad = (TextView) amapView.findViewById(R.id.tv_road);
-        amapmsg = (TextView) amapView.findViewById(R.id.tv_msg);
-        rl_base = amapView.findViewById(R.id.rl_base);
+            case R.id.btn_go_home: {
+                if (!AppUtil.isInstall(getContext(), AMAP_PACKAGE)) {
+                    Toast.makeText(getContext(), "没有安装高德地图", Toast.LENGTH_SHORT).show();
+                    break;
+                }
+                AMapCarPlugin.self().getHome();
+                break;
+            }
+            case R.id.btn_go_company: {
+                if (!AppUtil.isInstall(getContext(), AMAP_PACKAGE)) {
+                    Toast.makeText(getContext(), "没有安装高德地图", Toast.LENGTH_SHORT).show();
+                    break;
+                }
+                AMapCarPlugin.self().getComp();
+                break;
+            }
+        }
     }
 
     @Subscribe

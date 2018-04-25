@@ -29,7 +29,7 @@
     <color name="toolbar_bg">#99000000</color>
     <color name="launch_dock_bg">#33ffffff</color>
     <color name="launch_gps_noinfo">#99000000</color>
-
+    <color name="launch_text_color">#666666</color>
 
     <color name="color_red">#FF5722</color>
     <color name="color_orange">#FF9800</color>

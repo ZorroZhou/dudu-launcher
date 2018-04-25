@@ -6,7 +6,7 @@ import android.content.pm.PackageManager;
 import android.util.Log;
 import android.view.KeyEvent;
 
-import com.wow.carlauncher.common.ex.ToastEx;
+import com.wow.carlauncher.common.ex.ToastManage;
 import com.wow.carlauncher.plugin.console.ConsoleProtoclListener;
 import com.wow.carlauncher.plugin.console.ConsoleProtocl;
 import com.wow.frame.util.AppUtil;
@@ -79,13 +79,13 @@ public class SysConsoleImpl extends ConsoleProtocl {
     @Override
     public void callAnswer() {
         Log.e(TAG, "system console callAnswer");
-        ToastEx.self().show("不支持的指令");
+        ToastManage.self().show("不支持的指令");
     }
 
     @Override
     public void callHangup() {
         Log.e(TAG, "system console callHangup");
-        ToastEx.self().show("不支持的指令");
+        ToastManage.self().show("不支持的指令");
     }
 
     @Override

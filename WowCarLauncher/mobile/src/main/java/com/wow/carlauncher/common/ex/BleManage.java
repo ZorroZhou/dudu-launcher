@@ -27,17 +27,17 @@ import static com.wow.carlauncher.common.CommonData.TAG;
  * Created by 10124 on 2018/4/22.
  */
 
-public class BleManageEx extends ContextEx {
+public class BleManage extends ContextEx {
     private static class SingletonHolder {
         @SuppressLint("StaticFieldLeak")
-        private static BleManageEx instance = new BleManageEx();
+        private static BleManage instance = new BleManage();
     }
 
-    public static BleManageEx self() {
+    public static BleManage self() {
         return SingletonHolder.instance;
     }
 
-    private BleManageEx() {
+    private BleManage() {
         super();
     }
 
@@ -50,7 +50,7 @@ public class BleManageEx extends ContextEx {
         if (mBluetoothManager != null) {
             bluetoothAdapter = mBluetoothManager.getAdapter();
         } else {
-            ToastEx.self().show("设备不支持蓝牙");
+            ToastManage.self().show("设备不支持蓝牙");
         }
 
         bluetoothClient.closeBluetooth();
@@ -88,32 +88,46 @@ public class BleManageEx extends ContextEx {
             }
         }
     };
+    private boolean searching = false;
+
+    public boolean isSearching() {
+        return searching;
+    }
+
+    private byte[] locked = new byte[0];
 
     public void startSearch() {
+        stopSearch();
         x.task().post(new Runnable() {
             @Override
             public void run() {
-                if (bluetoothAdapter == null) {
-                    ToastEx.self().show("设备不支持蓝牙");
-                    return;
+                synchronized (locked) {
+                    if (bluetoothAdapter == null) {
+                        ToastManage.self().show("设备不支持蓝牙");
+                        return;
+                    }
+                    Log.d(TAG, "run: !!!!!!!!!!!!!!!!!!!!!开始扫描蓝牙");
+                    bluetoothAdapter.startLeScan(callback);
+                    startClearTimer();
+                    searching = true;
+                    EventBus.getDefault().post(new BleEventSearch().setSearch(true));
                 }
-                Log.d(TAG, "run: !!!!!!!!!!!!!!!!!!!!!开始扫描蓝牙");
-                bluetoothAdapter.startLeScan(callback);
-                startClearTimer();
-
-                EventBus.getDefault().post(new BleEventSearch().setSearch(true));
             }
         });
     }
 
     public void stopSearch() {
-        if (bluetoothAdapter == null) {
-            return;
+        synchronized (locked) {
+            if (bluetoothAdapter == null) {
+                return;
+            }
+            if (searching) {
+                bluetoothAdapter.stopLeScan(callback);
+                stopClearTimer();
+                searching = false;
+                EventBus.getDefault().post(new BleEventSearch().setSearch(false));
+            }
         }
-        bluetoothAdapter.stopLeScan(callback);
-        stopClearTimer();
-
-        EventBus.getDefault().post(new BleEventSearch().setSearch(false));
     }
 
     public void forceCallBack() {

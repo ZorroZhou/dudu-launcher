@@ -11,23 +11,19 @@ import com.inuker.bluetooth.library.connect.response.BleConnectResponse;
 import com.inuker.bluetooth.library.connect.response.BleNotifyResponse;
 import com.inuker.bluetooth.library.model.BleGattProfile;
 import com.wow.carlauncher.common.CommonData;
-import com.wow.carlauncher.common.ex.BleManageEx;
-import com.wow.carlauncher.common.ex.ToastEx;
+import com.wow.carlauncher.common.ex.BleManage;
+import com.wow.carlauncher.common.ex.ToastManage;
 import com.wow.carlauncher.common.ex.event.BleEventDeviceChange;
-import com.wow.carlauncher.common.ex.event.BleEventSearch;
 import com.wow.carlauncher.plugin.BasePlugin;
 import com.wow.carlauncher.plugin.fk.event.PFkEventConnect;
 import com.wow.carlauncher.plugin.fk.event.PFkEventModel;
 import com.wow.carlauncher.plugin.fk.protocol.YiLianProtocol;
-import com.wow.carlauncher.plugin.obd.evnet.PObdEventCarTp;
 import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.SharedPreUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-import org.xutils.x;
 
-import java.util.List;
 import java.util.UUID;
 
 import static com.inuker.bluetooth.library.Constants.REQUEST_SUCCESS;
@@ -67,7 +63,7 @@ public class FangkongPlugin extends BasePlugin<FangkongPluginListener> {
                 .setServiceDiscoverTimeout(5000)  // 发现服务超时5s
                 .build();
         EventBus.getDefault().register(this);
-        BleManageEx.self().forceCallBack();
+        BleManage.self().forceCallBack();
     }
 
     private FangkongProtocol fangkongProtocol;
@@ -103,8 +99,8 @@ public class FangkongPlugin extends BasePlugin<FangkongPluginListener> {
 
     private synchronized void connect() {
         final String fkaddress = SharedPreUtil.getSharedPreString(CommonData.SDATA_FANGKONG_ADDRESS);
-        Log.d(TAG, "connect: " + Constants.getStatusText(BleManageEx.self().client().getConnectStatus(fkaddress)) + "  " + CommonUtil.isNull(fkaddress) + "  " + Constants.getStatusText(BleManageEx.self().client().getConnectStatus(fkaddress)));
-        if (connecting || CommonUtil.isNull(fkaddress) || BleManageEx.self().client().getConnectStatus(fkaddress) == STATUS_DEVICE_CONNECTED) {
+        Log.d(TAG, "connect: " + Constants.getStatusText(BleManage.self().client().getConnectStatus(fkaddress)) + "  " + CommonUtil.isNull(fkaddress) + "  " + Constants.getStatusText(BleManage.self().client().getConnectStatus(fkaddress)));
+        if (connecting || CommonUtil.isNull(fkaddress) || BleManage.self().client().getConnectStatus(fkaddress) == STATUS_DEVICE_CONNECTED) {
             return;
         }
         connecting = true;
@@ -119,14 +115,14 @@ public class FangkongPlugin extends BasePlugin<FangkongPluginListener> {
                 break;
         }
         Log.d(TAG, "开始连接");
-        BleManageEx.self().client().clearRequest(fangkongProtocol.getAddress(), 0);
-        BleManageEx.self().client().refreshCache(fangkongProtocol.getAddress());
-        BleManageEx.self().client().registerConnectStatusListener(fangkongProtocol.getAddress(), bleConnectStatusListener);
-        BleManageEx.self().client().connect(fangkongProtocol.getAddress(), options, new BleConnectResponse() {
+        BleManage.self().client().clearRequest(fangkongProtocol.getAddress(), 0);
+        BleManage.self().client().refreshCache(fangkongProtocol.getAddress());
+        BleManage.self().client().registerConnectStatusListener(fangkongProtocol.getAddress(), bleConnectStatusListener);
+        BleManage.self().client().connect(fangkongProtocol.getAddress(), options, new BleConnectResponse() {
             @Override
             public void onResponse(int code, BleGattProfile data) {
                 if (code == REQUEST_SUCCESS) {
-                    BleManageEx.self().client().notify(fangkongProtocol.getAddress(),
+                    BleManage.self().client().notify(fangkongProtocol.getAddress(),
                             fangkongProtocol.getService(),
                             fangkongProtocol.getCharacter(),
                             new BleNotifyResponse() {
@@ -141,17 +137,17 @@ public class FangkongPlugin extends BasePlugin<FangkongPluginListener> {
                                 public void onResponse(int code) {
                                     connecting = false;
                                     if (code == REQUEST_SUCCESS) {
-                                        ToastEx.self().show("方控连接成功");
+                                        ToastManage.self().show("方控连接成功");
                                         Log.d(TAG, "onResponse: 开始测试!!!");
-                                        Log.d(TAG, Constants.getStatusText(BleManageEx.self().client().getConnectStatus(fkaddress)) + "  " + CommonUtil.isNull(fkaddress) + "  " + Constants.getStatusText(BleManageEx.self().client().getConnectStatus(fkaddress)));
+                                        Log.d(TAG, Constants.getStatusText(BleManage.self().client().getConnectStatus(fkaddress)) + "  " + CommonUtil.isNull(fkaddress) + "  " + Constants.getStatusText(BleManage.self().client().getConnectStatus(fkaddress)));
                                     } else {
-                                        BleManageEx.self().client().disconnect(fangkongProtocol.getAddress());
+                                        BleManage.self().client().disconnect(fangkongProtocol.getAddress());
                                     }
                                 }
                             });
                 } else {
                     connecting = false;
-                    BleManageEx.self().forceCallBack();
+                    BleManage.self().forceCallBack();
                     Log.d(TAG, "onResponse: 方控连接失败!!!");
                 }
             }
@@ -160,8 +156,8 @@ public class FangkongPlugin extends BasePlugin<FangkongPluginListener> {
 
     public synchronized void disconnect() {
         if (fangkongProtocol != null) {
-            BleManageEx.self().client().unregisterConnectStatusListener(fangkongProtocol.getAddress(), bleConnectStatusListener);
-            BleManageEx.self().client().disconnect(fangkongProtocol.getAddress());
+            BleManage.self().client().unregisterConnectStatusListener(fangkongProtocol.getAddress(), bleConnectStatusListener);
+            BleManage.self().client().disconnect(fangkongProtocol.getAddress());
             EventBus.getDefault().post(new PFkEventConnect().setConnected(false));
         }
     }

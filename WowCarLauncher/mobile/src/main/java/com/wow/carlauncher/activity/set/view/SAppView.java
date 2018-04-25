@@ -17,7 +17,7 @@ import com.wow.carlauncher.R;
 import com.wow.carlauncher.activity.PluginSetActivity;
 import com.wow.carlauncher.common.AppInfoManage;
 import com.wow.carlauncher.common.CommonData;
-import com.wow.carlauncher.common.ex.ToastEx;
+import com.wow.carlauncher.common.ex.ToastManage;
 import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.activity.launcher.event.LauncherDockLabelShowChangeEvent;
 import com.wow.carlauncher.plugin.console.ConsolePlugin;
@@ -132,7 +132,7 @@ public class SAppView extends FrameLayout {
         sv_wall_set.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ToastEx.self().show("请使用第三方看图软件直接将图片设置为安卓壁纸即可");
+                ToastManage.self().show("请使用第三方看图软件直接将图片设置为安卓壁纸即可");
             }
         });
         sv_apps_hides.setOnClickListener(new View.OnClickListener() {

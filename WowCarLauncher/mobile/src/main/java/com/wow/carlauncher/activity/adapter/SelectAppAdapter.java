@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
-import com.wow.carlauncher.common.BaseAdapterEx;
+import com.wow.carlauncher.common.base.BaseAdapterEx;
 import com.wow.frame.util.AppUtil.AppInfo;
 
 /**

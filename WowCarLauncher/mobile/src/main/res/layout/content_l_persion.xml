@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.android.percent.support.PercentLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/bg_l_persion"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:lines="1"
+        android:text="个人中心"
+        android:textColor="@android:color/white"
+        app:layout_heightPercent="12%h"
+        app:layout_marginTopPercent="3%h"
+        app:layout_textSizePercent="7%h" />
+
+
+    <com.zhy.android.percent.support.PercentLinearLayout
+        android:id="@+id/ll_controller"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/l_weather_wendu_bg"
+        android:orientation="horizontal"
+        app:layout_heightPercent="14%h"
+        app:layout_marginTopPercent="58%h"
+        app:layout_widthPercent="86%w">
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="点击登陆"
+            android:textColor="#f1f1f1"
+            app:layout_textSizePercent="50%h" />
+    </com.zhy.android.percent.support.PercentLinearLayout>
+</com.zhy.android.percent.support.PercentLinearLayout>

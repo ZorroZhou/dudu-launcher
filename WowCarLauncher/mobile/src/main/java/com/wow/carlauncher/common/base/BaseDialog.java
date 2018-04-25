@@ -1,4 +1,4 @@
-package com.wow.carlauncher.common;
+package com.wow.carlauncher.common.base;
 
 import android.app.Dialog;
 import android.content.Context;

@@ -12,12 +12,11 @@ import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
-import com.wow.carlauncher.common.ex.BleManageEx;
+import com.wow.carlauncher.common.ex.BleManage;
 import com.wow.carlauncher.plugin.fk.FangkongPlugin;
 import com.wow.carlauncher.plugin.fk.event.PFkEventConnect;
 import com.wow.carlauncher.plugin.fk.event.PFkEventModel;
 import com.wow.carlauncher.plugin.obd.ObdPlugin;
-import com.wow.carlauncher.plugin.obd.ObdPluginListener;
 import com.wow.carlauncher.plugin.obd.evnet.PObdEventCarInfo;
 import com.wow.carlauncher.plugin.obd.evnet.PObdEventCarTp;
 import com.wow.carlauncher.plugin.obd.evnet.PObdEventConnect;
@@ -26,7 +25,6 @@ import com.wow.frame.util.SharedPreUtil;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.xutils.view.annotation.ViewInject;
-import org.xutils.x;
 
 import static com.inuker.bluetooth.library.Constants.STATUS_DEVICE_CONNECTED;
 import static com.wow.carlauncher.common.CommonData.TAG;
@@ -91,10 +89,7 @@ public class LDeviceView extends LBaseView implements View.OnClickListener {
     private TextView tv_youliang;
 
     private void initView() {
-        LinearLayout amapView = (LinearLayout) View.inflate(getContext(), R.layout.plugin_device_launcher, null);
-        this.addView(amapView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-
-        x.view().inject(this);
+        addContent(R.layout.plugin_device_launcher);
 
         refreshFangkongState();
         refreshObdState();
@@ -110,7 +105,7 @@ public class LDeviceView extends LBaseView implements View.OnClickListener {
     private void refreshFangkongState() {
         String address = SharedPreUtil.getSharedPreString(CommonData.SDATA_FANGKONG_ADDRESS);
         if (CommonUtil.isNotNull(address)) {
-            if (BleManageEx.self().client().getConnectStatus(address) == STATUS_DEVICE_CONNECTED) {
+            if (BleManage.self().client().getConnectStatus(address) == STATUS_DEVICE_CONNECTED) {
                 tv_fangkongname.setText("方控(已连接)");
                 tv_fangkongmoshi.setText(FangkongPlugin.self().getModelName());
             } else {
@@ -126,8 +121,8 @@ public class LDeviceView extends LBaseView implements View.OnClickListener {
     private void refreshObdState() {
         String address = SharedPreUtil.getSharedPreString(CommonData.SDATA_OBD_ADDRESS);
         if (CommonUtil.isNotNull(address)) {
-            Log.d(TAG, "refreshObdState: " + BleManageEx.self().client().getConnectStatus(address) + " " + STATUS_DEVICE_CONNECTED);
-            if (BleManageEx.self().client().getConnectStatus(address) == STATUS_DEVICE_CONNECTED) {
+            Log.d(TAG, "refreshObdState: " + BleManage.self().client().getConnectStatus(address) + " " + STATUS_DEVICE_CONNECTED);
+            if (BleManage.self().client().getConnectStatus(address) == STATUS_DEVICE_CONNECTED) {
                 tv_obdname.setText("OBD(已连接)");
                 if (ObdPlugin.self().supportTp()) {
                     tv_tp_title.setText("胎压数据:");

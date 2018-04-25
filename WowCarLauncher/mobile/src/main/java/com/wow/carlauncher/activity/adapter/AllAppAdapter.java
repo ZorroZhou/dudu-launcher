@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.wow.frame.util.AppUtil;
 import com.wow.carlauncher.R;
-import com.wow.carlauncher.common.BaseAdapterEx;
+import com.wow.carlauncher.common.base.BaseAdapterEx;
 
 /**
  * Created by 10124 on 2017/10/28.

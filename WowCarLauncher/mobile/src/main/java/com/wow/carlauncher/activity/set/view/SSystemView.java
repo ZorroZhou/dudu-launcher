@@ -17,7 +17,7 @@ import android.widget.LinearLayout;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.AppInfoManage;
-import com.wow.carlauncher.common.ex.ToastEx;
+import com.wow.carlauncher.common.ex.ToastManage;
 import com.wow.carlauncher.common.view.SetView;
 import com.wow.frame.util.AppUtil;
 
@@ -83,7 +83,7 @@ public class SSystemView extends FrameLayout {
                     }).create();
                     dialog.show();
                 } else {
-                    ToastEx.self().show("这个功能是安卓6.0以上才有的");
+                    ToastManage.self().show("这个功能是安卓6.0以上才有的");
                 }
             }
         });
@@ -99,7 +99,7 @@ public class SSystemView extends FrameLayout {
         sv_sys_sdk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastEx.self().show("当前SDK版本是" + Build.VERSION.SDK_INT);
+                ToastManage.self().show("当前SDK版本是" + Build.VERSION.SDK_INT);
             }
         });
     }

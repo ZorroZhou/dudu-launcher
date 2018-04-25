@@ -1,91 +1,68 @@
 package com.wow.carlauncher.activity.launcher.view;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
-import com.wow.carlauncher.plugin.fk.event.PFkEventConnect;
 import com.wow.carlauncher.plugin.music.MusicPlugin;
-import com.wow.carlauncher.plugin.music.MusicPluginListener;
 import com.wow.carlauncher.plugin.music.event.PMusicEventCover;
 import com.wow.carlauncher.plugin.music.event.PMusicEventInfo;
-import com.wow.carlauncher.plugin.music.event.PMusicEventProgress;
 import com.wow.carlauncher.plugin.music.event.PMusicEventState;
 import com.wow.frame.util.CommonUtil;
 
 import org.greenrobot.eventbus.Subscribe;
-import org.xutils.x;
+import org.xutils.view.annotation.ContentView;
+import org.xutils.view.annotation.Event;
+import org.xutils.view.annotation.ViewInject;
+
+import static com.wow.carlauncher.common.CommonData.TAG;
 
 /**
  * Created by 10124 on 2018/4/20.
  */
 
+@ContentView(R.layout.content_l_music)
 public class LMusicView extends LBaseView {
 
     public LMusicView(@NonNull Context context) {
         super(context);
-        initView();
+        addContent(R.layout.content_l_music);
     }
 
     public LMusicView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        initView();
+        addContent(R.layout.content_l_music);
     }
 
-    private ImageView music_iv_play, music_iv_cover;
+    @ViewInject(R.id.iv_play)
+    private ImageView music_iv_play;
+
+    @ViewInject(R.id.tv_title)
     private TextView music_tv_title;
 
-
-    private void initView() {
-        View musicView = View.inflate(getContext(), R.layout.plugin_music_launcher, null);
-        this.addView(musicView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-
-        View.OnClickListener musicclick = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                switch (view.getId()) {
-                    case R.id.ll_prew: {
-                        MusicPlugin.self().pre();
-                        break;
-                    }
-                    case R.id.iv_play: {
-                        MusicPlugin.self().playOrPause();
-                        break;
-                    }
-                    case R.id.ll_next: {
-                        MusicPlugin.self().next();
-                        break;
-                    }
-                }
+    @Event(value = {R.id.iv_play, R.id.ll_prew, R.id.ll_next})
+    private void clickEvent(View view) {
+        Log.d(TAG, "clickEvent: " + view);
+        switch (view.getId()) {
+            case R.id.ll_prew: {
+                MusicPlugin.self().pre();
+                break;
             }
-        };
-
-
-        music_iv_play = (ImageView) musicView.findViewById(R.id.iv_play);
-        music_tv_title = (TextView) musicView.findViewById(R.id.tv_title);
-        music_iv_cover = (ImageView) musicView.findViewById(R.id.iv_cover);
-
-        musicView.findViewById(R.id.iv_play).setOnClickListener(musicclick);
-        musicView.findViewById(R.id.ll_prew).setOnClickListener(musicclick);
-        musicView.findViewById(R.id.ll_next).setOnClickListener(musicclick);
-    }
-
-    @Subscribe
-    public void onEventMainThread(final PMusicEventCover event) {
-        if (event.getCover() != null) {
-            music_iv_cover.setImageBitmap(event.getCover());
-        } else {
-
+            case R.id.iv_play: {
+                MusicPlugin.self().playOrPause();
+                break;
+            }
+            case R.id.ll_next: {
+                MusicPlugin.self().next();
+                break;
+            }
         }
     }
 
@@ -104,9 +81,9 @@ public class LMusicView extends LBaseView {
     public void onEventMainThread(final PMusicEventState event) {
         if (music_iv_play != null) {
             if (event.isRun()) {
-                music_iv_play.setImageResource(R.mipmap.ic_pause);
+                music_iv_play.setImageResource(R.drawable.ic_pause);
             } else {
-                music_iv_play.setImageResource(R.mipmap.ic_play);
+                music_iv_play.setImageResource(R.drawable.ic_play);
             }
         }
     }

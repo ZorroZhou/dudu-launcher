@@ -71,7 +71,7 @@
                 android:clickable="true"
                 android:contentDescription="@string/app_name"
                 android:scaleType="fitCenter"
-                android:src="@mipmap/ic_prev"
+                android:src="@drawable/ic_prev"
                 app:layout_heightPercent="85%w"
                 app:layout_widthPercent="85%w" />
         </com.zhy.android.percent.support.PercentLinearLayout>
@@ -89,7 +89,7 @@
                 android:clickable="true"
                 android:contentDescription="@string/app_name"
                 android:scaleType="fitCenter"
-                android:src="@mipmap/ic_play"
+                android:src="@drawable/ic_play"
                 app:layout_heightPercent="65%w"
                 app:layout_widthPercent="65%w" />
         </com.zhy.android.percent.support.PercentLinearLayout>
@@ -107,7 +107,7 @@
                 android:clickable="true"
                 android:contentDescription="@string/app_name"
                 android:scaleType="fitCenter"
-                android:src="@mipmap/ic_next"
+                android:src="@drawable/ic_next"
                 app:layout_heightPercent="85%w"
                 app:layout_widthPercent="85%w" />
         </com.zhy.android.percent.support.PercentLinearLayout>

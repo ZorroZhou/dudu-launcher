@@ -13,7 +13,7 @@ import android.widget.Button;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.activity.launcher.LauncherActivity;
 import com.wow.carlauncher.activity.set.SetActivity;
-import com.wow.carlauncher.common.BaseActivity;
+import com.wow.carlauncher.common.base.BaseActivity;
 
 import org.xutils.view.annotation.ViewInject;
 

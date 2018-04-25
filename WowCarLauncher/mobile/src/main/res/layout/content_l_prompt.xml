@@ -1,54 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.zhy.android.percent.support.PercentLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.zhy.android.percent.support.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="right"
-    android:orientation="horizontal"
     tools:ignore="RtlHardcoded">
 
-    <ImageView
-        android:id="@+id/iv_carinfo_tp"
-        android:layout_width="wrap_content"
+    <com.zhy.android.percent.support.PercentLinearLayout
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:contentDescription="@string/app_name"
-        android:src="@mipmap/ic_l_tp"
-        android:visibility="gone"
-        app:layout_widthPercent="100%h" />
+        android:gravity="right"
+        android:orientation="horizontal">
 
-    <ImageView
-        android:id="@+id/iv_obd"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:contentDescription="@string/app_name"
-        android:src="@mipmap/ic_l_obd"
-        android:visibility="gone"
-        app:layout_widthPercent="100%h" />
+        <ImageView
+            android:id="@+id/iv_carinfo_tp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/app_name"
+            android:src="@mipmap/ic_l_tp"
+            android:visibility="invisible"
+            app:layout_widthPercent="100%h" />
 
-    <ImageView
-        android:id="@+id/iv_fk"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:contentDescription="@string/app_name"
-        android:src="@mipmap/ic_l_fk"
-        android:visibility="gone"
-        app:layout_widthPercent="100%h" />
+        <ImageView
+            android:id="@+id/iv_obd"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/app_name"
+            android:src="@mipmap/ic_l_obd"
+            android:visibility="invisible"
+            app:layout_widthPercent="100%h" />
 
-    <ImageView
-        android:id="@+id/iv_wifi"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:contentDescription="@string/app_name"
-        android:src="@mipmap/ic_l_wifi"
-        android:visibility="gone"
-        app:layout_widthPercent="100%h" />
+        <ImageView
+            android:id="@+id/iv_fk"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/app_name"
+            android:src="@mipmap/ic_l_fk"
+            android:visibility="invisible"
+            app:layout_widthPercent="100%h" />
 
-    <ImageView
-        android:id="@+id/iv_set"
+        <ImageView
+            android:id="@+id/iv_ble"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/app_name"
+            android:src="@mipmap/ic_l_ble"
+            android:visibility="invisible"
+            app:layout_widthPercent="100%h" />
+
+        <ImageView
+            android:id="@+id/iv_wifi"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/app_name"
+            android:src="@mipmap/ic_l_wifi"
+            android:visibility="invisible"
+            app:layout_widthPercent="100%h" />
+
+        <ImageView
+            android:id="@+id/iv_set"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/app_name"
+            android:src="@mipmap/ic_l_set"
+            app:layout_widthPercent="100%h" />
+    </com.zhy.android.percent.support.PercentLinearLayout>
+
+    <TextView
+        android:id="@+id/tv_time"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:contentDescription="@string/app_name"
-        android:src="@mipmap/ic_l_set"
-        app:layout_widthPercent="100%h" />
-</com.zhy.android.percent.support.PercentLinearLayout>
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="10dp"
+        android:gravity="center_vertical|end"
+        android:textColor="#666666"
+        app:layout_textSizePercent="40%h" />
+
+</com.zhy.android.percent.support.PercentRelativeLayout>

@@ -14,15 +14,12 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.wow.carlauncher.R;
-import com.wow.carlauncher.activity.set.SetActivity;
 import com.wow.carlauncher.common.CommonData;
-import com.wow.carlauncher.common.ex.BleManageEx;
-import com.wow.carlauncher.common.ex.ToastEx;
+import com.wow.carlauncher.common.ex.BleManage;
+import com.wow.carlauncher.common.ex.ToastManage;
 import com.wow.carlauncher.common.ex.event.BleEventDeviceChange;
 import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.dialog.ListDialog;
-import com.wow.carlauncher.plugin.console.ConsoleProtoclEnum;
-import com.wow.carlauncher.plugin.music.MusicControllerEnum;
 import com.wow.carlauncher.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.plugin.obd.ObdProtocolEnum;
 import com.wow.frame.util.CommonUtil;
@@ -94,7 +91,7 @@ public class SObdView extends FrameLayout {
                         sv_obd_impl_select.setSummary("OBD使用的协议：" + show[obj.getObj()].getName());
 
                         ObdPlugin.self().disconnect();
-                        BleManageEx.self().forceCallBack();
+                        BleManage.self().forceCallBack();
                     }
                 }).setSingleChoiceItems(items, select, new DialogInterface.OnClickListener() {
                     @Override
@@ -113,7 +110,7 @@ public class SObdView extends FrameLayout {
                 SharedPreUtil.saveSharedPreString(CommonData.SDATA_OBD_ADDRESS, null);
                 SharedPreUtil.saveSharedPreString(CommonData.SDATA_OBD_NAME, null);
                 ObdPlugin.self().disconnect();
-                ToastEx.self().show("OBD绑定已删除");
+                ToastManage.self().show("OBD绑定已删除");
             }
         });
 
@@ -164,16 +161,16 @@ public class SObdView extends FrameLayout {
                     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                         dialog.dismiss();
                         BluetoothDevice device = devices.get(i);
-                        BleManageEx.self().removeDevice(device);
+                        BleManage.self().removeDevice(device);
                         SharedPreUtil.saveSharedPreString(CommonData.SDATA_OBD_ADDRESS, device.getAddress());
                         SharedPreUtil.saveSharedPreString(CommonData.SDATA_OBD_NAME, device.getName());
 
                         sv_obd_select.setSummary("绑定了设备:" + device.getName() + "  地址:" + device.getAddress());
 
-                        BleManageEx.self().forceCallBack();
+                        BleManage.self().forceCallBack();
                     }
                 });
-                BleManageEx.self().forceCallBack();
+                BleManage.self().forceCallBack();
             }
         });
     }

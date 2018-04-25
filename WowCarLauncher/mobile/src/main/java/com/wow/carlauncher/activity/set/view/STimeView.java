@@ -13,9 +13,9 @@ import android.widget.LinearLayout;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.AppInfoManage;
-import com.wow.carlauncher.common.BaseDialog;
+import com.wow.carlauncher.common.base.BaseDialog;
 import com.wow.carlauncher.common.CommonData;
-import com.wow.carlauncher.common.ex.ToastEx;
+import com.wow.carlauncher.common.ex.ToastManage;
 import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.dialog.CityDialog;
 import com.wow.carlauncher.activity.launcher.event.LEventCityRefresh;
@@ -108,7 +108,7 @@ public class STimeView extends FrameLayout {
                             EventBus.getDefault().post(new LEventCityRefresh());
                             tianqi_city.setSummary(cityDialog.getmCurrentDistrictName());
                         } else {
-                            ToastEx.self().show("请选择城市");
+                            ToastManage.self().show("请选择城市");
                         }
                         return false;
                     }

@@ -12,8 +12,8 @@ import com.inuker.bluetooth.library.connect.response.BleNotifyResponse;
 import com.inuker.bluetooth.library.connect.response.BleWriteResponse;
 import com.inuker.bluetooth.library.model.BleGattProfile;
 import com.wow.carlauncher.common.CommonData;
-import com.wow.carlauncher.common.ex.BleManageEx;
-import com.wow.carlauncher.common.ex.ToastEx;
+import com.wow.carlauncher.common.ex.BleManage;
+import com.wow.carlauncher.common.ex.ToastManage;
 import com.wow.carlauncher.common.ex.event.BleEventDeviceChange;
 import com.wow.carlauncher.plugin.BasePlugin;
 import com.wow.carlauncher.plugin.obd.protocol.GoodDriverTPProtocol;
@@ -24,14 +24,12 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.xutils.x;
 
-import java.util.List;
 import java.util.UUID;
 
 import static com.inuker.bluetooth.library.Constants.REQUEST_SUCCESS;
 import static com.inuker.bluetooth.library.Constants.STATUS_CONNECTED;
 import static com.inuker.bluetooth.library.Constants.STATUS_DEVICE_CONNECTED;
 import static com.wow.carlauncher.common.CommonData.SDATA_OBD_CONTROLLER;
-import static com.wow.carlauncher.common.CommonData.TAG;
 
 /**
  * Created by 10124 on 2017/11/4.
@@ -65,8 +63,8 @@ public class ObdPlugin extends BasePlugin<ObdPluginListener> {
 
         @Override
         public boolean isConnect() {
-            Log.d(TAG, "检查是否连接: " + Constants.getStatusText(BleManageEx.self().client().getConnectStatus(obdProtocol.getAddress())));
-            if (obdProtocol != null && BleManageEx.self().client().getConnectStatus(obdProtocol.getAddress()) == STATUS_DEVICE_CONNECTED) {
+            Log.d(TAG, "检查是否连接: " + Constants.getStatusText(BleManage.self().client().getConnectStatus(obdProtocol.getAddress())));
+            if (obdProtocol != null && BleManage.self().client().getConnectStatus(obdProtocol.getAddress()) == STATUS_DEVICE_CONNECTED) {
                 return true;
             }
             return false;
@@ -120,15 +118,15 @@ public class ObdPlugin extends BasePlugin<ObdPluginListener> {
                 .setServiceDiscoverTimeout(5000)  // 发现服务超时5s
                 .build();
         EventBus.getDefault().register(this);
-        BleManageEx.self().forceCallBack();
+        BleManage.self().forceCallBack();
     }
 
     private boolean connecting = false;
 
     private synchronized void connect() {
         final String address = SharedPreUtil.getSharedPreString(CommonData.SDATA_OBD_ADDRESS);
-        Log.d(TAG, "connect: " + Constants.getStatusText(BleManageEx.self().client().getConnectStatus(address)) + "  " + CommonUtil.isNull(address) + "  " + Constants.getStatusText(BleManageEx.self().client().getConnectStatus(address)));
-        if (connecting || CommonUtil.isNull(address) || BleManageEx.self().client().getConnectStatus(address) == STATUS_DEVICE_CONNECTED) {
+        Log.d(TAG, "connect: " + Constants.getStatusText(BleManage.self().client().getConnectStatus(address)) + "  " + CommonUtil.isNull(address) + "  " + Constants.getStatusText(BleManage.self().client().getConnectStatus(address)));
+        if (connecting || CommonUtil.isNull(address) || BleManage.self().client().getConnectStatus(address) == STATUS_DEVICE_CONNECTED) {
             return;
         }
         connecting = true;
@@ -143,14 +141,14 @@ public class ObdPlugin extends BasePlugin<ObdPluginListener> {
                 break;
         }
         Log.d(TAG, "开始连接");
-        BleManageEx.self().client().clearRequest(obdProtocol.getAddress(), 0);
-        BleManageEx.self().client().refreshCache(obdProtocol.getAddress());
-        BleManageEx.self().client().registerConnectStatusListener(obdProtocol.getAddress(), bleConnectStatusListener);
-        BleManageEx.self().client().connect(obdProtocol.getAddress(), options, new BleConnectResponse() {
+        BleManage.self().client().clearRequest(obdProtocol.getAddress(), 0);
+        BleManage.self().client().refreshCache(obdProtocol.getAddress());
+        BleManage.self().client().registerConnectStatusListener(obdProtocol.getAddress(), bleConnectStatusListener);
+        BleManage.self().client().connect(obdProtocol.getAddress(), options, new BleConnectResponse() {
             @Override
             public void onResponse(int code, BleGattProfile data) {
                 if (code == REQUEST_SUCCESS) {
-                    BleManageEx.self().client().notify(obdProtocol.getAddress(),
+                    BleManage.self().client().notify(obdProtocol.getAddress(),
                             obdProtocol.getNotifyService(),
                             obdProtocol.getNotifyCharacter(),
                             new BleNotifyResponse() {
@@ -164,20 +162,20 @@ public class ObdPlugin extends BasePlugin<ObdPluginListener> {
                                 @Override
                                 public void onResponse(int code) {
                                     connecting = false;
-                                    Log.d(TAG, "查询状态: " + Constants.getStatusText(BleManageEx.self().client().getConnectStatus(obdProtocol.getAddress())));
+                                    Log.d(TAG, "查询状态: " + Constants.getStatusText(BleManage.self().client().getConnectStatus(obdProtocol.getAddress())));
 
                                     Log.d(TAG, "onResponse: " + code);
                                     if (code == REQUEST_SUCCESS) {
-                                        ToastEx.self().show("OBD连接成功");
+                                        ToastManage.self().show("OBD连接成功");
                                         obdProtocol.run();
                                     } else {
-                                        BleManageEx.self().client().disconnect(obdProtocol.getAddress());
+                                        BleManage.self().client().disconnect(obdProtocol.getAddress());
                                     }
                                 }
                             });
                 } else {
                     connecting = false;
-                    BleManageEx.self().forceCallBack();
+                    BleManage.self().forceCallBack();
                     Log.d(TAG, "onResponse: 方控连接失败!!!");
                 }
             }
@@ -186,8 +184,8 @@ public class ObdPlugin extends BasePlugin<ObdPluginListener> {
 
     public synchronized void disconnect() {
         if (obdProtocol != null) {
-            BleManageEx.self().client().unregisterConnectStatusListener(obdProtocol.getAddress(), bleConnectStatusListener);
-            BleManageEx.self().client().disconnect(obdProtocol.getAddress());
+            BleManage.self().client().unregisterConnectStatusListener(obdProtocol.getAddress(), bleConnectStatusListener);
+            BleManage.self().client().disconnect(obdProtocol.getAddress());
             connectCallback(false);
         }
     }
@@ -195,7 +193,7 @@ public class ObdPlugin extends BasePlugin<ObdPluginListener> {
     private synchronized void write(byte[] msg) {
         if (obdProtocol != null) {
             Log.d(TAG, "write: " + new String(msg));
-            BleManageEx.self().client().write(obdProtocol.getAddress(), obdProtocol.getWriteService(), obdProtocol.getWriteCharacter(), msg, new BleWriteResponse() {
+            BleManage.self().client().write(obdProtocol.getAddress(), obdProtocol.getWriteService(), obdProtocol.getWriteCharacter(), msg, new BleWriteResponse() {
                 @Override
                 public void onResponse(int code) {
 

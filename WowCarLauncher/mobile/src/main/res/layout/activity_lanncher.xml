@@ -3,115 +3,107 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/fl_bg"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <FrameLayout
+    android:layout_height="match_parent"
+    android:background="@mipmap/bg_l_bright">
+    <!--390  50 285 60-->
+    <com.zhy.android.percent.support.PercentRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#33000000">
-        <!--390  50 285 60-->
+        android:orientation="vertical">
+
         <com.zhy.android.percent.support.PercentRelativeLayout
+            android:id="@+id/ll_top"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="0dp"
+            android:layout_alignParentTop="true"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            app:layout_heightPercent="12.8%h">
 
-            <com.zhy.android.percent.support.PercentRelativeLayout
-                android:id="@+id/ll_top"
+            <com.wow.carlauncher.activity.launcher.view.LPromptView
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_alignParentTop="true"
-                android:orientation="horizontal"
-                android:padding="10dp"
-                app:layout_heightPercent="12.8%h">
+                android:layout_height="match_parent" />
 
-                <com.wow.carlauncher.activity.launcher.view.LPromptView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-
-                <TextView
-                    android:id="@+id/tv_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center_vertical|end"
-                    android:textColor="#fff"
-                    app:layout_textSizePercent="40%h" />
-
-
-                <!--<ImageView-->
-                <!--android:id="@+id/iv_set"-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_height="0dp"-->
-                <!--android:layout_alignParentRight="true"-->
-                <!--android:layout_centerVertical="true"-->
-                <!--android:contentDescription="@string/iv_content"-->
-                <!--android:src="@mipmap/ic_menu"-->
-                <!--app:layout_heightPercent="60%h"-->
-                <!--app:layout_widthPercent="60%h" />-->
-            </com.zhy.android.percent.support.PercentRelativeLayout>
-
-            <com.wow.carlauncher.activity.launcher.view.LDockView
-                android:id="@+id/ll_dock"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_alignParentBottom="true"
-                android:background="@color/launch_dock_bg"
-                android:gravity="center"
-                android:orientation="horizontal"
-                app:layout_heightPercent="15.3%h" />
-
-            <LinearLayout
-                android:id="@+id/ll_main"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_above="@id/ll_dock"
-                android:layout_below="@id/ll_top"
-                android:baselineAligned="false"
-                android:orientation="horizontal"
-                android:paddingBottom="10dp"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp">
-
-
-                <com.wow.carlauncher.activity.launcher.view.LDeviceView
-                    android:id="@+id/item_2"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp" />
-
-                <com.wow.carlauncher.activity.launcher.view.LMusicView
-                    android:id="@+id/item_music"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp" />
-
-                <com.wow.carlauncher.activity.launcher.view.LAMapView
-                    android:id="@+id/item_amap"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp" />
-
-                <com.wow.carlauncher.activity.launcher.view.LWeatherView
-                    android:id="@+id/item_music2"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp" />
-            </LinearLayout>
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|end"
+                android:textColor="#fff"
+                app:layout_textSizePercent="60%h" />
+            <!--<ImageView-->
+            <!--android:id="@+id/iv_set"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="0dp"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:contentDescription="@string/iv_content"-->
+            <!--android:src="@mipmap/ic_menu"-->
+            <!--app:layout_heightPercent="60%h"-->
+            <!--app:layout_widthPercent="60%h" />-->
         </com.zhy.android.percent.support.PercentRelativeLayout>
-    </FrameLayout>
+
+        <com.wow.carlauncher.activity.launcher.view.LDockView
+            android:id="@+id/ll_dock"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_heightPercent="15.3%h" />
+
+        <LinearLayout
+            android:id="@+id/ll_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/ll_dock"
+            android:layout_below="@id/ll_top"
+            android:baselineAligned="false"
+            android:orientation="horizontal"
+            android:paddingBottom="10dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp">
+
+
+            <com.wow.carlauncher.activity.launcher.view.LDeviceView
+                android:id="@+id/item_2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp" />
+
+            <com.wow.carlauncher.activity.launcher.view.LMusicView
+                android:id="@+id/item_music"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp" />
+
+            <com.wow.carlauncher.activity.launcher.view.LAMapView
+                android:id="@+id/item_amap"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp" />
+
+            <com.wow.carlauncher.activity.launcher.view.LWeatherView
+                android:id="@+id/item_music2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp" />
+        </LinearLayout>
+    </com.zhy.android.percent.support.PercentRelativeLayout>
 </FrameLayout>

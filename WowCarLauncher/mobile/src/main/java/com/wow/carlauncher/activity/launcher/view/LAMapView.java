@@ -54,6 +54,8 @@ public class LAMapView extends LBaseView {
     private TextView amaproad;
     private TextView amapmsg;
 
+    private View rl_base;
+
     private void initView() {
         RelativeLayout amapView = (RelativeLayout) View.inflate(getContext(), R.layout.plugin_amap_launcher, null);
         this.addView(amapView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
@@ -102,6 +104,7 @@ public class LAMapView extends LBaseView {
         amapnavi = (LinearLayout) amapView.findViewById(R.id.ll_navi);
         amaproad = (TextView) amapView.findViewById(R.id.tv_road);
         amapmsg = (TextView) amapView.findViewById(R.id.tv_msg);
+        rl_base = amapView.findViewById(R.id.rl_base);
     }
 
     @Subscribe
@@ -110,10 +113,14 @@ public class LAMapView extends LBaseView {
             if (event.getState() == 8 || event.getState() == 10) {
                 amapController.setVisibility(View.GONE);
                 amapnavi.setVisibility(View.VISIBLE);
+                rl_base.setBackgroundResource(R.mipmap.bg_l_amap_naving);
+
+
             } else if (event.getState() == 9 || event.getState() == 11) {
                 amapController.setVisibility(View.VISIBLE);
                 amapnavi.setVisibility(View.GONE);
-                amapIcon.setImageResource(R.mipmap.ic_amap);
+                amapIcon.setImageResource(0);
+                rl_base.setBackgroundResource(R.mipmap.bg_l_amap);
             }
         }
     }

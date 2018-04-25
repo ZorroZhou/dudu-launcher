@@ -45,8 +45,8 @@ public class LauncherActivity extends Activity implements View.OnClickListener, 
     @ViewInject(R.id.tv_time)
     private TextView tv_time;
 
-    @ViewInject(R.id.ll_dock)
-    private LDockView ll_dock;
+//    @ViewInject(R.id.ll_dock)
+//    private LDockView ll_dock;
 
     private Context mContext;
 
@@ -75,17 +75,11 @@ public class LauncherActivity extends Activity implements View.OnClickListener, 
         //findViewById(R.id.iv_set).setOnClickListener(this);
         findViewById(R.id.tv_time).setOnClickListener(this);
 
-        ll_dock.findViewById(R.id.ll_dock1).setOnLongClickListener(this);
-        ll_dock.findViewById(R.id.ll_dock2).setOnLongClickListener(this);
-        ll_dock.findViewById(R.id.ll_dock3).setOnLongClickListener(this);
-        ll_dock.findViewById(R.id.ll_dock4).setOnLongClickListener(this);
-        ll_dock.findViewById(R.id.ll_dock5).setOnLongClickListener(this);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            findViewById(R.id.fl_bg).setBackground(WallpaperManager.getInstance(this).getDrawable());
-        } else {
-            findViewById(R.id.fl_bg).setBackgroundDrawable(WallpaperManager.getInstance(this).getDrawable());
-        }
+//        ll_dock.findViewById(R.id.ll_dock1).setOnLongClickListener(this);
+//        ll_dock.findViewById(R.id.ll_dock2).setOnLongClickListener(this);
+//        ll_dock.findViewById(R.id.ll_dock3).setOnLongClickListener(this);
+//        ll_dock.findViewById(R.id.ll_dock4).setOnLongClickListener(this);
+//        ll_dock.findViewById(R.id.ll_dock5).setOnLongClickListener(this);
     }
 
     @Override
@@ -179,35 +173,35 @@ public class LauncherActivity extends Activity implements View.OnClickListener, 
             if (resultCode == RESULT_OK) {
                 String packName = data.getStringExtra(IDATA_PACKAGE_NAME);
                 SharedPreUtil.saveSharedPreString(SDATA_DOCK1_CLASS, packName);
-                ll_dock.loadDock();
+                //ll_dock.loadDock();
             }
         }
         if (requestCode == REQUEST_SELECT_APP_TO_DOCK2) {
             if (resultCode == RESULT_OK) {
                 String packName = data.getStringExtra(IDATA_PACKAGE_NAME);
                 SharedPreUtil.saveSharedPreString(SDATA_DOCK2_CLASS, packName);
-                ll_dock.loadDock();
+                //ll_dock.loadDock();
             }
         }
         if (requestCode == REQUEST_SELECT_APP_TO_DOCK3) {
             if (resultCode == RESULT_OK) {
                 String packName = data.getStringExtra(IDATA_PACKAGE_NAME);
                 SharedPreUtil.saveSharedPreString(SDATA_DOCK3_CLASS, packName);
-                ll_dock.loadDock();
+                //ll_dock.loadDock();
             }
         }
         if (requestCode == REQUEST_SELECT_APP_TO_DOCK4) {
             if (resultCode == RESULT_OK) {
                 String packName = data.getStringExtra(IDATA_PACKAGE_NAME);
                 SharedPreUtil.saveSharedPreString(SDATA_DOCK4_CLASS, packName);
-                ll_dock.loadDock();
+                //ll_dock.loadDock();
             }
         }
         if (requestCode == REQUEST_SELECT_APP_TO_DOCK5) {
             if (resultCode == RESULT_OK) {
                 String packName = data.getStringExtra(IDATA_PACKAGE_NAME);
                 SharedPreUtil.saveSharedPreString(SDATA_DOCK5_CLASS, packName);
-                ll_dock.loadDock();
+                //ll_dock.loadDock();
             }
         }
     }

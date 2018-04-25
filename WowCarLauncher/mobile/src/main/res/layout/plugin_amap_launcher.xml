@@ -4,16 +4,26 @@
     android:id="@+id/rl_base"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/l_item_bg"
-    android:padding="10dp">
+    android:background="@mipmap/bg_l_amap">
 
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:lines="1"
+        android:text="极豆导航"
+        android:textColor="@android:color/white"
+        app:layout_heightPercent="12%h"
+        app:layout_marginTopPercent="3%h"
+        app:layout_textSizePercent="7%h" />
 
     <com.zhy.android.percent.support.PercentRelativeLayout
         android:id="@+id/ll_icon"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_alignParentTop="true"
-        app:layout_heightPercent="100%w">
+        app:layout_heightPercent="55%h"
+        app:layout_widthPercent="55%h">
 
         <ImageView
             android:id="@+id/iv_icon"
@@ -21,12 +31,9 @@
             android:layout_height="0dp"
             android:layout_centerHorizontal="true"
             android:scaleType="fitCenter"
-            android:src="@mipmap/ic_app_nav"
-            app:layout_heightPercent="60%h"
-            app:layout_marginTopPercent="15%h"
-            app:layout_widthPercent="60%h" />
+            app:layout_heightPercent="66%h"
+            app:layout_widthPercent="66%h" />
     </com.zhy.android.percent.support.PercentRelativeLayout>
-
 
     <LinearLayout
         android:id="@+id/ll_controller"

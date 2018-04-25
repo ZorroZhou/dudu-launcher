@@ -43,12 +43,11 @@ public class LMusicView extends LBaseView {
     }
 
     private ImageView music_iv_play, music_iv_cover;
-    private TextView music_tv_title, music_tv_time;
-    private ProgressBar music_pb_music;
+    private TextView music_tv_title;
 
 
     private void initView() {
-        RelativeLayout musicView = (RelativeLayout) View.inflate(getContext(), R.layout.plugin_music_launcher, null);
+        View musicView = View.inflate(getContext(), R.layout.plugin_music_launcher, null);
         this.addView(musicView, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
 
         View.OnClickListener musicclick = new View.OnClickListener() {
@@ -75,8 +74,6 @@ public class LMusicView extends LBaseView {
         music_iv_play = (ImageView) musicView.findViewById(R.id.iv_play);
         music_tv_title = (TextView) musicView.findViewById(R.id.tv_title);
         music_iv_cover = (ImageView) musicView.findViewById(R.id.iv_cover);
-        music_tv_time = (TextView) musicView.findViewById(R.id.tv_time);
-        music_pb_music = (ProgressBar) musicView.findViewById(R.id.pb_music);
 
         musicView.findViewById(R.id.iv_play).setOnClickListener(musicclick);
         musicView.findViewById(R.id.ll_prew).setOnClickListener(musicclick);
@@ -98,22 +95,8 @@ public class LMusicView extends LBaseView {
             if (CommonUtil.isNotNull(event.getTitle())) {
                 music_tv_title.setText(event.getTitle());
             } else {
-                music_tv_title.setText("标题");
+                music_tv_title.setText("音乐");
             }
-        }
-    }
-
-    @Subscribe
-    public void onEventMainThread(final PMusicEventProgress event) {
-        if (music_pb_music != null && event.getCurrTime() > 0 && event.getTotalTime() > 0) {
-            music_pb_music.setProgress(event.getCurrTime());
-            music_pb_music.setMax(event.getTotalTime());
-        }
-
-        if (music_tv_time != null) {
-            int tt = event.getTotalTime() / 1000;
-            int cc = event.getCurrTime() / 1000;
-            music_tv_time.setText(cc + ":" + tt);
         }
     }
 

@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -44,9 +45,6 @@ public class LWeatherView extends LBaseView {
     @ViewInject(R.id.tv_wendu)
     private TextView tv_wendu;
 
-    @ViewInject(R.id.tv_feng)
-    private TextView tv_feng;
-
     @ViewInject(R.id.tv_shidu)
     private TextView tv_shidu;
 
@@ -61,8 +59,8 @@ public class LWeatherView extends LBaseView {
     }
 
     private void initView() {
-        RelativeLayout view = (RelativeLayout) View.inflate(getContext(), R.layout.plugin_weather_launcher, null);
-        this.addView(view, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        View view = View.inflate(getContext(), R.layout.plugin_weather_launcher, null);
+        this.addView(view, FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
 
         x.view().inject(this);
     }
@@ -117,16 +115,16 @@ public class LWeatherView extends LBaseView {
 
                                 tv_wendu.setText(res.getLives().get(0).getTemperature() + "℃");
                                 tv_tianqi.setText(res.getLives().get(0).getWeather());
-                                String feng;
+                                // String feng;
                                 String wd = res.getLives().get(0).getWinddirection();
                                 Log.e(TAG, "callback: " + wd);
-                                if (wd.equals("东北") || wd.equals("东") || wd.equals("东南") || wd.equals("南") || wd.equals("西南") || wd.equals("西") || wd.equals("西北") || wd.equals("北")) {
-                                    feng = wd + "风: ";
-                                } else {
-                                    feng = "风力: ";
-                                }
-                                tv_feng.setText(feng + res.getLives().get(0).getWindpower() + "级");
-                                tv_shidu.setText("空气湿度: " + res.getLives().get(0).getHumidity());
+//                                if (wd.equals("东北") || wd.equals("东") || wd.equals("东南") || wd.equals("南") || wd.equals("西南") || wd.equals("西") || wd.equals("西北") || wd.equals("北")) {
+//                                    feng = wd + "风: ";
+//                                } else {
+//                                    feng = "风力: ";
+//                                }
+                                //tv_feng.setText(feng + res.getLives().get(0).getWindpower() + "级");
+                                tv_shidu.setText("湿度: " + res.getLives().get(0).getHumidity());
                                 //tv_tianqi2.setText(feng + res.getLives().get(0).getWindpower() + "级  空气湿度:" + res.getLives().get(0).getHumidity());
                             } else {
                                 //tv_tianqi.setText("请检查网络");

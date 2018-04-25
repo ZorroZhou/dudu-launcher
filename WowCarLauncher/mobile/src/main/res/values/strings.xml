@@ -24,4 +24,6 @@
     <string name="set_no">否</string>
 
     <string name="iv_content">图片</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 </resources>

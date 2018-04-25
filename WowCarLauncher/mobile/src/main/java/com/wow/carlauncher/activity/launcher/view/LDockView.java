@@ -19,6 +19,7 @@ import com.wow.carlauncher.activity.AppMenuActivity;
 import com.wow.carlauncher.activity.AppSelectActivity;
 import com.wow.carlauncher.activity.set.SetActivity;
 import com.wow.carlauncher.common.CommonData;
+import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.activity.launcher.event.LauncherDockLabelShowChangeEvent;
 import com.wow.frame.util.CommonUtil;
@@ -136,7 +137,7 @@ public class LDockView extends LinearLayout implements View.OnClickListener {
             try {
                 PackageInfo packageInfo = pm.getPackageInfo(packname1, 0);
                 Log.d(TAG, "loadDock: " + packageInfo.packageName);
-                iv_dock1.setImageDrawable(packageInfo.applicationInfo.loadIcon(pm));
+                iv_dock1.setImageDrawable(AppInfoManage.self().getIcon(packname1));
                 tv_dock1.setText(packageInfo.applicationInfo.loadLabel(pm));
             } catch (Exception e) {
                 ToastManage.self().show("dock1加载失败:" + e.getMessage());
@@ -147,7 +148,7 @@ public class LDockView extends LinearLayout implements View.OnClickListener {
         if (CommonUtil.isNotNull(packname2)) {
             try {
                 PackageInfo packageInfo = pm.getPackageInfo(packname2, 0);
-                iv_dock2.setImageDrawable(packageInfo.applicationInfo.loadIcon(pm));
+                iv_dock2.setImageDrawable(AppInfoManage.self().getIcon(packname2));
                 tv_dock2.setText(packageInfo.applicationInfo.loadLabel(pm));
             } catch (Exception e) {
                 ToastManage.self().show("dock2加载失败:" + e.getMessage());
@@ -159,7 +160,7 @@ public class LDockView extends LinearLayout implements View.OnClickListener {
         if (CommonUtil.isNotNull(packname3)) {
             try {
                 PackageInfo packageInfo = pm.getPackageInfo(packname3, 0);
-                iv_dock3.setImageDrawable(packageInfo.applicationInfo.loadIcon(pm));
+                iv_dock3.setImageDrawable(AppInfoManage.self().getIcon(packname3));
                 tv_dock3.setText(packageInfo.applicationInfo.loadLabel(pm));
             } catch (Exception e) {
                 ToastManage.self().show("dock3加载失败:" + e.getMessage());
@@ -171,7 +172,7 @@ public class LDockView extends LinearLayout implements View.OnClickListener {
         if (CommonUtil.isNotNull(packname4)) {
             try {
                 PackageInfo packageInfo = pm.getPackageInfo(packname4, 0);
-                iv_dock4.setImageDrawable(packageInfo.applicationInfo.loadIcon(pm));
+                iv_dock4.setImageDrawable(AppInfoManage.self().getIcon(packname4));
                 tv_dock4.setText(packageInfo.applicationInfo.loadLabel(pm));
             } catch (Exception e) {
                 ToastManage.self().show("dock4加载失败:" + e.getMessage());
@@ -183,7 +184,7 @@ public class LDockView extends LinearLayout implements View.OnClickListener {
         if (CommonUtil.isNotNull(packname5)) {
             try {
                 PackageInfo packageInfo = pm.getPackageInfo(packname5, 0);
-                iv_dock5.setImageDrawable(packageInfo.applicationInfo.loadIcon(pm));
+                iv_dock5.setImageDrawable(AppInfoManage.self().getIcon(packname5));
                 tv_dock5.setText(packageInfo.applicationInfo.loadLabel(pm));
             } catch (Exception e) {
                 ToastManage.self().show("dock5加载失败:" + e.getMessage());

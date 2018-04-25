@@ -59,6 +59,18 @@ public class ObdPlugin extends ContextEx {
 
     private ObdProtocol obdProtocol;
 
+    private PObdEventCarInfo lastPObdEventCarInfo;
+
+    public PObdEventCarInfo getLastPObdEventCarInfo() {
+        return lastPObdEventCarInfo;
+    }
+
+    private PObdEventCarTp lastPObdEventCarTp;
+
+    public PObdEventCarTp getLastPObdEventCarTp() {
+        return lastPObdEventCarTp;
+    }
+
     private ObdProtocolListener obdProtocolListener = new ObdProtocolListener() {
         @Override
         public void write(byte[] req) {
@@ -75,7 +87,8 @@ public class ObdPlugin extends ContextEx {
 
         @Override
         public void carRunningInfo(final Integer speed, final Integer rev, final Integer waterTemp, final Integer oilConsumption) {
-            postEvent(new PObdEventCarInfo().setSpeed(speed).setRev(rev).setWaterTemp(waterTemp).setOilConsumption(oilConsumption));
+            lastPObdEventCarInfo = new PObdEventCarInfo().setSpeed(speed).setRev(rev).setWaterTemp(waterTemp).setOilConsumption(oilConsumption);
+            postEvent(lastPObdEventCarInfo);
         }
 
         @Override
@@ -83,11 +96,12 @@ public class ObdPlugin extends ContextEx {
                                         final Float rFTirePressure, final Integer rFTemp,
                                         final Float lBTirePressure, final Integer lBTemp,
                                         final Float rBTirePressure, final Integer rBTemp) {
-            postEvent(new PObdEventCarTp()
+            lastPObdEventCarTp = new PObdEventCarTp()
                     .setlBTirePressure(lBTirePressure).setlBTemp(lBTemp)
                     .setlFTirePressure(lFTirePressure).setlFTemp(lFTemp)
                     .setrBTirePressure(rBTirePressure).setrBTemp(rBTemp)
-                    .setrFTirePressure(rFTirePressure).setrFTemp(rFTemp));
+                    .setrFTirePressure(rFTirePressure).setrFTemp(rFTemp);
+            postEvent(lastPObdEventCarTp);
         }
     };
 

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <LinearLayout
+        android:id="@+id/ll_set"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="16dp"
+            android:paddingTop="16dp"
+            android:text="车辆信息"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_info_speed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:fadingEdge="horizontal"
+            android:padding="16dp"
+            android:singleLine="true"
+            android:text="行车速度:无数据"
+            android:textColor="@color/set_view_title"
+            android:textSize="16sp" />
+
+        <View style="@style/Interval" />
+
+        <TextView
+            android:id="@+id/tv_info_rev"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:fadingEdge="horizontal"
+            android:padding="16dp"
+            android:singleLine="true"
+            android:text="发动机转速:无数据"
+            android:textColor="@color/set_view_title"
+            android:textSize="16sp" />
+
+        <View style="@style/Interval" />
+
+        <TextView
+            android:id="@+id/tv_info_wtemp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:fadingEdge="horizontal"
+            android:padding="16dp"
+            android:singleLine="true"
+            android:text="发动机水温:无数据"
+            android:textColor="@color/set_view_title"
+            android:textSize="16sp" />
+
+        <View style="@style/Interval" />
+
+        <TextView
+            android:id="@+id/tv_info_oil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:fadingEdge="horizontal"
+            android:padding="16dp"
+            android:singleLine="true"
+            android:text="水温:无数据"
+            android:textColor="@color/set_view_title"
+            android:textSize="16sp" />
+
+        <View style="@style/Interval" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="16dp"
+            android:paddingTop="16dp"
+            android:text="胎压信息(不支持):"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_tp_lf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:fadingEdge="horizontal"
+            android:padding="16dp"
+            android:singleLine="true"
+            android:text="左前轮:无数据"
+            android:textColor="@color/set_view_title"
+            android:textSize="16sp" />
+
+        <View style="@style/Interval" />
+
+        <TextView
+            android:id="@+id/tv_tp_rf"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:fadingEdge="horizontal"
+            android:padding="16dp"
+            android:singleLine="true"
+            android:text="右前轮:无数据"
+            android:textColor="@color/set_view_title"
+            android:textSize="16sp" />
+
+        <View style="@style/Interval" />
+
+        <TextView
+            android:id="@+id/tv_tp_lb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:fadingEdge="horizontal"
+            android:padding="16dp"
+            android:singleLine="true"
+            android:text="左后轮::无数据"
+            android:textColor="@color/set_view_title"
+            android:textSize="16sp" />
+
+        <View style="@style/Interval" />
+
+        <TextView
+            android:id="@+id/tv_tp_rb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:fadingEdge="horizontal"
+            android:padding="16dp"
+            android:singleLine="true"
+            android:text="右后轮:无数据"
+            android:textColor="@color/set_view_title"
+            android:textSize="16sp" />
+
+        <View style="@style/Interval" />
+    </LinearLayout>
+</ScrollView>

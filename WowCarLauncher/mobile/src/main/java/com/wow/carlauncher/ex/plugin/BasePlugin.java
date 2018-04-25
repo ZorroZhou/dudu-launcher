@@ -2,7 +2,7 @@ package com.wow.carlauncher.ex.plugin;
 
 import android.content.Context;
 
-import com.wow.carlauncher.common.ex.ContextEx;
+import com.wow.carlauncher.ex.ContextEx;
 
 import org.xutils.x;
 

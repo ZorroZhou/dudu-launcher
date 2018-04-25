@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.google.common.primitives.Shorts;
-import com.wow.carlauncher.common.ex.event.BleEventDeviceChange;
+import com.wow.carlauncher.ex.manage.event.BleEventDeviceChange;
 import com.wow.carlauncher.ex.plugin.console.ConsolePlugin;
 import com.wow.carlauncher.ex.plugin.SimulateDoubleClickUtil;
 import com.wow.carlauncher.ex.plugin.console.event.PConsoleEventCallState;

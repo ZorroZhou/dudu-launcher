@@ -8,7 +8,7 @@ import android.content.IntentFilter;
 import android.provider.Settings;
 import android.util.Log;
 
-import com.wow.carlauncher.common.ex.ToastManage;
+import com.wow.carlauncher.ex.manage.ToastManage;
 import com.wow.carlauncher.ex.plugin.console.ConsoleProtoclListener;
 import com.wow.carlauncher.ex.plugin.console.ConsoleProtocl;
 

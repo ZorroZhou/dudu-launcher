@@ -12,7 +12,7 @@ import com.wow.carlauncher.CarLauncherApplication;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.activity.LockActivity;
 import com.wow.carlauncher.common.CommonData;
-import com.wow.carlauncher.plugin11.console.ConsolePlugin;
+import com.wow.carlauncher.ex.plugin.console.ConsolePlugin;
 import com.wow.frame.util.SharedPreUtil;
 
 /**

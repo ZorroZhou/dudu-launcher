@@ -20,13 +20,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.wow.carlauncher.plugin11.amapcar.AMapCarPlugin;
-import com.wow.carlauncher.plugin11.amapcar.event.PAmapEventNavInfo;
-import com.wow.carlauncher.plugin11.amapcar.event.PAmapEventState;
-import com.wow.carlauncher.plugin11.music.MusicPlugin;
-import com.wow.carlauncher.plugin11.music.event.PMusicEventInfo;
-import com.wow.carlauncher.plugin11.music.event.PMusicEventProgress;
-import com.wow.carlauncher.plugin11.music.event.PMusicEventState;
+import com.wow.carlauncher.ex.plugin.amapcar.AMapCarPlugin;
+import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventNavInfo;
+import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventState;
+import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
+import com.wow.carlauncher.ex.plugin.music.event.PMusicEventInfo;
+import com.wow.carlauncher.ex.plugin.music.event.PMusicEventProgress;
+import com.wow.carlauncher.ex.plugin.music.event.PMusicEventState;
 import com.wow.frame.util.AppUtil;
 import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.DateUtil;
@@ -46,7 +46,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import static com.wow.carlauncher.common.CommonData.*;
-import static com.wow.carlauncher.plugin11.amapcar.AMapCarConstant.*;
+import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.*;
 
 public class PopupWin {
     private static class SingletonHolder {

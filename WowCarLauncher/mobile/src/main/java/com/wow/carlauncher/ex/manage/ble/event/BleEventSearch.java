@@ -1,4 +1,4 @@
-package com.wow.carlauncher.ex.manage.event;
+package com.wow.carlauncher.ex.manage.ble.event;
 
 /**
  * Created by 10124 on 2018/4/22.

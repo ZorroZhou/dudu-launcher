@@ -6,12 +6,13 @@ import android.content.IntentFilter;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.wow.carlauncher.ex.plugin.BasePlugin;
+import com.wow.carlauncher.ex.ContextEx;
 import com.wow.frame.util.AppUtil;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.inuker.bluetooth.library.BluetoothService.getContext;
 import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.*;
 import static com.wow.carlauncher.ex.plugin.amapcar.AMapCartReceiver.GETHC_NEXT_TO_NAVI;
 
@@ -19,7 +20,7 @@ import static com.wow.carlauncher.ex.plugin.amapcar.AMapCartReceiver.GETHC_NEXT_
  * Created by 10124 on 2017/11/4.
  */
 
-public class AMapCarPlugin extends BasePlugin {
+public class AMapCarPlugin extends ContextEx {
     public static final String TAG = "AMapCarPlugin";
     private static AMapCarPlugin self;
 
@@ -35,7 +36,7 @@ public class AMapCarPlugin extends BasePlugin {
     }
 
     public void init(Context context) {
-        super.init(context);
+        setContext(context);
         amapReceiver = new AMapCartReceiver(this);
 
         IntentFilter intentFilter = new IntentFilter();

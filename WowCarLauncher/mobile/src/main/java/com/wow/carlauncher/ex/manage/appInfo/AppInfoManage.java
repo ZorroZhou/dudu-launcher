@@ -1,9 +1,9 @@
-package com.wow.carlauncher.common;
+package com.wow.carlauncher.ex.manage.appInfo;
 
 import android.content.Context;
 
 import com.wow.frame.util.AppUtil;
-import com.wow.carlauncher.activity.launcher.event.LauncherAppRefreshEvent;
+import com.wow.carlauncher.ex.manage.appInfo.event.LauncherAppRefreshEvent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.xutils.x;

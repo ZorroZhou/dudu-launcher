@@ -1,4 +1,4 @@
-package com.wow.carlauncher.ex.manage;
+package com.wow.carlauncher.ex.manage.ble;
 
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
@@ -8,9 +8,10 @@ import android.content.Context;
 import android.util.Log;
 
 import com.inuker.bluetooth.library.BluetoothClient;
-import com.wow.carlauncher.ex.manage.event.BleEventDeviceChange;
-import com.wow.carlauncher.ex.manage.event.BleEventSearch;
+import com.wow.carlauncher.ex.manage.ble.event.BleEventDeviceChange;
+import com.wow.carlauncher.ex.manage.ble.event.BleEventSearch;
 import com.wow.carlauncher.ex.ContextEx;
+import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.frame.util.CommonUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -45,7 +46,6 @@ public class BleManage extends ContextEx {
     public void init(Context context) {
         setContext(context);
         bluetoothClient = new BluetoothClient(context);
-
         bluetoothDevices = Collections.synchronizedList(new ArrayList<BluetoothDeviceEx>());
         BluetoothManager mBluetoothManager = (BluetoothManager) getContext().getSystemService(Context.BLUETOOTH_SERVICE);
         if (mBluetoothManager != null) {
@@ -207,9 +207,5 @@ public class BleManage extends ContextEx {
 
         private BluetoothDevice bluetoothDevice;
         private Long findTime;
-    }
-
-    public interface BleDeviceSearchListener {
-        void deviceListChange(List<BluetoothDevice> bluetoothDevices);
     }
 }

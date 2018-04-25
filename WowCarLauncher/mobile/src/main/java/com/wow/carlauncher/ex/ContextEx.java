@@ -2,6 +2,8 @@ package com.wow.carlauncher.ex;
 
 import android.content.Context;
 
+import org.greenrobot.eventbus.EventBus;
+
 /**
  * Created by 10124 on 2018/4/21.
  */
@@ -22,5 +24,9 @@ public class ContextEx {
 
     public ContextEx(Context context) {
         this.context = context;
+    }
+
+    public void postEvent(Object e) {
+        EventBus.getDefault().post(e);
     }
 }

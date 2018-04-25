@@ -12,10 +12,11 @@ import com.inuker.bluetooth.library.connect.response.BleNotifyResponse;
 import com.inuker.bluetooth.library.connect.response.BleWriteResponse;
 import com.inuker.bluetooth.library.model.BleGattProfile;
 import com.wow.carlauncher.common.CommonData;
-import com.wow.carlauncher.ex.manage.BleManage;
-import com.wow.carlauncher.ex.manage.ToastManage;
-import com.wow.carlauncher.ex.manage.event.BleEventDeviceChange;
-import com.wow.carlauncher.ex.plugin.BasePlugin;
+import com.wow.carlauncher.ex.ContextEx;
+import com.wow.carlauncher.ex.manage.ble.BleManage;
+import com.wow.carlauncher.ex.manage.time.event.MTimeHSecondEvent;
+import com.wow.carlauncher.ex.manage.toast.ToastManage;
+import com.wow.carlauncher.ex.manage.ble.event.BleEventDeviceChange;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarInfo;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarTp;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventConnect;
@@ -25,7 +26,6 @@ import com.wow.frame.util.SharedPreUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
-import org.xutils.x;
 
 import java.util.UUID;
 
@@ -38,7 +38,7 @@ import static com.wow.carlauncher.common.CommonData.SDATA_OBD_CONTROLLER;
  * Created by 10124 on 2017/11/4.
  */
 
-public class ObdPlugin extends BasePlugin {
+public class ObdPlugin extends ContextEx {
     public static final String TAG = "WOW_CAR_OBD";
 
     private static ObdPlugin self;
@@ -107,7 +107,7 @@ public class ObdPlugin extends BasePlugin {
     };
 
     public void init(Context context) {
-        super.init(context);
+        setContext(context);
         options = new BleConnectOptions.Builder()
                 .setConnectRetry(Integer.MAX_VALUE)
                 .setConnectTimeout(5000)   // 连接超时5s
@@ -225,6 +225,15 @@ public class ObdPlugin extends BasePlugin {
                 Log.d(TAG, "扫描到绑定的方控: " + fkaddress);
                 connect();
             }
+        }
+    }
+
+    @Subscribe
+    public void onEventAsync(final MTimeHSecondEvent event) {
+        Log.d(TAG, "OBD检查连接情况! ");
+        String fkaddress = SharedPreUtil.getSharedPreString(CommonData.SDATA_FANGKONG_ADDRESS);
+        if (CommonUtil.isNotNull(fkaddress)) {
+
         }
     }
 }

@@ -4,7 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.wow.carlauncher.common.AppInfoManage;
+import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 
 /**
  * Created by 10124 on 2017/11/13.

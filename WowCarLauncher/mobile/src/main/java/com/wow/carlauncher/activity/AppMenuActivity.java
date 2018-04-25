@@ -14,10 +14,10 @@ import com.wow.frame.util.AppUtil.AppInfo;
 import com.wow.frame.util.SharedPreUtil;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.activity.adapter.AllAppAdapter;
-import com.wow.carlauncher.common.AppInfoManage;
+import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.common.base.BaseActivity;
 import com.wow.carlauncher.common.CommonData;
-import com.wow.carlauncher.activity.launcher.event.LauncherAppRefreshEvent;
+import com.wow.carlauncher.ex.manage.appInfo.event.LauncherAppRefreshEvent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

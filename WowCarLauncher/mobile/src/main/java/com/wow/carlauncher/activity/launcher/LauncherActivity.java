@@ -14,7 +14,7 @@ import android.widget.FrameLayout;
 
 import com.wow.carlauncher.activity.AppSelectActivity;
 import com.wow.carlauncher.activity.launcher.view.LDockView;
-import com.wow.carlauncher.ex.manage.ToastManage;
+import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.console.event.PConsoleEventLightState;
 import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.SharedPreUtil;

@@ -2,7 +2,7 @@ package com.wow.carlauncher.ex.plugin.console;
 
 import android.content.Context;
 
-import com.wow.carlauncher.ex.plugin.BasePlugin;
+import com.wow.carlauncher.ex.ContextEx;
 import com.wow.carlauncher.ex.plugin.console.event.PConsoleEventCallState;
 import com.wow.carlauncher.ex.plugin.console.event.PConsoleEventLightState;
 import com.wow.frame.util.SharedPreUtil;
@@ -17,7 +17,7 @@ import static com.wow.carlauncher.common.CommonData.SDATA_CONSOLE_MARK;
  * Created by 10124 on 2017/11/9.
  */
 
-public class ConsolePlugin extends BasePlugin {
+public class ConsolePlugin extends ContextEx {
     private static ConsolePlugin self;
 
     public static ConsolePlugin self() {
@@ -31,7 +31,7 @@ public class ConsolePlugin extends BasePlugin {
     }
 
     public void init(Context context) {
-        super.init(context);
+        setContext(context);
         loadConsole();
     }
 

@@ -1,4 +1,4 @@
-package com.wow.carlauncher.ex.manage.event;
+package com.wow.carlauncher.ex.manage.ble.event;
 
 import android.bluetooth.BluetoothDevice;
 

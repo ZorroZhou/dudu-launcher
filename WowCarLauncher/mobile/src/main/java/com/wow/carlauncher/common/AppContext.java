@@ -3,8 +3,10 @@ package com.wow.carlauncher.common;
 import android.app.Application;
 
 import com.wow.carlauncher.CarLauncherApplication;
-import com.wow.carlauncher.ex.manage.BleManage;
-import com.wow.carlauncher.ex.manage.ToastManage;
+import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
+import com.wow.carlauncher.ex.manage.ble.BleManage;
+import com.wow.carlauncher.ex.manage.time.TimeManage;
+import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.console.ConsolePlugin;
 import com.wow.carlauncher.ex.plugin.amapcar.AMapCarPlugin;
 import com.wow.carlauncher.ex.plugin.fk.FangkongPlugin;
@@ -58,10 +60,10 @@ public class AppContext implements SWebServiceDeclare, SAppDeclare {
 
         //通知工具
         ToastManage.self().init(app);
+        TimeManage.self().init(app);
         //蓝牙客户端
         BleManage.self().init(app);
         BleManage.self().startSearch();
-
 
 
         AMapCarPlugin.self().init(app);

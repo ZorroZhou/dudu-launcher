@@ -3,7 +3,7 @@ package com.wow.carlauncher.ex.plugin.music;
 import android.content.Context;
 import android.graphics.Bitmap;
 
-import com.wow.carlauncher.ex.plugin.BasePlugin;
+import com.wow.carlauncher.ex.ContextEx;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventCover;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventInfo;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventProgress;
@@ -19,7 +19,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import static com.wow.carlauncher.common.CommonData.SDATA_MUSIC_CONTROLLER;
 
-public class MusicPlugin extends BasePlugin{
+public class MusicPlugin extends ContextEx {
     private static MusicPlugin self;
 
     public static MusicPlugin self() {
@@ -38,7 +38,7 @@ public class MusicPlugin extends BasePlugin{
     private boolean playing = false;
 
     public void init(Context context) {
-        super.init(context);
+        setContext(context);
         setController(MusicControllerEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_MUSIC_CONTROLLER, MusicControllerEnum.SYSMUSIC.getId())));
     }
 

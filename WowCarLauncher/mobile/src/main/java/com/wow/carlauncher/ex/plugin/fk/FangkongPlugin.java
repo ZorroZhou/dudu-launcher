@@ -11,10 +11,11 @@ import com.inuker.bluetooth.library.connect.response.BleConnectResponse;
 import com.inuker.bluetooth.library.connect.response.BleNotifyResponse;
 import com.inuker.bluetooth.library.model.BleGattProfile;
 import com.wow.carlauncher.common.CommonData;
-import com.wow.carlauncher.ex.manage.BleManage;
-import com.wow.carlauncher.ex.manage.ToastManage;
-import com.wow.carlauncher.ex.manage.event.BleEventDeviceChange;
-import com.wow.carlauncher.ex.plugin.BasePlugin;
+import com.wow.carlauncher.ex.ContextEx;
+import com.wow.carlauncher.ex.manage.ble.BleManage;
+import com.wow.carlauncher.ex.manage.time.event.MTimeHSecondEvent;
+import com.wow.carlauncher.ex.manage.toast.ToastManage;
+import com.wow.carlauncher.ex.manage.ble.event.BleEventDeviceChange;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventConnect;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventModel;
 import com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol;
@@ -36,7 +37,7 @@ import static com.wow.carlauncher.common.CommonData.TAG;
  * Created by 10124 on 2017/11/4.
  */
 
-public class FangkongPlugin extends BasePlugin {
+public class FangkongPlugin extends ContextEx {
 
     private static FangkongPlugin self;
 
@@ -54,7 +55,7 @@ public class FangkongPlugin extends BasePlugin {
     }
 
     public void init(Context context) {
-        super.init(context);
+        setContext(context);
 
         options = new BleConnectOptions.Builder()
                 .setConnectRetry(Integer.MAX_VALUE)
@@ -180,6 +181,15 @@ public class FangkongPlugin extends BasePlugin {
                 Log.d(TAG, "扫描到绑定的方控: " + fkaddress);
                 connect();
             }
+        }
+    }
+
+    @Subscribe
+    public void onEventAsync(final MTimeHSecondEvent event) {
+        Log.d(TAG, "方控检查连接情况! ");
+        String fkaddress = SharedPreUtil.getSharedPreString(CommonData.SDATA_FANGKONG_ADDRESS);
+        if (CommonUtil.isNotNull(fkaddress)) {
+
         }
     }
 }

@@ -12,7 +12,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.wow.carlauncher.R;
-import com.wow.carlauncher.common.AppInfoManage;
+import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.popupWindow.event.PEventFSRefresh;

@@ -50,7 +50,7 @@
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:src="@mipmap/ic_jia"
+                    android:src="@mipmap/ic_jia2"
                     app:layout_heightPercent="50%h"
                     app:layout_widthPercent="50%h" />
             </com.zhy.android.percent.support.PercentLinearLayout>
@@ -65,7 +65,7 @@
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:src="@mipmap/ic_gongsi"
+                    android:src="@mipmap/ic_gongsi2"
                     app:layout_heightPercent="50%h"
                     app:layout_widthPercent="50%h" />
             </com.zhy.android.percent.support.PercentLinearLayout>

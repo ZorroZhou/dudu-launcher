@@ -1,9 +1,6 @@
 package com.wow.carlauncher.ex.manage.ble;
 
 import android.annotation.SuppressLint;
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.util.Log;
 
@@ -12,8 +9,6 @@ import com.inuker.bluetooth.library.beacon.Beacon;
 import com.inuker.bluetooth.library.search.SearchRequest;
 import com.inuker.bluetooth.library.search.SearchResult;
 import com.inuker.bluetooth.library.search.response.SearchResponse;
-import com.wow.carlauncher.ex.manage.ble.event.BleEventDeviceChange;
-import com.wow.carlauncher.ex.manage.ble.event.BleEventSearch;
 import com.wow.carlauncher.ex.ContextEx;
 
 import org.xutils.x;

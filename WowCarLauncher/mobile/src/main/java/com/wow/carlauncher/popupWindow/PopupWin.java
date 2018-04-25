@@ -229,7 +229,7 @@ public class PopupWin {
 
     private View amapView() {
         if (amapView == null) {
-            amapView = (FrameLayout) View.inflate(context, R.layout.plugin_amap_popup, null);
+            amapView = (FrameLayout) View.inflate(context, R.layout.popup_amap, null);
             View.OnClickListener clickListener = new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -263,7 +263,7 @@ public class PopupWin {
 
     private View musicView() {
         if (musicView == null) {
-            musicView = (LinearLayout) View.inflate(context, R.layout.plugin_music_popup, null);
+            musicView = (LinearLayout) View.inflate(context, R.layout.popup_music, null);
             View.OnClickListener clickListener = new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/l_item_bg">
+    android:background="#11000000">
 
     <com.zhy.android.percent.support.PercentLinearLayout
         android:id="@+id/ll_dock1"

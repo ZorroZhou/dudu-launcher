@@ -14,15 +14,13 @@ import com.wow.carlauncher.common.WeatherIconUtil;
 import com.wow.carlauncher.common.amapWebservice.WebService;
 import com.wow.carlauncher.common.amapWebservice.res.WeatherRes;
 import com.wow.carlauncher.activity.launcher.event.LEventCityRefresh;
+import com.wow.carlauncher.ex.manage.time.event.MTime30MinuteEvent;
 import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.SharedPreUtil;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 import static com.wow.carlauncher.common.CommonData.TAG;
 
@@ -55,42 +53,7 @@ public class LWeatherView extends LBaseView {
 
     private void initView() {
         addContent(R.layout.content_l_weather);
-    }
-
-    @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        startTimer();
-    }
-
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        stopTimer();
-    }
-
-    private Timer timer;
-    private int sanshifenzhong = 1000 * 60 * 30;
-
-    private void startTimer() {
-        Log.e(TAG, "startTimer: ");
-        stopTimer();
-        timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                refreshWeather();
-            }
-        }, sanshifenzhong - System.currentTimeMillis() % sanshifenzhong, sanshifenzhong);
         refreshWeather();
-    }
-
-    private void stopTimer() {
-        if (timer != null) {
-            Log.e(TAG, "stopTimer: ");
-            timer.cancel();
-            timer = null;
-        }
     }
 
     private void refreshWeather() {
@@ -135,4 +98,11 @@ public class LWeatherView extends LBaseView {
     public void onEventMainThread(LEventCityRefresh event) {
         refreshWeather();
     }
+
+    @Subscribe
+    public void onEventMainThread(MTime30MinuteEvent event) {
+        refreshWeather();
+    }
+
+
 }

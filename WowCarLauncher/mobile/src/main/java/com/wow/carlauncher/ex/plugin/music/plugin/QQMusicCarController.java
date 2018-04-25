@@ -7,14 +7,16 @@ import android.content.IntentFilter;
 import android.net.Uri;
 
 import com.google.gson.Gson;
+import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 import com.wow.carlauncher.ex.plugin.music.MusicController;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import com.wow.frame.SFrame;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.List;
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Created by 10124 on 2017/10/26.
@@ -40,7 +42,7 @@ public class QQMusicCarController extends MusicController {
         intentFilter.addAction("com.android.music.playstatechanged");
         this.context.registerReceiver(mReceiver, intentFilter);
 
-        startUpdate();
+        EventBus.getDefault().register(this);
     }
 
     public void play() {
@@ -76,28 +78,13 @@ public class QQMusicCarController extends MusicController {
 
     @Override
     public void destroy() {
-        stopUpdate();
+        EventBus.getDefault().unregister(this);
         context.unregisterReceiver(mReceiver);
     }
 
-    private Timer timer;
-
-    private void startUpdate() {
-        stopUpdate();
-        timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                refreshInfo();
-            }
-        }, 0, 1000);
-    }
-
-    private void stopUpdate() {
-        if (timer != null) {
-            timer.cancel();
-            timer = null;
-        }
+    @Subscribe
+    public void onEventMainThread(final MTimeSecondEvent event) {
+        refreshInfo();
     }
 
     private boolean waitMsg = false;

@@ -7,7 +7,6 @@ import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,9 +14,8 @@ import android.widget.TextView;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.activity.CarInfoActivity;
 import com.wow.carlauncher.activity.set.SetActivity;
-import com.wow.carlauncher.ex.manage.ble.BleManage;
-import com.wow.carlauncher.ex.manage.ble.event.BleEventSearch;
 import com.wow.carlauncher.event.EventWifiState;
+import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventConnect;
 import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarTp;
@@ -28,13 +26,8 @@ import com.wow.frame.util.NetWorkUtil;
 import org.greenrobot.eventbus.Subscribe;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
-import org.xutils.x;
 
 import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import static com.wow.carlauncher.common.CommonData.TAG;
 
 /**
  * Created by 10124 on 2018/4/22.
@@ -62,9 +55,6 @@ public class LPromptView extends LBaseView {
     @ViewInject(R.id.iv_obd)
     private ImageView iv_obd;
 
-    @ViewInject(R.id.iv_ble)
-    private ImageView iv_ble;
-
     @ViewInject(R.id.iv_fk)
     private ImageView iv_fk;
 
@@ -73,13 +63,10 @@ public class LPromptView extends LBaseView {
 
     private void initView() {
         addContent(R.layout.content_l_prompt);
-
-
         refreshWifiState();
-        refreshBleState();
     }
 
-    @Event(value = {R.id.iv_set, R.id.iv_wifi, R.id.iv_ble, R.id.iv_obd})
+    @Event(value = {R.id.iv_set, R.id.iv_wifi, R.id.iv_obd})
     private void clickEvent(View view) {
         switch (view.getId()) {
             case R.id.iv_set: {
@@ -90,24 +77,11 @@ public class LPromptView extends LBaseView {
                 getActivity().startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS)); //直接进入手机中的wifi网络设置界面
                 break;
             }
-            case R.id.iv_ble: {
-//                /BleManage.self().startSearch();
-                Log.d(TAG, "clickEvent: 重新开启扫描");
-                break;
-            }
             case R.id.iv_obd: {
                 getActivity().startActivity(new Intent(getContext(), CarInfoActivity.class));
                 break;
             }
         }
-    }
-
-    private void refreshBleState() {
-//        if (BleManage.self().isSearching()) {
-//            iv_ble.setVisibility(VISIBLE);
-//        } else {
-//            iv_ble.setVisibility(GONE);
-//        }
     }
 
     private void refreshWifiState() {
@@ -121,53 +95,17 @@ public class LPromptView extends LBaseView {
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        startTimer();
         refreshWifiState();
-        refreshBleState();
-    }
-
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        stopTimer();
-    }
-
-    private Timer timer;
-
-    private void startTimer() {
-        Log.e(TAG, "startTimer: ");
-        stopTimer();
-        timer = new Timer();
-        int yifenzhong = 1000 * 60;
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                setTime();
-            }
-        }, yifenzhong - System.currentTimeMillis() % yifenzhong, yifenzhong);
-        setTime();
-    }
-
-    private void setTime() {
-        x.task().autoPost(new Runnable() {
-            @Override
-            public void run() {
-                Date d = new Date();
-                LPromptView.this.tv_time.setText(DateUtil.dateToString(d, "HH:mm   " + DateUtil.getWeekOfDate(d) + " yyyy/MM/dd "));
-            }
-        });
-    }
-
-    private void stopTimer() {
-        if (timer != null) {
-            Log.e(TAG, "stopTimer: ");
-            timer.cancel();
-            timer = null;
-        }
     }
 
     private Activity getActivity() {
         return (Activity) getContext();
+    }
+
+    @Subscribe
+    public void onEventMainThread(final MTimeSecondEvent event) {
+        Date d = new Date();
+        LPromptView.this.tv_time.setText(DateUtil.dateToString(d, "HH:mm   " + DateUtil.getWeekOfDate(d) + " yyyy/MM/dd "));
     }
 
     @Subscribe
@@ -200,15 +138,6 @@ public class LPromptView extends LBaseView {
             iv_wifi.setVisibility(VISIBLE);
         } else {
             iv_wifi.setVisibility(GONE);
-        }
-    }
-
-    @Subscribe
-    public void onEventMainThread(final BleEventSearch event) {
-        if (event.isSearch()) {
-            iv_ble.setVisibility(VISIBLE);
-        } else {
-            iv_ble.setVisibility(GONE);
         }
     }
 

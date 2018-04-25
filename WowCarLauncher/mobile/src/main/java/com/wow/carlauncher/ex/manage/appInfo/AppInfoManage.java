@@ -1,9 +1,11 @@
 package com.wow.carlauncher.ex.manage.appInfo;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 
+import com.wow.carlauncher.ex.manage.ble.BleManage;
 import com.wow.frame.util.AppUtil;
-import com.wow.carlauncher.ex.manage.appInfo.event.LauncherAppRefreshEvent;
+import com.wow.carlauncher.ex.manage.appInfo.event.MAppInfoRefreshEvent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.xutils.x;
@@ -15,16 +17,17 @@ import java.util.List;
  */
 
 public class AppInfoManage {
-    private static AppInfoManage self;
+    private static class SingletonHolder {
+        @SuppressLint("StaticFieldLeak")
+        private static AppInfoManage instance = new AppInfoManage();
+    }
 
     public static AppInfoManage self() {
-        if (self == null) {
-            self = new AppInfoManage();
-        }
-        return self;
+        return AppInfoManage.SingletonHolder.instance;
     }
 
     private AppInfoManage() {
+        super();
     }
 
     private Context context;
@@ -45,7 +48,7 @@ public class AppInfoManage {
             @Override
             public void run() {
                 appInfos = AppUtil.getAllApp(context);
-                EventBus.getDefault().post(new LauncherAppRefreshEvent());
+                EventBus.getDefault().post(new MAppInfoRefreshEvent());
             }
         });
     }

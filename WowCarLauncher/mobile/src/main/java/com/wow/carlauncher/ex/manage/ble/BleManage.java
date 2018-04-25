@@ -8,6 +8,10 @@ import android.content.Context;
 import android.util.Log;
 
 import com.inuker.bluetooth.library.BluetoothClient;
+import com.inuker.bluetooth.library.beacon.Beacon;
+import com.inuker.bluetooth.library.search.SearchRequest;
+import com.inuker.bluetooth.library.search.SearchResult;
+import com.inuker.bluetooth.library.search.response.SearchResponse;
 import com.wow.carlauncher.ex.manage.ble.event.BleEventDeviceChange;
 import com.wow.carlauncher.ex.manage.ble.event.BleEventSearch;
 import com.wow.carlauncher.ex.ContextEx;
@@ -53,9 +57,6 @@ public class BleManage extends ContextEx {
         } else {
             ToastManage.self().show("设备不支持蓝牙");
         }
-
-        bluetoothClient.closeBluetooth();
-        bluetoothClient.openBluetooth();
     }
 
     private BluetoothClient bluetoothClient;
@@ -115,20 +116,6 @@ public class BleManage extends ContextEx {
                 }
             }
         });
-    }
-
-    public void stopSearch() {
-        synchronized (locked) {
-            if (bluetoothAdapter == null) {
-                return;
-            }
-            if (searching) {
-                bluetoothAdapter.stopLeScan(callback);
-                stopClearTimer();
-                searching = false;
-                EventBus.getDefault().post(new BleEventSearch().setSearch(false));
-            }
-        }
     }
 
     public void forceCallBack() {
@@ -207,5 +194,17 @@ public class BleManage extends ContextEx {
 
         private BluetoothDevice bluetoothDevice;
         private Long findTime;
+    }
+
+    public void searchBle(SearchResponse response) {
+        SearchRequest request = new SearchRequest.Builder()
+                .searchBluetoothLeDevice(3000, 3)   // 先扫BLE设备3次，每次3s
+                .build();
+
+        bluetoothClient.search(request, response);
+    }
+
+    public void stopSearch() {
+        bluetoothClient.stopSearch();
     }
 }

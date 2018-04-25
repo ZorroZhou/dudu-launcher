@@ -17,7 +17,7 @@ import com.wow.carlauncher.activity.adapter.AllAppAdapter;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.common.base.BaseActivity;
 import com.wow.carlauncher.common.CommonData;
-import com.wow.carlauncher.ex.manage.appInfo.event.LauncherAppRefreshEvent;
+import com.wow.carlauncher.ex.manage.appInfo.event.MAppInfoRefreshEvent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -122,7 +122,7 @@ public class AppMenuActivity extends BaseActivity implements AdapterView.OnItemC
     }
 
     @Subscribe
-    public void onEventMainThread(final LauncherAppRefreshEvent event) {
+    public void onEventMainThread(final MAppInfoRefreshEvent event) {
         loadData();
     }
 

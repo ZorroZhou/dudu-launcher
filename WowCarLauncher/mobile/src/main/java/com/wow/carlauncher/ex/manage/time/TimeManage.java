@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.wow.carlauncher.ex.ContextEx;
 import com.wow.carlauncher.ex.manage.time.event.MTimeHSecondEvent;
+import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -37,6 +38,7 @@ public class TimeManage extends ContextEx {
 
     private final static int HELF_SECOND = 500;
     private Timer timer;
+    private long timeMark = 0L;
 
     private void startTimer() {
         stopTimer();
@@ -45,6 +47,10 @@ public class TimeManage extends ContextEx {
             @Override
             public void run() {
                 postEvent(new MTimeHSecondEvent());
+                if (timeMark % 2 == 0) {
+                    postEvent(new MTimeSecondEvent());
+                }
+                timeMark++;
             }
         }, HELF_SECOND, HELF_SECOND);
     }

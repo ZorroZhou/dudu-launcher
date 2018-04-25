@@ -33,6 +33,7 @@ import static com.inuker.bluetooth.library.Constants.REQUEST_SUCCESS;
 import static com.inuker.bluetooth.library.Constants.STATUS_CONNECTED;
 import static com.inuker.bluetooth.library.Constants.STATUS_DEVICE_CONNECTED;
 import static com.wow.carlauncher.common.CommonData.SDATA_OBD_CONTROLLER;
+import static com.wow.carlauncher.common.CommonData.TAG;
 
 /**
  * Created by 10124 on 2017/11/4.
@@ -210,30 +211,12 @@ public class ObdPlugin extends ContextEx {
         return false;
     }
 
-
-    @Subscribe
-    public void onEventAsync(final BleEventDeviceChange event) {
-        String fkaddress = SharedPreUtil.getSharedPreString(CommonData.SDATA_FANGKONG_ADDRESS);
-        if (CommonUtil.isNotNull(fkaddress)) {
-            boolean have = false;
-            for (BluetoothDevice device : event.getBluetoothDevices()) {
-                if (device.getAddress().equals(fkaddress)) {
-                    have = true;
-                }
-            }
-            if (have) {
-                Log.d(TAG, "扫描到绑定的方控: " + fkaddress);
-                connect();
-            }
-        }
-    }
-
     @Subscribe
     public void onEventAsync(final MTimeHSecondEvent event) {
-        Log.d(TAG, "OBD检查连接情况! ");
-        String fkaddress = SharedPreUtil.getSharedPreString(CommonData.SDATA_FANGKONG_ADDRESS);
-        if (CommonUtil.isNotNull(fkaddress)) {
-
+        Log.d(TAG, "方控检查连接情况! ");
+        String fkaddress = SharedPreUtil.getSharedPreString(CommonData.SDATA_OBD_ADDRESS);
+        if (CommonUtil.isNotNull(fkaddress) && BleManage.self().client().getConnectStatus(fkaddress) != STATUS_DEVICE_CONNECTED) {
+            connect();
         }
     }
 }

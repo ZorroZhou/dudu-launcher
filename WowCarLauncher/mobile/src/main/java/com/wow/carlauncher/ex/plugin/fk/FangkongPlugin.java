@@ -168,28 +168,11 @@ public class FangkongPlugin extends ContextEx {
     }
 
     @Subscribe
-    public void onEventAsync(final BleEventDeviceChange event) {
-        String fkaddress = SharedPreUtil.getSharedPreString(CommonData.SDATA_FANGKONG_ADDRESS);
-        if (CommonUtil.isNotNull(fkaddress)) {
-            boolean have = false;
-            for (BluetoothDevice device : event.getBluetoothDevices()) {
-                if (device.getAddress().equals(fkaddress)) {
-                    have = true;
-                }
-            }
-            if (have) {
-                Log.d(TAG, "扫描到绑定的方控: " + fkaddress);
-                connect();
-            }
-        }
-    }
-
-    @Subscribe
     public void onEventAsync(final MTimeHSecondEvent event) {
         Log.d(TAG, "方控检查连接情况! ");
         String fkaddress = SharedPreUtil.getSharedPreString(CommonData.SDATA_FANGKONG_ADDRESS);
-        if (CommonUtil.isNotNull(fkaddress)) {
-
+        if (CommonUtil.isNotNull(fkaddress) && BleManage.self().client().getConnectStatus(fkaddress) != STATUS_DEVICE_CONNECTED) {
+            connect();
         }
     }
 }

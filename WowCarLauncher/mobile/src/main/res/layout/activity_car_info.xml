@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white">
 
     <LinearLayout
-        android:id="@+id/ll_set"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@android:color/white"
         android:orientation="vertical"
         android:padding="10dp">
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -19,7 +18,8 @@
             android:paddingTop="16dp"
             android:text="车辆信息"
             android:textColor="@color/colorPrimary"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            tools:ignore="RtlHardcoded" />
 
         <TextView
             android:id="@+id/tv_info_speed"
@@ -78,6 +78,7 @@
         <View style="@style/Interval" />
 
         <TextView
+            android:id="@+id/tv_tp_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingLeft="16dp"

@@ -22,7 +22,7 @@ public class AboutActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        setTitle("系统设置");
+        setTitle("关于我们");
         about.setText("新功能:\n" +
                 "1,增加Poweramp的插件支持.\n" +
                 "2,修复了qq音乐车机版插件的bug.\n" +

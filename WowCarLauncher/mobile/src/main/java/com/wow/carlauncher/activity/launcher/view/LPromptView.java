@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.activity.CarInfoActivity;
 import com.wow.carlauncher.activity.set.SetActivity;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
 import com.wow.carlauncher.ex.manage.ble.event.BleEventSearch;
@@ -78,7 +79,7 @@ public class LPromptView extends LBaseView {
         refreshBleState();
     }
 
-    @Event(value = {R.id.iv_set, R.id.iv_wifi, R.id.iv_ble})
+    @Event(value = {R.id.iv_set, R.id.iv_wifi, R.id.iv_ble, R.id.iv_obd})
     private void clickEvent(View view) {
         switch (view.getId()) {
             case R.id.iv_set: {
@@ -92,6 +93,10 @@ public class LPromptView extends LBaseView {
             case R.id.iv_ble: {
 //                /BleManage.self().startSearch();
                 Log.d(TAG, "clickEvent: 重新开启扫描");
+                break;
+            }
+            case R.id.iv_obd: {
+                getActivity().startActivity(new Intent(getContext(), CarInfoActivity.class));
                 break;
             }
         }

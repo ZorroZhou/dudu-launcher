@@ -1,6 +1,5 @@
 package com.wow.carlauncher.ex.plugin.obd;
 
-import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.util.Log;
 
@@ -16,7 +15,6 @@ import com.wow.carlauncher.ex.ContextEx;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
 import com.wow.carlauncher.ex.manage.time.event.MTimeHSecondEvent;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
-import com.wow.carlauncher.ex.manage.ble.event.BleEventDeviceChange;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarInfo;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarTp;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventConnect;
@@ -33,7 +31,6 @@ import static com.inuker.bluetooth.library.Constants.REQUEST_SUCCESS;
 import static com.inuker.bluetooth.library.Constants.STATUS_CONNECTED;
 import static com.inuker.bluetooth.library.Constants.STATUS_DEVICE_CONNECTED;
 import static com.wow.carlauncher.common.CommonData.SDATA_OBD_CONTROLLER;
-import static com.wow.carlauncher.common.CommonData.TAG;
 
 /**
  * Created by 10124 on 2017/11/4.
@@ -59,16 +56,16 @@ public class ObdPlugin extends ContextEx {
 
     private ObdProtocol obdProtocol;
 
-    private PObdEventCarInfo lastPObdEventCarInfo;
+    private PObdEventCarInfo currentPObdEventCarInfo;
 
-    public PObdEventCarInfo getLastPObdEventCarInfo() {
-        return lastPObdEventCarInfo;
+    public PObdEventCarInfo getCurrentPObdEventCarInfo() {
+        return currentPObdEventCarInfo;
     }
 
-    private PObdEventCarTp lastPObdEventCarTp;
+    private PObdEventCarTp currentPObdEventCarTp;
 
-    public PObdEventCarTp getLastPObdEventCarTp() {
-        return lastPObdEventCarTp;
+    public PObdEventCarTp getCurrentPObdEventCarTp() {
+        return currentPObdEventCarTp;
     }
 
     private ObdProtocolListener obdProtocolListener = new ObdProtocolListener() {
@@ -87,8 +84,19 @@ public class ObdPlugin extends ContextEx {
 
         @Override
         public void carRunningInfo(final Integer speed, final Integer rev, final Integer waterTemp, final Integer oilConsumption) {
-            lastPObdEventCarInfo = new PObdEventCarInfo().setSpeed(speed).setRev(rev).setWaterTemp(waterTemp).setOilConsumption(oilConsumption);
-            postEvent(lastPObdEventCarInfo);
+            postEvent(new PObdEventCarInfo().setSpeed(speed).setRev(rev).setWaterTemp(waterTemp).setOilConsumption(oilConsumption));
+            if (speed != null) {
+                currentPObdEventCarInfo.setSpeed(speed);
+            }
+            if (rev != null) {
+                currentPObdEventCarInfo.setRev(rev);
+            }
+            if (waterTemp != null) {
+                currentPObdEventCarInfo.setWaterTemp(waterTemp);
+            }
+            if (oilConsumption != null) {
+                currentPObdEventCarInfo.setOilConsumption(oilConsumption);
+            }
         }
 
         @Override
@@ -96,12 +104,24 @@ public class ObdPlugin extends ContextEx {
                                         final Float rFTirePressure, final Integer rFTemp,
                                         final Float lBTirePressure, final Integer lBTemp,
                                         final Float rBTirePressure, final Integer rBTemp) {
-            lastPObdEventCarTp = new PObdEventCarTp()
+            postEvent(new PObdEventCarTp()
                     .setlBTirePressure(lBTirePressure).setlBTemp(lBTemp)
                     .setlFTirePressure(lFTirePressure).setlFTemp(lFTemp)
                     .setrBTirePressure(rBTirePressure).setrBTemp(rBTemp)
-                    .setrFTirePressure(rFTirePressure).setrFTemp(rFTemp);
-            postEvent(lastPObdEventCarTp);
+                    .setrFTirePressure(rFTirePressure).setrFTemp(rFTemp));
+
+            if (lFTirePressure != null) {
+                currentPObdEventCarTp.setlFTirePressure(lFTirePressure).setlFTemp(lFTemp);
+            }
+            if (lBTirePressure != null) {
+                currentPObdEventCarTp.setlBTirePressure(lBTirePressure).setlBTemp(lBTemp);
+            }
+            if (rBTirePressure != null) {
+                currentPObdEventCarTp.setrBTirePressure(rBTirePressure).setlFTemp(rBTemp);
+            }
+            if (rFTirePressure != null) {
+                currentPObdEventCarTp.setrFTirePressure(rFTirePressure).setrFTemp(rFTemp);
+            }
         }
     };
 
@@ -129,6 +149,9 @@ public class ObdPlugin extends ContextEx {
                 .setServiceDiscoverTimeout(5000)  // 发现服务超时5s
                 .build();
         EventBus.getDefault().register(this);
+
+        currentPObdEventCarInfo = new PObdEventCarInfo();
+        currentPObdEventCarTp = new PObdEventCarTp();
     }
 
     private boolean connecting = false;

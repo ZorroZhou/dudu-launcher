@@ -10,7 +10,7 @@ abstract class GdTask extends ObdTask {
     String firstTreat(String msg) {
         msg = msg.replace(" ", "");
         msg = msg.replace(getReqMessage(), "");
-        return msg;
+        return msg.trim();
     }
 
     @Override

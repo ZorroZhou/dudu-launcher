@@ -1,14 +1,17 @@
 package com.wow.carlauncher.ex.plugin.obd.protocol.gd;
 
+import android.util.Log;
+
 import com.wow.carlauncher.ex.plugin.obd.ObdTask;
 
+import static com.wow.carlauncher.common.CommonData.TAG;
 import static com.wow.carlauncher.ex.plugin.obd.protocol.gd.CommonCmd.CMD_RES_END;
 
 /**
  * Created by 10124 on 2018/4/20.
  */
 
-public class GetTpTask extends ObdTask {
+public class GetTpTask extends GdTask {
     public static final int LF = 0;
     public static final int RF = 1;
     public static final int LB = 2;
@@ -42,7 +45,7 @@ public class GetTpTask extends ObdTask {
     }
 
     @Override
-    public void writeRes(String msg) {
+    public void writeRes2(String msg) {
         byte[] msgByte = msg.getBytes();
         float f1 = ((float) Integer.parseInt(new String(new byte[]{msgByte[3]}), 16)) / 10.0F + Integer.parseInt(new String(new byte[]{msgByte[4], msgByte[5]}), 16);
         tp = (float) (f1 / 14.5);

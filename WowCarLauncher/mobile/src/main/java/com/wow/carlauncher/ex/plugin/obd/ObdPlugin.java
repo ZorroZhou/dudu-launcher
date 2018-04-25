@@ -116,11 +116,11 @@ public class ObdPlugin extends ContextEx {
             if (lBTirePressure != null) {
                 currentPObdEventCarTp.setlBTirePressure(lBTirePressure).setlBTemp(lBTemp);
             }
-            if (rBTirePressure != null) {
-                currentPObdEventCarTp.setrBTirePressure(rBTirePressure).setlFTemp(rBTemp);
-            }
             if (rFTirePressure != null) {
                 currentPObdEventCarTp.setrFTirePressure(rFTirePressure).setrFTemp(rFTemp);
+            }
+            if (rBTirePressure != null) {
+                currentPObdEventCarTp.setrBTirePressure(rBTirePressure).setrBTemp(rBTemp);
             }
         }
     };

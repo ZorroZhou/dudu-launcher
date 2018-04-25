@@ -13,7 +13,7 @@
         android:layout_height="0dp"
         android:background="@color/toolbar_bg"
         android:fitsSystemWindows="true"
-        app:layout_heightPercent="15%h">
+        app:layout_heightPercent="10%h">
 
         <ImageView
             android:id="@+id/iv_back"
@@ -30,7 +30,8 @@
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            app:layout_textSizePercent="60%h" />
     </com.zhy.android.percent.support.PercentRelativeLayout>
 
     <RelativeLayout

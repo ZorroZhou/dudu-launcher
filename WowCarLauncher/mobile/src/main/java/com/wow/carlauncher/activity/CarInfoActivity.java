@@ -57,6 +57,10 @@ public class CarInfoActivity extends BaseActivity {
     @Override
     public void init() {
         setContent(R.layout.activity_car_info);
+    }
+
+    @Override
+    public void initView() {
         setTitle("车辆信息");
 
         onEventMainThread(ObdPlugin.self().getCurrentPObdEventCarInfo());
@@ -114,16 +118,16 @@ public class CarInfoActivity extends BaseActivity {
             String msg = "左前轮:" + String.format(Locale.CHINA, "%.1f", event.getlFTirePressure()) + "/" + event.getlFTemp() + "℃";
             tv_tp_lf.setText(msg);
         }
+        if (event.getlBTemp() != null && event.getlBTirePressure() != null) {
+            String msg = "左后轮:" + String.format(Locale.CHINA, "%.1f", event.getlBTirePressure()) + "/" + event.getlBTemp() + "℃";
+            tv_tp_lb.setText(msg);
+        }
 
         if (event.getrFTirePressure() != null && event.getrFTemp() != null) {
             String msg = "右前轮:" + String.format(Locale.CHINA, "%.1f", event.getrFTirePressure()) + "/" + event.getrFTemp() + "℃";
             tv_tp_rf.setText(msg);
         }
 
-        if (event.getlBTemp() != null && event.getlBTirePressure() != null) {
-            String msg = "左后轮:" + String.format(Locale.CHINA, "%.1f", event.getlBTirePressure()) + "/" + event.getlBTemp() + "℃";
-            tv_tp_lb.setText(msg);
-        }
 
         if (event.getrBTirePressure() != null && event.getrBTemp() != null) {
             String msg = "右后轮:" + String.format(Locale.CHINA, "%.1f", event.getrBTirePressure()) + "/" + event.getrBTemp() + "℃";

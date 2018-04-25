@@ -3,6 +3,7 @@ package com.wow.carlauncher.ex.plugin.fk;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.inuker.bluetooth.library.Constants;
 import com.inuker.bluetooth.library.connect.listener.BleConnectStatusListener;
@@ -86,6 +87,7 @@ public class FangkongPlugin extends ContextEx {
     private FangkongProtocolListener changeModelCallBack = new FangkongProtocolListener() {
         @Override
         public void changeModel(final String name) {
+            ToastManage.self().show("方控切换至:" + name);
             EventBus.getDefault().post(new PFkEventModel().setModelName(name));
         }
 

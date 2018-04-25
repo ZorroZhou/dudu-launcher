@@ -91,6 +91,7 @@ public class GoodDriverTPProtocol extends ObdProtocol {
     @Override
     public synchronized void receiveMessage(byte[] message) {
         resMessageTemp.append(new String(message));
+        Log.d(TAG, "receiveMessage: " + resMessageTemp);
         if (resMessageTemp.indexOf(">") > -1) {
             //拿出来消息进行回掉
             setTaskRes(resMessageTemp.substring(0, resMessageTemp.indexOf(">")));
@@ -126,6 +127,7 @@ public class GoodDriverTPProtocol extends ObdProtocol {
                 } else if (t.getMark() == LB) {
                     listener.carTirePressureInfo(null, null, null, null, t.getTp(), t.getTemp(), null, null);
                 } else if (t.getMark() == RB) {
+                    Log.d(TAG, "taskOver: !!!!!!!!!!!!!!!!!!" + t.getTp());
                     listener.carTirePressureInfo(null, null, null, null, null, null, t.getTp(), t.getTemp());
                 }
             }

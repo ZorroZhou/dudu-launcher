@@ -15,6 +15,7 @@ import com.wow.carlauncher.ex.ContextEx;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
+import com.wow.carlauncher.ex.plugin.fk.event.PFkEventConnect;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarInfo;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarTp;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventConnect;
@@ -131,10 +132,7 @@ public class ObdPlugin extends ContextEx {
         @Override
         public void onConnectStatusChanged(String mac, int status) {
             if (mac.equals(obdProtocol.getAddress())) {
-                if (status == STATUS_CONNECTED) {
-                    connectCallback(true);
-                } else {
-                    connectCallback(false);
+                if (status != STATUS_CONNECTED) {
                     obdProtocol.stop();
                 }
             }
@@ -223,7 +221,6 @@ public class ObdPlugin extends ContextEx {
         if (obdProtocol != null) {
             BleManage.self().client().unregisterConnectStatusListener(obdProtocol.getAddress(), bleConnectStatusListener);
             BleManage.self().client().disconnect(obdProtocol.getAddress());
-            connectCallback(false);
         }
     }
 
@@ -239,10 +236,6 @@ public class ObdPlugin extends ContextEx {
         }
     }
 
-    private void connectCallback(final boolean success) {
-        postEvent(new PObdEventConnect().setConnected(success));
-    }
-
     public boolean supportTp() {
         if (obdProtocol != null) {
             return obdProtocol.supportTp();
@@ -253,6 +246,13 @@ public class ObdPlugin extends ContextEx {
     @Subscribe(threadMode = ThreadMode.ASYNC)
     public void onEventAsync(final MTimeSecondEvent event) {
         String fkaddress = SharedPreUtil.getSharedPreString(CommonData.SDATA_OBD_ADDRESS);
+
+        if (CommonUtil.isNotNull(fkaddress) && BleManage.self().client().getConnectStatus(fkaddress) == STATUS_DEVICE_CONNECTED) {
+            postEvent(new PObdEventConnect().setConnected(true));
+        } else {
+            postEvent(new PObdEventConnect().setConnected(false));
+        }
+
         if (CommonUtil.isNotNull(fkaddress) && BleManage.self().client().getConnectStatus(fkaddress) != STATUS_DEVICE_CONNECTED) {
             connect();
         }

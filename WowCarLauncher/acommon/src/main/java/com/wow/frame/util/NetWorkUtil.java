@@ -42,7 +42,7 @@ public class NetWorkUtil {
             NetworkInfo mWiFiNetworkInfo = mConnectivityManager
                     .getNetworkInfo(ConnectivityManager.TYPE_WIFI);
             if (mWiFiNetworkInfo != null) {
-                return mWiFiNetworkInfo.isAvailable();
+                return mWiFiNetworkInfo.isConnected();
             }
         }
         return false;

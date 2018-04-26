@@ -17,6 +17,7 @@ import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventConnect;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventModel;
 import com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol;
+import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventConnect;
 import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.SharedPreUtil;
 
@@ -64,26 +65,11 @@ public class FangkongPlugin extends ContextEx {
                 .build();
 
         connect();
-        
+
         EventBus.getDefault().register(this);
     }
 
     private FangkongProtocol fangkongProtocol;
-
-    private final BleConnectStatusListener bleConnectStatusListener = new BleConnectStatusListener() {
-
-        @Override
-        public void onConnectStatusChanged(String mac, int status) {
-            //允许重连,同时是断开连接了,同时方控是由参数的,同时是方控的地址
-            if (mac.equals(fangkongProtocol.getAddress())) {
-                if (status == STATUS_CONNECTED) {
-                    EventBus.getDefault().post(new PFkEventConnect().setConnected(true));
-                } else {
-                    EventBus.getDefault().post(new PFkEventConnect().setConnected(false));
-                }
-            }
-        }
-    };
 
     private FangkongProtocolListener changeModelCallBack = new FangkongProtocolListener() {
         @Override
@@ -120,7 +106,6 @@ public class FangkongPlugin extends ContextEx {
         Log.d(TAG, "开始连接");
         BleManage.self().client().clearRequest(fangkongProtocol.getAddress(), 0);
         BleManage.self().client().refreshCache(fangkongProtocol.getAddress());
-        BleManage.self().client().registerConnectStatusListener(fangkongProtocol.getAddress(), bleConnectStatusListener);
         BleManage.self().client().connect(fangkongProtocol.getAddress(), options, new BleConnectResponse() {
             @Override
             public void onResponse(int code, BleGattProfile data) {
@@ -141,8 +126,6 @@ public class FangkongPlugin extends ContextEx {
                                     connecting = false;
                                     if (code == REQUEST_SUCCESS) {
                                         ToastManage.self().show("方控连接成功");
-                                        Log.d(TAG, "onResponse: 开始测试!!!");
-                                        Log.d(TAG, Constants.getStatusText(BleManage.self().client().getConnectStatus(fkaddress)) + "  " + CommonUtil.isNull(fkaddress) + "  " + Constants.getStatusText(BleManage.self().client().getConnectStatus(fkaddress)));
                                     } else {
                                         BleManage.self().client().disconnect(fangkongProtocol.getAddress());
                                     }
@@ -158,11 +141,10 @@ public class FangkongPlugin extends ContextEx {
 
     public synchronized void disconnect() {
         if (fangkongProtocol != null) {
-            BleManage.self().client().unregisterConnectStatusListener(fangkongProtocol.getAddress(), bleConnectStatusListener);
             BleManage.self().client().disconnect(fangkongProtocol.getAddress());
-            EventBus.getDefault().post(new PFkEventConnect().setConnected(false));
         }
     }
+
 
     public String getModelName() {
         return fangkongProtocol.getModelName();
@@ -171,6 +153,11 @@ public class FangkongPlugin extends ContextEx {
     @Subscribe(threadMode = ThreadMode.ASYNC)
     public void onEventAsync(final MTimeSecondEvent event) {
         String fkaddress = SharedPreUtil.getSharedPreString(CommonData.SDATA_FANGKONG_ADDRESS);
+        if (CommonUtil.isNotNull(fkaddress) && BleManage.self().client().getConnectStatus(fkaddress) == STATUS_DEVICE_CONNECTED) {
+            postEvent(new PFkEventConnect().setConnected(true));
+        } else {
+            postEvent(new PFkEventConnect().setConnected(false));
+        }
         if (CommonUtil.isNotNull(fkaddress) && BleManage.self().client().getConnectStatus(fkaddress) != STATUS_DEVICE_CONNECTED) {
             connect();
         }

@@ -14,21 +14,28 @@ import android.widget.TextView;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.activity.CarInfoActivity;
 import com.wow.carlauncher.activity.set.SetActivity;
+import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.event.EventWifiState;
+import com.wow.carlauncher.ex.manage.ble.BleManage;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventConnect;
 import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarTp;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventConnect;
+import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.DateUtil;
 import com.wow.frame.util.NetWorkUtil;
+import com.wow.frame.util.SharedPreUtil;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
+import org.xutils.x;
 
 import java.util.Date;
+
+import static com.inuker.bluetooth.library.Constants.STATUS_DEVICE_CONNECTED;
 
 /**
  * Created by 10124 on 2018/4/22.
@@ -64,7 +71,6 @@ public class LPromptView extends LBaseView {
 
     private void initView() {
         addContent(R.layout.content_l_prompt);
-        refreshWifiState();
     }
 
     @Event(value = {R.id.iv_set, R.id.iv_wifi, R.id.iv_obd})
@@ -93,10 +99,79 @@ public class LPromptView extends LBaseView {
         }
     }
 
+    private void refreshObdState(PObdEventConnect event) {
+        if (event.isConnected()) {
+            iv_obd.setVisibility(VISIBLE);
+            if (ObdPlugin.self().supportTp()) {
+                iv_carinfo_tp.setVisibility(VISIBLE);
+            } else {
+                iv_carinfo_tp.setVisibility(GONE);
+            }
+        } else {
+            iv_obd.setVisibility(GONE);
+            iv_carinfo_tp.setVisibility(GONE);
+        }
+    }
+
+    private void refreshFKState(final PFkEventConnect event) {
+        if (event.isConnected()) {
+            iv_fk.setVisibility(VISIBLE);
+        } else {
+            iv_fk.setVisibility(GONE);
+        }
+    }
+
+    private void refreshTpState(PObdEventCarTp event) {
+        if (ObdPlugin.self().supportTp()) {
+            iv_carinfo_tp.setVisibility(VISIBLE);
+            boolean warn = false;
+            if (event.getlBTirePressure() != null && event.getlBTirePressure() < 2) {
+                warn = true;
+            }
+            if (event.getlFTirePressure() != null && event.getlFTirePressure() < 2) {
+                warn = true;
+            }
+            if (event.getrBTirePressure() != null && event.getrBTirePressure() < 2) {
+                warn = true;
+            }
+            if (event.getrBTirePressure() != null && event.getrBTirePressure() < 2) {
+                warn = true;
+            }
+
+            if (warn) {
+                iv_carinfo_tp.setImageResource(R.mipmap.ic_l_tp_warn);
+            } else {
+                iv_carinfo_tp.setImageResource(R.mipmap.ic_l_tp);
+            }
+        } else {
+            iv_carinfo_tp.setVisibility(GONE);
+        }
+    }
+
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        refreshWifiState();
+        x.task().autoPost(new Runnable() {
+            @Override
+            public void run() {
+                refreshWifiState();
+                String fkaddress = SharedPreUtil.getSharedPreString(CommonData.SDATA_FANGKONG_ADDRESS);
+                if (CommonUtil.isNotNull(fkaddress) && BleManage.self().client().getConnectStatus(fkaddress) != STATUS_DEVICE_CONNECTED) {
+                    refreshFKState(new PFkEventConnect().setConnected(true));
+                } else {
+                    refreshFKState(new PFkEventConnect().setConnected(false));
+                }
+
+                String obdaddress = SharedPreUtil.getSharedPreString(CommonData.SDATA_OBD_ADDRESS);
+                if (CommonUtil.isNotNull(obdaddress) && BleManage.self().client().getConnectStatus(obdaddress) != STATUS_DEVICE_CONNECTED) {
+                    refreshObdState(new PObdEventConnect().setConnected(true));
+                } else {
+                    refreshObdState(new PObdEventConnect().setConnected(false));
+                }
+
+                refreshTpState(ObdPlugin.self().getCurrentPObdEventCarTp());
+            }
+        });
     }
 
     private Activity getActivity() {
@@ -120,17 +195,7 @@ public class LPromptView extends LBaseView {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(final PObdEventConnect event) {
-        if (event.isConnected()) {
-            iv_obd.setVisibility(VISIBLE);
-            if (ObdPlugin.self().supportTp()) {
-                iv_carinfo_tp.setVisibility(VISIBLE);
-            } else {
-                iv_carinfo_tp.setVisibility(GONE);
-            }
-        } else {
-            iv_obd.setVisibility(GONE);
-            iv_carinfo_tp.setVisibility(GONE);
-        }
+        refreshObdState(event);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -144,25 +209,6 @@ public class LPromptView extends LBaseView {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(final PObdEventCarTp event) {
-        iv_carinfo_tp.setVisibility(VISIBLE);
-        boolean warn = false;
-        if (event.getlBTirePressure() != null && event.getlBTirePressure() < 2) {
-            warn = true;
-        }
-        if (event.getlFTirePressure() != null && event.getlFTirePressure() < 2) {
-            warn = true;
-        }
-        if (event.getrBTirePressure() != null && event.getrBTirePressure() < 2) {
-            warn = true;
-        }
-        if (event.getrBTirePressure() != null && event.getrBTirePressure() < 2) {
-            warn = true;
-        }
-
-        if (warn) {
-            iv_carinfo_tp.setImageResource(R.mipmap.ic_l_tp_warn);
-        } else {
-            iv_carinfo_tp.setImageResource(R.mipmap.ic_l_tp);
-        }
+        refreshTpState(event);
     }
 }

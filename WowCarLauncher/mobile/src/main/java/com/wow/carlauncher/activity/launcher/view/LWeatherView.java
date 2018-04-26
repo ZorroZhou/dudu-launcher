@@ -1,25 +1,32 @@
 package com.wow.carlauncher.activity.launcher.view;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.activity.AppSelectActivity;
+import com.wow.carlauncher.activity.DrivingActivity;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.WeatherIconUtil;
 import com.wow.carlauncher.common.amapWebservice.WebService;
 import com.wow.carlauncher.common.amapWebservice.res.WeatherRes;
 import com.wow.carlauncher.activity.launcher.event.LEventCityRefresh;
 import com.wow.carlauncher.ex.manage.time.event.MTime30MinuteEvent;
+import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.SharedPreUtil;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
@@ -52,9 +59,23 @@ public class LWeatherView extends LBaseView {
         initView();
     }
 
+    @Event(value = {R.id.iv_tianqi})
+    private void clickEvent(View view) {
+        switch (view.getId()) {
+            case R.id.iv_tianqi: {
+                getActivity().startActivity(new Intent(getContext(), DrivingActivity.class));
+                break;
+            }
+        }
+    }
+
     private void initView() {
         addContent(R.layout.content_l_weather);
         refreshWeather();
+    }
+
+    private Activity getActivity() {
+        return (Activity) getContext();
     }
 
     private void refreshWeather() {

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.android.percent.support.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <com.zhy.android.percent.support.PercentRelativeLayout
+        android:id="@+id/fl_rev"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:background="@android:color/holo_green_dark"
+        app:layout_marginLeftPercent="1%w"
+        app:layout_widthPercent="38%w">
+
+        <com.wow.carlauncher.common.view.DashboardView
+            android:id="@+id/dv_rev"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_centerInParent="true"
+            app:layout_heightPercent="70%w"
+            app:layout_widthPercent="70%w" />
+    </com.zhy.android.percent.support.PercentRelativeLayout>
+
+    <com.zhy.android.percent.support.PercentRelativeLayout
+        android:id="@+id/fl_speed"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:background="@android:color/black"
+        app:layout_marginRightPercent="1%w"
+        app:layout_widthPercent="38%w">
+
+        <com.czp.library.ArcProgress
+            android:id="@+id/myProgress01"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_centerInParent="true"
+            android:progress="11"
+            app:bgShow="false"
+            app:borderWidth="20dp"
+            app:degree="90"
+            app:progressStyle="arc"
+            app:radius="80dp" />
+
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/test_11" />
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/test_12" />
+
+    </com.zhy.android.percent.support.PercentRelativeLayout>
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_toEndOf="@id/fl_rev"
+        android:layout_toStartOf="@id/fl_speed"
+        android:background="@android:color/holo_red_dark">
+
+
+    </FrameLayout>
+</com.zhy.android.percent.support.PercentRelativeLayout>

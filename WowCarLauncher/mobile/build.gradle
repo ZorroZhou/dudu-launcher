@@ -56,4 +56,5 @@ dependencies {
 
     compile 'com.zhy:percent-support-extends:+'
     compile 'com.inuker.bluetooth:library:+'
+    compile 'com.czp.arcProgressBar:ArcProgressBar:1.0.1'
 }

@@ -77,6 +77,10 @@
             android:name=".activity.AboutActivity"
             android:screenOrientation="landscape" />
         <activity
+            android:name=".activity.DrivingActivity"
+            android:screenOrientation="landscape" />
+
+        <activity
             android:name=".activity.CarInfoActivity"
             android:screenOrientation="landscape">
             <!--<intent-filter>-->

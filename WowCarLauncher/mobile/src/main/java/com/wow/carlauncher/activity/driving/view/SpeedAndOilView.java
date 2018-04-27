@@ -16,35 +16,36 @@ import org.xutils.x;
  * Created by 10124 on 2018/4/26.
  */
 
-public class RevAndWaterTempView extends RelativeLayout {
-    private final static int MAX_REV = 11000;
-    private final static int MAX_WATER_TEMP = 130;
+public class SpeedAndOilView extends RelativeLayout {
+    private final static int RATE = 100;
+    private final static int MAX_SPEED = 250 * RATE;
 
+    private final static int MAX_OIL = 100;
     @ViewInject(R.id.iv_cursor)
     private ImageView iv_cursor;
 
-    @ViewInject(R.id.iv_water_temp)
-    private ImageView iv_water_temp;
+    @ViewInject(R.id.iv_oil)
+    private ImageView iv_oil;
 
     private boolean show = false;
 
-    private int currentRev = 0;
-    private int tagerRev = 0;
-    private int revChange = 1;//转速变化的区间
+    private int currentValue = 0;
+    private int tagerValue = 0;
+    private int revChangeValue = 1;//转速变化的区间
 
-    public RevAndWaterTempView(Context context) {
+    public SpeedAndOilView(Context context) {
         super(context);
         initView();
     }
 
-    public RevAndWaterTempView(Context context, AttributeSet attrs) {
+    public SpeedAndOilView(Context context, AttributeSet attrs) {
         super(context, attrs);
         initView();
     }
 
 
     private void initView() {
-        View amapView = View.inflate(getContext(), R.layout.content_rev_and_water_temp, null);
+        View amapView = View.inflate(getContext(), R.layout.content_speed_and_oil, null);
         this.addView(amapView, FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
         x.view().inject(this);
     }
@@ -53,6 +54,7 @@ public class RevAndWaterTempView extends RelativeLayout {
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         show = true;
+
     }
 
     @Override
@@ -61,9 +63,8 @@ public class RevAndWaterTempView extends RelativeLayout {
         iv_cursor.setPivotX(iv_cursor.getWidth() / 2);
         iv_cursor.setPivotY(iv_cursor.getHeight() / 2);//支点在图片中心
 
-        iv_water_temp.setPivotX(iv_water_temp.getWidth() / 2);
-        iv_water_temp.setPivotY(iv_water_temp.getHeight() / 2);//支点在图片中心
-
+        iv_oil.setPivotX(iv_oil.getWidth() / 2);
+        iv_oil.setPivotY(iv_oil.getHeight() / 2);//支点在图片中心
     }
 
     @Override
@@ -72,54 +73,53 @@ public class RevAndWaterTempView extends RelativeLayout {
         show = false;
     }
 
-    public void setWaterTemp(int waterTemp) {
+    public void setOil(int oil) {
         if (show) {
-            if (waterTemp > MAX_WATER_TEMP) {
-                waterTemp = MAX_WATER_TEMP;
-            } else if (waterTemp < 0) {
-                waterTemp = 0;
+            if (oil > MAX_OIL) {
+                oil = MAX_OIL;
+            } else if (oil < 0) {
+                oil = 0;
             }
-            iv_water_temp.setRotation(-(float) (waterTemp * 90) / (float) MAX_WATER_TEMP);
+            iv_oil.setRotation(-(float) (oil * 90) / (float) MAX_OIL);
         }
     }
 
-    public void setRev(int rev) {
+    public void setSpeed(int speed) {
         if (show) {
-            if (rev > MAX_REV) {
-                rev = MAX_REV;
-            } else if (rev < 0) {
-                rev = 0;
+            speed = speed * RATE;
+            if (speed > MAX_SPEED) {
+                speed = MAX_SPEED;
+            } else if (speed < 0) {
+                speed = 0;
             }
-            tagerRev = rev;
-            revChange = Math.abs(tagerRev - currentRev) / 100;
-            if (revChange < 1) {
-                revChange = 1;
+            tagerValue = speed;
+            revChangeValue = Math.abs(tagerValue - currentValue) / 100;
+            if (revChangeValue < 1) {
+                revChangeValue = 1;
             }
             postValue();
         }
     }
 
     private void postValue() {
-        if (revChange + currentRev < tagerRev) {
-            currentRev = currentRev + revChange;
+        if (revChangeValue + currentValue < tagerValue) {
+            currentValue = currentValue + revChangeValue;
             postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    iv_cursor.setRotation((float) (currentRev * 270) / (float) MAX_REV);
+                    iv_cursor.setRotation((float) (currentValue * 270) / (float) MAX_SPEED);
                     postValue();
                 }
             }, 1);
-        } else if (revChange + currentRev > tagerRev) {
-            currentRev = currentRev - revChange;
+        } else if (revChangeValue + currentValue > tagerValue) {
+            currentValue = currentValue - revChangeValue;
             postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    iv_cursor.setRotation((float) (currentRev * 270) / (float) MAX_REV);
+                    iv_cursor.setRotation((float) (currentValue * 270) / (float) MAX_SPEED);
                     postValue();
                 }
             }, 1);
         }
     }
-
-
 }

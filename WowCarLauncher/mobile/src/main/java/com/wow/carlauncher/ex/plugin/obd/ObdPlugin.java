@@ -1,5 +1,6 @@
 package com.wow.carlauncher.ex.plugin.obd;
 
+import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.util.Log;
 
@@ -226,7 +227,6 @@ public class ObdPlugin extends ContextEx {
 
     private synchronized void write(byte[] msg) {
         if (obdProtocol != null) {
-            Log.d(TAG, "write: " + new String(msg));
             BleManage.self().client().write(obdProtocol.getAddress(), obdProtocol.getWriteService(), obdProtocol.getWriteCharacter(), msg, new BleWriteResponse() {
                 @Override
                 public void onResponse(int code) {

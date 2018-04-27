@@ -4,6 +4,7 @@ import android.widget.ImageView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.activity.driving.view.RevAndWaterTempView;
+import com.wow.carlauncher.activity.driving.view.SpeedAndOilView;
 import com.wow.carlauncher.common.base.BaseActivity;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 import com.wow.frame.util.DateUtil;
@@ -29,6 +30,10 @@ public class DrivingActivity extends BaseActivity {
     @ViewInject(R.id.rwtview)
     private RevAndWaterTempView rwtview;
 
+    @ViewInject(R.id.soview)
+    private SpeedAndOilView soview;
+
+
     @Override
     public void init() {
         setContent(R.layout.activity_driving);
@@ -37,6 +42,7 @@ public class DrivingActivity extends BaseActivity {
 
     boolean run = true;
     int rev = 10;
+    int speed = 10;
 
     @Override
     public void initView() {
@@ -46,14 +52,26 @@ public class DrivingActivity extends BaseActivity {
             @Override
             public void run() {
                 while (run) {
+
+
                     rev = rev + new Random().nextInt(300);
                     if (rev > 10000) {
                         rev = 100;
                     }
+
+                    speed = speed + new Random().nextInt(5);
+                    if (speed > 250) {
+                        speed = 100;
+                    }
+
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             rwtview.setRev(rev);
+                            rwtview.setWaterTemp(60);
+
+                            soview.setSpeed(speed);
+                            soview.setOil(100);
                         }
                     });
                     try {

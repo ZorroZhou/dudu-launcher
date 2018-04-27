@@ -14,6 +14,7 @@ import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventConnect;
 import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.SharedPreUtil;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.view.annotation.ViewInject;
@@ -67,12 +68,18 @@ public class CarInfoActivity extends BaseActivity {
         onEventMainThread(ObdPlugin.self().getCurrentPObdEventCarInfo());
         onEventMainThread(ObdPlugin.self().getCurrentPObdEventCarTp());
         refreshObdState();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     private void refreshObdState() {
         String address = SharedPreUtil.getSharedPreString(CommonData.SDATA_OBD_ADDRESS);
         if (CommonUtil.isNotNull(address)) {
-            Log.d(TAG, "refreshObdState: " + BleManage.self().client().getConnectStatus(address) + " " + STATUS_DEVICE_CONNECTED);
             if (BleManage.self().client().getConnectStatus(address) == STATUS_DEVICE_CONNECTED) {
                 setTitle("OBD(已连接)");
                 if (ObdPlugin.self().supportTp()) {

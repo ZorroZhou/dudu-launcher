@@ -5,12 +5,16 @@ import android.util.Log;
 
 import com.wow.carlauncher.ex.plugin.obd.ObdProtocol;
 import com.wow.carlauncher.ex.plugin.obd.ObdProtocolListener;
+import com.wow.carlauncher.ex.plugin.obd.protocol.gd.CloseEchoTask;
+import com.wow.carlauncher.ex.plugin.obd.protocol.gd.CloseLineFeedTask;
+import com.wow.carlauncher.ex.plugin.obd.protocol.gd.CloseSpaceTask;
+import com.wow.carlauncher.ex.plugin.obd.protocol.gd.CloseTitleTask;
 import com.wow.carlauncher.ex.plugin.obd.protocol.gd.GetOilConTask;
 import com.wow.carlauncher.ex.plugin.obd.protocol.gd.GetRevTask;
 import com.wow.carlauncher.ex.plugin.obd.protocol.gd.GetSpeedTask;
 import com.wow.carlauncher.ex.plugin.obd.protocol.gd.GetTpTask;
 import com.wow.carlauncher.ex.plugin.obd.protocol.gd.GetWaterTempTask;
-import com.wow.carlauncher.ex.plugin.obd.protocol.gd.ResetTask;
+import com.wow.carlauncher.ex.plugin.obd.protocol.gd.ProtocolAutoTask;
 import com.wow.carlauncher.ex.plugin.obd.ObdTask;
 
 import java.util.UUID;
@@ -41,21 +45,30 @@ public class GoodDriverTPProtocol extends ObdProtocol {
     private boolean reset = false;
     private int infoMark = 10;
 
+    private boolean cmdCloseEcho = false;
+    private boolean cmdCloseLineFeed = false;
+    private boolean cmdCloseSpace = false;
+    private boolean cmdCloseTitle = false;
+    private boolean cmdProtocolAuto = false;
+
     @Override
     public void run() {
         resMessageTemp.setLength(0);
+        cmdCloseEcho = false;
+        cmdCloseLineFeed = false;
+        cmdCloseSpace = false;
+        cmdCloseTitle = false;
+        cmdProtocolAuto = false;
+
         new Thread(new Runnable() {
             @Override
             public void run() {
                 running = true;
-                reset = false;
                 while (running) {
                     if (listener.isConnect()) {
+                        baseCheckTask();
+
                         if (mark % infoMark == 0) {
-                            if (!reset) {
-                                reset = true;
-                                addTask(new ResetTask());
-                            }
                             addTask(new GetSpeedTask());
                             addTask(new GetRevTask());
                             addTask(new GetWaterTempTask());
@@ -73,7 +86,7 @@ public class GoodDriverTPProtocol extends ObdProtocol {
                         running = false;
                     }
                     try {
-                        Thread.sleep(333);
+                        Thread.sleep(300);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -81,6 +94,28 @@ public class GoodDriverTPProtocol extends ObdProtocol {
             }
         }).start();
         Log.d(TAG, "!!!!!!!!!!!!!!!run: 开始运行");
+    }
+
+    private void baseCheckTask() {
+        if (!cmdCloseEcho) {
+            addTask(new CloseEchoTask());
+        }
+
+        if (!cmdCloseLineFeed) {
+            addTask(new CloseLineFeedTask());
+        }
+
+        if (!cmdCloseSpace) {
+            addTask(new CloseSpaceTask());
+        }
+
+        if (!cmdCloseTitle) {
+            addTask(new CloseTitleTask());
+        }
+
+        if (!cmdProtocolAuto) {
+            addTask(new ProtocolAutoTask());
+        }
     }
 
     @Override
@@ -102,37 +137,49 @@ public class GoodDriverTPProtocol extends ObdProtocol {
 
     @Override
     public void taskOver(ObdTask task) {
-        if (task.isSuccess() && task.haveData()) {
-            if (task instanceof GetSpeedTask) {
-                GetSpeedTask t = (GetSpeedTask) task;
-                listener.carRunningInfo(t.getSpeed(), null, null, null);
-            } else if (task instanceof GetRevTask) {
-                GetRevTask t = (GetRevTask) task;
-                if (t.getRev() > 500) {
-                    infoMark = 1;
-                }
-                listener.carRunningInfo(null, t.getRev(), null, null);
-            } else if (task instanceof GetWaterTempTask) {
-                GetWaterTempTask t = (GetWaterTempTask) task;
-                listener.carRunningInfo(null, null, t.getTemp(), null);
-            } else if (task instanceof GetOilConTask) {
-                GetOilConTask t = (GetOilConTask) task;
-                listener.carRunningInfo(null, null, null, t.getOil());
-            } else if (task instanceof GetTpTask) {
-                GetTpTask t = (GetTpTask) task;
-                if (t.getMark() == LF) {
-                    listener.carTirePressureInfo(t.getTp(), t.getTemp(), null, null, null, null, null, null);
-                } else if (t.getMark() == RF) {
-                    listener.carTirePressureInfo(null, null, t.getTp(), t.getTemp(), null, null, null, null);
-                } else if (t.getMark() == LB) {
-                    listener.carTirePressureInfo(null, null, null, null, t.getTp(), t.getTemp(), null, null);
-                } else if (t.getMark() == RB) {
-                    Log.d(TAG, "taskOver: !!!!!!!!!!!!!!!!!!" + t.getTp());
-                    listener.carTirePressureInfo(null, null, null, null, null, null, t.getTp(), t.getTemp());
+        if (task.isSuccess()) {
+            if (task instanceof CloseSpaceTask) {
+                cmdCloseSpace = true;
+            } else if (task instanceof CloseLineFeedTask) {
+                cmdCloseLineFeed = true;
+            } else if (task instanceof CloseEchoTask) {
+                cmdCloseEcho = true;
+            } else if (task instanceof CloseTitleTask) {
+                cmdCloseTitle = true;
+            } else if (task instanceof ProtocolAutoTask) {
+                cmdProtocolAuto = true;
+            } else if (task.haveData()) {
+                if (task instanceof GetSpeedTask) {
+                    GetSpeedTask t = (GetSpeedTask) task;
+                    listener.carRunningInfo(t.getSpeed(), null, null, null);
+                } else if (task instanceof GetRevTask) {
+                    GetRevTask t = (GetRevTask) task;
+                    if (t.getRev() > 500) {
+                        infoMark = 1;
+                    } else {
+                        infoMark = 10;
+                    }
+                    listener.carRunningInfo(null, t.getRev(), null, null);
+                } else if (task instanceof GetWaterTempTask) {
+                    GetWaterTempTask t = (GetWaterTempTask) task;
+                    listener.carRunningInfo(null, null, t.getTemp(), null);
+                } else if (task instanceof GetOilConTask) {
+                    GetOilConTask t = (GetOilConTask) task;
+                    listener.carRunningInfo(null, null, null, t.getOil());
+                } else if (task instanceof GetTpTask) {
+                    GetTpTask t = (GetTpTask) task;
+                    if (t.getMark() == LF) {
+                        listener.carTirePressureInfo(t.getTp(), t.getTemp(), null, null, null, null, null, null);
+                    } else if (t.getMark() == RF) {
+                        listener.carTirePressureInfo(null, null, t.getTp(), t.getTemp(), null, null, null, null);
+                    } else if (t.getMark() == LB) {
+                        listener.carTirePressureInfo(null, null, null, null, t.getTp(), t.getTemp(), null, null);
+                    } else if (t.getMark() == RB) {
+                        Log.d(TAG, "taskOver: !!!!!!!!!!!!!!!!!!" + t.getTp());
+                        listener.carTirePressureInfo(null, null, null, null, null, null, t.getTp(), t.getTemp());
+                    }
                 }
             }
-        } else if (task.isSuccess() && !task.haveData()) {
-            reset = false;
         }
     }
 

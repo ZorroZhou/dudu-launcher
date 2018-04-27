@@ -13,24 +13,11 @@
         app:layout_marginLeftPercent="1%w"
         app:layout_widthPercent="38%w">
 
-        <RelativeLayout
+        <com.wow.carlauncher.activity.driving.view.RevAndWaterTempView
+            android:id="@+id/rwtview"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_heightPercent="100%w">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:contentDescription="@string/app_name"
-                android:src="@mipmap/driving_rev_bg" />
-
-            <ImageView
-                android:id="@+id/driving_rev_bg_cursor"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:contentDescription="@string/app_name"
-                android:src="@mipmap/driving_rev_bg_cursor" />
-        </RelativeLayout>
+            app:layout_heightPercent="100%w" />
     </com.zhy.android.percent.support.PercentRelativeLayout>
 
     <com.zhy.android.percent.support.PercentRelativeLayout

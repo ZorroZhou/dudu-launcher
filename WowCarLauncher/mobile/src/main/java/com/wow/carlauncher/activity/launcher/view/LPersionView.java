@@ -25,6 +25,5 @@ public class LPersionView extends LBaseView {
 
     private void initView() {
         addContent(R.layout.content_l_persion);
-
     }
 }

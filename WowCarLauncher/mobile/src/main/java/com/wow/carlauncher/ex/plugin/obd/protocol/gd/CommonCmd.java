@@ -5,6 +5,7 @@ package com.wow.carlauncher.ex.plugin.obd.protocol.gd;
  */
 
 public interface CommonCmd {
+    String CMD_RES_SEARCGING = "SEARCGING...";
     String CMD_RES_SUCCESS = "OK";
     String CMD_RES_NO_DATA = "NODATA";
     String CMD_RES_END = ">";

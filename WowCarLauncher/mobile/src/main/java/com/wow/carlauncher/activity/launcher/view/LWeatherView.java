@@ -12,15 +12,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
-import com.wow.carlauncher.activity.AppSelectActivity;
-import com.wow.carlauncher.activity.DrivingActivity;
+import com.wow.carlauncher.activity.driving.DrivingActivity;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.WeatherIconUtil;
 import com.wow.carlauncher.common.amapWebservice.WebService;
 import com.wow.carlauncher.common.amapWebservice.res.WeatherRes;
 import com.wow.carlauncher.activity.launcher.event.LEventCityRefresh;
 import com.wow.carlauncher.ex.manage.time.event.MTime30MinuteEvent;
-import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.SharedPreUtil;
 
@@ -63,7 +61,7 @@ public class LWeatherView extends LBaseView {
     private void clickEvent(View view) {
         switch (view.getId()) {
             case R.id.iv_tianqi: {
-                //getActivity().startActivity(new Intent(getContext(), DrivingActivity.class));
+                getActivity().startActivity(new Intent(getContext(), DrivingActivity.class));
                 break;
             }
         }

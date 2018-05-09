@@ -1,5 +1,6 @@
 package com.wow.carlauncher.activity.driving;
 
+import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.wow.carlauncher.R;
@@ -37,7 +38,6 @@ public class DrivingActivity extends BaseActivity {
     @Override
     public void init() {
         setContent(R.layout.activity_driving);
-
     }
 
     boolean run = true;

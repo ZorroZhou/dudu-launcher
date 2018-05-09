@@ -1,4 +1,13 @@
 <resources>
+
+    <style name="DriverActivityTheme" parent="AppTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+
     <style name="LauncherTheme" parent="android:Theme.Wallpaper">
         <!-- Customize your theme here. -->
         <item name="windowActionBar">false</item>

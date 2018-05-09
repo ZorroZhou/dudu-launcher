@@ -1,62 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.zhy.android.percent.support.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/black">
+    android:background="@android:color/black"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="9"
+        android:orientation="horizontal">
+
+        <com.zhy.android.percent.support.PercentRelativeLayout
+            android:id="@+id/fl_rev"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="38">
+
+            <com.wow.carlauncher.activity.driving.view.RevAndWaterTempView
+                android:id="@+id/rwtview"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_centerInParent="true"
+                app:layout_heightPercent="100%w" />
+        </com.zhy.android.percent.support.PercentRelativeLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="22">
+
+
+        </FrameLayout>
+
+        <com.zhy.android.percent.support.PercentRelativeLayout
+            android:id="@+id/fl_speed"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="38">
+
+            <com.wow.carlauncher.activity.driving.view.SpeedAndOilView
+                android:id="@+id/soview"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_centerInParent="true"
+                app:layout_heightPercent="100%w" />
+        </com.zhy.android.percent.support.PercentRelativeLayout>
+
+    </LinearLayout>
+
 
     <LinearLayout
         android:id="@+id/ll_bottom"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
-        app:layout_heightPercent="10%h">
+        android:layout_weight="1"
+        android:orientation="horizontal">
 
     </LinearLayout>
-
-    <com.zhy.android.percent.support.PercentRelativeLayout
-        android:id="@+id/fl_rev"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/ll_bottom"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        app:layout_marginLeftPercent="1%w"
-        app:layout_widthPercent="38%w">
-
-        <com.wow.carlauncher.activity.driving.view.RevAndWaterTempView
-            android:id="@+id/rwtview"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_heightPercent="100%w" />
-    </com.zhy.android.percent.support.PercentRelativeLayout>
-
-    <com.zhy.android.percent.support.PercentRelativeLayout
-        android:id="@+id/fl_speed"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/ll_bottom"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        app:layout_marginRightPercent="1%w"
-        app:layout_widthPercent="38%w">
-
-        <com.wow.carlauncher.activity.driving.view.SpeedAndOilView
-            android:id="@+id/soview"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_heightPercent="100%w" />
-    </com.zhy.android.percent.support.PercentRelativeLayout>
-
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/ll_bottom"
-        android:layout_alignParentTop="true"
-        android:layout_toEndOf="@id/fl_rev"
-        android:layout_toStartOf="@id/fl_speed">
-
-
-    </FrameLayout>
-</com.zhy.android.percent.support.PercentRelativeLayout>
+</LinearLayout>

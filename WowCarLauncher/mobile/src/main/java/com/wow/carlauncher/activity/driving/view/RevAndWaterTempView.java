@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 
@@ -25,6 +26,10 @@ public class RevAndWaterTempView extends RelativeLayout {
 
     @ViewInject(R.id.iv_water_temp)
     private ImageView iv_water_temp;
+
+    @ViewInject(R.id.tv_rev)
+    private TextView tv_rev;
+
 
     private boolean show = false;
 
@@ -63,7 +68,6 @@ public class RevAndWaterTempView extends RelativeLayout {
 
         iv_water_temp.setPivotX(iv_water_temp.getWidth() / 2);
         iv_water_temp.setPivotY(iv_water_temp.getHeight() / 2);//支点在图片中心
-
     }
 
     @Override
@@ -85,6 +89,8 @@ public class RevAndWaterTempView extends RelativeLayout {
 
     public void setRev(int rev) {
         if (show) {
+            tv_rev.setText(rev + "");
+
             if (rev > MAX_REV) {
                 rev = MAX_REV;
             } else if (rev < 0) {

@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 
@@ -26,6 +27,12 @@ public class SpeedAndOilView extends RelativeLayout {
 
     @ViewInject(R.id.iv_oil)
     private ImageView iv_oil;
+
+    @ViewInject(R.id.tv_speed)
+    private TextView tv_speed;
+
+    @ViewInject(R.id.tv_oil)
+    private TextView tv_oil;
 
     private boolean show = false;
 
@@ -60,11 +67,12 @@ public class SpeedAndOilView extends RelativeLayout {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        iv_cursor.setPivotX(iv_cursor.getWidth() / 2);
-        iv_cursor.setPivotY(iv_cursor.getHeight() / 2);//支点在图片中心
 
-        iv_oil.setPivotX(iv_oil.getWidth() / 2);
-        iv_oil.setPivotY(iv_oil.getHeight() / 2);//支点在图片中心
+        iv_cursor.setPivotX(getMeasuredWidth() / 2);
+        iv_cursor.setPivotY(getMeasuredHeight() / 2);//支点在图片中心
+
+        iv_oil.setPivotX(getMeasuredWidth() / 2);
+        iv_oil.setPivotY(getMeasuredHeight() / 2);//支点在图片中心
     }
 
     @Override
@@ -81,11 +89,15 @@ public class SpeedAndOilView extends RelativeLayout {
                 oil = 0;
             }
             iv_oil.setRotation(-(float) (oil * 90) / (float) MAX_OIL);
+
+            tv_oil.setText("剩余油量:" + oil + "%");
         }
     }
 
     public void setSpeed(int speed) {
         if (show) {
+            tv_speed.setText(speed + "");
+
             speed = speed * RATE;
             if (speed > MAX_SPEED) {
                 speed = MAX_SPEED;

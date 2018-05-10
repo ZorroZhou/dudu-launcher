@@ -2,6 +2,7 @@ package com.wow.carlauncher.activity.driving.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -9,9 +10,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.common.CommonData;
 
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
+
+import static com.wow.carlauncher.common.CommonData.TAG;
 
 /**
  * Created by 10124 on 2018/4/26.
@@ -29,6 +33,9 @@ public class RevAndWaterTempView extends RelativeLayout {
 
     @ViewInject(R.id.tv_rev)
     private TextView tv_rev;
+
+    @ViewInject(R.id.tv_wt)
+    private TextView tv_wt;
 
 
     private boolean show = false;
@@ -63,11 +70,12 @@ public class RevAndWaterTempView extends RelativeLayout {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        iv_cursor.setPivotX(iv_cursor.getWidth() / 2);
-        iv_cursor.setPivotY(iv_cursor.getHeight() / 2);//支点在图片中心
 
-        iv_water_temp.setPivotX(iv_water_temp.getWidth() / 2);
-        iv_water_temp.setPivotY(iv_water_temp.getHeight() / 2);//支点在图片中心
+        iv_cursor.setPivotX(getMeasuredWidth() / 2);
+        iv_cursor.setPivotY(getMeasuredHeight() / 2);//支点在图片中心
+
+        iv_water_temp.setPivotX(getMeasuredWidth() / 2);
+        iv_water_temp.setPivotY(getMeasuredHeight() / 2);//支点在图片中心
     }
 
     @Override
@@ -84,6 +92,8 @@ public class RevAndWaterTempView extends RelativeLayout {
                 waterTemp = 0;
             }
             iv_water_temp.setRotation(-(float) (waterTemp * 90) / (float) MAX_WATER_TEMP);
+
+            tv_wt.setText("水温:" + waterTemp + "℃");
         }
     }
 

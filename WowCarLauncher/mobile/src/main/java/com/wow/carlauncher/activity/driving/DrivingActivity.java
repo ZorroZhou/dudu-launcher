@@ -37,6 +37,8 @@ public class DrivingActivity extends BaseActivity {
 
     @Override
     public void init() {
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContent(R.layout.activity_driving);
     }
 
@@ -71,7 +73,7 @@ public class DrivingActivity extends BaseActivity {
                             rwtview.setWaterTemp(60);
 
                             soview.setSpeed(speed);
-                            soview.setOil(100);
+                            soview.setOil(90);
                         }
                     });
                     try {

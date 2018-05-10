@@ -38,7 +38,40 @@
             android:gravity="center"
             android:text="1111"
             android:textColor="@android:color/white"
-            app:layout_heightPercent="30%h"
+            app:layout_heightPercent="20%h"
             app:layout_textSizePercent="20%h" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/tv_rev"
+            android:gravity="center"
+            android:text="转速"
+            android:textColor="#ccc"
+            app:layout_heightPercent="8%h"
+            app:layout_textSizePercent="5%h" />
+
+        <com.wow.carlauncher.common.view.PhilTextView
+            android:id="@+id/tv_rev_dw"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_rev"
+            android:gravity="center"
+            android:text="R/M"
+            android:textColor="#ccc"
+            app:layout_heightPercent="6%h"
+            app:layout_textSizePercent="6%h" />
+
+        <TextView
+            android:id="@+id/tv_wt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_rev_dw"
+            android:gravity="center"
+            android:text="水温:100℃"
+            android:textColor="#ccc"
+            app:layout_heightPercent="8%h"
+            app:layout_marginTopPercent="5%h"
+            app:layout_textSizePercent="5%h" />
     </com.zhy.android.percent.support.PercentRelativeLayout>
 </FrameLayout>

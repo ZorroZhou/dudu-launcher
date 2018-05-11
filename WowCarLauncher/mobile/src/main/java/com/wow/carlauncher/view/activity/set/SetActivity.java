@@ -1,14 +1,14 @@
-package com.wow.carlauncher.activity.set;
+package com.wow.carlauncher.view.activity.set;
 
 import android.view.View;
 
-import com.wow.carlauncher.activity.set.view.SAppView;
-import com.wow.carlauncher.activity.set.view.SFangKongView;
-import com.wow.carlauncher.activity.set.view.SHelpView;
-import com.wow.carlauncher.activity.set.view.SObdView;
-import com.wow.carlauncher.activity.set.view.SPopupView;
-import com.wow.carlauncher.activity.set.view.SSystemView;
-import com.wow.carlauncher.activity.set.view.STimeView;
+import com.wow.carlauncher.view.activity.set.view.SAppView;
+import com.wow.carlauncher.view.activity.set.view.SFangKongView;
+import com.wow.carlauncher.view.activity.set.view.SHelpView;
+import com.wow.carlauncher.view.activity.set.view.SObdView;
+import com.wow.carlauncher.view.activity.set.view.SPopupView;
+import com.wow.carlauncher.view.activity.set.view.SSystemView;
+import com.wow.carlauncher.view.activity.set.view.STimeView;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.view.base.BaseActivity;
 import com.wow.carlauncher.common.view.SetView;

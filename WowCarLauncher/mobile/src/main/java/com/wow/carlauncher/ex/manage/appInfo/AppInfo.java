@@ -7,7 +7,7 @@ import android.graphics.drawable.Drawable;
  */
 
 public class AppInfo {
-    public final static String INTERNAL_APP_DRIVING = "com.wow.test";
+    public final static String INTERNAL_APP_DRIVING = "com.wow.carlauncher.driving";
 
 
     public final static int MARK_OTHER_APP = 1;

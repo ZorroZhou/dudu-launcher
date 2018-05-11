@@ -82,7 +82,7 @@ public class AppInfoManage {
         this.context = c;
         this.packageManager = this.context.getPackageManager();
         internalApps = new HashMap<>();
-        internalApps.put(INTERNAL_APP_DRIVING, new InternalAppInfo(ContextCompat.getDrawable(context, R.mipmap.ic_launcher), "驾驶界面", INTERNAL_APP_DRIVING, MARK_INTERNAL_APP, DrivingActivity.class));
+        internalApps.put(INTERNAL_APP_DRIVING, new InternalAppInfo(ContextCompat.getDrawable(context, R.mipmap.ic_driving), "仪表盘", INTERNAL_APP_DRIVING, MARK_INTERNAL_APP, DrivingActivity.class));
         refreshAppInfo();
     }
 
@@ -107,11 +107,11 @@ public class AppInfoManage {
         Collections.sort(apps, new ResolveInfo.DisplayNameComparator(manager));
         final int count = apps.size();
         appInfos.clear();
+        appInfos.addAll(internalApps.values());
         for (int i = 0; i < count; i++) {
             String packageName = apps.get(i).activityInfo.applicationInfo.packageName;
             appInfos.add(new AppInfo(getIcon(packageName), getName(packageName), packageName, MARK_OTHER_APP));
         }
-        appInfos.addAll(internalApps.values());
         return appInfos;
     }
 
@@ -126,7 +126,6 @@ public class AppInfoManage {
             }
         }
         if (CommonUtil.isNotNull(app)) {
-            Log.d("11111111", "getIcon: " + app);
             if (app.contains(CommonData.APP_SEPARATE)) {
                 String[] xx = app.split(CommonData.APP_SEPARATE);
                 if (xx.length == 2) {

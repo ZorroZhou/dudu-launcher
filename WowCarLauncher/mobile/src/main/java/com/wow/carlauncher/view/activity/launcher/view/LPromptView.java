@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.view.activity.CarInfoActivity;
-import com.wow.carlauncher.activity.set.SetActivity;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.event.EventWifiState;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
@@ -22,6 +21,7 @@ import com.wow.carlauncher.ex.plugin.fk.event.PFkEventConnect;
 import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarTp;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventConnect;
+import com.wow.carlauncher.view.activity.set.SetActivity;
 import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.DateUtil;
 import com.wow.frame.util.NetWorkUtil;

@@ -17,11 +17,11 @@ import android.widget.TextView;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.view.activity.AppMenuActivity;
 import com.wow.carlauncher.view.activity.AppSelectActivity;
-import com.wow.carlauncher.activity.set.SetActivity;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
-import com.wow.carlauncher.activity.launcher.event.LauncherDockLabelShowChangeEvent;
+import com.wow.carlauncher.view.activity.launcher.event.LauncherDockLabelShowChangeEvent;
+import com.wow.carlauncher.view.activity.set.SetActivity;
 import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.SharedPreUtil;
 

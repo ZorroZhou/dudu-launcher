@@ -1,4 +1,4 @@
-package com.wow.carlauncher.activity.driving;
+package com.wow.carlauncher.view.activity.driving;
 
 import android.view.Window;
 import android.view.WindowManager;

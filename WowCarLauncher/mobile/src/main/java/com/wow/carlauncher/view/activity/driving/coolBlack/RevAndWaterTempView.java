@@ -5,7 +5,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
@@ -56,7 +55,7 @@ public class RevAndWaterTempView extends BaseEBusView {
 
 
     private void initView() {
-        View amapView = View.inflate(getContext(), R.layout.content_rev_and_water_temp, null);
+        View amapView = View.inflate(getContext(), R.layout.content_driving_cool_rev_and_water_temp, null);
         this.addView(amapView, FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
         x.view().inject(this);
     }

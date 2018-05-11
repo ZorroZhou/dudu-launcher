@@ -47,7 +47,7 @@
         <service android:name="com.amap.api.location.APSService" />
 
         <activity
-            android:name=".activity.launcher.LauncherActivity"
+            android:name=".view.activity.launcher.LauncherActivity"
             android:clearTaskOnLaunch="true"
             android:configChanges="keyboardHidden|orientation|screenSize|locale|screenLayout|mcc|mnc"
             android:excludeFromRecents="true"
@@ -62,26 +62,26 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.AppSelectActivity"
+            android:name=".view.activity.AppSelectActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".activity.LockActivity"
+            android:name=".view.activity.LockActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".activity.AppMenuActivity"
+            android:name=".view.activity.AppMenuActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".activity.set.SetActivity"
+            android:name=".view.activity.set.SetActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".activity.AboutActivity"
+            android:name=".view.activity.AboutActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".activity.driving.DrivingActivity"
+            android:name=".view.activity.driving.DrivingActivity"
             android:screenOrientation="landscape" />
 
         <activity
-            android:name=".activity.CarInfoActivity"
+            android:name=".view.activity.CarInfoActivity"
             android:screenOrientation="landscape">
             <!--<intent-filter>-->
             <!--<action android:name="android.intent.action.MAIN" />-->

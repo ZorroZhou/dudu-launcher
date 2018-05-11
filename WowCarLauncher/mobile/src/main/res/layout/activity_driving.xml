@@ -23,7 +23,7 @@
             android:layout_alignParentLeft="true"
             app:layout_widthPercent="44%w">
 
-            <com.wow.carlauncher.activity.driving.coolBlack.RevAndWaterTempView
+            <com.wow.carlauncher.view.activity.driving.coolBlack.RevAndWaterTempView
                 android:id="@+id/rwtview"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
@@ -39,7 +39,7 @@
             android:layout_alignParentRight="true"
             app:layout_widthPercent="44%w">
 
-            <com.wow.carlauncher.activity.driving.coolBlack.SpeedAndOilView
+            <com.wow.carlauncher.view.activity.driving.coolBlack.SpeedAndOilView
                 android:id="@+id/soview"
                 android:layout_width="0dp"
                 android:layout_height="0dp"

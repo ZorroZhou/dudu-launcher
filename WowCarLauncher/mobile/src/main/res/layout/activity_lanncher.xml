@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.wow.carlauncher.activity.launcher.view.LPromptView
+        <com.wow.carlauncher.view.activity.launcher.view.LPromptView
             android:id="@+id/ll_top"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -19,7 +19,7 @@
             android:orientation="horizontal"
             app:layout_heightPercent="12.8%h" />
 
-        <com.wow.carlauncher.activity.launcher.view.LDockView
+        <com.wow.carlauncher.view.activity.launcher.view.LDockView
             android:id="@+id/ll_dock"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -41,7 +41,7 @@
             android:paddingRight="5dp">
 
 
-            <com.wow.carlauncher.activity.launcher.view.LPersionView
+            <com.wow.carlauncher.view.activity.launcher.view.LPersionView
                 android:id="@+id/item_2"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -51,7 +51,7 @@
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp" />
 
-            <com.wow.carlauncher.activity.launcher.view.LMusicView
+            <com.wow.carlauncher.view.activity.launcher.view.LMusicView
                 android:id="@+id/item_music"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -61,7 +61,7 @@
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp" />
 
-            <com.wow.carlauncher.activity.launcher.view.LAMapView
+            <com.wow.carlauncher.view.activity.launcher.view.LAMapView
                 android:id="@+id/item_amap"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -71,7 +71,7 @@
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp" />
 
-            <com.wow.carlauncher.activity.launcher.view.LWeatherView
+            <com.wow.carlauncher.view.activity.launcher.view.LWeatherView
                 android:id="@+id/item_music2"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"

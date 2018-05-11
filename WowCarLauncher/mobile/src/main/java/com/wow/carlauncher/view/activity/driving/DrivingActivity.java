@@ -2,12 +2,10 @@ package com.wow.carlauncher.view.activity.driving;
 
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.view.activity.driving.coolBlack.CoolBlackView;
@@ -16,13 +14,13 @@ import com.wow.carlauncher.view.base.BaseActivity;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
-import static com.wow.carlauncher.common.CommonData.TAG;
-
 /**
  * Created by 10124 on 2018/4/25.
  */
 
 public class DrivingActivity extends BaseActivity {
+    public static boolean isDriving = false;
+
 
     @ViewInject(R.id.content)
     private FrameLayout content;
@@ -46,15 +44,15 @@ public class DrivingActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.iv_back2: {
                 new AlertDialog.Builder(this)
-                        .setTitle("带确定键的提示框")
-                        .setMessage("确定吗")
-                        .setPositiveButton("是", new DialogInterface.OnClickListener() {
+                        .setTitle("提示")
+                        .setMessage("确定推出驾驶界面吗?")
+                        .setPositiveButton("退出", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 finish();
                             }
                         })
-                        .setNegativeButton("否", null)
+                        .setNegativeButton("取消", null)
                         .show();
                 break;
             }

@@ -12,12 +12,12 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.ex.manage.appInfo.AppInfo;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.view.popupWindow.event.PEventFSRefresh;
 import com.wow.carlauncher.view.popupWindow.PopupWin;
-import com.wow.frame.util.AppUtil;
 import com.wow.frame.util.SharedPreUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -113,7 +113,7 @@ public class SPopupView extends FrameLayout {
             @Override
             public void onClick(View v) {
                 String selectapp = SharedPreUtil.getSharedPreString(CommonData.SDATA_POPUP_SHOW_APPS);
-                final List<AppUtil.AppInfo> appInfos = new ArrayList<>(AppInfoManage.self().getAppInfos());
+                final List<AppInfo> appInfos = new ArrayList<>(AppInfoManage.self().getOtherAppInfos());
                 String[] items = new String[appInfos.size()];
                 final boolean[] checks = new boolean[appInfos.size()];
                 for (int i = 0; i < items.length; i++) {

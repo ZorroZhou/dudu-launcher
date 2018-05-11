@@ -12,6 +12,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.ex.manage.appInfo.AppInfo;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.view.base.BaseDialog;
 import com.wow.carlauncher.common.CommonData;
@@ -20,7 +21,6 @@ import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.view.dialog.CityDialog;
 import com.wow.carlauncher.view.activity.launcher.event.LEventCityRefresh;
 import com.wow.carlauncher.ex.plugin.obd.ObdProtocolEnum;
-import com.wow.frame.util.AppUtil;
 import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.SharedPreUtil;
 import com.wow.frame.util.ThreadObj;
@@ -68,7 +68,7 @@ public class STimeView extends FrameLayout {
             @Override
             public void onClick(View v) {
                 String selectapp = SharedPreUtil.getSharedPreString(CommonData.SDATA_TIME_PLUGIN_OPEN_APP);
-                final List<AppUtil.AppInfo> appInfos = new ArrayList<>(AppInfoManage.self().getAppInfos());
+                final List<AppInfo> appInfos = new ArrayList<>(AppInfoManage.self().getOtherAppInfos());
                 String[] items = new String[appInfos.size()];
                 int select = -1;
                 for (int i = 0; i < items.length; i++) {

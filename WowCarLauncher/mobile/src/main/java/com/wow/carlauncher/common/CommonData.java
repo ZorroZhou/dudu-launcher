@@ -19,7 +19,8 @@ public class CommonData {
     public static final int REQUEST_SELECT_QQMUSIC_WIDGET1 = 10008;
     public static final int REQUEST_SELECT_QQMUSIC_WIDGET2 = 10009;
 
-    public static final String IDATA_PACKAGE_NAME = "PACKAGE_NAME";
+    public static final String IDATA_APP_PACKAGE_NAME = "IDATA_APP_PACKAGE_NAME";//应用包名
+    public static final String IDATA_APP_MARK = "IDATA_APP_MARK";//应用标记
 
     //音乐播放器的控制器
     public static final String SDATA_MUSIC_CONTROLLER = "SDATA_MUSIC_CONTROLLER";
@@ -85,4 +86,6 @@ public class CommonData {
     public static final String SDATA_ALLOW_DEBUG_APP = "SDATA_ALLOW_DEBUG_APP";//是否接受开发中的APP包
 
     public static final int APP_WIDGET_HOST_ID = 0x200;
+
+    public static final String APP_SEPARATE = ":";//应用标记
 }

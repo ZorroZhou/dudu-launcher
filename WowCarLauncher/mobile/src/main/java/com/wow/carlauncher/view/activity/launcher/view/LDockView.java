@@ -41,7 +41,6 @@ import static com.wow.carlauncher.common.CommonData.SDATA_DOCK2_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK3_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK4_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK5_CLASS;
-import static com.wow.carlauncher.common.CommonData.SDATA_TIME_PLUGIN_OPEN_APP;
 import static com.wow.carlauncher.common.CommonData.TAG;
 
 /**
@@ -122,12 +121,7 @@ public class LDockView extends LinearLayout implements View.OnClickListener {
     }
 
     private void openDock(String clazz) {
-        Intent appIntent = pm.getLaunchIntentForPackage(clazz);
-        if (appIntent != null) {
-            appIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            getActivity().startActivity(appIntent);
-        } else {
-            ToastManage.self().show("APP丢失");
+        if (!AppInfoManage.self().openApp(clazz)) {
             loadDock();
         }
     }
@@ -135,60 +129,54 @@ public class LDockView extends LinearLayout implements View.OnClickListener {
     public void loadDock() {
         String packname1 = SharedPreUtil.getSharedPreString(SDATA_DOCK1_CLASS);
         if (CommonUtil.isNotNull(packname1)) {
-            try {
-                PackageInfo packageInfo = pm.getPackageInfo(packname1, 0);
-                Log.d(TAG, "loadDock: " + packageInfo.packageName);
+            if (AppInfoManage.self().checkApp(packname1)) {
                 iv_dock1.setImageDrawable(AppInfoManage.self().getIcon(packname1));
-                tv_dock1.setText(packageInfo.applicationInfo.loadLabel(pm));
-            } catch (Exception e) {
-                ToastManage.self().show("dock1加载失败:" + e.getMessage());
+                tv_dock1.setText(AppInfoManage.self().getName(packname1));
+            } else {
+                ToastManage.self().show("dock1加载失败");
                 SharedPreUtil.saveSharedPreString(SDATA_DOCK1_CLASS, null);
             }
         }
         String packname2 = SharedPreUtil.getSharedPreString(SDATA_DOCK2_CLASS);
         if (CommonUtil.isNotNull(packname2)) {
-            try {
-                PackageInfo packageInfo = pm.getPackageInfo(packname2, 0);
+            if (AppInfoManage.self().checkApp(packname2)) {
                 iv_dock2.setImageDrawable(AppInfoManage.self().getIcon(packname2));
-                tv_dock2.setText(packageInfo.applicationInfo.loadLabel(pm));
-            } catch (Exception e) {
-                ToastManage.self().show("dock2加载失败:" + e.getMessage());
+                tv_dock2.setText(AppInfoManage.self().getName(packname2));
+            } else {
+                ToastManage.self().show("dock2加载失败");
                 SharedPreUtil.saveSharedPreString(SDATA_DOCK2_CLASS, null);
             }
         }
 
         String packname3 = SharedPreUtil.getSharedPreString(SDATA_DOCK3_CLASS);
         if (CommonUtil.isNotNull(packname3)) {
-            try {
-                PackageInfo packageInfo = pm.getPackageInfo(packname3, 0);
+            if (AppInfoManage.self().checkApp(packname3)) {
                 iv_dock3.setImageDrawable(AppInfoManage.self().getIcon(packname3));
-                tv_dock3.setText(packageInfo.applicationInfo.loadLabel(pm));
-            } catch (Exception e) {
-                ToastManage.self().show("dock3加载失败:" + e.getMessage());
+                tv_dock3.setText(AppInfoManage.self().getName(packname3));
+            } else {
+                ToastManage.self().show("dock3加载失败");
                 SharedPreUtil.saveSharedPreString(SDATA_DOCK3_CLASS, null);
             }
         }
 
         String packname4 = SharedPreUtil.getSharedPreString(SDATA_DOCK4_CLASS);
         if (CommonUtil.isNotNull(packname4)) {
-            try {
-                PackageInfo packageInfo = pm.getPackageInfo(packname4, 0);
+            if (AppInfoManage.self().checkApp(packname4)) {
                 iv_dock4.setImageDrawable(AppInfoManage.self().getIcon(packname4));
-                tv_dock4.setText(packageInfo.applicationInfo.loadLabel(pm));
-            } catch (Exception e) {
-                ToastManage.self().show("dock4加载失败:" + e.getMessage());
+                tv_dock4.setText(AppInfoManage.self().getName(packname4));
+            } else {
+                ToastManage.self().show("dock4加载失败");
                 SharedPreUtil.saveSharedPreString(SDATA_DOCK4_CLASS, null);
             }
         }
 
         String packname5 = SharedPreUtil.getSharedPreString(SDATA_DOCK5_CLASS);
         if (CommonUtil.isNotNull(packname5)) {
-            try {
-                PackageInfo packageInfo = pm.getPackageInfo(packname5, 0);
+            if (AppInfoManage.self().checkApp(packname5)) {
                 iv_dock5.setImageDrawable(AppInfoManage.self().getIcon(packname5));
-                tv_dock5.setText(packageInfo.applicationInfo.loadLabel(pm));
-            } catch (Exception e) {
-                ToastManage.self().show("dock5加载失败:" + e.getMessage());
+                tv_dock5.setText(AppInfoManage.self().getName(packname5));
+            } else {
+                ToastManage.self().show("dock45加载失败");
                 SharedPreUtil.saveSharedPreString(SDATA_DOCK5_CLASS, null);
             }
         }
@@ -198,23 +186,6 @@ public class LDockView extends LinearLayout implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.ll_time: {
-                String packname = SharedPreUtil.getSharedPreString(SDATA_TIME_PLUGIN_OPEN_APP);
-                if (!CommonUtil.isNull(packname)) {
-                    Intent appIntent = pm.getLaunchIntentForPackage(packname);
-                    if (appIntent != null) {
-                        appIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        getActivity().startActivity(appIntent);
-                    } else {
-                        ToastManage.self().show("APP丢失");
-                    }
-                }
-                break;
-            }
-            case R.id.iv_set: {
-                getActivity().startActivity(new Intent(getContext(), SetActivity.class));
-                break;
-            }
             case R.id.ll_dock1: {
                 String packname = SharedPreUtil.getSharedPreString(SDATA_DOCK1_CLASS);
                 if (CommonUtil.isNull(packname)) {

@@ -9,10 +9,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.ex.manage.appInfo.AppInfo;
 import com.wow.carlauncher.view.adapter.SelectAppAdapter;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.view.base.BaseActivity;
-import com.wow.frame.util.AppUtil.AppInfo;
 
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
@@ -20,7 +20,8 @@ import org.xutils.x;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.wow.carlauncher.common.CommonData.IDATA_PACKAGE_NAME;
+import static com.wow.carlauncher.common.CommonData.IDATA_APP_MARK;
+import static com.wow.carlauncher.common.CommonData.IDATA_APP_PACKAGE_NAME;
 
 /**
  * Created by 10124 on 2017/10/26.
@@ -62,7 +63,7 @@ public class AppSelectActivity extends BaseActivity implements AdapterView.OnIte
         x.task().run(new Runnable() {
             @Override
             public void run() {
-                final List<AppInfo> appInfos =new ArrayList<>(AppInfoManage.self().getAppInfos());
+                final List<AppInfo> appInfos = new ArrayList<>(AppInfoManage.self().getAllAppInfos());
                 x.task().autoPost(new Runnable() {
                     @Override
                     public void run() {
@@ -78,7 +79,8 @@ public class AppSelectActivity extends BaseActivity implements AdapterView.OnIte
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         AppInfo info = adapter.getItem(i);
         Intent data = new Intent();
-        data.putExtra(IDATA_PACKAGE_NAME, info.packageName);
+        data.putExtra(IDATA_APP_PACKAGE_NAME, info.packageName);
+        data.putExtra(IDATA_APP_MARK, info.appMark);
         setResult(RESULT_OK, data);
         finish();
     }

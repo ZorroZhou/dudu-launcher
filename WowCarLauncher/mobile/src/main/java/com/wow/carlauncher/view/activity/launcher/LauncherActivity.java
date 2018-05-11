@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
+import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.view.activity.AppSelectActivity;
 import com.wow.carlauncher.view.activity.launcher.view.LDockView;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
@@ -30,6 +31,7 @@ import org.xutils.x;
 import static com.wow.carlauncher.common.CommonData.*;
 
 public class LauncherActivity extends Activity {
+
     @ViewInject(R.id.ll_dock)
     private LDockView ll_dock;
 
@@ -110,36 +112,41 @@ public class LauncherActivity extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_SELECT_APP_TO_DOCK1) {
             if (resultCode == RESULT_OK) {
-                String packName = data.getStringExtra(IDATA_PACKAGE_NAME);
-                SharedPreUtil.saveSharedPreString(SDATA_DOCK1_CLASS, packName);
+                String packName = data.getStringExtra(IDATA_APP_PACKAGE_NAME);
+                int mark = data.getIntExtra(IDATA_APP_MARK, -1);
+                SharedPreUtil.saveSharedPreString(SDATA_DOCK1_CLASS, mark + CommonData.APP_SEPARATE + packName);
                 ll_dock.loadDock();
             }
         }
         if (requestCode == REQUEST_SELECT_APP_TO_DOCK2) {
             if (resultCode == RESULT_OK) {
-                String packName = data.getStringExtra(IDATA_PACKAGE_NAME);
-                SharedPreUtil.saveSharedPreString(SDATA_DOCK2_CLASS, packName);
+                String packName = data.getStringExtra(IDATA_APP_PACKAGE_NAME);
+                int mark = data.getIntExtra(IDATA_APP_MARK, -1);
+                SharedPreUtil.saveSharedPreString(SDATA_DOCK2_CLASS, mark + CommonData.APP_SEPARATE + packName);
                 ll_dock.loadDock();
             }
         }
         if (requestCode == REQUEST_SELECT_APP_TO_DOCK3) {
             if (resultCode == RESULT_OK) {
-                String packName = data.getStringExtra(IDATA_PACKAGE_NAME);
-                SharedPreUtil.saveSharedPreString(SDATA_DOCK3_CLASS, packName);
+                String packName = data.getStringExtra(IDATA_APP_PACKAGE_NAME);
+                int mark = data.getIntExtra(IDATA_APP_MARK, -1);
+                SharedPreUtil.saveSharedPreString(SDATA_DOCK3_CLASS, mark + CommonData.APP_SEPARATE + packName);
                 ll_dock.loadDock();
             }
         }
         if (requestCode == REQUEST_SELECT_APP_TO_DOCK4) {
             if (resultCode == RESULT_OK) {
-                String packName = data.getStringExtra(IDATA_PACKAGE_NAME);
-                SharedPreUtil.saveSharedPreString(SDATA_DOCK4_CLASS, packName);
+                String packName = data.getStringExtra(IDATA_APP_PACKAGE_NAME);
+                int mark = data.getIntExtra(IDATA_APP_MARK, -1);
+                SharedPreUtil.saveSharedPreString(SDATA_DOCK4_CLASS, mark + CommonData.APP_SEPARATE + packName);
                 ll_dock.loadDock();
             }
         }
         if (requestCode == REQUEST_SELECT_APP_TO_DOCK5) {
             if (resultCode == RESULT_OK) {
-                String packName = data.getStringExtra(IDATA_PACKAGE_NAME);
-                SharedPreUtil.saveSharedPreString(SDATA_DOCK5_CLASS, packName);
+                String packName = data.getStringExtra(IDATA_APP_PACKAGE_NAME);
+                int mark = data.getIntExtra(IDATA_APP_MARK, -1);
+                SharedPreUtil.saveSharedPreString(SDATA_DOCK5_CLASS, mark + CommonData.APP_SEPARATE + packName);
                 ll_dock.loadDock();
             }
         }

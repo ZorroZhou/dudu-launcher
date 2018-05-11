@@ -62,7 +62,6 @@ public class LWeatherView extends BaseEBusView {
     private void clickEvent(View view) {
         switch (view.getId()) {
             case R.id.iv_tianqi: {
-                getActivity().startActivity(new Intent(getContext(), DrivingActivity.class));
                 break;
             }
         }

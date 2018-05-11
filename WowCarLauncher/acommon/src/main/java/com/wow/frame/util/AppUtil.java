@@ -96,46 +96,6 @@ public class AppUtil {
         }
     }
 
-    public static List<AppInfo> getAllApp(Context context) {
-        List<AppInfo> appInfos = new ArrayList<>();
-
-        PackageManager manager = context.getPackageManager();
-        Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
-        mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-        final List<ResolveInfo> apps = manager.queryIntentActivities(
-                mainIntent, 0);
-        Collections.sort(apps, new ResolveInfo.DisplayNameComparator(manager));
-        final int count = apps.size();
-        appInfos.clear();
-        for (int i = 0; i < count; i++) {
-            ResolveInfo info = apps.get(i);
-            appInfos.add(new AppInfo(info.activityInfo.loadIcon(manager), info.loadLabel(manager).toString(), info.activityInfo.applicationInfo.packageName));
-        }
-        return appInfos;
-    }
-
-    public static class AppInfo {
-        public AppInfo(Drawable icon, String name, String packageName) {
-            this.icon = icon;
-            this.name = name;
-            this.packageName = packageName;
-        }
-
-        public String packageName;
-        public Drawable icon;
-        public String name;
-
-        @Override
-        public String toString() {
-            return "AppInfo{" +
-                    "packageName='" + packageName + '\'' +
-                    ", icon=" + icon +
-                    ", name='" + name + '\'' +
-                    '}';
-        }
-    }
-
-
     public static void sendKeyCode(final int keyCode) {
         new Thread(new Runnable() {
             @Override

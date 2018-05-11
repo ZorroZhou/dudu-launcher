@@ -10,7 +10,7 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
-import com.wow.frame.util.AppUtil.AppInfo;
+import com.wow.carlauncher.ex.manage.appInfo.AppInfo;
 import com.wow.frame.util.SharedPreUtil;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.view.adapter.AllAppAdapter;
@@ -62,7 +62,7 @@ public class AppMenuActivity extends BaseActivity implements AdapterView.OnItemC
             @Override
             public void run() {
                 adapter.clear();
-                final List<AppInfo> appInfos = new ArrayList<>(AppInfoManage.self().getAppInfos());
+                final List<AppInfo> appInfos = new ArrayList<>(AppInfoManage.self().getAllAppInfos());
                 String selectapp = SharedPreUtil.getSharedPreString(CommonData.SDATA_HIDE_APPS);
                 List<AppInfo> hides = new ArrayList<>();
                 for (AppInfo appInfo : appInfos) {
@@ -85,7 +85,8 @@ public class AppMenuActivity extends BaseActivity implements AdapterView.OnItemC
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         AppInfo info = adapter.getItem(i);
-        run(info);
+        AppInfoManage.self().openApp(info.appMark + CommonData.APP_SEPARATE + info.packageName);
+        finish();
     }
 
     @Override
@@ -97,21 +98,24 @@ public class AppMenuActivity extends BaseActivity implements AdapterView.OnItemC
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
         final AppInfo info = adapter.getItem(position);
-        final AlertDialog dialog = new AlertDialog.Builder(mContext).setView(R.layout.dialog_menu_all_app).show();
-        dialog.findViewById(R.id.run).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                run(info);
-            }
-        });
-        dialog.findViewById(R.id.un).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-                un(info);
-            }
-        });
+        if (info.appMark == AppInfo.MARK_OTHER_APP) {
+            final AlertDialog dialog = new AlertDialog.Builder(mContext).setView(R.layout.dialog_menu_all_app).show();
+            dialog.findViewById(R.id.run).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                    AppInfoManage.self().openApp(info.appMark + CommonData.APP_SEPARATE + info.packageName);
+                    finish();
+                }
+            });
+            dialog.findViewById(R.id.un).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                    un(info);
+                }
+            });
+        }
         return true;
     }
 
@@ -124,17 +128,6 @@ public class AppMenuActivity extends BaseActivity implements AdapterView.OnItemC
     @Subscribe
     public void onEventMainThread(final MAppInfoRefreshEvent event) {
         loadData();
-    }
-
-    private void run(AppInfo info) {
-        Intent appIntent = pm.getLaunchIntentForPackage(info.packageName);
-        if (appIntent == null) {
-            showTip("APP不存在!!");
-            return;
-        }
-        appIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(appIntent);
-        finish();
     }
 
     private void un(AppInfo info) {

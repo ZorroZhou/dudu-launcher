@@ -16,10 +16,10 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.ex.manage.appInfo.AppInfo;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.common.view.SetView;
-import com.wow.frame.util.AppUtil;
 
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
@@ -63,7 +63,7 @@ public class SSystemView extends FrameLayout {
             @Override
             public void onClick(View v) {
                 if (Build.VERSION.SDK_INT >= 23) {
-                    final List<AppUtil.AppInfo> appInfos = new ArrayList<>(AppInfoManage.self().getAppInfos());
+                    final List<AppInfo> appInfos = new ArrayList<>(AppInfoManage.self().getOtherAppInfos());
                     String[] items = new String[appInfos.size()];
                     for (int i = 0; i < items.length; i++) {
                         items[i] = appInfos.get(i).name + "(" + appInfos.get(i).packageName + ")";

@@ -15,8 +15,8 @@ import com.wow.carlauncher.R;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.view.SetView;
-import com.wow.carlauncher.popupWindow.event.PEventFSRefresh;
-import com.wow.carlauncher.popupWindow.PopupWin;
+import com.wow.carlauncher.view.popupWindow.event.PEventFSRefresh;
+import com.wow.carlauncher.view.popupWindow.PopupWin;
 import com.wow.frame.util.AppUtil;
 import com.wow.frame.util.SharedPreUtil;
 

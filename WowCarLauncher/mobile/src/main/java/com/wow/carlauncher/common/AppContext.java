@@ -12,7 +12,7 @@ import com.wow.carlauncher.ex.plugin.amapcar.AMapCarPlugin;
 import com.wow.carlauncher.ex.plugin.fk.FangkongPlugin;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
-import com.wow.carlauncher.popupWindow.PopupWin;
+import com.wow.carlauncher.view.popupWindow.PopupWin;
 import com.wow.carlauncher.webservice.AppWsInfo;
 import com.wow.carlauncher.webservice.service.CommonService;
 import com.wow.frame.SFrame;

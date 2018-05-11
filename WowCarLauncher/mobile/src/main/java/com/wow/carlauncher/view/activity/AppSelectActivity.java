@@ -79,7 +79,7 @@ public class AppSelectActivity extends BaseActivity implements AdapterView.OnIte
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         AppInfo info = adapter.getItem(i);
         Intent data = new Intent();
-        data.putExtra(IDATA_APP_PACKAGE_NAME, info.packageName);
+        data.putExtra(IDATA_APP_PACKAGE_NAME, info.clazz);
         data.putExtra(IDATA_APP_MARK, info.appMark);
         setResult(RESULT_OK, data);
         finish();

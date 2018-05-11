@@ -13,6 +13,7 @@ import com.wow.carlauncher.R;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventInfo;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventState;
+import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarTp;
 import com.wow.carlauncher.view.base.BaseEBusView;
 import com.wow.frame.util.CommonUtil;
@@ -32,11 +33,17 @@ public class BottomTpView extends BaseEBusView {
     public BottomTpView(@NonNull Context context) {
         super(context);
         addContent(R.layout.content_driving_cool_black_tp);
+        init();
     }
 
     public BottomTpView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         addContent(R.layout.content_driving_cool_black_tp);
+        init();
+    }
+
+    private void init() {
+        onEventMainThread(ObdPlugin.self().getCurrentPObdEventCarTp());
     }
 
     @ViewInject(R.id.tv_lf)
@@ -53,20 +60,20 @@ public class BottomTpView extends BaseEBusView {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(final PObdEventCarTp event) {
-        if (tv_lf != null) {
-            tv_lf.setText(getContext().getString(R.string.driving_cool_black_tp, event.getlFTirePressure()));
+        if (tv_lf != null && event.getlFTirePressure() != null) {
+            tv_lf.setText(getContext().getString(R.string.driving_cool_black_tp, event.getlFTirePressure(), event.getlFTemp()));
         }
 
-        if (tv_lb != null) {
-            tv_lb.setText(getContext().getString(R.string.driving_cool_black_tp, event.getlBTirePressure()));
+        if (tv_lb != null && event.getlBTirePressure() != null) {
+            tv_lb.setText(getContext().getString(R.string.driving_cool_black_tp, event.getlBTirePressure(), event.getlBTemp()));
         }
 
-        if (tv_rf != null) {
-            tv_rf.setText(getContext().getString(R.string.driving_cool_black_tp, event.getrFTirePressure()));
+        if (tv_rf != null && event.getrFTirePressure() != null) {
+            tv_rf.setText(getContext().getString(R.string.driving_cool_black_tp, event.getrFTirePressure(), event.getrFTemp()));
         }
 
-        if (tv_rb != null) {
-            tv_rb.setText(getContext().getString(R.string.driving_cool_black_tp, event.getrBTirePressure()));
+        if (tv_rb != null && event.getrBTirePressure() != null) {
+            tv_rb.setText(getContext().getString(R.string.driving_cool_black_tp, event.getrBTirePressure(), event.getrBTemp()));
         }
     }
 }

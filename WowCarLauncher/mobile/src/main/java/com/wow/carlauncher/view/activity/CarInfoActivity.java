@@ -133,8 +133,6 @@ public class CarInfoActivity extends BaseActivity {
             String msg = "右前轮:" + String.format(Locale.CHINA, "%.1f", event.getrFTirePressure()) + "/" + event.getrFTemp() + "℃";
             tv_tp_rf.setText(msg);
         }
-
-
         if (event.getrBTirePressure() != null && event.getrBTemp() != null) {
             String msg = "右后轮:" + String.format(Locale.CHINA, "%.1f", event.getrBTirePressure()) + "/" + event.getrBTemp() + "℃";
             tv_tp_rb.setText(msg);

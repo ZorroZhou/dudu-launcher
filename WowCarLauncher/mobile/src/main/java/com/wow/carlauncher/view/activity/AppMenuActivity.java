@@ -66,7 +66,7 @@ public class AppMenuActivity extends BaseActivity implements AdapterView.OnItemC
                 String selectapp = SharedPreUtil.getSharedPreString(CommonData.SDATA_HIDE_APPS);
                 List<AppInfo> hides = new ArrayList<>();
                 for (AppInfo appInfo : appInfos) {
-                    if (selectapp.contains("[" + appInfo.packageName + "]")) {
+                    if (selectapp.contains("[" + appInfo.clazz + "]")) {
                         hides.add(appInfo);
                     }
                 }
@@ -85,7 +85,7 @@ public class AppMenuActivity extends BaseActivity implements AdapterView.OnItemC
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         AppInfo info = adapter.getItem(i);
-        AppInfoManage.self().openApp(info.appMark + CommonData.APP_SEPARATE + info.packageName);
+        AppInfoManage.self().openApp(info.appMark + CommonData.APP_SEPARATE + info.clazz);
         finish();
     }
 
@@ -104,7 +104,7 @@ public class AppMenuActivity extends BaseActivity implements AdapterView.OnItemC
                 @Override
                 public void onClick(View v) {
                     dialog.dismiss();
-                    AppInfoManage.self().openApp(info.appMark + CommonData.APP_SEPARATE + info.packageName);
+                    AppInfoManage.self().openApp(info.appMark + CommonData.APP_SEPARATE + info.clazz);
                     finish();
                 }
             });
@@ -133,7 +133,7 @@ public class AppMenuActivity extends BaseActivity implements AdapterView.OnItemC
     private void un(AppInfo info) {
         Intent deleteIntent = new Intent();
         deleteIntent.setAction(Intent.ACTION_DELETE);
-        deleteIntent.setData(Uri.parse("package:" + info.packageName));
+        deleteIntent.setData(Uri.parse("package:" + info.clazz));
         startActivityForResult(deleteIntent, 0);
     }
 

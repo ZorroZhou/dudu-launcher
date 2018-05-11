@@ -27,8 +27,7 @@ public class DrivingActivity extends BaseActivity {
 
     @Override
     public void init() {
-        Window window = getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContent(R.layout.activity_driving);
     }
 

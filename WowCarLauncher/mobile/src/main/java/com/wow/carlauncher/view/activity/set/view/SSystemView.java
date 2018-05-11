@@ -66,7 +66,7 @@ public class SSystemView extends FrameLayout {
                     final List<AppInfo> appInfos = new ArrayList<>(AppInfoManage.self().getOtherAppInfos());
                     String[] items = new String[appInfos.size()];
                     for (int i = 0; i < items.length; i++) {
-                        items[i] = appInfos.get(i).name + "(" + appInfos.get(i).packageName + ")";
+                        items[i] = appInfos.get(i).name + "(" + appInfos.get(i).clazz + ")";
                     }
 
                     AlertDialog dialog = new AlertDialog.Builder(getContext()).setTitle("请选择APP").setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -77,7 +77,7 @@ public class SSystemView extends FrameLayout {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                                    Uri.parse("package:" + appInfos.get(which).packageName));
+                                    Uri.parse("package:" + appInfos.get(which).clazz));
                             getActivity().startActivity(intent);
                         }
                     }).create();

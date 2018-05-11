@@ -131,8 +131,8 @@ public class SAppView extends FrameLayout {
                 String[] items = new String[appInfos.size()];
                 final boolean[] checks = new boolean[appInfos.size()];
                 for (int i = 0; i < items.length; i++) {
-                    items[i] = appInfos.get(i).name + "(" + appInfos.get(i).packageName + ")";
-                    checks[i] = selectapp.contains("[" + appInfos.get(i).packageName + "]");
+                    items[i] = appInfos.get(i).name + "(" + appInfos.get(i).clazz + ")";
+                    checks[i] = selectapp.contains("[" + appInfos.get(i).clazz + "]");
                 }
 
                 AlertDialog dialog = new AlertDialog.Builder(getContext()).setTitle("请选择APP").setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -141,7 +141,7 @@ public class SAppView extends FrameLayout {
                         String selectapp = "";
                         for (int i = 0; i < appInfos.size(); i++) {
                             if (checks[i]) {
-                                selectapp = selectapp + "[" + appInfos.get(i).packageName + "];";
+                                selectapp = selectapp + "[" + appInfos.get(i).clazz + "];";
                             }
                         }
                         if (selectapp.endsWith(";")) {

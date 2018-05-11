@@ -72,8 +72,8 @@ public class STimeView extends FrameLayout {
                 String[] items = new String[appInfos.size()];
                 int select = -1;
                 for (int i = 0; i < items.length; i++) {
-                    items[i] = appInfos.get(i).name + "(" + appInfos.get(i).packageName + ")";
-                    if (appInfos.get(i).packageName.equals(selectapp)) {
+                    items[i] = appInfos.get(i).name + "(" + appInfos.get(i).clazz + ")";
+                    if (appInfos.get(i).clazz.equals(selectapp)) {
                         select = i;
                     }
                 }
@@ -82,7 +82,7 @@ public class STimeView extends FrameLayout {
                 AlertDialog dialog = new AlertDialog.Builder(getContext()).setTitle("请选择APP").setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        SharedPreUtil.saveSharedPreString(CommonData.SDATA_TIME_PLUGIN_OPEN_APP, appInfos.get(obj.getObj()).packageName);
+                        SharedPreUtil.saveSharedPreString(CommonData.SDATA_TIME_PLUGIN_OPEN_APP, appInfos.get(obj.getObj()).clazz);
                     }
                 }).setSingleChoiceItems(items, select, new DialogInterface.OnClickListener() {
                     @Override

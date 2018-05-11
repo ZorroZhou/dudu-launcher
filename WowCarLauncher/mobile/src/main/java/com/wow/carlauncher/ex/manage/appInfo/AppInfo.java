@@ -1,7 +1,5 @@
 package com.wow.carlauncher.ex.manage.appInfo;
 
-import android.graphics.drawable.Drawable;
-
 /**
  * Created by 10124 on 2018/5/11.
  */
@@ -13,24 +11,13 @@ public class AppInfo {
     public final static int MARK_OTHER_APP = 1;
     public final static int MARK_INTERNAL_APP = 2;
 
-    public AppInfo(Drawable icon, CharSequence name, String packageName, int appMark) {
-        this.icon = icon;
+    public AppInfo(CharSequence name, String clazz, int appMark) {
         this.appMark = appMark;
         this.name = name;
-        this.packageName = packageName;
+        this.clazz = clazz;
     }
 
     public int appMark = MARK_OTHER_APP;//app的标记,标记是自己的APP还是其他的
-    public String packageName;
-    public Drawable icon;
+    public String clazz;
     public CharSequence name;
-
-    @Override
-    public String toString() {
-        return "AppInfo{" +
-                "packageName='" + packageName + '\'' +
-                ", icon=" + icon +
-                ", name='" + name + '\'' +
-                '}';
-    }
 }

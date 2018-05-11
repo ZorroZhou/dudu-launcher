@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfo;
+import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.view.base.BaseAdapterEx;
 
 /**
@@ -31,7 +32,7 @@ public class SelectAppAdapter extends BaseAdapterEx<AppInfo> {
         AppInfo model = items.get(position);
         if (!model.equals(convertView.getTag())) {
             ((TextView) convertView.findViewById(R.id.name)).setText(model.name);
-            ((ImageView) convertView.findViewById(R.id.icon)).setImageDrawable(model.icon);
+            ((ImageView) convertView.findViewById(R.id.icon)).setImageDrawable(AppInfoManage.self().getIcon(model.clazz));
             convertView.setTag(model);
         }
         return convertView;

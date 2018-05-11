@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarInfo;
 import com.wow.carlauncher.view.base.BaseEBusView;
 
@@ -45,19 +46,18 @@ public class SpeedAndOilView extends BaseEBusView {
 
     public SpeedAndOilView(Context context) {
         super(context);
-        initView();
+        init();
     }
 
     public SpeedAndOilView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        initView();
+        init();
     }
 
 
-    private void initView() {
-        View amapView = View.inflate(getContext(), R.layout.content_driving_cool_speed_and_oil, null);
-        this.addView(amapView, FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
-        x.view().inject(this);
+    private void init() {
+        addContent(R.layout.content_driving_cool_speed_and_oil);
+        onEventMainThread(ObdPlugin.self().getCurrentPObdEventCarInfo());
     }
 
     @Override

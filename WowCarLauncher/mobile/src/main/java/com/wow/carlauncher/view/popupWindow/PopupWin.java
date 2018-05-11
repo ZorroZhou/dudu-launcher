@@ -1,4 +1,4 @@
-package com.wow.carlauncher.popupWindow;
+package com.wow.carlauncher.view.popupWindow;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -34,7 +34,7 @@ import com.wow.frame.util.SharedPreUtil;
 import com.wow.carlauncher.CarLauncherApplication;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
-import com.wow.carlauncher.popupWindow.event.PEventFSRefresh;
+import com.wow.carlauncher.view.popupWindow.event.PEventFSRefresh;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

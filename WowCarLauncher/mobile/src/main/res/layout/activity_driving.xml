@@ -3,191 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/black"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <com.zhy.android.percent.support.PercentRelativeLayout
-        android:id="@+id/ll_center"
+    <FrameLayout
+        android:id="@+id/content"
         android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <ImageView
+        android:id="@+id/iv_back"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_weight="7"
-        android:background="@mipmap/driving_black_bg"
-        android:orientation="horizontal"
-        app:layout_heightPercent="48%w">
-
-        <com.zhy.android.percent.support.PercentRelativeLayout
-            android:id="@+id/fl_rev"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            app:layout_widthPercent="44%w">
-
-            <com.wow.carlauncher.view.activity.driving.coolBlack.RevAndWaterTempView
-                android:id="@+id/rwtview"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_centerInParent="true"
-                app:layout_heightPercent="84%w"
-                app:layout_widthPercent="84%w" />
-        </com.zhy.android.percent.support.PercentRelativeLayout>
-
-        <com.zhy.android.percent.support.PercentRelativeLayout
-            android:id="@+id/fl_speed"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_alignParentRight="true"
-            app:layout_widthPercent="44%w">
-
-            <com.wow.carlauncher.view.activity.driving.coolBlack.SpeedAndOilView
-                android:id="@+id/soview"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_centerInParent="true"
-                app:layout_heightPercent="84%w"
-                app:layout_widthPercent="84%w" />
-        </com.zhy.android.percent.support.PercentRelativeLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_centerHorizontal="true"
-            android:orientation="vertical"
-            app:layout_widthPercent="20%w">
-
-            <com.zhy.android.percent.support.PercentLinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="22"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="当前时间"
-                    android:textColor="#ccc"
-                    app:layout_heightPercent="30%h"
-                    app:layout_marginTopPercent="10%h"
-                    app:layout_textSizePercent="20%h" />
-
-                <com.wow.carlauncher.common.view.PhilTextView
-                    android:id="@+id/tv_time"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="00:00:00"
-                    android:textColor="#fff"
-                    app:layout_heightPercent="50%h"
-                    app:layout_textSizePercent="45%h" />
-            </com.zhy.android.percent.support.PercentLinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="28">
-
-            </LinearLayout>
-
-            <com.zhy.android.percent.support.PercentLinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="28"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="行驶距离"
-                    android:textColor="#ccc"
-                    app:layout_heightPercent="20%h"
-                    app:layout_marginTopPercent="20%h"
-                    app:layout_textSizePercent="12%h" />
-
-                <com.wow.carlauncher.common.view.PhilTextView
-                    android:id="@+id/tv_driver_distance"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="11 KM"
-                    android:textColor="#fff"
-                    app:layout_heightPercent="40%h"
-                    app:layout_textSizePercent="25%h" />
-            </com.zhy.android.percent.support.PercentLinearLayout>
-
-            <com.zhy.android.percent.support.PercentLinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="22"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="行驶时间"
-                    android:textColor="#ccc"
-                    app:layout_heightPercent="30%h"
-                    app:layout_marginTopPercent="10%h"
-                    app:layout_textSizePercent="20%h" />
-
-                <com.wow.carlauncher.common.view.PhilTextView
-                    android:id="@+id/tv_driver_time"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="00:00:00"
-                    android:textColor="#fff"
-                    app:layout_heightPercent="50%h"
-                    app:layout_textSizePercent="45%h" />
-            </com.zhy.android.percent.support.PercentLinearLayout>
-        </LinearLayout>
-    </com.zhy.android.percent.support.PercentRelativeLayout>
-
-
-    <LinearLayout
-        android:id="@+id/ll_bottom"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@+id/ll_center"
-        android:layout_weight="1"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-        </LinearLayout>
-
-        <View
-            android:layout_width="0.5dp"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/l_bg_line2" />
-
-        <com.wow.carlauncher.view.activity.driving.coolBlack.BottomMusicView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-
-        <View
-            android:layout_width="0.5dp"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/l_bg_line2" />
-
-        <com.zhy.android.percent.support.PercentRelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
-
-
-        </com.zhy.android.percent.support.PercentRelativeLayout>
-    </LinearLayout>
+        android:padding="10dp"
+        android:src="@mipmap/ic_back"
+        app:layout_heightPercent="10%h"
+        app:layout_widthPercent="10%h" />
 </com.zhy.android.percent.support.PercentRelativeLayout>

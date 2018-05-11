@@ -141,6 +141,7 @@ public class GoodDriverTPProtocol extends ObdProtocol {
     @Override
     public void taskOver(ObdTask task) {
         if (task.isSuccess()) {
+            Log.d(TAG, "taskOver: " + task);
             if (task instanceof CloseSpaceTask) {
                 cmdCloseSpace = true;
             } else if (task instanceof CloseLineFeedTask) {
@@ -171,6 +172,7 @@ public class GoodDriverTPProtocol extends ObdProtocol {
                     listener.carRunningInfo(null, null, null, t.getOil());
                 } else if (task instanceof GetTpTask) {
                     GetTpTask t = (GetTpTask) task;
+                    Log.d(TAG, "taskOver  tp task: " + t);
                     if (t.getMark() == LF) {
                         listener.carTirePressureInfo(t.getTp(), t.getTemp(), null, null, null, null, null, null);
                     } else if (t.getMark() == RF) {
@@ -178,7 +180,6 @@ public class GoodDriverTPProtocol extends ObdProtocol {
                     } else if (t.getMark() == LB) {
                         listener.carTirePressureInfo(null, null, null, null, t.getTp(), t.getTemp(), null, null);
                     } else if (t.getMark() == RB) {
-                        Log.d(TAG, "taskOver: !!!!!!!!!!!!!!!!!!" + t.getTp());
                         listener.carTirePressureInfo(null, null, null, null, null, null, t.getTp(), t.getTemp());
                     }
                 }

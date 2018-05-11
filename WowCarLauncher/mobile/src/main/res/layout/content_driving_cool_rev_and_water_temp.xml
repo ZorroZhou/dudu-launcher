@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:text="1111"
+            android:text="0"
             android:textColor="@android:color/white"
             app:layout_heightPercent="20%h"
             app:layout_textSizePercent="20%h" />
@@ -68,7 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_rev_dw"
             android:gravity="center"
-            android:text="水温:100℃"
+            android:text="水温:未知"
             android:textColor="#ccc"
             app:layout_heightPercent="8%h"
             app:layout_marginTopPercent="5%h"

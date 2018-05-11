@@ -28,7 +28,6 @@
     <string name="add_widget">Add widget</string>
 
 
-
     <string name="driving_cool_black_tp">%1$f</string>
-    <string name="driving_cool_black_tp_nodata">无数据</string>
+    <string name="driving_cool_black_tp_nodata">0.0</string>
 </resources>

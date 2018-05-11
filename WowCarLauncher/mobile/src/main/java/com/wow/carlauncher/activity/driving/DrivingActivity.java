@@ -1,7 +1,9 @@
 package com.wow.carlauncher.activity.driving;
 
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.activity.driving.view.RevAndWaterTempView;
@@ -34,12 +36,16 @@ public class DrivingActivity extends BaseActivity {
     @ViewInject(R.id.soview)
     private SpeedAndOilView soview;
 
+    @ViewInject(R.id.tv_time)
+    private TextView tv_time;
 
     @Override
     public void init() {
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
+        Window window = getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         setContent(R.layout.activity_driving);
+
+        EventBus.getDefault().register(this);
     }
 
     boolean run = true;
@@ -90,11 +96,12 @@ public class DrivingActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         run = false;
+        EventBus.getDefault().unregister(this);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(final MTimeSecondEvent event) {
-
+        this.tv_time.setText(DateUtil.dateToString(new Date(), "HH:mm:ss"));
     }
 
 }

@@ -12,13 +12,13 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
-import com.wow.carlauncher.R;
-import com.wow.carlauncher.activity.launcher.view.LDockView;
+import com.wow.carlauncher.view.activity.AppSelectActivity;
+import com.wow.carlauncher.view.activity.launcher.view.LDockView;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.console.event.PConsoleEventLightState;
-import com.wow.carlauncher.view.activity.AppSelectActivity;
 import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.SharedPreUtil;
+import com.wow.carlauncher.R;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -27,18 +27,7 @@ import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
-import static com.wow.carlauncher.common.CommonData.IDATA_PACKAGE_NAME;
-import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_APP_TO_DOCK1;
-import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_APP_TO_DOCK2;
-import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_APP_TO_DOCK3;
-import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_APP_TO_DOCK4;
-import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_APP_TO_DOCK5;
-import static com.wow.carlauncher.common.CommonData.SDATA_DOCK1_CLASS;
-import static com.wow.carlauncher.common.CommonData.SDATA_DOCK2_CLASS;
-import static com.wow.carlauncher.common.CommonData.SDATA_DOCK3_CLASS;
-import static com.wow.carlauncher.common.CommonData.SDATA_DOCK4_CLASS;
-import static com.wow.carlauncher.common.CommonData.SDATA_DOCK5_CLASS;
-import static com.wow.carlauncher.common.CommonData.SDATA_TIME_PLUGIN_OPEN_APP;
+import static com.wow.carlauncher.common.CommonData.*;
 
 public class LauncherActivity extends Activity {
     @ViewInject(R.id.ll_dock)

@@ -1,8 +1,7 @@
-package com.wow.carlauncher.activity.driving.coolBlack;
+package com.wow.carlauncher.view.activity.driving.coolBlack;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -10,12 +9,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
-import com.wow.carlauncher.common.CommonData;
 
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
-
-import static com.wow.carlauncher.common.CommonData.TAG;
 
 /**
  * Created by 10124 on 2018/4/26.

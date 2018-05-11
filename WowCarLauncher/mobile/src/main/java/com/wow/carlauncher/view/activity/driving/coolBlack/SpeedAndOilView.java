@@ -1,4 +1,4 @@
-package com.wow.carlauncher.activity.driving.coolBlack;
+package com.wow.carlauncher.view.activity.driving.coolBlack;
 
 import android.content.Context;
 import android.util.AttributeSet;

@@ -1,10 +1,10 @@
 package com.wow.carlauncher.common;
 
 public class CommonData {
+    public static final String TAG = "WOW_CAR";
+
     public static final String[] POPUP_SIZE = {"小", "中", "大"};
 
-
-    public static final String TAG = "WOW_CAR";
     public static final String PACKAGE_NAME = "com.wow.carlauncher";
 
     public static final int REQUEST_SELECT_APP_TO_DOCK1 = 10000;

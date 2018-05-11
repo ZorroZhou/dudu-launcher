@@ -71,6 +71,9 @@ public class GoodDriverTPProtocol extends ObdProtocol {
                         if (mark % infoMark == 0) {
                             addTask(new GetSpeedTask());
                             addTask(new GetRevTask());
+                        }
+
+                        if (mark % 20 == 0) {
                             addTask(new GetWaterTempTask());
                             addTask(new GetOilConTask());
                         }

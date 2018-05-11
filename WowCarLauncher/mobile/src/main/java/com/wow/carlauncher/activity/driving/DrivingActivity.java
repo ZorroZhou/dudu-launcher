@@ -2,12 +2,11 @@ package com.wow.carlauncher.activity.driving;
 
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
-import com.wow.carlauncher.activity.driving.view.RevAndWaterTempView;
-import com.wow.carlauncher.activity.driving.view.SpeedAndOilView;
+import com.wow.carlauncher.activity.driving.coolBlack.RevAndWaterTempView;
+import com.wow.carlauncher.activity.driving.coolBlack.SpeedAndOilView;
 import com.wow.carlauncher.common.base.BaseActivity;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 import com.wow.frame.util.DateUtil;
@@ -20,8 +19,6 @@ import org.xutils.x;
 
 import java.util.Date;
 import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Created by 10124 on 2018/4/25.
@@ -68,7 +65,7 @@ public class DrivingActivity extends BaseActivity {
                     }
 
                     speed = speed + new Random().nextInt(5);
-                    if (speed > 250) {
+                    if (speed > 200) {
                         speed = 100;
                     }
 

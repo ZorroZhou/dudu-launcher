@@ -15,6 +15,7 @@
         android:gravity="center"
         android:paddingEnd="5dp"
         android:paddingStart="5dp"
+        android:singleLine="true"
         android:text="音乐"
         android:textColor="@android:color/white"
         app:layout_heightPercent="12%h"

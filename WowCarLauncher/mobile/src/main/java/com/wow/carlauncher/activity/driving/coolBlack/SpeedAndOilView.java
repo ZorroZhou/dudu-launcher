@@ -1,4 +1,4 @@
-package com.wow.carlauncher.activity.driving.view;
+package com.wow.carlauncher.activity.driving.coolBlack;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -19,7 +19,7 @@ import org.xutils.x;
 
 public class SpeedAndOilView extends RelativeLayout {
     private final static int RATE = 100;
-    private final static int MAX_SPEED = 250 * RATE;
+    private final static int MAX_SPEED = 200 * RATE;
 
     private final static int MAX_OIL = 100;
     @ViewInject(R.id.iv_cursor)

@@ -3,6 +3,7 @@ package com.wow.carlauncher.ex.plugin.amapcar;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventNavInfo;
@@ -14,6 +15,8 @@ import org.xutils.x;
 import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.*;
 
 public class AMapCartReceiver extends BroadcastReceiver {
+    public static final String TAG = "WOW_CAR_AMAP";
+
     public static final int GETHC_NEXT_TO_NONE = 0;
     public static final int GETHC_NEXT_TO_NAVI = 1;
 
@@ -99,6 +102,8 @@ public class AMapCartReceiver extends BroadcastReceiver {
                 }
 
                 case STATE_INFO: {
+                    Log.d(TAG, "onReceive: " + intent.getIntExtra(EXTRA_STATE, -1));
+
                     x.task().autoPost(new Runnable() {
                         @Override
                         public void run() {

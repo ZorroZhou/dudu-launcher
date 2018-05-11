@@ -4,15 +4,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 
-import com.wow.carlauncher.event.EventWifiState;
-import com.wow.carlauncher.service.MainService;
+import com.wow.carlauncher.view.event.EventWifiState;
 import com.wow.frame.util.NetWorkUtil;
 
 import org.greenrobot.eventbus.EventBus;
-
-import static android.app.DownloadManager.Request.NETWORK_WIFI;
 
 /**
  * Created by 10124 on 2017/10/31.

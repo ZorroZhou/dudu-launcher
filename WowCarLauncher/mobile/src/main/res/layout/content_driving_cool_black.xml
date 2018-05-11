@@ -82,10 +82,11 @@
                     app:layout_textSizePercent="45%h" />
             </com.zhy.android.percent.support.PercentLinearLayout>
 
-            <LinearLayout
+            <com.zhy.android.percent.support.PercentLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="28"
+                android:gravity="center"
                 android:orientation="vertical">
 
                 <TextView
@@ -95,7 +96,6 @@
                     android:text="瞬时油耗"
                     android:textColor="#ccc"
                     app:layout_heightPercent="20%h"
-                    app:layout_marginTopPercent="20%h"
                     app:layout_textSizePercent="12%h" />
 
                 <com.wow.carlauncher.common.view.PhilTextView
@@ -107,12 +107,22 @@
                     android:textColor="#fff"
                     app:layout_heightPercent="40%h"
                     app:layout_textSizePercent="25%h" />
-            </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="L/100KM"
+                    android:textColor="#ccc"
+                    app:layout_heightPercent="20%h"
+                    app:layout_textSizePercent="12%h" />
+            </com.zhy.android.percent.support.PercentLinearLayout>
 
             <com.zhy.android.percent.support.PercentLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="28"
+                android:gravity="center"
                 android:orientation="vertical">
 
                 <TextView
@@ -122,7 +132,6 @@
                     android:text="行驶距离"
                     android:textColor="#ccc"
                     app:layout_heightPercent="20%h"
-                    app:layout_marginTopPercent="20%h"
                     app:layout_textSizePercent="12%h" />
 
                 <com.wow.carlauncher.common.view.PhilTextView
@@ -130,10 +139,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="11 KM"
+                    android:text="0"
                     android:textColor="#fff"
                     app:layout_heightPercent="40%h"
                     app:layout_textSizePercent="25%h" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="KM"
+                    android:textColor="#ccc"
+                    app:layout_heightPercent="20%h"
+                    app:layout_textSizePercent="12%h" />
             </com.zhy.android.percent.support.PercentLinearLayout>
 
             <com.zhy.android.percent.support.PercentLinearLayout

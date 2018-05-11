@@ -1,4 +1,4 @@
-package com.wow.carlauncher.activity;
+package com.wow.carlauncher.view.activity;
 
 import android.app.WallpaperManager;
 import android.content.Intent;

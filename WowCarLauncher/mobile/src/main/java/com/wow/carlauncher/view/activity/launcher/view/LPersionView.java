@@ -6,12 +6,13 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.view.base.BaseEBusView;
 
 /**
  * Created by 10124 on 2018/4/25.
  */
 
-public class LPersionView extends LBaseView {
+public class LPersionView extends BaseEBusView {
 
     public LPersionView(@NonNull Context context) {
         super(context);

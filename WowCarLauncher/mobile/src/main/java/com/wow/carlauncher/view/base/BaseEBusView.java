@@ -1,4 +1,4 @@
-package com.wow.carlauncher.view.activity.launcher.view;
+package com.wow.carlauncher.view.base;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -17,12 +17,12 @@ import static com.wow.carlauncher.common.CommonData.TAG;
  * Created by 10124 on 2018/4/22.
  */
 
-public class LBaseView extends FrameLayout {
-    public LBaseView(@NonNull Context context) {
+public class BaseEBusView extends FrameLayout {
+    public BaseEBusView(@NonNull Context context) {
         super(context);
     }
 
-    public LBaseView(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public BaseEBusView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 

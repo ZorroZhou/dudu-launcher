@@ -13,6 +13,7 @@ import com.wow.carlauncher.R;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventInfo;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventState;
+import com.wow.carlauncher.view.base.BaseEBusView;
 import com.wow.frame.util.CommonUtil;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -28,7 +29,7 @@ import static com.wow.carlauncher.common.CommonData.TAG;
  */
 
 @ContentView(R.layout.content_l_music)
-public class LMusicView extends LBaseView {
+public class LMusicView extends BaseEBusView {
 
     public LMusicView(@NonNull Context context) {
         super(context);

@@ -16,6 +16,7 @@ import com.wow.carlauncher.R;
 import com.wow.carlauncher.ex.plugin.amapcar.AMapCarPlugin;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventNavInfo;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventState;
+import com.wow.carlauncher.view.base.BaseEBusView;
 import com.wow.frame.util.AppUtil;
 import com.wow.frame.util.CommonUtil;
 
@@ -34,7 +35,7 @@ import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.ICONS;
  * Created by 10124 on 2018/4/20.
  */
 
-public class LAMapView extends LBaseView {
+public class LAMapView extends BaseEBusView {
 
     public LAMapView(@NonNull Context context) {
         super(context);

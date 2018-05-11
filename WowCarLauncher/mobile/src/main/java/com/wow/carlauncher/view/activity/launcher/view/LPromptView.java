@@ -22,6 +22,7 @@ import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarTp;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventConnect;
 import com.wow.carlauncher.view.activity.set.SetActivity;
+import com.wow.carlauncher.view.base.BaseEBusView;
 import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.DateUtil;
 import com.wow.frame.util.NetWorkUtil;
@@ -41,7 +42,7 @@ import static com.inuker.bluetooth.library.Constants.STATUS_DEVICE_CONNECTED;
  * Created by 10124 on 2018/4/22.
  */
 
-public class LPromptView extends LBaseView {
+public class LPromptView extends BaseEBusView {
 
 
     public LPromptView(@NonNull Context context) {

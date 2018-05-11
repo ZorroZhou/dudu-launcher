@@ -26,4 +26,9 @@
     <string name="iv_content">图片</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
+
+
+
+    <string name="driving_cool_black_tp">%1$f</string>
+    <string name="driving_cool_black_tp_nodata">无数据</string>
 </resources>

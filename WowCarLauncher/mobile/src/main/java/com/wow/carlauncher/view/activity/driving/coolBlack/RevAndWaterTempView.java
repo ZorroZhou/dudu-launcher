@@ -9,7 +9,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarInfo;
+import com.wow.carlauncher.view.base.BaseEBusView;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
@@ -17,7 +21,7 @@ import org.xutils.x;
  * Created by 10124 on 2018/4/26.
  */
 
-public class RevAndWaterTempView extends RelativeLayout {
+public class RevAndWaterTempView extends BaseEBusView {
     private final static int MAX_REV = 11000;
     private final static int MAX_WATER_TEMP = 130;
 
@@ -133,5 +137,13 @@ public class RevAndWaterTempView extends RelativeLayout {
         }
     }
 
-
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(PObdEventCarInfo event) {
+        if (event.getRev() != null) {
+            setRev(event.getRev());
+        }
+        if (event.getWaterTemp() != null) {
+            setWaterTemp(event.getWaterTemp());
+        }
+    }
 }

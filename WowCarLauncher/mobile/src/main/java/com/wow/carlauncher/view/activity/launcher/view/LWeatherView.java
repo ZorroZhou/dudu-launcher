@@ -19,6 +19,7 @@ import com.wow.carlauncher.common.amapWebservice.res.WeatherRes;
 import com.wow.carlauncher.ex.manage.time.event.MTime30MinuteEvent;
 import com.wow.carlauncher.view.activity.driving.DrivingActivity;
 import com.wow.carlauncher.view.activity.launcher.event.LEventCityRefresh;
+import com.wow.carlauncher.view.base.BaseEBusView;
 import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.SharedPreUtil;
 
@@ -34,7 +35,7 @@ import static com.wow.carlauncher.common.CommonData.TAG;
  * Created by 10124 on 2018/4/20.
  */
 
-public class LWeatherView extends LBaseView {
+public class LWeatherView extends BaseEBusView {
     @ViewInject(R.id.iv_tianqi)
     private ImageView iv_tianqi;
 

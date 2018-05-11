@@ -1,4 +1,4 @@
-package com.wow.carlauncher.common.base;
+package com.wow.carlauncher.view.base;
 
 import android.app.Activity;
 import android.app.ProgressDialog;

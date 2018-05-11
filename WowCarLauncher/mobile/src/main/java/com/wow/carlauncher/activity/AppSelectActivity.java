@@ -9,9 +9,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.wow.carlauncher.R;
-import com.wow.carlauncher.activity.adapter.SelectAppAdapter;
+import com.wow.carlauncher.view.adapter.SelectAppAdapter;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
-import com.wow.carlauncher.common.base.BaseActivity;
+import com.wow.carlauncher.view.base.BaseActivity;
 import com.wow.frame.util.AppUtil.AppInfo;
 
 import org.xutils.view.annotation.ViewInject;

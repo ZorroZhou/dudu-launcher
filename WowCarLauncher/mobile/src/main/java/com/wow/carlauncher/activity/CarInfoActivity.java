@@ -1,11 +1,10 @@
 package com.wow.carlauncher.activity;
 
-import android.util.Log;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
-import com.wow.carlauncher.common.base.BaseActivity;
+import com.wow.carlauncher.view.base.BaseActivity;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
 import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarInfo;
@@ -22,7 +21,6 @@ import org.xutils.view.annotation.ViewInject;
 import java.util.Locale;
 
 import static com.inuker.bluetooth.library.Constants.STATUS_DEVICE_CONNECTED;
-import static com.wow.carlauncher.common.CommonData.TAG;
 
 /**
  * Created by 10124 on 2018/4/25.

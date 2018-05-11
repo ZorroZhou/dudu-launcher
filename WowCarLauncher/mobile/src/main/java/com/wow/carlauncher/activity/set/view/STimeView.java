@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
-import com.wow.carlauncher.common.base.BaseDialog;
+import com.wow.carlauncher.view.base.BaseDialog;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.common.view.SetView;

@@ -3,7 +3,7 @@ package com.wow.carlauncher.view.dialog;
 import android.content.Context;
 
 import com.wow.carlauncher.R;
-import com.wow.carlauncher.common.base.BaseDialog;
+import com.wow.carlauncher.view.base.BaseDialog;
 
 /**
  * Created by 10124 on 2017/11/5.

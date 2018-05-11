@@ -7,7 +7,7 @@ import android.widget.TextView;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.activity.driving.coolBlack.RevAndWaterTempView;
 import com.wow.carlauncher.activity.driving.coolBlack.SpeedAndOilView;
-import com.wow.carlauncher.common.base.BaseActivity;
+import com.wow.carlauncher.view.base.BaseActivity;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 import com.wow.frame.util.DateUtil;
 

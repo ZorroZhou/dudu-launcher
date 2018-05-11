@@ -13,9 +13,9 @@ import android.widget.GridView;
 import com.wow.frame.util.AppUtil.AppInfo;
 import com.wow.frame.util.SharedPreUtil;
 import com.wow.carlauncher.R;
-import com.wow.carlauncher.activity.adapter.AllAppAdapter;
+import com.wow.carlauncher.view.adapter.AllAppAdapter;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
-import com.wow.carlauncher.common.base.BaseActivity;
+import com.wow.carlauncher.view.base.BaseActivity;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.ex.manage.appInfo.event.MAppInfoRefreshEvent;
 

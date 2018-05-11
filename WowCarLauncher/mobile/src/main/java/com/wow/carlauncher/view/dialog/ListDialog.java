@@ -1,4 +1,4 @@
-package com.wow.carlauncher.dialog;
+package com.wow.carlauncher.view.dialog;
 
 import android.content.Context;
 import android.widget.ListView;

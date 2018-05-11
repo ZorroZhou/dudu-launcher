@@ -20,7 +20,7 @@ import com.wow.carlauncher.ex.manage.ble.BleManage;
 import com.wow.carlauncher.ex.manage.ble.MySearchResponse;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.common.view.SetView;
-import com.wow.carlauncher.dialog.ListDialog;
+import com.wow.carlauncher.view.dialog.ListDialog;
 import com.wow.carlauncher.ex.plugin.fk.FangkongPlugin;
 import com.wow.carlauncher.ex.plugin.fk.FangkongProtocolEnum;
 import com.wow.frame.util.CommonUtil;

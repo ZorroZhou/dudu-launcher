@@ -15,6 +15,8 @@ import com.wow.frame.repertory.dbTool.beanTool.BeanManage;
 import com.wow.frame.repertory.dbTool.beanTool.PropertyInfo;
 import com.wow.frame.util.DateUtil;
 
+import org.xutils.x;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -134,6 +136,15 @@ public class DatabaseManage {
         return r;
     }
 
+    public static <T extends BaseEntity> void insertSyn(@NonNull final BaseEntity entity) {
+        x.task().run(new Runnable() {
+            @Override
+            public void run() {
+                insert(entity);
+            }
+        });
+    }
+
     /**
      * 更新一个bean,如果id为null,则失败
      *
@@ -183,6 +194,15 @@ public class DatabaseManage {
         closeDataBase();
         return r;
 
+    }
+
+    public static <T extends BaseEntity> void updateSyn(@NonNull final BaseEntity entity, @NonNull final String where) {
+        x.task().run(new Runnable() {
+            @Override
+            public void run() {
+                update(entity, where);
+            }
+        });
     }
 
     /**

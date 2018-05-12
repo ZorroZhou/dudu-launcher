@@ -125,6 +125,44 @@ public class DateUtil {
         return weekDays[w];
     }
 
+    public static String formatDuring(long mss) {
+        String days = mss / (1000 * 60 * 60 * 24) + "";
+        String hours = (mss % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60) + "";
+        String minutes = (mss % (1000 * 60 * 60)) / (1000 * 60) + "";
+        String seconds = (mss % (1000 * 60)) / 1000 + "";
+
+        if (days.equals("0")) {
+            days = "00";
+        }
+        if (days.length() == 1) {
+            days = "0" + days;
+        }
+        if (hours.equals("0")) {
+            hours = "00";
+        }
+        if (hours.length() == 1) {
+            hours = "0" + hours;
+        }
+        if (minutes.equals("0")) {
+            minutes = "00";
+        }
+        if (minutes.length() == 1) {
+            minutes = "0" + minutes;
+        }
+        if (seconds.equals("0")) {
+            seconds = "00";
+        }
+        if (seconds.length() == 1) {
+            seconds = "0" + seconds;
+        }
+
+        if (!days.equals("00")) {
+            return days + ":" + hours + ":" + minutes + ":" + seconds;
+        } else {
+            return hours + ":" + minutes + ":" + seconds;
+        }
+    }
+
     public static String convertVoiceLength(String time) {
         int second = (int) (Float.parseFloat(time) / 1000);
         int minute = 0;

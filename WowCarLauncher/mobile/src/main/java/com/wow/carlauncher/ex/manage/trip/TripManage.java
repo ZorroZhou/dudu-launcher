@@ -6,10 +6,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.ex.ContextEx;
+import com.wow.carlauncher.ex.manage.location.event.MNewLocationEvent;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarInfo;
+import com.wow.carlauncher.repertory.db.model.Trip;
 import com.wow.carlauncher.view.activity.driving.DrivingActivity;
 import com.wow.carlauncher.view.activity.launcher.LauncherActivity;
+import com.wow.frame.util.SharedPreUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -34,9 +38,22 @@ public class TripManage extends ContextEx {
     }
 
     private boolean drivingShow = false;
+    private Trip trip;
+
+    public long getTropStartTime() {
+        if (trip != null) {
+            return trip.getStartTime();
+        } else {
+            return 0L;
+        }
+    }
 
     public boolean isDrivingShow() {
         return drivingShow;
+    }
+
+    public boolean isTripStart() {
+        return trip != null;
     }
 
     public TripManage setDrivingShow(boolean drivingShow) {
@@ -51,6 +68,9 @@ public class TripManage extends ContextEx {
     public void init(Context context) {
         setContext(context);
         EventBus.getDefault().register(this);
+        if (SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_TRIP_START_WITH_APP, true)) {
+            startTrip();
+        }
     }
 
 
@@ -63,10 +83,23 @@ public class TripManage extends ContextEx {
                 intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 getContext().startActivity(intent2);
             }
+            if (!SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_TRIP_START_WITH_APP, true)) {
+                startTrip();
+            }
         }
     }
 
-    private void startTrip() {
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(MNewLocationEvent event) {
 
+    }
+
+
+    private void startTrip() {
+        if (trip != null) {
+            return;
+        }
+        trip = new Trip().setStartTime(System.currentTimeMillis());
+        Log.d(TAG, "startTrip");
     }
 }

@@ -24,7 +24,6 @@ import org.xutils.x;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -137,8 +136,8 @@ public class AppInfoManage {
         if (CommonUtil.isNull(app)) {
             return null;
         }
-        if (app.contains(CommonData.APP_SEPARATE)) {
-            String[] xx = app.split(CommonData.APP_SEPARATE);
+        if (app.contains(CommonData.CONSTANT_APP_PACKAGE_SEPARATE)) {
+            String[] xx = app.split(CommonData.CONSTANT_APP_PACKAGE_SEPARATE);
             if (xx.length == 2) {
                 app = xx[1];
             }

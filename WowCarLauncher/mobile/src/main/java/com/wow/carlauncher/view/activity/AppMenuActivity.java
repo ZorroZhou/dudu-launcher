@@ -85,7 +85,7 @@ public class AppMenuActivity extends BaseActivity implements AdapterView.OnItemC
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         AppInfo info = adapter.getItem(i);
-        AppInfoManage.self().openApp(info.appMark + CommonData.APP_SEPARATE + info.clazz);
+        AppInfoManage.self().openApp(info.appMark + CommonData.CONSTANT_APP_PACKAGE_SEPARATE + info.clazz);
         finish();
     }
 
@@ -104,7 +104,7 @@ public class AppMenuActivity extends BaseActivity implements AdapterView.OnItemC
                 @Override
                 public void onClick(View v) {
                     dialog.dismiss();
-                    AppInfoManage.self().openApp(info.appMark + CommonData.APP_SEPARATE + info.clazz);
+                    AppInfoManage.self().openApp(info.appMark + CommonData.CONSTANT_APP_PACKAGE_SEPARATE + info.clazz);
                     finish();
                 }
             });

@@ -7,35 +7,42 @@ public class CommonData {
 
     public static final String PACKAGE_NAME = "com.wow.carlauncher";
 
+    //
     public static final int REQUEST_SELECT_APP_TO_DOCK1 = 10000;
     public static final int REQUEST_SELECT_APP_TO_DOCK2 = 10001;
     public static final int REQUEST_SELECT_APP_TO_DOCK3 = 10002;
     public static final int REQUEST_SELECT_APP_TO_DOCK4 = 10003;
     public static final int REQUEST_SELECT_APP_TO_DOCK5 = 10004;
 
-    public static final int REQUEST_SELECT_NCM_WIDGET1 = 10006;
-    public static final int REQUEST_SELECT_NCM_WIDGET2 = 10007;
+    //-------------------------------Intent传输数据时使用的mark-start-----------------------------------
+    //应用包名
+    public static final String IDATA_APP_PACKAGE_NAME = "IDATA_APP_PACKAGE_NAME";
+    //应用标记
+    public static final String IDATA_APP_MARK = "IDATA_APP_MARK";
+    //-------------------------------Intent传输数据时使用的mark-end-----------------------------------
 
-    public static final int REQUEST_SELECT_QQMUSIC_WIDGET1 = 10008;
-    public static final int REQUEST_SELECT_QQMUSIC_WIDGET2 = 10009;
 
-    public static final String IDATA_APP_PACKAGE_NAME = "IDATA_APP_PACKAGE_NAME";//应用包名
-    public static final String IDATA_APP_MARK = "IDATA_APP_MARK";//应用标记
-
+    //-------------------------------本地缓存使用的mark-start-----------------------------------
     //音乐播放器的控制器
     public static final String SDATA_MUSIC_CONTROLLER = "SDATA_MUSIC_CONTROLLER";
 
+    //-------------------------------方控设置相关-start-----------------------------------
     //方控的控制器
     public static final String SDATA_FANGKONG_CONTROLLER = "SDATA_FANGKONG_CONTROLLER";
-    //方控的地址
+    //方控的名称
     public static final String SDATA_FANGKONG_NAME = "SDATA_FANGKONG_NAME";
+    //方控的地址
     public static final String SDATA_FANGKONG_ADDRESS = "SDATA_FANGKONG_ADDRESS";
+    //-------------------------------方控设置相关-end-----------------------------------
 
-    //方控的控制器
+    //-------------------------------OBD设置相关-start-----------------------------------
+    //OBD的控制器
     public static final String SDATA_OBD_CONTROLLER = "SDATA_OBD_CONTROLLER";
-    //OBD的地址
+    //OBD的名称
     public static final String SDATA_OBD_NAME = "SDATA_OBD_NAME";
+    //OBD的地址
     public static final String SDATA_OBD_ADDRESS = "SDATA_OBD_ADDRESS";
+    //-------------------------------OBD设置相关-end-----------------------------------
     //dock的包名start
     public static final String SDATA_DOCK1_CLASS = "DOCK1_BEAN";
     public static final String SDATA_DOCK2_CLASS = "DOCK2_BEAN";
@@ -57,36 +64,25 @@ public class CommonData {
     public static final String SDATA_LAUNCHER_DOCK_LABEL_SHOW = "SDATA_LAUNCHER_DOCK_LABEL_SHOW";
     //是否允许悬浮框展示
     public static final String SDATA_POPUP_ALLOW_SHOW = "SDATA_POPUP_ALLOW_SHOW";
-
+    //悬浮框是否覆盖状态栏
     public static final String SDATA_POPUP_FULL_SCREEN = "SDATA_POPUP_FULL_SCREEN";
+    //悬浮框尺寸
     public static final String SDATA_POPUP_SIZE = "SDATA_POPUP_SIZE";
-    //悬浮框展示的APP
-    public static final String SDATA_POPUP_PLUGIN_SHOW_APPS = "SDATA_POPUP_PLUGIN_SHOW_APPS_";
-
     //隐藏的APP的包名，格式：[包名],[包名],[包名],[包名]
     public static final String SDATA_HIDE_APPS = "SDATA_HIDE_APPS";
-
-    //网易云音乐插件，弹出界面的展示的组件
-    public static final String SDATA_MUSIC_PLUGIN_NCM_WIDGET1 = "SDATA_MUSIC_PLUGIN_NCM_WIDGET1";
-    //网易云音乐插件，主页界面的展示的组件
-    public static final String SDATA_MUSIC_PLUGIN_NCM_WIDGET2 = "SDATA_MUSIC_PLUGIN_NCM_WIDGET2";
-
-    //QQ音乐插件，弹出界面的展示的组件
-    public static final String SDATA_MUSIC_PLUGIN_QQMUSIC_WIDGET1 = "SDATA_MUSIC_PLUGIN_QQMUSIC_WIDGET1";
-    //QQ音乐插件，主页界面的展示的组件
-    public static final String SDATA_MUSIC_PLUGIN_QQMUSIC_WIDGET2 = "SDATA_MUSIC_PLUGIN_QQMUSIC_WIDGET2";
-
     //时间插件打开的APP
     public static final String SDATA_TIME_PLUGIN_OPEN_APP = "SDATA_TIME_PLUGIN_OPEN_APP";
-
     //时间插件打开的APP
     public static final String SDATA_CONSOLE_MARK = "SDATA_CONSOLE_MARK";
-
+    //天气所属的城市
     public static final String SDATA_WEATHER_CITY = "SDATA_WEATHER_CITY";
+    //是否接受开发中的APP包
+    public static final String SDATA_ALLOW_DEBUG_APP = "SDATA_ALLOW_DEBUG_APP";
+    //应用包名标记使用的间隔
+    public static final String CONSTANT_APP_PACKAGE_SEPARATE = ":";
 
-    public static final String SDATA_ALLOW_DEBUG_APP = "SDATA_ALLOW_DEBUG_APP";//是否接受开发中的APP包
+    //行程以app启动为准
+    public static final String SDATA_TRIP_START_WITH_APP = "SDATA_TRIP_START_WITH_APP";
 
-    public static final int APP_WIDGET_HOST_ID = 0x200;
-
-    public static final String APP_SEPARATE = ":";//应用标记
+    //-------------------------------本地缓存使用的mark-end-----------------------------------
 }

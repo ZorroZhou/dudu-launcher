@@ -16,12 +16,12 @@
         android:textSize="14sp" />
 
     <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_auto_driving"
+        android:id="@+id/sv_auto_open_driving"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         st:summary="@string/set_yes"
         st:summary2="@string/set_no"
-        st:titleEx="是否自动弹出仪表盘界面(需要obd支持)"
+        st:titleEx="发动机有转速后自动弹出仪表盘界面(需要obd支持)"
         st:type="checkB" />
 
     <View style="@style/Interval" />
@@ -33,15 +33,9 @@
         st:summary="车机启动"
         st:summary2="发送机点火(需要OBD支持,未绑定OBD,则行程无法开始)"
         st:titleEx="行程开始标记"
-        st:type="checkB" />
+        st:type="switchB" />
 
     <View style="@style/Interval" />
 
-    <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_fangkong_impl_select"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        st:titleEx="方控协议"
-        st:type="buttonB" />
 
 </LinearLayout>

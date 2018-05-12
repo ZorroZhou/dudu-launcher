@@ -114,7 +114,7 @@ public class LauncherActivity extends Activity {
             if (resultCode == RESULT_OK) {
                 String packName = data.getStringExtra(IDATA_APP_PACKAGE_NAME);
                 int mark = data.getIntExtra(IDATA_APP_MARK, -1);
-                SharedPreUtil.saveSharedPreString(SDATA_DOCK1_CLASS, mark + CommonData.APP_SEPARATE + packName);
+                SharedPreUtil.saveSharedPreString(SDATA_DOCK1_CLASS, mark + CommonData.CONSTANT_APP_PACKAGE_SEPARATE + packName);
                 ll_dock.loadDock();
             }
         }
@@ -122,7 +122,7 @@ public class LauncherActivity extends Activity {
             if (resultCode == RESULT_OK) {
                 String packName = data.getStringExtra(IDATA_APP_PACKAGE_NAME);
                 int mark = data.getIntExtra(IDATA_APP_MARK, -1);
-                SharedPreUtil.saveSharedPreString(SDATA_DOCK2_CLASS, mark + CommonData.APP_SEPARATE + packName);
+                SharedPreUtil.saveSharedPreString(SDATA_DOCK2_CLASS, mark + CommonData.CONSTANT_APP_PACKAGE_SEPARATE + packName);
                 ll_dock.loadDock();
             }
         }
@@ -130,7 +130,7 @@ public class LauncherActivity extends Activity {
             if (resultCode == RESULT_OK) {
                 String packName = data.getStringExtra(IDATA_APP_PACKAGE_NAME);
                 int mark = data.getIntExtra(IDATA_APP_MARK, -1);
-                SharedPreUtil.saveSharedPreString(SDATA_DOCK3_CLASS, mark + CommonData.APP_SEPARATE + packName);
+                SharedPreUtil.saveSharedPreString(SDATA_DOCK3_CLASS, mark + CommonData.CONSTANT_APP_PACKAGE_SEPARATE + packName);
                 ll_dock.loadDock();
             }
         }
@@ -138,7 +138,7 @@ public class LauncherActivity extends Activity {
             if (resultCode == RESULT_OK) {
                 String packName = data.getStringExtra(IDATA_APP_PACKAGE_NAME);
                 int mark = data.getIntExtra(IDATA_APP_MARK, -1);
-                SharedPreUtil.saveSharedPreString(SDATA_DOCK4_CLASS, mark + CommonData.APP_SEPARATE + packName);
+                SharedPreUtil.saveSharedPreString(SDATA_DOCK4_CLASS, mark + CommonData.CONSTANT_APP_PACKAGE_SEPARATE + packName);
                 ll_dock.loadDock();
             }
         }
@@ -146,7 +146,7 @@ public class LauncherActivity extends Activity {
             if (resultCode == RESULT_OK) {
                 String packName = data.getStringExtra(IDATA_APP_PACKAGE_NAME);
                 int mark = data.getIntExtra(IDATA_APP_MARK, -1);
-                SharedPreUtil.saveSharedPreString(SDATA_DOCK5_CLASS, mark + CommonData.APP_SEPARATE + packName);
+                SharedPreUtil.saveSharedPreString(SDATA_DOCK5_CLASS, mark + CommonData.CONSTANT_APP_PACKAGE_SEPARATE + packName);
                 ll_dock.loadDock();
             }
         }

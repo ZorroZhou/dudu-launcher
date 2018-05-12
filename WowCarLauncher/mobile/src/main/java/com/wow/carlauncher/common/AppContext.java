@@ -27,6 +27,8 @@ import com.wow.frame.repertory.remote.WebServiceManage;
 import com.wow.frame.util.AndroidUtil;
 import com.wow.frame.util.SharedPreUtil;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
@@ -60,7 +62,6 @@ public class AppContext implements SWebServiceDeclare, SAppDeclare, SDatabaseDec
     public void init(CarLauncherApplication app) {
         this.application = app;
         SFrame.init(this);
-
         //通知工具
         ToastManage.self().init(app);
         TimeManage.self().init(app);

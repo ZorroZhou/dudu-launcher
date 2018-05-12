@@ -171,7 +171,7 @@
                     app:layout_textSizePercent="20%h" />
 
                 <com.wow.carlauncher.common.view.PhilTextView
-                    android:id="@+id/tv_driver_time"
+                    android:id="@+id/tv_trip_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"

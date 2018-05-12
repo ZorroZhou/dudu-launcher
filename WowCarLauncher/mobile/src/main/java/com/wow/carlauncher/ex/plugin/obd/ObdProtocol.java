@@ -1,6 +1,7 @@
 package com.wow.carlauncher.ex.plugin.obd;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
@@ -101,6 +102,8 @@ public abstract class ObdProtocol {
     protected boolean setTaskRes(String msg) {
         if (currentTask != null) {
             currentTask.writeRes(msg);
+
+            Log.d("task send over2", "sendTime:" + currentTask.getSendTime() + "  createTime:" + currentTask.getCreateTime() + "  overTime:" + System.currentTimeMillis());
             taskOver(currentTask);
             currentTask = null;
             runTask();

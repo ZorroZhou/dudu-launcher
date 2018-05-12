@@ -1,5 +1,7 @@
 package com.wow.carlauncher.ex.plugin.obd;
 
+import android.util.Log;
+
 /**
  * Created by 10124 on 2018/4/19.
  */
@@ -28,8 +30,9 @@ public abstract class ObdTask {
 
     public ObdTask setState(int state) {
         this.state = state;
-        if(state==STATE_WAIT_RECEIVE){
-
+        if (state == STATE_WAIT_RECEIVE) {
+            sendTime = System.currentTimeMillis();
+            Log.d("task send over", "sendTime:" + sendTime + "  createTime:" + createTime);
         }
         return this;
     }

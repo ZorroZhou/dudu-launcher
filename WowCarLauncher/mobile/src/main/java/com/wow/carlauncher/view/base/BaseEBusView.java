@@ -9,7 +9,10 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 import org.xutils.x;
+
+import java.lang.reflect.Method;
 
 import static com.wow.carlauncher.common.CommonData.TAG;
 
@@ -17,7 +20,7 @@ import static com.wow.carlauncher.common.CommonData.TAG;
  * Created by 10124 on 2018/4/22.
  */
 
-public class BaseEBusView extends FrameLayout {
+public class BaseEBusView extends BaseView {
     public BaseEBusView(@NonNull Context context) {
         super(context);
     }
@@ -26,19 +29,22 @@ public class BaseEBusView extends FrameLayout {
         super(context, attrs);
     }
 
-    protected void addContent(int r) {
-        View amapView = View.inflate(getContext(), r, null);
-        this.addView(amapView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-        x.view().inject(this);
-    }
-
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        try {
+
+        //判断是否有注解,有的话再注册
+        boolean have = false;
+        Method[] methods = getClass().getMethods();
+        for (Method m : methods) {
+            Subscribe meta = m.getAnnotation(Subscribe.class);
+            if (meta != null) {
+                have = true;
+                break;
+            }
+        }
+        if (have) {
             EventBus.getDefault().register(this);
-        } catch (Exception e) {
-            Log.d(TAG, "onAttachedToWindow: 无法注册事件总线");
         }
     }
 

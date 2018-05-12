@@ -23,6 +23,7 @@ import com.wow.carlauncher.ex.plugin.console.ConsolePlugin;
 import com.wow.carlauncher.ex.plugin.console.ConsoleProtoclEnum;
 import com.wow.carlauncher.ex.plugin.music.MusicControllerEnum;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
+import com.wow.carlauncher.view.base.BaseView;
 import com.wow.frame.util.SharedPreUtil;
 import com.wow.frame.util.ThreadObj;
 
@@ -41,7 +42,7 @@ import static com.wow.carlauncher.common.CommonData.TAG;
  * Created by 10124 on 2018/4/22.
  */
 
-public class SAppView extends FrameLayout {
+public class SAppView extends BaseView {
     public static final MusicControllerEnum[] ALL_MUSIC_CONTROLLER = {MusicControllerEnum.SYSMUSIC,
             MusicControllerEnum.QQCARMUSIC,
             MusicControllerEnum.JIDOUMUSIC,
@@ -78,11 +79,7 @@ public class SAppView extends FrameLayout {
 
 
     private void initView() {
-        LinearLayout amapView = (LinearLayout) View.inflate(getContext(), R.layout.content_set_app, null);
-        this.addView(amapView, FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
-
-        x.view().inject(this);
-
+        addContent(R.layout.content_set_app);
 
         MusicControllerEnum p1 = MusicControllerEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_MUSIC_CONTROLLER, MusicControllerEnum.SYSMUSIC.getId()));
         sv_plugin_select.setSummary("音乐播放器使用的控制器：" + p1.getName());

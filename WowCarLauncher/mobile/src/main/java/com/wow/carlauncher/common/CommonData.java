@@ -49,6 +49,7 @@ public class CommonData {
     public static final String SDATA_POPUP_WIN_Y = "SDATA_POPUP_WIN_Y";
     //悬浮框展示的APP
     public static final String SDATA_POPUP_SHOW_APPS = "SDATA_POPUP_SHOW_APPS";
+    //悬浮框是否全局展示
     public static final String SDATA_POPUP_SHOW_TYPE = "SDATA_POPUP_SHOW_TYPE";
     //悬浮框当前的插件
     public static final String SDATA_POPUP_CURRENT_PLUGIN = "SDATA_POPUP_CURRENT_PLUGIN_";

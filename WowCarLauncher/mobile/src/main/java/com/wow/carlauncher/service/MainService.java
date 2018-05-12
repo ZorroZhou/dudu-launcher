@@ -28,7 +28,7 @@ public class MainService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        PopupWin.self().checkShow(0);
+        PopupWin.self();
         return START_REDELIVER_INTENT;
     }
 

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:st="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="16dp"
+        android:paddingTop="16dp"
+        android:text="行程设置"
+        android:textColor="@color/colorPrimary"
+        android:textSize="14sp" />
+
+    <com.wow.carlauncher.common.view.SetView
+        android:id="@+id/sv_popup_window_showtype"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        st:summary="@string/set_yes"
+        st:summary2="@string/set_no"
+        st:titleEx="是否自动弹出仪表盘界面(需要obd支持)"
+        st:type="checkB" />
+
+    <View style="@style/Interval" />
+
+    <com.wow.carlauncher.common.view.SetView
+        android:id="@+id/sv_fangkong_remove"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        st:titleEx="删除方控绑定"
+        st:type="buttonB" />
+
+    <View style="@style/Interval" />
+
+    <com.wow.carlauncher.common.view.SetView
+        android:id="@+id/sv_fangkong_impl_select"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        st:titleEx="方控协议"
+        st:type="buttonB" />
+
+</LinearLayout>

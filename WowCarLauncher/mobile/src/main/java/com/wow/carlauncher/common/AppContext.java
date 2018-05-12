@@ -7,6 +7,7 @@ import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
 import com.wow.carlauncher.ex.manage.time.TimeManage;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
+import com.wow.carlauncher.ex.manage.trip.TripManage;
 import com.wow.carlauncher.ex.plugin.console.ConsolePlugin;
 import com.wow.carlauncher.ex.plugin.amapcar.AMapCarPlugin;
 import com.wow.carlauncher.ex.plugin.fk.FangkongPlugin;
@@ -71,6 +72,8 @@ public class AppContext implements SWebServiceDeclare, SAppDeclare {
         AppInfoManage.self().init(app);
         ConsolePlugin.self().init(app);
         PopupWin.self().init(app);
+
+        TripManage.self().init(app);
 
         int size = SharedPreUtil.getSharedPreInteger(CommonData.SDATA_POPUP_SIZE, 1);
         PopupWin.self().setRank(size + 1);

@@ -20,6 +20,7 @@ import com.wow.carlauncher.ex.manage.ble.BleManage;
 import com.wow.carlauncher.ex.manage.ble.MySearchResponse;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.common.view.SetView;
+import com.wow.carlauncher.view.base.BaseView;
 import com.wow.carlauncher.view.dialog.ListDialog;
 import com.wow.carlauncher.ex.plugin.fk.FangkongPlugin;
 import com.wow.carlauncher.ex.plugin.fk.FangkongProtocolEnum;
@@ -39,7 +40,7 @@ import static com.wow.carlauncher.common.CommonData.SDATA_FANGKONG_CONTROLLER;
  * Created by 10124 on 2018/4/22.
  */
 
-public class SFangKongView extends FrameLayout {
+public class SFangKongView extends BaseView {
     public static final FangkongProtocolEnum[] ALL_FANGKONG_CONTROLLER = {FangkongProtocolEnum.YLFK};
 
     public SFangKongView(@NonNull Context context) {
@@ -62,11 +63,7 @@ public class SFangKongView extends FrameLayout {
     private SetView sv_fangkong_remove;
 
     private void initView() {
-        LinearLayout amapView = (LinearLayout) View.inflate(getContext(), R.layout.content_set_fangkong, null);
-        this.addView(amapView, FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
-
-        x.view().inject(this);
-
+        addContent(R.layout.content_set_fangkong);
 
         FangkongProtocolEnum p1 = FangkongProtocolEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_FANGKONG_CONTROLLER, FangkongProtocolEnum.YLFK.getId()));
         sv_fangkong_impl_select.setSummary("方控使用的协议：" + p1.getName());

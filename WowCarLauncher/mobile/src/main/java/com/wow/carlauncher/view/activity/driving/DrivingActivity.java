@@ -8,6 +8,7 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.ex.manage.trip.TripManage;
 import com.wow.carlauncher.view.activity.driving.coolBlack.CoolBlackView;
 import com.wow.carlauncher.view.base.BaseActivity;
 
@@ -56,5 +57,17 @@ public class DrivingActivity extends BaseActivity {
                 break;
             }
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        TripManage.self().setDrivingShow(true);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        TripManage.self().setDrivingShow(false);
     }
 }

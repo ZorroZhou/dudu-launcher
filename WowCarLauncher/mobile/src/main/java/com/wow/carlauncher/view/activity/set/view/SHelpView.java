@@ -28,7 +28,7 @@ import com.wow.carlauncher.view.base.BaseDialog;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.common.view.SetView;
-import com.wow.carlauncher.webservice.service.CommonService;
+import com.wow.carlauncher.repertory.webservice.service.CommonService;
 import com.wow.frame.repertory.remote.WebServiceManage;
 import com.wow.frame.repertory.remote.WebTask;
 import com.wow.frame.repertory.remote.callback.SCallBack;

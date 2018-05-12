@@ -16,7 +16,7 @@
         android:textSize="14sp" />
 
     <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_popup_window_showtype"
+        android:id="@+id/sv_auto_driving"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         st:summary="@string/set_yes"
@@ -27,11 +27,13 @@
     <View style="@style/Interval" />
 
     <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_fangkong_remove"
+        android:id="@+id/sv_trip_start_mark"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        st:titleEx="删除方控绑定"
-        st:type="buttonB" />
+        st:summary="车机启动"
+        st:summary2="发送机点火(需要OBD支持,未绑定OBD,则行程无法开始)"
+        st:titleEx="行程开始标记"
+        st:type="checkB" />
 
     <View style="@style/Interval" />
 

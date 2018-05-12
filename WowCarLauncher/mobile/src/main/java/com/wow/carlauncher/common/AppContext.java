@@ -13,12 +13,15 @@ import com.wow.carlauncher.ex.plugin.amapcar.AMapCarPlugin;
 import com.wow.carlauncher.ex.plugin.fk.FangkongPlugin;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
+import com.wow.carlauncher.repertory.db.AppDbInfo;
 import com.wow.carlauncher.view.popupWindow.PopupWin;
-import com.wow.carlauncher.webservice.AppWsInfo;
-import com.wow.carlauncher.webservice.service.CommonService;
+import com.wow.carlauncher.repertory.webservice.AppWsInfo;
+import com.wow.carlauncher.repertory.webservice.service.CommonService;
 import com.wow.frame.SFrame;
 import com.wow.frame.declare.SAppDeclare;
+import com.wow.frame.declare.SDatabaseDeclare;
 import com.wow.frame.declare.SWebServiceDeclare;
+import com.wow.frame.repertory.dbTool.DatabaseInfo;
 import com.wow.frame.repertory.remote.WebServiceInfo;
 import com.wow.frame.repertory.remote.WebServiceManage;
 import com.wow.frame.util.AndroidUtil;
@@ -32,7 +35,7 @@ import java.io.StringWriter;
  * Created by liuyixian on 2017/9/20.
  */
 
-public class AppContext implements SWebServiceDeclare, SAppDeclare {
+public class AppContext implements SWebServiceDeclare, SAppDeclare, SDatabaseDeclare {
     private static AppContext self;
 
     public synchronized static AppContext self() {
@@ -88,6 +91,11 @@ public class AppContext implements SWebServiceDeclare, SAppDeclare {
     @Override
     public Application getApplication() {
         return this.application;
+    }
+
+    @Override
+    public DatabaseInfo getDatabaseInfo() {
+        return new AppDbInfo();
     }
 
     private void handerException() {

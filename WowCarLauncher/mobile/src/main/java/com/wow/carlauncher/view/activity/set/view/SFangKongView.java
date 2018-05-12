@@ -106,6 +106,7 @@ public class SFangKongView extends BaseView {
                 SharedPreUtil.saveSharedPreString(CommonData.SDATA_FANGKONG_NAME, null);
                 FangkongPlugin.self().disconnect();
                 ToastManage.self().show("方控绑定已删除");
+                sv_fangkong_select.setSummary("没有绑定蓝牙设备");
             }
         });
 

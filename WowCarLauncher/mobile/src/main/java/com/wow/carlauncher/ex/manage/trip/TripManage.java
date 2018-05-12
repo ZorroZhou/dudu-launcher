@@ -65,4 +65,8 @@ public class TripManage extends ContextEx {
             }
         }
     }
+
+    private void startTrip() {
+
+    }
 }

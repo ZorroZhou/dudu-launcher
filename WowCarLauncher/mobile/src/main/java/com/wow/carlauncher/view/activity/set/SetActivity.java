@@ -55,6 +55,8 @@ public class SetActivity extends BaseActivity {
     @ViewInject(R.id.ll_system_set)
     private SSystemView ll_system_set;
 
+
+
     @Override
     public void initView() {
         setTitle("设置");

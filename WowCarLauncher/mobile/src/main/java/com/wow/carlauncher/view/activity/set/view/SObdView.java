@@ -108,6 +108,7 @@ public class SObdView extends FrameLayout {
                 SharedPreUtil.saveSharedPreString(CommonData.SDATA_OBD_NAME, null);
                 ObdPlugin.self().disconnect();
                 ToastManage.self().show("OBD绑定已删除");
+                sv_obd_select.setSummary("没有绑定蓝牙设备");
             }
         });
 

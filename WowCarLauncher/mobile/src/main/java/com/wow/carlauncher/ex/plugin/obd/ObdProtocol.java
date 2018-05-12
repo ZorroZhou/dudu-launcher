@@ -41,6 +41,7 @@ public abstract class ObdProtocol {
         this.listener = listener;
 
         this.taskArrayDeque = new ArrayDeque<>();
+        EventBus.getDefault().register(this);
     }
 
     //是否支持胎压
@@ -93,6 +94,7 @@ public abstract class ObdProtocol {
 
     public void destroy() {
         this.taskArrayDeque.clear();
+        EventBus.getDefault().unregister(this);
     }
 
     protected boolean setTaskRes(String msg) {

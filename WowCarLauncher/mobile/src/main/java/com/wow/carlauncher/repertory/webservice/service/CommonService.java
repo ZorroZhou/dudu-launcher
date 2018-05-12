@@ -1,4 +1,4 @@
-package com.wow.carlauncher.webservice.service;
+package com.wow.carlauncher.repertory.webservice.service;
 
 import com.wow.carAssistant.packet.request.common.AppErrorRequest;
 import com.wow.carAssistant.packet.request.common.GetNewAppRequest;
@@ -15,7 +15,6 @@ import org.xutils.http.RequestParams;
 import org.xutils.x;
 
 import java.io.File;
-import java.util.Map;
 
 
 /**

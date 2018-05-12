@@ -1,7 +1,7 @@
-package com.wow.carlauncher.webservice;
+package com.wow.carlauncher.repertory.webservice;
 
 import com.wow.carAssistant.packet.response.common.Response;
-import com.wow.carlauncher.webservice.service.CommonService;
+import com.wow.carlauncher.repertory.webservice.service.CommonService;
 import com.wow.frame.SFrame;
 import com.wow.frame.repertory.remote.ResultCheck;
 import com.wow.frame.repertory.remote.ResultConvertor;

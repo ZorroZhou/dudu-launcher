@@ -2,39 +2,24 @@ package com.wow.carlauncher.ex.plugin.obd;
 
 import android.util.Log;
 
+import com.wow.frame.util.DateUtil;
+
+import java.util.Date;
+
 /**
  * Created by 10124 on 2018/4/19.
  */
 
 public abstract class ObdTask {
-    public final static int STATE_WAIT_SEND = 1;
-    public final static int STATE_WAIT_RECEIVE = 2;
-    public final static int STATE_TIME_OUT = 3;
-
-    private long createTime = System.currentTimeMillis();//创建时间,如果创建两秒后没有发送,则销毁
     private long sendTime;
+
+    public ObdTask setSendTime(long sendTime) {
+        this.sendTime = sendTime;
+        return this;
+    }
 
     public long getSendTime() {
         return sendTime;
-    }
-
-    public long getCreateTime() {
-        return createTime;
-    }
-
-    private int state = STATE_WAIT_SEND;
-
-    public int getState() {
-        return state;
-    }
-
-    public ObdTask setState(int state) {
-        this.state = state;
-        if (state == STATE_WAIT_RECEIVE) {
-            sendTime = System.currentTimeMillis();
-            Log.d("task send over", "sendTime:" + sendTime + "  createTime:" + createTime);
-        }
-        return this;
     }
 
     private boolean haveData = false;

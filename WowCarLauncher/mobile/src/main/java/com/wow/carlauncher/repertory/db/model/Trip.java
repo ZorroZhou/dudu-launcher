@@ -8,6 +8,7 @@ import com.wow.frame.repertory.dbTool.BaseEntity;
 
 public class Trip extends BaseEntity {
     private Long startTime;
+    private Integer mileage;//里程 米
 
     public Long getStartTime() {
         return startTime;

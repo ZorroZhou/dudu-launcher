@@ -47,7 +47,7 @@ public class BaseDialog extends Dialog {
         dialogWindow.setAttributes(layoutParams);
 
 
-        ImageView tv_cancel = (ImageView)findViewById(R.id.iv_cancel);
+        ImageView tv_cancel = (ImageView) findViewById(R.id.iv_cancel);
         tv_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

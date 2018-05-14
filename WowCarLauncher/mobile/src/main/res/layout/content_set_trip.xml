@@ -30,8 +30,8 @@
         android:id="@+id/sv_trip_start_mark"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        st:titleEx="行程合并(两次发动机点火时间间隔X分钟,默认为同一行程)"
-        st:type="inputB" />
+        st:titleEx="行程合并(OBD两次读取转速不为0的时间间隔X分钟,默认为同一行程)"
+        st:type="buttonB" />
 
     <View style="@style/Interval" />
 

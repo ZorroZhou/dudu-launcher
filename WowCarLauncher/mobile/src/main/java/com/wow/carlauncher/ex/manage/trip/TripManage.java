@@ -85,7 +85,7 @@ public class TripManage extends ContextEx {
     private long lastSpeedTime = 0;
     private int lastSpeed = -1;
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
+    @Subscribe(threadMode = ThreadMode.ASYNC)
     public void onEventMainThread(PObdEventCarInfo event) {
         Log.d(TAG, "onEventMainThread: " + event);
         if (event.getRev() != null && event.getRev() > 400) {
@@ -99,9 +99,12 @@ public class TripManage extends ContextEx {
         } else if (event.getRev() != null && event.getRev() == 0) {
             if (trip != null) {
                 //说明行程可能需要结束
-
+                
             }
-        } else if (event.getSpeed() != null) {
+        }
+
+        //这里说明是行程开始了,因为插入行程是个异步操作,所以要检查id是否有值(插入操作是否完成)
+        if (event.getSpeed() != null && trip != null && trip.getId() != null) {
             //这里计算里程
             if (lastSpeedTime != 0) {
                 long mm = System.currentTimeMillis() - lastSpeedTime;
@@ -117,7 +120,7 @@ public class TripManage extends ContextEx {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(MNewLocationEvent event) {
-        if (lastSpeedTime > 0 && lastSpeed >= 0) {
+        if (lastSpeedTime > 0 && lastSpeed >= 0 && trip != null && trip.getId() != null) {
             DatabaseManage.saveSyn(new TripPoint()
                     .setTrip(trip.getId())
                     .setLat(event.getLatitude())

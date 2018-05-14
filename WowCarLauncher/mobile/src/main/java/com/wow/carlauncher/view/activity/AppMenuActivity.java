@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.wow.carlauncher.ex.manage.appInfo.AppInfo;
+import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.frame.util.SharedPreUtil;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.view.adapter.AllAppAdapter;
@@ -122,7 +123,7 @@ public class AppMenuActivity extends BaseActivity implements AdapterView.OnItemC
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        showTip("卸载成功");
+        ToastManage.self().show("卸载成功");
     }
 
     @Subscribe

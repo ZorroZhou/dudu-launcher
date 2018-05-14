@@ -78,7 +78,7 @@
             android:screenOrientation="landscape" />
         <activity
             android:name=".view.activity.driving.DrivingActivity"
-            android:launchMode="singleTask"
+            android:launchMode="singleInstance"
             android:screenOrientation="landscape" />
 
         <activity

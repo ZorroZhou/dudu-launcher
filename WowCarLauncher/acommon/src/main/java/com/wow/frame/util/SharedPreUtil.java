@@ -3,6 +3,8 @@ package com.wow.frame.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import org.xutils.x;
+
 public class SharedPreUtil {
     // SharedPreference文件的文件名
     public final static String XML_Settings = "settings";
@@ -21,7 +23,7 @@ public class SharedPreUtil {
      */
     public static void saveSharedPreString(String key, String value) {
         settings = context.getSharedPreferences(XML_Settings, Context.MODE_PRIVATE);
-        settings.edit().putString(key, value).commit();
+        settings.edit().putString(key, value).apply();
     }
 
     /**
@@ -59,7 +61,7 @@ public class SharedPreUtil {
      */
     public static void saveSharedPreBoolean(String key, boolean value) {
         settings = context.getSharedPreferences(XML_Settings, 0);
-        settings.edit().putBoolean(key, value).commit();
+        settings.edit().putBoolean(key, value).apply();
     }
 
     /**
@@ -69,7 +71,7 @@ public class SharedPreUtil {
      */
     public static void saveSharedPreInteger(String key, int value) {
         settings = context.getSharedPreferences(XML_Settings, Context.MODE_PRIVATE);
-        settings.edit().putInt(key, value).commit();
+        settings.edit().putInt(key, value).apply();
     }
 
     /**
@@ -79,7 +81,11 @@ public class SharedPreUtil {
      */
     public static int getSharedPreInteger(String key, int defaultValue) {
         settings = context.getSharedPreferences(XML_Settings, Context.MODE_PRIVATE);
-        return settings.getInt(key, defaultValue);
+        try {
+            return settings.getInt(key, defaultValue);
+        } catch (Exception e) {
+            return defaultValue;
+        }
     }
 
     /**
@@ -90,7 +96,7 @@ public class SharedPreUtil {
      */
     public static void saveSharedPreLong(String key, Long value) {
         settings = context.getSharedPreferences(XML_Settings, Context.MODE_PRIVATE);
-        settings.edit().putLong(key, value).commit();
+        settings.edit().putLong(key, value).apply();
     }
 
     /**
@@ -100,8 +106,11 @@ public class SharedPreUtil {
      */
     public static long getSharedPreLong(String key, long defaultValue) {
         settings = context.getSharedPreferences(XML_Settings, Context.MODE_PRIVATE);
-        return settings.getLong(key, defaultValue);
-
+        try {
+            return settings.getLong(key, defaultValue);
+        } catch (Exception e) {
+            return defaultValue;
+        }
     }
 
     /**

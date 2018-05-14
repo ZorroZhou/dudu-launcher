@@ -393,6 +393,29 @@ public class DatabaseManage {
         }
     }
 
+    public static <T extends BaseEntity> void save(@NonNull T entity) {
+        boolean update = false;
+        if (entity.getId() != null) {
+            T t = (T) getBean(entity.getClass(), "id=" + entity.getId());
+            if (t != null) {
+                update(entity, "id=" + entity.getId());
+                update = true;
+            }
+        }
+        if (!update) {
+            insert(entity);
+        }
+    }
+
+    public static <T extends BaseEntity> void saveSyn(final @NonNull T entity) {
+        x.task().run(new Runnable() {
+            @Override
+            public void run() {
+                save(entity);
+            }
+        });
+    }
+
     private static class DatabaseHelper extends SQLiteOpenHelper {
         private DatabaseInfo info;
 

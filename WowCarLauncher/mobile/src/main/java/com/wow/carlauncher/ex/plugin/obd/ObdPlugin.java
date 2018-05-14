@@ -55,6 +55,12 @@ public class ObdPlugin extends ContextEx {
 
     }
 
+    private boolean connect = false;
+
+    public boolean isConnect() {
+        return connect;
+    }
+
     private BleConnectOptions options;
 
     private ObdProtocol obdProtocol;
@@ -248,8 +254,10 @@ public class ObdPlugin extends ContextEx {
         String fkaddress = SharedPreUtil.getSharedPreString(CommonData.SDATA_OBD_ADDRESS);
 
         if (CommonUtil.isNotNull(fkaddress) && BleManage.self().client().getConnectStatus(fkaddress) == STATUS_DEVICE_CONNECTED) {
+            connect = true;
             postEvent(new PObdEventConnect().setConnected(true));
         } else {
+            connect = false;
             postEvent(new PObdEventConnect().setConnected(false));
         }
 

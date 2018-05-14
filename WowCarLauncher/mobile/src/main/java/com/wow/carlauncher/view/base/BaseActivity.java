@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,7 @@ public abstract class BaseActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("BaseActivity", "onCreate: !!!!!!!!!!!!!!!!");
         super.onCreate(savedInstanceState);
         mContext = this;
         init();
@@ -160,22 +162,6 @@ public abstract class BaseActivity extends Activity {
                         }
                     }
                 }, 100);
-            }
-        });
-    }
-
-    private static Toast toast = null;
-
-    public void showTip(final String msg) {
-        this.runOnUiThread(new Runnable() {
-            public void run() {
-                if (toast == null) {
-                    toast = Toast.makeText(mContext, msg, Toast.LENGTH_SHORT);
-                } else {
-                    toast.cancel();
-                    toast = Toast.makeText(mContext, msg, Toast.LENGTH_SHORT);
-                }
-                toast.show();
             }
         });
     }

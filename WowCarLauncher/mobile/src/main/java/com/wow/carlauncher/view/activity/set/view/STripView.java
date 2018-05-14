@@ -45,18 +45,6 @@ public class STripView extends BaseView {
     private void initView() {
         addContent(R.layout.content_set_trip);
 
-        sv_trip_start_mark.setOnValueChangeListener(new SetView.OnValueChangeListener() {
-            @Override
-            public void onValueChange(String newValue, String oldValue) {
-                if ("1".equals(newValue)) {
-                    SharedPreUtil.saveSharedPreBoolean(CommonData.SDATA_TRIP_START_WITH_APP, true);
-                } else {
-                    SharedPreUtil.saveSharedPreBoolean(CommonData.SDATA_TRIP_START_WITH_APP, false);
-                }
-            }
-        });
-        sv_trip_start_mark.setChecked(SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_TRIP_START_WITH_APP, true));
-
         sv_auto_open_driving.setOnValueChangeListener(new SetView.OnValueChangeListener() {
             @Override
             public void onValueChange(String newValue, String oldValue) {

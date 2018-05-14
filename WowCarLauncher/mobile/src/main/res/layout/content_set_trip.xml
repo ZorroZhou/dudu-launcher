@@ -30,10 +30,8 @@
         android:id="@+id/sv_trip_start_mark"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        st:summary="车机启动"
-        st:summary2="发送机点火(需要OBD支持,未绑定OBD,则行程无法开始)"
-        st:titleEx="行程开始标记"
-        st:type="switchB" />
+        st:titleEx="行程合并(两次发动机点火时间间隔X分钟,默认为同一行程)"
+        st:type="inputB" />
 
     <View style="@style/Interval" />
 

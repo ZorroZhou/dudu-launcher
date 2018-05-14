@@ -30,4 +30,6 @@
 
     <string name="driving_cool_black_tp">%1$.1f/%2$d℃</string>
     <string name="driving_cool_black_tp_nodata">0.0</string>
+    <string name="trip_merge_time_message">OBD两次读取转速不为0的时间间隔 %1$d 分钟,默认为同一行程</string>
+
 </resources>

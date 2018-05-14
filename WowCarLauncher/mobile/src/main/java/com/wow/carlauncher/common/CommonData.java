@@ -81,9 +81,11 @@ public class CommonData {
     //应用包名标记使用的间隔
     public static final String CONSTANT_APP_PACKAGE_SEPARATE = ":";
 
-    //行程以app启动为准
-    public static final String SDATA_TRIP_START_WITH_APP = "SDATA_TRIP_START_WITH_APP";
+    //行程合并间隔
+    public static final String SDATA_TRIP_MERGE_TIME = "SDATA_TRIP_MERGE_TIME";
+    public static final int SDATA_TRIP_MERGE_TIME_DF = 1;
+    //是否自动启动驾驶界面
     public static final String SDATA_TRIP_AUTO_OPEN_DRIVING = "SDATA_TRIP_AUTO_OPEN_DRIVING";
-
+    public static final boolean SDATA_TRIP_AUTO_OPEN_DRIVING_DF = true;
     //-------------------------------本地缓存使用的mark-end-----------------------------------
 }

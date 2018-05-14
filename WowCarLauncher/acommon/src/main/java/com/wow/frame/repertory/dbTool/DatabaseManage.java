@@ -140,7 +140,9 @@ public class DatabaseManage {
         x.task().run(new Runnable() {
             @Override
             public void run() {
-                insert(entity);
+                synchronized (entity) {
+                    insert(entity);
+                }
             }
         });
     }
@@ -200,7 +202,9 @@ public class DatabaseManage {
         x.task().run(new Runnable() {
             @Override
             public void run() {
-                update(entity, where);
+                synchronized (entity) {
+                    update(entity, where);
+                }
             }
         });
     }
@@ -411,7 +415,9 @@ public class DatabaseManage {
         x.task().run(new Runnable() {
             @Override
             public void run() {
-                save(entity);
+                synchronized (entity) {
+                    save(entity);
+                }
             }
         });
     }

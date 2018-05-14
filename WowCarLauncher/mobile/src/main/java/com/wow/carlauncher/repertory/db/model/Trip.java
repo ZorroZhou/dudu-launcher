@@ -7,9 +7,22 @@ import com.wow.frame.repertory.dbTool.BaseEntity;
  */
 
 public class Trip extends BaseEntity {
+    public final static int STATE_RUNNING = 1;
+    public final static int STATE_OVER = 2;
+
     private Long startTime;
     private Long lastMarkTime;
+    private Integer state;
     private Integer mileage;//里程 米
+
+    public Integer getState() {
+        return state;
+    }
+
+    public Trip setState(Integer state) {
+        this.state = state;
+        return this;
+    }
 
     public Long getLastMarkTime() {
         return lastMarkTime;

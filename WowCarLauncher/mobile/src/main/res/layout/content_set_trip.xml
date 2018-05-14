@@ -16,6 +16,15 @@
         android:textSize="14sp" />
 
     <com.wow.carlauncher.common.view.SetView
+        android:id="@+id/sv_current_driving_activity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        st:titleEx="驾驶界面"
+        st:type="buttonB" />
+
+    <View style="@style/Interval" />
+
+    <com.wow.carlauncher.common.view.SetView
         android:id="@+id/sv_auto_open_driving"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,10 +36,10 @@
     <View style="@style/Interval" />
 
     <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_trip_start_mark"
+        android:id="@+id/sv_trip_merge_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        st:titleEx="行程合并(OBD两次读取转速不为0的时间间隔X分钟,默认为同一行程)"
+        st:titleEx="行程合并"
         st:type="buttonB" />
 
     <View style="@style/Interval" />

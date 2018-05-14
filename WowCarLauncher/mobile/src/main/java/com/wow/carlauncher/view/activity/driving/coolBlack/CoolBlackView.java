@@ -37,6 +37,9 @@ public class CoolBlackView extends BaseEBusView {
     @ViewInject(R.id.tv_time)
     private TextView tv_time;
 
+    @ViewInject(R.id.tv_date)
+    private TextView tv_date;
+
     @ViewInject(R.id.tv_trip_time)
     private TextView tv_trip_time;
 
@@ -46,6 +49,7 @@ public class CoolBlackView extends BaseEBusView {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(final MTimeSecondEvent event) {
+        this.tv_date.setText(DateUtil.dateToString(new Date(), "yyyy-MM-dd"));
         this.tv_time.setText(DateUtil.dateToString(new Date(), "HH:mm:ss"));
         if (TripManage.self().isTripStart()) {
             this.tv_trip_time.setText(DateUtil.formatDuring(System.currentTimeMillis() - TripManage.self().getTropStartTime()));

@@ -83,6 +83,7 @@ public class CommonData {
 
     //行程以app启动为准
     public static final String SDATA_TRIP_START_WITH_APP = "SDATA_TRIP_START_WITH_APP";
+    public static final String SDATA_TRIP_AUTO_OPEN_DRIVING = "SDATA_TRIP_AUTO_OPEN_DRIVING";
 
     //-------------------------------本地缓存使用的mark-end-----------------------------------
 }

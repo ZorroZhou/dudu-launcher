@@ -56,5 +56,17 @@ public class STripView extends BaseView {
             }
         });
         sv_trip_start_mark.setChecked(SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_TRIP_START_WITH_APP, true));
+
+        sv_auto_open_driving.setOnValueChangeListener(new SetView.OnValueChangeListener() {
+            @Override
+            public void onValueChange(String newValue, String oldValue) {
+                if ("1".equals(newValue)) {
+                    SharedPreUtil.saveSharedPreBoolean(CommonData.SDATA_TRIP_AUTO_OPEN_DRIVING, true);
+                } else {
+                    SharedPreUtil.saveSharedPreBoolean(CommonData.SDATA_TRIP_AUTO_OPEN_DRIVING, false);
+                }
+            }
+        });
+        sv_auto_open_driving.setChecked(SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_TRIP_AUTO_OPEN_DRIVING, true));
     }
 }

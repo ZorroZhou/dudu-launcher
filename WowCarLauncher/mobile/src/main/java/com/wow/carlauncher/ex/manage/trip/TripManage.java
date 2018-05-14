@@ -48,6 +48,15 @@ public class TripManage extends ContextEx {
         }
     }
 
+    public int getTropMileage() {
+        if (trip != null) {
+            return trip.getMileage();
+        } else {
+            return 0;
+        }
+    }
+
+
     public boolean isDrivingShow() {
         return drivingShow;
     }
@@ -73,12 +82,14 @@ public class TripManage extends ContextEx {
         }
     }
 
+    private long lastSpeedTime = 0;
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(PObdEventCarInfo event) {
         Log.d(TAG, "onEventMainThread: " + event);
         if (event.getRev() != null && event.getRev() > 400) {
-            if (!drivingShow) {
+            //这里先这么处理,之后再调整
+            if (!drivingShow && SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_TRIP_AUTO_OPEN_DRIVING, true)) {
                 Intent intent2 = new Intent(getContext(), DrivingActivity.class);
                 intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 getContext().startActivity(intent2);
@@ -86,6 +97,15 @@ public class TripManage extends ContextEx {
             if (!SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_TRIP_START_WITH_APP, true)) {
                 startTrip();
             }
+        } else if (event.getSpeed() != null) {
+            //这里计算里程
+            if (lastSpeedTime != 0) {
+                long mm = System.currentTimeMillis() - lastSpeedTime;
+                //毫秒转成小时后,乘以速度
+                double mi = (double) mm / 1000 / 60 / 60 * (double) event.getSpeed() * 1000;
+                trip.setMileage(trip.getMileage() + (int) mi);
+            }
+            lastSpeedTime = System.currentTimeMillis();
         }
     }
 
@@ -99,7 +119,7 @@ public class TripManage extends ContextEx {
         if (trip != null) {
             return;
         }
-        trip = new Trip().setStartTime(System.currentTimeMillis());
+        trip = new Trip().setStartTime(System.currentTimeMillis()).setMileage(0);
         Log.d(TAG, "startTrip");
     }
 }

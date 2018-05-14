@@ -1,7 +1,9 @@
 package com.wow.carlauncher.view.activity.driving;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -37,6 +39,8 @@ public class DrivingActivity extends BaseActivity {
         hideTitle();
         View nowContent = new CoolBlackView(this);
         content.addView(nowContent, FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
+
+        TripManage.self().setDrivingShow(true);
     }
 
     @Event(value = {R.id.iv_back2})
@@ -60,14 +64,8 @@ public class DrivingActivity extends BaseActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        TripManage.self().setDrivingShow(true);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onDestroy() {
+        super.onDestroy();
         TripManage.self().setDrivingShow(false);
     }
 }

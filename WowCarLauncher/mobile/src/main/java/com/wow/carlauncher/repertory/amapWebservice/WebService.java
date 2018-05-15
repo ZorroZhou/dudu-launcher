@@ -1,9 +1,9 @@
-package com.wow.carlauncher.common.amapWebservice;
+package com.wow.carlauncher.repertory.amapWebservice;
 
 import android.util.Log;
 
-import com.wow.carlauncher.common.amapWebservice.res.BaseRes;
-import com.wow.carlauncher.common.amapWebservice.res.WeatherRes;
+import com.wow.carlauncher.repertory.amapWebservice.res.BaseRes;
+import com.wow.carlauncher.repertory.amapWebservice.res.WeatherRes;
 import com.wow.frame.SFrame;
 
 import org.xutils.common.Callback;

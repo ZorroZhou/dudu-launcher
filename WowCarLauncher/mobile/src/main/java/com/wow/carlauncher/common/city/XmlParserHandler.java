@@ -1,4 +1,4 @@
-package com.wow.carlauncher.common.city.service;
+package com.wow.carlauncher.common.city;
 
 import com.wow.carlauncher.common.city.model.CityModel;
 import com.wow.carlauncher.common.city.model.DistrictModel;

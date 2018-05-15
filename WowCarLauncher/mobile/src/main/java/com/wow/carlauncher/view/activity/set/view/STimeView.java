@@ -18,6 +18,7 @@ import com.wow.carlauncher.view.base.BaseDialog;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.common.view.SetView;
+import com.wow.carlauncher.view.base.BaseDialog2;
 import com.wow.carlauncher.view.dialog.CityDialog;
 import com.wow.carlauncher.view.activity.launcher.event.LEventCityRefresh;
 import com.wow.carlauncher.ex.plugin.obd.ObdProtocolEnum;
@@ -32,6 +33,7 @@ import org.xutils.x;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.content.DialogInterface.BUTTON_POSITIVE;
 import static com.wow.carlauncher.common.CommonData.TAG;
 
 /**
@@ -98,19 +100,19 @@ public class STimeView extends FrameLayout {
             @Override
             public void onClick(View view) {
                 final CityDialog cityDialog = new CityDialog(getContext());
-                cityDialog.setOkListener(new BaseDialog.OnBtnClickListener() {
+                cityDialog.setOkclickListener(new BaseDialog2.OnBtnClickListener() {
                     @Override
-                    public boolean onClick(BaseDialog dialog) {
-                        Log.e(TAG, "onClick: " + cityDialog.getmCurrentDistrictName());
+                    public boolean onClick(BaseDialog2 dialog) {
                         if (CommonUtil.isNotNull(cityDialog.getmCurrentDistrictName())) {
                             SharedPreUtil.saveSharedPreString(CommonData.SDATA_WEATHER_CITY, cityDialog.getmCurrentDistrictName());
-                            dialog.dismiss();
+                            cityDialog.dismiss();
                             EventBus.getDefault().post(new LEventCityRefresh());
                             tianqi_city.setSummary(cityDialog.getmCurrentDistrictName());
+                            return true;
                         } else {
                             ToastManage.self().show("请选择城市");
+                            return false;
                         }
-                        return false;
                     }
                 });
                 cityDialog.show();

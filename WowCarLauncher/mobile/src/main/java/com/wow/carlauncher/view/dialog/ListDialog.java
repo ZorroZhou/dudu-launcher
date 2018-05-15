@@ -24,6 +24,5 @@ public class ListDialog extends BaseDialog {
         setContent(R.layout.dialog_listview);
 
         listView = (ListView) findViewById(R.id.lv_list);
-        System.out.println("!!!!!!!!!!!!!!" + listView);
     }
 }

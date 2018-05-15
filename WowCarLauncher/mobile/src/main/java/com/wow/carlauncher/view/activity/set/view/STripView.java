@@ -17,6 +17,7 @@ import com.wow.carlauncher.ex.manage.appInfo.AppInfo;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.view.base.BaseDialog;
+import com.wow.carlauncher.view.base.BaseDialog2;
 import com.wow.carlauncher.view.base.BaseView;
 import com.wow.carlauncher.view.dialog.InputDialog;
 import com.wow.carlauncher.view.popupWindow.event.PEventFSRefresh;
@@ -75,25 +76,26 @@ public class STripView extends BaseView {
             public void onClick(View v) {
                 final InputDialog inputDialog = new InputDialog(getContext());
                 inputDialog.setTitle("输入一个分钟数");
-                inputDialog.show();
                 inputDialog.setInputString(SharedPreUtil.getSharedPreInteger(SDATA_TRIP_MERGE_TIME, SDATA_TRIP_MERGE_TIME_DF) + "");
-                inputDialog.getButton(BUTTON_POSITIVE).setOnClickListener(new OnClickListener() {
+                inputDialog.setOkclickListener(new BaseDialog2.OnBtnClickListener() {
                     @Override
-                    public void onClick(View view) {
+                    public boolean onClick(BaseDialog2 dialog) {
                         try {
                             int xx = Integer.parseInt(inputDialog.getInputString());
                             if (xx < 100) {
                                 SharedPreUtil.saveSharedPreInteger(SDATA_TRIP_MERGE_TIME, xx);
                                 sv_trip_merge_time.setSummary(getResources().getString(R.string.trip_merge_time_message, SharedPreUtil.getSharedPreInteger(SDATA_TRIP_MERGE_TIME, SDATA_TRIP_MERGE_TIME_DF)));
-                                inputDialog.dismiss();
+                                return true;
                             } else {
                                 ToastManage.self().show("请输入小于100的分钟数");
                             }
                         } catch (Exception e) {
                             ToastManage.self().show("请输入小于100的分钟数");
                         }
+                        return false;
                     }
                 });
+                inputDialog.show();
             }
         });
         sv_trip_merge_time.setSummary(getResources().getString(R.string.trip_merge_time_message, SharedPreUtil.getSharedPreInteger(SDATA_TRIP_MERGE_TIME, SDATA_TRIP_MERGE_TIME_DF)));

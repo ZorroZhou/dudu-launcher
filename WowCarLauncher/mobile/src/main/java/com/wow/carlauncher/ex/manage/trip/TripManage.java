@@ -133,7 +133,7 @@ public class TripManage extends ContextEx {
     public void onEventMainThread(MTimeSecondEvent event) {
         synchronized (tripLock) {
             //如果长时间没有刷新信息,则说明行程该结束了
-            if (System.currentTimeMillis() - trip.getLastMarkTime() > SharedPreUtil.getSharedPreInteger(SDATA_TRIP_MERGE_TIME, SDATA_TRIP_MERGE_TIME_DF) * 60 * 1000) {
+            if (trip != null && System.currentTimeMillis() - trip.getLastMarkTime() > SharedPreUtil.getSharedPreInteger(SDATA_TRIP_MERGE_TIME, SDATA_TRIP_MERGE_TIME_DF) * 60 * 1000) {
                 trip.setState(Trip.STATE_OVER);
                 DatabaseManage.saveSyn(trip);
                 trip = null;

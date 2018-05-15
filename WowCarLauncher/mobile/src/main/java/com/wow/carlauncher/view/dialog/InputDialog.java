@@ -9,38 +9,35 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.wow.carlauncher.R;
-import com.wow.carlauncher.view.base.BaseDialog;
+import com.wow.carlauncher.view.base.BaseDialog2;
 
 /**
  * Created by 10124 on 2017/11/5.
  */
 
-public class InputDialog extends AlertDialog {
+public class InputDialog extends BaseDialog2 {
+
     public InputDialog(Context context) {
         super(context);
-        View base = LayoutInflater.from(getContext()).inflate(R.layout.dialog_input, new LinearLayout(context), false);
-        setView(base);
-        setCanceledOnTouchOutside(true);
-        setCancelable(true);
-        setButton(BUTTON_POSITIVE, "确定", new OnClickListener() {
+        setView(LayoutInflater.from(getContext()).inflate(R.layout.dialog_input, new LinearLayout(context), false));
+        setOnShowListenerEx(new OnShowListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
-            }
-        });
-        setButton(BUTTON_NEGATIVE, "取消", new OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dismiss();
+            public void onShow(DialogInterface dialogInterface) {
+                if (inputString != null) {
+                    ((EditText) findViewById(R.id.et_input)).setText(inputString);
+                }
             }
         });
     }
+
 
     public String getInputString() {
         return ((EditText) findViewById(R.id.et_input)).getText().toString();
     }
 
+    private String inputString;
+
     public void setInputString(String input) {
-        ((EditText) findViewById(R.id.et_input)).setText(input);
+        this.inputString = input;
     }
 }

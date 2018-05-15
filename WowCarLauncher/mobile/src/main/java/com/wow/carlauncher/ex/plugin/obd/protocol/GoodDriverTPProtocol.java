@@ -35,14 +35,12 @@ public class GoodDriverTPProtocol extends ObdProtocol {
 
     public GoodDriverTPProtocol(Context context, String address, final ObdProtocolListener listener) {
         super(context, address, listener);
-
         //单独用来处理粘包的,太扯淡了
         this.resMessageTemp = new StringBuffer();
     }
 
 
     private long mark = 0L;
-    private boolean reset = false;
     private int infoMark = 10;
 
     private boolean cmdCloseEcho = false;
@@ -50,6 +48,10 @@ public class GoodDriverTPProtocol extends ObdProtocol {
     private boolean cmdCloseSpace = false;
     private boolean cmdCloseTitle = false;
     private boolean cmdProtocolAuto = false;
+
+    public void warpTimeOut() {
+        cmdProtocolAuto = true;
+    }
 
     @Override
     public void run() {

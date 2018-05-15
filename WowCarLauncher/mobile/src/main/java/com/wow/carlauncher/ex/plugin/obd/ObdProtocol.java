@@ -6,6 +6,7 @@ import android.util.Log;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
+import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventConnect;
 import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.DateUtil;
@@ -50,6 +51,8 @@ public abstract class ObdProtocol {
     public abstract void run();
 
     public abstract void stop();
+
+    public abstract void warpTimeOut();
 
     public abstract void receiveMessage(byte[] message);
 
@@ -116,6 +119,7 @@ public abstract class ObdProtocol {
     @Subscribe(threadMode = ThreadMode.ASYNC)
     public void onEventAsync(final MTimeSecondEvent event) {
         if (currentTask != null && System.currentTimeMillis() - currentTask.getSendTime() > 2000) {
+            ToastManage.self().show("传输包超时");
             setTaskRes("");
         }
     }

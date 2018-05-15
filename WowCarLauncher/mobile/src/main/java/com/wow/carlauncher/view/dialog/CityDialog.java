@@ -1,7 +1,13 @@
 package com.wow.carlauncher.view.dialog;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.AssetManager;
+import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.view.base.BaseDialog;
@@ -12,6 +18,7 @@ import com.wow.carlauncher.common.city.service.XmlParserHandler;
 import com.wow.carlauncher.common.view.wheelWidget.OnWheelChangedListener;
 import com.wow.carlauncher.common.view.wheelWidget.WheelView;
 import com.wow.carlauncher.common.view.wheelWidget.adapters.ArrayWheelAdapter;
+import com.wow.carlauncher.view.base.BaseDialog2;
 
 import java.io.InputStream;
 import java.util.HashMap;
@@ -25,7 +32,7 @@ import javax.xml.parsers.SAXParserFactory;
  * Created by 10124 on 2017/11/15.
  */
 
-public class CityDialog extends BaseDialog implements OnWheelChangedListener {
+public class CityDialog extends BaseDialog2 implements OnWheelChangedListener {
     private static String[] mProvinceDatas;
     private static Map<String, String[]> mCitisDatasMap = new HashMap<>();
     private static Map<String, String[]> mDistrictDatasMap = new HashMap<>();
@@ -46,32 +53,20 @@ public class CityDialog extends BaseDialog implements OnWheelChangedListener {
     private WheelView mViewCity;
     private WheelView mViewDistrict;
 
-    private OnBtnClickListener okListener;
-
-    public void setOkListener(OnBtnClickListener okListener) {
-        this.okListener = okListener;
-    }
-
     public CityDialog(Context context) {
         super(context);
         setTitle("选择省市区");
-        setGravityCenter();
-        setContent(R.layout.dialog_city);
-        initProvinceDatas();
-        mCurrentProviceName = dCurrentProviceName;
-        mCurrentCityName = dCurrentCityName;
-        mCurrentDistrictName = dCurrentDistrictName;
-
-        setUpViews();
-        setUpListener();
-        setUpData();
-        setBtn3("确定", new OnBtnClickListener() {
+        setView(LayoutInflater.from(getContext()).inflate(R.layout.dialog_city, new LinearLayout(context), false));
+        setOnShowListenerEx(new OnShowListener() {
             @Override
-            public boolean onClick(BaseDialog dialog) {
-                if (okListener != null) {
-                    return okListener.onClick(dialog);
-                }
-                return false;
+            public void onShow(DialogInterface dialogInterface) {
+                initProvinceDatas();
+                mCurrentProviceName = dCurrentProviceName;
+                mCurrentCityName = dCurrentCityName;
+                mCurrentDistrictName = dCurrentDistrictName;
+                setUpViews();
+                setUpListener();
+                setUpData();
             }
         });
     }
@@ -93,7 +88,8 @@ public class CityDialog extends BaseDialog implements OnWheelChangedListener {
 
     private void setUpData() {
         initProvinceDatas();
-        mViewProvince.setViewAdapter(new ArrayWheelAdapter<>(context, mProvinceDatas));
+        mViewProvince.setViewAdapter(new ArrayWheelAdapter<>(getContext(), mProvinceDatas));
+        mViewProvince.setCurrentItem(3);
         // 设置可见条目数量
         mViewProvince.setVisibleItems(7);
         mViewCity.setVisibleItems(7);
@@ -122,7 +118,7 @@ public class CityDialog extends BaseDialog implements OnWheelChangedListener {
         if (areas == null) {
             areas = new String[]{""};
         }
-        mViewDistrict.setViewAdapter(new ArrayWheelAdapter<>(context, areas));
+        mViewDistrict.setViewAdapter(new ArrayWheelAdapter<>(getContext(), areas));
         mViewDistrict.setCurrentItem(0);
     }
 
@@ -136,7 +132,7 @@ public class CityDialog extends BaseDialog implements OnWheelChangedListener {
         if (cities == null) {
             cities = new String[]{""};
         }
-        mViewCity.setViewAdapter(new ArrayWheelAdapter<>(context, cities));
+        mViewCity.setViewAdapter(new ArrayWheelAdapter<>(getContext(), cities));
         mViewCity.setCurrentItem(0);
         updateAreas();
     }
@@ -147,7 +143,7 @@ public class CityDialog extends BaseDialog implements OnWheelChangedListener {
             return;
         }
         List<ProvinceModel> provinceList = null;
-        AssetManager asset = context.getAssets();
+        AssetManager asset = getContext().getAssets();
         try {
             InputStream input = asset.open("city_data.xml");
             // 创建一个解析xml的工厂对象

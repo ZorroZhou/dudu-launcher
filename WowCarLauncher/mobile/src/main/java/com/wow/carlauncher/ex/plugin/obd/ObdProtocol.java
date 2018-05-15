@@ -118,7 +118,7 @@ public abstract class ObdProtocol {
 
     @Subscribe(threadMode = ThreadMode.ASYNC)
     public void onEventAsync(final MTimeSecondEvent event) {
-        if (currentTask != null && System.currentTimeMillis() - currentTask.getSendTime() > 2000) {
+        if (currentTask != null && System.currentTimeMillis() - currentTask.getSendTime() > 5000) {
             ToastManage.self().show("传输包超时");
             setTaskRes("");
         }

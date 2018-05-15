@@ -53,7 +53,7 @@ public class CoolBlackView extends BaseEBusView {
         this.tv_time.setText(DateUtil.dateToString(new Date(), "HH:mm:ss"));
         if (TripManage.self().isTripStart()) {
             this.tv_trip_time.setText(DateUtil.formatDuring(System.currentTimeMillis() - TripManage.self().getTropStartTime()));
-            this.tv_driver_distance.setText(String.format(Locale.CHINA, "%.2f", (double) TripManage.self().getTropMileage() / 1000d));
+            this.tv_driver_distance.setText(String.format(Locale.CHINA, "%.1f", (double) TripManage.self().getTropMileage() / 1000d));
         } else {
             this.tv_trip_time.setText("00:00:00");
             this.tv_driver_distance.setText("0");

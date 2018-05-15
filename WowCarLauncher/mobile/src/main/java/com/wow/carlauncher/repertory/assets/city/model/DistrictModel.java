@@ -1,4 +1,4 @@
-package com.wow.carlauncher.common.city.model;
+package com.wow.carlauncher.repertory.assets.city.model;
 
 public class DistrictModel {
 	private String name;

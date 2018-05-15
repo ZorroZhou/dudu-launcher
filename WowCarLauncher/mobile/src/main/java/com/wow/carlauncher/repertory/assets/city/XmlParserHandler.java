@@ -1,8 +1,8 @@
-package com.wow.carlauncher.common.city;
+package com.wow.carlauncher.repertory.assets.city;
 
-import com.wow.carlauncher.common.city.model.CityModel;
-import com.wow.carlauncher.common.city.model.DistrictModel;
-import com.wow.carlauncher.common.city.model.ProvinceModel;
+import com.wow.carlauncher.repertory.assets.city.model.CityModel;
+import com.wow.carlauncher.repertory.assets.city.model.DistrictModel;
+import com.wow.carlauncher.repertory.assets.city.model.ProvinceModel;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -42,7 +42,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:scaleType="centerInside"
-        android:src="@mipmap/driving_tp_car"
+        android:src="@mipmap/driving_black_tp_car"
         app:layout_marginBottomPercent="10%h"
         app:layout_marginTopPercent="10%h"
         app:layout_widthPercent="40%w" />

@@ -9,14 +9,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitXY"
-        android:src="@mipmap/driving_rev_water_temp_cursor" />
+        android:src="@mipmap/driving_black_rev_water_temp_cursor" />
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:contentDescription="@string/app_name"
         android:scaleType="fitXY"
-        android:src="@mipmap/driving_rev_bg" />
+        android:src="@mipmap/driving_black_rev_bg" />
 
     <ImageView
         android:id="@+id/iv_cursor"
@@ -24,7 +24,7 @@
         android:layout_height="match_parent"
         android:contentDescription="@string/app_name"
         android:scaleType="fitXY"
-        android:src="@mipmap/driving_rev_bg_cursor" />
+        android:src="@mipmap/driving_black_rev_bg_cursor" />
 
     <com.zhy.android.percent.support.PercentRelativeLayout
         android:layout_width="match_parent"

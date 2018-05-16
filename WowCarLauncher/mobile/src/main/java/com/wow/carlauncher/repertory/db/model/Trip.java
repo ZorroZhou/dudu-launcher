@@ -1,28 +1,16 @@
 package com.wow.carlauncher.repertory.db.model;
 
 import com.wow.frame.repertory.dbTool.BaseEntity;
+import com.wow.frame.repertory.dbTool.Table;
 
 /**
  * Created by 10124 on 2018/5/12.
  */
-
+@Table(name = "Trip")
 public class Trip extends BaseEntity {
-    public final static int STATE_RUNNING = 1;
-    public final static int STATE_OVER = 2;
-
     private Long startTime;
     private Long lastMarkTime;
-    private Integer state;
     private Integer mileage;//里程 米
-
-    public Integer getState() {
-        return state;
-    }
-
-    public Trip setState(Integer state) {
-        this.state = state;
-        return this;
-    }
 
     public Long getLastMarkTime() {
         return lastMarkTime;

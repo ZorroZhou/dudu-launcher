@@ -92,7 +92,7 @@ public class TripManage extends ContextEx {
     @Subscribe(threadMode = ThreadMode.ASYNC)
     public void onEventMainThread(PObdEventCarInfo event) {
         synchronized (tripLock) {
-            Log.d(TAG, "onEventMainThread: " + event);
+            //Log.d(TAG, "onEventMainThread: " + event);
             if (event.getRev() != null && event.getRev() > 400) {
                 //这里先这么处理,之后再调整
                 if (!drivingShow && SharedPreUtil.getSharedPreBoolean(SDATA_TRIP_AUTO_OPEN_DRIVING, SDATA_TRIP_AUTO_OPEN_DRIVING_DF)) {
@@ -105,16 +105,18 @@ public class TripManage extends ContextEx {
                     trip.setLastMarkTime(System.currentTimeMillis());
                     DatabaseManage.saveSyn(trip);
                 } else {
+                    Log.d(TAG, "onEventMainThread  adasdasdasd111: " + trip);
                     trip = new Trip()
                             .setStartTime(System.currentTimeMillis())
-                            .setState(Trip.STATE_RUNNING)
                             .setMileage(0)
                             .setLastMarkTime(System.currentTimeMillis());
                     DatabaseManage.saveSyn(trip);
                 }
             }
             //这里说明是行程开始了,因为插入行程是个异步操作,所以要检查id是否有值(插入操作是否完成)
+            Log.d(TAG, "onEventMainThread: " + trip.getId());
             if (event.getSpeed() != null && trip != null && trip.getId() != null) {
+                Log.d(TAG, "onEventMainThread: !!!!!");
                 //这里计算里程
                 if (lastSpeedTime != 0) {
                     long mm = System.currentTimeMillis() - lastSpeedTime;
@@ -134,8 +136,6 @@ public class TripManage extends ContextEx {
         synchronized (tripLock) {
             //如果长时间没有刷新信息,则说明行程该结束了
             if (trip != null && System.currentTimeMillis() - trip.getLastMarkTime() > SharedPreUtil.getSharedPreInteger(SDATA_TRIP_MERGE_TIME, SDATA_TRIP_MERGE_TIME_DF) * 60 * 1000) {
-                trip.setState(Trip.STATE_OVER);
-                DatabaseManage.saveSyn(trip);
                 trip = null;
             }
         }

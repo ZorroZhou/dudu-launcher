@@ -402,11 +402,13 @@ public class DatabaseManage {
         if (entity.getId() != null) {
             T t = (T) getBean(entity.getClass(), "id=" + entity.getId());
             if (t != null) {
+                Log.d(TAG, "save-update:" + entity);
                 update(entity, "id=" + entity.getId());
                 update = true;
             }
         }
         if (!update) {
+            Log.d(TAG, "save-insert:" + entity);
             insert(entity);
         }
     }

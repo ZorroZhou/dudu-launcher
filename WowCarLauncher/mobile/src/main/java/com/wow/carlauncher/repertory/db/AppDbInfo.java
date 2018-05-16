@@ -1,5 +1,7 @@
 package com.wow.carlauncher.repertory.db;
 
+import com.wow.carlauncher.repertory.db.model.Trip;
+import com.wow.carlauncher.repertory.db.model.TripPoint;
 import com.wow.frame.repertory.dbTool.DatabaseInfo;
 
 /**
@@ -14,11 +16,11 @@ public class AppDbInfo extends DatabaseInfo {
 
     @Override
     public int getDbVersion() {
-        return 1;
+        return 2;
     }
 
     @Override
     public Class<?>[] getBeanClass() {
-        return new Class[0];
+        return new Class[]{Trip.class, TripPoint.class};
     }
 }

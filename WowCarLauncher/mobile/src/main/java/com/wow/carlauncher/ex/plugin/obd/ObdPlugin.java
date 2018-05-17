@@ -1,5 +1,6 @@
 package com.wow.carlauncher.ex.plugin.obd;
 
+import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.util.Log;
@@ -14,6 +15,7 @@ import com.inuker.bluetooth.library.model.BleGattProfile;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.ex.ContextEx;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
+import com.wow.carlauncher.ex.manage.time.TimeManage;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventConnect;
@@ -42,13 +44,13 @@ import static com.wow.carlauncher.common.CommonData.SDATA_OBD_CONTROLLER;
 public class ObdPlugin extends ContextEx {
     public static final String TAG = "WOW_CAR_OBD";
 
-    private static ObdPlugin self;
+    private static class SingletonHolder {
+        @SuppressLint("StaticFieldLeak")
+        private static ObdPlugin instance = new ObdPlugin();
+    }
 
     public static ObdPlugin self() {
-        if (self == null) {
-            self = new ObdPlugin();
-        }
-        return self;
+        return ObdPlugin.SingletonHolder.instance;
     }
 
     private ObdPlugin() {
@@ -57,8 +59,8 @@ public class ObdPlugin extends ContextEx {
 
     private boolean connect = false;
 
-    public boolean isConnect() {
-        return connect;
+    public boolean notConnect() {
+        return !connect;
     }
 
     private BleConnectOptions options;
@@ -85,10 +87,7 @@ public class ObdPlugin extends ContextEx {
 
         @Override
         public boolean isConnect() {
-            if (obdProtocol != null && BleManage.self().client().getConnectStatus(obdProtocol.getAddress()) == STATUS_DEVICE_CONNECTED) {
-                return true;
-            }
-            return false;
+            return obdProtocol != null && BleManage.self().client().getConnectStatus(obdProtocol.getAddress()) == STATUS_DEVICE_CONNECTED;
         }
 
         @Override
@@ -243,10 +242,7 @@ public class ObdPlugin extends ContextEx {
     }
 
     public boolean supportTp() {
-        if (obdProtocol != null) {
-            return obdProtocol.supportTp();
-        }
-        return false;
+        return obdProtocol != null && obdProtocol.supportTp();
     }
 
     @Subscribe(threadMode = ThreadMode.ASYNC)

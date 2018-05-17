@@ -48,15 +48,22 @@ public class TimeManage extends ContextEx {
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                if (EventBus.getDefault().hasSubscriberForEvent(MTimeSecondEvent.class)) {
-                    postEvent(new MTimeSecondEvent());
-                }
-                if (timeMark % (60 * 30) == 0) {
-                    if (EventBus.getDefault().hasSubscriberForEvent(MTime30MinuteEvent.class)) {
-                        postEvent(new MTime30MinuteEvent());
+                try {
+                    if (EventBus.getDefault().hasSubscriberForEvent(MTimeSecondEvent.class)) {
+                        postEvent(new MTimeSecondEvent());
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-                System.gc();
+                try {
+                    if (timeMark % (60 * 30) == 0) {
+                        if (EventBus.getDefault().hasSubscriberForEvent(MTime30MinuteEvent.class)) {
+                            postEvent(new MTime30MinuteEvent());
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 timeMark++;
             }
         }, SECOND, SECOND);

@@ -100,19 +100,12 @@ public abstract class ObdProtocol {
         EventBus.getDefault().unregister(this);
     }
 
-    protected boolean setTaskRes(String msg) {
+    protected void setTaskRes(String msg) {
         if (currentTask != null) {
             currentTask.writeRes(msg);
-
-            Log.d("task send over2", "sendTime:" + DateUtil.dateToString(new Date(currentTask.getSendTime()), "hh:ss:ss:SSSS") +
-                    "  overTime:" + DateUtil.dateToString(new Date(System.currentTimeMillis()), "hh:ss:ss:SSSS"));
-            Log.d("task send over3", "msg:" + msg);
             taskOver(currentTask);
             currentTask = null;
             runTask();
-            return true;
-        } else {
-            return false;
         }
     }
 
@@ -120,7 +113,9 @@ public abstract class ObdProtocol {
     public void onEventAsync(final MTimeSecondEvent event) {
         if (currentTask != null && System.currentTimeMillis() - currentTask.getSendTime() > 5000) {
             ToastManage.self().show("传输包超时");
-            setTaskRes("");
+            warpTimeOut();
+            currentTask = null;
+            runTask();
         }
     }
 }

@@ -3,30 +3,22 @@ package com.wow.carlauncher.view.activity.driving;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 import com.wow.carlauncher.R;
-import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.manage.trip.TripManage;
 import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
-import com.wow.carlauncher.ex.plugin.obd.ObdTask;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventConnect;
 import com.wow.carlauncher.view.activity.driving.coolBlack.CoolBlackView;
 import com.wow.carlauncher.view.base.BaseActivity;
-import com.wow.frame.util.DateUtil;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
-
-import java.util.Date;
-import java.util.Locale;
 
 /**
  * Created by 10124 on 2018/4/25.
@@ -53,7 +45,7 @@ public class DrivingActivity extends BaseActivity {
 
         TripManage.self().setDrivingShow(true);
 
-        if (!ObdPlugin.self().isConnect()) {
+        if (ObdPlugin.self().notConnect()) {
             ToastManage.self().show("OBD没有连接");
             moveTaskToBack(isTaskRoot());
         }
@@ -82,7 +74,7 @@ public class DrivingActivity extends BaseActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        if (!ObdPlugin.self().isConnect()) {
+        if (ObdPlugin.self().notConnect()) {
             ToastManage.self().show("OBD没有连接");
             moveTaskToBack(isTaskRoot());
         }

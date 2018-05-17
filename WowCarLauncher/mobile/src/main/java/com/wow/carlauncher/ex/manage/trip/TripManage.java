@@ -121,7 +121,7 @@ public class TripManage extends ContextEx {
                 if (lastSpeedTime != 0) {
                     long mm = System.currentTimeMillis() - lastSpeedTime;
                     //毫秒转成小时后,乘以速度
-                    double mi = (double) mm / 1000 / 60 / 60 * (double) event.getSpeed() * 1000;
+                    double mi = (double) mm / 1000 / 60 / 60 * (double) (lastSpeed + (event.getSpeed() - lastSpeed) / 2) * 1000;
                     trip.setMileage(trip.getMileage() + (int) mi);
                     DatabaseManage.saveSyn(trip);
                 }

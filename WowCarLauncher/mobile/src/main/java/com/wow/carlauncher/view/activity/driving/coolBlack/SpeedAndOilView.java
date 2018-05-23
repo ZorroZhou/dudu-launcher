@@ -139,13 +139,18 @@ public class SpeedAndOilView extends BaseEBusView {
     }
 
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(PObdEventCarInfo event) {
-        if (event.getSpeed() != null) {
-            setSpeed(event.getSpeed());
-        }
-        if (event.getOilConsumption() != null) {
-            setOil(event.getOilConsumption());
-        }
+    @Subscribe(threadMode = ThreadMode.ASYNC)
+    public void onEventMainThread(final PObdEventCarInfo event) {
+        post(new Runnable() {
+            @Override
+            public void run() {
+                if (event.getSpeed() != null) {
+                    setSpeed(event.getSpeed());
+                }
+                if (event.getOilConsumption() != null) {
+                    setOil(event.getOilConsumption());
+                }
+            }
+        });
     }
 }

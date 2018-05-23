@@ -136,13 +136,18 @@ public class RevAndWaterTempView extends BaseEBusView {
         }
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(PObdEventCarInfo event) {
-        if (event.getRev() != null) {
-            setRev(event.getRev());
-        }
-        if (event.getWaterTemp() != null) {
-            setWaterTemp(event.getWaterTemp());
-        }
+    @Subscribe(threadMode = ThreadMode.ASYNC)
+    public void onEventMainThread(final PObdEventCarInfo event) {
+        post(new Runnable() {
+            @Override
+            public void run() {
+                if (event.getRev() != null) {
+                    setRev(event.getRev());
+                }
+                if (event.getWaterTemp() != null) {
+                    setWaterTemp(event.getWaterTemp());
+                }
+            }
+        });
     }
 }

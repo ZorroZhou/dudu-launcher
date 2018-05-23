@@ -82,6 +82,7 @@ public class TripManage extends ContextEx {
     public void init(Context context) {
         setContext(context);
         EventBus.getDefault().register(this);
+        EventBus eventBus=new EventBus();
     }
 
     private long lastSpeedTime = 0;
@@ -90,7 +91,7 @@ public class TripManage extends ContextEx {
     private final byte[] tripLock = new byte[0];
 
     @Subscribe(threadMode = ThreadMode.ASYNC)
-    public void onEventMainThread(PObdEventCarInfo event) {
+    public void onEventCall(PObdEventCarInfo event) {
         synchronized (tripLock) {
             //Log.d(TAG, "onEventMainThread: " + event);
             if (event.getRev() != null && event.getRev() > 400) {

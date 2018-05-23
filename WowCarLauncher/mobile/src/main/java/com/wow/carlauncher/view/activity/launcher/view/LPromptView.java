@@ -208,8 +208,13 @@ public class LPromptView extends BaseEBusView {
         }
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
+    @Subscribe(threadMode = ThreadMode.ASYNC)
     public void onEventMainThread(final PObdEventCarTp event) {
-        refreshTpState(event);
+        post(new Runnable() {
+            @Override
+            public void run() {
+                refreshTpState(event);
+            }
+        });
     }
 }

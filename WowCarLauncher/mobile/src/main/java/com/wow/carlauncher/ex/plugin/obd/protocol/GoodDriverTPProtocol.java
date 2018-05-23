@@ -17,6 +17,8 @@ import com.wow.carlauncher.ex.plugin.obd.protocol.gd.GetWaterTempTask;
 import com.wow.carlauncher.ex.plugin.obd.protocol.gd.ProtocolAutoTask;
 import com.wow.carlauncher.ex.plugin.obd.ObdTask;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.UUID;
 
 import static com.wow.carlauncher.common.CommonData.TAG;

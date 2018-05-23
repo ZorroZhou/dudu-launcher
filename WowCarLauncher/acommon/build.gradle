@@ -23,7 +23,7 @@ dependencies {
     compile 'com.android.support:design:24.+'
 
     compile 'org.xutils:xutils:3.0'
-    compile 'org.greenrobot:eventbus:3.0.0'
+    compile 'org.greenrobot:eventbus:3+'
     compile 'com.google.code.gson:gson:2.2.4'
     compile group: 'com.google.guava', name: 'guava', version: '24.1-android'
 }

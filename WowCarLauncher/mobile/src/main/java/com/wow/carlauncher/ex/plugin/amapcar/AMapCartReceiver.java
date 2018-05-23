@@ -89,7 +89,8 @@ public class AMapCartReceiver extends BroadcastReceiver {
                     x.task().autoPost(new Runnable() {
                         @Override
                         public void run() {
-                            EventBus.getDefault().post(new PAmapEventState().setState(8));
+                            EventBus.getDefault().post(new PAmapEventState().setRunning(true));
+                            aMapCarPlugin.noticeHeartbeatTime();
                             EventBus.getDefault().post(new PAmapEventNavInfo()
                                     .setDis(intent.getIntExtra(NAVI_INFO_SEG_REMAIN_DIS, -1))
                                     .setIcon(intent.getIntExtra(NAVI_INFO_ICON, -1))
@@ -107,7 +108,13 @@ public class AMapCartReceiver extends BroadcastReceiver {
                     x.task().autoPost(new Runnable() {
                         @Override
                         public void run() {
-                            EventBus.getDefault().post(new PAmapEventState().setState(intent.getIntExtra(EXTRA_STATE, -1)));
+                            aMapCarPlugin.noticeHeartbeatTime();
+                            int state = intent.getIntExtra(EXTRA_STATE, -1);
+                            if (state == 8 || state == 10) {
+                                EventBus.getDefault().post(new PAmapEventState().setRunning(true));
+                            } else if (state == 9 || state == 11) {
+                                EventBus.getDefault().post(new PAmapEventState().setRunning(false));
+                            }
                         }
                     });
                     break;

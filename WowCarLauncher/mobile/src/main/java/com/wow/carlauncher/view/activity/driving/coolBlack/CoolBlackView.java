@@ -4,20 +4,29 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 import com.wow.carlauncher.ex.manage.trip.TripManage;
+import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventNavInfo;
+import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventState;
 import com.wow.carlauncher.view.base.BaseEBusView;
+import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.DateUtil;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.view.annotation.ViewInject;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Locale;
+
+import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.ICONS;
 
 /**
  * Created by 10124 on 2018/5/11.
@@ -46,6 +55,20 @@ public class CoolBlackView extends BaseEBusView {
     @ViewInject(R.id.tv_driver_distance)
     private TextView tv_driver_distance;
 
+    @ViewInject(R.id.iv_naving)
+    private ImageView iv_naving;
+
+    @ViewInject(R.id.ll_info_shunshiyouhao)
+    private LinearLayout ll_info_shunshiyouhao;
+
+    @ViewInject(R.id.ll_navinfo)
+    private LinearLayout ll_navinfo;
+
+    @ViewInject(R.id.tv_amaproad)
+    private TextView tv_amaproad;
+
+    @ViewInject(R.id.tv_amapmsg)
+    private TextView tv_amapmsg;
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(final MTimeSecondEvent event) {
@@ -57,6 +80,51 @@ public class CoolBlackView extends BaseEBusView {
         } else {
             this.tv_trip_time.setText("00:00:00");
             this.tv_driver_distance.setText("0");
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(final PAmapEventState event) {
+        if (event.isRunning()) {
+            ll_info_shunshiyouhao.setVisibility(View.GONE);
+            iv_naving.setVisibility(View.VISIBLE);
+            ll_navinfo.setVisibility(View.VISIBLE);
+
+        } else {
+            ll_info_shunshiyouhao.setVisibility(View.VISIBLE);
+            iv_naving.setVisibility(View.GONE);
+            iv_naving.setVisibility(View.GONE);
+            iv_naving.setImageResource(0);
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(final PAmapEventNavInfo event) {
+        if (iv_naving != null && event.getIcon() - 1 >= 0 && event.getIcon() - 1 < ICONS.length) {
+            iv_naving.setImageResource(ICONS[event.getIcon() - 1]);
+        }
+        if (tv_amaproad != null && CommonUtil.isNotNull(event.getWroad())) {
+            String msg = "";
+            if (event.getDis() < 10) {
+                msg = msg + "现在";
+            } else {
+                if (event.getDis() > 1000) {
+                    msg = msg + event.getDis() / 1000 + "公里后";
+                } else {
+                    msg = msg + event.getDis() + "米后";
+                }
+            }
+            msg = msg + event.getWroad();
+            tv_amaproad.setText(msg);
+        }
+        if (tv_amapmsg != null && event.getRemainTime() > -1 && event.getRemainDis() > -1) {
+            if (event.getRemainTime() == 0 || event.getRemainDis() == 0) {
+                tv_amapmsg.setText("到达");
+            } else {
+                String msg = "剩余" + new BigDecimal(event.getRemainDis() / 1000f).setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue() + "公里  " +
+                        event.getRemainTime() / 60 + "分钟";
+                tv_amapmsg.setText(msg);
+            }
         }
     }
 }

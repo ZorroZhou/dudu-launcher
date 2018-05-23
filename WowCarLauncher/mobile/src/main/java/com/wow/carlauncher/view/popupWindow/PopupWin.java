@@ -417,10 +417,10 @@ public class PopupWin {
             LinearLayout popupcontroller = (LinearLayout) amapView.findViewById(R.id.ll_controller);
             RelativeLayout popupnavi = (RelativeLayout) amapView.findViewById(R.id.ll_navi);
             if (popupcontroller != null && popupnavi != null) {
-                if (event.getState() == 8 || event.getState() == 10) {
+                if (event.isRunning()) {
                     popupcontroller.setVisibility(View.GONE);
                     popupnavi.setVisibility(View.VISIBLE);
-                } else if (event.getState() == 9 || event.getState() == 11) {
+                } else {
                     popupcontroller.setVisibility(View.VISIBLE);
                     popupnavi.setVisibility(View.GONE);
                 }

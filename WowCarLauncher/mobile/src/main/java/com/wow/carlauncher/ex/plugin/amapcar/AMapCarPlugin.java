@@ -7,12 +7,17 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.wow.carlauncher.ex.ContextEx;
+import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
+import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventState;
 import com.wow.frame.util.AppUtil;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.inuker.bluetooth.library.BluetoothService.getContext;
 import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.*;
 import static com.wow.carlauncher.ex.plugin.amapcar.AMapCartReceiver.GETHC_NEXT_TO_NAVI;
 
@@ -31,6 +36,8 @@ public class AMapCarPlugin extends ContextEx {
         return self;
     }
 
+    private long lastHeartbeatTime = 0;
+
     private AMapCarPlugin() {
 
     }
@@ -42,6 +49,8 @@ public class AMapCarPlugin extends ContextEx {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(RECEIVE_ACTION);
         context.registerReceiver(amapReceiver, intentFilter);
+
+        EventBus.getDefault().register(this);
     }
 
     private AMapCartReceiver amapReceiver;
@@ -140,5 +149,17 @@ public class AMapCarPlugin extends ContextEx {
             }
         }
         getContext().sendBroadcast(intent);
+    }
+
+    public void noticeHeartbeatTime() {
+        lastHeartbeatTime = System.currentTimeMillis();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(final MTimeSecondEvent event) {
+        //3分钟没有收到心跳，则结束导航
+        if (System.currentTimeMillis() - lastHeartbeatTime > 1000 * 60 * 3) {
+            EventBus.getDefault().post(new PAmapEventState().setRunning(false));
+        }
     }
 }

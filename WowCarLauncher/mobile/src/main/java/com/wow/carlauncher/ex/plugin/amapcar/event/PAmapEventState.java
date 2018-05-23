@@ -5,14 +5,14 @@ package com.wow.carlauncher.ex.plugin.amapcar.event;
  */
 
 public class PAmapEventState {
-    private int state;
+    private boolean running;
 
-    public int getState() {
-        return state;
+    public boolean isRunning() {
+        return running;
     }
 
-    public PAmapEventState setState(int state) {
-        this.state = state;
+    public PAmapEventState setRunning(boolean running) {
+        this.running = running;
         return this;
     }
 }

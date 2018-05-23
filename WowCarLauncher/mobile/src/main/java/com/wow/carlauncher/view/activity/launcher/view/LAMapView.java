@@ -96,13 +96,13 @@ public class LAMapView extends BaseEBusView {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(final PAmapEventState event) {
         if (amapController != null) {
-            if (event.getState() == 8 || event.getState() == 10) {
+            if (event.isRunning()) {
                 amapController.setVisibility(View.GONE);
                 amapnavi.setVisibility(View.VISIBLE);
                 rl_base.setBackgroundResource(R.mipmap.bg_l_amap_naving);
 
 
-            } else if (event.getState() == 9 || event.getState() == 11) {
+            } else {
                 amapController.setVisibility(View.VISIBLE);
                 amapnavi.setVisibility(View.GONE);
                 amapIcon.setImageResource(0);

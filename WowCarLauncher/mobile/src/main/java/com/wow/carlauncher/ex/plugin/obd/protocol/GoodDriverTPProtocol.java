@@ -33,12 +33,11 @@ import static com.wow.carlauncher.ex.plugin.obd.protocol.gd.GetTpTask.RF;
 
 public class GoodDriverTPProtocol extends ObdProtocol {
     private boolean running = false;
-    private StringBuffer resMessageTemp;
+    private final StringBuffer resMessageTemp = new StringBuffer();
 
     public GoodDriverTPProtocol(Context context, String address, final ObdProtocolListener listener) {
         super(context, address, listener);
         //单独用来处理粘包的,太扯淡了
-        this.resMessageTemp = new StringBuffer();
     }
 
 
@@ -53,11 +52,12 @@ public class GoodDriverTPProtocol extends ObdProtocol {
 
     public void warpTimeOut() {
         cmdProtocolAuto = true;
+        clearMessageTemp();
     }
 
     @Override
     public void run() {
-        resMessageTemp.setLength(0);
+        clearMessageTemp();
         cmdCloseEcho = false;
         cmdCloseLineFeed = false;
         cmdCloseSpace = false;
@@ -131,14 +131,16 @@ public class GoodDriverTPProtocol extends ObdProtocol {
     }
 
     @Override
-    public synchronized void receiveMessage(byte[] message) {
-        resMessageTemp.append(new String(message));
-        Log.d(TAG, "receiveMessage: " + resMessageTemp);
-        if (resMessageTemp.indexOf(">") > -1) {
-            //拿出来消息进行回掉
-            setTaskRes(resMessageTemp.substring(0, resMessageTemp.indexOf(">")));
-            //从缓存拿走消息
-            resMessageTemp.delete(0, resMessageTemp.indexOf(">") + 1);
+    public void receiveMessage(byte[] message) {
+        synchronized (resMessageTemp) {
+            resMessageTemp.append(new String(message));
+            Log.d(TAG, "receiveMessage: " + resMessageTemp);
+            if (resMessageTemp.indexOf(">") > -1) {
+                //拿出来消息进行回掉
+                setTaskRes(resMessageTemp.substring(0, resMessageTemp.indexOf(">")));
+                //从缓存拿走消息
+                resMessageTemp.delete(0, resMessageTemp.indexOf(">") + 1);
+            }
         }
     }
 
@@ -214,4 +216,12 @@ public class GoodDriverTPProtocol extends ObdProtocol {
     public UUID getWriteCharacter() {
         return UUID.fromString("0000FFE1-0000-1000-8000-00805F9B34FB");
     }
+
+
+    private void clearMessageTemp() {
+        synchronized (resMessageTemp) {
+            resMessageTemp.setLength(0);
+        }
+    }
+
 }

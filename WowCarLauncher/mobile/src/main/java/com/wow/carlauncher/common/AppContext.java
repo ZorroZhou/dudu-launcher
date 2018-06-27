@@ -71,15 +71,24 @@ public class AppContext implements SWebServiceDeclare, SAppDeclare, SDatabaseDec
         //定位管理器
         LocationManage.self().init(app);
 
+        //插件相关
+        //高德地图插件
         AMapCarPlugin.self().init(app);
+        //音乐插件
         MusicPlugin.self().init(app);
+        //方控插件
         FangkongPlugin.self().init(app);
+        //OBD插件
         ObdPlugin.self().init(app);
 
+        //app信息管理器
         AppInfoManage.self().init(app);
+        //车机控制插件
         ConsolePlugin.self().init(app);
+        //弹出敞口
         PopupWin.self().init(app);
 
+        //行程管理器
         TripManage.self().init(app);
 
         int size = SharedPreUtil.getSharedPreInteger(CommonData.SDATA_POPUP_SIZE, 1);

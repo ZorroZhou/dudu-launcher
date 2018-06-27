@@ -58,11 +58,14 @@ public class CoolBlackView extends BaseEBusView {
     @ViewInject(R.id.iv_naving)
     private ImageView iv_naving;
 
+    @ViewInject(R.id.ll_navinfo)
+    private LinearLayout ll_navinfo;
+
     @ViewInject(R.id.ll_info_shunshiyouhao)
     private LinearLayout ll_info_shunshiyouhao;
 
-    @ViewInject(R.id.ll_navinfo)
-    private LinearLayout ll_navinfo;
+    @ViewInject(R.id.ll_info_dis)
+    private LinearLayout ll_info_dis;
 
     @ViewInject(R.id.tv_amaproad)
     private TextView tv_amaproad;
@@ -87,13 +90,18 @@ public class CoolBlackView extends BaseEBusView {
     public void onEventMainThread(final PAmapEventState event) {
         if (event.isRunning()) {
             ll_info_shunshiyouhao.setVisibility(View.GONE);
+            ll_info_dis.setVisibility(View.GONE);
+            
             iv_naving.setVisibility(View.VISIBLE);
             ll_navinfo.setVisibility(View.VISIBLE);
 
         } else {
             ll_info_shunshiyouhao.setVisibility(View.VISIBLE);
+            ll_info_dis.setVisibility(View.VISIBLE);
+
             iv_naving.setVisibility(View.GONE);
-            iv_naving.setVisibility(View.GONE);
+            ll_navinfo.setVisibility(View.GONE);
+
             iv_naving.setImageResource(0);
         }
     }

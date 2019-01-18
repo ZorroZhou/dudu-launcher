@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorAccent">#ff7ba4b9</color>
+    <color name="colorPrimary">#ff394a53</color>
+    <color name="colorPrimaryDark">#ff949bc4</color>
+
+    <color name="plugin_title">#bbffffff</color>
+    <color name="plugin_music_name">#bbffffff</color>
+    <color name="plugin_music_album">#bbffffff</color>
+
+    <color name="plugin_content">#bbffffff</color>
+
+    <color name="popup_show_plugin">#88000000</color>
+
+    <color name="main_interval_color">#e5e5e5</color>
+
+
+    <color name="set_view_title">#de000000</color>
+    <color name="set_view_summary">#8a000000</color>
+    <color name="set_view_disable">#43000000</color>
+    <color name="item_mask">#32000000</color>
+
+    <color name="launch_color1">#5e606d</color>
+    <color name="launch_color2">#3095df</color>
+    <color name="launch_color3">#a7aab4</color>
+    <color name="launch_color4">#8dcd49</color>
+    <color name="launch_color5">#ea6072</color>
+
+    <color name="toolbar_bg">#99000000</color>
+    <color name="launch_dock_bg">#33ffffff</color>
+    <color name="launch_gps_noinfo">#99000000</color>
+    <color name="launch_text_color">#666666</color>
+
+    <color name="color_red">#FF5722</color>
+    <color name="color_orange">#FF9800</color>
+    <color name="color_yellow">#FFC107</color>
+    <color name="color_green">#3FB830</color>
+    <color name="color_blue">#00BAED</color>
+    <color name="color_dark">#263238</color>
+    <color name="color_dark_light">#455A64</color>
+    <color name="color_light">#ECEFF1</color>
+</resources>

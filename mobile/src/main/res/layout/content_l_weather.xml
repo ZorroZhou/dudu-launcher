@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.android.percent.support.PercentLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/bg_l_weather"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:lines="1"
+        android:text="天气"
+        android:textColor="@android:color/white"
+        app:layout_heightPercent="12%h"
+        app:layout_marginTopPercent="3%h"
+        app:layout_textSizePercent="7%h" />
+
+    <com.zhy.android.percent.support.PercentRelativeLayout
+        android:id="@+id/rl_cd"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_heightPercent="55%h"
+        app:layout_widthPercent="55%h">
+
+        <ImageView
+            android:id="@+id/iv_tianqi"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_centerInParent="true"
+            android:layout_weight="1"
+            android:contentDescription="@string/app_name"
+            android:scaleType="fitCenter"
+            android:src="@mipmap/wic_no"
+            app:layout_heightPercent="76%h"
+            app:layout_widthPercent="76%h" />
+
+    </com.zhy.android.percent.support.PercentRelativeLayout>
+
+
+    <com.zhy.android.percent.support.PercentLinearLayout
+        android:id="@+id/ll_controller"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/l_weather_wendu_bg"
+        android:orientation="horizontal"
+        app:layout_heightPercent="20%h"
+        app:layout_widthPercent="86%w">
+
+        <TextView
+            android:id="@+id/tv_wendu"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="等待数据"
+            android:textColor="#f1f1f1"
+            app:layout_textSizePercent="50%h" />
+
+
+        <com.zhy.android.percent.support.PercentLinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_tianqi"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:lines="1"
+                android:textColor="#f1f1f1"
+                app:layout_textSizePercent="30%h" />
+
+            <TextView
+                android:id="@+id/tv_shidu"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:lines="1"
+                android:textColor="#f1f1f1"
+                app:layout_textSizePercent="25%h" />
+        </com.zhy.android.percent.support.PercentLinearLayout>
+    </com.zhy.android.percent.support.PercentLinearLayout>
+</com.zhy.android.percent.support.PercentLinearLayout>

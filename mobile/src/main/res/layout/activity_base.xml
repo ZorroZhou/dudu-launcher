@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.android.percent.support.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/base"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <com.zhy.android.percent.support.PercentRelativeLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/toolbar_bg"
+        android:fitsSystemWindows="true"
+        app:layout_heightPercent="10%h">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:padding="10dp"
+            android:src="@mipmap/ic_back"
+            app:layout_heightPercent="100%h"
+            app:layout_widthPercent="100%h" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            app:layout_textSizePercent="50%h" />
+    </com.zhy.android.percent.support.PercentRelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/b_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/toolbar" />
+</com.zhy.android.percent.support.PercentRelativeLayout>

@@ -3,9 +3,9 @@ package com.wow.carlauncher.ex.manage.trip;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
 
+import com.wow.frame.util.SharedPreUtil;
 import com.wow.carlauncher.ex.ContextEx;
 import com.wow.carlauncher.ex.manage.location.event.MNewLocationEvent;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
@@ -13,15 +13,11 @@ import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarInfo;
 import com.wow.carlauncher.repertory.db.model.Trip;
 import com.wow.carlauncher.repertory.db.model.TripPoint;
 import com.wow.carlauncher.view.activity.driving.DrivingActivity;
-import com.wow.carlauncher.view.activity.launcher.LauncherActivity;
 import com.wow.frame.repertory.dbTool.DatabaseManage;
-import com.wow.frame.util.SharedPreUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.xutils.DbManager;
-import org.xutils.x;
 
 import static com.wow.carlauncher.common.CommonData.*;
 

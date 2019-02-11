@@ -4,7 +4,6 @@ import android.content.Context;
 import android.util.Log;
 
 import com.inuker.bluetooth.library.Constants;
-import com.inuker.bluetooth.library.connect.listener.BleConnectStatusListener;
 import com.inuker.bluetooth.library.connect.options.BleConnectOptions;
 import com.inuker.bluetooth.library.connect.response.BleConnectResponse;
 import com.inuker.bluetooth.library.connect.response.BleNotifyResponse;
@@ -28,7 +27,6 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.UUID;
 
 import static com.inuker.bluetooth.library.Constants.REQUEST_SUCCESS;
-import static com.inuker.bluetooth.library.Constants.STATUS_CONNECTED;
 import static com.inuker.bluetooth.library.Constants.STATUS_DEVICE_CONNECTED;
 import static com.wow.carlauncher.common.CommonData.SDATA_FANGKONG_CONTROLLER;
 import static com.wow.carlauncher.common.CommonData.TAG;

@@ -20,20 +20,12 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.wow.carAssistant.packet.response.common.GetAppUpdateRes;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.view.activity.AboutActivity;
 import com.wow.carlauncher.view.base.BaseActivity;
-import com.wow.carlauncher.view.base.BaseDialog;
 import com.wow.carlauncher.common.CommonData;
-import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.common.view.SetView;
-import com.wow.carlauncher.repertory.webservice.service.CommonService;
-import com.wow.frame.repertory.remote.WebServiceManage;
 import com.wow.frame.repertory.remote.WebTask;
-import com.wow.frame.repertory.remote.callback.SCallBack;
-import com.wow.frame.repertory.remote.callback.SProgressCallback;
-import com.wow.frame.util.AndroidUtil;
 import com.wow.frame.util.SharedPreUtil;
 
 import org.xutils.view.annotation.ViewInject;
@@ -133,144 +125,8 @@ public class SHelpView extends FrameLayout {
             }
         });
 
-        sv_get_newest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                verifyStoragePermissions(getActivity());
-                WebServiceManage.getService(CommonService.class).checkUpdate(SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_ALLOW_DEBUG_APP, false)).setCallback(new SCallBack<GetAppUpdateRes>() {
-                    @Override
-                    public void callback(boolean isok, String msg, final GetAppUpdateRes res) {
-                        if (isok) {
-                            final String version = AndroidUtil.getAppVersionCode(getContext());
-                            if (TextUtils.isEmpty(version)) {
-                                ToastManage.self().show("获取当前版本号失败");
-                                return;
-                            }
-                            if (res.getVersionCode() == null) {
-                                ToastManage.self().show("没有新版本发布");
-                                return;
-                            }
-                            boolean havenew;
-                            Log.e(TAG, "callback!!!!!!!!!!!!!!!: " + SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_ALLOW_DEBUG_APP, false));
-                            Log.e(TAG, "callback!!!!!!!!!!!!!!!: " + (res.getVersionCode() >= Integer.parseInt(version)));
-                            if (SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_ALLOW_DEBUG_APP, false)) {
-                                havenew = res.getVersionCode() >= Integer.parseInt(version);
-                            } else {
-                                havenew = res.getVersionCode() > Integer.parseInt(version);
-                            }
-
-                            if (havenew) {
-                                BaseDialog baseDialog = new BaseDialog(getContext());
-                                baseDialog.setGravityCenter();
-                                baseDialog.setTitle("版本更新");
-                                baseDialog.setMessage("最新版本为" + res.getVersionName() + ",是否更新?\n" + res.getNewMessage());
-                                baseDialog.setBtn1("下载", new BaseDialog.OnBtnClickListener() {
-                                    @Override
-                                    public boolean onClick(BaseDialog dialog) {
-                                        dialog.dismiss();
-                                        final String savePath = Environment.getExternalStorageDirectory() + "/" + res.getVersionName() + ".apk";
-                                        downloadUpdataTask = WebServiceManage.getService(CommonService.class).getAppUpdateFile(savePath, SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_ALLOW_DEBUG_APP, false));
-                                        showLoading("开始下载!", downloadUpdataTaskCancel);
-                                        downloadUpdataTask.setCallback(new SProgressCallback<File>() {
-                                            @Override
-                                            public void onProgress(float progress) {
-                                                if (progress > 0 && progress < 1)
-                                                    downloadResult(progress, savePath, null);
-                                            }
-
-                                            @Override
-                                            public void callback(boolean isok, String msg, File res) {
-                                                if (isok) {
-                                                    downloadResult(1f, savePath, savePath);
-                                                } else {
-                                                    downloadResult(-1f, savePath, msg);
-                                                }
-                                            }
-                                        });
-                                        return true;
-                                    }
-                                });
-                                baseDialog.setBtn2("取消", null);
-                                baseDialog.show();
-                            } else {
-                                ToastManage.self().show("已是最新版本");
-                            }
-
-                        } else {
-                            ToastManage.self().show("错误:" + msg);
-                        }
-                    }
-                });
-            }
-        });
     }
 
-    public void downloadResult(float progress, String path, String msg) {
-        if (progress == -1) {
-            ToastManage.self().show(msg);
-            return;
-        }
-        if (progress >= 0 && progress < 1) {
-            showLoading("已经下载:" + (int) (progress * 100) + "%", downloadUpdataTaskCancel);
-        }
-        if (progress == 1) {
-            ToastManage.self().show("下载成功");
-            downloadUpdataTask = null;
-            hideLoading();
-            Intent intent = new Intent();
-            //执行动作
-            intent.setAction(Intent.ACTION_VIEW);
-            //执行的数据类型
-            Uri data = Uri.fromFile(new File(path + ".tmp"));
-            intent.setDataAndType(data, "application/vnd.android.package-archive");
-            getActivity().startActivity(intent);
-        }
-    }
-
-
-    public void showLoading(final String msg, @Nullable final BaseActivity.ProgressInterruptListener progressInterruptListener) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                x.task().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (showLoading) {
-                            return;
-                        }
-                        if (progressDialog != null && !getActivity().isFinishing() && !showLoading) {
-                            progressDialog.setMessage(msg);
-                            progressDialog.show();
-                            showLoading = true;
-                        }
-                    }
-                }, 100);
-            }
-        });
-    }
-
-
-    public synchronized void hideLoading() {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                x.task().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (!showLoading) {
-                            return;
-                        }
-                        if (progressDialog != null && showLoading) {
-                            progressDialog.hide();
-                            showLoading = false;
-                        }
-                    }
-                }, 100);
-            }
-        });
-    }
-
-    private Boolean showLoading = false;
 
     private Activity getActivity() {
         return (Activity) getContext();

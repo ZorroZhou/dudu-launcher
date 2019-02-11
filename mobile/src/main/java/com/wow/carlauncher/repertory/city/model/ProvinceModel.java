@@ -1,4 +1,4 @@
-package com.wow.carlauncher.repertory.assets.city.model;
+package com.wow.carlauncher.repertory.city.model;
 
 import java.util.List;
 

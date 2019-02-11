@@ -11,7 +11,6 @@ public enum MusicControllerEnum {
     //QQMUSIC("QQ音乐手机版", 5),
     QQCARMUSIC("QQ音乐车机版", 6),
     JIDOUMUSIC("极豆音乐", 7),
-    POWERAMPMUSIC("PowerAmp", 8),
     NWDMUSIC("NWD音乐", 9);
     private String name;
     private Integer id;
@@ -46,8 +45,6 @@ public enum MusicControllerEnum {
                 return QQCARMUSIC;
             case 7:
                 return JIDOUMUSIC;
-            case 8:
-                return POWERAMPMUSIC;
             case 9:
                 return NWDMUSIC;
         }

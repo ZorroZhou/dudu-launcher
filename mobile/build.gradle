@@ -1,12 +1,11 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion '27.0.3'
+    compileSdkVersion 28
     defaultConfig {
         applicationId "com.wow.carlauncher"
         minSdkVersion 18
-        targetSdkVersion 24
+        targetSdkVersion 28
         versionCode 6
         versionName "1.100"
     }
@@ -45,15 +44,17 @@ android {
 }
 
 dependencies {
+    api project(':acommon')
 
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-
-    compile project(':acommon')
-
-    compile 'com.android.support:appcompat-v7:24.+'
-    compile 'com.android.support:support-v4:24.+'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-
-    compile 'com.zhy:percent-support-extends:+'
-    compile 'com.inuker.bluetooth:library:+'
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.google.guava:guava:27.0.1-android'
+    implementation 'org.xutils:xutils:3.5.0'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
+    implementation 'com.android.support:design:28.0.0'
+    implementation 'com.android.support:support-v4:28.0.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation 'com.zhy:percent-support-extends:1.1.1'
+    implementation 'com.inuker.bluetooth:library:1.4.0'
+    implementation 'com.amap.api:location:4.4.0'
+    implementation 'org.greenrobot:eventbus:3.1.1'
 }

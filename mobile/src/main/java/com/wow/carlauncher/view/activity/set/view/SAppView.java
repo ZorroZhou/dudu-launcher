@@ -46,7 +46,6 @@ public class SAppView extends BaseView {
     public static final MusicControllerEnum[] ALL_MUSIC_CONTROLLER = {MusicControllerEnum.SYSMUSIC,
             MusicControllerEnum.QQCARMUSIC,
             MusicControllerEnum.JIDOUMUSIC,
-            MusicControllerEnum.POWERAMPMUSIC,
             MusicControllerEnum.NWDMUSIC};
 
     public static final ConsoleProtoclEnum[] ALL_CONSOLES = {ConsoleProtoclEnum.SYSTEM, ConsoleProtoclEnum.NWD};

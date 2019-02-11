@@ -10,7 +10,6 @@ import com.wow.carlauncher.ex.plugin.music.event.PMusicEventProgress;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventState;
 import com.wow.carlauncher.ex.plugin.music.plugin.JidouMusicController;
 import com.wow.carlauncher.ex.plugin.music.plugin.NwdMusicController;
-import com.wow.carlauncher.ex.plugin.music.plugin.PowerAmpCarController;
 import com.wow.carlauncher.ex.plugin.music.plugin.QQMusicCarController;
 import com.wow.carlauncher.ex.plugin.music.plugin.SystemMusicController;
 import com.wow.frame.util.SharedPreUtil;
@@ -58,9 +57,6 @@ public class MusicPlugin extends ContextEx {
                 break;
             case NWDMUSIC:
                 musicController = new NwdMusicController();
-                break;
-            case POWERAMPMUSIC:
-                musicController = new PowerAmpCarController();
                 break;
         }
         if (musicController != null) {

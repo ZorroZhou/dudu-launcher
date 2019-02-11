@@ -16,19 +16,11 @@ import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.repertory.db.AppDbInfo;
 import com.wow.carlauncher.view.popupWindow.PopupWin;
-import com.wow.carlauncher.repertory.webservice.AppWsInfo;
-import com.wow.carlauncher.repertory.webservice.service.CommonService;
 import com.wow.frame.SFrame;
 import com.wow.frame.declare.SAppDeclare;
 import com.wow.frame.declare.SDatabaseDeclare;
-import com.wow.frame.declare.SWebServiceDeclare;
 import com.wow.frame.repertory.dbTool.DatabaseInfo;
-import com.wow.frame.repertory.remote.WebServiceInfo;
-import com.wow.frame.repertory.remote.WebServiceManage;
-import com.wow.frame.util.AndroidUtil;
 import com.wow.frame.util.SharedPreUtil;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -38,7 +30,7 @@ import java.io.StringWriter;
  * Created by liuyixian on 2017/9/20.
  */
 
-public class AppContext implements SWebServiceDeclare, SAppDeclare, SDatabaseDeclare {
+public class AppContext implements SAppDeclare, SDatabaseDeclare {
     private static AppContext self;
 
     public synchronized static AppContext self() {
@@ -93,12 +85,7 @@ public class AppContext implements SWebServiceDeclare, SAppDeclare, SDatabaseDec
 
         int size = SharedPreUtil.getSharedPreInteger(CommonData.SDATA_POPUP_SIZE, 1);
         PopupWin.self().setRank(size + 1);
-
-    }
-
-    @Override
-    public WebServiceInfo getWebServiceInfo() {
-        return new AppWsInfo();
+        handerException();
     }
 
     @Override
@@ -119,7 +106,6 @@ public class AppContext implements SWebServiceDeclare, SAppDeclare, SDatabaseDec
                 StringWriter sw = new StringWriter();
                 PrintWriter pw = new PrintWriter(sw);
                 e.printStackTrace(pw);
-                WebServiceManage.getService(CommonService.class).appError(AndroidUtil.getPhoneInfo(application), sw.toString());
                 pw.close();
 
                 System.exit(0);

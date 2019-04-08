@@ -24,7 +24,7 @@ public class WeatherRes extends BaseRes {
         private String weather;
         private Integer temperature;
         private String winddirection;
-        private Integer windpower;
+        private String windpower;
         private Integer humidity;
 
         public String getProvince() {
@@ -75,11 +75,11 @@ public class WeatherRes extends BaseRes {
             this.winddirection = winddirection;
         }
 
-        public Integer getWindpower() {
+        public String getWindpower() {
             return windpower;
         }
 
-        public void setWindpower(Integer windpower) {
+        public void setWindpower(String windpower) {
             this.windpower = windpower;
         }
 

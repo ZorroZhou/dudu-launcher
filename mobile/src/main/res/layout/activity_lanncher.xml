@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/fl_bg"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,23 +11,26 @@
         android:id="@+id/ll_dock"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_weight="7"
         android:gravity="center" />
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="8"
+        android:layout_weight="60"
         android:orientation="vertical">
 
 
-        <LinearLayout
+        <com.zhy.android.percent.support.PercentLinearLayout
             android:id="@+id/ll_main"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="8"
             android:baselineAligned="false"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp">
 
 
             <com.wow.carlauncher.view.activity.launcher.view.LMusicView
@@ -36,8 +40,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp" />
+                app:layout_marginPercent="1%w" />
 
             <com.wow.carlauncher.view.activity.launcher.view.LAMapView
                 android:id="@+id/item_amap"
@@ -46,8 +49,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp" />
+                app:layout_marginPercent="1%w" />
 
             <com.wow.carlauncher.view.activity.launcher.view.LWeatherView
                 android:id="@+id/item_music2"
@@ -56,9 +58,8 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp" />
-        </LinearLayout>
+                app:layout_marginPercent="1%w" />
+        </com.zhy.android.percent.support.PercentLinearLayout>
 
         <com.wow.carlauncher.view.activity.launcher.view.LPromptView
             android:id="@+id/ll_top"

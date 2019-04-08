@@ -20,7 +20,8 @@ public class WebService {
     private static final String KEY = "b8a80f002ec3fe70454a4c013eaabbb7";
 
     public static void getWeatherInfo(String adcode, final CommonCallback commonCallback) {
-        RequestParams params = new RequestParams("https://restapi.amap.com/v3/weather/weatherInfo?key=" + KEY + "&city=" + adcode);
+        RequestParams params = new RequestParams("http://restapi.amap.com/v3/weather/weatherInfo?key=" + KEY + "&city=" + adcode);
+        System.out.println("这里请求了" + params);
         x.http().request(HttpMethod.GET, params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
@@ -32,15 +33,18 @@ public class WebService {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
+                Log.e(TAG, "onError: ");
+                ex.printStackTrace();
             }
 
             @Override
             public void onCancelled(CancelledException cex) {
-
+                System.out.println("onCancelled");
             }
 
             @Override
             public void onFinished() {
+                System.out.println("onFinished");
             }
         });
     }

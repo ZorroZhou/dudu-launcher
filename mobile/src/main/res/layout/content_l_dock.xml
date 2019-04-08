@@ -1,147 +1,172 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.zhy.android.percent.support.PercentLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#11000000"
-    android:orientation="vertical">
+    android:gravity="center"
+    tools:ignore="HardcodedText,RtlHardcoded">
 
     <com.zhy.android.percent.support.PercentLinearLayout
-        android:id="@+id/ll_dock1"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_marginBottomPercent="5%h"
+        app:layout_marginTopPercent="5%h">
 
-        <ImageView
-            android:id="@+id/iv_dock1"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:contentDescription="@string/iv_main_dock_icon"
-            android:src="@mipmap/ic_add_app"
-            app:layout_heightPercent="70%h"
-            app:layout_widthPercent="70%h" />
-
-        <TextView
-            android:id="@+id/tv_dock1"
+        <com.zhy.android.percent.support.PercentLinearLayout
+            android:id="@+id/ll_dock1"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_weight="1"
             android:gravity="center"
-            android:text="添加"
-            android:textColor="@color/launch_text_color"
-            app:layout_heightPercent="25%h"
-            app:layout_textSizePercent="15%h" />
-    </com.zhy.android.percent.support.PercentLinearLayout>
+            android:orientation="vertical"
+            app:layout_marginBottomPercent="3%h"
+            app:layout_marginTopPercent="3%h">
 
-    <com.zhy.android.percent.support.PercentLinearLayout
-        android:id="@+id/ll_dock2"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical">
+            <ImageView
+                android:id="@+id/iv_dock1"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:contentDescription="@string/iv_main_dock_icon"
+                android:src="@mipmap/ic_add_app"
+                app:layout_heightPercent="70%h"
+                app:layout_widthPercent="70%h" />
 
-        <ImageView
-            android:id="@+id/iv_dock2"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:contentDescription="@string/iv_main_dock_icon"
-            android:src="@mipmap/ic_add_app"
-            app:layout_heightPercent="70%h"
-            app:layout_widthPercent="70%h" />
+            <TextView
+                android:id="@+id/tv_dock1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="添加"
+                android:textColor="@color/launch_text_color"
+                app:layout_heightPercent="25%h"
+                app:layout_textSizePercent="20%h" />
+        </com.zhy.android.percent.support.PercentLinearLayout>
 
-        <TextView
-            android:id="@+id/tv_dock2"
+        <com.zhy.android.percent.support.PercentLinearLayout
+            android:id="@+id/ll_dock2"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_weight="1"
             android:gravity="center"
-            android:text="添加"
-            android:textColor="@color/launch_text_color"
-            app:layout_heightPercent="25%h"
-            app:layout_textSizePercent="15%h" />
-    </com.zhy.android.percent.support.PercentLinearLayout>
+            android:orientation="vertical"
+            app:layout_marginBottomPercent="3%h"
+            app:layout_marginTopPercent="3%h">
 
-    <com.zhy.android.percent.support.PercentLinearLayout
-        android:id="@+id/ll_dock3"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical">
+            <ImageView
+                android:id="@+id/iv_dock2"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:contentDescription="@string/iv_main_dock_icon"
+                android:src="@mipmap/ic_add_app"
+                app:layout_heightPercent="70%h"
+                app:layout_widthPercent="70%h" />
 
-        <ImageView
-            android:id="@+id/iv_dock3"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:contentDescription="@string/iv_main_dock_icon"
-            android:src="@mipmap/ic_add_app"
-            app:layout_heightPercent="70%h"
-            app:layout_widthPercent="70%h" />
+            <TextView
+                android:id="@+id/tv_dock2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="添加"
+                android:textColor="@color/launch_text_color"
+                app:layout_heightPercent="25%h"
+                app:layout_textSizePercent="20%h" />
+        </com.zhy.android.percent.support.PercentLinearLayout>
 
-        <TextView
-            android:id="@+id/tv_dock3"
+        <com.zhy.android.percent.support.PercentLinearLayout
+            android:id="@+id/ll_dock3"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_weight="1"
             android:gravity="center"
-            android:text="添加"
-            android:textColor="@color/launch_text_color"
-            app:layout_heightPercent="25%h"
-            app:layout_textSizePercent="15%h" />
-    </com.zhy.android.percent.support.PercentLinearLayout>
+            android:orientation="vertical"
+            app:layout_marginBottomPercent="3%h"
+            app:layout_marginTopPercent="3%h">
 
-    <com.zhy.android.percent.support.PercentLinearLayout
-        android:id="@+id/ll_dock4"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical">
+            <ImageView
+                android:id="@+id/iv_dock3"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:contentDescription="@string/iv_main_dock_icon"
+                android:src="@mipmap/ic_add_app"
+                app:layout_heightPercent="70%h"
+                app:layout_widthPercent="70%h" />
 
-        <ImageView
-            android:id="@+id/iv_dock4"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:contentDescription="@string/iv_main_dock_icon"
-            android:src="@mipmap/ic_add_app"
-            app:layout_heightPercent="70%h"
-            app:layout_widthPercent="70%h" />
+            <TextView
+                android:id="@+id/tv_dock3"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="添加"
+                android:textColor="@color/launch_text_color"
+                app:layout_heightPercent="25%h"
+                app:layout_textSizePercent="20%h" />
+        </com.zhy.android.percent.support.PercentLinearLayout>
 
-        <TextView
-            android:id="@+id/tv_dock4"
+        <com.zhy.android.percent.support.PercentLinearLayout
+            android:id="@+id/ll_dock4"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_weight="1"
             android:gravity="center"
-            android:text="添加"
-            android:textColor="@color/launch_text_color"
-            app:layout_heightPercent="25%h"
-            app:layout_textSizePercent="15%h" />
-    </com.zhy.android.percent.support.PercentLinearLayout>
+            android:orientation="vertical"
+            app:layout_marginBottomPercent="3%h"
+            app:layout_marginTopPercent="3%h">
 
-    <com.zhy.android.percent.support.PercentLinearLayout
-        android:id="@+id/ll_all_apps"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical">
+            <ImageView
+                android:id="@+id/iv_dock4"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:contentDescription="@string/iv_main_dock_icon"
+                android:src="@mipmap/ic_add_app"
+                app:layout_heightPercent="70%h"
+                app:layout_widthPercent="70%h" />
 
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:contentDescription="@string/iv_main_dock_icon"
-            android:src="@mipmap/ic_apps"
-            app:layout_heightPercent="70%h"
-            app:layout_widthPercent="70%h" />
+            <TextView
+                android:id="@+id/tv_dock4"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="添加"
+                android:textColor="@color/launch_text_color"
+                app:layout_heightPercent="25%h"
+                app:layout_textSizePercent="20%h" />
+        </com.zhy.android.percent.support.PercentLinearLayout>
 
-        <TextView
-            android:id="@+id/tv_app_appss"
+        <com.zhy.android.percent.support.PercentLinearLayout
+            android:id="@+id/ll_all_apps"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_weight="1"
             android:gravity="center"
-            android:text="全部应用"
-            android:textColor="@color/launch_text_color"
-            app:layout_heightPercent="25%h"
-            app:layout_textSizePercent="15%h" />
+            android:orientation="vertical"
+            app:layout_marginBottomPercent="3%h"
+            app:layout_marginTopPercent="3%h">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:contentDescription="@string/iv_main_dock_icon"
+                android:src="@mipmap/ic_apps"
+                app:layout_heightPercent="70%h"
+                app:layout_widthPercent="70%h" />
+
+            <TextView
+                android:id="@+id/tv_app_appss"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="全部应用"
+                android:textColor="@color/launch_text_color"
+                app:layout_heightPercent="25%h"
+                app:layout_textSizePercent="20%h" />
+        </com.zhy.android.percent.support.PercentLinearLayout>
     </com.zhy.android.percent.support.PercentLinearLayout>
-</LinearLayout>
+</com.zhy.android.percent.support.PercentLinearLayout>

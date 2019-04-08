@@ -4,137 +4,113 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#22222222"
     tools:ignore="HardcodedText,RtlHardcoded">
 
     <com.zhy.android.percent.support.PercentLinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:weightSum="40"
-        app:layout_marginPercent="2%h">
+        app:layout_marginLeftPercent="3%h"
+        app:layout_marginRightPercent="3%h">
 
         <com.zhy.android.percent.support.PercentFrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="5">
+            app:layout_heightPercent="14%h">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical|left"
+                android:includeFontPadding="false"
                 android:lines="1"
                 android:text="音乐"
-                app:layout_textSizePercent="40%h" />
+                app:layout_marginBottomPercent="7%h"
+                app:layout_textSizePercent="34%h" />
         </com.zhy.android.percent.support.PercentFrameLayout>
 
-        <TextView
-            android:id="@+id/tv_title"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:ellipsize="marquee"
-            android:gravity="center"
-            android:paddingStart="5dp"
-            android:paddingEnd="5dp"
-            android:singleLine="true"
-            android:text="音乐"
-            android:textColor="@android:color/white"
-            app:layout_heightPercent="12%h"
-            app:layout_marginTopPercent="3%h"
-            app:layout_textSizePercent="7%h" />
-
-        <com.zhy.android.percent.support.PercentRelativeLayout
-            android:id="@+id/rl_cd"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_heightPercent="55%h"
-            app:layout_widthPercent="55%h">
+            app:layout_heightPercent="35%h">
 
             <ImageView
                 android:id="@+id/music_iv_cover"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_centerInParent="true"
-                android:layout_weight="1"
                 android:contentDescription="@string/app_name"
-                android:scaleType="fitCenter"
-                android:src="@mipmap/l_music_cd"
-                app:layout_heightPercent="66%h"
-                app:layout_widthPercent="66%h" />
+                android:src="@mipmap/l_music_cd" />
+        </RelativeLayout>
 
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:contentDescription="@string/app_name"
-                android:scaleType="fitCenter"
-                android:src="@mipmap/l_music_pointer"
-                app:layout_heightPercent="11%h"
-                app:layout_marginTopPercent="60%h"
-                app:layout_widthPercent="35%h" />
-        </com.zhy.android.percent.support.PercentRelativeLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:lines="1"
+            android:text="音乐名称"
+            android:textColor="#fff"
+            app:layout_heightPercent="8%h"
+            app:layout_marginTopPercent="4%h"
+            app:layout_textSizePercent="5%h" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:lines="1"
+            android:text="作者"
+            android:textColor="#5c647b"
+            app:layout_heightPercent="7%h"
+            app:layout_textSizePercent="4%h" />
 
         <com.zhy.android.percent.support.PercentLinearLayout
             android:id="@+id/ll_controller"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:gravity="center"
             android:orientation="horizontal"
-            app:layout_heightPercent="20%h">
+            app:layout_heightPercent="15%h"
+            app:layout_marginTopPercent="8%h">
 
-            <com.zhy.android.percent.support.PercentLinearLayout
+
+            <ImageView
+                android:id="@+id/ll_prew"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="right|center_vertical">
+                android:layout_height="0dp"
+                android:clickable="true"
+                android:contentDescription="@string/app_name"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_prev"
+                app:layout_heightPercent="100%h"
+                app:layout_marginRightPercent="20%h"
+                app:layout_widthPercent="100%h" />
 
-                <ImageView
-                    android:id="@+id/ll_prew"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:clickable="true"
-                    android:contentDescription="@string/app_name"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/ic_prev"
-                    app:layout_heightPercent="85%w"
-                    app:layout_widthPercent="85%w" />
-            </com.zhy.android.percent.support.PercentLinearLayout>
-
-            <com.zhy.android.percent.support.PercentLinearLayout
+            <ImageView
+                android:id="@+id/iv_play"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:gravity="center">
+                android:layout_height="0dp"
+                android:clickable="true"
+                android:contentDescription="@string/app_name"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_play"
+                app:layout_heightPercent="100%h"
+                app:layout_widthPercent="100%h" />
 
-                <ImageView
-                    android:id="@+id/iv_play"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:clickable="true"
-                    android:contentDescription="@string/app_name"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/ic_play"
-                    app:layout_heightPercent="65%w"
-                    app:layout_widthPercent="65%w" />
-            </com.zhy.android.percent.support.PercentLinearLayout>
-
-            <com.zhy.android.percent.support.PercentLinearLayout
+            <ImageView
+                android:id="@+id/ll_next"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="left|center_vertical">
-
-                <ImageView
-                    android:id="@+id/ll_next"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:clickable="true"
-                    android:contentDescription="@string/app_name"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/ic_next"
-                    app:layout_heightPercent="85%w"
-                    app:layout_widthPercent="85%w" />
-            </com.zhy.android.percent.support.PercentLinearLayout>
+                android:layout_height="0dp"
+                android:clickable="true"
+                android:contentDescription="@string/app_name"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_next"
+                app:layout_heightPercent="100%h"
+                app:layout_marginLeftPercent="20%h"
+                app:layout_widthPercent="100%h" />
         </com.zhy.android.percent.support.PercentLinearLayout>
     </com.zhy.android.percent.support.PercentLinearLayout>
 </com.zhy.android.percent.support.PercentFrameLayout>

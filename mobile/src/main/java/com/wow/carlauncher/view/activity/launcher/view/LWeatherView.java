@@ -15,14 +15,18 @@ import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.WeatherIconUtil;
 import com.wow.carlauncher.ex.manage.time.event.MTimeMinuteEvent;
+import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.repertory.amapWebservice.WebService;
 import com.wow.carlauncher.repertory.amapWebservice.res.WeatherRes;
 import com.wow.carlauncher.ex.manage.time.event.MTime30MinuteEvent;
 import com.wow.carlauncher.view.activity.launcher.event.LEventCityRefresh;
+import com.wow.carlauncher.view.base.BaseDialog2;
 import com.wow.carlauncher.view.base.BaseEBusView;
+import com.wow.carlauncher.view.dialog.CityDialog;
 import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.SharedPreUtil;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.view.annotation.Event;
@@ -65,10 +69,26 @@ public class LWeatherView extends BaseEBusView {
         initView();
     }
 
-    @Event(value = {R.id.iv_tianqi})
+    @Event(value = {R.id.tv_title})
     private void clickEvent(View view) {
         switch (view.getId()) {
-            case R.id.iv_tianqi: {
+            case R.id.tv_title: {
+                final CityDialog cityDialog = new CityDialog(getContext());
+                cityDialog.setOkclickListener(new BaseDialog2.OnBtnClickListener() {
+                    @Override
+                    public boolean onClick(BaseDialog2 dialog) {
+                        if (CommonUtil.isNotNull(cityDialog.getmCurrentDistrictName())) {
+                            SharedPreUtil.saveSharedPreString(CommonData.SDATA_WEATHER_CITY, cityDialog.getmCurrentDistrictName());
+                            cityDialog.dismiss();
+                            EventBus.getDefault().post(new LEventCityRefresh());
+                            return true;
+                        } else {
+                            ToastManage.self().show("请选择城市");
+                            return false;
+                        }
+                    }
+                });
+                cityDialog.show();
                 break;
             }
         }
@@ -76,7 +96,6 @@ public class LWeatherView extends BaseEBusView {
 
     private void initView() {
         addContent(R.layout.content_l_weather);
-        refreshWeather();
     }
 
     private void refreshWeather() {
@@ -88,11 +107,11 @@ public class LWeatherView extends BaseEBusView {
                 } else {
                     tv_title.setText(SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_CITY));
                 }
-//                tv_tianqi.setText("");
-//                tv_wendu1.setText("");
-//                tv_wendu2.setText("");
+                tv_tianqi.setText("");
+                tv_wendu1.setText("");
+                tv_wendu2.setText("");
 
-                if (CommonUtil.isNotNull(SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_CITY))) {
+                if (!Strings.isNullOrEmpty(SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_CITY))) {
                     WebService.getWeatherInfo(SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_CITY), new WebService.CommonCallback<WeatherRes>() {
                         @Override
                         public void callback(WeatherRes res) {

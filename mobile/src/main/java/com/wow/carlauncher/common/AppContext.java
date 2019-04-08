@@ -1,9 +1,10 @@
 package com.wow.carlauncher.common;
 
 import android.app.Application;
+import android.os.Environment;
+import android.util.Log;
 
 import com.wow.carlauncher.CarLauncherApplication;
-import com.wow.carlauncher.ex.manage.LogManage;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
 import com.wow.carlauncher.ex.manage.location.LocationManage;
@@ -23,8 +24,14 @@ import com.wow.frame.declare.SDatabaseDeclare;
 import com.wow.frame.repertory.dbTool.DatabaseInfo;
 import com.wow.frame.util.SharedPreUtil;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.PrintWriter;
-import java.io.StringWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
+import static com.wow.carlauncher.common.CommonData.TAG;
 
 
 /**
@@ -56,8 +63,6 @@ public class AppContext implements SAppDeclare, SDatabaseDeclare {
     public void init(CarLauncherApplication app) {
         this.application = app;
         SFrame.init(this);
-        //日志管理器
-        LogManage.self().init(app);
         //通知工具
         ToastManage.self().init(app);
         TimeManage.self().init(app);
@@ -105,13 +110,36 @@ public class AppContext implements SAppDeclare, SDatabaseDeclare {
         Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
             @Override
             public void uncaughtException(Thread t, Throwable e) {
-                e.printStackTrace();
-                StringWriter sw = new StringWriter();
-                PrintWriter pw = new PrintWriter(sw);
-                e.printStackTrace(pw);
-                pw.close();
+                try {
+                    String path;
 
-                System.exit(0);
+                    if (Environment.getExternalStorageState().equals(
+                            Environment.MEDIA_MOUNTED)) {// 优先保存到SD卡中
+                        path = Environment.getExternalStorageDirectory()
+                                .getAbsolutePath() + File.separator + "error";
+                    } else {// 如果SD卡不存在，就保存到本应用的目录下
+                        path = getApplication().getFilesDir().getAbsolutePath()
+                                + File.separator + "error";
+                    }
+
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault());
+                    String date = format.format(new Date(System.currentTimeMillis()));
+
+                    File file = new File(path, "log_"
+                            + date + ".log");
+                    if (!file.exists() && file.mkdirs() && file.createNewFile()) {
+                        Log.e(TAG, "创建文件");
+                    } else {
+                        return;
+                    }
+
+                    PrintWriter pw = new PrintWriter(new FileWriter(file));
+                    e.printStackTrace(pw);
+                    pw.close();
+                    System.exit(0);
+                } catch (Exception ee) {
+                    e.printStackTrace();
+                }
             }
         });
     }

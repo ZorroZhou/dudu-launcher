@@ -24,4 +24,24 @@
         <attr name="circle" format="boolean" />
         <attr name="radius" format="dimension" />
     </declare-styleable>
+
+    <declare-styleable name="MultipleTextView">
+
+        <!--前缀文字-->
+        <attr name="prefixText" format="string" />
+        <!--前缀文字颜色-->
+        <attr name="prefixTextColor" format="color" />
+
+        <!--前缀内容文字-->
+        <attr name="contentText" format="string" />
+        <!--前缀内容文字颜色-->
+        <attr name="contentTextColor" format="color" />
+
+        <!--后缀文字-->
+        <attr name="suffixText" format="string" />
+        <!--后缀文字颜色-->
+        <attr name="suffixTextColor" format="color" />
+
+    </declare-styleable>
+
 </resources>

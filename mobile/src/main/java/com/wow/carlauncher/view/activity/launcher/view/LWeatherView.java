@@ -10,9 +10,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.common.base.Strings;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.WeatherIconUtil;
+import com.wow.carlauncher.ex.manage.time.event.MTimeMinuteEvent;
 import com.wow.carlauncher.repertory.amapWebservice.WebService;
 import com.wow.carlauncher.repertory.amapWebservice.res.WeatherRes;
 import com.wow.carlauncher.ex.manage.time.event.MTime30MinuteEvent;
@@ -40,11 +42,18 @@ public class LWeatherView extends BaseEBusView {
     @ViewInject(R.id.tv_tianqi)
     private TextView tv_tianqi;
 
-    @ViewInject(R.id.tv_wendu)
-    private TextView tv_wendu;
+    @ViewInject(R.id.tv_wendu1)
+    private TextView tv_wendu1;
 
-    @ViewInject(R.id.tv_shidu)
-    private TextView tv_shidu;
+    @ViewInject(R.id.tv_wendu2)
+    private TextView tv_wendu2;
+
+    @ViewInject(R.id.tv_kongqq)
+    private TextView tv_kongqq;
+
+    @ViewInject(R.id.tv_title)
+    private TextView tv_title;
+
 
     public LWeatherView(@NonNull Context context) {
         super(context);
@@ -70,14 +79,19 @@ public class LWeatherView extends BaseEBusView {
         refreshWeather();
     }
 
-    private Activity getActivity() {
-        return (Activity) getContext();
-    }
-
     private void refreshWeather() {
         x.task().autoPost(new Runnable() {
             @Override
             public void run() {
+                if (Strings.isNullOrEmpty(SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_CITY))) {
+                    tv_title.setText("点击设置城市");
+                } else {
+                    tv_title.setText(SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_CITY));
+                }
+//                tv_tianqi.setText("");
+//                tv_wendu1.setText("");
+//                tv_wendu2.setText("");
+
                 if (CommonUtil.isNotNull(SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_CITY))) {
                     WebService.getWeatherInfo(SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_CITY), new WebService.CommonCallback<WeatherRes>() {
                         @Override
@@ -86,7 +100,7 @@ public class LWeatherView extends BaseEBusView {
                             if (Integer.valueOf(1).equals(res.getStatus()) && res.getLives().size() > 0) {
                                 iv_tianqi.setImageResource(WeatherIconUtil.getWeatherResId(res.getLives().get(0).getWeather()));
 
-                                tv_wendu.setText(res.getLives().get(0).getTemperature() + "℃");
+                                tv_wendu1.setText(res.getLives().get(0).getTemperature() + "℃");
                                 tv_tianqi.setText(res.getLives().get(0).getWeather());
                                 // String feng;
                                 String wd = res.getLives().get(0).getWinddirection();
@@ -97,16 +111,13 @@ public class LWeatherView extends BaseEBusView {
 //                                    feng = "风力: ";
 //                                }
                                 //tv_feng.setText(feng + res.getLives().get(0).getWindpower() + "级");
-                                tv_shidu.setText("湿度: " + res.getLives().get(0).getHumidity());
+                                tv_kongqq.setText("湿度: " + res.getLives().get(0).getHumidity());
                                 //tv_tianqi2.setText(feng + res.getLives().get(0).getWindpower() + "级  空气湿度:" + res.getLives().get(0).getHumidity());
                             } else {
                                 //tv_tianqi.setText("请检查网络");
                             }
                         }
                     });
-                } else {
-                    tv_wendu.setText("请预先设置城市");
-                    tv_tianqi.setText("点击设置-时间和天气设置-天气定位进行设置");
                 }
             }
         });
@@ -118,7 +129,7 @@ public class LWeatherView extends BaseEBusView {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(MTime30MinuteEvent event) {
+    public void onEventMainThread(MTimeMinuteEvent event) {
         refreshWeather();
     }
 

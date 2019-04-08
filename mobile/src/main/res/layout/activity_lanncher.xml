@@ -1,55 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/fl_bg"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/bg_l_bright">
-    <!--390  50 285 60-->
-    <com.zhy.android.percent.support.PercentRelativeLayout
-        android:layout_width="match_parent"
+    android:background="@mipmap/bg_l_bright"
+    android:orientation="horizontal">
+
+    <com.wow.carlauncher.view.activity.launcher.view.LDockView
+        android:id="@+id/ll_dock"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="8"
         android:orientation="vertical">
 
-        <com.wow.carlauncher.view.activity.launcher.view.LPromptView
-            android:id="@+id/ll_top"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_alignParentTop="true"
-            android:orientation="horizontal"
-            app:layout_heightPercent="12.8%h" />
-
-        <com.wow.carlauncher.view.activity.launcher.view.LDockView
-            android:id="@+id/ll_dock"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_alignParentBottom="true"
-            android:gravity="center"
-            android:orientation="horizontal"
-            app:layout_heightPercent="15.3%h" />
 
         <LinearLayout
             android:id="@+id/ll_main"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@id/ll_dock"
-            android:layout_below="@id/ll_top"
+            android:layout_height="0dp"
+            android:layout_weight="8"
             android:baselineAligned="false"
-            android:orientation="horizontal"
-            android:paddingBottom="10dp"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp">
+            android:orientation="horizontal">
 
-
-            <com.wow.carlauncher.view.activity.launcher.view.LPersionView
-                android:id="@+id/item_2"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp" />
 
             <com.wow.carlauncher.view.activity.launcher.view.LMusicView
                 android:id="@+id/item_music"
@@ -81,5 +59,11 @@
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp" />
         </LinearLayout>
-    </com.zhy.android.percent.support.PercentRelativeLayout>
-</FrameLayout>
+
+        <com.wow.carlauncher.view.activity.launcher.view.LPromptView
+            android:id="@+id/ll_top"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+    </LinearLayout>
+</LinearLayout>

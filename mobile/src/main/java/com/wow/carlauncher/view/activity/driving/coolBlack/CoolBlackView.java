@@ -91,7 +91,7 @@ public class CoolBlackView extends BaseEBusView {
         if (event.isRunning()) {
             ll_info_shunshiyouhao.setVisibility(View.GONE);
             ll_info_dis.setVisibility(View.GONE);
-            
+
             iv_naving.setVisibility(View.VISIBLE);
             ll_navinfo.setVisibility(View.VISIBLE);
 

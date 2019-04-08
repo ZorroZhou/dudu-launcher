@@ -86,13 +86,6 @@ public class LDockView extends LinearLayout implements View.OnClickListener {
     @ViewInject(R.id.tv_dock4)
     private TextView tv_dock4;
 
-    @ViewInject(R.id.ll_dock5)
-    private LinearLayout ll_dock5;
-    @ViewInject(R.id.iv_dock5)
-    private ImageView iv_dock5;
-    @ViewInject(R.id.tv_dock5)
-    private TextView tv_dock5;
-
     @ViewInject(R.id.tv_app_appss)
     private TextView tv_app_appss;
 
@@ -112,7 +105,6 @@ public class LDockView extends LinearLayout implements View.OnClickListener {
         ll_dock2.setOnClickListener(this);
         ll_dock3.setOnClickListener(this);
         ll_dock4.setOnClickListener(this);
-        ll_dock5.setOnClickListener(this);
 
 
         findViewById(R.id.ll_all_apps).setOnClickListener(this);
@@ -170,16 +162,6 @@ public class LDockView extends LinearLayout implements View.OnClickListener {
             }
         }
 
-        String packname5 = SharedPreUtil.getSharedPreString(SDATA_DOCK5_CLASS);
-        if (CommonUtil.isNotNull(packname5)) {
-            if (AppInfoManage.self().checkApp(packname5)) {
-                iv_dock5.setImageDrawable(AppInfoManage.self().getIcon(packname5));
-                tv_dock5.setText(AppInfoManage.self().getName(packname5));
-            } else {
-                ToastManage.self().show("dock45加载失败");
-                SharedPreUtil.saveSharedPreString(SDATA_DOCK5_CLASS, null);
-            }
-        }
         dockLabelShow(SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_LAUNCHER_DOCK_LABEL_SHOW, true));
     }
 
@@ -222,15 +204,6 @@ public class LDockView extends LinearLayout implements View.OnClickListener {
                 }
                 break;
             }
-            case R.id.ll_dock5: {
-                String packname = SharedPreUtil.getSharedPreString(SDATA_DOCK5_CLASS);
-                if (CommonUtil.isNull(packname)) {
-                    getActivity().startActivityForResult(new Intent(getContext(), AppSelectActivity.class), REQUEST_SELECT_APP_TO_DOCK5);
-                } else {
-                    openDock(packname);
-                }
-                break;
-            }
             case R.id.ll_all_apps: {
                 getActivity().startActivity(new Intent(getContext(), AppMenuActivity.class));
                 break;
@@ -254,7 +227,6 @@ public class LDockView extends LinearLayout implements View.OnClickListener {
         tv_dock2.setVisibility(showFlag);
         tv_dock3.setVisibility(showFlag);
         tv_dock4.setVisibility(showFlag);
-        tv_dock5.setVisibility(showFlag);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

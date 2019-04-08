@@ -182,7 +182,7 @@ public class LPromptView extends BaseEBusView {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(final MTimeSecondEvent event) {
         Date d = new Date();
-        this.tv_time.setText(DateUtil.dateToString(d, "HH:mm   " + DateUtil.getWeekOfDate(d) + " yyyy/MM/dd "));
+        this.tv_time.setText(DateUtil.dateToString(d, " yyyy年MM月dd日  " + DateUtil.getWeekOfDate(d) + "  HH:mm"));
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

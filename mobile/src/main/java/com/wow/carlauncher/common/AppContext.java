@@ -3,6 +3,7 @@ package com.wow.carlauncher.common;
 import android.app.Application;
 
 import com.wow.carlauncher.CarLauncherApplication;
+import com.wow.carlauncher.ex.manage.LogManage;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
 import com.wow.carlauncher.ex.manage.location.LocationManage;
@@ -55,6 +56,8 @@ public class AppContext implements SAppDeclare, SDatabaseDeclare {
     public void init(CarLauncherApplication app) {
         this.application = app;
         SFrame.init(this);
+        //日志管理器
+        LogManage.self().init(app);
         //通知工具
         ToastManage.self().init(app);
         TimeManage.self().init(app);

@@ -86,9 +86,6 @@ public class LDockView extends LinearLayout implements View.OnClickListener {
     @ViewInject(R.id.tv_dock4)
     private TextView tv_dock4;
 
-    @ViewInject(R.id.tv_app_appss)
-    private TextView tv_app_appss;
-
     private PackageManager pm;
 
     private void initView() {
@@ -105,9 +102,6 @@ public class LDockView extends LinearLayout implements View.OnClickListener {
         ll_dock2.setOnClickListener(this);
         ll_dock3.setOnClickListener(this);
         ll_dock4.setOnClickListener(this);
-
-
-        findViewById(R.id.ll_all_apps).setOnClickListener(this);
 
         loadDock();
     }
@@ -204,10 +198,6 @@ public class LDockView extends LinearLayout implements View.OnClickListener {
                 }
                 break;
             }
-            case R.id.ll_all_apps: {
-                getActivity().startActivity(new Intent(getContext(), AppMenuActivity.class));
-                break;
-            }
         }
     }
 
@@ -222,7 +212,6 @@ public class LDockView extends LinearLayout implements View.OnClickListener {
         } else {
             showFlag = View.GONE;
         }
-        tv_app_appss.setVisibility(showFlag);
         tv_dock1.setVisibility(showFlag);
         tv_dock2.setVisibility(showFlag);
         tv_dock3.setVisibility(showFlag);

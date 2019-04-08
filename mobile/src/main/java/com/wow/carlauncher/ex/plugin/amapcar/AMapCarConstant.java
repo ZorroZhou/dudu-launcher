@@ -79,6 +79,7 @@ public class AMapCarConstant {
     public static final String NAVI_INFO_NEXT_ROAD_NAME = "NEXT_ROAD_NAME";
     public static final String NAVI_INFO_ROUTE_REMAIN_DIS = "ROUTE_REMAIN_DIS";
     public static final String NAVI_INFO_ROUTE_REMAIN_TIME = "ROUTE_REMAIN_TIME";
+
     //状态信息
     public static final int STATE_INFO = 10019;
 }

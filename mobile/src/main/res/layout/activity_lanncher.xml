@@ -5,66 +5,60 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@mipmap/bg_l_bright"
-    android:orientation="horizontal">
-
-    <com.wow.carlauncher.view.activity.launcher.view.LDockView
-        android:id="@+id/ll_dock"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="7"
-        android:gravity="center" />
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="60"
-        android:orientation="vertical">
+    android:orientation="vertical">
 
 
-        <com.zhy.android.percent.support.PercentLinearLayout
-            android:id="@+id/ll_main"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="8"
-            android:baselineAligned="false"
-            android:orientation="horizontal"
-            android:paddingTop="10dp"
-            android:paddingRight="10dp"
-            android:paddingBottom="10dp">
+    <com.zhy.android.percent.support.PercentLinearLayout
+        android:id="@+id/ll_main"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="8"
+        android:orientation="horizontal">
 
+        <com.wow.carlauncher.view.activity.launcher.view.LDockView
+            android:id="@+id/ll_dock"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="7"
+            android:gravity="center" />
 
-            <com.wow.carlauncher.view.activity.launcher.view.LMusicView
-                android:id="@+id/item_music"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical"
-                app:layout_marginPercent="1%w" />
+        <View
+            android:layout_width="0.1dp"
+            android:layout_height="match_parent"
+            android:background="#c6d6e0" />
 
-            <com.wow.carlauncher.view.activity.launcher.view.LAMapView
-                android:id="@+id/item_amap"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical"
-                app:layout_marginPercent="1%w" />
+        <com.wow.carlauncher.view.activity.launcher.view.LMusicView
+            android:id="@+id/item_music"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="20"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_marginPercent="1%w" />
 
-            <com.wow.carlauncher.view.activity.launcher.view.LWeatherView
-                android:id="@+id/item_music2"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical"
-                app:layout_marginPercent="1%w" />
-        </com.zhy.android.percent.support.PercentLinearLayout>
+        <com.wow.carlauncher.view.activity.launcher.view.LAMapView
+            android:id="@+id/item_amap"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="20"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_marginPercent="1%w" />
 
-        <com.wow.carlauncher.view.activity.launcher.view.LPromptView
-            android:id="@+id/ll_top"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-    </LinearLayout>
+        <com.wow.carlauncher.view.activity.launcher.view.LWeatherView
+            android:id="@+id/item_music2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="20"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_marginPercent="1%w" />
+    </com.zhy.android.percent.support.PercentLinearLayout>
+
+    <com.wow.carlauncher.view.activity.launcher.view.LPromptView
+        android:id="@+id/ll_top"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
 </LinearLayout>

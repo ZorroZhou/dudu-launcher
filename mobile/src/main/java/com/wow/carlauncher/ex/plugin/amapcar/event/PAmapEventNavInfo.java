@@ -5,11 +5,17 @@ package com.wow.carlauncher.ex.plugin.amapcar.event;
  */
 
 public class PAmapEventNavInfo {
+    //事件类型
     private int type;
+    //图标
     private int icon;
+    //距离,米
     private int dis;
+    //路名
     private String wroad;
+    //剩余距离
     private int remainDis;
+    //剩余时间
     private int remainTime;
 
     public int getType() {

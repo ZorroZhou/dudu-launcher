@@ -4,67 +4,87 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/n_dock_bg"
     android:gravity="right"
     android:orientation="horizontal"
     tools:ignore="RtlHardcoded">
 
-    <TextView
-        android:id="@+id/tv_time"
-        android:layout_width="wrap_content"
+    <com.zhy.android.percent.support.PercentRelativeLayout
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_marginRight="10dp"
-        android:gravity="center_vertical|end"
-        android:text="2019年1月1日 星期一 23:59:59"
-        android:textColor="#666666"
-        app:layout_textSizePercent="50%h" />
+        android:layout_weight="7">
 
-    <ImageView
-        android:id="@+id/iv_carinfo_tp"
-        android:layout_width="wrap_content"
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/n_home"
+            app:layout_heightPercent="50%h" />
+    </com.zhy.android.percent.support.PercentRelativeLayout>
+
+    <com.zhy.android.percent.support.PercentLinearLayout
+        android:layout_width="1dp"
         android:layout_height="match_parent"
-        android:contentDescription="@string/app_name"
-        android:src="@mipmap/ic_l_tp"
-        app:layout_widthPercent="100%h" />
+        android:layout_weight="60"
+        android:gravity="right">
 
-    <ImageView
-        android:id="@+id/iv_obd"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:contentDescription="@string/app_name"
-        android:src="@mipmap/ic_l_obd"
-        app:layout_widthPercent="100%h" />
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_marginRight="10dp"
+            android:gravity="center_vertical|end"
+            android:text="2019年1月1日 星期一 23:59:59"
+            android:textColor="#666666"
+            app:layout_textSizePercent="50%h" />
 
-    <ImageView
-        android:id="@+id/iv_fk"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:contentDescription="@string/app_name"
-        android:src="@mipmap/ic_l_fk"
-        app:layout_widthPercent="100%h" />
+        <ImageView
+            android:id="@+id/iv_carinfo_tp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/app_name"
+            android:src="@mipmap/ic_l_tp"
+            app:layout_widthPercent="100%h" />
 
-    <ImageView
-        android:id="@+id/iv_ble"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:contentDescription="@string/app_name"
-        android:src="@mipmap/ic_l_ble"
-        app:layout_widthPercent="100%h" />
+        <ImageView
+            android:id="@+id/iv_obd"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/app_name"
+            android:src="@mipmap/ic_l_obd"
+            app:layout_widthPercent="100%h" />
 
-    <ImageView
-        android:id="@+id/iv_wifi"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:contentDescription="@string/app_name"
-        android:src="@mipmap/ic_l_wifi"
-        app:layout_widthPercent="100%h" />
+        <ImageView
+            android:id="@+id/iv_fk"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/app_name"
+            android:src="@mipmap/ic_l_fk"
+            app:layout_widthPercent="100%h" />
 
-    <ImageView
-        android:id="@+id/iv_set"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:contentDescription="@string/app_name"
-        android:src="@mipmap/ic_l_set"
-        app:layout_widthPercent="100%h" />
+        <ImageView
+            android:id="@+id/iv_ble"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/app_name"
+            android:src="@mipmap/ic_l_ble"
+            app:layout_widthPercent="100%h" />
 
+        <ImageView
+            android:id="@+id/iv_wifi"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/app_name"
+            android:src="@mipmap/ic_l_wifi"
+            app:layout_widthPercent="100%h" />
+
+        <ImageView
+            android:id="@+id/iv_set"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/app_name"
+            android:src="@mipmap/ic_l_set"
+            app:layout_widthPercent="100%h" />
+    </com.zhy.android.percent.support.PercentLinearLayout>
 </com.zhy.android.percent.support.PercentLinearLayout>

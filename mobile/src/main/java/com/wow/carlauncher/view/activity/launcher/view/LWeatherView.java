@@ -40,8 +40,6 @@ import static com.wow.carlauncher.common.CommonData.TAG;
  */
 
 public class LWeatherView extends BaseEBusView {
-    @ViewInject(R.id.iv_tianqi)
-    private ImageView iv_tianqi;
 
     @ViewInject(R.id.tv_tianqi)
     private TextView tv_tianqi;
@@ -49,8 +47,6 @@ public class LWeatherView extends BaseEBusView {
     @ViewInject(R.id.tv_wendu1)
     private TextView tv_wendu1;
 
-    @ViewInject(R.id.tv_wendu2)
-    private TextView tv_wendu2;
 
     @ViewInject(R.id.tv_kongqq)
     private TextView tv_kongqq;
@@ -58,6 +54,8 @@ public class LWeatherView extends BaseEBusView {
     @ViewInject(R.id.tv_title)
     private TextView tv_title;
 
+    @ViewInject(R.id.iv_tianqi)
+    private ImageView iv_tianqi;
 
     public LWeatherView(@NonNull Context context) {
         super(context);
@@ -109,7 +107,6 @@ public class LWeatherView extends BaseEBusView {
                 }
                 tv_tianqi.setText("");
                 tv_wendu1.setText("");
-                tv_wendu2.setText("");
 
                 if (!Strings.isNullOrEmpty(SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_CITY))) {
                     WebService.getWeatherInfo(SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_CITY), new WebService.CommonCallback<WeatherRes>() {

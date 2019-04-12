@@ -4,196 +4,177 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#22222222"
+    android:background="@drawable/n_tianqi_bg"
     tools:ignore="HardcodedText,RtlHardcoded">
 
-    <com.zhy.android.percent.support.PercentLinearLayout
+    <com.zhy.android.percent.support.PercentRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_marginLeftPercent="3%h"
-        app:layout_marginRightPercent="3%h">
+        android:orientation="vertical">
 
-        <com.zhy.android.percent.support.PercentFrameLayout
+        <ImageView
+            android:id="@+id/iv_tianqi"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:contentDescription="@string/app_name"
+            android:scaleType="fitStart"
+            android:src="@mipmap/n_weather_weizhi"
+            app:layout_widthPercent="75%w" />
+
+        <com.zhy.android.percent.support.PercentLinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_heightPercent="14%h">
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:orientation="vertical"
+            app:layout_heightPercent="60%h"
+            app:layout_marginLeftPercent="4%h"
+            app:layout_marginRightPercent="4%h">
+
+            <TextView
+                android:id="@+id/tv_tianqi"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:ellipsize="end"
+                android:gravity="left|center_vertical"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:text="晴"
+                app:layout_heightPercent="8%h"
+                app:layout_textSizePercent="7%h" />
+
+            <TextView
+                android:id="@+id/tv_wendu1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:ellipsize="end"
+                android:gravity="left|center_vertical"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:text="15°"
+                android:textStyle="bold"
+                app:layout_heightPercent="22%h"
+                app:layout_marginTopPercent="2%h"
+                app:layout_textSizePercent="21%h" />
 
             <TextView
                 android:id="@+id/tv_title"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
+                android:layout_height="0dp"
+                android:gravity="left|center_vertical"
                 android:includeFontPadding="false"
                 android:lines="1"
                 android:text="青岛市-李沧区"
-                app:layout_marginBottomPercent="7%h"
-                app:layout_textSizePercent="34%h" />
-        </com.zhy.android.percent.support.PercentFrameLayout>
+                app:layout_heightPercent="9%h"
+                app:layout_marginTopPercent="4%h"
+                app:layout_textSizePercent="8%h" />
 
-        <com.zhy.android.percent.support.PercentRelativeLayout
-            android:id="@+id/rl_cd"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_heightPercent="28%h">
-
-            <ImageView
-                android:id="@+id/iv_tianqi"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_alignParentRight="true"
-                android:contentDescription="@string/app_name"
-                android:scaleType="fitCenter"
-                android:src="@mipmap/wic_no"
-                app:layout_heightPercent="100%h"
-                app:layout_widthPercent="100%h" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#dbe2e5"
+                app:layout_marginTopPercent="4%h" />
 
             <com.zhy.android.percent.support.PercentLinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_centerHorizontal="true"
+                android:layout_height="0dp"
                 android:orientation="vertical"
-                app:layout_heightPercent="100%h">
+                app:layout_heightPercent="54%h">
+                <!--190-->
 
-                <TextView
-                    android:id="@+id/tv_tianqi"
-                    android:layout_width="match_parent"
+                <com.zhy.android.percent.support.PercentRelativeLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="0dp"
-                    android:ellipsize="end"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:maxLines="1"
-                    android:text="晴"
-                    app:layout_heightPercent="21%h"
-                    app:layout_textSizePercent="20%h" />
+                    android:orientation="horizontal"
+                    app:layout_heightPercent="14%h"
+                    app:layout_marginTopPercent="10%h">
 
-                <TextView
-                    android:id="@+id/tv_wendu1"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:ellipsize="end"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:maxLines="1"
-                    android:text=" 15°"
-                    app:layout_heightPercent="46%h"
-                    app:layout_marginTopPercent="5%h"
-                    app:layout_textSizePercent="45%h" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentLeft="true"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:maxLines="1"
+                        android:text="空气质量:"
+                        app:layout_textSizePercent="80%h" />
 
-                <TextView
-                    android:id="@+id/tv_wendu2"
-                    android:layout_width="match_parent"
+                    <TextView
+                        android:id="@+id/tv_kongqq"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:maxLines="1"
+                        android:text="等待数据"
+                        app:layout_textSizePercent="80%h" />
+                </com.zhy.android.percent.support.PercentRelativeLayout>
+
+                <com.zhy.android.percent.support.PercentRelativeLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="0dp"
-                    android:ellipsize="end"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:maxLines="1"
-                    android:text=" 15°-20°"
-                    app:layout_heightPercent="16%h"
-                    app:layout_marginTopPercent="9%h"
-                    app:layout_textSizePercent="15%h" />
+                    android:orientation="horizontal"
+                    app:layout_heightPercent="14%h"
+                    app:layout_marginTopPercent="14%h">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentLeft="true"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:maxLines="1"
+                        android:text="紫外线指数:"
+                        app:layout_textSizePercent="80%h" />
+
+                    <TextView
+                        android:id="@+id/tv_zwx"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:maxLines="1"
+                        android:text="等待数据"
+                        app:layout_textSizePercent="80%h" />
+                </com.zhy.android.percent.support.PercentRelativeLayout>
+
+                <com.zhy.android.percent.support.PercentRelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:orientation="horizontal"
+                    app:layout_heightPercent="14%h"
+                    app:layout_marginTopPercent="14%h">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentLeft="true"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:maxLines="1"
+                        android:text="洗车指数:"
+                        app:layout_textSizePercent="80%h" />
+
+                    <TextView
+                        android:id="@+id/tv_xc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentRight="true"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:maxLines="1"
+                        android:text="等待数据"
+                        app:layout_textSizePercent="80%h" />
+                </com.zhy.android.percent.support.PercentRelativeLayout>
+
             </com.zhy.android.percent.support.PercentLinearLayout>
-
-        </com.zhy.android.percent.support.PercentRelativeLayout>
-
-        <com.zhy.android.percent.support.PercentLinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            app:layout_heightPercent="20%h"
-            app:layout_marginLeftPercent="3%h"
-            app:layout_marginRightPercent="3%h"
-            app:layout_marginTopPercent="14%h">
-
-            <com.zhy.android.percent.support.PercentRelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:orientation="horizontal"
-                app:layout_heightPercent="20%h">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentLeft="true"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:maxLines="1"
-                    android:text="空气质量:"
-                    app:layout_textSizePercent="99%h" />
-
-                <TextView
-                    android:id="@+id/tv_kongqq"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentRight="true"
-                    android:ellipsize="end"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:maxLines="1"
-                    android:text="等待数据"
-                    app:layout_textSizePercent="99%h" />
-            </com.zhy.android.percent.support.PercentRelativeLayout>
-
-            <com.zhy.android.percent.support.PercentRelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:orientation="horizontal"
-                app:layout_heightPercent="20%h"
-                app:layout_marginTopPercent="20%h">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentLeft="true"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:maxLines="1"
-                    android:text="紫外线指数:"
-                    app:layout_textSizePercent="99%h" />
-
-                <TextView
-                    android:id="@+id/tv_zwx"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentRight="true"
-                    android:ellipsize="end"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:maxLines="1"
-                    android:text="等待数据"
-                    app:layout_textSizePercent="99%h" />
-            </com.zhy.android.percent.support.PercentRelativeLayout>
-
-            <com.zhy.android.percent.support.PercentRelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:orientation="horizontal"
-                app:layout_heightPercent="20%h"
-                app:layout_marginTopPercent="20%h">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentLeft="true"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:maxLines="1"
-                    android:text="洗车指数:"
-                    app:layout_textSizePercent="99%h" />
-
-                <TextView
-                    android:id="@+id/tv_xc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentRight="true"
-                    android:ellipsize="end"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:maxLines="1"
-                    android:text="等待数据"
-                    app:layout_textSizePercent="99%h" />
-            </com.zhy.android.percent.support.PercentRelativeLayout>
-
         </com.zhy.android.percent.support.PercentLinearLayout>
-    </com.zhy.android.percent.support.PercentLinearLayout>
+    </com.zhy.android.percent.support.PercentRelativeLayout>
 </com.zhy.android.percent.support.PercentFrameLayout>

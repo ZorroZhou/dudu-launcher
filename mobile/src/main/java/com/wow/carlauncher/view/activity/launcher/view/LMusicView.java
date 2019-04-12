@@ -81,9 +81,9 @@ public class LMusicView extends BaseEBusView {
     public void onEventMainThread(final PMusicEventState event) {
         if (music_iv_play != null) {
             if (event.isRun()) {
-                music_iv_play.setImageResource(R.drawable.ic_pause);
+                music_iv_play.setImageResource(R.mipmap.ic_pause);
             } else {
-                music_iv_play.setImageResource(R.drawable.ic_play);
+                music_iv_play.setImageResource(R.mipmap.ic_play);
             }
         }
     }

@@ -53,8 +53,8 @@ public class LAMapView extends BaseEBusView {
     private ImageView amapIcon;
     @ViewInject(R.id.ll_navi)
     private LinearLayout amapnavi;
-    @ViewInject(R.id.tv_road)
-    private TextView amaproad;
+//    @ViewInject(R.id.tv_road)
+//    private TextView amaproad;
     @ViewInject(R.id.tv_msg)
     private TextView amapmsg;
     @ViewInject(R.id.rl_base)
@@ -99,14 +99,10 @@ public class LAMapView extends BaseEBusView {
             if (event.isRunning()) {
                 amapController.setVisibility(View.GONE);
                 amapnavi.setVisibility(View.VISIBLE);
-                rl_base.setBackgroundResource(R.mipmap.bg_l_amap_naving);
-
-
             } else {
                 amapController.setVisibility(View.VISIBLE);
                 amapnavi.setVisibility(View.GONE);
                 amapIcon.setImageResource(0);
-                rl_base.setBackgroundResource(R.mipmap.bg_l_amap);
             }
         }
     }
@@ -116,20 +112,20 @@ public class LAMapView extends BaseEBusView {
         if (amapIcon != null && event.getIcon() - 1 >= 0 && event.getIcon() - 1 < ICONS.length) {
             amapIcon.setImageResource(ICONS[event.getIcon() - 1]);
         }
-        if (amaproad != null && CommonUtil.isNotNull(event.getWroad())) {
-            String msg = "";
-            if (event.getDis() < 10) {
-                msg = msg + "现在";
-            } else {
-                if (event.getDis() > 1000) {
-                    msg = msg + event.getDis() / 1000 + "公里后";
-                } else {
-                    msg = msg + event.getDis() + "米后";
-                }
-            }
-            msg = msg + event.getWroad();
-            amaproad.setText(msg);
-        }
+//        if (amaproad != null && CommonUtil.isNotNull(event.getWroad())) {
+//            String msg = "";
+//            if (event.getDis() < 10) {
+//                msg = msg + "现在";
+//            } else {
+//                if (event.getDis() > 1000) {
+//                    msg = msg + event.getDis() / 1000 + "公里后";
+//                } else {
+//                    msg = msg + event.getDis() + "米后";
+//                }
+//            }
+//            msg = msg + event.getWroad();
+//            amaproad.setText(msg);
+//        }
         if (amapmsg != null && event.getRemainTime() > -1 && event.getRemainDis() > -1) {
             if (event.getRemainTime() == 0 || event.getRemainDis() == 0) {
                 amapmsg.setText("到达");

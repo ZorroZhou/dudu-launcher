@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#22222222"
+    android:background="@drawable/n_yinyue_bg"
     tools:ignore="HardcodedText,RtlHardcoded">
 
     <com.zhy.android.percent.support.PercentLinearLayout
@@ -41,7 +41,7 @@
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
                 android:contentDescription="@string/app_name"
-                android:src="@mipmap/l_music_cd" />
+                android:src="@mipmap/music_dlogo" />
         </RelativeLayout>
 
         <TextView
@@ -51,7 +51,7 @@
             android:includeFontPadding="false"
             android:lines="1"
             android:text="音乐名称"
-            android:textColor="#fff"
+            android:textColor="#697380"
             app:layout_heightPercent="8%h"
             app:layout_marginTopPercent="4%h"
             app:layout_textSizePercent="5%h" />
@@ -63,9 +63,20 @@
             android:includeFontPadding="false"
             android:lines="1"
             android:text="作者"
-            android:textColor="#5c647b"
+            android:textColor="#a9b0b7"
             app:layout_heightPercent="7%h"
             app:layout_textSizePercent="4%h" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:indeterminate="false"
+            android:max="100"
+            android:progress="50"
+            android:progressDrawable="@drawable/n_music_progress"
+            app:layout_marginTopPercent="2%h" />
 
         <com.zhy.android.percent.support.PercentLinearLayout
             android:id="@+id/ll_controller"
@@ -74,29 +85,27 @@
             android:gravity="center"
             android:orientation="horizontal"
             app:layout_heightPercent="15%h"
-            app:layout_marginTopPercent="8%h">
+            app:layout_marginTopPercent="5%h">
 
 
             <ImageView
                 android:id="@+id/ll_prew"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:clickable="true"
                 android:contentDescription="@string/app_name"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_prev"
-                app:layout_heightPercent="100%h"
+                android:src="@mipmap/ic_prev"
+                app:layout_heightPercent="77%h"
                 app:layout_marginRightPercent="20%h"
-                app:layout_widthPercent="100%h" />
+                app:layout_widthPercent="77%h" />
 
             <ImageView
                 android:id="@+id/iv_play"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:clickable="true"
                 android:contentDescription="@string/app_name"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_play"
+                android:src="@mipmap/ic_play"
                 app:layout_heightPercent="100%h"
                 app:layout_widthPercent="100%h" />
 
@@ -104,13 +113,12 @@
                 android:id="@+id/ll_next"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:clickable="true"
                 android:contentDescription="@string/app_name"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_next"
-                app:layout_heightPercent="100%h"
+                android:src="@mipmap/ic_next"
+                app:layout_heightPercent="77%h"
                 app:layout_marginLeftPercent="20%h"
-                app:layout_widthPercent="100%h" />
+                app:layout_widthPercent="77%h" />
         </com.zhy.android.percent.support.PercentLinearLayout>
     </com.zhy.android.percent.support.PercentLinearLayout>
 </com.zhy.android.percent.support.PercentFrameLayout>

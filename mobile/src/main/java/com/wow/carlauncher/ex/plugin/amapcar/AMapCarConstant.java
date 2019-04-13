@@ -35,7 +35,7 @@ public class AMapCarConstant {
 
     //行政区的标记
     public static final int REQUEST_DISTRICT = 10029;
-    public static final int RESPONSE_DISTRICT = 10030;
+    public static final int RECEIVER_RESPONSE_DISTRICT = 10030;
     public static final String RESPONSE_DISTRICT_PRVINCE_NAME = "PRVINCE_NAME";
     public static final String RESPONSE_DISTRICT_CITY_NAME = "CITY_NAME";
 
@@ -50,7 +50,7 @@ public class AMapCarConstant {
     public static final int REQUEST_GETHC = 10045;
     public static final int REQUEST_GETHC_EXTRA_TYPE_HOME = 1;
     public static final int REQUEST_GETHC_EXTRA_TYPE_COMP = 2;
-    public static final int RESPONSE_GETHC = 10046;
+    public static final int RECEIVER_RESPONSE_GETHC = 10046;
     public static final String RESPONSE_GETHC_DISTANCE = "DISTANCE";
     public static final String RESPONSE_GETHC_CATEGORY = "CATEGORY";
     public static final String RESPONSE_GETHC_ADDRESS = "ADDRESS";
@@ -72,8 +72,10 @@ public class AMapCarConstant {
     //请求引导信息
     public static final int REQUEST_NAVI_INFO = 10062;
 
+    public static final int REQUEST_EXIT_NAV = 10010;
+
     //引导信息
-    public static final int NAVI_INFO = 10001;
+    public static final int RECEIVER_NAVI_INFO = 10001;
 
     public static class NaviInfoConstant {
         //导航类型，对应的值为int类型
@@ -177,7 +179,7 @@ public class AMapCarConstant {
 
 
     //状态信息
-    public static final int STATE_INFO = 10019;
+    public static final int RECEIVER_STATE_INFO = 10019;
 
     public static class StateInfoConstant {
         public static final int APP_OPEN = 0;//开始运行，Application启动即为开始运行
@@ -201,4 +203,9 @@ public class AMapCarConstant {
         public static final int NAV_GET = 39;//到达目的地通知
         public static final int HREAT = 40;//心跳通知
     }
+
+    public static final int RECEIVER_LUKUANG_INFO = 13011;
+    public static final String RECEIVER_LUKUANG_INFO_EXTAR = "EXTRA_TMC_SEGMENT";
+
+
 }

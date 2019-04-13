@@ -74,7 +74,7 @@ public class LAMapView extends BaseEBusView {
     private ProgressBar progressBar;
 
 
-    @Event(value = {R.id.rl_base, R.id.btn_go_home, R.id.btn_go_company})
+    @Event(value = {R.id.rl_base, R.id.btn_go_home, R.id.btn_close})
     private void clickEvent(View view) {
         Log.d(TAG, "clickEvent: " + view);
         switch (view.getId()) {
@@ -96,12 +96,12 @@ public class LAMapView extends BaseEBusView {
                 AMapCarPlugin.self().getHome();
                 break;
             }
-            case R.id.btn_go_company: {
+            case R.id.btn_close: {
                 if (!AppUtil.isInstall(getContext(), AMAP_PACKAGE)) {
                     Toast.makeText(getContext(), "没有安装高德地图", Toast.LENGTH_SHORT).show();
                     break;
                 }
-                AMapCarPlugin.self().getComp();
+                AMapCarPlugin.self().exitNav();
                 break;
             }
         }

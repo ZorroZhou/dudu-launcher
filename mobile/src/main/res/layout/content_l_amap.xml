@@ -188,7 +188,7 @@
                     android:background="#cdd8db" />
 
                 <com.zhy.android.percent.support.PercentLinearLayout
-                    android:id="@+id/btn_go_company"
+                    android:id="@+id/btn_close"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:gravity="center"

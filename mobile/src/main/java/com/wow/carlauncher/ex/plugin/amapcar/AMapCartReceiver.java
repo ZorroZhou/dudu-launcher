@@ -4,10 +4,14 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.util.SizeF;
 import android.widget.Toast;
 
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventNavInfo;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventState;
+import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapLukuangInfo;
+import com.wow.carlauncher.ex.plugin.amapcar.model.Lukuang;
+import com.wow.frame.SFrame;
 
 import org.greenrobot.eventbus.EventBus;
 import org.xutils.x;
@@ -41,14 +45,15 @@ public class AMapCartReceiver extends BroadcastReceiver {
     public void onReceive(Context context, final Intent intent) {
         String action = intent.getAction();
         if (RECEIVE_ACTION.equals(action)) {
+            aMapCarPlugin.noticeHeartbeatTime();
             int key = intent.getIntExtra(KEY_TYPE, -1);
             switch (key) {
-                case RESPONSE_DISTRICT: {
+                case RECEIVER_RESPONSE_DISTRICT: {
                     intent.getStringExtra(RESPONSE_DISTRICT_PRVINCE_NAME);
                     intent.getStringExtra(RESPONSE_DISTRICT_CITY_NAME);
                     break;
                 }
-                case RESPONSE_GETHC: {
+                case RECEIVER_RESPONSE_GETHC: {
                     double lon = intent.getDoubleExtra(LON, 0);
                     double lat = intent.getDoubleExtra(LAT, 0);
                     int type = intent.getIntExtra(CATEGORY, -1);
@@ -87,49 +92,48 @@ public class AMapCartReceiver extends BroadcastReceiver {
                     }
                     break;
                 }
-                case NAVI_INFO: {
-                    x.task().autoPost(new Runnable() {
-                        @Override
-                        public void run() {
-                            EventBus.getDefault().post(new PAmapEventState().setRunning(true));
-                            aMapCarPlugin.noticeHeartbeatTime();
-                            EventBus.getDefault().post(new PAmapEventNavInfo()
-                                    .setType(intent.getIntExtra(NaviInfoConstant.TYPE, -1))
-                                    .setSegRemainDis(intent.getIntExtra(NaviInfoConstant.SEG_REMAIN_DIS, -1))
-                                    .setIcon(intent.getIntExtra(NaviInfoConstant.ICON, -1))
+                case RECEIVER_NAVI_INFO: {
+                    EventBus.getDefault().post(new PAmapEventState().setRunning(true));
+                    EventBus.getDefault().post(new PAmapEventNavInfo()
+                            .setType(intent.getIntExtra(NaviInfoConstant.TYPE, -1))
+                            .setSegRemainDis(intent.getIntExtra(NaviInfoConstant.SEG_REMAIN_DIS, -1))
+                            .setIcon(intent.getIntExtra(NaviInfoConstant.ICON, -1))
 
-                                    .setNextRoadName(intent.getStringExtra(NaviInfoConstant.NEXT_ROAD_NAME))
-                                    .setCurRoadName(intent.getStringExtra(NaviInfoConstant.CUR_ROAD_NAME))
+                            .setNextRoadName(intent.getStringExtra(NaviInfoConstant.NEXT_ROAD_NAME))
+                            .setCurRoadName(intent.getStringExtra(NaviInfoConstant.CUR_ROAD_NAME))
 
-                                    .setRouteRemainDis(intent.getIntExtra(NaviInfoConstant.ROUTE_REMAIN_DIS, -1))
-                                    .setRouteRemainTime(intent.getIntExtra(NaviInfoConstant.ROUTE_REMAIN_TIME, -1))
+                            .setRouteRemainDis(intent.getIntExtra(NaviInfoConstant.ROUTE_REMAIN_DIS, -1))
+                            .setRouteRemainTime(intent.getIntExtra(NaviInfoConstant.ROUTE_REMAIN_TIME, -1))
 
-                                    .setRouteAllDis(intent.getIntExtra(NaviInfoConstant.ROUTE_ALL_DIS, -1))
-                                    .setRouteAllTime(intent.getIntExtra(NaviInfoConstant.ROUTE_ALL_TIME, -1))
+                            .setRouteAllDis(intent.getIntExtra(NaviInfoConstant.ROUTE_ALL_DIS, -1))
+                            .setRouteAllTime(intent.getIntExtra(NaviInfoConstant.ROUTE_ALL_TIME, -1))
 
-                                    .setCurSpeed(intent.getIntExtra(NaviInfoConstant.CUR_SPEED, -1))
-                                    .setCameraSpeed(intent.getIntExtra(NaviInfoConstant.CAMERA_SPEED, -1))
-                            );
-                        }
-                    });
+                            .setCurSpeed(intent.getIntExtra(NaviInfoConstant.CUR_SPEED, -1))
+                            .setCameraSpeed(intent.getIntExtra(NaviInfoConstant.CAMERA_SPEED, -1))
+                    );
                     break;
                 }
 
-                case STATE_INFO: {
-                    Log.d(TAG, "onReceive: " + intent.getIntExtra(EXTRA_STATE, -1));
-
-                    x.task().autoPost(new Runnable() {
-                        @Override
-                        public void run() {
-                            aMapCarPlugin.noticeHeartbeatTime();
-                            int state = intent.getIntExtra(EXTRA_STATE, -1);
-                            if (state == StateInfoConstant.NAV_START || state == StateInfoConstant.MNAV_START) {
-                                EventBus.getDefault().post(new PAmapEventState().setRunning(true));
-                            } else if (state == StateInfoConstant.NAV_STOP || state == StateInfoConstant.MNAV_STOP || state == StateInfoConstant.APP_EXIT) {
-                                EventBus.getDefault().post(new PAmapEventState().setRunning(false));
-                            }
-                        }
-                    });
+                case RECEIVER_STATE_INFO: {
+                    int state = intent.getIntExtra(EXTRA_STATE, -1);
+                    if (state == StateInfoConstant.NAV_START
+                            || state == StateInfoConstant.MNAV_START) {
+                        EventBus.getDefault().post(new PAmapEventState().setRunning(true));
+                    } else if (state == StateInfoConstant.NAV_STOP
+                            || state == StateInfoConstant.MNAV_STOP
+                            || state == StateInfoConstant.APP_EXIT
+                            || state == StateInfoConstant.XH_STOP) {
+                        EventBus.getDefault().post(new PAmapEventState().setRunning(false));
+                    }
+                    break;
+                }
+                case RECEIVER_LUKUANG_INFO: {
+                    String info = intent.getStringExtra(RECEIVER_LUKUANG_INFO_EXTAR);
+                    Lukuang lukuang = SFrame.getGson().fromJson(info, Lukuang.class);
+                    if (lukuang != null) {
+                        EventBus.getDefault().post(new PAmapEventState().setRunning(true));
+                        EventBus.getDefault().post(new PAmapLukuangInfo().setLukuang(lukuang));
+                    }
                     break;
                 }
             }

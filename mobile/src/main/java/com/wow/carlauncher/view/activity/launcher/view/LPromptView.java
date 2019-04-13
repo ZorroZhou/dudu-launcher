@@ -12,8 +12,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.view.activity.AppMenuActivity;
 import com.wow.carlauncher.view.activity.CarInfoActivity;
 import com.wow.carlauncher.common.CommonData;
+import com.wow.carlauncher.view.adapter.AllAppAdapter;
 import com.wow.carlauncher.view.event.EventWifiState;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
@@ -74,7 +76,7 @@ public class LPromptView extends BaseEBusView {
         addContent(R.layout.content_l_prompt);
     }
 
-    @Event(value = {R.id.iv_set, R.id.iv_wifi, R.id.iv_obd})
+    @Event(value = {R.id.iv_set, R.id.iv_wifi, R.id.iv_obd, R.id.rl_home})
     private void clickEvent(View view) {
         switch (view.getId()) {
             case R.id.iv_set: {
@@ -87,6 +89,10 @@ public class LPromptView extends BaseEBusView {
             }
             case R.id.iv_obd: {
                 getActivity().startActivity(new Intent(getContext(), CarInfoActivity.class));
+                break;
+            }
+            case R.id.rl_home: {
+                getActivity().startActivity(new Intent(getContext(), AppMenuActivity.class));
                 break;
             }
         }

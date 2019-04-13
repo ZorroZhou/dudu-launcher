@@ -10,6 +10,7 @@
     tools:ignore="RtlHardcoded">
 
     <com.zhy.android.percent.support.PercentRelativeLayout
+        android:id="@+id/rl_home"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="7">

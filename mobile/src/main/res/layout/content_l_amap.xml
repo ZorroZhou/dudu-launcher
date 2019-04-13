@@ -103,10 +103,10 @@
             android:layout_height="0dp"
             android:layout_below="@id/fl_luxian"
             android:orientation="vertical"
-            app:layout_heightPercent="11%h"
+            app:layout_heightPercent="16%h"
             app:layout_marginLeftPercent="3%h"
             app:layout_marginTopPercent="3%h"
-            app:layout_widthPercent="11%h">
+            app:layout_widthPercent="16%h">
 
             <TextView
                 android:layout_width="match_parent"

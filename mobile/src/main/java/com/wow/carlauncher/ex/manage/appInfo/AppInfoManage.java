@@ -16,6 +16,7 @@ import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.view.activity.driving.DrivingActivity;
 import com.wow.carlauncher.ex.manage.appInfo.event.MAppInfoRefreshEvent;
+import com.wow.carlauncher.view.activity.set.SetActivity;
 import com.wow.frame.util.CommonUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -97,7 +98,8 @@ public class AppInfoManage {
 
         appInfos = new ConcurrentHashMap<>();
         internalApps = new ConcurrentHashMap<>();
-        internalApps.put(INTERNAL_APP_DRIVING, new InternalAppInfo("驾驶界面", INTERNAL_APP_DRIVING, MARK_INTERNAL_APP, DrivingActivity.class));
+        internalApps.put(INTERNAL_APP_DRIVING, new InternalAppInfo("驾驶", INTERNAL_APP_DRIVING, MARK_INTERNAL_APP, DrivingActivity.class));
+        internalApps.put(INTERNAL_APP_SETTING, new InternalAppInfo("设置", INTERNAL_APP_DRIVING, MARK_INTERNAL_APP, SetActivity.class));
         refreshAppInfo(false);
     }
 

@@ -11,29 +11,30 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        app:layout_marginLeftPercent="3%h"
-        app:layout_marginRightPercent="3%h">
+        app:layout_marginLeftPercent="2%h"
+        app:layout_marginRightPercent="2%h">
 
         <com.zhy.android.percent.support.PercentFrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_heightPercent="14%h">
+            app:layout_heightPercent="12%h">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
                 android:gravity="center"
                 android:includeFontPadding="false"
                 android:lines="1"
                 android:text="音乐"
-                app:layout_marginBottomPercent="7%h"
-                app:layout_textSizePercent="34%h" />
+                app:layout_textSizePercent="50%h" />
         </com.zhy.android.percent.support.PercentFrameLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_heightPercent="35%h">
+            app:layout_heightPercent="35%h"
+            app:layout_marginTopPercent="2%h">
 
             <ImageView
                 android:id="@+id/music_iv_cover"
@@ -76,6 +77,8 @@
             android:max="100"
             android:progress="50"
             android:progressDrawable="@drawable/n_music_progress"
+            app:layout_marginLeftPercent="2%h"
+            app:layout_marginRightPercent="2%h"
             app:layout_marginTopPercent="2%h" />
 
         <com.zhy.android.percent.support.PercentLinearLayout

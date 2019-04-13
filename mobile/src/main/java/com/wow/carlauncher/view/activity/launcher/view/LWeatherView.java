@@ -153,6 +153,8 @@ public class LWeatherView extends BaseEBusView {
                                     tv_fl.setText(String.valueOf(cityWeather.getWindpower()));
                                     tv_fx.setText(String.valueOf(cityWeather.getWinddirection() + "风"));
                                 }
+                            } else {
+
                             }
                         }
                     });
@@ -165,16 +167,19 @@ public class LWeatherView extends BaseEBusView {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(LEventCityRefresh event) {
+        System.out.println("!!!LEventCityRefresh");
         refreshWeather(true);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(MTimeMinuteEvent event) {
+        System.out.println("!!!MTimeMinuteEvent");
         refreshWeather(false);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(MNewLocationEvent event) {
+        System.out.println("!!!MNewLocationEvent");
         this.adcode = event.getAdCode();
         this.city = event.getCity();
         refreshWeather(false);

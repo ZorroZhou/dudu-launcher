@@ -11,6 +11,8 @@ import org.xutils.http.HttpMethod;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
+import java.io.UnsupportedEncodingException;
+
 /**
  * Created by 10124 on 2017/10/29.
  */
@@ -20,8 +22,8 @@ public class WebService {
     private static final String KEY = "b8a80f002ec3fe70454a4c013eaabbb7";
 
     public static void getWeatherInfo(String adcode, final CommonCallback commonCallback) {
-        RequestParams params = new RequestParams("http://restapi.amap.com/v3/weather/weatherInfo?key=" + KEY + "&city=" + adcode);
-        System.out.println("这里请求了" + params);
+        RequestParams params = new RequestParams("http://restapi.amap.com/v3/weather/weatherInfo?key=" + KEY + "&city=" + getURLEncoderString(adcode));
+        Log.e(TAG, "这里请求了" + params);
         x.http().request(HttpMethod.GET, params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
@@ -39,12 +41,12 @@ public class WebService {
 
             @Override
             public void onCancelled(CancelledException cex) {
-                System.out.println("onCancelled");
+                Log.e(TAG, "onCancelled");
             }
 
             @Override
             public void onFinished() {
-                System.out.println("onFinished");
+                Log.e(TAG, "onFinished");
             }
         });
     }
@@ -54,4 +56,18 @@ public class WebService {
 
         }
     }
+
+    public static String getURLEncoderString(String str) {
+        String result = "";
+        if (null == str) {
+            return "";
+        }
+        try {
+            result = java.net.URLEncoder.encode(str, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
 }

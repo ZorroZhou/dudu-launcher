@@ -98,11 +98,11 @@
                         android:gravity="center"
                         android:includeFontPadding="false"
                         android:maxLines="1"
-                        android:text="空气质量:"
+                        android:text="空气湿度:"
                         app:layout_textSizePercent="80%h" />
 
                     <TextView
-                        android:id="@+id/tv_kongqq"
+                        android:id="@+id/tv_kqsd"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_alignParentRight="true"
@@ -128,11 +128,11 @@
                         android:gravity="center"
                         android:includeFontPadding="false"
                         android:maxLines="1"
-                        android:text="紫外线指数:"
+                        android:text="风向:"
                         app:layout_textSizePercent="80%h" />
 
                     <TextView
-                        android:id="@+id/tv_zwx"
+                        android:id="@+id/tv_fx"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_alignParentRight="true"
@@ -158,11 +158,11 @@
                         android:gravity="center"
                         android:includeFontPadding="false"
                         android:maxLines="1"
-                        android:text="洗车指数:"
+                        android:text="风力:"
                         app:layout_textSizePercent="80%h" />
 
                     <TextView
-                        android:id="@+id/tv_xc"
+                        android:id="@+id/tv_fl"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_alignParentRight="true"
@@ -173,6 +173,7 @@
                         android:text="等待数据"
                         app:layout_textSizePercent="80%h" />
                 </com.zhy.android.percent.support.PercentRelativeLayout>
+
 
             </com.zhy.android.percent.support.PercentLinearLayout>
         </com.zhy.android.percent.support.PercentLinearLayout>

@@ -79,28 +79,6 @@ public class AMapCarPlugin extends ContextEx {
         sendReceiver(REQUEST_GETHC, param);
     }
 
-//    public void toHomeSet() {
-//        if (!AppUtil.isInstall(context, AMAP_PACKAGE)) {
-//            Toast.makeText(context, "没有安装高德地图", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-//
-//        Map<String, Object> param = new HashMap<>();
-//        param.put(EXTRA_TYPE, REQUEST_SET_HC_HOME);
-//        sendReceiver(REQUEST_SET_HC, param);
-//    }
-//
-//    public void toCompSet() {
-//        if (!AppUtil.isInstall(context, AMAP_PACKAGE)) {
-//            Toast.makeText(context, "没有安装高德地图", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-//
-//        Map<String, Object> param = new HashMap<>();
-//        param.put(EXTRA_TYPE, REQUEST_SET_HC_COMP);
-//        sendReceiver(REQUEST_SET_HC, param);
-//    }
-
     public void naviToComp() {
         if (!AppUtil.isInstall(getContext(), AMAP_PACKAGE)) {
             Toast.makeText(getContext(), "没有安装高德地图", Toast.LENGTH_SHORT).show();

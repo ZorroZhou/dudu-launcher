@@ -13,6 +13,8 @@ import org.greenrobot.eventbus.EventBus;
 import org.xutils.x;
 
 import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.*;
+import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.NaviInfoConstant;
+import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.StateInfoConstant;
 
 public class AMapCartReceiver extends BroadcastReceiver {
     public static final String TAG = "WOW_CAR_AMAP";
@@ -92,11 +94,22 @@ public class AMapCartReceiver extends BroadcastReceiver {
                             EventBus.getDefault().post(new PAmapEventState().setRunning(true));
                             aMapCarPlugin.noticeHeartbeatTime();
                             EventBus.getDefault().post(new PAmapEventNavInfo()
-                                    .setDis(intent.getIntExtra(NAVI_INFO_SEG_REMAIN_DIS, -1))
-                                    .setIcon(intent.getIntExtra(NAVI_INFO_ICON, -1))
-                                    .setWroad(intent.getStringExtra(NAVI_INFO_NEXT_ROAD_NAME))
-                                    .setRemainDis(intent.getIntExtra(NAVI_INFO_ROUTE_REMAIN_DIS, -1))
-                                    .setRemainTime(intent.getIntExtra(NAVI_INFO_ROUTE_REMAIN_TIME, -1)));
+                                    .setType(intent.getIntExtra(NaviInfoConstant.TYPE, -1))
+                                    .setSegRemainDis(intent.getIntExtra(NaviInfoConstant.SEG_REMAIN_DIS, -1))
+                                    .setIcon(intent.getIntExtra(NaviInfoConstant.ICON, -1))
+
+                                    .setNextRoadName(intent.getStringExtra(NaviInfoConstant.NEXT_ROAD_NAME))
+                                    .setCurRoadName(intent.getStringExtra(NaviInfoConstant.CUR_ROAD_NAME))
+
+                                    .setRouteRemainDis(intent.getIntExtra(NaviInfoConstant.ROUTE_REMAIN_DIS, -1))
+                                    .setRouteRemainTime(intent.getIntExtra(NaviInfoConstant.ROUTE_REMAIN_TIME, -1))
+
+                                    .setRouteAllDis(intent.getIntExtra(NaviInfoConstant.ROUTE_ALL_DIS, -1))
+                                    .setRouteAllTime(intent.getIntExtra(NaviInfoConstant.ROUTE_ALL_TIME, -1))
+
+                                    .setCurSpeed(intent.getIntExtra(NaviInfoConstant.CUR_SPEED, -1))
+                                    .setCameraSpeed(intent.getIntExtra(NaviInfoConstant.CAMERA_SPEED, -1))
+                            );
                         }
                     });
                     break;
@@ -110,9 +123,9 @@ public class AMapCartReceiver extends BroadcastReceiver {
                         public void run() {
                             aMapCarPlugin.noticeHeartbeatTime();
                             int state = intent.getIntExtra(EXTRA_STATE, -1);
-                            if (state == 8 || state == 10) {
+                            if (state == StateInfoConstant.NAV_START || state == StateInfoConstant.MNAV_START) {
                                 EventBus.getDefault().post(new PAmapEventState().setRunning(true));
-                            } else if (state == 9 || state == 11) {
+                            } else if (state == StateInfoConstant.NAV_STOP || state == StateInfoConstant.MNAV_STOP || state == StateInfoConstant.APP_EXIT) {
                                 EventBus.getDefault().post(new PAmapEventState().setRunning(false));
                             }
                         }

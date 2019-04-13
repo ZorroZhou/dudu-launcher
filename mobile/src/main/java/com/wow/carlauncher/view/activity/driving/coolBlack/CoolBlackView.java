@@ -111,26 +111,26 @@ public class CoolBlackView extends BaseEBusView {
         if (iv_naving != null && event.getIcon() - 1 >= 0 && event.getIcon() - 1 < ICONS.length) {
             iv_naving.setImageResource(ICONS[event.getIcon() - 1]);
         }
-        if (tv_amaproad != null && CommonUtil.isNotNull(event.getWroad())) {
+        if (tv_amaproad != null && CommonUtil.isNotNull(event.getNextRoadName())) {
             String msg = "";
-            if (event.getDis() < 10) {
+            if (event.getSegRemainDis() < 10) {
                 msg = msg + "现在";
             } else {
-                if (event.getDis() > 1000) {
-                    msg = msg + event.getDis() / 1000 + "公里后";
+                if (event.getSegRemainDis() > 1000) {
+                    msg = msg + event.getSegRemainDis() / 1000 + "公里后";
                 } else {
-                    msg = msg + event.getDis() + "米后";
+                    msg = msg + event.getSegRemainDis() + "米后";
                 }
             }
-            msg = msg + event.getWroad();
+            msg = msg + event.getNextRoadName();
             tv_amaproad.setText(msg);
         }
-        if (tv_amapmsg != null && event.getRemainTime() > -1 && event.getRemainDis() > -1) {
-            if (event.getRemainTime() == 0 || event.getRemainDis() == 0) {
+        if (tv_amapmsg != null && event.getRouteRemainTime() > -1 && event.getRouteRemainDis() > -1) {
+            if (event.getRouteRemainTime() == 0 || event.getRouteRemainDis() == 0) {
                 tv_amapmsg.setText("到达");
             } else {
-                String msg = "剩余" + new BigDecimal(event.getRemainDis() / 1000f).setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue() + "公里  " +
-                        event.getRemainTime() / 60 + "分钟";
+                String msg = "剩余" + new BigDecimal(event.getRouteRemainDis() / 1000f).setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue() + "公里  " +
+                        event.getRouteRemainTime() / 60 + "分钟";
                 tv_amapmsg.setText(msg);
             }
         }

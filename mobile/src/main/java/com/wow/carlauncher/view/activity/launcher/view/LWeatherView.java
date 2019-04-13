@@ -14,6 +14,7 @@ import com.google.common.base.Strings;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.WeatherIconUtil;
+import com.wow.carlauncher.ex.manage.location.event.MNewLocationEvent;
 import com.wow.carlauncher.ex.manage.time.event.MTimeMinuteEvent;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.repertory.amapWebservice.WebService;
@@ -48,14 +49,20 @@ public class LWeatherView extends BaseEBusView {
     private TextView tv_wendu1;
 
 
-    @ViewInject(R.id.tv_kongqq)
-    private TextView tv_kongqq;
+    @ViewInject(R.id.tv_kqsd)
+    private TextView tv_kqsd;
 
     @ViewInject(R.id.tv_title)
     private TextView tv_title;
 
     @ViewInject(R.id.iv_tianqi)
     private ImageView iv_tianqi;
+
+    @ViewInject(R.id.tv_fl)
+    private TextView tv_fl;
+    @ViewInject(R.id.tv_fx)
+    private TextView tv_fx;
+
 
     public LWeatherView(@NonNull Context context) {
         super(context);
@@ -96,44 +103,56 @@ public class LWeatherView extends BaseEBusView {
         addContent(R.layout.content_l_weather);
     }
 
+    private String city, adcode;
+
+    private long lastUpdate;
+    private boolean runninng = false;
+
     private void refreshWeather() {
+        if (runninng) {
+            return;
+        }
+        runninng = true;
         x.task().autoPost(new Runnable() {
             @Override
             public void run() {
-                if (Strings.isNullOrEmpty(SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_CITY))) {
-                    tv_title.setText("点击设置城市");
+                String chengshi = "";
+                //如果定位失败,则使用设置的地理位置
+                if (Strings.isNullOrEmpty(adcode)) {
+                    if (Strings.isNullOrEmpty(SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_CITY))) {
+                        tv_title.setText("点击设置城市");
+                    } else {
+                        tv_title.setText(SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_CITY));
+                        chengshi = SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_CITY);
+                    }
+                    tv_tianqi.setText("");
+                    tv_wendu1.setText("");
                 } else {
-                    tv_title.setText(SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_CITY));
+                    chengshi = adcode;
+                    tv_title.setText(city);
                 }
-                tv_tianqi.setText("");
-                tv_wendu1.setText("");
 
-                if (!Strings.isNullOrEmpty(SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_CITY))) {
-                    WebService.getWeatherInfo(SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_CITY), new WebService.CommonCallback<WeatherRes>() {
+                if (!Strings.isNullOrEmpty(chengshi)) {
+                    WebService.getWeatherInfo(chengshi, new WebService.CommonCallback<WeatherRes>() {
                         @Override
                         public void callback(WeatherRes res) {
-                            System.out.println(res);
+                            runninng = false;
                             if (Integer.valueOf(1).equals(res.getStatus()) && res.getLives().size() > 0) {
-                                iv_tianqi.setImageResource(WeatherIconUtil.getWeatherResId(res.getLives().get(0).getWeather()));
-
-                                tv_wendu1.setText(res.getLives().get(0).getTemperature() + "℃");
-                                tv_tianqi.setText(res.getLives().get(0).getWeather());
-                                // String feng;
-                                String wd = res.getLives().get(0).getWinddirection();
-                                Log.e(TAG, "callback: " + wd);
-//                                if (wd.equals("东北") || wd.equals("东") || wd.equals("东南") || wd.equals("南") || wd.equals("西南") || wd.equals("西") || wd.equals("西北") || wd.equals("北")) {
-//                                    feng = wd + "风: ";
-//                                } else {
-//                                    feng = "风力: ";
-//                                }
-                                //tv_feng.setText(feng + res.getLives().get(0).getWindpower() + "级");
-                                tv_kongqq.setText("湿度: " + res.getLives().get(0).getHumidity());
-                                //tv_tianqi2.setText(feng + res.getLives().get(0).getWindpower() + "级  空气湿度:" + res.getLives().get(0).getHumidity());
-                            } else {
-                                //tv_tianqi.setText("请检查网络");
+                                lastUpdate = System.currentTimeMillis();
+                                WeatherRes.CityWeather cityWeather = res.getLives().get(0);
+                                if (cityWeather != null) {
+                                    iv_tianqi.setImageResource(WeatherIconUtil.getWeatherResId(cityWeather.getWeather()));
+                                    tv_tianqi.setText(cityWeather.getWeather());
+                                    tv_wendu1.setText(String.valueOf(cityWeather.getTemperature() + "℃"));
+                                    tv_kqsd.setText(String.valueOf(cityWeather.getHumidity()));
+                                    tv_fl.setText(String.valueOf(cityWeather.getWindpower()));
+                                    tv_fx.setText(String.valueOf(cityWeather.getWinddirection() + "风"));
+                                }
                             }
                         }
                     });
+                } else {
+                    runninng = false;
                 }
             }
         });
@@ -149,5 +168,10 @@ public class LWeatherView extends BaseEBusView {
         refreshWeather();
     }
 
-
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(MNewLocationEvent event) {
+        this.adcode = event.getAdCode();
+        this.city = event.getCity();
+        refreshWeather();
+    }
 }

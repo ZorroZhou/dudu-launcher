@@ -74,12 +74,131 @@ public class AMapCarConstant {
 
     //引导信息
     public static final int NAVI_INFO = 10001;
-    public static final String NAVI_INFO_ICON = "ICON";
-    public static final String NAVI_INFO_SEG_REMAIN_DIS = "SEG_REMAIN_DIS";
-    public static final String NAVI_INFO_NEXT_ROAD_NAME = "NEXT_ROAD_NAME";
-    public static final String NAVI_INFO_ROUTE_REMAIN_DIS = "ROUTE_REMAIN_DIS";
-    public static final String NAVI_INFO_ROUTE_REMAIN_TIME = "ROUTE_REMAIN_TIME";
+
+    public static class NaviInfoConstant {
+        //导航类型，对应的值为int类型
+        //：GPS导航
+        //1：模拟导航
+        public static final String TYPE = "TYPE";
+
+        //当前道路名称，对应的值为String类型
+
+        public static final String CUR_ROAD_NAME = "CUR_ROAD_NAME";
+
+        //下一道路名，对应的值为String类型
+        public static final String NEXT_ROAD_NAME = "NEXT_ROAD_NAME";
+
+
+        //距离最近服务区的距离，对应的值为int类型，单位：米
+        public static final String SAPA_DIST = "SAPA_DIST";
+
+        //服务区类型，对应的值为int类型
+        //0：高速服务区
+        //1：其他高速服务设施（收费站等）
+
+        public static final String SAPA_TYPE = "SAPA_TYPE";
+
+        //距离最近的电子眼距离，对应的值为int类型，单位：米
+        public static final String CAMERA_DIST = "CAMERA_DIST";
+
+        //电子眼类型，对应的值为int类型
+        //0 测速摄像头
+        //1为监控摄像头
+        //2为闯红灯拍照
+        //3为违章拍照
+        //4为公交专用道摄像头
+        //5为应急车道摄像头
+
+        public static final String CAMERA_TYPE = "CAMERA_TYPE";
+
+        //电子眼限速度，对应的值为int类型，无限速则为0，单位：公里/小时
+        public static final String CAMERA_SPEED = "CAMERA_SPEED";
+
+
+        //下一个将要路过的电子眼编号，若为-1则对应的道路上没有电子眼，对应的值为int类型
+        public static final String CAMERA_INDEX = "CAMERA_INDEX";
+
+        //导航转向图标，对应的值为int类型
+        public static final String ICON = "ICON";
+
+        //路径剩余距离，对应的值为int类型，单位：米
+        public static final String ROUTE_REMAIN_DIS = "ROUTE_REMAIN_DIS";
+
+        //路径剩余时间，对应的值为int类型，单位：秒
+        public static final String ROUTE_REMAIN_TIME = "ROUTE_REMAIN_TIME";
+
+        //当前导航段剩余距离，对应的值为int类型，单位：米
+        public static final String SEG_REMAIN_DIS = "SEG_REMAIN_DIS";
+
+        //当前导航段剩余时间，对应的值为int类型，单位：秒
+        public static final String SEG_REMAIN_TIME = "SEG_REMAIN_TIME";
+
+        //当前位置的前一个形状点号，对应的值为int类型，从0开始
+        public static final String CUR_POINT_NUM = "CUR_POINT_NUM";
+
+        //环岛出口序号，对应的值为int类型，从0开始.
+        //1.x版本：只有在icon为11和12时有效，其余为无效值0
+        //2.x版本：只有在icon为11、12、17、18时有效，其余为无效值0
+        public static final String ROUND_ABOUT_NUM = "ROUNG_ABOUT_NUM";
+
+        //路径总距离，对应的值为int类型，单位：米
+        public static final String ROUTE_ALL_DIS = "ROUTE_ALL_DIS";
+
+        //路径总时间，对应的值为int类型，单位：秒
+        public static final String ROUTE_ALL_TIME = "ROUTE_ALL_TIME";
+
+        //当前车速，对应的值为int类型，单位：公里/小时
+        public static final String CUR_SPEED = "CUR_SPEED";
+
+        //红绿灯个数，对应的值为int类型
+        public static final String TRAFFIC_LIGHT_NUM = "TRAFFIC_LIGHT_NUM";
+
+        //服务区个数，对应的值为int类型
+        public static final String SAPA_NUM = "SAPA_NUM";
+
+        //下一个服务区名称，对应的值为String类型
+        public static final String SAPA_NAME = "SAPA_NAME";
+
+        //当前道路类型，对应的值为int类型
+        //0：高速公路
+        //1：国道
+        //2：省道
+        //3：县道
+        //4：乡公路
+        //5：县乡村内部道路
+        //6：主要大街、城市快速道
+        //7：主要道路
+        //8：次要道路
+        //9：普通道路
+        //10：非导航道路
+
+        public static final String ROAD_TYPE = "ROAD_TYPE";
+    }
+
 
     //状态信息
     public static final int STATE_INFO = 10019;
+
+    public static class StateInfoConstant {
+        public static final int APP_OPEN = 0;//开始运行，Application启动即为开始运行
+        public static final int APP_INIT = 1;//初始化完成，每次创建地图完成通知
+        public static final int APP_EXIT = 2;//运行结束，退出程序
+        public static final int APP_TO_FRONT = 3;//进入前台，OnStart函数中调用
+        public static final int APP_TO_BACK = 4;//进入后台，OnStop函数中调用
+        public static final int GET_ROAD = 5;//开始算路
+        public static final int GET_ROAD_SUCCESS = 6;//开始算路 成功
+        public static final int GET_ROAD_ERROR = 7;//开始算路 失败
+        public static final int NAV_START = 8;//开始导航
+        public static final int NAV_STOP = 9;//结束导航
+        public static final int MNAV_START = 10;//开始模拟导航
+        public static final int MNAV_PAUSE = 11;//暂停模拟导航
+        public static final int MNAV_STOP = 12;//结束模拟导航
+        public static final int TTS_START = 13;//开始TTS播报
+        public static final int TTS_STOP = 14;//停止TTS播报
+        public static final int XH_START = 24;//进入巡航播报状态
+        public static final int XH_STOP = 25;//退出巡航播报状态
+
+        public static final int NAV_GET = 39;//到达目的地通知
+        public static final int HREAT = 40;//心跳通知
+    }
 }

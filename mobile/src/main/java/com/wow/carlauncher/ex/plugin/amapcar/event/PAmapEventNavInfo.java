@@ -9,14 +9,15 @@ public class PAmapEventNavInfo {
     private int type;
     //图标
     private int icon;
-    //距离,米
-    private int dis;
-    //路名
-    private String wroad;
-    //剩余距离
-    private int remainDis;
-    //剩余时间
-    private int remainTime;
+    private int segRemainDis; //当前导航段剩余距离，对应的值为int类型，单位：米
+    private String nextRoadName;//下一道路名
+    private String curRoadName;//当前道路名称
+    private int routeRemainDis;//路径剩余距离，对应的值为int类型，单位：米
+    private int routeRemainTime;//路径剩余时间，对应的值为int类型，单位：秒
+    private int routeAllDis;//路径总距离，对应的值为int类型，单位：米
+    private int routeAllTime;//路径总时间，对应的值为int类型，单位：秒
+    private int curSpeed;//当前车速，对应的值为int类型，单位：公里/小时
+    private int cameraSpeed;//电子眼限速度，对应的值为int类型，无限速则为0，单位：公里/小时
 
     public int getType() {
         return type;
@@ -36,39 +37,84 @@ public class PAmapEventNavInfo {
         return this;
     }
 
-    public int getDis() {
-        return dis;
+    public int getSegRemainDis() {
+        return segRemainDis;
     }
 
-    public PAmapEventNavInfo setDis(int dis) {
-        this.dis = dis;
+    public PAmapEventNavInfo setSegRemainDis(int segRemainDis) {
+        this.segRemainDis = segRemainDis;
         return this;
     }
 
-    public String getWroad() {
-        return wroad;
+    public String getNextRoadName() {
+        return nextRoadName;
     }
 
-    public PAmapEventNavInfo setWroad(String wroad) {
-        this.wroad = wroad;
+    public PAmapEventNavInfo setNextRoadName(String nextRoadName) {
+        this.nextRoadName = nextRoadName;
         return this;
     }
 
-    public int getRemainDis() {
-        return remainDis;
+    public String getCurRoadName() {
+        return curRoadName;
     }
 
-    public PAmapEventNavInfo setRemainDis(int remainDis) {
-        this.remainDis = remainDis;
+    public PAmapEventNavInfo setCurRoadName(String curRoadName) {
+        this.curRoadName = curRoadName;
         return this;
     }
 
-    public int getRemainTime() {
-        return remainTime;
+    public int getRouteRemainDis() {
+        return routeRemainDis;
     }
 
-    public PAmapEventNavInfo setRemainTime(int remainTime) {
-        this.remainTime = remainTime;
+    public PAmapEventNavInfo setRouteRemainDis(int routeRemainDis) {
+        this.routeRemainDis = routeRemainDis;
+        return this;
+    }
+
+    public int getRouteRemainTime() {
+        return routeRemainTime;
+    }
+
+    public PAmapEventNavInfo setRouteRemainTime(int routeRemainTime) {
+        this.routeRemainTime = routeRemainTime;
+        return this;
+    }
+
+    public int getRouteAllDis() {
+        return routeAllDis;
+    }
+
+    public PAmapEventNavInfo setRouteAllDis(int routeAllDis) {
+        this.routeAllDis = routeAllDis;
+        return this;
+    }
+
+    public int getRouteAllTime() {
+        return routeAllTime;
+    }
+
+    public PAmapEventNavInfo setRouteAllTime(int routeAllTime) {
+        this.routeAllTime = routeAllTime;
+        return this;
+    }
+
+    public int getCurSpeed() {
+        return curSpeed;
+    }
+
+    public PAmapEventNavInfo setCurSpeed(int curSpeed) {
+        this.curSpeed = curSpeed;
+        return this;
+    }
+
+    public int getCameraSpeed() {
+        return cameraSpeed;
+    }
+
+    public PAmapEventNavInfo setCameraSpeed(int cameraSpeed) {
+        this.cameraSpeed = cameraSpeed;
         return this;
     }
 }

@@ -87,7 +87,7 @@
             android:layout_height="0dp"
             android:gravity="center"
             android:orientation="horizontal"
-            app:layout_heightPercent="15%h"
+            app:layout_heightPercent="18%h"
             app:layout_marginTopPercent="5%h">
 
 

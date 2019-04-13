@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,14 +57,22 @@ public class LAMapView extends BaseEBusView {
     @ViewInject(R.id.ll_navi)
     private LinearLayout amapnavi;
 
-//    @ViewInject(R.id.tv_road)
-//    private TextView amaproad;
+    @ViewInject(R.id.tv_next_dis)
+    private TextView tv_next_dis;
+
+    @ViewInject(R.id.tv_next_road)
+    private TextView tv_next_road;
+
+    @ViewInject(R.id.tv_xiansu)
+    private TextView tv_xiansu;
+
 
     @ViewInject(R.id.tv_msg)
-    private TextView amapmsg;
+    private TextView tv_msg;
 
-    @ViewInject(R.id.rl_base)
-    private View rl_base;
+    @ViewInject(R.id.progressBar)
+    private ProgressBar progressBar;
+
 
     @Event(value = {R.id.rl_base, R.id.btn_go_home, R.id.btn_go_company})
     private void clickEvent(View view) {
@@ -114,31 +123,77 @@ public class LAMapView extends BaseEBusView {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(final PAmapEventNavInfo event) {
+        String fangxiang = "";
         if (amapIcon != null && event.getIcon() - 1 >= 0 && event.getIcon() - 1 < ICONS.length) {
             amapIcon.setImageResource(ICONS[event.getIcon() - 1]);
-        }
-//        if (amaproad != null && CommonUtil.isNotNull(event.getWroad())) {
-//            String msg = "";
-//            if (event.getDis() < 10) {
-//                msg = msg + "现在";
-//            } else {
-//                if (event.getDis() > 1000) {
-//                    msg = msg + event.getDis() / 1000 + "公里后";
-//                } else {
-//                    msg = msg + event.getDis() + "米后";
-//                }
-//            }
-//            msg = msg + event.getWroad();
-//            amaproad.setText(msg);
-//        }
-        if (amapmsg != null && event.getRemainTime() > -1 && event.getRemainDis() > -1) {
-            if (event.getRemainTime() == 0 || event.getRemainDis() == 0) {
-                amapmsg.setText("到达");
-            } else {
-                String msg = "剩余" + new BigDecimal(event.getRemainDis() / 1000f).setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue() + "公里  " +
-                        event.getRemainTime() / 60 + "分钟";
-                amapmsg.setText(msg);
+            switch (event.getIcon()) {
+                case 2:
+                    fangxiang = "左拐";
+                    break;
+                case 3:
+                    fangxiang = "右拐";
+                    break;
+                case 4:
+                    fangxiang = "左前方";
+                    break;
+                case 5:
+                    fangxiang = "右前方";
+                    break;
+                case 6:
+                    fangxiang = "左后方";
+                    break;
+                case 7:
+                    fangxiang = "右后方";
+                    break;
+                case 8:
+                    fangxiang = "掉头";
+                    break;
+                case 20:
+                    fangxiang = "右方掉头";
+                    break;
             }
         }
+
+        if (tv_next_dis != null && CommonUtil.isNotNull(event.getSegRemainDis())) {
+            String msg = "";
+            if (event.getSegRemainDis() < 10) {
+                msg = msg + "现在";
+            } else {
+                if (event.getSegRemainDis() > 1000) {
+                    msg = msg + event.getSegRemainDis() / 1000 + "公里后";
+                } else {
+                    msg = msg + event.getSegRemainDis() + "米后";
+                }
+            }
+            msg = msg + event.getNextRoadName();
+            tv_next_dis.setText(msg);
+        }
+        if (tv_next_road != null && CommonUtil.isNotNull(event.getNextRoadName())) {
+            String msg = fangxiang + "进入" + event.getNextRoadName();
+            tv_next_road.setText(msg);
+        }
+        if (tv_xiansu != null) {
+            if (event.getCameraSpeed() > 0) {
+                String msg = event.getCameraSpeed() + "";
+                tv_xiansu.setText(msg);
+                tv_xiansu.setVisibility(VISIBLE);
+            } else {
+                tv_xiansu.setVisibility(GONE);
+            }
+        }
+
+        if (tv_msg != null && event.getRouteRemainTime() > -1 && event.getRouteRemainDis() > -1) {
+            if (event.getRouteRemainTime() == 0 || event.getRouteRemainDis() == 0) {
+                tv_msg.setText("到达");
+            } else {
+                String msg = "剩余" + new BigDecimal(event.getRouteRemainDis() / 1000f).setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue() + "公里";
+                tv_msg.setText(msg);
+            }
+        }
+
+        if (progressBar != null) {
+            progressBar.setProgress((int) (event.getRouteRemainDis() * 100f / event.getRouteAllDis()));
+        }
+
     }
 }

@@ -49,14 +49,19 @@ public class LAMapView extends BaseEBusView {
 
     @ViewInject(R.id.ll_controller)
     private View amapController;
+
     @ViewInject(R.id.iv_icon)
     private ImageView amapIcon;
+
     @ViewInject(R.id.ll_navi)
     private LinearLayout amapnavi;
+
 //    @ViewInject(R.id.tv_road)
 //    private TextView amaproad;
+
     @ViewInject(R.id.tv_msg)
     private TextView amapmsg;
+
     @ViewInject(R.id.rl_base)
     private View rl_base;
 

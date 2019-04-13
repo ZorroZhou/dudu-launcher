@@ -7,40 +7,105 @@
     android:layout_height="match_parent"
     android:background="@drawable/n_dh_bg"
     android:orientation="vertical"
-    tools:ignore="HardcodedText">
+    tools:ignore="HardcodedText,RtlHardcoded">
 
     <com.zhy.android.percent.support.PercentRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        app:layout_marginLeftPercent="3%h"
-        app:layout_marginRightPercent="3%h">
+        app:layout_marginLeftPercent="2%h"
+        app:layout_marginRightPercent="2%h">
 
         <com.zhy.android.percent.support.PercentFrameLayout
             android:id="@+id/fl_top"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_heightPercent="14%h">
+            app:layout_heightPercent="12%h">
 
             <TextView
                 android:id="@+id/tv_title"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="5dp"
                 android:gravity="center"
                 android:includeFontPadding="false"
                 android:lines="1"
                 android:text="导航"
-                app:layout_marginBottomPercent="7%h"
-                app:layout_textSizePercent="34%h" />
+                app:layout_textSizePercent="50%h" />
         </com.zhy.android.percent.support.PercentFrameLayout>
 
-        <com.zhy.android.percent.support.PercentFrameLayout
+        <com.meetsl.scardview.SCardView
             android:id="@+id/fl_luxian"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_below="@id/fl_top"
-            android:background="@mipmap/n_dh_db"
-            app:layout_heightPercent="18%h" />
+            android:background="@android:color/transparent"
+            app:cardBackgroundColor="@android:color/transparent"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="5dp"
+            app:cardLightDirection="top"
+            app:cardPreventCornerOverlap="false"
+            app:cardUseCornerArea="true"
+            app:layout_heightPercent="20%h">
+
+            <com.zhy.android.percent.support.PercentRelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/n_dh2_bg">
+
+                <com.zhy.android.percent.support.PercentRelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_heightPercent="100%h"
+                    app:layout_widthPercent="100%h">
+
+                    <ImageView
+                        android:id="@+id/iv_icon"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_centerInParent="true"
+                        android:scaleType="fitCenter"
+                        android:src="@mipmap/hud_sou9"
+                        app:layout_heightPercent="55%h"
+                        app:layout_widthPercent="55%h" />
+                </com.zhy.android.percent.support.PercentRelativeLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:paddingRight="10dp"
+                    android:text="100M后"
+                    android:textColor="#fff"
+                    app:layout_heightPercent="78%h"
+                    app:layout_textSizePercent="35%h" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:gravity="center"
+                    android:lines="1"
+                    android:paddingRight="10dp"
+                    android:text="右拐进入香港路"
+                    android:textColor="#ddd"
+                    app:layout_heightPercent="54%h"
+                    app:layout_textSizePercent="22%h" />
+            </com.zhy.android.percent.support.PercentRelativeLayout>
+        </com.meetsl.scardview.SCardView>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_below="@id/fl_luxian"
+            app:layout_heightPercent="11%h"
+            app:layout_marginLeftPercent="3%h"
+            app:layout_marginTopPercent="3%h"
+            app:layout_widthPercent="11%h" />
 
         <LinearLayout
             android:id="@+id/ll_controller"
@@ -54,7 +119,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="#dbe2e5" />
+                android:background="#cdd8db" />
 
             <com.zhy.android.percent.support.PercentLinearLayout
                 android:layout_width="match_parent"
@@ -76,13 +141,28 @@
                         app:layout_widthPercent="60%h" />
                 </com.zhy.android.percent.support.PercentLinearLayout>
 
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="#cdd8db" />
+
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="测试文字"
-                    app:layout_textSizePercent="55%h" />
+                    android:text="剩余30公里"
+                    android:textColor="#6b7383"
+                    app:layout_textSizePercent="40%h" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="#cdd8db" />
 
                 <com.zhy.android.percent.support.PercentLinearLayout
                     android:id="@+id/btn_go_company"

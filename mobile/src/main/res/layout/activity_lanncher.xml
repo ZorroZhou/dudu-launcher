@@ -32,8 +32,8 @@
             android:layout_height="match_parent"
             android:layout_weight="60"
             android:orientation="horizontal"
-            app:layout_marginBottomPercent="4%h"
-            app:layout_marginTopPercent="4%h">
+            app:layout_marginBottomPercent="2%h"
+            app:layout_marginTopPercent="2%h">
 
             <com.meetsl.scardview.SCardView
                 android:layout_width="0dp"

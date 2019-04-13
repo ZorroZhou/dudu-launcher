@@ -108,7 +108,12 @@ public class LWeatherView extends BaseEBusView {
     private long lastUpdate;
     private boolean runninng = false;
 
-    private void refreshWeather() {
+    private void refreshWeather(boolean qiangzhi) {
+        if (!qiangzhi) {
+            if (System.currentTimeMillis() - lastUpdate < 60 * 1000 * 60) {
+                return;
+            }
+        }
         if (runninng) {
             return;
         }
@@ -160,18 +165,18 @@ public class LWeatherView extends BaseEBusView {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(LEventCityRefresh event) {
-        refreshWeather();
+        refreshWeather(true);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(MTimeMinuteEvent event) {
-        refreshWeather();
+        refreshWeather(false);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(MNewLocationEvent event) {
         this.adcode = event.getAdCode();
         this.city = event.getCity();
-        refreshWeather();
+        refreshWeather(false);
     }
 }

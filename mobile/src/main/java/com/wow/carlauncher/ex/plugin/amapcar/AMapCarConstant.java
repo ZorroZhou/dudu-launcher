@@ -206,6 +206,13 @@ public class AMapCarConstant {
 
     public static final int RECEIVER_LUKUANG_INFO = 13011;
     public static final String RECEIVER_LUKUANG_INFO_EXTAR = "EXTRA_TMC_SEGMENT";
+    public static final int RECEIVER_LUKUANG_TYPE_NONE = -1;//无效
+    public static final int RECEIVER_LUKUANG_TYPE_NO_INFO = 0;//无交通流
 
+    public static final int RECEIVER_LUKUANG_TYPE_R1 = 1;//畅通
+    public static final int RECEIVER_LUKUANG_TYPE_R2 = 2;//缓行（黄色）
+    public static final int RECEIVER_LUKUANG_TYPE_R3 = 3;// 拥堵（红色）
+    public static final int RECEIVER_LUKUANG_TYPE_R4 = 4;//严重拥堵（深红色）
+    public static final int RECEIVER_LUKUANG_TYPE_OVER = 10;// 行驶过的路段（灰色）
 
 }

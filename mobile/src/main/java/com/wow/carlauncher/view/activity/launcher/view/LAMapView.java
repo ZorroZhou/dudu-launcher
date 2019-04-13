@@ -17,6 +17,8 @@ import com.wow.carlauncher.R;
 import com.wow.carlauncher.ex.plugin.amapcar.AMapCarPlugin;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventNavInfo;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventState;
+import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapLukuangInfo;
+import com.wow.carlauncher.ex.plugin.amapcar.model.Lukuang;
 import com.wow.carlauncher.view.base.BaseEBusView;
 import com.wow.frame.util.AppUtil;
 import com.wow.frame.util.CommonUtil;
@@ -31,6 +33,8 @@ import java.math.BigDecimal;
 import static com.wow.carlauncher.common.CommonData.TAG;
 import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.AMAP_PACKAGE;
 import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.ICONS;
+import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.RECEIVER_LUKUANG_TYPE_OVER;
+import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.RECEIVER_LUKUANG_TYPE_R2;
 
 /**
  * Created by 10124 on 2018/4/20.
@@ -111,12 +115,12 @@ public class LAMapView extends BaseEBusView {
     public void onEventMainThread(final PAmapEventState event) {
         if (amapController != null) {
             if (event.isRunning()) {
-                amapController.setVisibility(View.GONE);
-                amapnavi.setVisibility(View.VISIBLE);
+                //amapController.setVisibility(View.GONE);
+                //amapnavi.setVisibility(View.VISIBLE);
             } else {
                 amapController.setVisibility(View.VISIBLE);
-                amapnavi.setVisibility(View.GONE);
-                amapIcon.setImageResource(0);
+                //amapnavi.setVisibility(View.GONE);
+                //amapIcon.setImageResource(0);
             }
         }
     }
@@ -191,9 +195,36 @@ public class LAMapView extends BaseEBusView {
             }
         }
 
-        if (progressBar != null) {
-            progressBar.setProgress((int) (event.getRouteRemainDis() * 100f / event.getRouteAllDis()));
-        }
+    }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(final PAmapLukuangInfo event) {
+        Lukuang lukuang = event.getLukuang();
+        if (progressBar != null) {
+//            progressBar.setProgress((int) (event.getRouteRemainDis() * 100f / event.getRouteAllDis()));
+            if (lukuang.isTmc_segment_enabled()) {
+                progressBar.setVisibility(VISIBLE);
+                int zouguo = 0;
+                for (Lukuang.TmcInfo tmcInfo : lukuang.getTmc_info()) {
+                    if (tmcInfo.getTmc_status() == RECEIVER_LUKUANG_TYPE_OVER) {
+                        zouguo = tmcInfo.getTmc_segment_distance();
+                        break;
+                    }
+                }
+                progressBar.setProgress((int) (zouguo * 100f / lukuang.getTotal_distance()));
+
+//                int huangse = 0;
+//                for (Lukuang.TmcInfo tmcInfo : lukuang.getTmc_info()) {
+//                    if (tmcInfo.getTmc_status() == RECEIVER_LUKUANG_TYPE_R2||) {
+//                        zouguo = tmcInfo.getTmc_segment_distance();
+//                        break;
+//                    }
+//                }
+
+            } else {
+                progressBar.setVisibility(GONE);
+            }
+
+        }
     }
 }

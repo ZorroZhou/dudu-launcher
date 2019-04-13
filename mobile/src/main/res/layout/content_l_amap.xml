@@ -216,6 +216,7 @@
             android:max="100"
             android:progress="50"
             android:progressDrawable="@drawable/n_dh_progress"
+            android:secondaryProgress="80"
             app:layout_marginBottomPercent="10%h"
             app:layout_marginRightPercent="2%h"
             app:layout_marginTopPercent="5%h" />

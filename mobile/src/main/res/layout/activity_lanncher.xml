@@ -32,38 +32,59 @@
             android:layout_height="match_parent"
             android:layout_weight="60"
             android:orientation="horizontal"
-            app:layout_marginBottomPercent="6%h"
-            app:layout_marginTopPercent="6%h">
+            app:layout_marginBottomPercent="4%h"
+            app:layout_marginTopPercent="4%h">
 
-            <com.wow.carlauncher.view.activity.launcher.view.LAMapView
-                android:id="@+id/item_amap"
+            <com.meetsl.scardview.SCardView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical"
-                app:layout_marginLeftPercent="4%h"
-                app:layout_marginRightPercent="1.5%h" />
+                android:background="@android:color/transparent"
+                app:cardBackgroundColor="@android:color/transparent"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="10dp"
+                app:cardLightDirection="LT"
+                app:cardPreventCornerOverlap="false"
+                app:cardUseCornerArea="true">
 
-            <com.wow.carlauncher.view.activity.launcher.view.LMusicView
-                android:id="@+id/item_music"
+                <com.wow.carlauncher.view.activity.launcher.view.LAMapView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </com.meetsl.scardview.SCardView>
+
+            <com.meetsl.scardview.SCardView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical"
-                app:layout_marginLeftPercent="1.5%h"
-                app:layout_marginRightPercent="1.5%h" />
+                android:background="@android:color/transparent"
+                app:cardBackgroundColor="@android:color/transparent"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="10dp"
+                app:cardLightDirection="LT"
+                app:cardPreventCornerOverlap="false"
+                app:cardUseCornerArea="true">
 
-            <com.wow.carlauncher.view.activity.launcher.view.LWeatherView
-                android:id="@+id/item_music2"
+                <com.wow.carlauncher.view.activity.launcher.view.LMusicView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </com.meetsl.scardview.SCardView>
+
+            <com.meetsl.scardview.SCardView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical"
-                app:layout_marginLeftPercent="1.5%h"
-                app:layout_marginRightPercent="4%h" />
+                android:background="@android:color/transparent"
+                app:cardBackgroundColor="@android:color/transparent"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="10dp"
+                app:cardLightDirection="LT"
+                app:cardPreventCornerOverlap="false"
+                app:cardUseCornerArea="true">
+
+                <com.wow.carlauncher.view.activity.launcher.view.LWeatherView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </com.meetsl.scardview.SCardView>
         </com.zhy.android.percent.support.PercentLinearLayout>
     </com.zhy.android.percent.support.PercentLinearLayout>
 

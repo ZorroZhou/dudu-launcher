@@ -98,14 +98,34 @@
             </com.zhy.android.percent.support.PercentRelativeLayout>
         </com.meetsl.scardview.SCardView>
 
-        <TextView
+        <com.zhy.android.percent.support.PercentLinearLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_below="@id/fl_luxian"
+            android:orientation="vertical"
             app:layout_heightPercent="11%h"
             app:layout_marginLeftPercent="3%h"
             app:layout_marginTopPercent="3%h"
-            app:layout_widthPercent="11%h" />
+            app:layout_widthPercent="11%h">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="3"
+                android:gravity="center_horizontal|bottom"
+                android:text="120"
+                android:textColor="#5d6575"
+                app:layout_textSizePercent="40%h" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:gravity="center_horizontal|top"
+                android:text="KM/H"
+                android:textColor="#5d6575"
+                app:layout_textSizePercent="20%h" />
+        </com.zhy.android.percent.support.PercentLinearLayout>
 
         <LinearLayout
             android:id="@+id/ll_controller"
@@ -181,6 +201,22 @@
             </com.zhy.android.percent.support.PercentLinearLayout>
         </LinearLayout>
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="5dp"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/ll_controller"
+            android:layout_below="@id/fl_luxian"
+            android:layout_alignParentRight="true"
+            android:indeterminate="false"
+            android:max="100"
+            android:progress="30"
+            android:progressDrawable="@drawable/n_dh_progress"
+            android:secondaryProgress="60"
+            app:layout_marginBottomPercent="10%h"
+            app:layout_marginRightPercent="2%h"
+            app:layout_marginTopPercent="5%h" />
 
         <!--<com.zhy.android.percent.support.PercentRelativeLayout-->
         <!--android:id="@+id/ll_icon"-->

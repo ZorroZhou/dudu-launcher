@@ -78,7 +78,7 @@ public class SAppView extends BaseView {
         addContent(R.layout.content_set_app);
 
         MusicControllerEnum p1 = MusicControllerEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_MUSIC_CONTROLLER, MusicControllerEnum.SYSMUSIC.getId()));
-        sv_plugin_select.setSummary("音乐播放器使用的控制器：" + p1.getName());
+        sv_plugin_select.setSummary(p1.getName());
         sv_plugin_select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,7 +98,7 @@ public class SAppView extends BaseView {
                     public void onClick(DialogInterface dialog, int which) {
                         SharedPreUtil.saveSharedPreInteger(SDATA_MUSIC_CONTROLLER, show[obj.getObj()].getId());
                         MusicPlugin.self().setController(show[obj.getObj()]);
-                        sv_plugin_select.setSummary("音乐播放器使用的控制器：" + show[obj.getObj()].getName());
+                        sv_plugin_select.setSummary(show[obj.getObj()].getName());
                     }
                 }).setSingleChoiceItems(items, select, new DialogInterface.OnClickListener() {
                     @Override

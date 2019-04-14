@@ -14,6 +14,8 @@ import android.widget.FrameLayout;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
+import com.wow.carlauncher.common.SunRiseSetUtil;
+import com.wow.carlauncher.ex.manage.location.event.MNewLocationEvent;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.console.event.PConsoleEventLightState;
 import com.wow.carlauncher.view.activity.AppSelectActivity;
@@ -27,6 +29,8 @@ import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
+
+import java.util.Date;
 
 import static com.wow.carlauncher.common.CommonData.IDATA_APP_MARK;
 import static com.wow.carlauncher.common.CommonData.IDATA_APP_PACKAGE_NAME;
@@ -52,6 +56,8 @@ public class LauncherActivity extends Activity {
 
     private PackageManager pm;
 
+    private boolean night = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +77,8 @@ public class LauncherActivity extends Activity {
         setContentView(R.layout.activity_lanncher);
         x.view().inject(this);
         EventBus.getDefault().register(this);
+
+        //System.out.println(SunRiseSetUtil.get);
     }
 
     @Event(value = {R.id.tv_time})
@@ -178,6 +186,12 @@ public class LauncherActivity extends Activity {
 
     @Override
     public void onBackPressed() {
+
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(MNewLocationEvent event) {
+        System.out.println("!!!!!!!" + SunRiseSetUtil.isNight(event.getLongitude(), event.getLatitude(), new Date()));
 
     }
 

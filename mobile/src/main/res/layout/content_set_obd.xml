@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         st:summary="@string/set_yes"
         st:summary2="@string/set_no"
-        st:titleEx="发动机有转速后自动弹出仪表盘界面(需要obd支持)"
+        st:titleEx="发动机有转速后自动弹出仪表盘界面"
         st:type="checkB" />
 
     <View style="@style/Interval" />

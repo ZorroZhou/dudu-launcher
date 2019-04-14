@@ -172,8 +172,12 @@ public class LWeatherView extends BaseEBusView {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(MNewLocationEvent event) {
+        boolean frist = false;
+        if (this.adcode == null) {
+            frist = true;
+        }
         this.adcode = event.getAdCode();
         this.city = event.getCity();
-        refreshWeather(false);
+        refreshWeather(frist);
     }
 }

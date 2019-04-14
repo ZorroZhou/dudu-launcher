@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:st="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@android:color/white"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:ignore="HardcodedText,RtlHardcoded">
 
     <TextView
         android:layout_width="match_parent"
@@ -16,11 +18,31 @@
         android:textSize="14sp" />
 
     <com.wow.carlauncher.common.view.SetView
+        android:id="@+id/sv_plugin_theme"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        st:summary="未选择"
+        st:titleEx="主题选择,可以选择使用昼夜主题"
+        st:type="buttonB" />
+
+    <View style="@style/Interval" />
+
+    <com.wow.carlauncher.common.view.SetView
         android:id="@+id/sv_plugin_select"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        st:summary="音乐插件的实现选择,可使用APP控制第三方音乐播放器"
-        st:titleEx="音乐播放器控制器选择"
+        st:summary="未选择"
+        st:titleEx="音乐播放器控制器，可使用APP控制第三方音乐播放器"
+        st:type="buttonB" />
+
+    <View style="@style/Interval" />
+
+    <com.wow.carlauncher.common.view.SetView
+        android:id="@+id/sv_console"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        st:summary="未选择"
+        st:titleEx="控制层实现，如声音控制，一件清理等功能的实现，不同的车机可能处理方式不同。"
         st:type="buttonB" />
 
     <View style="@style/Interval" />
@@ -40,16 +62,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         st:titleEx="壁纸设置"
-        st:type="buttonB" />
-
-    <View style="@style/Interval" />
-
-    <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_console"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        st:summary="如声音控制，一件清理等功能的实现，不同的车机可能处理方式不同。"
-        st:titleEx="控制层实现"
         st:type="buttonB" />
 
     <View style="@style/Interval" />

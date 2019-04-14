@@ -71,9 +71,32 @@ public class AMapCarPlugin extends ContextEx {
             Toast.makeText(getContext(), "没有安装高德地图", Toast.LENGTH_SHORT).show();
             return;
         }
-
         sendReceiver(REQUEST_EXIT_NAV, null);
     }
+
+    public void mute(boolean mute) {
+        if (!AppUtil.isInstall(getContext(), AMAP_PACKAGE)) {
+            Toast.makeText(getContext(), "没有安装高德地图", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        Map<String, Object> param = new HashMap<>();
+        if (mute) {
+            param.put(REQUEST_SET_NAVI_MUTE_MARK, 1);
+        } else {
+            param.put(REQUEST_SET_NAVI_MUTE_MARK, 0);
+            param.put(REQUEST_SET_NAVI_CASUAL_MUTE_MARK, 0);
+        }
+        sendReceiver(REQUEST_SET_NAVI_MUTE, param);
+    }
+
+    public void getMute() {
+        if (!AppUtil.isInstall(getContext(), AMAP_PACKAGE)) {
+            Toast.makeText(getContext(), "没有安装高德地图", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        sendReceiver(REQUEST_GET_NAVI_MUTE, null);
+    }
+
 
     public void getHome() {
         if (!AppUtil.isInstall(getContext(), AMAP_PACKAGE)) {

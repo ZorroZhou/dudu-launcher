@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventNavInfo;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventState;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapLukuangInfo;
+import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapMuteStateInfo;
 import com.wow.carlauncher.ex.plugin.amapcar.model.Lukuang;
 import com.wow.frame.SFrame;
 
@@ -125,6 +126,10 @@ public class AMapCartReceiver extends BroadcastReceiver {
                             || state == StateInfoConstant.XH_STOP) {
                         EventBus.getDefault().post(new PAmapEventState().setRunning(false));
                     }
+                    //如果APP启动和APP退到后台了,则同步一下静音状态
+                    if (state == StateInfoConstant.APP_OPEN || state == StateInfoConstant.APP_TO_BACK) {
+                        aMapCarPlugin.getMute();
+                    }
                     break;
                 }
                 case RECEIVER_LUKUANG_INFO: {
@@ -134,6 +139,13 @@ public class AMapCartReceiver extends BroadcastReceiver {
                         EventBus.getDefault().post(new PAmapEventState().setRunning(true));
                         EventBus.getDefault().post(new PAmapLukuangInfo().setLukuang(lukuang));
                     }
+                    break;
+                }
+
+                case RECEIVE_NAVI_MUTE_STATE: {
+                    int state1 = intent.getIntExtra(RECEIVE_NAVI_MUTE_STATE_MUTE, 0);
+                    int state2 = intent.getIntExtra(RECEIVE_NAVI_MUTE_STATE_CASUAL_MUTE, 0);
+                    EventBus.getDefault().post(new PAmapMuteStateInfo().setMute(state1 == 1 || state2 == 1));
                     break;
                 }
             }

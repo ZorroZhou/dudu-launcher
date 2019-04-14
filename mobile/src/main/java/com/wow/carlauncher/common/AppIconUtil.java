@@ -22,6 +22,8 @@ public class AppIconUtil {
         appiconMark.put("com.nwd.radio", R.mipmap.app_icon_radio);
         appiconMark.put("com.nwd.bt.music", R.mipmap.app_icon_bt_music);
 
+        appiconMark.put("com.android.music", R.mipmap.app_icon_new_music);
+        appiconMark.put("com.android.settings", R.mipmap.app_icon_new_set);
     }
 
     public static int getIcon(String app) {

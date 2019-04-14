@@ -215,4 +215,15 @@ public class AMapCarConstant {
     public static final int RECEIVER_LUKUANG_TYPE_R4 = 4;//严重拥堵（深红色）
     public static final int RECEIVER_LUKUANG_TYPE_OVER = 10;// 行驶过的路段（灰色）
 
+
+    public static final int REQUEST_SET_NAVI_MUTE = 10047;
+    public static final String REQUEST_SET_NAVI_MUTE_MARK = "EXTRA_MUTE";
+    public static final String REQUEST_SET_NAVI_CASUAL_MUTE_MARK = "EXTRA_CASUAL_MUTE";
+
+    public static final int REQUEST_GET_NAVI_MUTE = 10071;
+
+    public static final int RECEIVE_NAVI_MUTE_STATE = 10072;
+
+    public static final String RECEIVE_NAVI_MUTE_STATE_CASUAL_MUTE = "EXTRA_CASUAL_MUTE";
+    public static final String RECEIVE_NAVI_MUTE_STATE_MUTE = "EXTRA_MUTE";
 }

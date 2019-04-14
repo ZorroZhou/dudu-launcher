@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/n_dh_bg"
     android:orientation="vertical"
-    tools:ignore="HardcodedText,RtlHardcoded">
+    tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry">
 
     <com.zhy.android.percent.support.PercentRelativeLayout
         android:layout_width="match_parent"
@@ -100,14 +100,16 @@
         </com.meetsl.scardview.SCardView>
 
         <com.zhy.android.percent.support.PercentLinearLayout
+            android:id="@+id/ll_xiansu"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_below="@id/fl_luxian"
             android:orientation="vertical"
-            app:layout_heightPercent="16%h"
+            android:visibility="gone"
+            app:layout_heightPercent="14%h"
             app:layout_marginLeftPercent="3%h"
             app:layout_marginTopPercent="3%h"
-            app:layout_widthPercent="16%h">
+            app:layout_widthPercent="14%h">
 
             <TextView
                 android:id="@+id/tv_xiansu"

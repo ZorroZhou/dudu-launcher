@@ -70,6 +70,8 @@ public class LAMapView extends BaseEBusView {
     @ViewInject(R.id.tv_xiansu)
     private TextView tv_xiansu;
 
+    @ViewInject(R.id.ll_xiansu)
+    private LinearLayout ll_xiansu;
 
     @ViewInject(R.id.tv_msg)
     private TextView tv_msg;
@@ -169,7 +171,6 @@ public class LAMapView extends BaseEBusView {
                     msg = msg + event.getSegRemainDis() + "米后";
                 }
             }
-            msg = msg + event.getNextRoadName();
             tv_next_dis.setText(msg);
         }
         if (tv_next_road != null && CommonUtil.isNotNull(event.getNextRoadName())) {
@@ -180,9 +181,9 @@ public class LAMapView extends BaseEBusView {
             if (event.getCameraSpeed() > 0) {
                 String msg = event.getCameraSpeed() + "";
                 tv_xiansu.setText(msg);
-                tv_xiansu.setVisibility(VISIBLE);
+                ll_xiansu.setVisibility(VISIBLE);
             } else {
-                tv_xiansu.setVisibility(GONE);
+                ll_xiansu.setVisibility(GONE);
             }
         }
 

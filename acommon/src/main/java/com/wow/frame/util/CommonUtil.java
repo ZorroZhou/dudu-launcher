@@ -8,16 +8,9 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.inputmethod.InputMethodManager;
 
-
-import com.google.gson.Gson;
-
 import java.lang.reflect.Array;
 import java.security.MessageDigest;
-import java.text.ParsePosition;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;

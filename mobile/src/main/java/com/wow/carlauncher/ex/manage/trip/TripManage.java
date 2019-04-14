@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import com.wow.frame.util.SharedPreUtil;
 import com.wow.carlauncher.ex.ContextEx;
 import com.wow.carlauncher.ex.manage.location.event.MNewLocationEvent;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
@@ -14,12 +13,16 @@ import com.wow.carlauncher.repertory.db.model.Trip;
 import com.wow.carlauncher.repertory.db.model.TripPoint;
 import com.wow.carlauncher.view.activity.driving.DrivingActivity;
 import com.wow.frame.repertory.dbTool.DatabaseManage;
+import com.wow.frame.util.SharedPreUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import static com.wow.carlauncher.common.CommonData.*;
+import static com.wow.carlauncher.common.CommonData.SDATA_TRIP_AUTO_OPEN_DRIVING;
+import static com.wow.carlauncher.common.CommonData.SDATA_TRIP_AUTO_OPEN_DRIVING_DF;
+import static com.wow.carlauncher.common.CommonData.SDATA_TRIP_MERGE_TIME;
+import static com.wow.carlauncher.common.CommonData.SDATA_TRIP_MERGE_TIME_DF;
 
 /**
  * 行程管理器

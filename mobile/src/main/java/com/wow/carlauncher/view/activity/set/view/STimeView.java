@@ -12,16 +12,15 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.common.CommonData;
+import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfo;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
-import com.wow.carlauncher.view.base.BaseDialog;
-import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
-import com.wow.carlauncher.common.view.SetView;
+import com.wow.carlauncher.ex.plugin.obd.ObdProtocolEnum;
+import com.wow.carlauncher.view.activity.launcher.event.LEventCityRefresh;
 import com.wow.carlauncher.view.base.BaseDialog2;
 import com.wow.carlauncher.view.dialog.CityDialog;
-import com.wow.carlauncher.view.activity.launcher.event.LEventCityRefresh;
-import com.wow.carlauncher.ex.plugin.obd.ObdProtocolEnum;
 import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.SharedPreUtil;
 import com.wow.frame.util.ThreadObj;
@@ -33,7 +32,6 @@ import org.xutils.x;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.content.DialogInterface.BUTTON_POSITIVE;
 import static com.wow.carlauncher.common.CommonData.TAG;
 
 /**

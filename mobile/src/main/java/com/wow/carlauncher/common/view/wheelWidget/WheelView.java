@@ -19,9 +19,6 @@
 
 package com.wow.carlauncher.common.view.wheelWidget;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import android.content.Context;
 import android.database.DataSetObserver;
 import android.graphics.Canvas;
@@ -39,6 +36,9 @@ import android.widget.LinearLayout;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.view.wheelWidget.adapters.WheelViewAdapter;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Numeric wheel view.

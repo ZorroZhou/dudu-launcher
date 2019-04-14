@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.wow.carlauncher.ex.plugin.obd.ObdProtocol;
 import com.wow.carlauncher.ex.plugin.obd.ObdProtocolListener;
+import com.wow.carlauncher.ex.plugin.obd.ObdTask;
 import com.wow.carlauncher.ex.plugin.obd.protocol.gd.CloseEchoTask;
 import com.wow.carlauncher.ex.plugin.obd.protocol.gd.CloseLineFeedTask;
 import com.wow.carlauncher.ex.plugin.obd.protocol.gd.CloseSpaceTask;
@@ -15,9 +16,6 @@ import com.wow.carlauncher.ex.plugin.obd.protocol.gd.GetSpeedTask;
 import com.wow.carlauncher.ex.plugin.obd.protocol.gd.GetTpTask;
 import com.wow.carlauncher.ex.plugin.obd.protocol.gd.GetWaterTempTask;
 import com.wow.carlauncher.ex.plugin.obd.protocol.gd.ProtocolAutoTask;
-import com.wow.carlauncher.ex.plugin.obd.ObdTask;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.UUID;
 

@@ -7,13 +7,13 @@ import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 
 import com.wow.carlauncher.R;
-import com.wow.carlauncher.repertory.city.model.CityModel;
-import com.wow.carlauncher.repertory.city.model.DistrictModel;
-import com.wow.carlauncher.repertory.city.model.ProvinceModel;
-import com.wow.carlauncher.repertory.city.XmlParserHandler;
 import com.wow.carlauncher.common.view.wheelWidget.OnWheelChangedListener;
 import com.wow.carlauncher.common.view.wheelWidget.WheelView;
 import com.wow.carlauncher.common.view.wheelWidget.adapters.ArrayWheelAdapter;
+import com.wow.carlauncher.repertory.city.XmlParserHandler;
+import com.wow.carlauncher.repertory.city.model.CityModel;
+import com.wow.carlauncher.repertory.city.model.DistrictModel;
+import com.wow.carlauncher.repertory.city.model.ProvinceModel;
 import com.wow.carlauncher.view.base.BaseDialog2;
 
 import java.io.InputStream;

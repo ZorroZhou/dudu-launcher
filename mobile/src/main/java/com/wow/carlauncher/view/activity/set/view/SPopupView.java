@@ -12,12 +12,12 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.wow.carlauncher.R;
-import com.wow.carlauncher.ex.manage.appInfo.AppInfo;
-import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.view.SetView;
-import com.wow.carlauncher.view.popupWindow.event.PEventFSRefresh;
+import com.wow.carlauncher.ex.manage.appInfo.AppInfo;
+import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.view.popupWindow.PopupWin;
+import com.wow.carlauncher.view.popupWindow.event.PEventFSRefresh;
 import com.wow.frame.util.SharedPreUtil;
 
 import org.greenrobot.eventbus.EventBus;

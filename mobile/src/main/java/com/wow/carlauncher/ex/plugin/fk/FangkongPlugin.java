@@ -16,7 +16,6 @@ import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventConnect;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventModel;
 import com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol;
-import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventConnect;
 import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.SharedPreUtil;
 

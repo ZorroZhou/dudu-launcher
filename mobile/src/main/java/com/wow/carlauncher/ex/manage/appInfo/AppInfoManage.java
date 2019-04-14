@@ -13,9 +13,9 @@ import android.support.v4.content.ContextCompat;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.AppIconUtil;
 import com.wow.carlauncher.common.CommonData;
+import com.wow.carlauncher.ex.manage.appInfo.event.MAppInfoRefreshEvent;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.view.activity.driving.DrivingActivity;
-import com.wow.carlauncher.ex.manage.appInfo.event.MAppInfoRefreshEvent;
 import com.wow.carlauncher.view.activity.set.SetActivity;
 import com.wow.frame.util.CommonUtil;
 
@@ -29,7 +29,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static com.wow.carlauncher.ex.manage.appInfo.AppInfo.*;
+import static com.wow.carlauncher.ex.manage.appInfo.AppInfo.INTERNAL_APP_DRIVING;
+import static com.wow.carlauncher.ex.manage.appInfo.AppInfo.INTERNAL_APP_SETTING;
+import static com.wow.carlauncher.ex.manage.appInfo.AppInfo.MARK_INTERNAL_APP;
+import static com.wow.carlauncher.ex.manage.appInfo.AppInfo.MARK_OTHER_APP;
 
 /**
  * Created by 10124 on 2017/11/13.

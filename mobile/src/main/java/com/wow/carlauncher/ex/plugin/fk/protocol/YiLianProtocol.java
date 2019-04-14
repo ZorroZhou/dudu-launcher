@@ -6,8 +6,8 @@ import android.util.Log;
 
 import com.google.common.primitives.Shorts;
 import com.wow.carlauncher.ex.plugin.console.ConsolePlugin;
-import com.wow.carlauncher.ex.plugin.fk.FKSimulateDoubleClick;
 import com.wow.carlauncher.ex.plugin.console.event.PConsoleEventCallState;
+import com.wow.carlauncher.ex.plugin.fk.FKSimulateDoubleClick;
 import com.wow.carlauncher.ex.plugin.fk.FangkongProtocol;
 import com.wow.carlauncher.ex.plugin.fk.FangkongProtocolListener;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;

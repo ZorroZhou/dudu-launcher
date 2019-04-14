@@ -4,8 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.wow.carlauncher.view.activity.launcher.LauncherActivity;
 import com.wow.carlauncher.service.MainService;
+import com.wow.carlauncher.view.activity.launcher.LauncherActivity;
 
 import org.xutils.x;
 

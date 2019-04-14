@@ -1,36 +1,25 @@
 package com.wow.carlauncher.view.activity.set.view;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 import com.wow.carlauncher.R;
-import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.view.SetView;
-import com.wow.carlauncher.ex.manage.appInfo.AppInfo;
-import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
-import com.wow.carlauncher.view.base.BaseDialog;
 import com.wow.carlauncher.view.base.BaseDialog2;
 import com.wow.carlauncher.view.base.BaseView;
 import com.wow.carlauncher.view.dialog.InputDialog;
-import com.wow.carlauncher.view.popupWindow.event.PEventFSRefresh;
 import com.wow.frame.util.SharedPreUtil;
 
-import org.greenrobot.eventbus.EventBus;
 import org.xutils.view.annotation.ViewInject;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static android.content.DialogInterface.BUTTON_POSITIVE;
-import static com.wow.carlauncher.common.CommonData.*;
+import static com.wow.carlauncher.common.CommonData.SDATA_TRIP_AUTO_OPEN_DRIVING;
+import static com.wow.carlauncher.common.CommonData.SDATA_TRIP_AUTO_OPEN_DRIVING_DF;
+import static com.wow.carlauncher.common.CommonData.SDATA_TRIP_MERGE_TIME;
+import static com.wow.carlauncher.common.CommonData.SDATA_TRIP_MERGE_TIME_DF;
 
 /**
  * Created by 10124 on 2018/4/22.

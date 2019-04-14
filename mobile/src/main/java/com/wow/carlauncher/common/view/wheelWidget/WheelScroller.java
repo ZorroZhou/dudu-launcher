@@ -23,8 +23,8 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.view.GestureDetector;
-import android.view.MotionEvent;
 import android.view.GestureDetector.SimpleOnGestureListener;
+import android.view.MotionEvent;
 import android.view.animation.Interpolator;
 import android.widget.Scroller;
 

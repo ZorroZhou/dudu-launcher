@@ -19,11 +19,11 @@
 
 package com.wow.carlauncher.common.view.wheelWidget;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import android.view.View;
 import android.widget.LinearLayout;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Recycle stores wheel items to reuse. 

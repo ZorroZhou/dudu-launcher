@@ -34,7 +34,6 @@ import static com.wow.carlauncher.common.CommonData.TAG;
 import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.AMAP_PACKAGE;
 import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.ICONS;
 import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.RECEIVER_LUKUANG_TYPE_OVER;
-import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.RECEIVER_LUKUANG_TYPE_R2;
 
 /**
  * Created by 10124 on 2018/4/20.

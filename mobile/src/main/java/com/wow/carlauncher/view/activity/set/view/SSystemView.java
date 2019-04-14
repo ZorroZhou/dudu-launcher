@@ -16,10 +16,10 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfo;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
-import com.wow.carlauncher.common.view.SetView;
 
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;

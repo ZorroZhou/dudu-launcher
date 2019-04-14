@@ -1,12 +1,5 @@
 package com.wow.carlauncher.ex.plugin.obd.protocol.gd;
 
-import android.util.Log;
-
-import com.wow.carlauncher.ex.plugin.obd.ObdTask;
-
-import static com.wow.carlauncher.common.CommonData.TAG;
-import static com.wow.carlauncher.ex.plugin.obd.protocol.gd.CommonCmd.CMD_RES_END;
-
 /**
  * Created by 10124 on 2018/4/20.
  */

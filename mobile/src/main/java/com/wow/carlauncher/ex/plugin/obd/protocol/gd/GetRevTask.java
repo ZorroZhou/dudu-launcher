@@ -2,9 +2,7 @@ package com.wow.carlauncher.ex.plugin.obd.protocol.gd;
 
 import com.google.common.primitives.Shorts;
 import com.wow.carlauncher.ex.plugin.obd.ObdUtil;
-import com.wow.carlauncher.ex.plugin.obd.ObdTask;
 
-import static com.wow.carlauncher.ex.plugin.obd.protocol.gd.CommonCmd.CMD_RES_END;
 import static com.wow.carlauncher.ex.plugin.obd.protocol.gd.CommonCmd.CMD_RES_NO_DATA;
 
 /**

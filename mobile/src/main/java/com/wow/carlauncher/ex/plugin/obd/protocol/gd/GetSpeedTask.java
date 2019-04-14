@@ -1,8 +1,6 @@
 package com.wow.carlauncher.ex.plugin.obd.protocol.gd;
 
-import com.wow.carlauncher.ex.plugin.obd.ObdTask;
-
-import static com.wow.carlauncher.ex.plugin.obd.protocol.gd.CommonCmd.*;
+import static com.wow.carlauncher.ex.plugin.obd.protocol.gd.CommonCmd.CMD_RES_NO_DATA;
 
 /**
  * Created by 10124 on 2018/4/20.

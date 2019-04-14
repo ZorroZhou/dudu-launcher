@@ -3,8 +3,6 @@ package com.wow.frame.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import org.xutils.x;
-
 public class SharedPreUtil {
     // SharedPreference文件的文件名
     public final static String XML_Settings = "settings";

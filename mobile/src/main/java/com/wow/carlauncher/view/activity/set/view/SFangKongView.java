@@ -10,26 +10,23 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
 import com.inuker.bluetooth.library.search.SearchResult;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
+import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
 import com.wow.carlauncher.ex.manage.ble.MySearchResponse;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
-import com.wow.carlauncher.common.view.SetView;
-import com.wow.carlauncher.view.base.BaseView;
-import com.wow.carlauncher.view.dialog.ListDialog;
 import com.wow.carlauncher.ex.plugin.fk.FangkongPlugin;
 import com.wow.carlauncher.ex.plugin.fk.FangkongProtocolEnum;
+import com.wow.carlauncher.view.base.BaseView;
+import com.wow.carlauncher.view.dialog.ListDialog;
 import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.SharedPreUtil;
 import com.wow.frame.util.ThreadObj;
 
 import org.xutils.view.annotation.ViewInject;
-import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.List;

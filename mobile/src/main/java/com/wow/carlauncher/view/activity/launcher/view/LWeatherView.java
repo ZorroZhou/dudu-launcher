@@ -1,11 +1,9 @@
 package com.wow.carlauncher.view.activity.launcher.view;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,7 +17,6 @@ import com.wow.carlauncher.ex.manage.time.event.MTimeMinuteEvent;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.repertory.amapWebservice.WebService;
 import com.wow.carlauncher.repertory.amapWebservice.res.WeatherRes;
-import com.wow.carlauncher.ex.manage.time.event.MTime30MinuteEvent;
 import com.wow.carlauncher.view.activity.launcher.event.LEventCityRefresh;
 import com.wow.carlauncher.view.base.BaseDialog2;
 import com.wow.carlauncher.view.base.BaseEBusView;
@@ -33,8 +30,6 @@ import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
-
-import static com.wow.carlauncher.common.CommonData.TAG;
 
 /**
  * Created by 10124 on 2018/4/20.

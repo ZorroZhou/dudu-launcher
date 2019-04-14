@@ -1,7 +1,6 @@
 package com.wow.carlauncher.ex.plugin.obd;
 
 import android.annotation.SuppressLint;
-import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.util.Log;
 
@@ -15,10 +14,8 @@ import com.inuker.bluetooth.library.model.BleGattProfile;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.ex.ContextEx;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
-import com.wow.carlauncher.ex.manage.time.TimeManage;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
-import com.wow.carlauncher.ex.plugin.fk.event.PFkEventConnect;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarInfo;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarTp;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventConnect;

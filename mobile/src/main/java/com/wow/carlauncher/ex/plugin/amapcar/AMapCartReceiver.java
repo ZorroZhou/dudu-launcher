@@ -3,8 +3,6 @@ package com.wow.carlauncher.ex.plugin.amapcar;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
-import android.util.SizeF;
 import android.widget.Toast;
 
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventNavInfo;
@@ -15,10 +13,25 @@ import com.wow.carlauncher.ex.plugin.amapcar.model.Lukuang;
 import com.wow.frame.SFrame;
 
 import org.greenrobot.eventbus.EventBus;
-import org.xutils.x;
 
-import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.*;
+import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.CATEGORY;
+import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.EXTRA_STATE;
+import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.KEY_TYPE;
+import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.LAT;
+import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.LON;
 import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.NaviInfoConstant;
+import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.RECEIVER_LUKUANG_INFO;
+import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.RECEIVER_LUKUANG_INFO_EXTAR;
+import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.RECEIVER_NAVI_INFO;
+import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.RECEIVER_RESPONSE_DISTRICT;
+import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.RECEIVER_RESPONSE_GETHC;
+import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.RECEIVER_STATE_INFO;
+import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.RECEIVE_ACTION;
+import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.RECEIVE_NAVI_MUTE_STATE;
+import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.RECEIVE_NAVI_MUTE_STATE_CASUAL_MUTE;
+import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.RECEIVE_NAVI_MUTE_STATE_MUTE;
+import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.RESPONSE_DISTRICT_CITY_NAME;
+import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.RESPONSE_DISTRICT_PRVINCE_NAME;
 import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.StateInfoConstant;
 
 public class AMapCartReceiver extends BroadcastReceiver {

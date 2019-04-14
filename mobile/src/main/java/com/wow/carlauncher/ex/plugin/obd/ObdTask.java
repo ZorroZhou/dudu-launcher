@@ -1,11 +1,5 @@
 package com.wow.carlauncher.ex.plugin.obd;
 
-import android.util.Log;
-
-import com.wow.frame.util.DateUtil;
-
-import java.util.Date;
-
 /**
  * Created by 10124 on 2018/4/19.
  */

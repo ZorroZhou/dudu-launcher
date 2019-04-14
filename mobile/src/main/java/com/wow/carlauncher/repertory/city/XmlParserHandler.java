@@ -4,12 +4,12 @@ import com.wow.carlauncher.repertory.city.model.CityModel;
 import com.wow.carlauncher.repertory.city.model.DistrictModel;
 import com.wow.carlauncher.repertory.city.model.ProvinceModel;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class XmlParserHandler extends DefaultHandler {
 

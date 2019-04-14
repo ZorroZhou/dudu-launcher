@@ -3,24 +3,15 @@ package com.wow.carlauncher.ex.plugin.obd;
 import android.content.Context;
 import android.util.Log;
 
-import com.wow.carlauncher.common.CommonData;
-import com.wow.carlauncher.ex.manage.ble.BleManage;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
-import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventConnect;
-import com.wow.frame.util.CommonUtil;
-import com.wow.frame.util.DateUtil;
-import com.wow.frame.util.SharedPreUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayDeque;
-import java.util.Date;
 import java.util.UUID;
-
-import static com.inuker.bluetooth.library.Constants.STATUS_DEVICE_CONNECTED;
 
 /**
  * Created by 10124 on 2018/3/29.

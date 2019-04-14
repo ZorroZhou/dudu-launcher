@@ -9,8 +9,8 @@ import android.provider.Settings;
 import android.util.Log;
 
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
-import com.wow.carlauncher.ex.plugin.console.ConsoleProtoclListener;
 import com.wow.carlauncher.ex.plugin.console.ConsoleProtocl;
+import com.wow.carlauncher.ex.plugin.console.ConsoleProtoclListener;
 
 import static com.wow.carlauncher.common.CommonData.TAG;
 import static com.wow.carlauncher.ex.plugin.console.impl.NwdConsoleImpl.PublicSettingTable.NO_SOURCE_DEVICE_STATE;

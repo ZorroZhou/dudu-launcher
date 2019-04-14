@@ -1,22 +1,11 @@
 package com.wow.carlauncher.view.activity.driving.blue1;
 
 import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.RectF;
 import android.util.AttributeSet;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.wow.carlauncher.R;
-import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
-import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarInfo;
 import com.wow.carlauncher.view.base.BaseEBusView;
-
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-import org.xutils.view.annotation.ViewInject;
 
 /**
  * Created by 10124 on 2018/4/26.

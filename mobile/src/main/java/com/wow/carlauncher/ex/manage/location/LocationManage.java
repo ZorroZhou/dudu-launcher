@@ -2,7 +2,6 @@ package com.wow.carlauncher.ex.manage.location;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;

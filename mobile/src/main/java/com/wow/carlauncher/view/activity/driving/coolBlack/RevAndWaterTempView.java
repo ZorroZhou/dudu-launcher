@@ -2,8 +2,6 @@ package com.wow.carlauncher.view.activity.driving.coolBlack;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,7 +13,6 @@ import com.wow.carlauncher.view.base.BaseEBusView;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.view.annotation.ViewInject;
-import org.xutils.x;
 
 /**
  * Created by 10124 on 2018/4/26.

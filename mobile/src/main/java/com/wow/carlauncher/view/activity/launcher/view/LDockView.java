@@ -3,25 +3,21 @@ package com.wow.carlauncher.view.activity.launcher.view;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
-import com.wow.carlauncher.view.activity.AppMenuActivity;
-import com.wow.carlauncher.view.activity.AppSelectActivity;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
+import com.wow.carlauncher.view.activity.AppSelectActivity;
 import com.wow.carlauncher.view.activity.launcher.event.LauncherDockLabelShowChangeEvent;
-import com.wow.carlauncher.view.activity.set.SetActivity;
 import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.SharedPreUtil;
 
@@ -35,13 +31,10 @@ import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_APP_TO_DOCK1;
 import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_APP_TO_DOCK2;
 import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_APP_TO_DOCK3;
 import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_APP_TO_DOCK4;
-import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_APP_TO_DOCK5;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK1_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK2_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK3_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK4_CLASS;
-import static com.wow.carlauncher.common.CommonData.SDATA_DOCK5_CLASS;
-import static com.wow.carlauncher.common.CommonData.TAG;
 
 /**
  * Created by 10124 on 2018/4/22.

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.util.Log;
 
 import com.inuker.bluetooth.library.BluetoothClient;
-import com.inuker.bluetooth.library.beacon.Beacon;
 import com.inuker.bluetooth.library.search.SearchRequest;
 import com.inuker.bluetooth.library.search.SearchResult;
 import com.inuker.bluetooth.library.search.response.SearchResponse;

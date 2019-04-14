@@ -65,8 +65,8 @@
                         android:layout_centerInParent="true"
                         android:scaleType="fitCenter"
                         android:src="@mipmap/hud_sou9"
-                        app:layout_heightPercent="55%h"
-                        app:layout_widthPercent="55%h" />
+                        app:layout_heightPercent="70%h"
+                        app:layout_widthPercent="70%h" />
                 </com.zhy.android.percent.support.PercentRelativeLayout>
 
                 <TextView
@@ -151,13 +151,14 @@
                 android:orientation="horizontal">
 
                 <com.zhy.android.percent.support.PercentLinearLayout
-                    android:id="@+id/btn_go_home"
+                    android:id="@+id/btn_mute"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:gravity="center"
                     app:layout_widthPercent="100%h">
 
                     <ImageView
+                        android:id="@+id/iv_mute"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:src="@mipmap/n_dh_bz"

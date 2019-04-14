@@ -104,6 +104,7 @@ public class AMapCarPlugin extends ContextEx {
             param.put(REQUEST_SET_NAVI_CASUAL_MUTE_MARK, 0);
         }
         sendReceiver(REQUEST_SET_NAVI_MUTE, param);
+        getMute();
     }
 
     public void getMute() {

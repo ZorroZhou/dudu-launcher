@@ -18,6 +18,7 @@ import com.wow.carlauncher.ex.plugin.amapcar.AMapCarPlugin;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventNavInfo;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventState;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapLukuangInfo;
+import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapMuteStateInfo;
 import com.wow.carlauncher.ex.plugin.amapcar.model.Lukuang;
 import com.wow.carlauncher.view.base.BaseEBusView;
 import com.wow.frame.util.AppUtil;
@@ -51,14 +52,13 @@ public class LAMapView extends BaseEBusView {
         addContent(R.layout.content_l_amap);
     }
 
+    private boolean mute = false;
+
     @ViewInject(R.id.ll_controller)
     private View amapController;
 
     @ViewInject(R.id.iv_icon)
     private ImageView amapIcon;
-
-    @ViewInject(R.id.ll_navi)
-    private LinearLayout amapnavi;
 
     @ViewInject(R.id.tv_next_dis)
     private TextView tv_next_dis;
@@ -78,8 +78,10 @@ public class LAMapView extends BaseEBusView {
     @ViewInject(R.id.progressBar)
     private ProgressBar progressBar;
 
+    @ViewInject(R.id.iv_mute)
+    private ImageView iv_mute;
 
-    @Event(value = {R.id.rl_base, R.id.btn_go_home, R.id.btn_close})
+    @Event(value = {R.id.rl_base, R.id.btn_go_home, R.id.btn_close, R.id.btn_mute})
     private void clickEvent(View view) {
         Log.d(TAG, "clickEvent: " + view);
         switch (view.getId()) {
@@ -109,6 +111,14 @@ public class LAMapView extends BaseEBusView {
                 AMapCarPlugin.self().exitNav();
                 break;
             }
+            case R.id.btn_mute: {
+                if (!AppUtil.isInstall(getContext(), AMAP_PACKAGE)) {
+                    Toast.makeText(getContext(), "没有安装高德地图", Toast.LENGTH_SHORT).show();
+                    break;
+                }
+                AMapCarPlugin.self().mute(!mute);
+                break;
+            }
         }
     }
 
@@ -123,6 +133,16 @@ public class LAMapView extends BaseEBusView {
                 //amapnavi.setVisibility(View.GONE);
                 //amapIcon.setImageResource(0);
             }
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(final PAmapMuteStateInfo event) {
+        if (iv_mute != null) {
+            mute = event.isMute();
+//            if (event.isMute()) {
+//            } else {
+//            }
         }
     }
 

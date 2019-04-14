@@ -46,6 +46,7 @@
         </RelativeLayout>
 
         <TextView
+            android:id="@+id/tv_title"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:gravity="center"
@@ -58,6 +59,7 @@
             app:layout_textSizePercent="5%h" />
 
         <TextView
+            android:id="@+id/tv_zuozhe"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:gravity="center"

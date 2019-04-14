@@ -19,11 +19,6 @@
     <declare-styleable name="Theme">
         <attr name="customImageViewStyle" format="reference" />
     </declare-styleable>
-    <!-- 自定义圆角ImageView -->
-    <declare-styleable name="CustomImageView">
-        <attr name="circle" format="boolean" />
-        <attr name="radius" format="dimension" />
-    </declare-styleable>
 
     <declare-styleable name="MultipleTextView">
 
@@ -44,4 +39,11 @@
 
     </declare-styleable>
 
+    <declare-styleable name="Custom_Round_Image_View">
+        <attr name="radius" format="dimension" />
+        <attr name="left_top_radius" format="dimension" />
+        <attr name="right_top_radius" format="dimension" />
+        <attr name="right_bottom_radius" format="dimension" />
+        <attr name="left_bottom_radius" format="dimension" />
+    </declare-styleable>
 </resources>

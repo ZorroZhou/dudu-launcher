@@ -7,11 +7,13 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventInfo;
+import com.wow.carlauncher.ex.plugin.music.event.PMusicEventProgress;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventState;
 import com.wow.carlauncher.view.base.BaseEBusView;
 import com.wow.frame.util.CommonUtil;
@@ -47,6 +49,12 @@ public class LMusicView extends BaseEBusView {
     @ViewInject(R.id.tv_title)
     private TextView music_tv_title;
 
+    @ViewInject(R.id.tv_zuozhe)
+    private TextView tv_zuozhe;
+
+    @ViewInject(R.id.progressBar)
+    private ProgressBar progressBar;
+
     @Event(value = {R.id.iv_play, R.id.ll_prew, R.id.ll_next})
     private void clickEvent(View view) {
         Log.d(TAG, "clickEvent: " + view);
@@ -68,12 +76,22 @@ public class LMusicView extends BaseEBusView {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(final PMusicEventInfo event) {
-        if (music_tv_title != null) {
+        if (progressBar != null) {
+            progressBar.setVisibility(GONE);
+        }
+        if (music_tv_title != null && tv_zuozhe != null) {
             if (CommonUtil.isNotNull(event.getTitle())) {
                 music_tv_title.setText(event.getTitle());
             } else {
                 music_tv_title.setText("音乐");
             }
+
+            if (CommonUtil.isNotNull(event.getArtist())) {
+                tv_zuozhe.setText(event.getArtist());
+            } else {
+                tv_zuozhe.setText("未知作家");
+            }
+
         }
     }
 
@@ -87,4 +105,13 @@ public class LMusicView extends BaseEBusView {
             }
         }
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(final PMusicEventProgress event) {
+        if (progressBar != null) {
+            progressBar.setVisibility(VISIBLE);
+            progressBar.setProgress((int) (event.getCurrTime() * 100F / event.getTotalTime()));
+        }
+    }
+
 }

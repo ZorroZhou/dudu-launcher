@@ -46,6 +46,7 @@ public class QQMusicCarController extends MusicController {
         EventBus.getDefault().register(this);
     }
 
+
     public void play() {
         sendEvent(WE_DRIVE_RESUME);
     }
@@ -70,6 +71,9 @@ public class QQMusicCarController extends MusicController {
     }
 
     private void refreshInfo() {
+        if (waitMsg) {
+            return;
+        }
         waitMsg = true;
         Intent intent2 = new Intent("com.tencent.qqmusiccar.action");
         intent2.setClassName(PACKAGE_NAME, CLASS_NAME);
@@ -95,6 +99,7 @@ public class QQMusicCarController extends MusicController {
                 if ("com.tencent.qqmusiccar.action.PLAY_COMMAND_SEND_FOR_THIRD".equals(intent.getAction()) && intent.getStringExtra("com.tencent.qqmusiccar.EXTRA_COMMAND_DATA") != null && waitMsg) {
                     waitMsg = false;
                     String value = intent.getStringExtra("com.tencent.qqmusiccar.EXTRA_COMMAND_DATA");
+                    System.out.println(value);
                     Map m = gson.fromJson(value, Map.class);
                     Map c = (Map) m.get("command");
                     if ("update_state".equals(c.get("method"))) {

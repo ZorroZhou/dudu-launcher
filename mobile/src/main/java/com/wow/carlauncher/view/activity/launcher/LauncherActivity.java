@@ -191,8 +191,7 @@ public class LauncherActivity extends Activity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(MNewLocationEvent event) {
-        System.out.println("!!!!!!!" + SunRiseSetUtil.isNight(event.getLongitude(), event.getLatitude(), new Date()));
-
+        
     }
 
     private BroadcastReceiver homeReceiver = new BroadcastReceiver() {

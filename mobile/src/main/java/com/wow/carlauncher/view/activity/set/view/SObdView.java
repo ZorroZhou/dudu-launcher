@@ -34,6 +34,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.wow.carlauncher.common.CommonData.SDATA_OBD_CONTROLLER;
+import static com.wow.carlauncher.common.CommonData.SDATA_TRIP_AUTO_OPEN_DRIVING;
+import static com.wow.carlauncher.common.CommonData.SDATA_TRIP_AUTO_OPEN_DRIVING_DF;
 
 /**
  * Created by 10124 on 2018/4/22.
@@ -60,6 +62,9 @@ public class SObdView extends FrameLayout {
 
     @ViewInject(R.id.sv_obd_disconnect)
     private SetView sv_obd_disconnect;
+    
+    @ViewInject(R.id.sv_auto_open_driving)
+    private SetView sv_auto_open_driving;
 
     private void initView() {
         LinearLayout view = (LinearLayout) View.inflate(getContext(), R.layout.content_set_obd, null);
@@ -173,5 +178,17 @@ public class SObdView extends FrameLayout {
                 });
             }
         });
+
+        sv_auto_open_driving.setOnValueChangeListener(new SetView.OnValueChangeListener() {
+            @Override
+            public void onValueChange(String newValue, String oldValue) {
+                if ("1".equals(newValue)) {
+                    SharedPreUtil.saveSharedPreBoolean(SDATA_TRIP_AUTO_OPEN_DRIVING, true);
+                } else {
+                    SharedPreUtil.saveSharedPreBoolean(SDATA_TRIP_AUTO_OPEN_DRIVING, false);
+                }
+            }
+        });
+        sv_auto_open_driving.setChecked(SharedPreUtil.getSharedPreBoolean(SDATA_TRIP_AUTO_OPEN_DRIVING, SDATA_TRIP_AUTO_OPEN_DRIVING_DF));
     }
 }

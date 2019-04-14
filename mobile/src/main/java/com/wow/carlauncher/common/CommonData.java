@@ -72,7 +72,7 @@ public class CommonData {
     public static final String SDATA_HIDE_APPS = "SDATA_HIDE_APPS";
     //时间插件打开的APP
     public static final String SDATA_TIME_PLUGIN_OPEN_APP = "SDATA_TIME_PLUGIN_OPEN_APP";
-    //时间插件打开的APP
+    //控制接口实现类型,系统还是NWD
     public static final String SDATA_CONSOLE_MARK = "SDATA_CONSOLE_MARK";
     //天气所属的城市
     public static final String SDATA_WEATHER_CITY = "SDATA_WEATHER_CITY";
@@ -83,9 +83,17 @@ public class CommonData {
 
     //行程合并间隔
     public static final String SDATA_TRIP_MERGE_TIME = "SDATA_TRIP_MERGE_TIME";
+    //默认值
     public static final int SDATA_TRIP_MERGE_TIME_DF = 1;
     //是否自动启动驾驶界面
     public static final String SDATA_TRIP_AUTO_OPEN_DRIVING = "SDATA_TRIP_AUTO_OPEN_DRIVING";
+    //以上默认值
     public static final boolean SDATA_TRIP_AUTO_OPEN_DRIVING_DF = true;
     //-------------------------------本地缓存使用的mark-end-----------------------------------
+
+    //APP启动后自动任务相关
+    //第一个打开的APP
+    public static final String SDATA_APP_AUTO_OPEN_INTERVAL = "SDATA_APP_AUTO_OPEN_INTERVAL";
+    public static final int SDATA_APP_AUTO_OPEN_INTERVAL_DF = 5000;
+    public static final String SDATA_APP_AUTO_OPEN1 = "SDATA_APP_AUTO_OPEN1";
 }

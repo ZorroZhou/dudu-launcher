@@ -31,19 +31,10 @@
                 <View style="@style/Interval" />
 
                 <com.wow.carlauncher.common.view.SetView
-                    android:id="@+id/sg_trip"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    st:titleEx="行程设置"
-                    st:type="buttonB" />
-
-                <View style="@style/Interval" />
-
-                <com.wow.carlauncher.common.view.SetView
                     android:id="@+id/sg_obd"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    st:titleEx="OBD设置"
+                    st:titleEx="OBD"
                     st:type="buttonB" />
 
                 <View style="@style/Interval" />
@@ -52,7 +43,7 @@
                     android:id="@+id/sg_fangkong"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    st:titleEx="方控设置"
+                    st:titleEx="方控"
                     st:type="buttonB" />
 
                 <View style="@style/Interval" />
@@ -61,7 +52,7 @@
                     android:id="@+id/sg_popup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    st:titleEx="悬浮窗设置"
+                    st:titleEx="悬浮窗"
                     st:type="buttonB" />
 
                 <View style="@style/Interval" />
@@ -70,7 +61,7 @@
                     android:id="@+id/sg_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    st:titleEx="时间和天气设置"
+                    st:titleEx="时间和天气"
                     st:type="buttonB" />
 
                 <View style="@style/Interval" />
@@ -79,19 +70,11 @@
                     android:id="@+id/sg_system_set"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    st:titleEx="系统设置"
+                    st:titleEx="系统"
                     st:type="buttonB" />
 
                 <View style="@style/Interval" />
 
-                <com.wow.carlauncher.common.view.SetView
-                    android:id="@+id/sg_help"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    st:titleEx="帮助"
-                    st:type="buttonB" />
-
-                <View style="@style/Interval" />
             </LinearLayout>
         </ScrollView>
 
@@ -145,20 +128,8 @@
                     android:layout_height="match_parent"
                     android:visibility="gone" />
 
-                <com.wow.carlauncher.view.activity.set.view.SHelpView
-                    android:id="@+id/ll_help"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="gone" />
-
                 <com.wow.carlauncher.view.activity.set.view.SSystemView
                     android:id="@+id/ll_system"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="gone" />
-
-                <com.wow.carlauncher.view.activity.set.view.STripView
-                    android:id="@+id/ll_trip"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="gone" />

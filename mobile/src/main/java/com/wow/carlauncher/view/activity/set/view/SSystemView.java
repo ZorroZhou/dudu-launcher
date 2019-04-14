@@ -13,6 +13,7 @@ import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.wow.carlauncher.R;
@@ -20,6 +21,7 @@ import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfo;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
+import com.wow.carlauncher.view.activity.AboutActivity;
 
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
@@ -52,6 +54,12 @@ public class SSystemView extends FrameLayout {
     @ViewInject(R.id.sv_sys_sdk)
     private SetView sv_sys_sdk;
 
+
+    @ViewInject(R.id.sv_about)
+    private SetView sv_about;
+
+    @ViewInject(R.id.sv_money)
+    private SetView sv_money;
 
     private void initView() {
         LinearLayout view = (LinearLayout) View.inflate(getContext(), R.layout.content_set_system, null);
@@ -100,6 +108,23 @@ public class SSystemView extends FrameLayout {
             @Override
             public void onClick(View v) {
                 ToastManage.self().show("当前SDK版本是" + Build.VERSION.SDK_INT);
+            }
+        });
+
+        sv_about.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().startActivity(new Intent(getContext(), AboutActivity.class));
+            }
+        });
+
+        sv_money.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ImageView imageView = new ImageView(getContext());
+                imageView.setImageResource(R.mipmap.money);
+                AlertDialog dialog = new AlertDialog.Builder(getContext()).setView(imageView).setTitle("支持我吧!").setPositiveButton("确定", null).create();
+                dialog.show();
             }
         });
     }

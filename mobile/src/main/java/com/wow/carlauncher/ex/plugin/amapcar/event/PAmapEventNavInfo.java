@@ -18,7 +18,19 @@ public class PAmapEventNavInfo {
     private int routeAllTime;//路径总时间，对应的值为int类型，单位：秒
     private int curSpeed;//当前车速，对应的值为int类型，单位：公里/小时
     private int cameraSpeed;//电子眼限速度，对应的值为int类型，无限速则为0，单位：公里/小时
+    private int roadType;//当前道路类型，对应的值为int类型
 
+    //0：高速公路
+    //1：国道
+    //2：省道
+    //3：县道
+    //4：乡公路
+    //5：县乡村内部道路
+    //6：主要大街、城市快速道
+    //7：主要道路
+    //8：次要道路
+    //9：普通道路
+    //10：非导航道路
     public int getType() {
         return type;
     }
@@ -116,5 +128,32 @@ public class PAmapEventNavInfo {
     public PAmapEventNavInfo setCameraSpeed(int cameraSpeed) {
         this.cameraSpeed = cameraSpeed;
         return this;
+    }
+
+    public int getRoadType() {
+        return roadType;
+    }
+
+    public PAmapEventNavInfo setRoadType(int roadType) {
+        this.roadType = roadType;
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        return "PAmapEventNavInfo{" +
+                "type=" + type +
+                ", icon=" + icon +
+                ", segRemainDis=" + segRemainDis +
+                ", nextRoadName='" + nextRoadName + '\'' +
+                ", curRoadName='" + curRoadName + '\'' +
+                ", routeRemainDis=" + routeRemainDis +
+                ", routeRemainTime=" + routeRemainTime +
+                ", routeAllDis=" + routeAllDis +
+                ", routeAllTime=" + routeAllTime +
+                ", curSpeed=" + curSpeed +
+                ", cameraSpeed=" + cameraSpeed +
+                ", roadType=" + roadType +
+                '}';
     }
 }

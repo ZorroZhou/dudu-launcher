@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.common.LukuangView;
 import com.wow.carlauncher.ex.plugin.amapcar.AMapCarPlugin;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventNavInfo;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventState;
@@ -30,6 +31,8 @@ import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.wow.carlauncher.common.CommonData.TAG;
 import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.AMAP_PACKAGE;
@@ -54,11 +57,11 @@ public class LAMapView extends BaseEBusView {
 
     private boolean mute = false;
 
-    @ViewInject(R.id.ll_controller)
-    private View amapController;
-
     @ViewInject(R.id.iv_icon)
     private ImageView amapIcon;
+
+    @ViewInject(R.id.iv_road)
+    private ImageView iv_road;
 
     @ViewInject(R.id.tv_next_dis)
     private TextView tv_next_dis;
@@ -75,9 +78,6 @@ public class LAMapView extends BaseEBusView {
     @ViewInject(R.id.tv_msg)
     private TextView tv_msg;
 
-    @ViewInject(R.id.progressBar)
-    private ProgressBar progressBar;
-
     @ViewInject(R.id.iv_mute)
     private ImageView iv_mute;
 
@@ -86,6 +86,9 @@ public class LAMapView extends BaseEBusView {
 
     @ViewInject(R.id.rl_daohang)
     private View rl_daohang;
+
+    @ViewInject(R.id.lukuang)
+    private LukuangView lukuangView;
 
     @Event(value = {R.id.rl_base, R.id.btn_go_home, R.id.btn_close, R.id.btn_mute, R.id.btn_nav_gs, R.id.btn_nav_j, R.id.btn_gd})
     private void clickEvent(View view) {
@@ -138,7 +141,7 @@ public class LAMapView extends BaseEBusView {
                     Toast.makeText(getContext(), "没有安装高德地图", Toast.LENGTH_SHORT).show();
                     break;
                 }
-                AMapCarPlugin.self().testNavi();
+                //AMapCarPlugin.self().testNavi();
                 break;
             }
         }
@@ -146,14 +149,12 @@ public class LAMapView extends BaseEBusView {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(final PAmapEventState event) {
-        if (amapController != null) {
-            if (event.isRunning()) {
-                rl_daohang.setVisibility(View.VISIBLE);
-                rl_moren.setVisibility(View.GONE);
-            } else {
-                rl_moren.setVisibility(View.VISIBLE);
-                rl_daohang.setVisibility(View.GONE);
-            }
+        if (event.isRunning()) {
+            rl_daohang.setVisibility(View.VISIBLE);
+            rl_moren.setVisibility(View.GONE);
+        } else {
+            rl_moren.setVisibility(View.VISIBLE);
+            rl_daohang.setVisibility(View.GONE);
         }
     }
 
@@ -161,9 +162,11 @@ public class LAMapView extends BaseEBusView {
     public void onEventMainThread(final PAmapMuteStateInfo event) {
         if (iv_mute != null) {
             mute = event.isMute();
-//            if (event.isMute()) {
-//            } else {
-//            }
+            if (event.isMute()) {
+                iv_mute.setImageResource(R.mipmap.n_dh_jy);
+            } else {
+                iv_mute.setImageResource(R.mipmap.n_dh_bjy);
+            }
         }
     }
 
@@ -214,8 +217,13 @@ public class LAMapView extends BaseEBusView {
             tv_next_dis.setText(msg);
         }
         if (tv_next_road != null && CommonUtil.isNotNull(event.getNextRoadName())) {
-            String msg = fangxiang + "进入" + event.getNextRoadName();
-            tv_next_road.setText(msg);
+            if ("目的地".equals(event.getNextRoadName())) {
+                String msg = fangxiang + "到达" + event.getNextRoadName();
+                tv_next_road.setText(msg);
+            } else {
+                String msg = fangxiang + "进入" + event.getNextRoadName();
+                tv_next_road.setText(msg);
+            }
         }
         if (tv_xiansu != null) {
             if (event.getCameraSpeed() > 0) {
@@ -235,36 +243,34 @@ public class LAMapView extends BaseEBusView {
                 tv_msg.setText(msg);
             }
         }
-
+        if (iv_road != null) {
+            if (event.getRoadType() == 0 || event.getRoadType() == 6) {
+                iv_road.setImageResource(R.mipmap.n_road1);
+            } else if (event.getRoadType() == 4 || event.getRoadType() == 5 || event.getRoadType() == 9 || event.getRoadType() == 10) {
+                iv_road.setImageResource(R.mipmap.n_road3);
+            } else {
+                iv_road.setImageResource(R.mipmap.n_road2);
+            }
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(final PAmapLukuangInfo event) {
         Lukuang lukuang = event.getLukuang();
-        if (progressBar != null) {
-//            progressBar.setProgress((int) (event.getRouteRemainDis() * 100f / event.getRouteAllDis()));
-            if (lukuang.isTmc_segment_enabled()) {
-                progressBar.setVisibility(VISIBLE);
-                int zouguo = 0;
-                for (Lukuang.TmcInfo tmcInfo : lukuang.getTmc_info()) {
-                    if (tmcInfo.getTmc_status() == RECEIVER_LUKUANG_TYPE_OVER) {
-                        zouguo = tmcInfo.getTmc_segment_distance();
-                        break;
-                    }
-                }
-                progressBar.setProgress((int) (zouguo * 100f / lukuang.getTotal_distance()));
-
-//                int huangse = 0;
-//                for (Lukuang.TmcInfo tmcInfo : lukuang.getTmc_info()) {
-//                    if (tmcInfo.getTmc_status() == RECEIVER_LUKUANG_TYPE_R2||) {
-//                        zouguo = tmcInfo.getTmc_segment_distance();
-//                        break;
-//                    }
-//                }
-
-            } else {
-                progressBar.setVisibility(GONE);
+        if (lukuangView != null) {
+            //if (lukuang.isTmc_segment_enabled()) {
+            lukuangView.setVisibility(VISIBLE);
+            List<LukuangView.LukuangModel> models = new ArrayList<>();
+            for (Lukuang.TmcInfo tmcInfo : lukuang.getTmc_info()) {
+                models.add(new LukuangView.LukuangModel()
+                        .setDistance(tmcInfo.getTmc_segment_distance())
+                        .setStatus(tmcInfo.getTmc_status())
+                        .setNumber(tmcInfo.getTmc_segment_number()));
             }
+            lukuangView.setLukuangs(models);
+//            } else {
+//                lukuangView.setVisibility(GONE);
+//            }
 
         }
     }

@@ -70,18 +70,14 @@ public class CommonUtil {
             }
         }
         if (object instanceof Number) {
-            System.out.println("数字");
             return ((Number) object).doubleValue() == 0;
         }
         if (object instanceof Boolean) {
-            System.out.println("布尔");
             return !((Boolean) object).booleanValue();
         }
         if (object instanceof Character) {
-            System.out.println("字符");
             return object == "\0";
         }
-        System.out.println("其他,暂未处理");
         return false;
     }
 
@@ -239,8 +235,6 @@ public class CommonUtil {
     }
 
 
-
-
     /**
      * 弹出软键盘
      *
@@ -261,6 +255,7 @@ public class CommonUtil {
 
     /**
      * 检验选择日期是都有效
+     *
      * @param year
      * @param month
      * @param day

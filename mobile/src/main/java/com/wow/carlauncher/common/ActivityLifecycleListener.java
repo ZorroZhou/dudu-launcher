@@ -17,7 +17,7 @@ public class ActivityLifecycleListener implements Application.ActivityLifecycleC
 
     @Override
     public void onActivityStarted(Activity activity) {
-        PopupWin.self().checkShow(1);
+        //PopupWin.self().checkShow(1);
     }
 
     @Override
@@ -31,7 +31,7 @@ public class ActivityLifecycleListener implements Application.ActivityLifecycleC
 
     @Override
     public void onActivityStopped(Activity activity) {
-        PopupWin.self().checkShow(-1);
+        //PopupWin.self().checkShow(-1);
     }
 
     @Override

@@ -3,8 +3,10 @@ package com.wow.carlauncher.ex.plugin.amapcar;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.Toast;
 
+import com.google.common.base.Strings;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventNavInfo;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventState;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapLukuangInfo;
@@ -107,8 +109,10 @@ public class AMapCartReceiver extends BroadcastReceiver {
                     break;
                 }
                 case RECEIVER_NAVI_INFO: {
-                    EventBus.getDefault().post(new PAmapEventState().setRunning(true));
-                    EventBus.getDefault().post(new PAmapEventNavInfo()
+                    Log.e(TAG, "onReceive: RECEIVER_NAVI_INFO");
+                    PAmapEventNavInfo info = new PAmapEventNavInfo()
+                            .setRoadType(intent.getIntExtra(NaviInfoConstant.ROAD_TYPE, -1))
+
                             .setType(intent.getIntExtra(NaviInfoConstant.TYPE, -1))
                             .setSegRemainDis(intent.getIntExtra(NaviInfoConstant.SEG_REMAIN_DIS, -1))
                             .setIcon(intent.getIntExtra(NaviInfoConstant.ICON, -1))
@@ -123,13 +127,21 @@ public class AMapCartReceiver extends BroadcastReceiver {
                             .setRouteAllTime(intent.getIntExtra(NaviInfoConstant.ROUTE_ALL_TIME, -1))
 
                             .setCurSpeed(intent.getIntExtra(NaviInfoConstant.CUR_SPEED, -1))
-                            .setCameraSpeed(intent.getIntExtra(NaviInfoConstant.CAMERA_SPEED, -1))
-                    );
+                            .setCameraSpeed(intent.getIntExtra(NaviInfoConstant.CAMERA_SPEED, -1));
+                    if (!(info.getSegRemainDis() == 0 &&
+                            info.getRouteRemainDis() == 0 &&
+                            info.getRouteAllDis() == 0 &&
+                            Strings.isNullOrEmpty(info.getNextRoadName()) &&
+                            Strings.isNullOrEmpty(info.getCurRoadName()))) {
+                        EventBus.getDefault().post(new PAmapEventState().setRunning(true));
+                        EventBus.getDefault().post(info);
+                    }
                     break;
                 }
 
                 case RECEIVER_STATE_INFO: {
                     int state = intent.getIntExtra(EXTRA_STATE, -1);
+                    Log.e(TAG, "onReceive: RECEIVER_STATE_INFO" + state);
                     if (state == StateInfoConstant.NAV_START
                             || state == StateInfoConstant.MNAV_START) {
                         EventBus.getDefault().post(new PAmapEventState().setRunning(true));
@@ -147,6 +159,7 @@ public class AMapCartReceiver extends BroadcastReceiver {
                 }
                 case RECEIVER_LUKUANG_INFO: {
                     String info = intent.getStringExtra(RECEIVER_LUKUANG_INFO_EXTAR);
+                    Log.e(TAG, "onReceive: RECEIVER_LUKUANG_INFO:" + info);
                     Lukuang lukuang = SFrame.getGson().fromJson(info, Lukuang.class);
                     if (lukuang != null) {
                         EventBus.getDefault().post(new PAmapEventState().setRunning(true));
@@ -156,6 +169,7 @@ public class AMapCartReceiver extends BroadcastReceiver {
                 }
 
                 case RECEIVE_NAVI_MUTE_STATE: {
+                    Log.e(TAG, "onReceive: RECEIVE_NAVI_MUTE_STATE");
                     int state1 = intent.getIntExtra(RECEIVE_NAVI_MUTE_STATE_MUTE, 0);
                     int state2 = intent.getIntExtra(RECEIVE_NAVI_MUTE_STATE_CASUAL_MUTE, 0);
                     EventBus.getDefault().post(new PAmapMuteStateInfo().setMute(state1 == 1 || state2 == 1));

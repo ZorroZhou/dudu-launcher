@@ -8,6 +8,7 @@ android {
         targetSdkVersion 28
         versionCode 6
         versionName "1.100"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -45,7 +46,9 @@ android {
 
 dependencies {
     api project(':acommon')
+    api project(':musicapi')
 
+    implementation 'com.android.support:multidex:1.0.3'
     implementation 'io.github.meetsl:SCardView:1.1'
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.google.guava:guava:27.0.1-android'
@@ -58,4 +61,5 @@ dependencies {
     implementation 'com.inuker.bluetooth:library:1.4.0'
     implementation 'com.amap.api:location:4.4.0'
     implementation 'org.greenrobot:eventbus:3.1.1'
+    implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
 }

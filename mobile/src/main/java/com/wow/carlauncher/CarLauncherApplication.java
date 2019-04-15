@@ -2,13 +2,14 @@ package com.wow.carlauncher;
 
 import android.app.Application;
 import android.content.Intent;
+import android.support.multidex.MultiDexApplication;
 
 import com.wow.carlauncher.common.ActivityLifecycleListener;
 import com.wow.carlauncher.common.AppContext;
 import com.wow.carlauncher.service.MainService;
 import com.wow.frame.declare.SAppDeclare;
 
-public class CarLauncherApplication extends Application implements SAppDeclare {
+public class CarLauncherApplication extends MultiDexApplication implements SAppDeclare {
     @Override
     public void onCreate() {
         super.onCreate();

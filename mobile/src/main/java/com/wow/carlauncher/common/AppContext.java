@@ -4,7 +4,15 @@ import android.app.Application;
 import android.os.Environment;
 import android.util.Log;
 
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.wow.carlauncher.CarLauncherApplication;
+import com.wow.carlauncher.ex.manage.MusicCoverManage;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
 import com.wow.carlauncher.ex.manage.location.LocationManage;
@@ -63,6 +71,7 @@ public class AppContext implements SAppDeclare, SDatabaseDeclare {
     public void init(CarLauncherApplication app) {
         this.application = app;
         SFrame.init(this);
+        initImage();
         //通知工具
         ToastManage.self().init(app);
         TimeManage.self().init(app);
@@ -70,6 +79,8 @@ public class AppContext implements SAppDeclare, SDatabaseDeclare {
         BleManage.self().init(app);
         //定位管理器
         LocationManage.self().init(app);
+
+        MusicCoverManage.self().init();
 
         //插件相关
         //高德地图插件
@@ -142,5 +153,31 @@ public class AppContext implements SAppDeclare, SDatabaseDeclare {
                 }
             }
         });
+    }
+
+
+    private void initImage() {
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this.application)
+                .memoryCacheExtraOptions(480, 800)
+                // 缓存在内存的图片的宽和高度
+                // default = device screen dimensions
+                .diskCacheExtraOptions(480, 800, null)
+                .threadPoolSize(3)
+                // 线程池内加载的数量
+                .threadPriority(Thread.NORM_PRIORITY - 2)
+                .tasksProcessingOrder(QueueProcessingType.FIFO)
+                .denyCacheImageMultipleSizesInMemory()
+                .memoryCache(new LruMemoryCache(2 * 1024 * 1024))//你可以通过自己的内存缓存实现
+                .memoryCacheSize(3 * 1024 * 1024)// 缓存到内存的最大数据
+                .memoryCacheSizePercentage(13)
+                .diskCacheSize(50 * 1024 * 1024)// //缓存到文件的最大数据
+                .diskCacheFileCount(99999)// 文件数量
+                .diskCacheFileNameGenerator(new Md5FileNameGenerator())//将保存的时候的URI名称用MD5 加密
+                .imageDownloader(new BaseImageDownloader(this.application)) // default
+                .defaultDisplayImageOptions(DisplayImageOptions.createSimple()) // default
+                .writeDebugLogs()// Remove for release app
+                .build();
+        // Initialize ImageLoader with configuration.
+        ImageLoader.getInstance().init(config);// 初始化
     }
 }

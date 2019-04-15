@@ -1,1 +1,1 @@
-include ':mobile',':acommon'
+include ':mobile',':acommon', ':musicapi'

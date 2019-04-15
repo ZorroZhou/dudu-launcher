@@ -1,6 +1,7 @@
 package com.wow.carlauncher.view.activity.launcher.view;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -10,19 +11,28 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.ex.manage.MusicCoverManage;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventInfo;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventProgress;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventState;
 import com.wow.carlauncher.view.base.BaseEBusView;
 import com.wow.frame.util.CommonUtil;
+import com.wow.musicapi.api.MusicApi;
+import com.wow.musicapi.api.MusicApiFactory;
+import com.wow.musicapi.api.MusicProvider;
+import com.wow.musicapi.model.Song;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
+import org.xutils.x;
+
+import java.util.List;
 
 import static com.wow.carlauncher.common.CommonData.TAG;
 
@@ -55,6 +65,10 @@ public class LMusicView extends BaseEBusView {
     @ViewInject(R.id.progressBar)
     private ProgressBar progressBar;
 
+    @ViewInject(R.id.music_iv_cover)
+    private ImageView music_iv_cover;
+
+
     @Event(value = {R.id.iv_play, R.id.ll_prew, R.id.ll_next})
     private void clickEvent(View view) {
         Log.d(TAG, "clickEvent: " + view);
@@ -74,6 +88,8 @@ public class LMusicView extends BaseEBusView {
         }
     }
 
+    private String key = "";
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(final PMusicEventInfo event) {
         if (progressBar != null) {
@@ -92,6 +108,30 @@ public class LMusicView extends BaseEBusView {
                 tv_zuozhe.setText("未知作家");
             }
 
+            if (music_iv_cover != null) {
+                String nowkey = event.getTitle() + event.getArtist();
+                if (!nowkey.equals(key)) {
+                    key = nowkey;
+                    MusicCoverManage.self().loadMusicCover(event.getTitle(), event.getArtist(), new MusicCoverManage.Callback() {
+                        @Override
+                        public void loadCover(boolean success, String title, String zuojia, final Bitmap cover) {
+                            String kk = title + zuojia;
+                            if (key.equals(kk)) {
+                                if (success) {
+                                    x.task().autoPost(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            music_iv_cover.setImageBitmap(cover);
+                                        }
+                                    });
+                                } else {
+                                    music_iv_cover.setImageResource(R.mipmap.music_dlogo);
+                                }
+                            }
+                        }
+                    });
+                }
+            }
         }
     }
 

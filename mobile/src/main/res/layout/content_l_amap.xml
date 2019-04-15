@@ -73,6 +73,7 @@
                         android:gravity="left">
 
                         <com.zhy.android.percent.support.PercentLinearLayout
+                            android:id="@+id/btn_gd"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:gravity="center"

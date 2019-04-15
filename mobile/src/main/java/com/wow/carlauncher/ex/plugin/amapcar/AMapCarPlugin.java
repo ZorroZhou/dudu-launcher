@@ -72,6 +72,31 @@ public class AMapCarPlugin extends ContextEx {
 
     private AMapCartReceiver amapReceiver;
 
+    public void testNavi() {
+        Intent intent = new Intent();
+        intent.setAction("AUTONAVI_STANDARD_BROADCAST_RECV");
+        intent.putExtra("KEY_TYPE", 10076);
+        intent.putExtra("EXTRA_SLAT", 24.496706);
+        intent.putExtra("EXTRA_SLON", 118.182682);
+        intent.putExtra("EXTRA_SNAME", "佰翔软件园酒店");
+        intent.putExtra("EXTRA_FMIDLAT", 24.492793);
+        intent.putExtra("EXTRA_FMIDLON", 118.162947);
+        intent.putExtra("EXTRA_FMIDNAME", "蔡塘");
+        intent.putExtra("EXTRA_SMIDLAT", 24.483256);
+        intent.putExtra("EXTRA_SMIDLON", 118.148825);
+        intent.putExtra("EXTRA_SMIDNAME", "太川大楼");
+        intent.putExtra("EXTRA_TMIDLAT", 24.47658);
+        intent.putExtra("EXTRA_TMIDLON", 118.163917);
+        intent.putExtra("EXTRA_TMIDNAME", "世界山庄");
+        intent.putExtra("EXTRA_DLAT", 24.453688);
+        intent.putExtra("EXTRA_DLON", 118.17581);
+        intent.putExtra("EXTRA_DNAME", "椰风寨");
+        intent.putExtra("EXTRA_DEV", 0);
+        intent.putExtra("EXTRA_M", 0);
+        intent.putExtra("KEY_RECYLE_SIMUNAVI", true);
+        getContext().sendBroadcast(intent);
+    }
+
     public void naviToHome() {
         if (!AppUtil.isInstall(getContext(), AMAP_PACKAGE)) {
             Toast.makeText(getContext(), "没有安装高德地图", Toast.LENGTH_SHORT).show();

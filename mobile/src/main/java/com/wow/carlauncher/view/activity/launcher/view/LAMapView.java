@@ -87,7 +87,7 @@ public class LAMapView extends BaseEBusView {
     @ViewInject(R.id.rl_daohang)
     private View rl_daohang;
 
-    @Event(value = {R.id.rl_base, R.id.btn_go_home, R.id.btn_close, R.id.btn_mute, R.id.btn_nav_gs, R.id.btn_nav_j})
+    @Event(value = {R.id.rl_base, R.id.btn_go_home, R.id.btn_close, R.id.btn_mute, R.id.btn_nav_gs, R.id.btn_nav_j, R.id.btn_gd})
     private void clickEvent(View view) {
         Log.d(TAG, "clickEvent: " + view);
         switch (view.getId()) {
@@ -131,6 +131,14 @@ public class LAMapView extends BaseEBusView {
                     break;
                 }
                 AMapCarPlugin.self().mute(!mute);
+                break;
+            }
+            case R.id.btn_gd: {
+                if (!AppUtil.isInstall(getContext(), AMAP_PACKAGE)) {
+                    Toast.makeText(getContext(), "没有安装高德地图", Toast.LENGTH_SHORT).show();
+                    break;
+                }
+                AMapCarPlugin.self().testNavi();
                 break;
             }
         }

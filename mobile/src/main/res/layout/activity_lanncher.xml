@@ -4,7 +4,7 @@
     android:id="@+id/fl_bg"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/n_home_bg"
+    android:background="@drawable/n_desk_bg"
     android:orientation="vertical">
 
 
@@ -25,7 +25,7 @@
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:background="#b9c6d1" />
+            android:background="#c6d2d9" />
 
         <com.zhy.android.percent.support.PercentLinearLayout
             android:layout_width="0dp"

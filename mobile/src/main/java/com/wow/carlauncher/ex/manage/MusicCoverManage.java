@@ -48,7 +48,12 @@ public class MusicCoverManage {
         String name = nameGenerator.generate(title + "-" + zuojia + "-" + musicProvider) + ".temp";
         final File cover = new File(Environment.getExternalStorageDirectory() + File.separator + "music_cover" + File.separator + name);
         if (cover.exists()) {
-            callback.loadCover(true, title, zuojia, BitmapFactory.decodeFile(cover.getAbsolutePath()));
+            Bitmap bitmap = BitmapFactory.decodeFile(cover.getAbsolutePath());
+            if (bitmap != null && bitmap.getWidth() > 0) {
+                callback.loadCover(true, title, zuojia, bitmap);
+            } else {
+                callback.loadCover(false, title, zuojia, null);
+            }
         } else {
             try {
                 new File(Environment.getExternalStorageDirectory() + File.separator + "music_cover" + File.separator).mkdirs();

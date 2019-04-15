@@ -125,8 +125,6 @@ public class LWeatherView extends BaseEBusView {
                         tv_title.setText(SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_CITY));
                         chengshi = SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_CITY);
                     }
-                    tv_tianqi.setText("");
-                    tv_wendu1.setText("");
                 } else {
                     chengshi = adcode;
                     tv_title.setText(city);
@@ -148,8 +146,6 @@ public class LWeatherView extends BaseEBusView {
                                     tv_fl.setText(String.valueOf(cityWeather.getWindpower()));
                                     tv_fx.setText(String.valueOf(cityWeather.getWinddirection() + "风"));
                                 }
-                            } else {
-
                             }
                         }
                     });

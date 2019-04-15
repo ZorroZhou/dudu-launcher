@@ -9,14 +9,12 @@
 
     <com.wow.carlauncher.common.view.CustomRoundAngleImageView
         android:id="@+id/iv_tianqi"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
         android:contentDescription="@string/app_name"
         android:scaleType="fitStart"
         android:src="@mipmap/n_weather_weizhi"
-        app:layout_widthPercent="75%w"
         app:right_top_radius="10dp" />
 
     <com.zhy.android.percent.support.PercentLinearLayout

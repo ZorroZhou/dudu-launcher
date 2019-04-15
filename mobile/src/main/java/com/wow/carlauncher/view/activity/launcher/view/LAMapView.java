@@ -81,7 +81,13 @@ public class LAMapView extends BaseEBusView {
     @ViewInject(R.id.iv_mute)
     private ImageView iv_mute;
 
-    @Event(value = {R.id.rl_base, R.id.btn_go_home, R.id.btn_close, R.id.btn_mute})
+    @ViewInject(R.id.rl_moren)
+    private View rl_moren;
+
+    @ViewInject(R.id.rl_daohang)
+    private View rl_daohang;
+
+    @Event(value = {R.id.rl_base, R.id.btn_go_home, R.id.btn_close, R.id.btn_mute, R.id.btn_nav_gs, R.id.btn_nav_j})
     private void clickEvent(View view) {
         Log.d(TAG, "clickEvent: " + view);
         switch (view.getId()) {
@@ -95,12 +101,20 @@ public class LAMapView extends BaseEBusView {
                 getContext().startActivity(appIntent);
                 break;
             }
-            case R.id.btn_go_home: {
+            case R.id.btn_nav_j: {
                 if (!AppUtil.isInstall(getContext(), AMAP_PACKAGE)) {
                     Toast.makeText(getContext(), "没有安装高德地图", Toast.LENGTH_SHORT).show();
                     break;
                 }
-                AMapCarPlugin.self().getHome();
+                AMapCarPlugin.self().naviToHome();
+                break;
+            }
+            case R.id.btn_nav_gs: {
+                if (!AppUtil.isInstall(getContext(), AMAP_PACKAGE)) {
+                    Toast.makeText(getContext(), "没有安装高德地图", Toast.LENGTH_SHORT).show();
+                    break;
+                }
+                AMapCarPlugin.self().naviToComp();
                 break;
             }
             case R.id.btn_close: {
@@ -126,12 +140,11 @@ public class LAMapView extends BaseEBusView {
     public void onEventMainThread(final PAmapEventState event) {
         if (amapController != null) {
             if (event.isRunning()) {
-                //amapController.setVisibility(View.GONE);
-                //amapnavi.setVisibility(View.VISIBLE);
+                rl_daohang.setVisibility(View.VISIBLE);
+                rl_moren.setVisibility(View.GONE);
             } else {
-                amapController.setVisibility(View.VISIBLE);
-                //amapnavi.setVisibility(View.GONE);
-                //amapIcon.setImageResource(0);
+                rl_moren.setVisibility(View.VISIBLE);
+                rl_daohang.setVisibility(View.GONE);
             }
         }
     }

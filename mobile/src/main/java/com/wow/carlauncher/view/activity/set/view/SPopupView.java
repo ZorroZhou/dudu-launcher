@@ -16,6 +16,7 @@ import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfo;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
+import com.wow.carlauncher.view.base.BaseView;
 import com.wow.carlauncher.view.popupWindow.PopupWin;
 import com.wow.carlauncher.view.popupWindow.event.PEventFSRefresh;
 import com.wow.frame.util.SharedPreUtil;
@@ -34,7 +35,7 @@ import static com.wow.carlauncher.common.CommonData.TAG;
  * Created by 10124 on 2018/4/22.
  */
 
-public class SPopupView extends FrameLayout {
+public class SPopupView extends BaseView {
 
     public SPopupView(@NonNull Context context) {
         super(context);
@@ -62,10 +63,7 @@ public class SPopupView extends FrameLayout {
     private SetView sv_popup_window_size;
 
     private void initView() {
-        LinearLayout view = (LinearLayout) View.inflate(getContext(), R.layout.content_set_popup, null);
-        this.addView(view, FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
-
-        x.view().inject(this);
+        addContent(R.layout.content_set_popup);
 
 
         sv_popup_window_size.setOnClickListener(new View.OnClickListener() {

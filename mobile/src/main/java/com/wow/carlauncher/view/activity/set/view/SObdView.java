@@ -22,6 +22,7 @@ import com.wow.carlauncher.ex.manage.ble.MySearchResponse;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.ex.plugin.obd.ObdProtocolEnum;
+import com.wow.carlauncher.view.base.BaseView;
 import com.wow.carlauncher.view.dialog.ListDialog;
 import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.SharedPreUtil;
@@ -41,7 +42,7 @@ import static com.wow.carlauncher.common.CommonData.SDATA_TRIP_AUTO_OPEN_DRIVING
  * Created by 10124 on 2018/4/22.
  */
 
-public class SObdView extends FrameLayout {
+public class SObdView extends BaseView {
     public static final ObdProtocolEnum[] ALL_OBD_CONTROLLER = {ObdProtocolEnum.YJ_TYB};
 
     public SObdView(@NonNull Context context) {
@@ -62,15 +63,13 @@ public class SObdView extends FrameLayout {
 
     @ViewInject(R.id.sv_obd_disconnect)
     private SetView sv_obd_disconnect;
-    
+
     @ViewInject(R.id.sv_auto_open_driving)
     private SetView sv_auto_open_driving;
 
     private void initView() {
-        LinearLayout view = (LinearLayout) View.inflate(getContext(), R.layout.content_set_obd, null);
-        this.addView(view, FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
 
-        x.view().inject(this);
+        addContent(R.layout.content_set_obd);
 
         ObdProtocolEnum p1 = ObdProtocolEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_OBD_CONTROLLER, ObdProtocolEnum.YJ_TYB.getId()));
         sv_obd_impl_select.setSummary("OBD使用的协议：" + p1.getName());

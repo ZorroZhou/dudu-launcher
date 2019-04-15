@@ -22,6 +22,7 @@ import com.wow.carlauncher.ex.manage.appInfo.AppInfo;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.view.activity.AboutActivity;
+import com.wow.carlauncher.view.base.BaseView;
 
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
@@ -33,7 +34,7 @@ import java.util.List;
  * Created by 10124 on 2018/4/22.
  */
 
-public class SSystemView extends FrameLayout {
+public class SSystemView extends BaseView {
 
     public SSystemView(@NonNull Context context) {
         super(context);
@@ -62,10 +63,7 @@ public class SSystemView extends FrameLayout {
     private SetView sv_money;
 
     private void initView() {
-        LinearLayout view = (LinearLayout) View.inflate(getContext(), R.layout.content_set_system, null);
-        this.addView(view, FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
-
-        x.view().inject(this);
+        addContent(R.layout.content_set_system);
 
         sv_sys_overlay.setOnClickListener(new View.OnClickListener() {
             @Override

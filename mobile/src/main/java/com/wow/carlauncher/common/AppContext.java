@@ -1,9 +1,11 @@
 package com.wow.carlauncher.common;
 
 import android.app.Application;
+import android.content.Intent;
 import android.os.Environment;
 import android.util.Log;
 
+import com.google.common.base.Strings;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -31,6 +33,8 @@ import com.wow.frame.declare.SAppDeclare;
 import com.wow.frame.declare.SDatabaseDeclare;
 import com.wow.frame.repertory.dbTool.DatabaseInfo;
 import com.wow.frame.util.SharedPreUtil;
+
+import org.xutils.x;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -105,6 +109,44 @@ public class AppContext implements SAppDeclare, SDatabaseDeclare {
         int size = SharedPreUtil.getSharedPreInteger(CommonData.SDATA_POPUP_SIZE, 1);
         PopupWin.self().setRank(size + 1);
         handerException();
+
+        x.task().run(new Runnable() {
+            @Override
+            public void run() {
+                if (SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_APP_AUTO_OPEN_USE, false)) {
+                    Log.e(TAG, "开始唤醒其他APP");
+                    if (!Strings.isNullOrEmpty(SharedPreUtil.getSharedPreString(CommonData.SDATA_APP_AUTO_OPEN1))) {
+                        Log.e(TAG, "SDATA_APP_AUTO_OPEN1 " + SharedPreUtil.getSharedPreString(CommonData.SDATA_APP_AUTO_OPEN1));
+                        AppInfoManage.self().openApp(SharedPreUtil.getSharedPreString(CommonData.SDATA_APP_AUTO_OPEN1));
+                    }
+                    if (!Strings.isNullOrEmpty(SharedPreUtil.getSharedPreString(CommonData.SDATA_APP_AUTO_OPEN2))) {
+                        Log.e(TAG, "SDATA_APP_AUTO_OPEN2 " + SharedPreUtil.getSharedPreString(CommonData.SDATA_APP_AUTO_OPEN2));
+                        AppInfoManage.self().openApp(SharedPreUtil.getSharedPreString(CommonData.SDATA_APP_AUTO_OPEN2));
+                    }
+                    if (!Strings.isNullOrEmpty(SharedPreUtil.getSharedPreString(CommonData.SDATA_APP_AUTO_OPEN3))) {
+                        Log.e(TAG, "SDATA_APP_AUTO_OPEN3 " + SharedPreUtil.getSharedPreString(CommonData.SDATA_APP_AUTO_OPEN3));
+                        AppInfoManage.self().openApp(SharedPreUtil.getSharedPreString(CommonData.SDATA_APP_AUTO_OPEN3));
+                    }
+                    if (!Strings.isNullOrEmpty(SharedPreUtil.getSharedPreString(CommonData.SDATA_APP_AUTO_OPEN4))) {
+                        Log.e(TAG, "SDATA_APP_AUTO_OPEN4 " + SharedPreUtil.getSharedPreString(CommonData.SDATA_APP_AUTO_OPEN4));
+                        AppInfoManage.self().openApp(SharedPreUtil.getSharedPreString(CommonData.SDATA_APP_AUTO_OPEN4));
+                    }
+                    Log.e(TAG, "延迟返回:" + SharedPreUtil.getSharedPreInteger(CommonData.SDATA_APP_AUTO_OPEN_BACK, 5) + "秒");
+                    x.task().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Log.e(TAG, "back to desktop");
+                            Intent home = new Intent(Intent.ACTION_MAIN);
+                            home.addCategory(Intent.CATEGORY_HOME);
+                            home.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            application.startActivity(home);
+                        }
+                    }, SharedPreUtil.getSharedPreInteger(CommonData.SDATA_APP_AUTO_OPEN_BACK, 5) * 1000);
+                } else {
+                    Log.e(TAG, "不唤醒其他APP");
+                }
+            }
+        });
     }
 
     @Override

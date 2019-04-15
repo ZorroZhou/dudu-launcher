@@ -6,6 +6,7 @@ import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.view.activity.set.view.SAppView;
 import com.wow.carlauncher.view.activity.set.view.SFangKongView;
+import com.wow.carlauncher.view.activity.set.view.SLoadAppView;
 import com.wow.carlauncher.view.activity.set.view.SObdView;
 import com.wow.carlauncher.view.activity.set.view.SPopupView;
 import com.wow.carlauncher.view.activity.set.view.SSystemView;
@@ -34,6 +35,8 @@ public class SetActivity extends BaseActivity {
 
     @ViewInject(R.id.sg_fangkong)
     private SetView sg_fangkong;
+    @ViewInject(R.id.sg_load_app)
+    private SetView sg_load_app;
 
     @ViewInject(R.id.sg_obd)
     private SetView sg_obd;
@@ -56,6 +59,9 @@ public class SetActivity extends BaseActivity {
     @ViewInject(R.id.ll_system)
     private SSystemView ll_system;
 
+    @ViewInject(R.id.ll_load_app)
+    private SLoadAppView ll_load_app;
+
     @Override
     public void initView() {
         setTitle("设置");
@@ -68,6 +74,7 @@ public class SetActivity extends BaseActivity {
                 ll_system.setVisibility(View.GONE);
                 ll_fangkong.setVisibility(View.GONE);
                 ll_obd.setVisibility(View.GONE);
+                ll_load_app.setVisibility(View.GONE);
 
                 switch (view.getId()) {
                     case R.id.sg_app: {
@@ -94,6 +101,10 @@ public class SetActivity extends BaseActivity {
                         ll_obd.setVisibility(View.VISIBLE);
                         break;
                     }
+                    case R.id.sg_load_app: {
+                        ll_load_app.setVisibility(View.VISIBLE);
+                        break;
+                    }
                     default: {
                         ll_app.setVisibility(View.VISIBLE);
                     }
@@ -107,5 +118,6 @@ public class SetActivity extends BaseActivity {
         sg_system_set.setOnClickListener(groupClick);
         sg_fangkong.setOnClickListener(groupClick);
         sg_obd.setOnClickListener(groupClick);
+        sg_load_app.setOnClickListener(groupClick);
     }
 }

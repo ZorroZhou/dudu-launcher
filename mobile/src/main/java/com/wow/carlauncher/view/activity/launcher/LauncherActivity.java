@@ -77,8 +77,6 @@ public class LauncherActivity extends Activity {
         setContentView(R.layout.activity_lanncher);
         x.view().inject(this);
         EventBus.getDefault().register(this);
-
-        //System.out.println(SunRiseSetUtil.get);
     }
 
     @Event(value = {R.id.tv_time})
@@ -191,7 +189,7 @@ public class LauncherActivity extends Activity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(MNewLocationEvent event) {
-        
+
     }
 
     private BroadcastReceiver homeReceiver = new BroadcastReceiver() {

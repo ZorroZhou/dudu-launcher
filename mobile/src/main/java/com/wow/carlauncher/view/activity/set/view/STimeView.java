@@ -20,6 +20,7 @@ import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.obd.ObdProtocolEnum;
 import com.wow.carlauncher.view.activity.launcher.event.LEventCityRefresh;
 import com.wow.carlauncher.view.base.BaseDialog2;
+import com.wow.carlauncher.view.base.BaseView;
 import com.wow.carlauncher.view.dialog.CityDialog;
 import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.SharedPreUtil;
@@ -38,7 +39,7 @@ import static com.wow.carlauncher.common.CommonData.TAG;
  * Created by 10124 on 2018/4/22.
  */
 
-public class STimeView extends FrameLayout {
+public class STimeView extends BaseView {
     public static final ObdProtocolEnum[] ALL_OBD_CONTROLLER = {ObdProtocolEnum.YJ_TYB};
 
     public STimeView(@NonNull Context context) {
@@ -59,10 +60,7 @@ public class STimeView extends FrameLayout {
     private SetView tianqi_city;
 
     private void initView() {
-        LinearLayout view = (LinearLayout) View.inflate(getContext(), R.layout.content_set_time, null);
-        this.addView(view, FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
-
-        x.view().inject(this);
+        addContent(R.layout.content_set_time);
 
         time_plugin_open_app_select.setOnClickListener(new View.OnClickListener() {
             @Override

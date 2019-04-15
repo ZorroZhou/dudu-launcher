@@ -31,6 +31,15 @@
                 <View style="@style/Interval" />
 
                 <com.wow.carlauncher.common.view.SetView
+                    android:id="@+id/sg_load_app"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    st:titleEx="APP联动启动"
+                    st:type="buttonB" />
+
+                <View style="@style/Interval" />
+
+                <com.wow.carlauncher.common.view.SetView
                     android:id="@+id/sg_obd"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -130,6 +139,12 @@
 
                 <com.wow.carlauncher.view.activity.set.view.SSystemView
                     android:id="@+id/ll_system"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone" />
+
+                <com.wow.carlauncher.view.activity.set.view.SLoadAppView
+                    android:id="@+id/ll_load_app"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="gone" />

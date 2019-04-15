@@ -42,8 +42,9 @@
                 app:cardBackgroundColor="@android:color/transparent"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="10dp"
-                app:cardLightDirection="LT"
                 app:cardPreventCornerOverlap="false"
+                app:cardShadowEndColor="#01000000"
+                app:cardShadowStartColor="#20000000"
                 app:cardUseCornerArea="true">
 
                 <com.wow.carlauncher.view.activity.launcher.view.LAMapView
@@ -59,8 +60,9 @@
                 app:cardBackgroundColor="@android:color/transparent"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="10dp"
-                app:cardLightDirection="LT"
                 app:cardPreventCornerOverlap="false"
+                app:cardShadowEndColor="#01000000"
+                app:cardShadowStartColor="#20000000"
                 app:cardUseCornerArea="true">
 
                 <com.wow.carlauncher.view.activity.launcher.view.LMusicView
@@ -76,8 +78,9 @@
                 app:cardBackgroundColor="@android:color/transparent"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="10dp"
-                app:cardLightDirection="LT"
                 app:cardPreventCornerOverlap="false"
+                app:cardShadowEndColor="#01000000"
+                app:cardShadowStartColor="#20000000"
                 app:cardUseCornerArea="true">
 
                 <com.wow.carlauncher.view.activity.launcher.view.LWeatherView

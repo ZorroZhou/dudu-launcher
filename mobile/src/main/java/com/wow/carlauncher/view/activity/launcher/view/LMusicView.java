@@ -40,7 +40,6 @@ import static com.wow.carlauncher.common.CommonData.TAG;
  * Created by 10124 on 2018/4/20.
  */
 
-@ContentView(R.layout.content_l_music)
 public class LMusicView extends BaseEBusView {
 
     public LMusicView(@NonNull Context context) {

@@ -109,7 +109,6 @@ public class AMapCartReceiver extends BroadcastReceiver {
                     break;
                 }
                 case RECEIVER_NAVI_INFO: {
-                    Log.e(TAG, "onReceive: RECEIVER_NAVI_INFO");
                     PAmapEventNavInfo info = new PAmapEventNavInfo()
                             .setRoadType(intent.getIntExtra(NaviInfoConstant.ROAD_TYPE, -1))
 
@@ -141,7 +140,6 @@ public class AMapCartReceiver extends BroadcastReceiver {
 
                 case RECEIVER_STATE_INFO: {
                     int state = intent.getIntExtra(EXTRA_STATE, -1);
-                    Log.e(TAG, "onReceive: RECEIVER_STATE_INFO" + state);
                     if (state == StateInfoConstant.NAV_START
                             || state == StateInfoConstant.MNAV_START) {
                         EventBus.getDefault().post(new PAmapEventState().setRunning(true));
@@ -159,7 +157,6 @@ public class AMapCartReceiver extends BroadcastReceiver {
                 }
                 case RECEIVER_LUKUANG_INFO: {
                     String info = intent.getStringExtra(RECEIVER_LUKUANG_INFO_EXTAR);
-                    Log.e(TAG, "onReceive: RECEIVER_LUKUANG_INFO:" + info);
                     Lukuang lukuang = SFrame.getGson().fromJson(info, Lukuang.class);
                     if (lukuang != null) {
                         EventBus.getDefault().post(new PAmapEventState().setRunning(true));
@@ -169,7 +166,6 @@ public class AMapCartReceiver extends BroadcastReceiver {
                 }
 
                 case RECEIVE_NAVI_MUTE_STATE: {
-                    Log.e(TAG, "onReceive: RECEIVE_NAVI_MUTE_STATE");
                     int state1 = intent.getIntExtra(RECEIVE_NAVI_MUTE_STATE_MUTE, 0);
                     int state2 = intent.getIntExtra(RECEIVE_NAVI_MUTE_STATE_CASUAL_MUTE, 0);
                     EventBus.getDefault().post(new PAmapMuteStateInfo().setMute(state1 == 1 || state2 == 1));

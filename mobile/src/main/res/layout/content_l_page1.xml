@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.android.percent.support.PercentLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+
+    <com.meetsl.scardview.SCardView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@android:color/transparent"
+        app:cardBackgroundColor="@android:color/transparent"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="10dp"
+        app:cardPreventCornerOverlap="false"
+        app:cardShadowEndColor="#01000000"
+        app:cardShadowStartColor="#20000000"
+        app:cardUseCornerArea="true">
+
+        <com.wow.carlauncher.view.activity.launcher.view.LAMapView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.meetsl.scardview.SCardView>
+
+    <com.meetsl.scardview.SCardView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@android:color/transparent"
+        app:cardBackgroundColor="@android:color/transparent"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="10dp"
+        app:cardPreventCornerOverlap="false"
+        app:cardShadowEndColor="#01000000"
+        app:cardShadowStartColor="#20000000"
+        app:cardUseCornerArea="true">
+
+        <com.wow.carlauncher.view.activity.launcher.view.LMusicView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.meetsl.scardview.SCardView>
+
+    <com.meetsl.scardview.SCardView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@android:color/transparent"
+        app:cardBackgroundColor="@android:color/transparent"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="10dp"
+        app:cardPreventCornerOverlap="false"
+        app:cardShadowEndColor="#01000000"
+        app:cardShadowStartColor="#20000000"
+        app:cardUseCornerArea="true">
+
+        <com.wow.carlauncher.view.activity.launcher.view.LWeatherView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.meetsl.scardview.SCardView>
+</com.zhy.android.percent.support.PercentLinearLayout>

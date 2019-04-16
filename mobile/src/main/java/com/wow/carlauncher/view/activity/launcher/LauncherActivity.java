@@ -7,10 +7,14 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
@@ -20,8 +24,11 @@ import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.console.event.PConsoleEventLightState;
 import com.wow.carlauncher.view.activity.AppSelectActivity;
 import com.wow.carlauncher.view.activity.launcher.view.LDockView;
+import com.wow.carlauncher.view.activity.launcher.view.LPage1View;
+import com.wow.carlauncher.view.activity.launcher.view.LPage2View;
 import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.SharedPreUtil;
+import com.wow.frame.util.ViewUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -31,6 +38,7 @@ import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
 import java.util.Date;
+import java.util.List;
 
 import static com.wow.carlauncher.common.CommonData.IDATA_APP_MARK;
 import static com.wow.carlauncher.common.CommonData.IDATA_APP_PACKAGE_NAME;
@@ -54,6 +62,12 @@ public class LauncherActivity extends Activity {
     @ViewInject(R.id.fl_bg)
     private FrameLayout fl_bg;
 
+    @ViewInject(R.id.viewPager)
+    private ViewPager viewPager;
+
+    @ViewInject(R.id.postion)
+    private LinearLayout postion;
+
     private boolean night = false;
 
     @Override
@@ -73,6 +87,46 @@ public class LauncherActivity extends Activity {
         setContentView(R.layout.activity_lanncher);
         x.view().inject(this);
         EventBus.getDefault().register(this);
+
+        LPage1View lPage1View = new LPage1View(getApplicationContext());
+        LPage2View lPage2View = new LPage2View(getApplicationContext());
+
+        viewPager.setAdapter(new ViewAdapter(new View[]{lPage1View, lPage2View}));
+
+
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewUtils.dip2px(getApplicationContext(), 10), ViewUtils.dip2px(getApplicationContext(), 10));
+        //设置小圆点左右之间的间隔
+        params.setMargins(10, 0, 10, 0);
+        final View[] posts = new View[2];
+        for (int i = 0; i < posts.length; i++) {
+            posts[i] = new View(getApplicationContext());
+            if (i == 0) {
+                posts[i].setBackgroundResource(R.drawable.n_l_postion);
+            } else {
+                posts[i].setBackgroundResource(R.drawable.n_l_postion_n);
+            }
+            postion.addView(posts[i], params);
+        }
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
+
+            }
+
+            @Override
+            public void onPageSelected(int i) {
+                for (View post : posts) {
+                    post.setBackgroundResource(R.drawable.n_l_postion_n);
+                }
+                posts[i].setBackgroundResource(R.drawable.n_l_postion);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
+            }
+        });
     }
 
     @Event(value = {R.id.ll_dock1, R.id.ll_dock2, R.id.ll_dock3, R.id.ll_dock4}, type = View.OnLongClickListener.class)
@@ -152,11 +206,11 @@ public class LauncherActivity extends Activity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(PConsoleEventLightState event) {
-        if (event.isOpen()) {
-            fl_bg.setBackgroundResource(R.mipmap.bg_l_midnight);
-        } else {
-            fl_bg.setBackgroundResource(R.mipmap.bg_l_bright);
-        }
+//        if (event.isOpen()) {
+//            fl_bg.setBackgroundResource(R.mipmap.bg_l_midnight);
+//        } else {
+//            fl_bg.setBackgroundResource(R.mipmap.bg_l_bright);
+//        }
     }
 
     @Override
@@ -167,6 +221,36 @@ public class LauncherActivity extends Activity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(MNewLocationEvent event) {
 
+    }
+
+    class ViewAdapter extends PagerAdapter {
+        private View[] datas;
+
+        public ViewAdapter(View[] list) {
+            datas = list;
+        }
+
+        @Override
+        public int getCount() {
+            return datas.length;
+        }
+
+        @Override
+        public boolean isViewFromObject(View view, Object object) {
+            return view == object;
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            View view = datas[position];
+            container.addView(datas[position]);
+            return view;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            container.removeView(datas[position]);
+        }
     }
 
     private BroadcastReceiver homeReceiver = new BroadcastReceiver() {

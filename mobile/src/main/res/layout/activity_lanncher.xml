@@ -31,63 +31,27 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="60"
-            android:orientation="horizontal"
-            app:layout_marginPercent="2%h">
+            android:orientation="vertical">
 
-            <com.meetsl.scardview.SCardView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewPager"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1"
-                android:background="@android:color/transparent"
-                app:cardBackgroundColor="@android:color/transparent"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="10dp"
-                app:cardPreventCornerOverlap="false"
-                app:cardShadowEndColor="#01000000"
-                app:cardShadowStartColor="#20000000"
-                app:cardUseCornerArea="true">
+                app:layout_marginLeftPercent="2%h"
+                app:layout_marginRightPercent="2%h"
+                app:layout_marginTopPercent="2%h" />
 
-                <com.wow.carlauncher.view.activity.launcher.view.LAMapView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </com.meetsl.scardview.SCardView>
-
-            <com.meetsl.scardview.SCardView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                app:cardBackgroundColor="@android:color/transparent"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="10dp"
-                app:cardPreventCornerOverlap="false"
-                app:cardShadowEndColor="#01000000"
-                app:cardShadowStartColor="#20000000"
-                app:cardUseCornerArea="true">
-
-                <com.wow.carlauncher.view.activity.launcher.view.LMusicView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </com.meetsl.scardview.SCardView>
-
-            <com.meetsl.scardview.SCardView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                app:cardBackgroundColor="@android:color/transparent"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="10dp"
-                app:cardPreventCornerOverlap="false"
-                app:cardShadowEndColor="#01000000"
-                app:cardShadowStartColor="#20000000"
-                app:cardUseCornerArea="true">
-
-                <com.wow.carlauncher.view.activity.launcher.view.LWeatherView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-            </com.meetsl.scardview.SCardView>
+            <LinearLayout
+                android:id="@+id/postion"
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingBottom="5dp"
+                app:layout_marginBottomPercent="2%h" />
         </com.zhy.android.percent.support.PercentLinearLayout>
+
     </com.zhy.android.percent.support.PercentLinearLayout>
 
     <com.wow.carlauncher.view.activity.launcher.view.LPromptView

@@ -94,7 +94,7 @@ public class LauncherActivity extends Activity {
         viewPager.setAdapter(new ViewAdapter(new View[]{lPage1View, lPage2View}));
 
 
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewUtils.dip2px(getApplicationContext(), 10), ViewUtils.dip2px(getApplicationContext(), 10));
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewUtils.dip2px(getApplicationContext(), 8), ViewUtils.dip2px(getApplicationContext(), 8));
         //设置小圆点左右之间的间隔
         params.setMargins(10, 0, 10, 0);
         final View[] posts = new View[2];

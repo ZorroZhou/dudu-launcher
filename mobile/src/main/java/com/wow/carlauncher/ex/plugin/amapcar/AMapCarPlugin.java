@@ -93,14 +93,13 @@ public class AMapCarPlugin extends ContextEx {
         intent.putExtra("EXTRA_DNAME", "椰风寨");
         intent.putExtra("EXTRA_DEV", 0);
         intent.putExtra("EXTRA_M", 0);
-        intent.putExtra("KEY_RECYLE_SIMUNAVI", true);
+        intent.putExtra("KEY_RECYLE_SIMUNAVI", false);
         getContext().sendBroadcast(intent);
 
         Intent intent2 = new Intent();
         intent2.setAction("AUTONAVI_STANDARD_BROADCAST_RECV");
         intent2.putExtra("KEY_TYPE", 10031);
         getContext().sendBroadcast(intent2);
-        System.out.println("测试导航!!!");
     }
 
     public void naviToHome() {

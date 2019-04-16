@@ -141,7 +141,7 @@ public class LAMapView extends BaseEBusView {
                     Toast.makeText(getContext(), "没有安装高德地图", Toast.LENGTH_SHORT).show();
                     break;
                 }
-                //AMapCarPlugin.self().testNavi();
+                AMapCarPlugin.self().testNavi();
                 break;
             }
         }

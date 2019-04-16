@@ -20,6 +20,9 @@ import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventState;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapLukuangInfo;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapMuteStateInfo;
 import com.wow.carlauncher.ex.plugin.amapcar.model.Lukuang;
+import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
+import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarTp;
+import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventConnect;
 import com.wow.carlauncher.view.base.BaseEBusView;
 import com.wow.frame.util.AppUtil;
 import com.wow.frame.util.CommonUtil;
@@ -45,13 +48,55 @@ public class LTaiyaView extends BaseEBusView {
 
     public LTaiyaView(@NonNull Context context) {
         super(context);
-        addContent(R.layout.content_l_taiya);
+        init();
     }
 
     public LTaiyaView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        addContent(R.layout.content_l_taiya);
+        init();
     }
 
+    @ViewInject(R.id.tv_lt)
+    private TextView tv_lt;
 
+    @ViewInject(R.id.tv_rt)
+    private TextView tv_rt;
+
+    @ViewInject(R.id.tv_lb)
+    private TextView tv_lb;
+
+    @ViewInject(R.id.tv_rb)
+    private TextView tv_rb;
+
+
+    private void init() {
+        addContent(R.layout.content_l_taiya);
+        onEventMainThread(ObdPlugin.self().getCurrentPObdEventCarTp());
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(final PObdEventConnect event) {
+        if (event.isConnected() && ObdPlugin.self().supportTp()) {
+
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventMainThread(final PObdEventCarTp event) {
+        if (tv_lt != null && event.getlFTirePressure() != null) {
+            tv_lt.setText(getContext().getString(R.string.launcher_tp, event.getlFTirePressure(), event.getlFTemp()));
+        }
+
+        if (tv_lb != null && event.getlBTirePressure() != null) {
+            tv_lb.setText(getContext().getString(R.string.launcher_tp, event.getlBTirePressure(), event.getlBTemp()));
+        }
+
+        if (tv_rt != null && event.getrFTirePressure() != null) {
+            tv_rt.setText(getContext().getString(R.string.launcher_tp, event.getrFTirePressure(), event.getrFTemp()));
+        }
+
+        if (tv_rb != null && event.getrBTirePressure() != null) {
+            tv_rb.setText(getContext().getString(R.string.launcher_tp, event.getrBTirePressure(), event.getrBTemp()));
+        }
+    }
 }

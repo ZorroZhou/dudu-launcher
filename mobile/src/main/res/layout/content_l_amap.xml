@@ -9,7 +9,7 @@
     android:orientation="vertical"
     tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry">
 
-    <FrameLayout
+    <com.zhy.android.percent.support.PercentFrameLayout
         android:id="@+id/rl_moren"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -55,7 +55,7 @@
                 android:layout_alignParentBottom="true"
                 android:gravity="center"
                 android:orientation="vertical"
-                app:layout_heightPercent="12%h">
+                app:layout_heightPercent="13%h">
 
                 <View
                     android:layout_width="match_parent"
@@ -101,7 +101,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        app:layout_widthPercent="100%h">
+                        app:layout_widthPercent="110%h">
 
                         <ImageView
                             android:layout_width="0dp"
@@ -123,7 +123,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        app:layout_widthPercent="100%h">
+                        app:layout_widthPercent="110%h">
 
                         <ImageView
                             android:layout_width="0dp"
@@ -135,7 +135,7 @@
                 </com.zhy.android.percent.support.PercentLinearLayout>
             </LinearLayout>
         </com.zhy.android.percent.support.PercentRelativeLayout>
-    </FrameLayout>
+    </com.zhy.android.percent.support.PercentFrameLayout>
 
     <com.zhy.android.percent.support.PercentRelativeLayout
         android:id="@+id/rl_daohang"
@@ -268,7 +268,7 @@
             android:layout_alignParentBottom="true"
             android:gravity="center"
             android:orientation="vertical"
-            app:layout_heightPercent="12%h">
+            app:layout_heightPercent="13%h">
 
             <View
                 android:layout_width="match_parent"

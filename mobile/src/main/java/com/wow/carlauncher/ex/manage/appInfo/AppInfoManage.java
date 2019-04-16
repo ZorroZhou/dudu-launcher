@@ -102,7 +102,7 @@ public class AppInfoManage {
         appInfos = new ConcurrentHashMap<>();
         internalApps = new ConcurrentHashMap<>();
         internalApps.put(INTERNAL_APP_DRIVING, new InternalAppInfo("驾驶", INTERNAL_APP_DRIVING, MARK_INTERNAL_APP, DrivingActivity.class));
-        internalApps.put(INTERNAL_APP_SETTING, new InternalAppInfo("设置", INTERNAL_APP_SETTING, MARK_INTERNAL_APP, SetActivity.class));
+        internalApps.put(INTERNAL_APP_SETTING, new InternalAppInfo("桌面设置", INTERNAL_APP_SETTING, MARK_INTERNAL_APP, SetActivity.class));
         refreshAppInfo(false);
     }
 

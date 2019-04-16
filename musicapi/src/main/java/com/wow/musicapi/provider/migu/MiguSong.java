@@ -2,7 +2,12 @@ package com.wow.musicapi.provider.migu;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.wow.musicapi.api.MusicProvider;
-import com.wow.musicapi.model.*;
+import com.wow.musicapi.model.Album;
+import com.wow.musicapi.model.Artist;
+import com.wow.musicapi.model.BaseBean;
+import com.wow.musicapi.model.Lyric;
+import com.wow.musicapi.model.MusicLink;
+import com.wow.musicapi.model.Song;
 import com.wow.musicapi.util.SongUtils;
 
 import java.util.ArrayList;

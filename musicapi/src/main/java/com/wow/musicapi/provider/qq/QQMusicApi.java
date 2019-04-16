@@ -2,8 +2,8 @@ package com.wow.musicapi.provider.qq;
 
 import com.wow.musicapi.api.MusicApi;
 import com.wow.musicapi.model.Album;
-import com.wow.musicapi.model.Song;
 import com.wow.musicapi.model.MusicLink;
+import com.wow.musicapi.model.Song;
 
 import java.io.IOException;
 import java.util.List;

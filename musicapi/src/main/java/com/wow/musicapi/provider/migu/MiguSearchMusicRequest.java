@@ -2,9 +2,6 @@ package com.wow.musicapi.provider.migu;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import okhttp3.HttpUrl;
-import okhttp3.Request;
-import okhttp3.Response;
 import com.wow.musicapi.api.BaseRequest;
 import com.wow.musicapi.config.Constants;
 import com.wow.musicapi.model.Song;
@@ -12,6 +9,10 @@ import com.wow.musicapi.model.Song;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.HttpUrl;
+import okhttp3.Request;
+import okhttp3.Response;
 
 @SuppressWarnings("SpellCheckingInspection")
 class MiguSearchMusicRequest extends BaseRequest<List<? extends Song>> {

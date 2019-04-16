@@ -1,7 +1,6 @@
 package com.wow.musicapi.provider.netease;
 
 import com.alibaba.fastjson.annotation.JSONField;
-
 import com.wow.musicapi.model.BaseBean;
 import com.wow.musicapi.model.MusicLink;
 

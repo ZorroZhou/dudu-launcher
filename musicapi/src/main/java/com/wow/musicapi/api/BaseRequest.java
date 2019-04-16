@@ -1,11 +1,11 @@
 package com.wow.musicapi.api;
 
+import java.io.IOException;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Request;
 import okhttp3.Response;
-
-import java.io.IOException;
 
 /**
  * 为统一http请求和解析返回数据而封装的基类

@@ -1,6 +1,5 @@
 package com.wow.musicapi.api;
 
-import okhttp3.*;
 import com.wow.musicapi.util.DnsHelper;
 import com.wow.musicapi.util.TextUtils;
 
@@ -13,6 +12,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import okhttp3.Callback;
+import okhttp3.Dns;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Created by haohua on 2018/2/11.

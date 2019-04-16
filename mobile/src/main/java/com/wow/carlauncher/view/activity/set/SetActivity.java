@@ -5,12 +5,10 @@ import android.view.View;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.view.activity.set.view.SAppView;
-import com.wow.carlauncher.view.activity.set.view.SFangKongView;
-import com.wow.carlauncher.view.activity.set.view.SLoadAppView;
 import com.wow.carlauncher.view.activity.set.view.SBleDeviceView;
+import com.wow.carlauncher.view.activity.set.view.SLoadAppView;
 import com.wow.carlauncher.view.activity.set.view.SPopupView;
 import com.wow.carlauncher.view.activity.set.view.SSystemView;
-import com.wow.carlauncher.view.activity.set.view.STimeView;
 import com.wow.carlauncher.view.base.BaseActivity;
 
 import org.xutils.view.annotation.ViewInject;

@@ -68,6 +68,9 @@ public class SBleDeviceView extends BaseView {
     @ViewInject(R.id.sv_obd_disconnect)
     private SetView sv_obd_disconnect;
 
+    @ViewInject(R.id.sv_auto_open_driving)
+    private SetView sv_auto_open_driving;
+
     @ViewInject(R.id.sv_fangkong_select)
     private SetView sv_fangkong_select;
 
@@ -187,6 +190,19 @@ public class SBleDeviceView extends BaseView {
                 });
             }
         });
+
+        sv_auto_open_driving.setOnValueChangeListener(new SetView.OnValueChangeListener() {
+            @Override
+            public void onValueChange(String newValue, String oldValue) {
+                if ("1".equals(newValue)) {
+                    SharedPreUtil.saveSharedPreBoolean(SDATA_TRIP_AUTO_OPEN_DRIVING, true);
+                } else {
+                    SharedPreUtil.saveSharedPreBoolean(SDATA_TRIP_AUTO_OPEN_DRIVING, false);
+                }
+            }
+        });
+        sv_auto_open_driving.setChecked(SharedPreUtil.getSharedPreBoolean(SDATA_TRIP_AUTO_OPEN_DRIVING, SDATA_TRIP_AUTO_OPEN_DRIVING_DF));
+
 
         FangkongProtocolEnum fkp1 = FangkongProtocolEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_FANGKONG_CONTROLLER, FangkongProtocolEnum.YLFK.getId()));
         sv_fangkong_impl_select.setSummary("方控使用的协议：" + fkp1.getName());

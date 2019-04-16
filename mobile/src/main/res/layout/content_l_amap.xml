@@ -160,6 +160,7 @@
                 android:includeFontPadding="false"
                 android:lines="1"
                 android:text="高德导航"
+                android:textColor="#101933"
                 app:layout_textSizePercent="50%h" />
         </com.zhy.android.percent.support.PercentFrameLayout>
 
@@ -234,8 +235,8 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_below="@id/fl_luxian"
+            android:background="@mipmap/n_quan"
             android:orientation="vertical"
-            android:visibility="gone"
             app:layout_heightPercent="14%h"
             app:layout_marginLeftPercent="3%h"
             app:layout_marginTopPercent="3%h"
@@ -248,8 +249,8 @@
                 android:layout_weight="3"
                 android:gravity="center_horizontal|bottom"
                 android:text="120"
-                android:textColor="#5d6575"
-                app:layout_textSizePercent="40%h" />
+                android:textColor="#101933"
+                app:layout_textSizePercent="35%h" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -257,8 +258,8 @@
                 android:layout_weight="2"
                 android:gravity="center_horizontal|top"
                 android:text="KM/H"
-                android:textColor="#5d6575"
-                app:layout_textSizePercent="20%h" />
+                android:textColor="#101933"
+                app:layout_textSizePercent="15%h" />
         </com.zhy.android.percent.support.PercentLinearLayout>
 
         <LinearLayout

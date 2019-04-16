@@ -3,7 +3,6 @@ package com.wow.musicapi.provider.kuwo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlText;
 import com.wow.musicapi.model.BaseBean;
 import com.wow.musicapi.model.MusicLink;
 

@@ -1,12 +1,13 @@
 package com.wow.musicapi.provider.xiami;
 
 import com.alibaba.fastjson.JSONObject;
-import okhttp3.HttpUrl;
-import okhttp3.Request;
-import okhttp3.Response;
 import com.wow.musicapi.api.BaseRequest;
 
 import java.io.IOException;
+
+import okhttp3.HttpUrl;
+import okhttp3.Request;
+import okhttp3.Response;
 
 @SuppressWarnings("SpellCheckingInspection")
 public class XiamiGetAlbumInfoRequest extends BaseRequest<XiamiAlbum> {

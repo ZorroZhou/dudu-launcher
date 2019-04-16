@@ -23,7 +23,6 @@ import org.xutils.view.annotation.ViewInject;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.Locale;
 
 import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.ICONS;
 

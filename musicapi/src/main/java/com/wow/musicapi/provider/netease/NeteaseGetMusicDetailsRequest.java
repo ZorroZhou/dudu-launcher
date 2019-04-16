@@ -2,17 +2,17 @@ package com.wow.musicapi.provider.netease;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import okhttp3.FormBody;
-import okhttp3.HttpUrl;
-import okhttp3.Request;
-import okhttp3.Response;
 import com.wow.musicapi.api.BaseRequest;
 import com.wow.musicapi.config.Constants;
-import com.wow.musicapi.model.MusicLink;
 import com.wow.musicapi.util.CommonUtils;
 
 import java.io.IOException;
 import java.util.List;
+
+import okhttp3.FormBody;
+import okhttp3.HttpUrl;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Created by haohua on 2018/2/11.

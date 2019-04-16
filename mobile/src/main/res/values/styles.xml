@@ -8,15 +8,15 @@
     </style>
 
 
-    <style name="LauncherTheme" parent="android:Theme.Wallpaper">
-        <!-- Customize your theme here. -->
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-        <item name="android:windowNoTitle">true</item>
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-    </style>
+    <!--<style name="LauncherTheme" parent="android:Theme.Wallpaper">-->
+        <!--&lt;!&ndash; Customize your theme here. &ndash;&gt;-->
+        <!--<item name="windowActionBar">false</item>-->
+        <!--<item name="windowNoTitle">true</item>-->
+        <!--<item name="android:windowNoTitle">true</item>-->
+        <!--<item name="colorPrimary">@color/colorPrimary</item>-->
+        <!--<item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
+        <!--<item name="colorAccent">@color/colorAccent</item>-->
+    <!--</style>-->
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
@@ -27,9 +27,9 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="toolBar" parent="AppTheme">
-        <item name="colorControlNormal">#fff</item>
-    </style>
+    <!--<style name="toolBar" parent="AppTheme">-->
+        <!--<item name="colorControlNormal">#fff</item>-->
+    <!--</style>-->
 
     <style name="Interval">
         <item name="android:background">@color/main_interval_color</item>

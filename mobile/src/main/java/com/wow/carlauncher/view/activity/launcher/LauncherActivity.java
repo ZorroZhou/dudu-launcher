@@ -5,7 +5,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -18,15 +17,12 @@ import android.widget.LinearLayout;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
-import com.wow.carlauncher.common.SunRiseSetUtil;
 import com.wow.carlauncher.ex.manage.location.event.MNewLocationEvent;
-import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.console.event.PConsoleEventLightState;
 import com.wow.carlauncher.view.activity.AppSelectActivity;
 import com.wow.carlauncher.view.activity.launcher.view.LDockView;
 import com.wow.carlauncher.view.activity.launcher.view.LPage1View;
 import com.wow.carlauncher.view.activity.launcher.view.LPage2View;
-import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.SharedPreUtil;
 import com.wow.frame.util.ViewUtils;
 
@@ -36,9 +32,6 @@ import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
-
-import java.util.Date;
-import java.util.List;
 
 import static com.wow.carlauncher.common.CommonData.IDATA_APP_MARK;
 import static com.wow.carlauncher.common.CommonData.IDATA_APP_PACKAGE_NAME;
@@ -52,7 +45,6 @@ import static com.wow.carlauncher.common.CommonData.SDATA_DOCK2_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK3_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK4_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK5_CLASS;
-import static com.wow.carlauncher.common.CommonData.SDATA_TIME_PLUGIN_OPEN_APP;
 
 public class LauncherActivity extends Activity {
 

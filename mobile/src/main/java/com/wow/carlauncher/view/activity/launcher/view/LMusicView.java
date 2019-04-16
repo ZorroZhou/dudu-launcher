@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.ex.manage.MusicCoverManage;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
@@ -20,19 +19,12 @@ import com.wow.carlauncher.ex.plugin.music.event.PMusicEventProgress;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventState;
 import com.wow.carlauncher.view.base.BaseEBusView;
 import com.wow.frame.util.CommonUtil;
-import com.wow.musicapi.api.MusicApi;
-import com.wow.musicapi.api.MusicApiFactory;
-import com.wow.musicapi.api.MusicProvider;
-import com.wow.musicapi.model.Song;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
-
-import java.util.List;
 
 import static com.wow.carlauncher.common.CommonData.TAG;
 

@@ -1,13 +1,14 @@
 package com.wow.musicapi.provider.kugou;
 
 import com.alibaba.fastjson.JSONObject;
-import okhttp3.HttpUrl;
-import okhttp3.Request;
-import okhttp3.Response;
 import com.wow.musicapi.api.BaseRequest;
 import com.wow.musicapi.config.Constants;
 
 import java.io.IOException;
+
+import okhttp3.HttpUrl;
+import okhttp3.Request;
+import okhttp3.Response;
 
 @SuppressWarnings("SpellCheckingInspection")
 class KugouGetSongDetailRequest extends BaseRequest<KugouSong> {

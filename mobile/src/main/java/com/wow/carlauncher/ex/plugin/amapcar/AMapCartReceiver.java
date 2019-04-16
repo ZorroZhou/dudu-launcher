@@ -3,7 +3,6 @@ package com.wow.carlauncher.ex.plugin.amapcar;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.google.common.base.Strings;

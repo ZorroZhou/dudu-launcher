@@ -26,6 +26,7 @@ import com.wow.carlauncher.ex.plugin.fk.FangkongPlugin;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.repertory.db.AppDbInfo;
+import com.wow.carlauncher.view.consoleWindow.ConsoleWin;
 import com.wow.carlauncher.view.popupWindow.PopupWin;
 import com.wow.frame.SFrame;
 import com.wow.frame.declare.SAppDeclare;
@@ -101,6 +102,8 @@ public class AppContext implements SAppDeclare, SDatabaseDeclare {
         ConsolePlugin.self().init(app);
         //弹出敞口
         PopupWin.self().init(app);
+
+        ConsoleWin.self().init(app);
 
         int size = SharedPreUtil.getSharedPreInteger(CommonData.SDATA_POPUP_SIZE, 1);
         PopupWin.self().setRank(size + 1);

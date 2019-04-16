@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -24,6 +25,7 @@ import com.wow.frame.util.SharedPreUtil;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
@@ -35,12 +37,13 @@ import static com.wow.carlauncher.common.CommonData.SDATA_DOCK1_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK2_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK3_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK4_CLASS;
+import static com.wow.carlauncher.common.CommonData.TAG;
 
 /**
  * Created by 10124 on 2018/4/22.
  */
 
-public class LDockView extends LinearLayout implements View.OnClickListener {
+public class LDockView extends LinearLayout {
     public LDockView(@NonNull Context context) {
         super(context);
         initView();
@@ -51,29 +54,21 @@ public class LDockView extends LinearLayout implements View.OnClickListener {
         initView();
     }
 
-    @ViewInject(R.id.ll_dock1)
-    private LinearLayout ll_dock1;
     @ViewInject(R.id.iv_dock1)
     private ImageView iv_dock1;
     @ViewInject(R.id.tv_dock1)
     private TextView tv_dock1;
 
-    @ViewInject(R.id.ll_dock2)
-    private LinearLayout ll_dock2;
     @ViewInject(R.id.iv_dock2)
     private ImageView iv_dock2;
     @ViewInject(R.id.tv_dock2)
     private TextView tv_dock2;
 
-    @ViewInject(R.id.ll_dock3)
-    private LinearLayout ll_dock3;
     @ViewInject(R.id.iv_dock3)
     private ImageView iv_dock3;
     @ViewInject(R.id.tv_dock3)
     private TextView tv_dock3;
 
-    @ViewInject(R.id.ll_dock4)
-    private LinearLayout ll_dock4;
     @ViewInject(R.id.iv_dock4)
     private ImageView iv_dock4;
     @ViewInject(R.id.tv_dock4)
@@ -90,11 +85,6 @@ public class LDockView extends LinearLayout implements View.OnClickListener {
         x.view().inject(this);
 
         //这里要先添加事件，要不然ID重复，会导致读取的子view错误
-
-        ll_dock1.setOnClickListener(this);
-        ll_dock2.setOnClickListener(this);
-        ll_dock3.setOnClickListener(this);
-        ll_dock4.setOnClickListener(this);
 
         loadDock();
     }
@@ -152,8 +142,9 @@ public class LDockView extends LinearLayout implements View.OnClickListener {
         dockLabelShow(SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_LAUNCHER_DOCK_LABEL_SHOW, true));
     }
 
-    @Override
-    public void onClick(View v) {
+    @Event(value = {R.id.ll_dock1, R.id.ll_dock2, R.id.ll_dock3, R.id.ll_dock4})
+    private void clickEvent(View v) {
+        Log.d(TAG, "clickEvent: " + v);
         switch (v.getId()) {
             case R.id.ll_dock1: {
                 String packname = SharedPreUtil.getSharedPreString(SDATA_DOCK1_CLASS);

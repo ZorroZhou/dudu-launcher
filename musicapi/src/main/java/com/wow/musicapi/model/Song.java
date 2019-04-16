@@ -1,9 +1,9 @@
 package com.wow.musicapi.model;
 
+import com.wow.musicapi.api.MusicProvider;
+
 import java.io.Serializable;
 import java.util.List;
-
-import com.wow.musicapi.api.MusicProvider;
 
 /**
  * Created by haohua on 2018/2/9.

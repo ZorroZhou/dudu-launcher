@@ -1,23 +1,22 @@
 package com.wow.musicapi.provider.netease;
 
 import com.alibaba.fastjson.JSONObject;
-
-import okhttp3.FormBody;
-import okhttp3.HttpUrl;
-import okhttp3.Request;
-import okhttp3.Response;
-
-import org.apache.commons.codec.binary.Base64;
-
 import com.wow.musicapi.api.BaseRequest;
 import com.wow.musicapi.config.Constants;
 import com.wow.musicapi.model.Album;
 import com.wow.musicapi.util.AES;
 
+import org.apache.commons.codec.binary.Base64;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import okhttp3.FormBody;
+import okhttp3.HttpUrl;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * 参考: https://github.com/metowolf/NeteaseCloudMusicApi/blob/master/weapi/NeteaseMusicAPI_mini.php

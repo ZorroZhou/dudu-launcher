@@ -1,8 +1,5 @@
 package com.wow.musicapi;
 
-import okhttp3.Request;
-import okhttp3.Response;
-
 import com.wow.musicapi.api.HttpEngine;
 import com.wow.musicapi.api.MusicApi;
 import com.wow.musicapi.api.MusicApiFactory;
@@ -12,6 +9,9 @@ import com.wow.musicapi.model.Song;
 
 import java.io.IOException;
 import java.util.List;
+
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class ShawnMain {
 

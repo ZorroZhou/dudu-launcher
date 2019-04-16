@@ -1,16 +1,15 @@
 package com.wow.musicapi.provider.netease;
 
 import com.alibaba.fastjson.JSONObject;
-
-import org.apache.commons.codec.binary.Hex;
-
 import com.wow.musicapi.api.MusicApi;
 import com.wow.musicapi.model.Album;
-import com.wow.musicapi.model.Song;
 import com.wow.musicapi.model.MusicLink;
+import com.wow.musicapi.model.Song;
 import com.wow.musicapi.util.AES;
 import com.wow.musicapi.util.Function;
 import com.wow.musicapi.util.SongUtils;
+
+import org.apache.commons.codec.binary.Hex;
 
 import java.io.IOException;
 import java.util.List;

@@ -6,36 +6,21 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfo;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
-import com.wow.carlauncher.ex.manage.toast.ToastManage;
-import com.wow.carlauncher.ex.plugin.console.ConsolePlugin;
-import com.wow.carlauncher.ex.plugin.console.ConsoleProtoclEnum;
-import com.wow.carlauncher.ex.plugin.music.MusicControllerEnum;
-import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
-import com.wow.carlauncher.view.activity.launcher.event.LauncherDockLabelShowChangeEvent;
 import com.wow.carlauncher.view.base.BaseView;
 import com.wow.frame.util.SharedPreUtil;
 import com.wow.frame.util.ThreadObj;
 
-import org.greenrobot.eventbus.EventBus;
 import org.xutils.view.annotation.ViewInject;
-import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.wow.carlauncher.common.CommonData.SDATA_CONSOLE_MARK;
-import static com.wow.carlauncher.common.CommonData.SDATA_MUSIC_CONTROLLER;
-import static com.wow.carlauncher.common.CommonData.TAG;
 
 /**
  * Created by 10124 on 2018/4/22.

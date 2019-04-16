@@ -1,13 +1,14 @@
 package com.wow.musicapi.provider.baidu;
 
 import com.alibaba.fastjson.JSONObject;
-import okhttp3.HttpUrl;
-import okhttp3.Request;
-import okhttp3.Response;
 import com.wow.musicapi.api.BaseRequest;
 
 import java.io.IOException;
 import java.util.List;
+
+import okhttp3.HttpUrl;
+import okhttp3.Request;
+import okhttp3.Response;
 
 @SuppressWarnings("SpellCheckingInspection")
 class BaiduGetAlbumInfoRequest extends BaseRequest<BaiduAlbum> {

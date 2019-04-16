@@ -1,15 +1,16 @@
 package com.wow.musicapi.provider.xiami;
 
 import com.alibaba.fastjson.JSONObject;
-import okhttp3.HttpUrl;
-import okhttp3.Request;
-import okhttp3.Response;
 import com.wow.musicapi.api.BaseRequest;
 import com.wow.musicapi.config.Constants;
 import com.wow.musicapi.model.Song;
 
 import java.io.IOException;
 import java.util.List;
+
+import okhttp3.HttpUrl;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Create by huchunyue on 2018/2/24

@@ -1,14 +1,15 @@
 package com.wow.musicapi.provider.qq;
 
 import com.alibaba.fastjson.JSONObject;
-import okhttp3.HttpUrl;
-import okhttp3.Request;
-import okhttp3.Response;
 import com.wow.musicapi.api.BaseRequest;
 import com.wow.musicapi.model.Album;
 
 import java.io.IOException;
 import java.util.List;
+
+import okhttp3.HttpUrl;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Created by haohua on 2018/2/11.

@@ -62,8 +62,8 @@ public class SFangKongView extends BaseView {
     private void initView() {
         addContent(R.layout.content_set_fangkong);
 
-        FangkongProtocolEnum p1 = FangkongProtocolEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_FANGKONG_CONTROLLER, FangkongProtocolEnum.YLFK.getId()));
-        sv_fangkong_impl_select.setSummary("方控使用的协议：" + p1.getName());
+        FangkongProtocolEnum fkp1 = FangkongProtocolEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_FANGKONG_CONTROLLER, FangkongProtocolEnum.YLFK.getId()));
+        sv_fangkong_impl_select.setSummary("方控使用的协议：" + fkp1.getName());
         sv_fangkong_impl_select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -108,9 +108,9 @@ public class SFangKongView extends BaseView {
         });
 
 
-        String address = SharedPreUtil.getSharedPreString(CommonData.SDATA_FANGKONG_ADDRESS);
-        if (CommonUtil.isNotNull(address)) {
-            sv_fangkong_select.setSummary("绑定了设备:" + SharedPreUtil.getSharedPreString(CommonData.SDATA_FANGKONG_NAME) + "  地址:" + address);
+        String fkaddress = SharedPreUtil.getSharedPreString(CommonData.SDATA_FANGKONG_ADDRESS);
+        if (CommonUtil.isNotNull(fkaddress)) {
+            sv_fangkong_select.setSummary("绑定了设备:" + SharedPreUtil.getSharedPreString(CommonData.SDATA_FANGKONG_NAME) + "  地址:" + fkaddress);
         } else {
             sv_fangkong_select.setSummary("没有绑定蓝牙设备");
         }

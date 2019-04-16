@@ -7,7 +7,7 @@ import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.view.activity.set.view.SAppView;
 import com.wow.carlauncher.view.activity.set.view.SFangKongView;
 import com.wow.carlauncher.view.activity.set.view.SLoadAppView;
-import com.wow.carlauncher.view.activity.set.view.SObdView;
+import com.wow.carlauncher.view.activity.set.view.SBleDeviceView;
 import com.wow.carlauncher.view.activity.set.view.SPopupView;
 import com.wow.carlauncher.view.activity.set.view.SSystemView;
 import com.wow.carlauncher.view.activity.set.view.STimeView;
@@ -27,34 +27,23 @@ public class SetActivity extends BaseActivity {
     @ViewInject(R.id.sg_popup)
     private SetView sg_popup;
 
-    @ViewInject(R.id.sg_time)
-    private SetView sg_time;
-
     @ViewInject(R.id.sg_system_set)
     private SetView sg_system_set;
 
-    @ViewInject(R.id.sg_fangkong)
-    private SetView sg_fangkong;
     @ViewInject(R.id.sg_load_app)
     private SetView sg_load_app;
 
-    @ViewInject(R.id.sg_obd)
-    private SetView sg_obd;
+    @ViewInject(R.id.sg_ble_device)
+    private SetView sg_ble_device;
 
     @ViewInject(R.id.ll_app)
     private SAppView ll_app;
 
-    @ViewInject(R.id.ll_fangkong)
-    private SFangKongView ll_fangkong;
-
     @ViewInject(R.id.ll_obd)
-    private SObdView ll_obd;
+    private SBleDeviceView ll_obd;
 
     @ViewInject(R.id.ll_popup)
     private SPopupView ll_popup;
-
-    @ViewInject(R.id.ll_time)
-    private STimeView ll_time;
 
     @ViewInject(R.id.ll_system)
     private SSystemView ll_system;
@@ -70,9 +59,7 @@ public class SetActivity extends BaseActivity {
             public void onClick(View view) {
                 ll_app.setVisibility(View.GONE);
                 ll_popup.setVisibility(View.GONE);
-                ll_time.setVisibility(View.GONE);
                 ll_system.setVisibility(View.GONE);
-                ll_fangkong.setVisibility(View.GONE);
                 ll_obd.setVisibility(View.GONE);
                 ll_load_app.setVisibility(View.GONE);
 
@@ -85,19 +72,11 @@ public class SetActivity extends BaseActivity {
                         ll_popup.setVisibility(View.VISIBLE);
                         break;
                     }
-                    case R.id.sg_time: {
-                        ll_time.setVisibility(View.VISIBLE);
-                        break;
-                    }
-                    case R.id.sg_fangkong: {
-                        ll_fangkong.setVisibility(View.VISIBLE);
-                        break;
-                    }
                     case R.id.sg_system_set: {
                         ll_system.setVisibility(View.VISIBLE);
                         break;
                     }
-                    case R.id.sg_obd: {
+                    case R.id.sg_ble_device: {
                         ll_obd.setVisibility(View.VISIBLE);
                         break;
                     }
@@ -114,10 +93,8 @@ public class SetActivity extends BaseActivity {
 
         sg_app.setOnClickListener(groupClick);
         sg_popup.setOnClickListener(groupClick);
-        sg_time.setOnClickListener(groupClick);
         sg_system_set.setOnClickListener(groupClick);
-        sg_fangkong.setOnClickListener(groupClick);
-        sg_obd.setOnClickListener(groupClick);
+        sg_ble_device.setOnClickListener(groupClick);
         sg_load_app.setOnClickListener(groupClick);
     }
 }

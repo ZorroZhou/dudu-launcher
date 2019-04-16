@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
-import com.wow.carlauncher.ex.manage.trip.TripManage;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventNavInfo;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventState;
 import com.wow.carlauncher.view.base.BaseEBusView;
@@ -73,17 +72,14 @@ public class CoolBlackView extends BaseEBusView {
     @ViewInject(R.id.tv_amapmsg)
     private TextView tv_amapmsg;
 
+    private long startTime = System.currentTimeMillis();
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(final MTimeSecondEvent event) {
         this.tv_date.setText(DateUtil.dateToString(new Date(), "yyyy-MM-dd"));
         this.tv_time.setText(DateUtil.dateToString(new Date(), "HH:mm:ss"));
-        if (TripManage.self().isTripStart()) {
-            this.tv_trip_time.setText(DateUtil.formatDuring(System.currentTimeMillis() - TripManage.self().getTropStartTime()));
-            this.tv_driver_distance.setText(String.format(Locale.CHINA, "%.1f", (double) TripManage.self().getTropMileage() / 1000d));
-        } else {
-            this.tv_trip_time.setText("00:00:00");
-            this.tv_driver_distance.setText("0");
-        }
+        this.tv_trip_time.setText(DateUtil.formatDuring(System.currentTimeMillis() - startTime));
+        //this.tv_driver_distance.setText(String.format(Locale.CHINA, "%.1f", (double) TripManage.self().getTropMileage() / 1000d));
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

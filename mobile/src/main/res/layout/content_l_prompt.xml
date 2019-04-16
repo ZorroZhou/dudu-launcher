@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="2019年1月1日 星期一 23:59:59"
+        android:text="1月1日 星期一 23:59:59"
         android:textColor="#666666"
         app:layout_textSizePercent="50%h" />
 

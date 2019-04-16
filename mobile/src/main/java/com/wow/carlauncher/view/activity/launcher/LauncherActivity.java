@@ -54,15 +54,11 @@ public class LauncherActivity extends Activity {
     @ViewInject(R.id.fl_bg)
     private FrameLayout fl_bg;
 
-    private PackageManager pm;
-
     private boolean night = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        pm = getPackageManager();
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
@@ -77,25 +73,6 @@ public class LauncherActivity extends Activity {
         setContentView(R.layout.activity_lanncher);
         x.view().inject(this);
         EventBus.getDefault().register(this);
-    }
-
-    @Event(value = {R.id.tv_time})
-    private void clickEvent(View view) {
-        switch (view.getId()) {
-            case R.id.ll_time: {
-                String packname = SharedPreUtil.getSharedPreString(SDATA_TIME_PLUGIN_OPEN_APP);
-                if (!CommonUtil.isNull(packname)) {
-                    Intent appIntent = pm.getLaunchIntentForPackage(packname);
-                    if (appIntent != null) {
-                        appIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(appIntent);
-                    } else {
-                        ToastManage.self().show("APP丢失");
-                    }
-                }
-                break;
-            }
-        }
     }
 
     @Event(value = {R.id.ll_dock1, R.id.ll_dock2, R.id.ll_dock3, R.id.ll_dock4}, type = View.OnLongClickListener.class)

@@ -1,16 +1,11 @@
 package com.wow.carlauncher.view.activity.driving;
 
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
-import com.wow.carlauncher.ex.manage.trip.TripManage;
-import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventConnect;
 import com.wow.carlauncher.view.activity.driving.coolBlack.CoolBlackView;
 import com.wow.carlauncher.view.base.BaseActivity;
@@ -43,40 +38,19 @@ public class DrivingActivity extends BaseActivity {
         View nowContent = new CoolBlackView(this);
         content.addView(nowContent, FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
 
-        TripManage.self().setDrivingShow(true);
-
-        if (ObdPlugin.self().notConnect()) {
-            ToastManage.self().show("OBD没有连接");
-            moveTaskToBack(isTaskRoot());
-        }
+//        if (ObdPlugin.self().notConnect()) {
+//            ToastManage.self().show("OBD没有连接");
+//            moveTaskToBack(isTaskRoot());
+//        }
     }
 
     @Event(value = {R.id.iv_back2})
     private void clickEvent(View view) {
         switch (view.getId()) {
             case R.id.iv_back2: {
-                new AlertDialog.Builder(this)
-                        .setTitle("提示")
-                        .setMessage("确定推出驾驶界面吗?")
-                        .setPositiveButton("退出", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                finish();
-                            }
-                        })
-                        .setNegativeButton("取消", null)
-                        .show();
+                moveTaskToBack(isTaskRoot());
                 break;
             }
-        }
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        if (ObdPlugin.self().notConnect()) {
-            ToastManage.self().show("OBD没有连接");
-            moveTaskToBack(isTaskRoot());
         }
     }
 
@@ -90,12 +64,6 @@ public class DrivingActivity extends BaseActivity {
     public void onPause() {
         super.onPause();
         isFront = false;
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        TripManage.self().setDrivingShow(false);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

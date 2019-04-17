@@ -20,6 +20,7 @@
         app:cardUseCornerArea="true">
 
         <com.wow.carlauncher.view.activity.launcher.view.LAMapView
+            android:id="@+id/lamap"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </com.meetsl.scardview.SCardView>
@@ -38,6 +39,7 @@
         app:cardUseCornerArea="true">
 
         <com.wow.carlauncher.view.activity.launcher.view.LMusicView
+            android:id="@+id/lmusic"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </com.meetsl.scardview.SCardView>
@@ -56,6 +58,7 @@
         app:cardUseCornerArea="true">
 
         <com.wow.carlauncher.view.activity.launcher.view.LWeatherView
+            android:id="@+id/lwearther"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </com.meetsl.scardview.SCardView>

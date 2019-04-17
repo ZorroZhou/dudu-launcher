@@ -41,10 +41,22 @@
             android:layout_height="match_parent" />
     </com.meetsl.scardview.SCardView>
 
-    <View
+    <com.meetsl.scardview.SCardView
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:background="@android:color/transparent" />
+        android:background="@android:color/transparent"
+        app:cardBackgroundColor="@android:color/transparent"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="10dp"
+        app:cardPreventCornerOverlap="false"
+        app:cardShadowEndColor="#01000000"
+        app:cardShadowStartColor="#20000000"
+        app:cardUseCornerArea="true">
+
+        <com.wow.carlauncher.view.activity.launcher.view.LTimeView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.meetsl.scardview.SCardView>
 
 </com.zhy.android.percent.support.PercentLinearLayout>

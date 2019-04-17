@@ -21,7 +21,7 @@ public class DateUtil {
      */
     public static String getNowTime() {
         Date now = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         String date = sdf.format(now);
         return date;
     }
@@ -52,7 +52,7 @@ public class DateUtil {
      * @return
      */
     public final static String strDateTostrDate(String dateString, String format) {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(format, Locale.getDefault());
         Date dateValue = null;
         try {
             dateValue = simpleDateFormat.parse(dateString);
@@ -66,8 +66,8 @@ public class DateUtil {
         int age = 0;
         Date birthDate = stringToDate(birth);
         Date now = new Date();
-        SimpleDateFormat format_y = new SimpleDateFormat("yyyy");
-        SimpleDateFormat format_M = new SimpleDateFormat("MM");
+        SimpleDateFormat format_y = new SimpleDateFormat("yyyy", Locale.getDefault());
+        SimpleDateFormat format_M = new SimpleDateFormat("MM", Locale.getDefault());
         String birth_year = format_y.format(birthDate);
         String this_year = format_y.format(now);
         String birth_month = format_M.format(birthDate);
@@ -84,7 +84,7 @@ public class DateUtil {
      * @return
      */
     public static int getYear() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy", Locale.getDefault());
         String date1 = sdf.format(new Date());
         return Integer.parseInt(date1);
     }

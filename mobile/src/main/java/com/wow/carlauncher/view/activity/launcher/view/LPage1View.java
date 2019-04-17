@@ -13,6 +13,11 @@ import org.xutils.view.annotation.ViewInject;
 
 public class LPage1View extends BaseView {
 
+    public LPage1View(@NonNull Context context, Bundle savedInstanceState) {
+        super(context);
+        initView();
+    }
+
     public LPage1View(@NonNull Context context) {
         super(context);
         initView();

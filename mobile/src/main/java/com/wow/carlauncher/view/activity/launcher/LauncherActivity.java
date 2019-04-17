@@ -25,6 +25,7 @@ import com.wow.carlauncher.view.activity.AppSelectActivity;
 import com.wow.carlauncher.view.activity.launcher.view.LDockView;
 import com.wow.carlauncher.view.activity.launcher.view.LPage1View;
 import com.wow.carlauncher.view.activity.launcher.view.LPage2View;
+import com.wow.carlauncher.view.base.BaseView;
 import com.wow.frame.util.SharedPreUtil;
 import com.wow.frame.util.ViewUtils;
 
@@ -65,6 +66,8 @@ public class LauncherActivity extends Activity {
 
     private boolean night = false;
 
+    private BaseView[] myviews;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,18 +87,20 @@ public class LauncherActivity extends Activity {
         intentFilter.addAction(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
         registerReceiver(homeReceiver, intentFilter);
 
-        initView();
+        initView(savedInstanceState);
 
         LauncherActivity.activity = this;
     }
 
-    public void initView() {
+    public void initView(Bundle savedInstanceState) {
         setContentView(R.layout.activity_lanncher);
         x.view().inject(this);
         EventBus.getDefault().register(this);
 
-        LPage1View lPage1View = new LPage1View(this);
-        LPage2View lPage2View = new LPage2View(this);
+        LPage1View lPage1View = new LPage1View(this,savedInstanceState);
+        LPage2View lPage2View = new LPage2View(this,savedInstanceState);
+
+        myviews = new BaseView[]{lPage1View, lPage2View};
 
         viewPager.setAdapter(new ViewAdapter(new View[]{lPage1View, lPage2View}));
 
@@ -211,6 +216,9 @@ public class LauncherActivity extends Activity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         Log.e(CommonData.TAG, "保存数据?? ");
+        for (BaseView view : myviews) {
+            view.onSaveInstanceState(outState);
+        }
     }
 
     @Override

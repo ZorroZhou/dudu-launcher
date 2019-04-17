@@ -14,7 +14,7 @@ import java.lang.reflect.Method;
  * Created by 10124 on 2018/4/22.
  */
 
-public class BaseEBusView extends BaseView {
+public abstract class BaseEBusView extends BaseView {
     public BaseEBusView(@NonNull Context context) {
         super(context);
     }

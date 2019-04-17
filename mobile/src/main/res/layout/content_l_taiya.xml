@@ -118,7 +118,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:background="?ty_bg"
-                            android:gravity="center_vertical|left"
+                            android:gravity="center_vertical|right"
                             android:padding="12dp"
                             android:text="右前\n0.0\n0.0"
                             android:textColor="?l_text2"
@@ -126,15 +126,6 @@
                     </com.zhy.android.percent.support.PercentFrameLayout>
                 </com.meetsl.scardview.SCardView>
 
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_centerInParent="true"
-                    android:scaleType="centerInside"
-                    android:src="@mipmap/n_car2"
-                    app:layout_heightPercent="40%h"
-                    app:layout_widthPercent="40%w" />
 
                 <com.meetsl.scardview.SCardView
                     android:layout_width="wrap_content"
@@ -191,7 +182,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="?ty_bg"
-                            android:gravity="center_vertical|left"
+                            android:gravity="center_vertical|right"
                             android:padding="12dp"
                             android:text="右后\n0.0\n0.0"
                             android:textColor="?l_text2"
@@ -199,7 +190,14 @@
                     </com.zhy.android.percent.support.PercentFrameLayout>
                 </com.meetsl.scardview.SCardView>
 
-
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_centerInParent="true"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/n_car2"
+                    app:layout_heightPercent="40%h"
+                    app:layout_widthPercent="40%w" />
             </com.zhy.android.percent.support.PercentRelativeLayout>
         </LinearLayout>
     </com.zhy.android.percent.support.PercentLinearLayout>

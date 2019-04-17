@@ -13,6 +13,8 @@
     <attr name="dh_dh" format="reference" />
     <attr name="dh2_bg" format="reference" />
     <attr name="dh_gs" format="reference" />
+    <attr name="dh_clo" format="reference" />
+    <attr name="dh_jy" format="reference" />
     <attr name="dh_j" format="reference" />
     <attr name="dh_quan" format="reference" />
 

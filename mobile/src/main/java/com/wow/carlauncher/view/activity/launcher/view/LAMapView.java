@@ -157,9 +157,17 @@ public class LAMapView extends BaseEBusView {
         if (iv_mute != null) {
             mute = event.isMute();
             if (event.isMute()) {
-                iv_mute.setImageResource(R.mipmap.n_dh_jy);
+                if (SharedPreUtil.getSharedPreInteger(CommonData.SDATA_APP_THEME, R.style.AppThemeWhile) == R.style.AppThemeWhile) {
+                    iv_mute.setImageResource(R.mipmap.n_dh_jy);
+                } else {
+                    iv_mute.setImageResource(R.mipmap.n_dh_jy_b);
+                }
             } else {
-                iv_mute.setImageResource(R.mipmap.n_dh_bjy);
+                if (SharedPreUtil.getSharedPreInteger(CommonData.SDATA_APP_THEME, R.style.AppThemeWhile) == R.style.AppThemeWhile) {
+                    iv_mute.setImageResource(R.mipmap.n_dh_bjy);
+                } else {
+                    iv_mute.setImageResource(R.mipmap.n_dh_bjy);
+                }
             }
         }
     }

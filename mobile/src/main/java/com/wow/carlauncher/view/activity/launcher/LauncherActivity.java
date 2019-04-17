@@ -138,29 +138,6 @@ public class LauncherActivity extends Activity {
         });
     }
 
-    @Event(value = {R.id.ll_dock1, R.id.ll_dock2, R.id.ll_dock3, R.id.ll_dock4})
-    private boolean clickEvent(View view) {
-        switch (view.getId()) {
-            case R.id.ll_dock1: {
-                startActivityForResult(new Intent(this, AppSelectActivity.class), REQUEST_SELECT_APP_TO_DOCK1);
-                break;
-            }
-            case R.id.ll_dock2: {
-                startActivityForResult(new Intent(this, AppSelectActivity.class), REQUEST_SELECT_APP_TO_DOCK2);
-                break;
-            }
-            case R.id.ll_dock3: {
-                startActivityForResult(new Intent(this, AppSelectActivity.class), REQUEST_SELECT_APP_TO_DOCK3);
-                break;
-            }
-            case R.id.ll_dock4: {
-                startActivityForResult(new Intent(this, AppSelectActivity.class), REQUEST_SELECT_APP_TO_DOCK4);
-                break;
-            }
-        }
-        return false;
-    }
-
     @Event(value = {R.id.ll_dock1, R.id.ll_dock2, R.id.ll_dock3, R.id.ll_dock4}, type = View.OnLongClickListener.class)
     private boolean longClickEvent(View view) {
         switch (view.getId()) {

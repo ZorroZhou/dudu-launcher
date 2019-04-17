@@ -291,7 +291,7 @@
                         android:id="@+id/iv_mute"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
-                        android:src="@mipmap/n_dh_bjy"
+                        android:src="?dh_jy"
                         app:layout_heightPercent="60%h"
                         app:layout_widthPercent="60%h" />
                 </com.zhy.android.percent.support.PercentLinearLayout>
@@ -329,7 +329,7 @@
                     <ImageView
                         android:layout_width="0dp"
                         android:layout_height="0dp"
-                        android:src="@mipmap/n_dh_close"
+                        android:src="?dh_clo"
                         app:layout_heightPercent="60%h"
                         app:layout_widthPercent="60%h" />
                 </com.zhy.android.percent.support.PercentLinearLayout>

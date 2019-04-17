@@ -16,7 +16,7 @@
     </style>
 
     <style name="AppThemeWhile" parent="AppTheme">
-        <item name="l_text1">#101933</item>
+        <item name="l_text1">#333e54</item>
         <item name="l_text2">#697185</item>
         <item name="l_text3">#9ba1a9</item>
         <item name="l_text4">#333e54</item>
@@ -29,6 +29,8 @@
         <item name="dh_dh">@mipmap/n_dh_dh</item>
         <item name="dh2_bg">@drawable/n_dh2_bg</item>
         <item name="dh_gs">@mipmap/n_dh_gs</item>
+        <item name="dh_clo">@mipmap/n_dh_close</item>
+        <item name="dh_jy">@mipmap/n_dh_jy</item>
         <item name="dh_j">@mipmap/n_dh_j</item>
         <item name="dh_quan">@mipmap/n_dh_quan</item>
 
@@ -61,6 +63,8 @@
         <item name="dh_dh">@mipmap/n_dh_dh_b</item>
         <item name="dh2_bg">@drawable/n_dh2_bg_b</item>
         <item name="dh_gs">@mipmap/n_dh_gs_b</item>
+        <item name="dh_clo">@mipmap/n_dh_close_b</item>
+        <item name="dh_jy">@mipmap/n_dh_jy_b</item>
         <item name="dh_j">@mipmap/n_dh_j_b</item>
         <item name="dh_quan">@mipmap/n_dh_quan_b</item>
 

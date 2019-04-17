@@ -149,7 +149,7 @@ public class LAMapView extends BaseEBusView {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(final PAmapEventState event) {
-//        rl_moren.setVisibility(event.isRunning() ? GONE : VISIBLE);
+        rl_moren.setVisibility(event.isRunning() ? GONE : VISIBLE);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

@@ -2,10 +2,9 @@
 <com.zhy.android.percent.support.PercentFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rl_base"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/n_l_item2_bg"
+    android:background="?l_item2"
     android:orientation="vertical"
     tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry">
 
@@ -35,17 +34,265 @@
                 app:layout_textSizePercent="50%h" />
         </com.zhy.android.percent.support.PercentFrameLayout>
 
-        <LinearLayout
+        <com.zhy.android.percent.support.PercentLinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            app:layout_marginPercent="5%w">
+            android:orientation="vertical"
+            app:layout_marginLeftPercent="2%h"
+            app:layout_marginRightPercent="2%h">
 
-            <TextView
-                android:id="@+id/tv_open_console"
+            <com.meetsl.scardview.SCardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="打开控制台" />
-        </LinearLayout>
+                android:layout_height="0dp"
+                android:background="@android:color/transparent"
+                app:cardBackgroundColor="@android:color/transparent"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="5dp"
+                app:cardLightDirection="none"
+                app:cardPreventCornerOverlap="false"
+                app:cardUseCornerArea="true"
+                app:layout_heightPercent="20%h">
+
+                <com.zhy.android.percent.support.PercentLinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="?cell_bg"
+                    android:orientation="vertical"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
+
+                    <com.zhy.android.percent.support.PercentLinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical|left"
+                            android:lines="1"
+                            android:text="转速:"
+                            android:textColor="?l_text2"
+                            app:layout_textSizePercent="50%h" />
+
+                        <TextView
+                            android:id="@+id/tv_zs"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical|right"
+                            android:lines="1"
+                            android:text="1000/M"
+                            android:textColor="?l_text2"
+                            app:layout_textSizePercent="50%h" />
+                    </com.zhy.android.percent.support.PercentLinearLayout>
+
+                    <com.zhy.android.percent.support.PercentRelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1">
+
+                        <ProgressBar
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="10dp"
+                            android:layout_centerInParent="true"
+                            android:progressDrawable="@drawable/n_music_progress" />
+                    </com.zhy.android.percent.support.PercentRelativeLayout>
+                </com.zhy.android.percent.support.PercentLinearLayout>
+            </com.meetsl.scardview.SCardView>
+
+            <com.meetsl.scardview.SCardView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@android:color/transparent"
+                app:cardBackgroundColor="@android:color/transparent"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="5dp"
+                app:cardLightDirection="none"
+                app:cardPreventCornerOverlap="false"
+                app:cardUseCornerArea="true"
+                app:layout_heightPercent="20%h">
+
+                <com.zhy.android.percent.support.PercentLinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="?cell_bg"
+                    android:orientation="vertical"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
+
+                    <com.zhy.android.percent.support.PercentLinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical|left"
+                            android:lines="1"
+                            android:text="速度:"
+                            android:textColor="?l_text2"
+                            app:layout_textSizePercent="50%h" />
+
+                        <TextView
+                            android:id="@+id/tv_sd"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical|right"
+                            android:lines="1"
+                            android:text="80KM/H"
+                            android:textColor="?l_text2"
+                            app:layout_textSizePercent="50%h" />
+                    </com.zhy.android.percent.support.PercentLinearLayout>
+
+                    <com.zhy.android.percent.support.PercentRelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1">
+
+                        <ProgressBar
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="10dp"
+                            android:layout_centerInParent="true"
+                            android:progressDrawable="@drawable/n_music_progress" />
+                    </com.zhy.android.percent.support.PercentRelativeLayout>
+                </com.zhy.android.percent.support.PercentLinearLayout>
+            </com.meetsl.scardview.SCardView>
+
+            <com.meetsl.scardview.SCardView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@android:color/transparent"
+                app:cardBackgroundColor="@android:color/transparent"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="5dp"
+                app:cardLightDirection="none"
+                app:cardPreventCornerOverlap="false"
+                app:cardUseCornerArea="true"
+                app:layout_heightPercent="20%h">
+
+                <com.zhy.android.percent.support.PercentLinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="?cell_bg"
+                    android:orientation="vertical"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
+
+                    <com.zhy.android.percent.support.PercentLinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical|left"
+                            android:lines="1"
+                            android:text="水温:"
+                            android:textColor="?l_text2"
+                            app:layout_textSizePercent="50%h" />
+
+                        <TextView
+                            android:id="@+id/tv_sw"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical|right"
+                            android:lines="1"
+                            android:text="100°"
+                            android:textColor="?l_text2"
+                            app:layout_textSizePercent="50%h" />
+                    </com.zhy.android.percent.support.PercentLinearLayout>
+
+                    <com.zhy.android.percent.support.PercentRelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1">
+
+                        <ProgressBar
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="10dp"
+                            android:layout_centerInParent="true"
+                            android:progressDrawable="@drawable/n_music_progress" />
+                    </com.zhy.android.percent.support.PercentRelativeLayout>
+                </com.zhy.android.percent.support.PercentLinearLayout>
+            </com.meetsl.scardview.SCardView>
+
+            <com.meetsl.scardview.SCardView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@android:color/transparent"
+                app:cardBackgroundColor="@android:color/transparent"
+                app:cardCornerRadius="5dp"
+                app:cardElevation="5dp"
+                app:cardLightDirection="none"
+                app:cardPreventCornerOverlap="false"
+                app:cardUseCornerArea="true"
+                app:layout_heightPercent="20%h">
+
+                <com.zhy.android.percent.support.PercentLinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="?cell_bg"
+                    android:orientation="vertical"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
+
+                    <com.zhy.android.percent.support.PercentLinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical|left"
+                            android:lines="1"
+                            android:text="剩余油量:"
+                            android:textColor="?l_text2"
+                            app:layout_textSizePercent="50%h" />
+
+                        <TextView
+                            android:id="@+id/tv_yl"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical|right"
+                            android:lines="1"
+                            android:text="50%"
+                            android:textColor="?l_text2"
+                            app:layout_textSizePercent="50%h" />
+                    </com.zhy.android.percent.support.PercentLinearLayout>
+
+                    <com.zhy.android.percent.support.PercentRelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1">
+
+                        <ProgressBar
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="10dp"
+                            android:layout_centerInParent="true"
+                            android:progressDrawable="@drawable/n_music_progress" />
+                    </com.zhy.android.percent.support.PercentRelativeLayout>
+                </com.zhy.android.percent.support.PercentLinearLayout>
+            </com.meetsl.scardview.SCardView>
+        </com.zhy.android.percent.support.PercentLinearLayout>
     </com.zhy.android.percent.support.PercentLinearLayout>
 </com.zhy.android.percent.support.PercentFrameLayout>

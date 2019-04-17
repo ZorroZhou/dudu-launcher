@@ -172,7 +172,7 @@
             app:cardBackgroundColor="@android:color/transparent"
             app:cardCornerRadius="10dp"
             app:cardElevation="5dp"
-            app:cardLightDirection="top"
+            app:cardLightDirection="none"
             app:cardPreventCornerOverlap="false"
             app:cardUseCornerArea="true"
             app:layout_heightPercent="22%h">

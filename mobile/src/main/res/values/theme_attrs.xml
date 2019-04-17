@@ -18,7 +18,7 @@
     <attr name="dh_j" format="reference" />
     <attr name="dh_quan" format="reference" />
 
-    <attr name="ty_bg" format="reference" />
+    <attr name="cell_bg" format="reference" />
     <attr name="prompt_bg" format="reference|color" />
 
     <attr name="ic_play" format="reference" />

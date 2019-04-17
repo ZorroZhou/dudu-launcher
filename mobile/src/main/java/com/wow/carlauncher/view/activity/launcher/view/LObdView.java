@@ -36,14 +36,14 @@ public class LObdView extends BaseEBusView {
     }
 
 
-    @Event(value = {R.id.tv_open_console})
-    private void clickEvent(View v) {
-        Log.d(TAG, "clickEvent: " + v);
-        switch (v.getId()) {
-            case R.id.tv_open_console: {
-                ConsoleWin.self().show();
-                break;
-            }
-        }
-    }
+//    @Event(value = {R.id.tv_open_console})
+//    private void clickEvent(View v) {
+//        Log.d(TAG, "clickEvent: " + v);
+//        switch (v.getId()) {
+//            case R.id.tv_open_console: {
+//                ConsoleWin.self().show();
+//                break;
+//            }
+//        }
+//    }
 }

@@ -7,6 +7,8 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.wow.carlauncher.R;
+
 import org.xutils.x;
 
 /**

@@ -73,7 +73,7 @@ public class LPromptView extends BaseEBusView {
 
     @ViewInject(R.id.iv_wifi)
     private ImageView iv_wifi;
-    
+
     private PackageManager pm;
 
     private void initView() {

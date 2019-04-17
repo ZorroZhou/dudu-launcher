@@ -54,6 +54,7 @@ public class LDockView extends LinearLayout {
         initView();
     }
 
+
     @ViewInject(R.id.iv_dock1)
     private ImageView iv_dock1;
     @ViewInject(R.id.tv_dock1)

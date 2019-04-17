@@ -56,9 +56,6 @@ public class SSystemView extends BaseView {
     @ViewInject(R.id.sv_about)
     private SetView sv_about;
 
-    @ViewInject(R.id.sv_money)
-    private SetView sv_money;
-
     private void initView() {
         addContent(R.layout.content_set_system);
 
@@ -113,15 +110,6 @@ public class SSystemView extends BaseView {
             }
         });
 
-        sv_money.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ImageView imageView = new ImageView(getContext());
-                imageView.setImageResource(R.mipmap.money);
-                AlertDialog dialog = new AlertDialog.Builder(getContext()).setView(imageView).setTitle("支持我吧!").setPositiveButton("确定", null).create();
-                dialog.show();
-            }
-        });
     }
 
     private Activity getActivity() {

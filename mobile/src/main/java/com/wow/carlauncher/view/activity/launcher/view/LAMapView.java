@@ -2,6 +2,7 @@ package com.wow.carlauncher.view.activity.launcher.view;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -47,12 +48,15 @@ public class LAMapView extends BaseEBusView {
 
     public LAMapView(@NonNull Context context) {
         super(context);
-        addContent(R.layout.content_l_amap);
     }
 
     public LAMapView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        addContent(R.layout.content_l_amap);
+    }
+
+    @Override
+    protected int getContent() {
+        return R.layout.content_l_amap;
     }
 
     private boolean mute = false;

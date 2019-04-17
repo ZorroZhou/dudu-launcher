@@ -30,12 +30,15 @@ import static com.wow.carlauncher.common.CommonData.TAG;
 public class BottomMusicView extends BaseEBusView {
     public BottomMusicView(@NonNull Context context) {
         super(context);
-        addContent(R.layout.content_driving_cool_black_music);
     }
 
     public BottomMusicView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        addContent(R.layout.content_driving_cool_black_music);
+    }
+
+    @Override
+    protected int getContent() {
+        return R.layout.content_driving_cool_black_music;
     }
 
     @ViewInject(R.id.iv_play)

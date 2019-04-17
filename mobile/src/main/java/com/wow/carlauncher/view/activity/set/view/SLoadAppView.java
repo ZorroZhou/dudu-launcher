@@ -2,6 +2,7 @@ package com.wow.carlauncher.view.activity.set.view;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -29,12 +30,15 @@ import java.util.List;
 public class SLoadAppView extends BaseView {
     public SLoadAppView(@NonNull Context context) {
         super(context);
-        initView();
     }
 
     public SLoadAppView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        initView();
+    }
+
+    @Override
+    protected int getContent() {
+        return R.layout.content_set_load_app;
     }
 
     @ViewInject(R.id.sv_load_use)
@@ -52,8 +56,7 @@ public class SLoadAppView extends BaseView {
     @ViewInject(R.id.sv_back_yanchi)
     private SetView sv_back_yanchi;
 
-    private void initView() {
-        addContent(R.layout.content_set_load_app);
+    protected void initView(Bundle savedInstanceState) {
 
 
         sv_open1.setOnClickListener(new View.OnClickListener() {

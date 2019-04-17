@@ -15,17 +15,19 @@ public class LPage1View extends BaseView {
 
     public LPage1View(@NonNull Context context, Bundle savedInstanceState) {
         super(context);
-        initView();
     }
 
     public LPage1View(@NonNull Context context) {
         super(context);
-        initView();
     }
 
     public LPage1View(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        initView();
+    }
+
+    @Override
+    protected int getContent() {
+        return R.layout.content_l_page1;
     }
 
     @ViewInject(R.id.lamap)
@@ -36,10 +38,6 @@ public class LPage1View extends BaseView {
 
     @ViewInject(R.id.lwearther)
     private LWeatherView lwearther;
-
-    private void initView() {
-        addContent(R.layout.content_l_page1);
-    }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {

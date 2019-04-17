@@ -2,6 +2,7 @@ package com.wow.carlauncher.view.activity.set.view;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -41,12 +42,15 @@ public class STimeView extends BaseView {
 
     public STimeView(@NonNull Context context) {
         super(context);
-        initView();
     }
 
     public STimeView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        initView();
+    }
+
+    @Override
+    protected int getContent() {
+        return R.layout.content_set_time;
     }
 
     @ViewInject(R.id.time_plugin_open_app_select)
@@ -56,8 +60,7 @@ public class STimeView extends BaseView {
     @ViewInject(R.id.tianqi_city)
     private SetView tianqi_city;
 
-    private void initView() {
-        addContent(R.layout.content_set_time);
+    protected void initView(Bundle savedInstanceState) {
 
         time_plugin_open_app_select.setOnClickListener(new View.OnClickListener() {
             @Override

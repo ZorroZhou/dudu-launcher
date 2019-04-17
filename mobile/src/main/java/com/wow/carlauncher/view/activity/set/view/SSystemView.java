@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -35,14 +36,16 @@ public class SSystemView extends BaseView {
 
     public SSystemView(@NonNull Context context) {
         super(context);
-        initView();
     }
 
     public SSystemView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        initView();
     }
 
+    @Override
+    protected int getContent() {
+        return R.layout.content_set_system;
+    }
     @ViewInject(R.id.sv_sys_anquan)
     private SetView sv_sys_anquan;
 
@@ -56,8 +59,7 @@ public class SSystemView extends BaseView {
     @ViewInject(R.id.sv_about)
     private SetView sv_about;
 
-    private void initView() {
-        addContent(R.layout.content_set_system);
+    protected void initView(Bundle savedInstanceState) {
 
         sv_sys_overlay.setOnClickListener(new View.OnClickListener() {
             @Override

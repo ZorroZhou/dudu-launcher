@@ -1,6 +1,7 @@
 package com.wow.carlauncher.view.activity.driving.coolBlack;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -22,17 +23,19 @@ import org.xutils.view.annotation.ViewInject;
 public class BottomTpView extends BaseEBusView {
     public BottomTpView(@NonNull Context context) {
         super(context);
-        addContent(R.layout.content_driving_cool_black_tp);
-        init();
     }
 
     public BottomTpView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        addContent(R.layout.content_driving_cool_black_tp);
-        init();
     }
 
-    private void init() {
+    @Override
+    protected int getContent() {
+        return R.layout.content_driving_cool_black_tp;
+    }
+
+    @Override
+    protected void initView(Bundle savedInstanceState) {
         onEventMainThread(ObdPlugin.self().getCurrentPObdEventCarTp());
     }
 

@@ -15,12 +15,15 @@ import com.wow.carlauncher.view.base.BaseEBusView;
 public class Blue1View extends BaseEBusView {
     public Blue1View(@NonNull Context context) {
         super(context);
-        addContent(R.layout.content_driving_blue1);
     }
 
     public Blue1View(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        addContent(R.layout.content_driving_blue1);
+    }
+
+    @Override
+    protected int getContent() {
+        return R.layout.content_driving_blue1;
     }
 }
 

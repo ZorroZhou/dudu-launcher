@@ -1,6 +1,7 @@
 package com.wow.carlauncher.view.activity.launcher.view;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -36,6 +37,22 @@ import org.xutils.x;
  */
 
 public class LWeatherView extends BaseEBusView {
+    public LWeatherView(@NonNull Context context) {
+        super(context);
+    }
+
+    public LWeatherView(@NonNull Context context, @Nullable AttributeSet attrs) {
+        super(context, attrs);
+    }
+
+    public LWeatherView(@NonNull Context context, Bundle savedInstanceState) {
+        super(context, savedInstanceState);
+    }
+
+    @Override
+    protected int getContent() {
+        return R.layout.content_l_weather;
+    }
 
     @ViewInject(R.id.tv_tianqi)
     private TextView tv_tianqi;
@@ -58,16 +75,6 @@ public class LWeatherView extends BaseEBusView {
     @ViewInject(R.id.tv_fx)
     private TextView tv_fx;
 
-
-    public LWeatherView(@NonNull Context context) {
-        super(context);
-        initView();
-    }
-
-    public LWeatherView(@NonNull Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-        initView();
-    }
 
     @Event(value = {R.id.tv_title})
     private void clickEvent(View view) {
@@ -93,10 +100,6 @@ public class LWeatherView extends BaseEBusView {
                 break;
             }
         }
-    }
-
-    private void initView() {
-        addContent(R.layout.content_l_weather);
     }
 
     private String city, adcode;

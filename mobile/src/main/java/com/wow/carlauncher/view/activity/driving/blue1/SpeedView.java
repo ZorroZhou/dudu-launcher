@@ -26,19 +26,18 @@ public class SpeedView extends BaseEBusView {
 
     public SpeedView(Context context) {
         super(context);
-        init();
 
     }
 
     public SpeedView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
     }
 
     private Paint mPaint;
 
-    private void init() {
-        addContent(R.layout.content_driving_blue_speed);
+    @Override
+    protected int getContent() {
+        return R.layout.content_driving_blue_speed;
     }
 
     @Override

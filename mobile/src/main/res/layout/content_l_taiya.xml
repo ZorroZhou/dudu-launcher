@@ -89,7 +89,7 @@
                             android:padding="12dp"
                             android:text="左前\n0.0\n0.0"
                             android:textColor="?l_text2"
-                            app:layout_textSizePercent="5%h" />
+                            app:layout_textSizePercent="7%h" />
                     </com.zhy.android.percent.support.PercentFrameLayout>
                 </com.meetsl.scardview.SCardView>
 
@@ -120,7 +120,7 @@
                             android:padding="12dp"
                             android:text="右前\n0.0\n0.0"
                             android:textColor="?l_text2"
-                            app:layout_textSizePercent="5%h" />
+                            app:layout_textSizePercent="7%h" />
                     </com.zhy.android.percent.support.PercentFrameLayout>
                 </com.meetsl.scardview.SCardView>
 
@@ -152,7 +152,7 @@
                             android:padding="12dp"
                             android:text="左后\n0.0\n0.0"
                             android:textColor="?l_text2"
-                            app:layout_textSizePercent="5%h" />
+                            app:layout_textSizePercent="7%h" />
                     </com.zhy.android.percent.support.PercentFrameLayout>
                 </com.meetsl.scardview.SCardView>
 
@@ -182,7 +182,7 @@
                             android:padding="12dp"
                             android:text="右后\n0.0\n0.0"
                             android:textColor="?l_text2"
-                            app:layout_textSizePercent="5%h" />
+                            app:layout_textSizePercent="7%h" />
                     </com.zhy.android.percent.support.PercentFrameLayout>
                 </com.meetsl.scardview.SCardView>
 

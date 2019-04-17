@@ -3,6 +3,7 @@ package com.wow.carlauncher.view.activity.set.view;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -51,12 +52,15 @@ public class SBleDeviceView extends BaseView {
 
     public SBleDeviceView(@NonNull Context context) {
         super(context);
-        initView();
     }
 
     public SBleDeviceView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        initView();
+    }
+
+    @Override
+    protected int getContent() {
+        return R.layout.content_set_obd;
     }
 
     @ViewInject(R.id.sv_obd_select)
@@ -80,10 +84,7 @@ public class SBleDeviceView extends BaseView {
     @ViewInject(R.id.sv_fangkong_remove)
     private SetView sv_fangkong_remove;
 
-    private void initView() {
-
-        addContent(R.layout.content_set_obd);
-
+    protected void initView(Bundle savedInstanceState) {
         ObdProtocolEnum p1 = ObdProtocolEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_OBD_CONTROLLER, ObdProtocolEnum.YJ_TYB.getId()));
         sv_obd_impl_select.setSummary("OBD使用的协议：" + p1.getName());
         sv_obd_impl_select.setOnClickListener(new View.OnClickListener() {

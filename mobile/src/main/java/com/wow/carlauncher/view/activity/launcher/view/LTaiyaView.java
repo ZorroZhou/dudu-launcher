@@ -2,20 +2,14 @@ package com.wow.carlauncher.view.activity.launcher.view;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
-import com.wow.carlauncher.common.GsdFastBlurUtil;
 import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarTp;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventConnect;
@@ -33,12 +27,19 @@ public class LTaiyaView extends BaseEBusView {
 
     public LTaiyaView(@NonNull Context context) {
         super(context);
-        init();
     }
 
     public LTaiyaView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        init();
+    }
+
+    public LTaiyaView(@NonNull Context context, Bundle savedInstanceState) {
+        super(context, savedInstanceState);
+    }
+
+    @Override
+    protected int getContent() {
+        return R.layout.content_l_taiya;
     }
 
     @ViewInject(R.id.tv_lt)
@@ -56,8 +57,8 @@ public class LTaiyaView extends BaseEBusView {
     @ViewInject(R.id.rl_base)
     private View rl_base;
 
-    private void init() {
-        addContent(R.layout.content_l_taiya);
+    @Override
+    protected void initView(Bundle savedInstanceState) {
         onEventMainThread(ObdPlugin.self().getCurrentPObdEventCarTp());
     }
 

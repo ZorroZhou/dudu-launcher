@@ -3,6 +3,7 @@ package com.wow.carlauncher.view.activity.set.view;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -42,12 +43,15 @@ public class SFangKongView extends BaseView {
 
     public SFangKongView(@NonNull Context context) {
         super(context);
-        initView();
     }
 
     public SFangKongView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        initView();
+    }
+
+    @Override
+    protected int getContent() {
+        return R.layout.content_set_fangkong;
     }
 
     @ViewInject(R.id.sv_fangkong_select)
@@ -59,8 +63,7 @@ public class SFangKongView extends BaseView {
     @ViewInject(R.id.sv_fangkong_remove)
     private SetView sv_fangkong_remove;
 
-    private void initView() {
-        addContent(R.layout.content_set_fangkong);
+    protected void initView(Bundle savedInstanceState) {
 
         FangkongProtocolEnum fkp1 = FangkongProtocolEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_FANGKONG_CONTROLLER, FangkongProtocolEnum.YLFK.getId()));
         sv_fangkong_impl_select.setSummary("方控使用的协议：" + fkp1.getName());

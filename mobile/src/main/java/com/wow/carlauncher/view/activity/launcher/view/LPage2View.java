@@ -22,7 +22,8 @@ public class LPage2View extends BaseView {
         super(context, attrs);
     }
 
-    protected void initView() {
-        addContent(R.layout.content_l_page2);
+    @Override
+    protected int getContent() {
+        return R.layout.content_l_page2;
     }
 }

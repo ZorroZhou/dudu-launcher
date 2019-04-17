@@ -1,6 +1,7 @@
 package com.wow.carlauncher.view.activity.driving.coolBlack;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -43,17 +44,20 @@ public class SpeedAndOilView extends BaseEBusView {
 
     public SpeedAndOilView(Context context) {
         super(context);
-        init();
     }
 
     public SpeedAndOilView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
     }
 
 
-    private void init() {
-        addContent(R.layout.content_driving_cool_speed_and_oil);
+    @Override
+    protected int getContent() {
+        return R.layout.content_driving_cool_speed_and_oil;
+    }
+
+    @Override
+    protected void initView(Bundle savedInstanceState) {
         onEventMainThread(ObdPlugin.self().getCurrentPObdEventCarInfo());
     }
 

@@ -1,6 +1,7 @@
 package com.wow.carlauncher.view.activity.launcher.view;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -34,17 +35,19 @@ public class LTimeView extends BaseEBusView {
 
     public LTimeView(@NonNull Context context) {
         super(context);
-        init();
     }
 
     public LTimeView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        init();
     }
 
-    private void init() {
-        addContent(R.layout.content_l_time);
+    @Override
+    protected int getContent() {
+        return R.layout.content_l_time;
+    }
 
+    @Override
+    protected void initView(Bundle savedInstanceState) {
         onEventMainThread(null);
     }
 

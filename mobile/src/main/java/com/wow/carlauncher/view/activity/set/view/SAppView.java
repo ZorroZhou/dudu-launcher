@@ -2,6 +2,7 @@ package com.wow.carlauncher.view.activity.set.view;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -52,14 +53,16 @@ public class SAppView extends BaseView {
 
     public SAppView(@NonNull Context context) {
         super(context);
-        initView();
     }
 
     public SAppView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        initView();
     }
 
+    @Override
+    protected int getContent() {
+        return R.layout.content_set_app;
+    }
 
     @ViewInject(R.id.sv_plugin_select)
     private SetView sv_plugin_select;
@@ -83,9 +86,7 @@ public class SAppView extends BaseView {
     @ViewInject(R.id.tianqi_city)
     private SetView tianqi_city;
 
-
-    private void initView() {
-        addContent(R.layout.content_set_app);
+    protected void initView(Bundle savedInstanceState) {
 
         MusicControllerEnum p1 = MusicControllerEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_MUSIC_CONTROLLER, MusicControllerEnum.SYSMUSIC.getId()));
         sv_plugin_select.setSummary(p1.getName());

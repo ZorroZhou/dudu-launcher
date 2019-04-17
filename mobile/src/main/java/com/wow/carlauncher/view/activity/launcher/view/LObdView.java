@@ -1,6 +1,7 @@
 package com.wow.carlauncher.view.activity.launcher.view;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -23,27 +24,18 @@ public class LObdView extends BaseEBusView {
 
     public LObdView(@NonNull Context context) {
         super(context);
-        init();
     }
 
     public LObdView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        init();
     }
 
-    private void init() {
-        addContent(R.layout.content_l_obd);
+    public LObdView(@NonNull Context context, Bundle savedInstanceState) {
+        super(context, savedInstanceState);
     }
 
-
-//    @Event(value = {R.id.tv_open_console})
-//    private void clickEvent(View v) {
-//        Log.d(TAG, "clickEvent: " + v);
-//        switch (v.getId()) {
-//            case R.id.tv_open_console: {
-//                ConsoleWin.self().show();
-//                break;
-//            }
-//        }
-//    }
+    @Override
+    protected int getContent() {
+        return R.layout.content_l_obd;
+    }
 }

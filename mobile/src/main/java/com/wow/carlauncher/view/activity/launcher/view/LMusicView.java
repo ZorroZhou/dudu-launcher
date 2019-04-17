@@ -2,6 +2,7 @@ package com.wow.carlauncher.view.activity.launcher.view;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -38,12 +39,19 @@ public class LMusicView extends BaseEBusView {
 
     public LMusicView(@NonNull Context context) {
         super(context);
-        addContent(R.layout.content_l_music);
     }
 
     public LMusicView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        addContent(R.layout.content_l_music);
+    }
+
+    public LMusicView(@NonNull Context context, Bundle savedInstanceState) {
+        super(context, savedInstanceState);
+    }
+
+    @Override
+    protected int getContent() {
+        return R.layout.content_l_music;
     }
 
     @ViewInject(R.id.iv_play)

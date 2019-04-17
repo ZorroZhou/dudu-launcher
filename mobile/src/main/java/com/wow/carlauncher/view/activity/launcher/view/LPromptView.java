@@ -3,7 +3,7 @@ package com.wow.carlauncher.view.activity.launcher.view;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,7 +16,6 @@ import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
-import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventConnect;
 import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarTp;
@@ -41,7 +40,6 @@ import org.xutils.x;
 import java.util.Date;
 
 import static com.inuker.bluetooth.library.Constants.STATUS_DEVICE_CONNECTED;
-import static com.wow.carlauncher.common.CommonData.SDATA_TIME_PLUGIN_OPEN_APP;
 
 /**
  * Created by 10124 on 2018/4/22.
@@ -52,12 +50,19 @@ public class LPromptView extends BaseEBusView {
 
     public LPromptView(@NonNull Context context) {
         super(context);
-        initView();
     }
 
     public LPromptView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        initView();
+    }
+
+    public LPromptView(@NonNull Context context, Bundle savedInstanceState) {
+        super(context, savedInstanceState);
+    }
+
+    @Override
+    protected int getContent() {
+        return R.layout.content_l_prompt;
     }
 
     @ViewInject(R.id.tv_time)
@@ -74,13 +79,6 @@ public class LPromptView extends BaseEBusView {
 
     @ViewInject(R.id.iv_wifi)
     private ImageView iv_wifi;
-
-    private PackageManager pm;
-
-    private void initView() {
-        addContent(R.layout.content_l_prompt);
-        pm = getActivity().getPackageManager();
-    }
 
     @Event(value = {R.id.iv_set, R.id.iv_wifi, R.id.iv_obd, R.id.rl_home, R.id.tv_time})
     private void clickEvent(View view) {

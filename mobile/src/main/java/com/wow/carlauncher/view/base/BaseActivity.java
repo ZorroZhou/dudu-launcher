@@ -36,7 +36,6 @@ public abstract class BaseActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d("BaseActivity", "onCreate: !!!!!!!!!!!!!!!!");
         super.onCreate(savedInstanceState);
         mContext = this;
         init();

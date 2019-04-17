@@ -93,8 +93,8 @@ public class LauncherActivity extends Activity {
         x.view().inject(this);
         EventBus.getDefault().register(this);
 
-        LPage1View lPage1View = new LPage1View(getApplicationContext());
-        LPage2View lPage2View = new LPage2View(getApplicationContext());
+        LPage1View lPage1View = new LPage1View(this);
+        LPage2View lPage2View = new LPage2View(this);
 
         viewPager.setAdapter(new ViewAdapter(new View[]{lPage1View, lPage2View}));
 

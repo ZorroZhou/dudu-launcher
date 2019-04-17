@@ -68,9 +68,9 @@ public class CityDialog extends BaseDialog2 implements OnWheelChangedListener {
     }
 
     private void setUpViews() {
-        mViewProvince = (WheelView) findViewById(R.id.id_province);
-        mViewCity = (WheelView) findViewById(R.id.id_city);
-        mViewDistrict = (WheelView) findViewById(R.id.id_district);
+        mViewProvince = findViewById(R.id.id_province);
+        mViewCity = findViewById(R.id.id_city);
+        mViewDistrict = findViewById(R.id.id_district);
     }
 
     private void setUpListener() {

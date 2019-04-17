@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/n_l_item3_bg"
+    android:background="?l_item3"
     tools:ignore="HardcodedText,RtlHardcoded">
 
     <com.wow.carlauncher.common.view.CustomRoundAngleImageView
@@ -36,7 +36,7 @@
             android:includeFontPadding="false"
             android:maxLines="1"
             android:text="晴"
-            android:textColor="#9ba1a9"
+            android:textColor="?l_text3"
             app:layout_heightPercent="8%h"
             app:layout_textSizePercent="7%h" />
 
@@ -49,7 +49,7 @@
             android:includeFontPadding="false"
             android:maxLines="1"
             android:text="15°"
-            android:textColor="#333e54"
+            android:textColor="?l_text4"
             android:textStyle="bold"
             app:layout_heightPercent="22%h"
             app:layout_marginTopPercent="2%h"
@@ -63,7 +63,7 @@
             android:includeFontPadding="false"
             android:lines="1"
             android:text="青岛市-李沧区"
-            android:textColor="#333e54"
+            android:textColor="?l_text4"
             app:layout_heightPercent="9%h"
             app:layout_marginTopPercent="4%h"
             app:layout_textSizePercent="8%h" />
@@ -96,7 +96,7 @@
                     android:includeFontPadding="false"
                     android:maxLines="1"
                     android:text="空气湿度:"
-                    android:textColor="#7b8391"
+                    android:textColor="?l_text3"
                     app:layout_textSizePercent="80%h" />
 
                 <TextView
@@ -109,7 +109,7 @@
                     android:includeFontPadding="false"
                     android:maxLines="1"
                     android:text="等待数据"
-                    android:textColor="#333e54"
+                    android:textColor="?l_text2"
                     app:layout_textSizePercent="80%h" />
             </com.zhy.android.percent.support.PercentRelativeLayout>
 
@@ -128,7 +128,7 @@
                     android:includeFontPadding="false"
                     android:maxLines="1"
                     android:text="风向:"
-                    android:textColor="#7b8391"
+                    android:textColor="?l_text3"
                     app:layout_textSizePercent="80%h" />
 
                 <TextView
@@ -141,7 +141,7 @@
                     android:includeFontPadding="false"
                     android:maxLines="1"
                     android:text="等待数据"
-                    android:textColor="#333e54"
+                    android:textColor="?l_text2"
                     app:layout_textSizePercent="80%h" />
             </com.zhy.android.percent.support.PercentRelativeLayout>
 
@@ -160,7 +160,7 @@
                     android:includeFontPadding="false"
                     android:maxLines="1"
                     android:text="风力:"
-                    android:textColor="#7b8391"
+                    android:textColor="?l_text3"
                     app:layout_textSizePercent="80%h" />
 
                 <TextView
@@ -173,7 +173,7 @@
                     android:includeFontPadding="false"
                     android:maxLines="1"
                     android:text="等待数据"
-                    android:textColor="#333e54"
+                    android:textColor="?l_text2"
                     app:layout_textSizePercent="80%h" />
             </com.zhy.android.percent.support.PercentRelativeLayout>
 

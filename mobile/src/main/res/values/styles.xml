@@ -18,6 +18,8 @@
     <style name="AppThemeWhile" parent="AppTheme">
         <item name="l_text1">#101933</item>
         <item name="l_text2">#697185</item>
+        <item name="l_text3">#9ba1a9</item>
+        <item name="l_text4">#333e54</item>
 
         <item name="l_item1">@drawable/n_l_item1_bg</item>
         <item name="l_item2">@drawable/n_l_item2_bg</item>
@@ -30,11 +32,23 @@
         <item name="dh_quan">@mipmap/n_dh_quan</item>
 
         <item name="ty_bg">@drawable/n_ty_bg</item>
+        <item name="prompt_bg">@drawable/n_dock_bg</item>
+
+
+        <item name="ic_play">@mipmap/ic_play</item>
+        <item name="ic_pause">@mipmap/ic_pause</item>
+        <item name="ic_prev">@mipmap/ic_prev</item>
+        <item name="ic_next">@mipmap/ic_next</item>
+
+        <item name="line">#c6d2d9</item>
+        <item name="home">@mipmap/n_home</item>
     </style>
 
     <style name="AppThemeBlack" parent="AppTheme">
         <item name="l_text1">#fff</item>
         <item name="l_text2">#fff</item>
+        <item name="l_text3">#848a95</item>
+        <item name="l_text4">#fff</item>
 
         <item name="l_item1">@drawable/n_l_item1_bg_b</item>
         <item name="l_item2">@drawable/n_l_item2_bg_b</item>
@@ -47,6 +61,15 @@
         <item name="dh_quan">@mipmap/n_dh_quan_b</item>
 
         <item name="ty_bg">@drawable/n_ty_bg_b</item>
+        <item name="prompt_bg">#2a2e39</item>
+
+        <item name="ic_play">@mipmap/ic_play_b</item>
+        <item name="ic_pause">@mipmap/ic_pause_b</item>
+        <item name="ic_prev">@mipmap/ic_prev_b</item>
+        <item name="ic_next">@mipmap/ic_next_b</item>
+
+        <item name="line">#666f80</item>
+        <item name="home">@mipmap/n_home_b</item>
     </style>
 
     <style name="Interval">

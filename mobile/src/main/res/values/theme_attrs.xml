@@ -2,6 +2,9 @@
 <resources>
     <attr name="l_text1" format="color" />
     <attr name="l_text2" format="color" />
+    <attr name="l_text3" format="color" />
+    <attr name="l_text4" format="color" />
+
     <attr name="l_item1" format="reference" />
     <attr name="l_item2" format="reference" />
     <attr name="l_item3" format="reference" />
@@ -12,6 +15,14 @@
     <attr name="dh_j" format="reference" />
     <attr name="dh_quan" format="reference" />
 
-
     <attr name="ty_bg" format="reference" />
+    <attr name="prompt_bg" format="reference|color" />
+
+    <attr name="ic_play" format="reference" />
+    <attr name="ic_pause" format="reference" />
+    <attr name="ic_next" format="reference" />
+    <attr name="ic_prev" format="reference" />
+
+    <attr name="line" format="color" />
+    <attr name="home" format="reference" />
 </resources>

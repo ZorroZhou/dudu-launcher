@@ -71,7 +71,8 @@ public class LauncherActivity extends Activity {
         int theme = SharedPreUtil.getSharedPreInteger(CommonData.SDATA_APP_THEME, R.style.AppThemeBlack);
         if (theme == R.style.AppThemeBlack || theme == R.style.AppThemeWhile) {
             getApplicationContext().setTheme(theme);
-        }else{
+            setTheme(theme);
+        } else {
             SharedPreUtil.saveSharedPreInteger(CommonData.SDATA_APP_THEME, R.style.AppThemeBlack);
         }
 

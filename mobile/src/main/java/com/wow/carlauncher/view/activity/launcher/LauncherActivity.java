@@ -68,7 +68,7 @@ public class LauncherActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //超级大坑,必去全局设置才能用
-        int theme = SharedPreUtil.getSharedPreInteger(CommonData.SDATA_APP_THEME, R.style.AppThemeBlack);
+        int theme = SharedPreUtil.getSharedPreInteger(CommonData.SDATA_APP_THEME, R.style.AppThemeWhile);
         if (theme == R.style.AppThemeBlack || theme == R.style.AppThemeWhile) {
             getApplicationContext().setTheme(theme);
             setTheme(theme);
@@ -102,13 +102,16 @@ public class LauncherActivity extends Activity {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewUtils.dip2px(getApplicationContext(), 8), ViewUtils.dip2px(getApplicationContext(), 8));
         //设置小圆点左右之间的间隔
         params.setMargins(10, 0, 10, 0);
+
+        //根据主题处理小圆点
+        boolean baise = SharedPreUtil.getSharedPreInteger(CommonData.SDATA_APP_THEME, R.style.AppThemeWhile) == R.style.AppThemeWhile;
         final View[] posts = new View[2];
         for (int i = 0; i < posts.length; i++) {
             posts[i] = new View(getApplicationContext());
             if (i == 0) {
-                posts[i].setBackgroundResource(R.drawable.n_l_postion);
+                posts[i].setBackgroundResource(baise ? R.drawable.n_l_postion : R.drawable.n_l_postion_n);
             } else {
-                posts[i].setBackgroundResource(R.drawable.n_l_postion_n);
+                posts[i].setBackgroundResource(baise ? R.drawable.n_l_postion_n : R.drawable.n_l_postion);
             }
             postion.addView(posts[i], params);
         }
@@ -121,10 +124,11 @@ public class LauncherActivity extends Activity {
 
             @Override
             public void onPageSelected(int i) {
+                boolean baise = SharedPreUtil.getSharedPreInteger(CommonData.SDATA_APP_THEME, R.style.AppThemeWhile) == R.style.AppThemeWhile;
                 for (View post : posts) {
-                    post.setBackgroundResource(R.drawable.n_l_postion_n);
+                    post.setBackgroundResource(baise ? R.drawable.n_l_postion_n : R.drawable.n_l_postion);
                 }
-                posts[i].setBackgroundResource(R.drawable.n_l_postion);
+                posts[i].setBackgroundResource(baise ? R.drawable.n_l_postion : R.drawable.n_l_postion_n);
             }
 
             @Override

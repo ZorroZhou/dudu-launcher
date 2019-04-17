@@ -11,6 +11,7 @@
     <attr name="desk_bg" format="reference" />
 
     <attr name="dh_dh" format="reference" />
+    <attr name="dh2_bg" format="reference" />
     <attr name="dh_gs" format="reference" />
     <attr name="dh_j" format="reference" />
     <attr name="dh_quan" format="reference" />
@@ -25,4 +26,6 @@
 
     <attr name="line" format="color" />
     <attr name="home" format="reference" />
+
+    <attr name="car" format="reference" />
 </resources>

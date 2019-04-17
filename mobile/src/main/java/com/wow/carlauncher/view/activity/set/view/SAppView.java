@@ -247,11 +247,11 @@ public class SAppView extends BaseView {
                 cityDialog.setOkclickListener(new BaseDialog2.OnBtnClickListener() {
                     @Override
                     public boolean onClick(BaseDialog2 dialog) {
-                        if (CommonUtil.isNotNull(cityDialog.getmCurrentDistrictName())) {
-                            SharedPreUtil.saveSharedPreString(CommonData.SDATA_WEATHER_CITY, cityDialog.getmCurrentDistrictName());
+                        if (CommonUtil.isNotNull(cityDialog.getDistrictName())) {
+                            SharedPreUtil.saveSharedPreString(CommonData.SDATA_WEATHER_CITY, cityDialog.getDistrictName());
                             cityDialog.dismiss();
                             EventBus.getDefault().post(new LEventCityRefresh());
-                            tianqi_city.setSummary(cityDialog.getmCurrentDistrictName());
+                            tianqi_city.setSummary(cityDialog.getDistrictName());
                             return true;
                         } else {
                             ToastManage.self().show("请选择城市");

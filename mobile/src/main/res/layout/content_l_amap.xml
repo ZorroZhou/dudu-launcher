@@ -12,7 +12,8 @@
     <com.zhy.android.percent.support.PercentFrameLayout
         android:id="@+id/rl_moren"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="gone">
 
         <com.wow.carlauncher.common.view.CustomRoundAngleImageView
             android:layout_width="match_parent"
@@ -142,7 +143,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:visibility="gone"
         app:layout_marginLeftPercent="2%h"
         app:layout_marginRightPercent="2%h">
 
@@ -181,7 +181,7 @@
             <com.zhy.android.percent.support.PercentRelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/n_dh2_bg">
+                android:background="?dh2_bg">
 
                 <com.zhy.android.percent.support.PercentRelativeLayout
                     android:layout_width="0dp"
@@ -357,7 +357,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_centerHorizontal="true"
-                android:src="@mipmap/n_car"
+                android:src="?car"
                 app:layout_heightPercent="34%h"
                 app:layout_marginTopPercent="50%h"
                 app:layout_widthPercent="34%h" />

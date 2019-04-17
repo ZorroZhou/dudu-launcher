@@ -78,6 +78,8 @@ public class CommonData {
     public static final String SDATA_CONSOLE_MARK = "SDATA_CONSOLE_MARK";
     //天气所属的城市
     public static final String SDATA_WEATHER_CITY = "SDATA_WEATHER_CITY";
+
+    public static final String SDATA_WEATHER_SHI = "SDATA_WEATHER_SHI";
     //是否接受开发中的APP包
     public static final String SDATA_ALLOW_DEBUG_APP = "SDATA_ALLOW_DEBUG_APP";
     //应用包名标记使用的间隔

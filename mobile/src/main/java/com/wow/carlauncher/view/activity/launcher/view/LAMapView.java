@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.LukuangView;
 import com.wow.carlauncher.ex.plugin.amapcar.AMapCarPlugin;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventNavInfo;
@@ -23,6 +24,7 @@ import com.wow.carlauncher.ex.plugin.amapcar.model.Lukuang;
 import com.wow.carlauncher.view.base.BaseEBusView;
 import com.wow.frame.util.AppUtil;
 import com.wow.frame.util.CommonUtil;
+import com.wow.frame.util.SharedPreUtil;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -147,13 +149,7 @@ public class LAMapView extends BaseEBusView {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(final PAmapEventState event) {
-        if (event.isRunning()) {
-            rl_daohang.setVisibility(View.VISIBLE);
-            rl_moren.setVisibility(View.GONE);
-        } else {
-            rl_moren.setVisibility(View.VISIBLE);
-            rl_daohang.setVisibility(View.GONE);
-        }
+//        rl_moren.setVisibility(event.isRunning() ? GONE : VISIBLE);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -242,12 +238,22 @@ public class LAMapView extends BaseEBusView {
             }
         }
         if (iv_road != null) {
-            if (event.getRoadType() == 0 || event.getRoadType() == 6) {
-                iv_road.setImageResource(R.mipmap.n_road1);
-            } else if (event.getRoadType() == 4 || event.getRoadType() == 5 || event.getRoadType() == 9 || event.getRoadType() == 10) {
-                iv_road.setImageResource(R.mipmap.n_road3);
+            if (SharedPreUtil.getSharedPreInteger(CommonData.SDATA_APP_THEME, R.style.AppThemeWhile) == R.style.AppThemeWhile) {
+                if (event.getRoadType() == 0 || event.getRoadType() == 6) {
+                    iv_road.setImageResource(R.mipmap.n_road1);
+                } else if (event.getRoadType() == 4 || event.getRoadType() == 5 || event.getRoadType() == 9 || event.getRoadType() == 10) {
+                    iv_road.setImageResource(R.mipmap.n_road3);
+                } else {
+                    iv_road.setImageResource(R.mipmap.n_road2);
+                }
             } else {
-                iv_road.setImageResource(R.mipmap.n_road2);
+                if (event.getRoadType() == 0 || event.getRoadType() == 6) {
+                    iv_road.setImageResource(R.mipmap.n_road1_b);
+                } else if (event.getRoadType() == 4 || event.getRoadType() == 5 || event.getRoadType() == 9 || event.getRoadType() == 10) {
+                    iv_road.setImageResource(R.mipmap.n_road3_b);
+                } else {
+                    iv_road.setImageResource(R.mipmap.n_road2_b);
+                }
             }
         }
     }

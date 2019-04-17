@@ -77,8 +77,9 @@ public class LWeatherView extends BaseEBusView {
                 cityDialog.setOkclickListener(new BaseDialog2.OnBtnClickListener() {
                     @Override
                     public boolean onClick(BaseDialog2 dialog) {
-                        if (CommonUtil.isNotNull(cityDialog.getmCurrentDistrictName())) {
-                            SharedPreUtil.saveSharedPreString(CommonData.SDATA_WEATHER_CITY, cityDialog.getmCurrentDistrictName());
+                        if (CommonUtil.isNotNull(cityDialog.getCityName()) && CommonUtil.isNotNull(cityDialog.getDistrictName())) {
+                            SharedPreUtil.saveSharedPreString(CommonData.SDATA_WEATHER_CITY, cityDialog.getDistrictName());
+                            SharedPreUtil.saveSharedPreString(CommonData.SDATA_WEATHER_SHI, cityDialog.getCityName());
                             cityDialog.dismiss();
                             EventBus.getDefault().post(new LEventCityRefresh());
                             return true;

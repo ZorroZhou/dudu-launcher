@@ -38,10 +38,14 @@ public class CityDialog extends BaseDialog2 implements OnWheelChangedListener {
 
 
     private String mCurrentProviceName;
-    private String mCurrentCityName;
+    private String mCurrentCityName = "";
     private String mCurrentDistrictName = "";
 
-    public String getmCurrentDistrictName() {
+    public static String getCityName() {
+        return dCurrentCityName;
+    }
+
+    public String getDistrictName() {
         return mCurrentDistrictName;
     }
 
@@ -52,7 +56,7 @@ public class CityDialog extends BaseDialog2 implements OnWheelChangedListener {
     public CityDialog(Context context) {
         super(context);
         setTitle("选择省市区");
-        setView(LayoutInflater.from(getContext()).inflate(R.layout.dialog_city, new LinearLayout(context), false));
+        setView(LayoutInflater.from(getContext()).inflate(R.layout.dialog_city, new LinearLayout(context), true));
         setOnShowListenerEx(new OnShowListener() {
             @Override
             public void onShow(DialogInterface dialogInterface) {

@@ -2,13 +2,20 @@ package com.wow.carlauncher.view.activity.launcher.view;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.common.GsdFastBlurUtil;
 import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarTp;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventConnect;
@@ -46,14 +53,8 @@ public class LTaiyaView extends BaseEBusView {
     @ViewInject(R.id.tv_rb)
     private TextView tv_rb;
 
-    @ViewInject(R.id.tv_msg)
-    private TextView tv_msg;
-
-    @ViewInject(R.id.ll_ty)
-    private LinearLayout ll_ty;
-
-    @ViewInject(R.id.ll_msg)
-    private LinearLayout ll_msg;
+    @ViewInject(R.id.rl_base)
+    private View rl_base;
 
     private void init() {
         addContent(R.layout.content_l_taiya);

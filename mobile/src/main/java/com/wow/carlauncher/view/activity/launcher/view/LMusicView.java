@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.ex.manage.MusicCoverManage;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventInfo;
@@ -19,6 +20,7 @@ import com.wow.carlauncher.ex.plugin.music.event.PMusicEventProgress;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventState;
 import com.wow.carlauncher.view.base.BaseEBusView;
 import com.wow.frame.util.CommonUtil;
+import com.wow.frame.util.SharedPreUtil;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -130,9 +132,17 @@ public class LMusicView extends BaseEBusView {
     public void onEventMainThread(final PMusicEventState event) {
         if (music_iv_play != null) {
             if (event.isRun()) {
-                music_iv_play.setImageResource(R.mipmap.ic_pause);
+                if (SharedPreUtil.getSharedPreInteger(CommonData.SDATA_APP_THEME, R.style.AppThemeWhile) == R.style.AppThemeWhile) {
+                    music_iv_play.setImageResource(R.mipmap.ic_pause);
+                } else {
+                    music_iv_play.setImageResource(R.mipmap.ic_pause_b);
+                }
             } else {
-                music_iv_play.setImageResource(R.mipmap.ic_play);
+                if (SharedPreUtil.getSharedPreInteger(CommonData.SDATA_APP_THEME, R.style.AppThemeWhile) == R.style.AppThemeWhile) {
+                    music_iv_play.setImageResource(R.mipmap.ic_play);
+                } else {
+                    music_iv_play.setImageResource(R.mipmap.ic_play_b);
+                }
             }
         }
     }

@@ -5,7 +5,7 @@
     android:id="@+id/rl_base"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/n_l_item1_bg"
+    android:background="?l_item1"
     tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry">
 
     <com.zhy.android.percent.support.PercentLinearLayout
@@ -31,7 +31,7 @@
                 android:includeFontPadding="false"
                 android:lines="1"
                 android:text="胎压"
-                android:textColor="#101933"
+                android:textColor="?l_text1"
                 app:layout_textSizePercent="50%h" />
         </com.zhy.android.percent.support.PercentFrameLayout>
 
@@ -63,33 +63,69 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <TextView
-                    android:id="@+id/tv_lt"
+                <com.meetsl.scardview.SCardView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
                     android:layout_weight="1"
-                    android:background="@drawable/n_ty_bg"
-                    android:gravity="center_vertical|left"
-                    android:padding="15dp"
-                    android:text="左前\n0.0\n0.0"
-                    android:textColor="#697380"
-                    app:layout_textSizePercent="6%h" />
+                    app:cardBackgroundColor="@android:color/transparent"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="10dp"
+                    app:cardPreventCornerOverlap="false"
+                    app:cardShadowEndColor="#01000000"
+                    app:cardShadowStartColor="#20000000"
+                    app:cardUseCornerArea="true">
 
-                <TextView
-                    android:id="@+id/tv_rt"
+                    <com.zhy.android.percent.support.PercentFrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/tv_lt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="?ty_bg"
+                            android:gravity="center_vertical|left"
+                            android:padding="15dp"
+                            android:text="左前\n0.0\n0.0"
+                            android:textColor="?l_text2"
+                            app:layout_textSizePercent="6%h" />
+                    </com.zhy.android.percent.support.PercentFrameLayout>
+                </com.meetsl.scardview.SCardView>
+
+                <com.meetsl.scardview.SCardView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentRight="true"
                     android:layout_weight="1"
-                    android:background="@drawable/n_ty_bg"
-                    android:gravity="center_vertical|left"
-                    android:padding="15dp"
-                    android:text="右前\n0.0\n0.0"
-                    android:textColor="#697380"
-                    app:layout_textSizePercent="6%h" />
+                    app:cardBackgroundColor="@android:color/transparent"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="10dp"
+                    app:cardPreventCornerOverlap="false"
+                    app:cardShadowEndColor="#01000000"
+                    app:cardShadowStartColor="#20000000"
+                    app:cardUseCornerArea="true">
+
+                    <com.zhy.android.percent.support.PercentFrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/tv_rt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="?ty_bg"
+                            android:gravity="center_vertical|left"
+                            android:padding="15dp"
+                            android:text="右前\n0.0\n0.0"
+                            android:textColor="?l_text2"
+                            app:layout_textSizePercent="6%h" />
+                    </com.zhy.android.percent.support.PercentFrameLayout>
+                </com.meetsl.scardview.SCardView>
+
 
                 <ImageView
                     android:layout_width="0dp"
@@ -100,32 +136,70 @@
                     app:layout_heightPercent="40%h"
                     app:layout_widthPercent="40%w" />
 
-                <TextView
-                    android:id="@+id/tv_lb"
+                <com.meetsl.scardview.SCardView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentBottom="true"
                     android:layout_weight="1"
-                    android:background="@drawable/n_ty_bg"
-                    android:gravity="center_vertical|left"
-                    android:padding="15dp"
-                    android:text="左后\n0.0\n0.0"
-                    android:textColor="#697380"
-                    app:layout_textSizePercent="6%h" />
+                    app:cardBackgroundColor="@android:color/transparent"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="10dp"
+                    app:cardPreventCornerOverlap="false"
+                    app:cardShadowEndColor="#01000000"
+                    app:cardShadowStartColor="#20000000"
+                    app:cardUseCornerArea="true">
 
-                <TextView
-                    android:id="@+id/tv_rb"
+                    <com.zhy.android.percent.support.PercentFrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/tv_lb"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="?ty_bg"
+                            android:gravity="center_vertical|left"
+                            android:padding="15dp"
+                            android:text="左后\n0.0\n0.0"
+                            android:textColor="?l_text2"
+                            app:layout_textSizePercent="6%h" />
+                    </com.zhy.android.percent.support.PercentFrameLayout>
+                </com.meetsl.scardview.SCardView>
+
+                <com.meetsl.scardview.SCardView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentBottom="true"
-                    android:background="@drawable/n_ty_bg"
-                    android:gravity="center_vertical|left"
-                    android:padding="15dp"
-                    android:text="右后\n0.0\n0.0"
-                    android:textColor="#697380"
-                    app:layout_textSizePercent="6%h" />
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="@android:color/transparent"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="10dp"
+                    app:cardPreventCornerOverlap="false"
+                    app:cardShadowEndColor="#01000000"
+                    app:cardShadowStartColor="#20000000"
+                    app:cardUseCornerArea="true">
+
+                    <com.zhy.android.percent.support.PercentFrameLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/tv_rb"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="?ty_bg"
+                            android:gravity="center_vertical|left"
+                            android:padding="15dp"
+                            android:text="右后\n0.0\n0.0"
+                            android:textColor="?l_text2"
+                            app:layout_textSizePercent="6%h" />
+                    </com.zhy.android.percent.support.PercentFrameLayout>
+                </com.meetsl.scardview.SCardView>
+
+
             </com.zhy.android.percent.support.PercentRelativeLayout>
         </LinearLayout>
     </com.zhy.android.percent.support.PercentLinearLayout>

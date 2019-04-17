@@ -16,11 +16,37 @@
     </style>
 
     <style name="AppThemeWhile" parent="AppTheme">
-        <item name="appTextTitle">#101933</item>
+        <item name="l_text1">#101933</item>
+        <item name="l_text2">#697185</item>
+
+        <item name="l_item1">@drawable/n_l_item1_bg</item>
+        <item name="l_item2">@drawable/n_l_item2_bg</item>
+        <item name="l_item3">@drawable/n_l_item3_bg</item>
+        <item name="desk_bg">@drawable/n_desk_bg</item>
+
+        <item name="dh_dh">@mipmap/n_dh_dh</item>
+        <item name="dh_gs">@mipmap/n_dh_gs</item>
+        <item name="dh_j">@mipmap/n_dh_j</item>
+        <item name="dh_quan">@mipmap/n_dh_quan</item>
+
+        <item name="ty_bg">@drawable/n_ty_bg</item>
     </style>
 
     <style name="AppThemeBlack" parent="AppTheme">
-        <item name="appTextTitle">#ffffff</item>
+        <item name="l_text1">#fff</item>
+        <item name="l_text2">#fff</item>
+
+        <item name="l_item1">@drawable/n_l_item1_bg_b</item>
+        <item name="l_item2">@drawable/n_l_item2_bg_b</item>
+        <item name="l_item3">@drawable/n_l_item3_bg_b</item>
+        <item name="desk_bg">@drawable/n_desk_bg_b</item>
+
+        <item name="dh_dh">@mipmap/n_dh_dh_b</item>
+        <item name="dh_gs">@mipmap/n_dh_gs_b</item>
+        <item name="dh_j">@mipmap/n_dh_j_b</item>
+        <item name="dh_quan">@mipmap/n_dh_quan_b</item>
+
+        <item name="ty_bg">@drawable/n_ty_bg_b</item>
     </style>
 
     <style name="Interval">

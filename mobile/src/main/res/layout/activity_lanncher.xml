@@ -4,7 +4,7 @@
     android:id="@+id/fl_bg"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/n_desk_bg"
+    android:background="?desk_bg"
     android:orientation="vertical">
 
 

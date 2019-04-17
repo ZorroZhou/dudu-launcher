@@ -7,6 +7,8 @@ public class CommonData {
 
     public static final String PACKAGE_NAME = "com.wow.carlauncher";
 
+    public static final String SDATA_APP_THEME = "SDATA_APP_THEME";
+
     //
     public static final int REQUEST_SELECT_APP_TO_DOCK1 = 10000;
     public static final int REQUEST_SELECT_APP_TO_DOCK2 = 10001;

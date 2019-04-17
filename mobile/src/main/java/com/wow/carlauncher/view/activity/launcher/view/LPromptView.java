@@ -23,6 +23,7 @@ import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarTp;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventConnect;
 import com.wow.carlauncher.view.activity.AppMenuActivity;
 import com.wow.carlauncher.view.activity.CarInfoActivity;
+import com.wow.carlauncher.view.activity.launcher.LauncherActivity;
 import com.wow.carlauncher.view.activity.set.SetActivity;
 import com.wow.carlauncher.view.base.BaseEBusView;
 import com.wow.carlauncher.view.event.EventWifiState;
@@ -101,16 +102,23 @@ public class LPromptView extends BaseEBusView {
                 break;
             }
             case R.id.tv_time: {
-                String packname = SharedPreUtil.getSharedPreString(SDATA_TIME_PLUGIN_OPEN_APP);
-                if (!CommonUtil.isNull(packname)) {
-                    Intent appIntent = pm.getLaunchIntentForPackage(packname);
-                    if (appIntent != null) {
-                        appIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        getActivity().startActivity(appIntent);
-                    } else {
-                        ToastManage.self().show("APP丢失");
-                    }
+                if (SharedPreUtil.getSharedPreInteger(CommonData.SDATA_APP_THEME, R.style.AppThemeWhile) == R.style.AppThemeWhile) {
+                    SharedPreUtil.saveSharedPreInteger(CommonData.SDATA_APP_THEME, R.style.AppThemeBlack);
+                    LauncherActivity.activity.recreate();
+                } else {
+                    SharedPreUtil.saveSharedPreInteger(CommonData.SDATA_APP_THEME, R.style.AppThemeWhile);
+                    LauncherActivity.activity.recreate();
                 }
+//                String packname = SharedPreUtil.getSharedPreString(SDATA_TIME_PLUGIN_OPEN_APP);
+//                if (!CommonUtil.isNull(packname)) {
+//                    Intent appIntent = pm.getLaunchIntentForPackage(packname);
+//                    if (appIntent != null) {
+//                        appIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                        getActivity().startActivity(appIntent);
+//                    } else {
+//                        ToastManage.self().show("APP丢失");
+//                    }
+//                }
                 break;
             }
         }

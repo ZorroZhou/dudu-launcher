@@ -48,6 +48,7 @@ import static com.wow.carlauncher.common.CommonData.SDATA_DOCK4_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK5_CLASS;
 
 public class LauncherActivity extends Activity {
+    public static LauncherActivity activity;
 
     @ViewInject(R.id.ll_dock)
     private LDockView ll_dock;
@@ -67,7 +68,13 @@ public class LauncherActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //超级大坑,必去全局设置才能用
-        getApplicationContext().setTheme(R.style.AppThemeBlack);
+        int theme = SharedPreUtil.getSharedPreInteger(CommonData.SDATA_APP_THEME, R.style.AppThemeBlack);
+        if (theme == R.style.AppThemeBlack || theme == R.style.AppThemeWhile) {
+            getApplicationContext().setTheme(theme);
+        }else{
+            SharedPreUtil.saveSharedPreInteger(CommonData.SDATA_APP_THEME, R.style.AppThemeBlack);
+        }
+
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
@@ -76,6 +83,8 @@ public class LauncherActivity extends Activity {
         registerReceiver(homeReceiver, intentFilter);
 
         initView();
+
+        LauncherActivity.activity = this;
     }
 
     public void initView() {
@@ -122,6 +131,29 @@ public class LauncherActivity extends Activity {
 
             }
         });
+    }
+
+    @Event(value = {R.id.ll_dock1, R.id.ll_dock2, R.id.ll_dock3, R.id.ll_dock4})
+    private boolean clickEvent(View view) {
+        switch (view.getId()) {
+            case R.id.ll_dock1: {
+                startActivityForResult(new Intent(this, AppSelectActivity.class), REQUEST_SELECT_APP_TO_DOCK1);
+                break;
+            }
+            case R.id.ll_dock2: {
+                startActivityForResult(new Intent(this, AppSelectActivity.class), REQUEST_SELECT_APP_TO_DOCK2);
+                break;
+            }
+            case R.id.ll_dock3: {
+                startActivityForResult(new Intent(this, AppSelectActivity.class), REQUEST_SELECT_APP_TO_DOCK3);
+                break;
+            }
+            case R.id.ll_dock4: {
+                startActivityForResult(new Intent(this, AppSelectActivity.class), REQUEST_SELECT_APP_TO_DOCK4);
+                break;
+            }
+        }
+        return false;
     }
 
     @Event(value = {R.id.ll_dock1, R.id.ll_dock2, R.id.ll_dock3, R.id.ll_dock4}, type = View.OnLongClickListener.class)
@@ -197,6 +229,7 @@ public class LauncherActivity extends Activity {
         super.onDestroy();
         unregisterReceiver(homeReceiver);
         EventBus.getDefault().unregister(this);
+        LauncherActivity.activity = null;
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

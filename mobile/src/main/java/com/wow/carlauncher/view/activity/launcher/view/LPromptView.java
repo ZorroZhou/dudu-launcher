@@ -69,6 +69,7 @@ public class LPromptView extends BaseEXView {
         Context context = getContext();
         fl_base.setBackgroundResource(manage.getCurrentThemeRes(context, R.drawable.n_dock_bg));
         tv_time.setTextColor(manage.getCurrentThemeColor(context, R.color.l_text1));
+        iv_home.setImageResource(manage.getCurrentThemeRes(context, R.mipmap.n_home));
     }
 
     @ViewInject(R.id.fl_base)
@@ -79,6 +80,9 @@ public class LPromptView extends BaseEXView {
 
     @ViewInject(R.id.iv_carinfo_tp)
     private ImageView iv_carinfo_tp;
+
+    @ViewInject(R.id.iv_home)
+    private ImageView iv_home;
 
     @ViewInject(R.id.iv_obd)
     private ImageView iv_obd;
@@ -109,7 +113,6 @@ public class LPromptView extends BaseEXView {
                 break;
             }
             case R.id.tv_time: {
-                CarLauncherApplication.stime = System.currentTimeMillis();
                 if (SharedPreUtil.getSharedPreInteger(CommonData.SDATA_APP_THEME, WHITE) == WHITE) {
                     SharedPreUtil.saveSharedPreInteger(CommonData.SDATA_APP_THEME, BLACK);
                     ThemeManage.self().setThemeMode(BLACK);

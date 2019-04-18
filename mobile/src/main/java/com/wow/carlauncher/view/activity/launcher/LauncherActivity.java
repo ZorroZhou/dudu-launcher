@@ -82,15 +82,12 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
         if (theme == WHITE || theme == BLACK) {
             ThemeManage.self().setThemeMode(theme);
         }
-
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
         registerReceiver(homeReceiver, intentFilter);
-
         initView();
-
         ThemeManage.self().registerThemeChangeListener(this);
         onThemeChanged(ThemeManage.self());
         LauncherActivity.activity = this;
@@ -99,20 +96,19 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
     public void initView() {
         setContentView(R.layout.activity_lanncher);
         x.view().inject(this);
-        EventBus.getDefault().register(this);
 
+        EventBus.getDefault().register(this);
         LPage1View lPage1View = new LPage1View(this);
         LPage2View lPage2View = new LPage2View(this);
 
         viewPager.setAdapter(new ViewAdapter(new View[]{lPage1View, lPage2View}));
-
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewUtils.dip2px(getApplicationContext(), 8), ViewUtils.dip2px(getApplicationContext(), 8));
         //设置小圆点左右之间的间隔
         params.setMargins(10, 0, 10, 0);
 
         //根据主题处理小圆点
-        boolean baise = SharedPreUtil.getSharedPreInteger(CommonData.SDATA_APP_THEME, R.style.AppThemeWhile) == R.style.AppThemeWhile;
+        boolean baise = ThemeManage.self().getThemeMode() == WHITE;
         final View[] posts = new View[2];
         for (int i = 0; i < posts.length; i++) {
             posts[i] = new View(getApplicationContext());
@@ -123,7 +119,6 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
             }
             postion.addView(posts[i], params);
         }
-
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
@@ -132,7 +127,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
 
             @Override
             public void onPageSelected(int i) {
-                boolean baise = SharedPreUtil.getSharedPreInteger(CommonData.SDATA_APP_THEME, R.style.AppThemeWhile) == R.style.AppThemeWhile;
+                boolean baise = ThemeManage.self().getThemeMode() == WHITE;
                 for (View post : posts) {
                     post.setBackgroundResource(baise ? R.drawable.n_l_postion_n : R.drawable.n_l_postion);
                 }
@@ -219,12 +214,6 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
                 ll_dock.loadDock();
             }
         }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Toast.makeText(this, "启动时间: " + (System.currentTimeMillis() - CarLauncherApplication.stime), Toast.LENGTH_LONG).show();
     }
 
     @Override

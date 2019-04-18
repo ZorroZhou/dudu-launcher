@@ -46,6 +46,18 @@
     <color name="l_text2">#697185</color>
     <color name="l_text2_b">#fff</color>
 
+    <color name="l_text3">#9ba1a9</color>
+    <color name="l_text3_b">#848a95</color>
+
+    <color name="l_text4">#333e54</color>
+    <color name="l_text4_b">#fff</color>
+
     <color name="line">#c6d2d9</color>
     <color name="line_b">#666f80</color>
+
+    <color name="l_music_title">#697380</color>
+    <color name="l_music_title_b">#fff</color>
+
+    <color name="l_music_zuozhe">#7b8391</color>
+    <color name="l_music_zuozhe_b">#818796</color>
 </resources>

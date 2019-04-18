@@ -12,15 +12,14 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
-import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.ex.manage.MusicCoverManage;
+import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventInfo;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventProgress;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventState;
 import com.wow.carlauncher.view.base.BaseEXView;
 import com.wow.frame.util.CommonUtil;
-import com.wow.frame.util.SharedPreUtil;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -29,6 +28,7 @@ import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
 import static com.wow.carlauncher.common.CommonData.TAG;
+import static com.wow.carlauncher.ex.manage.ThemeManage.WHITE;
 
 /**
  * Created by 10124 on 2018/4/20.
@@ -49,11 +49,40 @@ public class LMusicView extends BaseEXView {
         return R.layout.content_l_music;
     }
 
-    @ViewInject(R.id.iv_play)
-    private ImageView music_iv_play;
+    @Override
+    public void onThemeChanged(ThemeManage manage) {
+        Context context = getContext();
+        rl_base.setBackgroundResource(manage.getCurrentThemeRes(context, R.drawable.n_l_item1_bg));
+        tv_title.setTextColor(manage.getCurrentThemeColor(context, R.color.l_text1));
+
+        refreshPlay();
+
+        ll_prew.setImageResource(manage.getCurrentThemeRes(context, R.mipmap.ic_prev));
+        ll_next.setImageResource(manage.getCurrentThemeRes(context, R.mipmap.ic_next));
+
+        tv_music_title.setTextColor(manage.getCurrentThemeColor(context, R.color.l_music_title));
+        tv_zuozhe.setTextColor(manage.getCurrentThemeColor(context, R.color.l_music_zuozhe));
+    }
+
+    private boolean run;
+
+    @ViewInject(R.id.rl_base)
+    private View rl_base;
 
     @ViewInject(R.id.tv_title)
-    private TextView music_tv_title;
+    private TextView tv_title;
+
+    @ViewInject(R.id.iv_play)
+    private ImageView iv_play;
+
+    @ViewInject(R.id.ll_prew)
+    private ImageView ll_prew;
+
+    @ViewInject(R.id.ll_next)
+    private ImageView ll_next;
+
+    @ViewInject(R.id.tv_music_title)
+    private TextView tv_music_title;
 
     @ViewInject(R.id.tv_zuozhe)
     private TextView tv_zuozhe;
@@ -63,6 +92,22 @@ public class LMusicView extends BaseEXView {
 
     @ViewInject(R.id.music_iv_cover)
     private ImageView music_iv_cover;
+
+    private void refreshPlay() {
+        if (run) {
+            if (ThemeManage.self().getThemeMode() == WHITE) {
+                iv_play.setImageResource(R.mipmap.ic_pause);
+            } else {
+                iv_play.setImageResource(R.mipmap.ic_pause_b);
+            }
+        } else {
+            if (ThemeManage.self().getThemeMode() == WHITE) {
+                iv_play.setImageResource(R.mipmap.ic_play);
+            } else {
+                iv_play.setImageResource(R.mipmap.ic_play_b);
+            }
+        }
+    }
 
 
     @Event(value = {R.id.iv_play, R.id.ll_prew, R.id.ll_next})
@@ -88,11 +133,11 @@ public class LMusicView extends BaseEXView {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final PMusicEventInfo event) {
-        if (music_tv_title != null && tv_zuozhe != null) {
+        if (tv_music_title != null && tv_zuozhe != null) {
             if (CommonUtil.isNotNull(event.getTitle())) {
-                music_tv_title.setText(event.getTitle());
+                tv_music_title.setText(event.getTitle());
             } else {
-                music_tv_title.setText("音乐");
+                tv_music_title.setText("音乐");
             }
 
             if (CommonUtil.isNotNull(event.getArtist())) {
@@ -130,20 +175,9 @@ public class LMusicView extends BaseEXView {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final PMusicEventState event) {
-        if (music_iv_play != null) {
-            if (event.isRun()) {
-                if (SharedPreUtil.getSharedPreInteger(CommonData.SDATA_APP_THEME, R.style.AppThemeWhile) == R.style.AppThemeWhile) {
-                    music_iv_play.setImageResource(R.mipmap.ic_pause);
-                } else {
-                    music_iv_play.setImageResource(R.mipmap.ic_pause_b);
-                }
-            } else {
-                if (SharedPreUtil.getSharedPreInteger(CommonData.SDATA_APP_THEME, R.style.AppThemeWhile) == R.style.AppThemeWhile) {
-                    music_iv_play.setImageResource(R.mipmap.ic_play);
-                } else {
-                    music_iv_play.setImageResource(R.mipmap.ic_play_b);
-                }
-            }
+        if (iv_play != null) {
+            run = event.isRun();
+            refreshPlay();
         }
     }
 

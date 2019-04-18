@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.LukuangView;
+import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.plugin.amapcar.AMapCarPlugin;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventNavInfo;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventState;
@@ -36,6 +37,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.wow.carlauncher.common.CommonData.TAG;
+import static com.wow.carlauncher.ex.manage.ThemeManage.WHITE;
 import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.AMAP_PACKAGE;
 import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.ICONS;
 
@@ -58,7 +60,71 @@ public class LAMapView extends BaseEXView {
         return R.layout.content_l_amap;
     }
 
+    @Override
+    public void onThemeChanged(ThemeManage manage) {
+        Context context = getContext();
+        rl_base.setBackgroundResource(manage.getCurrentThemeRes(context, R.drawable.n_l_item1_bg));
+        ll_xiansu.setBackgroundResource(manage.getCurrentThemeRes(context, R.mipmap.n_dh_quan));
+        iv_moren.setImageResource(manage.getCurrentThemeRes(context, R.mipmap.n_dh_moren));
+
+        manage.setTextViewsColor(this, new int[]{
+                R.id.tv_title1,
+                R.id.tv_title2,
+                R.id.tv_xiansu,
+                R.id.tv_text1,
+                R.id.tv_msg
+        }, R.color.l_text1);
+
+
+        manage.setViewsBackround(this, new int[]{
+                R.id.line1,
+                R.id.line2,
+                R.id.line3,
+                R.id.line4,
+                R.id.line5,
+                R.id.line6
+        }, R.color.line);
+
+        iv_dh.setImageResource(manage.getCurrentThemeRes(context, R.mipmap.n_dh_dh));
+        iv_dh_j.setImageResource(manage.getCurrentThemeRes(context, R.mipmap.n_dh_j));
+        iv_dh_gs.setImageResource(manage.getCurrentThemeRes(context, R.mipmap.n_dh_gs));
+        rl_view1.setBackgroundResource(manage.getCurrentThemeRes(context, R.drawable.n_dh2_bg));
+
+        refreshMute();
+        refreshRoad();
+
+        iv_close.setImageResource(manage.getCurrentThemeRes(context, R.mipmap.n_dh_close));
+        iv_car.setImageResource(manage.getCurrentThemeRes(context, R.mipmap.n_car));
+    }
+
+
     private boolean mute = false;
+
+    private int roadType = 10;
+
+    @ViewInject(R.id.rl_base)
+    private View rl_base;
+
+    @ViewInject(R.id.rl_view1)
+    private View rl_view1;
+
+    @ViewInject(R.id.iv_dh)
+    private ImageView iv_dh;
+
+    @ViewInject(R.id.iv_dh_gs)
+    private ImageView iv_dh_gs;
+
+    @ViewInject(R.id.iv_close)
+    private ImageView iv_close;
+
+    @ViewInject(R.id.iv_dh_j)
+    private ImageView iv_dh_j;
+
+    @ViewInject(R.id.iv_moren)
+    private ImageView iv_moren;
+
+    @ViewInject(R.id.iv_car)
+    private ImageView iv_car;
 
     @ViewInject(R.id.iv_icon)
     private ImageView amapIcon;
@@ -87,11 +153,44 @@ public class LAMapView extends BaseEXView {
     @ViewInject(R.id.rl_moren)
     private View rl_moren;
 
-    @ViewInject(R.id.rl_daohang)
-    private View rl_daohang;
-
     @ViewInject(R.id.lukuang)
     private LukuangView lukuangView;
+
+    private void refreshMute() {
+        if (mute) {
+            if (ThemeManage.self().getThemeMode() == WHITE) {
+                iv_mute.setImageResource(R.mipmap.n_dh_jy);
+            } else {
+                iv_mute.setImageResource(R.mipmap.n_dh_jy_b);
+            }
+        } else {
+            if (ThemeManage.self().getThemeMode() == WHITE) {
+                iv_mute.setImageResource(R.mipmap.n_dh_bjy);
+            } else {
+                iv_mute.setImageResource(R.mipmap.n_dh_bjy_b);
+            }
+        }
+    }
+
+    private void refreshRoad() {
+        if (ThemeManage.self().getThemeMode() == WHITE) {
+            if (roadType == 0 || roadType == 6) {
+                iv_road.setImageResource(R.mipmap.n_road1);
+            } else if (roadType == 4 || roadType == 5 || roadType == 9 || roadType == 10) {
+                iv_road.setImageResource(R.mipmap.n_road3);
+            } else {
+                iv_road.setImageResource(R.mipmap.n_road2);
+            }
+        } else {
+            if (roadType == 0 || roadType == 6) {
+                iv_road.setImageResource(R.mipmap.n_road1_b);
+            } else if (roadType == 4 || roadType == 5 || roadType == 9 || roadType == 10) {
+                iv_road.setImageResource(R.mipmap.n_road3_b);
+            } else {
+                iv_road.setImageResource(R.mipmap.n_road2_b);
+            }
+        }
+    }
 
     @Event(value = {R.id.rl_base, R.id.btn_go_home, R.id.btn_close, R.id.btn_mute, R.id.btn_nav_gs, R.id.btn_nav_j, R.id.btn_gd})
     private void clickEvent(View view) {
@@ -163,19 +262,7 @@ public class LAMapView extends BaseEXView {
     public void onEvent(final PAmapMuteStateInfo event) {
         if (iv_mute != null) {
             mute = event.isMute();
-            if (event.isMute()) {
-                if (SharedPreUtil.getSharedPreInteger(CommonData.SDATA_APP_THEME, R.style.AppThemeWhile) == R.style.AppThemeWhile) {
-                    iv_mute.setImageResource(R.mipmap.n_dh_jy);
-                } else {
-                    iv_mute.setImageResource(R.mipmap.n_dh_jy_b);
-                }
-            } else {
-                if (SharedPreUtil.getSharedPreInteger(CommonData.SDATA_APP_THEME, R.style.AppThemeWhile) == R.style.AppThemeWhile) {
-                    iv_mute.setImageResource(R.mipmap.n_dh_bjy);
-                } else {
-                    iv_mute.setImageResource(R.mipmap.n_dh_bjy_b);
-                }
-            }
+            refreshMute();
         }
     }
 
@@ -253,23 +340,8 @@ public class LAMapView extends BaseEXView {
             }
         }
         if (iv_road != null) {
-            if (SharedPreUtil.getSharedPreInteger(CommonData.SDATA_APP_THEME, R.style.AppThemeWhile) == R.style.AppThemeWhile) {
-                if (event.getRoadType() == 0 || event.getRoadType() == 6) {
-                    iv_road.setImageResource(R.mipmap.n_road1);
-                } else if (event.getRoadType() == 4 || event.getRoadType() == 5 || event.getRoadType() == 9 || event.getRoadType() == 10) {
-                    iv_road.setImageResource(R.mipmap.n_road3);
-                } else {
-                    iv_road.setImageResource(R.mipmap.n_road2);
-                }
-            } else {
-                if (event.getRoadType() == 0 || event.getRoadType() == 6) {
-                    iv_road.setImageResource(R.mipmap.n_road1_b);
-                } else if (event.getRoadType() == 4 || event.getRoadType() == 5 || event.getRoadType() == 9 || event.getRoadType() == 10) {
-                    iv_road.setImageResource(R.mipmap.n_road3_b);
-                } else {
-                    iv_road.setImageResource(R.mipmap.n_road2_b);
-                }
-            }
+            roadType = event.getRoadType();
+            refreshRoad();
         }
     }
 

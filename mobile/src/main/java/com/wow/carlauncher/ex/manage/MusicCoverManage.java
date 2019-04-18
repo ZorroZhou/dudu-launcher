@@ -18,7 +18,9 @@ import org.xutils.x;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class MusicCoverManage {
     private static class SingletonHolder {
@@ -43,45 +45,62 @@ public class MusicCoverManage {
 
     public void init() {
         api = MusicApiFactory.create(musicProvider);
+        runkey = new HashSet<>();
     }
+
+    private Set<String> runkey;
 
     public void loadMusicCover(final String title, final String zuojia, final Callback callback) {
         String name = nameGenerator.generate(title + "-" + zuojia + "-" + musicProvider) + ".temp";
+        System.out.println(runkey);
+        if (runkey.contains(name)) {
+            return;
+        }
+        runkey.add(name);
         final File cover = new File(Environment.getExternalStorageDirectory() + File.separator + "music_cover" + File.separator + name);
         if (cover.exists()) {
             Log.e(CommonData.TAG, "已有的封面");
             Bitmap bitmap = BitmapFactory.decodeFile(cover.getAbsolutePath());
             if (bitmap != null && bitmap.getWidth() > 0) {
                 callback.loadCover(true, title, zuojia, bitmap);
+                Log.e(CommonData.TAG, "封面载入成功");
             } else {
+                cover.deleteOnExit();
                 callback.loadCover(false, title, zuojia, null);
+                Log.e(CommonData.TAG, "封面载入成功");
             }
+            runkey.remove(name);
         } else {
             Log.e(CommonData.TAG, "新的封面");
-            x.task().run(new Runnable() {
-                @Override
-                public void run() {
-                    boolean success = false;
-                    try {
-                        final List<? extends Song> songs = api.searchMusicSync(title + " " + zuojia, 1, false);
-                        if (songs.size() > 0) {
-                            Bitmap bitmap = ImageLoader.getInstance().loadImageSync(songs.get(0).getPicUrl());
-                            if (bitmap != null) {
-                                new File(Environment.getExternalStorageDirectory() + File.separator + "music_cover" + File.separator).mkdirs();
-                                cover.createNewFile();
-                                callback.loadCover(true, title, zuojia, bitmap);
-                                FileOutputStream out = new FileOutputStream(cover);
-                                bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
-                                success = true;
-                            }
+            x.task().run(() -> {
+                boolean success = false;
+                try {
+                    final List<? extends Song> songs = api.searchMusicSync(title + " " + zuojia, 1, false);
+                    if (songs.size() > 0) {
+                        Bitmap bitmap = ImageLoader.getInstance().loadImageSync(songs.get(0).getPicUrl());
+                        File dir = new File(Environment.getExternalStorageDirectory() + File.separator + "music_cover" + File.separator);
+                        boolean direxist = true;
+                        if (!dir.exists()) {
+                            direxist = dir.mkdirs();
                         }
-                    } catch (Throwable e) {
-                        e.printStackTrace();
+                        if (bitmap != null && direxist && cover.createNewFile()) {
+                            callback.loadCover(true, title, zuojia, bitmap);
+                            FileOutputStream out = new FileOutputStream(cover);
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+                            success = true;
+                            Log.e(CommonData.TAG, "封面下载成功");
+                        } else {
+                            Log.e(CommonData.TAG, "封面下载失败");
+                        }
                     }
-                    if (!success) {
-                        callback.loadCover(false, title, zuojia, null);
-                    }
+                } catch (Throwable e) {
+                    e.printStackTrace();
                 }
+                if (!success) {
+                    callback.loadCover(false, title, zuojia, null);
+                    Log.e(CommonData.TAG, "封面下载失败");
+                }
+                runkey.remove(name);
             });
         }
     }

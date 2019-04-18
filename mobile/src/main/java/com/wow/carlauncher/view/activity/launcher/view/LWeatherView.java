@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.WeatherIconUtil;
+import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.location.event.MNewLocationEvent;
 import com.wow.carlauncher.ex.manage.time.event.MTimeMinuteEvent;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
@@ -49,6 +50,37 @@ public class LWeatherView extends BaseEXView {
         return R.layout.content_l_weather;
     }
 
+
+    @Override
+    public void onThemeChanged(ThemeManage manage) {
+        Context context = getContext();
+        rl_base.setBackgroundResource(manage.getCurrentThemeRes(context, R.drawable.n_l_item1_bg));
+        tv_title.setTextColor(manage.getCurrentThemeColor(context, R.color.l_text1));
+        tv_tianqi.setTextColor(manage.getCurrentThemeColor(context, R.color.l_text3));
+        tv_wendu1.setTextColor(manage.getCurrentThemeColor(context, R.color.l_text4));
+        tv_title.setTextColor(manage.getCurrentThemeColor(context, R.color.l_text4));
+
+        line1.setBackgroundResource(manage.getCurrentThemeRes(context, R.color.line));
+
+        manage.setTextViewsColor(this, new int[]{
+                R.id.tv_text2,
+                R.id.tv_text3,
+                R.id.tv_text4
+        }, R.color.l_text3);
+
+        manage.setTextViewsColor(this, new int[]{
+                R.id.tv_kqsd,
+                R.id.tv_fl,
+                R.id.tv_fx
+        }, R.color.l_text4);
+    }
+
+    @ViewInject(R.id.rl_base)
+    private View rl_base;
+
+    @ViewInject(R.id.line1)
+    private View line1;
+
     @ViewInject(R.id.tv_tianqi)
     private TextView tv_tianqi;
 
@@ -67,6 +99,7 @@ public class LWeatherView extends BaseEXView {
 
     @ViewInject(R.id.tv_fl)
     private TextView tv_fl;
+
     @ViewInject(R.id.tv_fx)
     private TextView tv_fx;
 

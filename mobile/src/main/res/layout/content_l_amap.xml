@@ -5,7 +5,6 @@
     android:id="@+id/rl_base"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?l_item1"
     android:orientation="vertical"
     tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry">
 
@@ -15,11 +14,11 @@
         android:layout_height="match_parent">
 
         <com.wow.carlauncher.common.view.CustomRoundAngleImageView
+            android:id="@+id/iv_moren"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:contentDescription="@string/app_name"
             android:scaleType="fitXY"
-            android:src="?dh_moren"
             app:radius="10dp" />
 
         <com.zhy.android.percent.support.PercentRelativeLayout
@@ -37,6 +36,7 @@
                 app:layout_heightPercent="12%h">
 
                 <TextView
+                    android:id="@+id/tv_title1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="5dp"
@@ -44,7 +44,6 @@
                     android:includeFontPadding="false"
                     android:lines="1"
                     android:text="高德导航"
-                    android:textColor="?l_text1"
                     app:layout_textSizePercent="50%h" />
             </com.zhy.android.percent.support.PercentFrameLayout>
 
@@ -58,9 +57,9 @@
                 app:layout_heightPercent="13%h">
 
                 <View
+                    android:id="@+id/line1"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="?line" />
+                    android:layout_height="1dp" />
 
                 <com.zhy.android.percent.support.PercentLinearLayout
                     android:layout_width="match_parent"
@@ -81,20 +80,20 @@
                             app:layout_widthPercent="100%h">
 
                             <ImageView
+                                android:id="@+id/iv_dh"
                                 android:layout_width="0dp"
                                 android:layout_height="0dp"
-                                android:src="?dh_dh"
                                 app:layout_heightPercent="60%h"
                                 app:layout_widthPercent="60%h" />
                         </com.zhy.android.percent.support.PercentLinearLayout>
                     </com.zhy.android.percent.support.PercentLinearLayout>
 
                     <View
+                        android:id="@+id/line2"
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
                         android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:background="?line" />
+                        android:layout_marginBottom="10dp" />
 
                     <com.zhy.android.percent.support.PercentLinearLayout
                         android:id="@+id/btn_nav_j"
@@ -104,19 +103,19 @@
                         app:layout_widthPercent="110%h">
 
                         <ImageView
+                            android:id="@+id/iv_dh_j"
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:src="?dh_j"
                             app:layout_heightPercent="60%h"
                             app:layout_widthPercent="60%h" />
                     </com.zhy.android.percent.support.PercentLinearLayout>
 
                     <View
+                        android:id="@+id/line3"
                         android:layout_width="1dp"
                         android:layout_height="match_parent"
                         android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:background="?line" />
+                        android:layout_marginBottom="10dp" />
 
                     <com.zhy.android.percent.support.PercentLinearLayout
                         android:id="@+id/btn_nav_gs"
@@ -126,9 +125,9 @@
                         app:layout_widthPercent="110%h">
 
                         <ImageView
+                            android:id="@+id/iv_dh_gs"
                             android:layout_width="0dp"
                             android:layout_height="0dp"
-                            android:src="?dh_gs"
                             app:layout_heightPercent="60%h"
                             app:layout_widthPercent="60%h" />
                     </com.zhy.android.percent.support.PercentLinearLayout>
@@ -152,6 +151,7 @@
             app:layout_heightPercent="12%h">
 
             <TextView
+                android:id="@+id/tv_title2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="5dp"
@@ -159,7 +159,6 @@
                 android:includeFontPadding="false"
                 android:lines="1"
                 android:text="高德导航"
-                android:textColor="?l_text1"
                 app:layout_textSizePercent="50%h" />
         </com.zhy.android.percent.support.PercentFrameLayout>
 
@@ -178,9 +177,9 @@
             app:layout_heightPercent="22%h">
 
             <com.zhy.android.percent.support.PercentRelativeLayout
+                android:id="@+id/rl_view1"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="?dh2_bg">
+                android:layout_height="match_parent">
 
                 <com.zhy.android.percent.support.PercentRelativeLayout
                     android:layout_width="0dp"
@@ -234,7 +233,6 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_below="@id/fl_luxian"
-            android:background="@mipmap/n_dh_quan"
             android:orientation="vertical"
             app:layout_heightPercent="14%h"
             app:layout_marginLeftPercent="3%h"
@@ -248,16 +246,15 @@
                 android:layout_weight="3"
                 android:gravity="center_horizontal|bottom"
                 android:text="120"
-                android:textColor="?l_text1"
                 app:layout_textSizePercent="35%h" />
 
             <TextView
+                android:id="@+id/tv_text1"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="2"
                 android:gravity="center_horizontal|top"
                 android:text="KM/H"
-                android:textColor="?l_text1"
                 app:layout_textSizePercent="15%h" />
         </com.zhy.android.percent.support.PercentLinearLayout>
 
@@ -271,9 +268,9 @@
             app:layout_heightPercent="13%h">
 
             <View
+                android:id="@+id/line4"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?line" />
+                android:layout_height="1dp" />
 
             <com.zhy.android.percent.support.PercentLinearLayout
                 android:layout_width="match_parent"
@@ -291,17 +288,16 @@
                         android:id="@+id/iv_mute"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
-                        android:src="?dh_jy"
                         app:layout_heightPercent="60%h"
                         app:layout_widthPercent="60%h" />
                 </com.zhy.android.percent.support.PercentLinearLayout>
 
                 <View
+                    android:id="@+id/line5"
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
                     android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="?line" />
+                    android:layout_marginBottom="10dp" />
 
                 <TextView
                     android:id="@+id/tv_msg"
@@ -309,15 +305,14 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:textColor="?l_text1"
                     app:layout_textSizePercent="40%h" />
 
                 <View
+                    android:id="@+id/line6"
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
                     android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:background="?line" />
+                    android:layout_marginBottom="10dp" />
 
                 <com.zhy.android.percent.support.PercentLinearLayout
                     android:id="@+id/btn_close"
@@ -327,9 +322,9 @@
                     app:layout_widthPercent="100%h">
 
                     <ImageView
+                        android:id="@+id/iv_close"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
-                        android:src="?dh_clo"
                         app:layout_heightPercent="60%h"
                         app:layout_widthPercent="60%h" />
                 </com.zhy.android.percent.support.PercentLinearLayout>
@@ -353,10 +348,10 @@
                 app:layout_widthPercent="75%h" />
 
             <ImageView
+                android:id="@+id/iv_car"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_centerHorizontal="true"
-                android:src="?car"
                 app:layout_heightPercent="34%h"
                 app:layout_marginTopPercent="50%h"
                 app:layout_widthPercent="34%h" />

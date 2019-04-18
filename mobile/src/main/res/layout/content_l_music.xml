@@ -2,9 +2,9 @@
 <com.zhy.android.percent.support.PercentFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_base"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?l_item2"
     tools:ignore="HardcodedText,RtlHardcoded">
 
     <com.zhy.android.percent.support.PercentLinearLayout
@@ -20,6 +20,7 @@
             app:layout_heightPercent="12%h">
 
             <TextView
+                android:id="@+id/tv_title"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="5dp"
@@ -27,7 +28,6 @@
                 android:includeFontPadding="false"
                 android:lines="1"
                 android:text="音乐"
-                android:textColor="?l_text1"
                 app:layout_textSizePercent="50%h" />
         </com.zhy.android.percent.support.PercentFrameLayout>
 
@@ -51,7 +51,7 @@
         </com.zhy.android.percent.support.PercentRelativeLayout>
 
         <TextView
-            android:id="@+id/tv_title"
+            android:id="@+id/tv_music_title"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:gravity="center"
@@ -105,7 +105,6 @@
                 android:layout_height="0dp"
                 android:contentDescription="@string/app_name"
                 android:scaleType="fitCenter"
-                android:src="?ic_prev"
                 app:layout_heightPercent="77%h"
                 app:layout_marginRightPercent="20%h"
                 app:layout_widthPercent="77%h" />
@@ -116,7 +115,6 @@
                 android:layout_height="0dp"
                 android:contentDescription="@string/app_name"
                 android:scaleType="fitCenter"
-                android:src="?ic_play"
                 app:layout_heightPercent="100%h"
                 app:layout_widthPercent="100%h" />
 
@@ -126,7 +124,6 @@
                 android:layout_height="0dp"
                 android:contentDescription="@string/app_name"
                 android:scaleType="fitCenter"
-                android:src="?ic_next"
                 app:layout_heightPercent="77%h"
                 app:layout_marginLeftPercent="20%h"
                 app:layout_widthPercent="77%h" />

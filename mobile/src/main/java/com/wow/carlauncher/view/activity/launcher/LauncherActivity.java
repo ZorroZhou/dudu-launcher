@@ -78,10 +78,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //超级大坑,必去全局设置才能用
-        int theme = SharedPreUtil.getSharedPreInteger(CommonData.SDATA_APP_THEME, WHITE);
-        if (theme == WHITE || theme == BLACK) {
-            ThemeManage.self().setThemeMode(theme);
-        }
+        ThemeManage.self().refreshTheme();
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         IntentFilter intentFilter = new IntentFilter();
@@ -227,11 +224,11 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(PConsoleEventLightState event) {
-//        if (event.isOpen()) {
-//            fl_bg.setBackgroundResource(R.mipmap.bg_l_midnight);
-//        } else {
-//            fl_bg.setBackgroundResource(R.mipmap.bg_l_bright);
-//        }
+        if (event.isOpen()) {
+            ThemeManage.self().setThemeMode(BLACK);
+        } else {
+            ThemeManage.self().setThemeMode(WHITE);
+        }
     }
 
     @Override

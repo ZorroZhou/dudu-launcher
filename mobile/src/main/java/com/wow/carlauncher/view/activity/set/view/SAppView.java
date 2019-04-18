@@ -13,6 +13,8 @@ import android.view.View;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.view.SetView;
+import com.wow.carlauncher.ex.manage.ThemeManage;
+import com.wow.carlauncher.ex.manage.ThemeManage.ThemeMode;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfo;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
@@ -35,6 +37,7 @@ import org.xutils.view.annotation.ViewInject;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.wow.carlauncher.common.CommonData.SDATA_APP_THEME;
 import static com.wow.carlauncher.common.CommonData.SDATA_CONSOLE_MARK;
 import static com.wow.carlauncher.common.CommonData.SDATA_MUSIC_CONTROLLER;
 import static com.wow.carlauncher.common.CommonData.TAG;
@@ -50,6 +53,9 @@ public class SAppView extends BaseView {
             MusicControllerEnum.NWDMUSIC};
 
     public static final ConsoleProtoclEnum[] ALL_CONSOLES = {ConsoleProtoclEnum.SYSTEM, ConsoleProtoclEnum.NWD};
+
+    public static final ThemeMode[] THEME_MODEL = {ThemeMode.SHIJIAN, ThemeMode.DENGGUANG, ThemeMode.BAISE, ThemeMode.HEISE};
+
 
     public SAppView(@NonNull Context context) {
         super(context);
@@ -86,40 +92,71 @@ public class SAppView extends BaseView {
     @ViewInject(R.id.tianqi_city)
     private SetView tianqi_city;
 
+    @ViewInject(R.id.sv_plugin_theme)
+    private SetView sv_plugin_theme;
+
+
     @Override
     protected void initView() {
+        ThemeMode t11 = ThemeMode.getById(SharedPreUtil.getSharedPreInteger(SDATA_APP_THEME, ThemeMode.SHIJIAN.getId()));
+        sv_plugin_theme.setSummary(t11.getName());
+        sv_plugin_theme.setOnClickListener(view -> {
+            ThemeMode p = ThemeMode.getById(SharedPreUtil.getSharedPreInteger(SDATA_APP_THEME, ThemeMode.SHIJIAN.getId()));
+            final ThemeMode[] show = THEME_MODEL;
+            String[] items = new String[show.length];
+            int select = 0;
+            for (int i = 0; i < show.length; i++) {
+                items[i] = show[i].getName();
+                if (show[i].equals(p)) {
+                    select = i;
+                }
+            }
+            final ThreadObj<Integer> obj = new ThreadObj<>(select);
+            AlertDialog dialog = new AlertDialog.Builder(getContext()).setTitle("请选择插件").setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    SharedPreUtil.saveSharedPreInteger(SDATA_APP_THEME, show[obj.getObj()].getId());
+                    sv_plugin_select.setSummary(show[obj.getObj()].getName());
+                    ThemeManage.self().refreshTheme();
+                }
+            }).setSingleChoiceItems(items, select, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    obj.setObj(which);
+                }
+            }).create();
+            dialog.show();
+        });
+
 
         MusicControllerEnum p1 = MusicControllerEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_MUSIC_CONTROLLER, MusicControllerEnum.SYSMUSIC.getId()));
         sv_plugin_select.setSummary(p1.getName());
-        sv_plugin_select.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MusicControllerEnum p = MusicControllerEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_MUSIC_CONTROLLER, MusicControllerEnum.SYSMUSIC.getId()));
-                final MusicControllerEnum[] show = ALL_MUSIC_CONTROLLER;
-                String[] items = new String[show.length];
-                int select = 0;
-                for (int i = 0; i < show.length; i++) {
-                    items[i] = show[i].getName();
-                    if (show[i].equals(p)) {
-                        select = i;
-                    }
+        sv_plugin_select.setOnClickListener(view -> {
+            MusicControllerEnum p = MusicControllerEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_MUSIC_CONTROLLER, MusicControllerEnum.SYSMUSIC.getId()));
+            final MusicControllerEnum[] show = ALL_MUSIC_CONTROLLER;
+            String[] items = new String[show.length];
+            int select = 0;
+            for (int i = 0; i < show.length; i++) {
+                items[i] = show[i].getName();
+                if (show[i].equals(p)) {
+                    select = i;
                 }
-                final ThreadObj<Integer> obj = new ThreadObj<>(select);
-                AlertDialog dialog = new AlertDialog.Builder(getContext()).setTitle("请选择插件").setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        SharedPreUtil.saveSharedPreInteger(SDATA_MUSIC_CONTROLLER, show[obj.getObj()].getId());
-                        MusicPlugin.self().setController(show[obj.getObj()]);
-                        sv_plugin_select.setSummary(show[obj.getObj()].getName());
-                    }
-                }).setSingleChoiceItems(items, select, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        obj.setObj(which);
-                    }
-                }).create();
-                dialog.show();
             }
+            final ThreadObj<Integer> obj = new ThreadObj<>(select);
+            AlertDialog dialog = new AlertDialog.Builder(getContext()).setTitle("请选择插件").setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    SharedPreUtil.saveSharedPreInteger(SDATA_MUSIC_CONTROLLER, show[obj.getObj()].getId());
+                    MusicPlugin.self().setController(show[obj.getObj()]);
+                    sv_plugin_select.setSummary(show[obj.getObj()].getName());
+                }
+            }).setSingleChoiceItems(items, select, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    obj.setObj(which);
+                }
+            }).create();
+            dialog.show();
         });
 
         sv_wall_set.setOnClickListener(new View.OnClickListener() {

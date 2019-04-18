@@ -3,6 +3,7 @@ package com.wow.carlauncher.view.activity.launcher.view;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,6 +18,7 @@ import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
+import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventConnect;
 import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarTp;
@@ -41,6 +43,7 @@ import java.util.Date;
 
 import static com.inuker.bluetooth.library.Constants.STATUS_DEVICE_CONNECTED;
 import static com.wow.carlauncher.common.CommonData.MINUTE_MILL;
+import static com.wow.carlauncher.common.CommonData.SDATA_TIME_PLUGIN_OPEN_APP;
 import static com.wow.carlauncher.ex.manage.ThemeManage.BLACK;
 import static com.wow.carlauncher.ex.manage.ThemeManage.WHITE;
 
@@ -65,12 +68,19 @@ public class LPromptView extends BaseEXView {
     }
 
     @Override
+    protected void initView() {
+        pm = getActivity().getPackageManager();
+    }
+
+    @Override
     public void onThemeChanged(ThemeManage manage) {
         Context context = getContext();
         fl_base.setBackgroundResource(manage.getCurrentThemeRes(context, R.drawable.n_dock_bg));
         tv_time.setTextColor(manage.getCurrentThemeColor(context, R.color.l_text1));
         iv_home.setImageResource(manage.getCurrentThemeRes(context, R.mipmap.n_home));
     }
+
+    private PackageManager pm;
 
     @ViewInject(R.id.fl_base)
     private View fl_base;
@@ -113,23 +123,16 @@ public class LPromptView extends BaseEXView {
                 break;
             }
             case R.id.tv_time: {
-                if (SharedPreUtil.getSharedPreInteger(CommonData.SDATA_APP_THEME, WHITE) == WHITE) {
-                    SharedPreUtil.saveSharedPreInteger(CommonData.SDATA_APP_THEME, BLACK);
-                    ThemeManage.self().setThemeMode(BLACK);
-                } else {
-                    SharedPreUtil.saveSharedPreInteger(CommonData.SDATA_APP_THEME, WHITE);
-                    ThemeManage.self().setThemeMode(WHITE);
+                String packname = SharedPreUtil.getSharedPreString(SDATA_TIME_PLUGIN_OPEN_APP);
+                if (CommonUtil.isNotNull(packname)) {
+                    Intent appIntent = pm.getLaunchIntentForPackage(packname);
+                    if (appIntent != null) {
+                        appIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        getActivity().startActivity(appIntent);
+                    } else {
+                        ToastManage.self().show("APP丢失");
+                    }
                 }
-//                String packname = SharedPreUtil.getSharedPreString(SDATA_TIME_PLUGIN_OPEN_APP);
-//                if (CommonUtil.isNotNull(packname)) {
-//                    Intent appIntent = pm.getLaunchIntentForPackage(packname);
-//                    if (appIntent != null) {
-//                        appIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                        getActivity().startActivity(appIntent);
-//                    } else {
-//                        ToastManage.self().show("APP丢失");
-//                    }
-//                }
                 break;
             }
         }

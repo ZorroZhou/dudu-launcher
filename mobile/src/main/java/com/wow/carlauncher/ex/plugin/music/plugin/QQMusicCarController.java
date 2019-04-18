@@ -87,9 +87,15 @@ public class QQMusicCarController extends MusicController {
         context.unregisterReceiver(mReceiver);
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(final MTimeSecondEvent event) {
-        refreshInfo();
+    private int index = 2;
+
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void onEvent(final MTimeSecondEvent event) {
+        index++;
+        if (index > 2) {
+            index = 1;
+            refreshInfo();
+        }
     }
 
     private boolean waitMsg = false;

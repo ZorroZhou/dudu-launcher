@@ -92,10 +92,7 @@ public class LMusicView extends BaseEBusView {
     private String key = "";
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(final PMusicEventInfo event) {
-        if (progressBar != null) {
-            progressBar.setVisibility(GONE);
-        }
+    public void onEvent(final PMusicEventInfo event) {
         if (music_tv_title != null && tv_zuozhe != null) {
             if (CommonUtil.isNotNull(event.getTitle())) {
                 music_tv_title.setText(event.getTitle());
@@ -137,7 +134,7 @@ public class LMusicView extends BaseEBusView {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(final PMusicEventState event) {
+    public void onEvent(final PMusicEventState event) {
         if (music_iv_play != null) {
             if (event.isRun()) {
                 if (SharedPreUtil.getSharedPreInteger(CommonData.SDATA_APP_THEME, R.style.AppThemeWhile) == R.style.AppThemeWhile) {
@@ -156,10 +153,12 @@ public class LMusicView extends BaseEBusView {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(final PMusicEventProgress event) {
+    public void onEvent(final PMusicEventProgress event) {
         if (progressBar != null) {
             progressBar.setVisibility(VISIBLE);
             progressBar.setProgress((int) (event.getCurrTime() * 100F / event.getTotalTime()));
+        } else {
+            progressBar.setVisibility(GONE);
         }
     }
 

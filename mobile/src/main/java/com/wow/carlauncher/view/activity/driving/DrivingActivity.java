@@ -67,7 +67,7 @@ public class DrivingActivity extends BaseActivity {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(final PObdEventConnect event) {
+    public void onEvent(final PObdEventConnect event) {
         if (isFront && !event.isConnected()) {
             ToastManage.self().show("OBD失去连接");
             moveTaskToBack(true);

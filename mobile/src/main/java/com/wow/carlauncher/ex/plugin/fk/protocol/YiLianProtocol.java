@@ -51,8 +51,8 @@ public class YiLianProtocol extends FangkongProtocol {
         Log.d(TAG, "yilian protocol init");
     }
 
-    @Subscribe(threadMode = ThreadMode.ASYNC)
-    public void onEventAsync(final PConsoleEventCallState event) {
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void onEvent(final PConsoleEventCallState event) {
         isCalling = event.isCalling();
     }
 

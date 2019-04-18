@@ -37,6 +37,7 @@ import org.xutils.x;
  */
 
 public class LWeatherView extends BaseEBusView {
+
     public LWeatherView(@NonNull Context context) {
         super(context);
     }
@@ -160,18 +161,18 @@ public class LWeatherView extends BaseEBusView {
         });
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(LEventCityRefresh event) {
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void onEvent(LEventCityRefresh event) {
         refreshWeather(true);
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(MTimeMinuteEvent event) {
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void onEvent(MTimeMinuteEvent event) {
         refreshWeather(false);
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(MNewLocationEvent event) {
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void onEvent(MNewLocationEvent event) {
         boolean frist = false;
         if (this.adcode == null) {
             frist = true;

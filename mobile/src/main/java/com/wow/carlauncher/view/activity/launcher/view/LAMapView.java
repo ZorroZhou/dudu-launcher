@@ -152,12 +152,16 @@ public class LAMapView extends BaseEBusView {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(final PAmapEventState event) {
-        rl_moren.setVisibility(event.isRunning() ? GONE : VISIBLE);
+    public void onEvent(final PAmapEventState event) {
+        if (rl_moren.getVisibility() == VISIBLE && event.isRunning()) {
+            rl_moren.setVisibility(GONE);
+        } else if (rl_moren.getVisibility() == GONE && !event.isRunning()) {
+            rl_moren.setVisibility(VISIBLE);
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(final PAmapMuteStateInfo event) {
+    public void onEvent(final PAmapMuteStateInfo event) {
         if (iv_mute != null) {
             mute = event.isMute();
             if (event.isMute()) {
@@ -177,7 +181,7 @@ public class LAMapView extends BaseEBusView {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(final PAmapEventNavInfo event) {
+    public void onEvent(final PAmapEventNavInfo event) {
         String fangxiang = "";
         if (amapIcon != null && event.getIcon() - 1 >= 0 && event.getIcon() - 1 < ICONS.length) {
             amapIcon.setImageResource(ICONS[event.getIcon() - 1]);
@@ -271,7 +275,7 @@ public class LAMapView extends BaseEBusView {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(final PAmapLukuangInfo event) {
+    public void onEvent(final PAmapLukuangInfo event) {
         Lukuang lukuang = event.getLukuang();
         if (lukuangView != null) {
             //if (lukuang.isTmc_segment_enabled()) {

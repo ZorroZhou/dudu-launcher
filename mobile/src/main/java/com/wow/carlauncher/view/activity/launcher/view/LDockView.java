@@ -205,7 +205,7 @@ public class LDockView extends LinearLayout {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(LauncherDockLabelShowChangeEvent event) {
+    public void onEvent(LauncherDockLabelShowChangeEvent event) {
         dockLabelShow(event.show);
     }
 

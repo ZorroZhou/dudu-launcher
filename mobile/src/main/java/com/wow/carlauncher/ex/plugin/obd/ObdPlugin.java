@@ -242,8 +242,8 @@ public class ObdPlugin extends ContextEx {
         return obdProtocol != null && obdProtocol.supportTp();
     }
 
-    @Subscribe(threadMode = ThreadMode.ASYNC)
-    public void onEventAsync(final MTimeSecondEvent event) {
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void onEvent(final MTimeSecondEvent event) {
         String fkaddress = SharedPreUtil.getSharedPreString(CommonData.SDATA_OBD_ADDRESS);
 
         if (CommonUtil.isNotNull(fkaddress) && BleManage.self().client().getConnectStatus(fkaddress) == STATUS_DEVICE_CONNECTED) {

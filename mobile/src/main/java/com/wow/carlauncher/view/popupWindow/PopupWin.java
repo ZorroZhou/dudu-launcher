@@ -131,8 +131,8 @@ public class PopupWin {
     }
 
 
-    @Subscribe
-    public void onEventMainThread(PEventFSRefresh event) {
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(PEventFSRefresh event) {
         Log.e(TAG, "onEventMainThread: " + event);
         if (SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_POPUP_FULL_SCREEN, true)) {
             winparams.flags = WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_FULLSCREEN;
@@ -386,7 +386,7 @@ public class PopupWin {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(final PMusicEventInfo event) {
+    public void onEvent(final PMusicEventInfo event) {
         if (CommonUtil.isNotNull(event.getTitle())) {
             ((TextView) musicView().findViewById(R.id.tv_title)).setText(event.getTitle());
         } else {
@@ -395,7 +395,7 @@ public class PopupWin {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(final PMusicEventProgress event) {
+    public void onEvent(final PMusicEventProgress event) {
         if (event.getTotalTime() > 0) {
             ProgressBar progressBar = ((ProgressBar) musicView().findViewById(R.id.pb_music));
             progressBar.setProgress(event.getCurrTime());
@@ -404,7 +404,7 @@ public class PopupWin {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(final PMusicEventState event) {
+    public void onEvent(final PMusicEventState event) {
         if (!event.isRun()) {
             ((ImageView) musicView().findViewById(R.id.iv_play)).setImageResource(R.mipmap.ic_play2);
         } else {
@@ -413,7 +413,7 @@ public class PopupWin {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(final PAmapEventState event) {
+    public void onEvent(final PAmapEventState event) {
         if (amapView != null) {
             LinearLayout popupcontroller = (LinearLayout) amapView.findViewById(R.id.ll_controller);
             RelativeLayout popupnavi = (RelativeLayout) amapView.findViewById(R.id.ll_navi);
@@ -430,7 +430,7 @@ public class PopupWin {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(final PAmapEventNavInfo event) {
+    public void onEvent(final PAmapEventNavInfo event) {
         if (amapView != null) {
             ImageView popupIcon = (ImageView) amapView.findViewById(R.id.iv_icon);
             TextView popupdis = (TextView) amapView.findViewById(R.id.tv_dis);

@@ -213,8 +213,8 @@ public class AMapCarPlugin extends ContextEx {
         lastHeartbeatTime = System.currentTimeMillis();
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(final MTimeSecondEvent event) {
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void onEvent(final MTimeSecondEvent event) {
         //3分钟没有收到心跳，则结束导航
         if (System.currentTimeMillis() - lastHeartbeatTime > 1000 * 60 * 3) {
             EventBus.getDefault().post(new PAmapEventState().setRunning(false));

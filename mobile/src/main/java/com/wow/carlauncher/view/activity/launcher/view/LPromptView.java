@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
+import com.wow.carlauncher.common.LunarUtil;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventConnect;
@@ -37,9 +38,12 @@ import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import static com.inuker.bluetooth.library.Constants.STATUS_DEVICE_CONNECTED;
+import static com.wow.carlauncher.common.CommonData.DAY_MILL;
+import static com.wow.carlauncher.common.CommonData.MINUTE_MILL;
 
 /**
  * Created by 10124 on 2018/4/22.
@@ -209,18 +213,25 @@ public class LPromptView extends BaseEBusView {
         return (Activity) getContext();
     }
 
+    private long cur_min = 0L;
+
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(final MTimeSecondEvent event) {
-        Date d = new Date();
-        String date = DateUtil.dateToString(d, "MM月dd日 " + DateUtil.getWeekOfDate(d) + " HH:mm");
-        if (date.startsWith("0")) {
-            date = date.substring(1);
+    public void onEvent(final MTimeSecondEvent event) {
+        long time = System.currentTimeMillis();
+        long time1 = time / MINUTE_MILL;
+        if (time1 != cur_min) {
+            cur_min = time1;
+            Date d = new Date();
+            String date = DateUtil.dateToString(d, "MM月dd日 " + DateUtil.getWeekOfDate(d) + " HH:mm");
+            if (date.startsWith("0")) {
+                date = date.substring(1);
+            }
+            this.tv_time.setText(date);
         }
-        this.tv_time.setText(date);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(final PFkEventConnect event) {
+    public void onEvent(final PFkEventConnect event) {
         if (event.isConnected()) {
             iv_fk.setVisibility(VISIBLE);
         } else {
@@ -229,12 +240,12 @@ public class LPromptView extends BaseEBusView {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(final PObdEventConnect event) {
+    public void onEvent(final PObdEventConnect event) {
         refreshObdState(event);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(final EventWifiState event) {
+    public void onEvent(final EventWifiState event) {
         if (event.isUsable()) {
             iv_wifi.setVisibility(VISIBLE);
         } else {
@@ -243,7 +254,7 @@ public class LPromptView extends BaseEBusView {
     }
 
     @Subscribe(threadMode = ThreadMode.ASYNC)
-    public void onEventMainThread(final PObdEventCarTp event) {
+    public void onEvent(final PObdEventCarTp event) {
         post(new Runnable() {
             @Override
             public void run() {

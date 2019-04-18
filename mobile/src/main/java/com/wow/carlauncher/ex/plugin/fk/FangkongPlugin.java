@@ -147,8 +147,8 @@ public class FangkongPlugin extends ContextEx {
         return fangkongProtocol.getModelName();
     }
 
-    @Subscribe(threadMode = ThreadMode.ASYNC)
-    public void onEventAsync(final MTimeSecondEvent event) {
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void onEvent(final MTimeSecondEvent event) {
         String fkaddress = SharedPreUtil.getSharedPreString(CommonData.SDATA_FANGKONG_ADDRESS);
         if (CommonUtil.isNotNull(fkaddress) && BleManage.self().client().getConnectStatus(fkaddress) == STATUS_DEVICE_CONNECTED) {
             postEvent(new PFkEventConnect().setConnected(true));

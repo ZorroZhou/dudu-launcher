@@ -8,7 +8,6 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -48,6 +47,7 @@ import static com.wow.carlauncher.common.CommonData.SDATA_DOCK2_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK3_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK4_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK5_CLASS;
+import static com.wow.carlauncher.common.CommonData.TAG;
 
 public class LauncherActivity extends Activity {
     public static LauncherActivity activity;
@@ -71,6 +71,7 @@ public class LauncherActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        long t1 = System.currentTimeMillis();
         //超级大坑,必去全局设置才能用
         int theme = SharedPreUtil.getSharedPreInteger(CommonData.SDATA_APP_THEME, R.style.AppThemeWhile);
         if (theme == R.style.AppThemeBlack || theme == R.style.AppThemeWhile) {
@@ -90,6 +91,8 @@ public class LauncherActivity extends Activity {
         initView(savedInstanceState);
 
         LauncherActivity.activity = this;
+
+        Log.e(TAG, "启动时间: " + (System.currentTimeMillis() - t1));
     }
 
     public void initView(Bundle savedInstanceState) {
@@ -97,8 +100,8 @@ public class LauncherActivity extends Activity {
         x.view().inject(this);
         EventBus.getDefault().register(this);
 
-        LPage1View lPage1View = new LPage1View(this,savedInstanceState);
-        LPage2View lPage2View = new LPage2View(this,savedInstanceState);
+        LPage1View lPage1View = new LPage1View(this, savedInstanceState);
+        LPage2View lPage2View = new LPage2View(this, savedInstanceState);
 
         myviews = new BaseView[]{lPage1View, lPage2View};
 
@@ -230,7 +233,7 @@ public class LauncherActivity extends Activity {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(PConsoleEventLightState event) {
+    public void onEvent(PConsoleEventLightState event) {
 //        if (event.isOpen()) {
 //            fl_bg.setBackgroundResource(R.mipmap.bg_l_midnight);
 //        } else {
@@ -243,8 +246,8 @@ public class LauncherActivity extends Activity {
 
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(MNewLocationEvent event) {
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void onEvent(MNewLocationEvent event) {
 
     }
 

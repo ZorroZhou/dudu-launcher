@@ -3,6 +3,10 @@ package com.wow.carlauncher.common;
 public class CommonData {
     public static final String TAG = "WOW_CAR";
 
+    public final static long MINUTE_MILL = 60 * 1000;
+    public final static long HOUR_MILL = 60 * MINUTE_MILL;
+    public final static long DAY_MILL = 24 * HOUR_MILL;
+
     public static final String[] POPUP_SIZE = {"小", "中", "大"};
 
     public static final String PACKAGE_NAME = "com.wow.carlauncher";

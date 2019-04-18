@@ -22,6 +22,7 @@ import com.wow.frame.util.SharedPreUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
@@ -126,8 +127,8 @@ public class AppMenuActivity extends BaseActivity implements AdapterView.OnItemC
         ToastManage.self().show("卸载成功");
     }
 
-    @Subscribe
-    public void onEventMainThread(final MAppInfoRefreshEvent event) {
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void onEvent(final MAppInfoRefreshEvent event) {
         loadData();
     }
 

@@ -59,12 +59,12 @@ public class LTaiyaView extends BaseEBusView {
 
     @Override
     protected void initView(Bundle savedInstanceState) {
-        onEventMainThread(ObdPlugin.self().getCurrentPObdEventCarTp());
+        onEvent(ObdPlugin.self().getCurrentPObdEventCarTp());
     }
 
     @SuppressLint("SetTextI18n")
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(final PObdEventConnect event) {
+    public void onEvent(final PObdEventConnect event) {
 //        boolean show = false;
 //        if (event.isConnected()) {
 //            if (ObdPlugin.self().supportTp()) {
@@ -80,7 +80,7 @@ public class LTaiyaView extends BaseEBusView {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(final PObdEventCarTp event) {
+    public void onEvent(final PObdEventCarTp event) {
         if (tv_lt != null && event.getlFTirePressure() != null) {
             tv_lt.setText(getContext().getString(R.string.launcher_tp, "左前", event.getlFTirePressure(), event.getlFTemp()));
         }

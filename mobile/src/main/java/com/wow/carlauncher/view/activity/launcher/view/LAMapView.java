@@ -21,7 +21,7 @@ import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventState;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapLukuangInfo;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapMuteStateInfo;
 import com.wow.carlauncher.ex.plugin.amapcar.model.Lukuang;
-import com.wow.carlauncher.view.base.BaseEBusView;
+import com.wow.carlauncher.view.base.BaseEXView;
 import com.wow.frame.util.AppUtil;
 import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.SharedPreUtil;
@@ -43,7 +43,7 @@ import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.ICONS;
  * Created by 10124 on 2018/4/20.
  */
 
-public class LAMapView extends BaseEBusView {
+public class LAMapView extends BaseEXView {
 
     public LAMapView(@NonNull Context context) {
         super(context);

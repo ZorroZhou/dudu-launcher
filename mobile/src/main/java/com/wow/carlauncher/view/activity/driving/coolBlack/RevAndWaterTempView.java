@@ -1,7 +1,6 @@
 package com.wow.carlauncher.view.activity.driving.coolBlack;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -9,7 +8,7 @@ import android.widget.TextView;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarInfo;
-import com.wow.carlauncher.view.base.BaseEBusView;
+import com.wow.carlauncher.view.base.BaseEXView;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -19,7 +18,7 @@ import org.xutils.view.annotation.ViewInject;
  * Created by 10124 on 2018/4/26.
  */
 
-public class RevAndWaterTempView extends BaseEBusView {
+public class RevAndWaterTempView extends BaseEXView {
     private final static int MAX_REV = 11000;
     private final static int MAX_WATER_TEMP = 130;
 

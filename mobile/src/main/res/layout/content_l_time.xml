@@ -5,7 +5,6 @@
     android:id="@+id/rl_base"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?l_item3"
     android:orientation="vertical"
     tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry">
 
@@ -23,6 +22,7 @@
             app:layout_heightPercent="12%h">
 
             <TextView
+                android:id="@+id/tv_text1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="5dp"
@@ -30,7 +30,6 @@
                 android:includeFontPadding="false"
                 android:lines="1"
                 android:text="时间"
-                android:textColor="?l_text1"
                 app:layout_textSizePercent="50%h" />
         </com.zhy.android.percent.support.PercentFrameLayout>
 
@@ -61,10 +60,8 @@
                         android:id="@+id/tv_shijian"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="?cell_bg"
                         android:gravity="center"
                         android:text="09:99"
-                        android:textColor="?l_text2"
                         app:layout_textSizePercent="70%h" />
                 </com.zhy.android.percent.support.PercentFrameLayout>
             </com.meetsl.scardview.SCardView>
@@ -83,7 +80,6 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="星期一"
-                    android:textColor="?l_text2"
                     app:layout_textSizePercent="10%h" />
 
                 <TextView
@@ -93,7 +89,6 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="2019年1月4日"
-                    android:textColor="?l_text2"
                     app:layout_textSizePercent="12%h" />
 
                 <TextView
@@ -103,7 +98,6 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="农历一月初四"
-                    android:textColor="?l_text2"
                     app:layout_marginBottomPercent="40%h"
                     app:layout_textSizePercent="8%h" />
             </com.zhy.android.percent.support.PercentLinearLayout>

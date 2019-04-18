@@ -30,10 +30,14 @@ public abstract class BaseView extends FrameLayout {
         this.addView(amapView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         x.view().inject(this);
         initView();
+        initViewEnd();
     }
 
     protected abstract int getContent();
 
     protected void initView() {
+    }
+
+    protected void initViewEnd() {
     }
 }

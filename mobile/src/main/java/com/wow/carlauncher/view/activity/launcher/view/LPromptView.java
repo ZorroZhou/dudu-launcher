@@ -3,7 +3,6 @@ package com.wow.carlauncher.view.activity.launcher.view;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,6 +14,7 @@ import android.widget.TextView;
 import com.wow.carlauncher.CarLauncherApplication;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
+import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventConnect;
@@ -23,9 +23,8 @@ import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarTp;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventConnect;
 import com.wow.carlauncher.view.activity.AppMenuActivity;
 import com.wow.carlauncher.view.activity.CarInfoActivity;
-import com.wow.carlauncher.view.activity.launcher.LauncherActivity;
 import com.wow.carlauncher.view.activity.set.SetActivity;
-import com.wow.carlauncher.view.base.BaseEBusView;
+import com.wow.carlauncher.view.base.BaseEXView;
 import com.wow.carlauncher.view.event.EventWifiState;
 import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.DateUtil;
@@ -42,12 +41,14 @@ import java.util.Date;
 
 import static com.inuker.bluetooth.library.Constants.STATUS_DEVICE_CONNECTED;
 import static com.wow.carlauncher.common.CommonData.MINUTE_MILL;
+import static com.wow.carlauncher.ex.manage.ThemeManage.BLACK;
+import static com.wow.carlauncher.ex.manage.ThemeManage.WHITE;
 
 /**
  * Created by 10124 on 2018/4/22.
  */
 
-public class LPromptView extends BaseEBusView {
+public class LPromptView extends BaseEXView {
 
 
     public LPromptView(@NonNull Context context) {
@@ -57,6 +58,7 @@ public class LPromptView extends BaseEBusView {
     public LPromptView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
+
     @Override
     protected int getContent() {
         return R.layout.content_l_prompt;
@@ -98,12 +100,12 @@ public class LPromptView extends BaseEBusView {
             }
             case R.id.tv_time: {
                 CarLauncherApplication.stime = System.currentTimeMillis();
-                if (SharedPreUtil.getSharedPreInteger(CommonData.SDATA_APP_THEME, R.style.AppThemeWhile) == R.style.AppThemeWhile) {
-                    SharedPreUtil.saveSharedPreInteger(CommonData.SDATA_APP_THEME, R.style.AppThemeBlack);
-                    LauncherActivity.activity.recreate();
+                if (SharedPreUtil.getSharedPreInteger(CommonData.SDATA_APP_THEME, WHITE) == WHITE) {
+                    SharedPreUtil.saveSharedPreInteger(CommonData.SDATA_APP_THEME, BLACK);
+                    ThemeManage.self().setThemeMode(BLACK);
                 } else {
-                    SharedPreUtil.saveSharedPreInteger(CommonData.SDATA_APP_THEME, R.style.AppThemeWhile);
-                    LauncherActivity.activity.recreate();
+                    SharedPreUtil.saveSharedPreInteger(CommonData.SDATA_APP_THEME, WHITE);
+                    ThemeManage.self().setThemeMode(WHITE);
                 }
 //                String packname = SharedPreUtil.getSharedPreString(SDATA_TIME_PLUGIN_OPEN_APP);
 //                if (CommonUtil.isNotNull(packname)) {

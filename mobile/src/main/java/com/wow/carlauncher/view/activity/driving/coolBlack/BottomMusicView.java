@@ -13,7 +13,7 @@ import com.wow.carlauncher.R;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventInfo;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventState;
-import com.wow.carlauncher.view.base.BaseEBusView;
+import com.wow.carlauncher.view.base.BaseEXView;
 import com.wow.frame.util.CommonUtil;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -27,7 +27,7 @@ import static com.wow.carlauncher.common.CommonData.TAG;
  * Created by 10124 on 2018/5/11.
  */
 
-public class BottomMusicView extends BaseEBusView {
+public class BottomMusicView extends BaseEXView {
     public BottomMusicView(@NonNull Context context) {
         super(context);
     }

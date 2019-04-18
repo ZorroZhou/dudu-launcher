@@ -2,7 +2,6 @@ package com.wow.carlauncher.view.activity.launcher.view;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -19,7 +18,7 @@ import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventInfo;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventProgress;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventState;
-import com.wow.carlauncher.view.base.BaseEBusView;
+import com.wow.carlauncher.view.base.BaseEXView;
 import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.SharedPreUtil;
 
@@ -35,7 +34,7 @@ import static com.wow.carlauncher.common.CommonData.TAG;
  * Created by 10124 on 2018/4/20.
  */
 
-public class LMusicView extends BaseEBusView {
+public class LMusicView extends BaseEXView {
 
     public LMusicView(@NonNull Context context) {
         super(context);

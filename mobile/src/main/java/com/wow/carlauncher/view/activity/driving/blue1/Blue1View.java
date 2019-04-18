@@ -6,13 +6,13 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 
 import com.wow.carlauncher.R;
-import com.wow.carlauncher.view.base.BaseEBusView;
+import com.wow.carlauncher.view.base.BaseEXView;
 
 /**
  * Created by 10124 on 2018/5/11.
  */
 
-public class Blue1View extends BaseEBusView {
+public class Blue1View extends BaseEXView {
     public Blue1View(@NonNull Context context) {
         super(context);
     }

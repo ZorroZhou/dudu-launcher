@@ -1,7 +1,6 @@
 package com.wow.carlauncher.view.activity.launcher.view;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -19,7 +18,7 @@ import com.wow.carlauncher.repertory.amapWebservice.WebService;
 import com.wow.carlauncher.repertory.amapWebservice.res.WeatherRes;
 import com.wow.carlauncher.view.activity.launcher.event.LEventCityRefresh;
 import com.wow.carlauncher.view.base.BaseDialog2;
-import com.wow.carlauncher.view.base.BaseEBusView;
+import com.wow.carlauncher.view.base.BaseEXView;
 import com.wow.carlauncher.view.dialog.CityDialog;
 import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.SharedPreUtil;
@@ -35,7 +34,7 @@ import org.xutils.x;
  * Created by 10124 on 2018/4/20.
  */
 
-public class LWeatherView extends BaseEBusView {
+public class LWeatherView extends BaseEXView {
 
     public LWeatherView(@NonNull Context context) {
         super(context);

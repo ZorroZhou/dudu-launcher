@@ -1,7 +1,6 @@
 package com.wow.carlauncher.view.activity.driving.coolBlack;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -10,7 +9,7 @@ import android.widget.TextView;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarTp;
-import com.wow.carlauncher.view.base.BaseEBusView;
+import com.wow.carlauncher.view.base.BaseEXView;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -20,7 +19,7 @@ import org.xutils.view.annotation.ViewInject;
  * Created by 10124 on 2018/5/11.
  */
 
-public class BottomTpView extends BaseEBusView {
+public class BottomTpView extends BaseEXView {
     public BottomTpView(@NonNull Context context) {
         super(context);
     }

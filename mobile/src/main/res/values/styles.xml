@@ -35,7 +35,7 @@
         <item name="dh_j">@mipmap/n_dh_j</item>
         <item name="dh_quan">@mipmap/n_dh_quan</item>
 
-        <item name="cell_bg">@drawable/n_ty_bg</item>
+        <item name="cell_bg">@drawable/n_cell_bg</item>
         <item name="prompt_bg">@drawable/n_dock_bg</item>
 
 
@@ -70,7 +70,7 @@
         <item name="dh_j">@mipmap/n_dh_j_b</item>
         <item name="dh_quan">@mipmap/n_dh_quan_b</item>
 
-        <item name="cell_bg">@drawable/n_ty_bg_b</item>
+        <item name="cell_bg">@drawable/n_cell_bg_b</item>
         <item name="prompt_bg">#2a2e39</item>
 
         <item name="ic_play">@mipmap/ic_play_b</item>

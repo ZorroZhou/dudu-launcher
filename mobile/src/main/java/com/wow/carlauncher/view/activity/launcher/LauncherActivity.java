@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.wow.carlauncher.CarLauncherApplication;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
+import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.location.event.MNewLocationEvent;
 import com.wow.carlauncher.ex.plugin.console.event.PConsoleEventLightState;
 import com.wow.carlauncher.view.activity.AppSelectActivity;
@@ -50,15 +51,14 @@ import static com.wow.carlauncher.common.CommonData.SDATA_DOCK3_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK4_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK5_CLASS;
 import static com.wow.carlauncher.common.CommonData.TAG;
+import static com.wow.carlauncher.ex.manage.ThemeManage.BLACK;
+import static com.wow.carlauncher.ex.manage.ThemeManage.WHITE;
 
 public class LauncherActivity extends Activity {
     public static LauncherActivity activity;
 
     @ViewInject(R.id.ll_dock)
     private LDockView ll_dock;
-
-    @ViewInject(R.id.fl_bg)
-    private FrameLayout fl_bg;
 
     @ViewInject(R.id.viewPager)
     private ViewPager viewPager;
@@ -72,12 +72,9 @@ public class LauncherActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //超级大坑,必去全局设置才能用
-        int theme = SharedPreUtil.getSharedPreInteger(CommonData.SDATA_APP_THEME, R.style.AppThemeWhile);
-        if (theme == R.style.AppThemeBlack || theme == R.style.AppThemeWhile) {
-            getApplicationContext().setTheme(theme);
-            setTheme(theme);
-        } else {
-            SharedPreUtil.saveSharedPreInteger(CommonData.SDATA_APP_THEME, R.style.AppThemeBlack);
+        int theme = SharedPreUtil.getSharedPreInteger(CommonData.SDATA_APP_THEME, WHITE);
+        if (theme == WHITE || theme == BLACK) {
+            ThemeManage.self().setThemeMode(theme);
         }
 
 

@@ -1,16 +1,17 @@
 package com.wow.carlauncher.view.activity.launcher.view;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.LunarUtil;
+import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
-import com.wow.carlauncher.view.base.BaseEBusView;
+import com.wow.carlauncher.view.base.BaseEXView;
 import com.wow.frame.util.DateUtil;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -27,7 +28,7 @@ import static com.wow.carlauncher.common.CommonData.MINUTE_MILL;
  * Created by 10124 on 2018/4/20.
  */
 
-public class LTimeView extends BaseEBusView {
+public class LTimeView extends BaseEXView {
 
 
     public LTimeView(@NonNull Context context) {
@@ -44,9 +45,29 @@ public class LTimeView extends BaseEBusView {
     }
 
     @Override
+    public void onThemeChanged(ThemeManage manage) {
+        Context context = getContext();
+
+        rl_base.setBackgroundResource(manage.getCurrentThemeRes(context, R.drawable.n_l_item3_bg));
+        tv_text1.setTextColor(manage.getCurrentThemeColor(context, R.color.l_text1));
+        tv_shijian.setBackgroundResource(manage.getCurrentThemeRes(context, R.drawable.n_cell_bg));
+        tv_shijian.setTextColor(manage.getCurrentThemeColor(context, R.color.l_text2));
+        tv_week.setTextColor(manage.getCurrentThemeColor(context, R.color.l_text2));
+        tv_day.setTextColor(manage.getCurrentThemeColor(context, R.color.l_text2));
+        tv_lunar.setTextColor(manage.getCurrentThemeColor(context, R.color.l_text2));
+    }
+
+    @Override
     protected void initView() {
         onEvent(null);
     }
+
+    @ViewInject(R.id.rl_base)
+    private View rl_base;
+
+    @ViewInject(R.id.tv_text1)
+    private TextView tv_text1;
+
 
     @ViewInject(R.id.tv_shijian)
     private TextView tv_shijian;
@@ -89,6 +110,5 @@ public class LTimeView extends BaseEBusView {
                 }
             }
         }
-
     }
 }

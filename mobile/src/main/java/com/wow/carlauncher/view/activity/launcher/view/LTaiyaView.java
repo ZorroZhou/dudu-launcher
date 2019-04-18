@@ -2,7 +2,6 @@ package com.wow.carlauncher.view.activity.launcher.view;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -13,7 +12,7 @@ import com.wow.carlauncher.R;
 import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarTp;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventConnect;
-import com.wow.carlauncher.view.base.BaseEBusView;
+import com.wow.carlauncher.view.base.BaseEXView;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -23,7 +22,7 @@ import org.xutils.view.annotation.ViewInject;
  * Created by 10124 on 2018/4/20.
  */
 
-public class LTaiyaView extends BaseEBusView {
+public class LTaiyaView extends BaseEXView {
 
     public LTaiyaView(@NonNull Context context) {
         super(context);

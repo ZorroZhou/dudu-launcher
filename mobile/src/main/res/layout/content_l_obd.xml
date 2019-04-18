@@ -2,9 +2,9 @@
 <com.zhy.android.percent.support.PercentFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fl_base"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?l_item2"
     android:orientation="vertical"
     tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry">
 
@@ -23,6 +23,7 @@
             app:layout_heightPercent="12%h">
 
             <TextView
+                android:id="@+id/tv_text1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="5dp"
@@ -30,7 +31,6 @@
                 android:includeFontPadding="false"
                 android:lines="1"
                 android:text="OBD车况"
-                android:textColor="?l_text1"
                 app:layout_textSizePercent="50%h" />
         </com.zhy.android.percent.support.PercentFrameLayout>
 
@@ -55,9 +55,9 @@
                 app:layout_heightPercent="20%h">
 
                 <com.zhy.android.percent.support.PercentLinearLayout
+                    android:id="@+id/ll_cell1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="?cell_bg"
                     android:orientation="vertical"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp">
@@ -69,13 +69,13 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/tv_text21"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center_vertical|left"
                             android:lines="1"
                             android:text="转速:"
-                            android:textColor="?l_text2"
                             app:layout_textSizePercent="50%h" />
 
                         <TextView
@@ -86,7 +86,6 @@
                             android:gravity="center_vertical|right"
                             android:lines="1"
                             android:text="1000/M"
-                            android:textColor="?l_text2"
                             app:layout_textSizePercent="50%h" />
                     </com.zhy.android.percent.support.PercentLinearLayout>
 
@@ -118,9 +117,9 @@
                 app:layout_heightPercent="20%h">
 
                 <com.zhy.android.percent.support.PercentLinearLayout
+                    android:id="@+id/ll_cell2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="?cell_bg"
                     android:orientation="vertical"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp">
@@ -132,13 +131,13 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/tv_text22"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center_vertical|left"
                             android:lines="1"
                             android:text="速度:"
-                            android:textColor="?l_text2"
                             app:layout_textSizePercent="50%h" />
 
                         <TextView
@@ -149,7 +148,6 @@
                             android:gravity="center_vertical|right"
                             android:lines="1"
                             android:text="80KM/H"
-                            android:textColor="?l_text2"
                             app:layout_textSizePercent="50%h" />
                     </com.zhy.android.percent.support.PercentLinearLayout>
 
@@ -181,9 +179,9 @@
                 app:layout_heightPercent="20%h">
 
                 <com.zhy.android.percent.support.PercentLinearLayout
+                    android:id="@+id/ll_cell3"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="?cell_bg"
                     android:orientation="vertical"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp">
@@ -195,13 +193,13 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/tv_text23"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center_vertical|left"
                             android:lines="1"
                             android:text="水温:"
-                            android:textColor="?l_text2"
                             app:layout_textSizePercent="50%h" />
 
                         <TextView
@@ -212,7 +210,6 @@
                             android:gravity="center_vertical|right"
                             android:lines="1"
                             android:text="100°"
-                            android:textColor="?l_text2"
                             app:layout_textSizePercent="50%h" />
                     </com.zhy.android.percent.support.PercentLinearLayout>
 
@@ -244,9 +241,9 @@
                 app:layout_heightPercent="20%h">
 
                 <com.zhy.android.percent.support.PercentLinearLayout
+                    android:id="@+id/ll_cell4"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="?cell_bg"
                     android:orientation="vertical"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp">
@@ -258,13 +255,13 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/tv_text24"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center_vertical|left"
                             android:lines="1"
                             android:text="剩余油量:"
-                            android:textColor="?l_text2"
                             app:layout_textSizePercent="50%h" />
 
                         <TextView
@@ -275,7 +272,6 @@
                             android:gravity="center_vertical|right"
                             android:lines="1"
                             android:text="50%"
-                            android:textColor="?l_text2"
                             app:layout_textSizePercent="50%h" />
                     </com.zhy.android.percent.support.PercentLinearLayout>
 

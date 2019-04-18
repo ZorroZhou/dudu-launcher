@@ -6,6 +6,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 
+import com.wow.carlauncher.ex.manage.ThemeManage;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
@@ -15,12 +17,12 @@ import java.lang.reflect.Method;
  * Created by 10124 on 2018/4/22.
  */
 
-public abstract class BaseEBusView extends BaseView {
-    public BaseEBusView(@NonNull Context context) {
+public abstract class BaseEXView extends BaseView implements ThemeManage.OnThemeChangeListener {
+    public BaseEXView(@NonNull Context context) {
         super(context);
     }
 
-    public BaseEBusView(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public BaseEXView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
@@ -41,6 +43,8 @@ public abstract class BaseEBusView extends BaseView {
         if (have) {
             EventBus.getDefault().register(this);
         }
+
+        ThemeManage.self().registerThemeChangeListener(this);
     }
 
     @Override
@@ -49,5 +53,16 @@ public abstract class BaseEBusView extends BaseView {
         if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);
         }
+        ThemeManage.self().unregisterThemeChangeListener(this);
+    }
+
+    @Override
+    public void onThemeChanged(ThemeManage manage) {
+
+    }
+
+    @Override
+    protected void initViewEnd() {
+        onThemeChanged(ThemeManage.self());
     }
 }

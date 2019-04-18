@@ -10,7 +10,6 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
@@ -19,16 +18,14 @@ import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.view.activity.AppSelectActivity;
 import com.wow.carlauncher.view.activity.launcher.event.LauncherDockLabelShowChangeEvent;
-import com.wow.carlauncher.view.base.BaseEBusView;
+import com.wow.carlauncher.view.base.BaseEXView;
 import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.SharedPreUtil;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
-import org.xutils.x;
 
 import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_APP_TO_DOCK1;
 import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_APP_TO_DOCK2;
@@ -44,7 +41,7 @@ import static com.wow.carlauncher.common.CommonData.TAG;
  * Created by 10124 on 2018/4/22.
  */
 
-public class LDockView extends BaseEBusView {
+public class LDockView extends BaseEXView {
     public LDockView(@NonNull Context context) {
         super(context);
     }

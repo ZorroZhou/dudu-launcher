@@ -5,13 +5,13 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 
 import com.wow.carlauncher.R;
-import com.wow.carlauncher.view.base.BaseEBusView;
+import com.wow.carlauncher.view.base.BaseEXView;
 
 /**
  * Created by 10124 on 2018/4/26.
  */
 
-public class SpeedView extends BaseEBusView {
+public class SpeedView extends BaseEXView {
     private final static int MAX_REV = 11000;
     private final static int MAX_WATER_TEMP = 130;
 

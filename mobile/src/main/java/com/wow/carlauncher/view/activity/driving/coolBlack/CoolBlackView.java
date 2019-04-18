@@ -13,7 +13,7 @@ import com.wow.carlauncher.R;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventNavInfo;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventState;
-import com.wow.carlauncher.view.base.BaseEBusView;
+import com.wow.carlauncher.view.base.BaseEXView;
 import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.DateUtil;
 
@@ -30,7 +30,7 @@ import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.ICONS;
  * Created by 10124 on 2018/5/11.
  */
 
-public class CoolBlackView extends BaseEBusView {
+public class CoolBlackView extends BaseEXView {
     public CoolBlackView(@NonNull Context context) {
         super(context);
     }

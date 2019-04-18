@@ -1,6 +1,6 @@
 package com.wow.musicapi.provider.xiami;
 
-import com.alibaba.fastjson.annotation.JSONField;
+import com.google.gson.annotations.SerializedName;
 import com.wow.musicapi.api.MusicProvider;
 import com.wow.musicapi.model.Album;
 import com.wow.musicapi.model.Artist;
@@ -13,19 +13,19 @@ import java.util.List;
 
 @SuppressWarnings("SpellCheckingInspection")
 public class XiamiAlbum extends BaseBean implements Album {
-    @JSONField(name = "artist_name")
+    @SerializedName("artist_name")
     public String artistName;
 
-    @JSONField(name = "artist_id")
+    @SerializedName("artist_id")
     public long artistId;
 
-    @JSONField(name = "album_id")
+    @SerializedName("album_id")
     public String albumId;
 
-    @JSONField(name = "album_name")
+    @SerializedName("album_name")
     public String albumName;
 
-    @JSONField(name = "songs")
+    @SerializedName("songs")
     public List<XiamiSong> songs;
 
     @Override

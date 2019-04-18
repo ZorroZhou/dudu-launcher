@@ -1,6 +1,6 @@
 package com.wow.musicapi.model;
 
-import com.alibaba.fastjson.JSONObject;
+import com.wow.frame.SFrame;
 
 import java.io.Serializable;
 
@@ -10,6 +10,6 @@ import java.io.Serializable;
 public abstract class BaseBean implements Cloneable, Serializable {
     @Override
     public String toString() {
-        return JSONObject.toJSONString(this);
+        return SFrame.getGson().toJson(this);
     }
 }

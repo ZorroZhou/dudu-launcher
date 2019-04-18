@@ -1,12 +1,14 @@
 package com.wow.musicapi.provider.xiami;
 
-import com.alibaba.fastjson.JSONObject;
+import com.google.gson.reflect.TypeToken;
+import com.wow.frame.SFrame;
 import com.wow.musicapi.api.BaseRequest;
 import com.wow.musicapi.config.Constants;
 import com.wow.musicapi.model.Song;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.HttpUrl;
 import okhttp3.Request;
@@ -47,9 +49,10 @@ public class XiamiSearchMusicRequest extends BaseRequest<List<? extends Song>> {
 
     protected List<XiamiSong> parseResult(Response response) throws IOException {
         String data = response.body().string();
-        JSONObject json = JSONObject.parseObject(data);
-        List<XiamiSong> list = json.getJSONObject("data").getJSONArray("songs")
-                .toJavaList(XiamiSong.class);
+        Map json = SFrame.getGson().fromJson(data, Map.class);
+
+        List<XiamiSong> list = SFrame.getGson().fromJson(SFrame.getGson().toJson(json.get("data")), new TypeToken<List<XiamiSong>>() {
+        }.getType());
         return list;
     }
 }

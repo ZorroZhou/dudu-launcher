@@ -8,7 +8,6 @@ android {
         targetSdkVersion 28
         versionCode 6
         versionName "1.100"
-        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -48,10 +47,8 @@ dependencies {
     api project(':acommon')
     api project(':musicapi')
 
-    implementation 'com.android.support:multidex:1.0.3'
     implementation 'io.github.meetsl:SCardView:1.1'
     implementation 'com.google.code.gson:gson:2.8.5'
-//    implementation 'com.google.guava:guava:27.0.1-android'
     implementation 'org.xutils:xutils:3.5.0'
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support:design:28.0.0'

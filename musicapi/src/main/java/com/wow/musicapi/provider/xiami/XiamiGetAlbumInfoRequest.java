@@ -1,9 +1,11 @@
 package com.wow.musicapi.provider.xiami;
 
-import com.alibaba.fastjson.JSONObject;
+import com.wow.frame.SFrame;
+import com.wow.frame.repertory.dbTool.beanTool.BeanUtil;
 import com.wow.musicapi.api.BaseRequest;
 
 import java.io.IOException;
+import java.util.Map;
 
 import okhttp3.HttpUrl;
 import okhttp3.Request;
@@ -35,8 +37,8 @@ public class XiamiGetAlbumInfoRequest extends BaseRequest<XiamiAlbum> {
 
     protected XiamiAlbum parseResult(Response response) throws IOException {
         String data = response.body().string();
-        JSONObject json = JSONObject.parseObject(data);
-        XiamiAlbum album = json.getJSONObject("data").toJavaObject(XiamiAlbum.class);
+        Map json = SFrame.getGson().fromJson(data, Map.class);
+        XiamiAlbum album = SFrame.getGson().fromJson(SFrame.getGson().toJson(json.get("data")), XiamiAlbum.class);
         return album;
     }
 }

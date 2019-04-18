@@ -19,7 +19,7 @@
             android:layout_height="match_parent"
             android:contentDescription="@string/app_name"
             android:scaleType="fitXY"
-            android:src="@mipmap/n_dh_moren"
+            android:src="?dh_moren"
             app:radius="10dp" />
 
         <com.zhy.android.percent.support.PercentRelativeLayout

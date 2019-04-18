@@ -26,6 +26,7 @@
         <item name="l_item3">@drawable/n_l_item3_bg</item>
         <item name="desk_bg">@drawable/n_desk_bg</item>
 
+        <item name="dh_moren">@mipmap/n_dh_moren</item>
         <item name="dh_dh">@mipmap/n_dh_dh</item>
         <item name="dh2_bg">@drawable/n_dh2_bg</item>
         <item name="dh_gs">@mipmap/n_dh_gs</item>
@@ -60,6 +61,7 @@
         <item name="l_item3">@drawable/n_l_item3_bg_b</item>
         <item name="desk_bg">@drawable/n_desk_bg_b</item>
 
+        <item name="dh_moren">@mipmap/n_dh_moren_b</item>
         <item name="dh_dh">@mipmap/n_dh_dh_b</item>
         <item name="dh2_bg">@drawable/n_dh2_bg_b</item>
         <item name="dh_gs">@mipmap/n_dh_gs_b</item>

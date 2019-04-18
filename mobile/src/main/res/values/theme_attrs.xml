@@ -10,6 +10,7 @@
     <attr name="l_item3" format="reference" />
     <attr name="desk_bg" format="reference" />
 
+    <attr name="dh_moren" format="reference" />
     <attr name="dh_dh" format="reference" />
     <attr name="dh2_bg" format="reference" />
     <attr name="dh_gs" format="reference" />

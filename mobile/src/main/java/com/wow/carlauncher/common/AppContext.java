@@ -14,6 +14,7 @@ import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.wow.carlauncher.CarLauncherApplication;
 import com.wow.carlauncher.ex.manage.MusicCoverManage;
+import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
 import com.wow.carlauncher.ex.manage.location.LocationManage;
@@ -75,17 +76,22 @@ public class AppContext implements SAppDeclare, SDatabaseDeclare {
     public void init(CarLauncherApplication app) {
         this.application = app;
         SFrame.init(this);
+        //图片加载工具
         initImage();
         //通知工具
         ToastManage.self().init(app);
+        //时间管理器
         TimeManage.self().init(app);
         //蓝牙客户端
         BleManage.self().init(app);
         //定位管理器
         LocationManage.self().init(app);
-
+        //封面加载器
         MusicCoverManage.self().init();
-
+        //主题管理器
+        ThemeManage.self().init(app);
+        //app信息管理器
+        AppInfoManage.self().init(app);
         //插件相关
         //高德地图插件
         AMapCarPlugin.self().init(app);
@@ -95,14 +101,12 @@ public class AppContext implements SAppDeclare, SDatabaseDeclare {
         FangkongPlugin.self().init(app);
         //OBD插件
         ObdPlugin.self().init(app);
-
-        //app信息管理器
-        AppInfoManage.self().init(app);
         //车机控制插件
         ConsolePlugin.self().init(app);
+        //悬浮窗
         //弹出敞口
         PopupWin.self().init(app);
-
+        //控制窗口
         ConsoleWin.self().init(app);
 
         int size = SharedPreUtil.getSharedPreInteger(CommonData.SDATA_POPUP_SIZE, 1);

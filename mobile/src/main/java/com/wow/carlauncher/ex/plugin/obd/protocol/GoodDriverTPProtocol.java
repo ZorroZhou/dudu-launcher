@@ -35,9 +35,7 @@ public class GoodDriverTPProtocol extends ObdProtocol {
 
     public GoodDriverTPProtocol(Context context, String address, final ObdProtocolListener listener) {
         super(context, address, listener);
-        //单独用来处理粘包的,太扯淡了
     }
-
 
     private long mark = 0L;
     private int infoMark = 10;

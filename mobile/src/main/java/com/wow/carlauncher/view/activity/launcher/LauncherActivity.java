@@ -54,7 +54,7 @@ import static com.wow.carlauncher.common.CommonData.TAG;
 import static com.wow.carlauncher.ex.manage.ThemeManage.BLACK;
 import static com.wow.carlauncher.ex.manage.ThemeManage.WHITE;
 
-public class LauncherActivity extends Activity {
+public class LauncherActivity extends Activity implements ThemeManage.OnThemeChangeListener {
     public static LauncherActivity activity;
 
     @ViewInject(R.id.ll_dock)
@@ -65,6 +65,12 @@ public class LauncherActivity extends Activity {
 
     @ViewInject(R.id.postion)
     private LinearLayout postion;
+
+    @ViewInject(R.id.fl_bg)
+    private View fl_bg;
+
+    @ViewInject(R.id.line1)
+    private View line1;
 
     private boolean night = false;
 
@@ -77,19 +83,20 @@ public class LauncherActivity extends Activity {
             ThemeManage.self().setThemeMode(theme);
         }
 
-
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
         registerReceiver(homeReceiver, intentFilter);
 
-        initView(savedInstanceState);
+        initView();
 
+        ThemeManage.self().registerThemeChangeListener(this);
+        onThemeChanged(ThemeManage.self());
         LauncherActivity.activity = this;
     }
 
-    public void initView(Bundle savedInstanceState) {
+    public void initView() {
         setContentView(R.layout.activity_lanncher);
         x.view().inject(this);
         EventBus.getDefault().register(this);
@@ -137,6 +144,13 @@ public class LauncherActivity extends Activity {
 
             }
         });
+    }
+
+    @Override
+    public void onThemeChanged(ThemeManage manage) {
+        Context context = getApplicationContext();
+        fl_bg.setBackgroundResource(manage.getCurrentThemeRes(context, R.drawable.n_desk_bg));
+        line1.setBackgroundResource(manage.getCurrentThemeRes(context, R.color.line));
     }
 
     @Event(value = {R.id.ll_dock1, R.id.ll_dock2, R.id.ll_dock3, R.id.ll_dock4}, type = View.OnLongClickListener.class)
@@ -211,7 +225,6 @@ public class LauncherActivity extends Activity {
     protected void onResume() {
         super.onResume();
         Toast.makeText(this, "启动时间: " + (System.currentTimeMillis() - CarLauncherApplication.stime), Toast.LENGTH_LONG).show();
-        System.out.println("1111111111111111111112");
     }
 
     @Override
@@ -219,8 +232,8 @@ public class LauncherActivity extends Activity {
         super.onDestroy();
         unregisterReceiver(homeReceiver);
         EventBus.getDefault().unregister(this);
+        ThemeManage.self().unregisterThemeChangeListener(this);
         LauncherActivity.activity = null;
-        System.out.println("onDestroy");
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

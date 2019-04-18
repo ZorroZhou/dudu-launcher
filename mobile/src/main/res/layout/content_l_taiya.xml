@@ -5,7 +5,6 @@
     android:id="@+id/rl_base"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?l_item1"
     tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry">
 
     <com.zhy.android.percent.support.PercentLinearLayout
@@ -24,6 +23,7 @@
             app:layout_heightPercent="12%h">
 
             <TextView
+                android:id="@+id/tv_text1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="5dp"
@@ -31,7 +31,6 @@
                 android:includeFontPadding="false"
                 android:lines="1"
                 android:text="胎压"
-                android:textColor="?l_text1"
                 app:layout_textSizePercent="50%h" />
         </com.zhy.android.percent.support.PercentFrameLayout>
 
@@ -187,6 +186,7 @@
                 </com.meetsl.scardview.SCardView>
 
                 <ImageView
+                    android:id="@+id/iv_img"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_centerInParent="true"

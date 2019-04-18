@@ -64,6 +64,16 @@ public class LPromptView extends BaseEXView {
         return R.layout.content_l_prompt;
     }
 
+    @Override
+    public void onThemeChanged(ThemeManage manage) {
+        Context context = getContext();
+        fl_base.setBackgroundResource(manage.getCurrentThemeRes(context, R.drawable.n_dock_bg));
+        tv_time.setTextColor(manage.getCurrentThemeColor(context, R.color.l_text1));
+    }
+
+    @ViewInject(R.id.fl_base)
+    private View fl_base;
+
     @ViewInject(R.id.tv_time)
     private TextView tv_time;
 

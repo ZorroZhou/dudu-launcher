@@ -45,4 +45,7 @@
 
     <color name="l_text2">#697185</color>
     <color name="l_text2_b">#fff</color>
+
+    <color name="line">#c6d2d9</color>
+    <color name="line_b">#666f80</color>
 </resources>

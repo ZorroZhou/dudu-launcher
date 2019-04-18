@@ -62,7 +62,7 @@ public abstract class BaseEXView extends BaseView implements ThemeManage.OnTheme
     }
 
     @Override
-    protected void initViewEnd() {
+    protected final void initViewEnd() {
         onThemeChanged(ThemeManage.self());
     }
 }

@@ -6,9 +6,11 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarTp;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventConnect;
@@ -37,6 +39,33 @@ public class LTaiyaView extends BaseEXView {
         return R.layout.content_l_taiya;
     }
 
+    @Override
+    public void onThemeChanged(ThemeManage manage) {
+        Context context = getContext();
+        rl_base.setBackgroundResource(manage.getCurrentThemeRes(context, R.drawable.n_l_item1_bg));
+        tv_text1.setTextColor(manage.getCurrentThemeColor(context, R.color.l_text1));
+
+        manage.setViewsBackround(this, new int[]{
+                R.id.tv_lt,
+                R.id.tv_rt,
+                R.id.tv_lb,
+                R.id.tv_rb
+        }, R.drawable.n_cell_bg);
+
+
+        manage.setTextViewsColor(this, new int[]{
+                R.id.tv_lt,
+                R.id.tv_rt,
+                R.id.tv_lb,
+                R.id.tv_rb
+        }, R.color.l_text2);
+
+        //iv_img.setImageResource(manage.getCurrentThemeRes(context, R.mipmap.n_car_b));
+    }
+
+    @ViewInject(R.id.tv_text1)
+    private TextView tv_text1;
+
     @ViewInject(R.id.tv_lt)
     private TextView tv_lt;
 
@@ -51,6 +80,9 @@ public class LTaiyaView extends BaseEXView {
 
     @ViewInject(R.id.rl_base)
     private View rl_base;
+
+    @ViewInject(R.id.iv_img)
+    private ImageView iv_img;
 
     @Override
     protected void initView() {

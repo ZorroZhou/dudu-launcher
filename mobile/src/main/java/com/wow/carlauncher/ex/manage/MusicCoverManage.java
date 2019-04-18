@@ -4,9 +4,11 @@ import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
+import android.util.Log;
 
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.wow.carlauncher.common.CommonData;
 import com.wow.musicapi.api.MusicApi;
 import com.wow.musicapi.api.MusicApiFactory;
 import com.wow.musicapi.api.MusicProvider;
@@ -48,6 +50,7 @@ public class MusicCoverManage {
         String name = nameGenerator.generate(title + "-" + zuojia + "-" + musicProvider) + ".temp";
         final File cover = new File(Environment.getExternalStorageDirectory() + File.separator + "music_cover" + File.separator + name);
         if (cover.exists()) {
+            Log.e(CommonData.TAG, "已有的封面");
             Bitmap bitmap = BitmapFactory.decodeFile(cover.getAbsolutePath());
             if (bitmap != null && bitmap.getWidth() > 0) {
                 callback.loadCover(true, title, zuojia, bitmap);
@@ -55,12 +58,7 @@ public class MusicCoverManage {
                 callback.loadCover(false, title, zuojia, null);
             }
         } else {
-            try {
-                new File(Environment.getExternalStorageDirectory() + File.separator + "music_cover" + File.separator).mkdirs();
-                cover.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            Log.e(CommonData.TAG, "新的封面");
             x.task().run(new Runnable() {
                 @Override
                 public void run() {
@@ -69,10 +67,14 @@ public class MusicCoverManage {
                         final List<? extends Song> songs = api.searchMusicSync(title + " " + zuojia, 1, false);
                         if (songs.size() > 0) {
                             Bitmap bitmap = ImageLoader.getInstance().loadImageSync(songs.get(0).getPicUrl());
-                            callback.loadCover(true, title, zuojia, bitmap);
-                            FileOutputStream out = new FileOutputStream(cover);
-                            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
-                            success = true;
+                            if (bitmap != null) {
+                                new File(Environment.getExternalStorageDirectory() + File.separator + "music_cover" + File.separator).mkdirs();
+                                cover.createNewFile();
+                                callback.loadCover(true, title, zuojia, bitmap);
+                                FileOutputStream out = new FileOutputStream(cover);
+                                bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+                                success = true;
+                            }
                         }
                     } catch (Exception e) {
                         e.printStackTrace();

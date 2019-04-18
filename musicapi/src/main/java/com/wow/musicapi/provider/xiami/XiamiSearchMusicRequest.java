@@ -49,9 +49,10 @@ public class XiamiSearchMusicRequest extends BaseRequest<List<? extends Song>> {
 
     protected List<XiamiSong> parseResult(Response response) throws IOException {
         String data = response.body().string();
+        System.out.println(data);
         Map json = SFrame.getGson().fromJson(data, Map.class);
 
-        List<XiamiSong> list = SFrame.getGson().fromJson(SFrame.getGson().toJson(json.get("data")), new TypeToken<List<XiamiSong>>() {
+        List<XiamiSong> list = SFrame.getGson().fromJson(SFrame.getGson().toJson(((Map) json.get("data")).get("songs")), new TypeToken<List<XiamiSong>>() {
         }.getType());
         return list;
     }

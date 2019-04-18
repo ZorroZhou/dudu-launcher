@@ -93,6 +93,7 @@ public class LMusicView extends BaseEBusView {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final PMusicEventInfo event) {
+        System.out.println(event);
         if (music_tv_title != null && tv_zuozhe != null) {
             if (CommonUtil.isNotNull(event.getTitle())) {
                 music_tv_title.setText(event.getTitle());

@@ -1,10 +1,12 @@
 package com.wow.carlauncher.ex.plugin.music;
 
+import com.wow.carlauncher.view.activity.set.SetEnum;
+
 /**
  * Created by 10124 on 2018/3/28.
  */
 
-public enum MusicControllerEnum {
+public enum MusicControllerEnum implements SetEnum {
     UNKNOW("未知", -1),
     SYSMUSIC("系统音乐", 3),
     //NCMUSIC("网易云音乐", 4),

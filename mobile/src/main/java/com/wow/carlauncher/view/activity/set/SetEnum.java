@@ -1,7 +1,7 @@
 package com.wow.carlauncher.view.activity.set;
 
 
-public interface BaseEnum {
+public interface SetEnum {
     String getName();
 
     void setName(String name);

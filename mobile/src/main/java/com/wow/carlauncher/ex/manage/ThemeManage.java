@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.wow.carlauncher.common.SunRiseSetUtil;
 import com.wow.carlauncher.ex.manage.location.event.MNewLocationEvent;
+import com.wow.carlauncher.view.activity.set.SetEnum;
 import com.wow.frame.util.SharedPreUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -196,7 +197,7 @@ public class ThemeManage {
         void onThemeChanged(ThemeManage manage);
     }
 
-    public enum ThemeMode {
+    public enum ThemeMode implements SetEnum {
         SHIJIAN("根据日出日落切换", 0),
         DENGGUANG("根据灯光切换(部分车型支持)", 1),
         BAISE("强制白色主题", 2),

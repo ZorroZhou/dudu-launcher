@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.wow.carlauncher.common.SunRiseSetUtil;
 import com.wow.carlauncher.ex.manage.location.event.MNewLocationEvent;
+import com.wow.carlauncher.ex.manage.time.event.MTimeMinuteEvent;
 import com.wow.carlauncher.view.activity.set.SetEnum;
 import com.wow.frame.util.SharedPreUtil;
 
@@ -179,6 +180,11 @@ public class ThemeManage {
     public void onEvent(MNewLocationEvent event) {
         this.lat = event.getLatitude();
         this.lon = event.getLongitude();
+    }
+
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void onEvent(MTimeMinuteEvent event) {
+        refreshTheme();
     }
 
     /**

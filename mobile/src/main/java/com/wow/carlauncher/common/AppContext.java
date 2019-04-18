@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Environment;
 import android.util.Log;
 
-import com.google.common.base.Strings;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -32,6 +31,7 @@ import com.wow.frame.SFrame;
 import com.wow.frame.declare.SAppDeclare;
 import com.wow.frame.declare.SDatabaseDeclare;
 import com.wow.frame.repertory.dbTool.DatabaseInfo;
+import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.SharedPreUtil;
 
 import org.xutils.x;
@@ -114,19 +114,19 @@ public class AppContext implements SAppDeclare, SDatabaseDeclare {
             public void run() {
                 if (SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_APP_AUTO_OPEN_USE, false)) {
                     Log.e(TAG, "开始唤醒其他APP");
-                    if (!Strings.isNullOrEmpty(SharedPreUtil.getSharedPreString(CommonData.SDATA_APP_AUTO_OPEN1))) {
+                    if (CommonUtil.isNotNull(SharedPreUtil.getSharedPreString(CommonData.SDATA_APP_AUTO_OPEN1))) {
                         Log.e(TAG, "SDATA_APP_AUTO_OPEN1 " + SharedPreUtil.getSharedPreString(CommonData.SDATA_APP_AUTO_OPEN1));
                         AppInfoManage.self().openApp(SharedPreUtil.getSharedPreString(CommonData.SDATA_APP_AUTO_OPEN1));
                     }
-                    if (!Strings.isNullOrEmpty(SharedPreUtil.getSharedPreString(CommonData.SDATA_APP_AUTO_OPEN2))) {
+                    if (CommonUtil.isNotNull(SharedPreUtil.getSharedPreString(CommonData.SDATA_APP_AUTO_OPEN2))) {
                         Log.e(TAG, "SDATA_APP_AUTO_OPEN2 " + SharedPreUtil.getSharedPreString(CommonData.SDATA_APP_AUTO_OPEN2));
                         AppInfoManage.self().openApp(SharedPreUtil.getSharedPreString(CommonData.SDATA_APP_AUTO_OPEN2));
                     }
-                    if (!Strings.isNullOrEmpty(SharedPreUtil.getSharedPreString(CommonData.SDATA_APP_AUTO_OPEN3))) {
+                    if (CommonUtil.isNotNull(SharedPreUtil.getSharedPreString(CommonData.SDATA_APP_AUTO_OPEN3))) {
                         Log.e(TAG, "SDATA_APP_AUTO_OPEN3 " + SharedPreUtil.getSharedPreString(CommonData.SDATA_APP_AUTO_OPEN3));
                         AppInfoManage.self().openApp(SharedPreUtil.getSharedPreString(CommonData.SDATA_APP_AUTO_OPEN3));
                     }
-                    if (!Strings.isNullOrEmpty(SharedPreUtil.getSharedPreString(CommonData.SDATA_APP_AUTO_OPEN4))) {
+                    if (CommonUtil.isNotNull(SharedPreUtil.getSharedPreString(CommonData.SDATA_APP_AUTO_OPEN4))) {
                         Log.e(TAG, "SDATA_APP_AUTO_OPEN4 " + SharedPreUtil.getSharedPreString(CommonData.SDATA_APP_AUTO_OPEN4));
                         AppInfoManage.self().openApp(SharedPreUtil.getSharedPreString(CommonData.SDATA_APP_AUTO_OPEN4));
                     }

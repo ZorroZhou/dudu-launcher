@@ -112,7 +112,7 @@ public class LPromptView extends BaseEBusView {
                     LauncherActivity.activity.recreate();
                 }
 //                String packname = SharedPreUtil.getSharedPreString(SDATA_TIME_PLUGIN_OPEN_APP);
-//                if (!CommonUtil.isNull(packname)) {
+//                if (CommonUtil.isNotNull(packname)) {
 //                    Intent appIntent = pm.getLaunchIntentForPackage(packname);
 //                    if (appIntent != null) {
 //                        appIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

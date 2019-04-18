@@ -7,9 +7,9 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
-import com.google.common.base.Strings;
 import com.wow.carlauncher.ex.ContextEx;
 import com.wow.carlauncher.ex.manage.location.event.MNewLocationEvent;
+import com.wow.frame.util.CommonUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -64,7 +64,7 @@ public class LocationManage extends ContextEx implements AMapLocationListener {
 
     @Override
     public void onLocationChanged(AMapLocation aMapLocation) {
-        if (aMapLocation != null && aMapLocation.getErrorCode() == 0 && !Strings.isNullOrEmpty(aMapLocation.getCity())) {
+        if (aMapLocation != null && aMapLocation.getErrorCode() == 0 && CommonUtil.isNotNull(aMapLocation.getCity())) {
             EventBus.getDefault().post(new MNewLocationEvent().setCity(aMapLocation.getCity()).setAdCode(aMapLocation.getAdCode()).setLatitude(aMapLocation.getLatitude()).setLongitude(aMapLocation.getLongitude()));
         }
     }

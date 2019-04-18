@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.common.base.Strings;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.WeatherIconUtil;
@@ -123,8 +122,8 @@ public class LWeatherView extends BaseEBusView {
             public void run() {
                 String chengshi = "";
                 //如果定位失败,则使用设置的地理位置
-                if (Strings.isNullOrEmpty(adcode)) {
-                    if (Strings.isNullOrEmpty(SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_CITY))) {
+                if (CommonUtil.isNull(adcode)) {
+                    if (CommonUtil.isNull(SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_CITY))) {
                         tv_title.setText("点击设置城市");
                     } else {
                         tv_title.setText(SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_CITY));
@@ -135,7 +134,7 @@ public class LWeatherView extends BaseEBusView {
                     tv_title.setText(city);
                 }
 
-                if (!Strings.isNullOrEmpty(chengshi)) {
+                if (CommonUtil.isNotNull(chengshi)) {
                     WebService.getWeatherInfo(chengshi, new WebService.CommonCallback<WeatherRes>() {
                         @Override
                         public void callback(WeatherRes res) {

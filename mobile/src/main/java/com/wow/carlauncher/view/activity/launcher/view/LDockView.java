@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.common.base.Strings;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
@@ -150,7 +149,7 @@ public class LDockView extends LinearLayout {
         switch (v.getId()) {
             case R.id.ll_dock1: {
                 String packname = SharedPreUtil.getSharedPreString(SDATA_DOCK1_CLASS);
-                if (Strings.isNullOrEmpty(packname)) {
+                if (CommonUtil.isNull(packname)) {
                     getActivity().startActivityForResult(new Intent(getContext(), AppSelectActivity.class), REQUEST_SELECT_APP_TO_DOCK1);
                 } else {
                     openDock(packname);
@@ -159,7 +158,7 @@ public class LDockView extends LinearLayout {
             }
             case R.id.ll_dock2: {
                 String packname = SharedPreUtil.getSharedPreString(SDATA_DOCK2_CLASS);
-                if (Strings.isNullOrEmpty(packname)) {
+                if (CommonUtil.isNull(packname)) {
                     getActivity().startActivityForResult(new Intent(getContext(), AppSelectActivity.class), REQUEST_SELECT_APP_TO_DOCK2);
                 } else {
                     openDock(packname);
@@ -168,7 +167,7 @@ public class LDockView extends LinearLayout {
             }
             case R.id.ll_dock3: {
                 String packname = SharedPreUtil.getSharedPreString(SDATA_DOCK3_CLASS);
-                if (Strings.isNullOrEmpty(packname)) {
+                if (CommonUtil.isNull(packname)) {
                     getActivity().startActivityForResult(new Intent(getContext(), AppSelectActivity.class), REQUEST_SELECT_APP_TO_DOCK3);
                 } else {
                     openDock(packname);
@@ -177,7 +176,7 @@ public class LDockView extends LinearLayout {
             }
             case R.id.ll_dock4: {
                 String packname = SharedPreUtil.getSharedPreString(SDATA_DOCK4_CLASS);
-                if (Strings.isNullOrEmpty(packname)) {
+                if (CommonUtil.isNull(packname)) {
                     getActivity().startActivityForResult(new Intent(getContext(), AppSelectActivity.class), REQUEST_SELECT_APP_TO_DOCK4);
                 } else {
                     openDock(packname);

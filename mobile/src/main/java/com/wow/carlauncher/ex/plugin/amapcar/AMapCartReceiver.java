@@ -5,13 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
-import com.google.common.base.Strings;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventNavInfo;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventState;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapLukuangInfo;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapMuteStateInfo;
 import com.wow.carlauncher.ex.plugin.amapcar.model.Lukuang;
 import com.wow.frame.SFrame;
+import com.wow.frame.util.CommonUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -129,8 +129,8 @@ public class AMapCartReceiver extends BroadcastReceiver {
                     if (!(info.getSegRemainDis() == 0 &&
                             info.getRouteRemainDis() == 0 &&
                             info.getRouteAllDis() == 0 &&
-                            Strings.isNullOrEmpty(info.getNextRoadName()) &&
-                            Strings.isNullOrEmpty(info.getCurRoadName()))) {
+                            CommonUtil.isNull(info.getNextRoadName()) &&
+                            CommonUtil.isNull(info.getCurRoadName()))) {
                         EventBus.getDefault().post(new PAmapEventState().setRunning(true));
                         EventBus.getDefault().post(info);
                     }

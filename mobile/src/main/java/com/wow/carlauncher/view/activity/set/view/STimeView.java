@@ -60,7 +60,8 @@ public class STimeView extends BaseView {
     @ViewInject(R.id.tianqi_city)
     private SetView tianqi_city;
 
-    protected void initView(Bundle savedInstanceState) {
+    @Override
+    protected void initView() {
 
         time_plugin_open_app_select.setOnClickListener(new View.OnClickListener() {
             @Override

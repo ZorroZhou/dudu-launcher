@@ -15,7 +15,9 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import com.wow.carlauncher.CarLauncherApplication;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.ex.manage.location.event.MNewLocationEvent;
@@ -66,12 +68,9 @@ public class LauncherActivity extends Activity {
 
     private boolean night = false;
 
-    private BaseView[] myviews;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        long t1 = System.currentTimeMillis();
         //超级大坑,必去全局设置才能用
         int theme = SharedPreUtil.getSharedPreInteger(CommonData.SDATA_APP_THEME, R.style.AppThemeWhile);
         if (theme == R.style.AppThemeBlack || theme == R.style.AppThemeWhile) {
@@ -91,8 +90,6 @@ public class LauncherActivity extends Activity {
         initView(savedInstanceState);
 
         LauncherActivity.activity = this;
-
-        Log.e(TAG, "启动时间: " + (System.currentTimeMillis() - t1));
     }
 
     public void initView(Bundle savedInstanceState) {
@@ -100,10 +97,8 @@ public class LauncherActivity extends Activity {
         x.view().inject(this);
         EventBus.getDefault().register(this);
 
-        LPage1View lPage1View = new LPage1View(this, savedInstanceState);
-        LPage2View lPage2View = new LPage2View(this, savedInstanceState);
-
-        myviews = new BaseView[]{lPage1View, lPage2View};
+        LPage1View lPage1View = new LPage1View(this);
+        LPage2View lPage2View = new LPage2View(this);
 
         viewPager.setAdapter(new ViewAdapter(new View[]{lPage1View, lPage2View}));
 
@@ -216,12 +211,10 @@ public class LauncherActivity extends Activity {
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        Log.e(CommonData.TAG, "保存数据?? ");
-        for (BaseView view : myviews) {
-            view.onSaveInstanceState(outState);
-        }
+    protected void onResume() {
+        super.onResume();
+        Toast.makeText(this, "启动时间: " + (System.currentTimeMillis() - CarLauncherApplication.stime), Toast.LENGTH_LONG).show();
+        System.out.println("1111111111111111111112");
     }
 
     @Override
@@ -230,6 +223,7 @@ public class LauncherActivity extends Activity {
         unregisterReceiver(homeReceiver);
         EventBus.getDefault().unregister(this);
         LauncherActivity.activity = null;
+        System.out.println("onDestroy");
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

@@ -17,31 +17,23 @@ import org.xutils.x;
 public abstract class BaseView extends FrameLayout {
     public BaseView(@NonNull Context context) {
         super(context);
-        startInit(null);
-    }
-
-    public BaseView(@NonNull Context context, Bundle savedInstanceState) {
-        super(context);
-        startInit(savedInstanceState);
+        startInit();
     }
 
     public BaseView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        startInit(null);
+        startInit();
     }
 
-    private void startInit(Bundle savedInstanceState) {
+    private void startInit() {
         View amapView = View.inflate(getContext(), getContent(), null);
         this.addView(amapView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         x.view().inject(this);
-        initView(savedInstanceState);
+        initView();
     }
 
     protected abstract int getContent();
 
-    protected void initView(Bundle savedInstanceState) {
-    }
-
-    public void onSaveInstanceState(Bundle outState) {
+    protected void initView() {
     }
 }

@@ -35,7 +35,7 @@ public class BottomTpView extends BaseEBusView {
     }
 
     @Override
-    protected void initView(Bundle savedInstanceState) {
+    protected void initView() {
         onEventMainThread(ObdPlugin.self().getCurrentPObdEventCarTp());
     }
 

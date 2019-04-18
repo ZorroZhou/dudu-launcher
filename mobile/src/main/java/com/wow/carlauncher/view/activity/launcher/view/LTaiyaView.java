@@ -33,10 +33,6 @@ public class LTaiyaView extends BaseEBusView {
         super(context, attrs);
     }
 
-    public LTaiyaView(@NonNull Context context, Bundle savedInstanceState) {
-        super(context, savedInstanceState);
-    }
-
     @Override
     protected int getContent() {
         return R.layout.content_l_taiya;
@@ -58,7 +54,7 @@ public class LTaiyaView extends BaseEBusView {
     private View rl_base;
 
     @Override
-    protected void initView(Bundle savedInstanceState) {
+    protected void initView() {
         onEvent(ObdPlugin.self().getCurrentPObdEventCarTp());
     }
 

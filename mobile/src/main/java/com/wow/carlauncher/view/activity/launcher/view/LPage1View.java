@@ -13,10 +13,6 @@ import org.xutils.view.annotation.ViewInject;
 
 public class LPage1View extends BaseView {
 
-    public LPage1View(@NonNull Context context, Bundle savedInstanceState) {
-        super(context);
-    }
-
     public LPage1View(@NonNull Context context) {
         super(context);
     }
@@ -38,14 +34,4 @@ public class LPage1View extends BaseView {
 
     @ViewInject(R.id.lwearther)
     private LWeatherView lwearther;
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        if (lamap != null)
-            lamap.onSaveInstanceState(outState);
-        if (lmusic != null)
-            lmusic.onSaveInstanceState(outState);
-        if (lwearther != null)
-            lwearther.onSaveInstanceState(outState);
-    }
 }

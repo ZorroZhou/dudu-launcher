@@ -44,7 +44,7 @@ public class LTimeView extends BaseEBusView {
     }
 
     @Override
-    protected void initView(Bundle savedInstanceState) {
+    protected void initView() {
         onEvent(null);
     }
 

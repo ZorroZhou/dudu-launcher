@@ -63,7 +63,8 @@ public class SPopupView extends BaseView {
     @ViewInject(R.id.sv_popup_window_size)
     private SetView sv_popup_window_size;
 
-    protected void initView(Bundle savedInstanceState) {
+    @Override
+    protected void initView() {
         sv_popup_window_size.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

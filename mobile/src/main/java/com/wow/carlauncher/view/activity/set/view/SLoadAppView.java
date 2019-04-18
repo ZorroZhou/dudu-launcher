@@ -56,7 +56,8 @@ public class SLoadAppView extends BaseView {
     @ViewInject(R.id.sv_back_yanchi)
     private SetView sv_back_yanchi;
 
-    protected void initView(Bundle savedInstanceState) {
+    @Override
+    protected void initView() {
 
 
         sv_open1.setOnClickListener(new View.OnClickListener() {

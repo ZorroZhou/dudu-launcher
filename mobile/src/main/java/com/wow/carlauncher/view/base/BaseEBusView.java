@@ -24,10 +24,6 @@ public abstract class BaseEBusView extends BaseView {
         super(context, attrs);
     }
 
-    public BaseEBusView(@NonNull Context context, Bundle savedInstanceState) {
-        super(context, savedInstanceState);
-    }
-
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();

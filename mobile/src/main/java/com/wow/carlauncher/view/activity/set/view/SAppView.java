@@ -86,7 +86,8 @@ public class SAppView extends BaseView {
     @ViewInject(R.id.tianqi_city)
     private SetView tianqi_city;
 
-    protected void initView(Bundle savedInstanceState) {
+    @Override
+    protected void initView() {
 
         MusicControllerEnum p1 = MusicControllerEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_MUSIC_CONTROLLER, MusicControllerEnum.SYSMUSIC.getId()));
         sv_plugin_select.setSummary(p1.getName());

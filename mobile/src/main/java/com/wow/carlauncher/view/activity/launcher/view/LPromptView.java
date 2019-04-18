@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.wow.carlauncher.CarLauncherApplication;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
@@ -56,11 +57,6 @@ public class LPromptView extends BaseEBusView {
     public LPromptView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
-
-    public LPromptView(@NonNull Context context, Bundle savedInstanceState) {
-        super(context, savedInstanceState);
-    }
-
     @Override
     protected int getContent() {
         return R.layout.content_l_prompt;
@@ -101,6 +97,7 @@ public class LPromptView extends BaseEBusView {
                 break;
             }
             case R.id.tv_time: {
+                CarLauncherApplication.stime = System.currentTimeMillis();
                 if (SharedPreUtil.getSharedPreInteger(CommonData.SDATA_APP_THEME, R.style.AppThemeWhile) == R.style.AppThemeWhile) {
                     SharedPreUtil.saveSharedPreInteger(CommonData.SDATA_APP_THEME, R.style.AppThemeBlack);
                     LauncherActivity.activity.recreate();

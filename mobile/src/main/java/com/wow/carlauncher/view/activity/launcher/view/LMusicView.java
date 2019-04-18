@@ -45,10 +45,6 @@ public class LMusicView extends BaseEBusView {
         super(context, attrs);
     }
 
-    public LMusicView(@NonNull Context context, Bundle savedInstanceState) {
-        super(context, savedInstanceState);
-    }
-
     @Override
     protected int getContent() {
         return R.layout.content_l_music;

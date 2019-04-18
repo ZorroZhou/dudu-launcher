@@ -57,7 +57,7 @@ public class SpeedAndOilView extends BaseEBusView {
     }
 
     @Override
-    protected void initView(Bundle savedInstanceState) {
+    protected void initView() {
         onEventMainThread(ObdPlugin.self().getCurrentPObdEventCarInfo());
     }
 

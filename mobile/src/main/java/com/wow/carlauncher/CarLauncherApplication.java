@@ -9,9 +9,12 @@ import com.wow.carlauncher.service.MainService;
 import com.wow.frame.declare.SAppDeclare;
 
 public class CarLauncherApplication extends Application implements SAppDeclare {
+    public static long stime;
+
     @Override
     public void onCreate() {
         super.onCreate();
+        stime = System.currentTimeMillis();
         AppContext.self().init(this);
 
         registerActivityLifecycleCallbacks(new ActivityLifecycleListener());

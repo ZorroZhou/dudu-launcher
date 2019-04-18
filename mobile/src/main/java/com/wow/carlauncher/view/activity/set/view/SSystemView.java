@@ -58,7 +58,8 @@ public class SSystemView extends BaseView {
     @ViewInject(R.id.sv_about)
     private SetView sv_about;
 
-    protected void initView(Bundle savedInstanceState) {
+    @Override
+    protected void initView() {
 
         sv_sys_overlay.setOnClickListener(new View.OnClickListener() {
             @Override

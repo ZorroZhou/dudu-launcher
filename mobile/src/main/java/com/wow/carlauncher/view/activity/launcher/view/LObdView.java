@@ -23,10 +23,6 @@ public class LObdView extends BaseEBusView {
         super(context, attrs);
     }
 
-    public LObdView(@NonNull Context context, Bundle savedInstanceState) {
-        super(context, savedInstanceState);
-    }
-
     @Override
     protected int getContent() {
         return R.layout.content_l_obd;

@@ -19,6 +19,7 @@ import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.view.activity.AppSelectActivity;
 import com.wow.carlauncher.view.activity.launcher.event.LauncherDockLabelShowChangeEvent;
+import com.wow.carlauncher.view.base.BaseEBusView;
 import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.SharedPreUtil;
 
@@ -43,15 +44,13 @@ import static com.wow.carlauncher.common.CommonData.TAG;
  * Created by 10124 on 2018/4/22.
  */
 
-public class LDockView extends LinearLayout {
+public class LDockView extends BaseEBusView {
     public LDockView(@NonNull Context context) {
         super(context);
-        initView();
     }
 
     public LDockView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        initView();
     }
 
 
@@ -77,16 +76,15 @@ public class LDockView extends LinearLayout {
 
     private PackageManager pm;
 
-    private void initView() {
+    @Override
+    protected int getContent() {
+        return R.layout.content_l_dock;
+    }
+
+    @Override
+    protected void initView() {
         pm = getContext().getPackageManager();
-
-        LinearLayout amapView = (LinearLayout) View.inflate(getContext(), R.layout.content_l_dock, null);
-        this.addView(amapView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-
-        x.view().inject(this);
-
         //这里要先添加事件，要不然ID重复，会导致读取的子view错误
-
         loadDock();
     }
 
@@ -206,17 +204,5 @@ public class LDockView extends LinearLayout {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(LauncherDockLabelShowChangeEvent event) {
         dockLabelShow(event.show);
-    }
-
-    @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        EventBus.getDefault().unregister(this);
     }
 }

@@ -80,8 +80,9 @@ public class SBleDeviceView extends BaseView {
 
     @ViewInject(R.id.sv_fangkong_remove)
     private SetView sv_fangkong_remove;
-
-    protected void initView(Bundle savedInstanceState) {
+    
+    @Override
+    protected void initView() {
         ObdProtocolEnum p1 = ObdProtocolEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_OBD_CONTROLLER, ObdProtocolEnum.YJ_TYB.getId()));
         sv_obd_impl_select.setSummary("OBD使用的协议：" + p1.getName());
         sv_obd_impl_select.setOnClickListener(new View.OnClickListener() {

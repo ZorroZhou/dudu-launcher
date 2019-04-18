@@ -45,10 +45,6 @@ public class LWeatherView extends BaseEBusView {
         super(context, attrs);
     }
 
-    public LWeatherView(@NonNull Context context, Bundle savedInstanceState) {
-        super(context, savedInstanceState);
-    }
-
     @Override
     protected int getContent() {
         return R.layout.content_l_weather;

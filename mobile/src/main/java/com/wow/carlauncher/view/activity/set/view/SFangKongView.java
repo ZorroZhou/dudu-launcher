@@ -63,7 +63,8 @@ public class SFangKongView extends BaseView {
     @ViewInject(R.id.sv_fangkong_remove)
     private SetView sv_fangkong_remove;
 
-    protected void initView(Bundle savedInstanceState) {
+    @Override
+    protected void initView() {
 
         FangkongProtocolEnum fkp1 = FangkongProtocolEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_FANGKONG_CONTROLLER, FangkongProtocolEnum.YLFK.getId()));
         sv_fangkong_impl_select.setSummary("方控使用的协议：" + fkp1.getName());

@@ -1,6 +1,5 @@
 package com.wow.musicapi;
 
-import com.wow.musicapi.api.HttpEngine;
 import com.wow.musicapi.api.MusicApi;
 import com.wow.musicapi.api.MusicApiFactory;
 import com.wow.musicapi.api.MusicProvider;

@@ -5,7 +5,6 @@ import com.wow.musicapi.model.Album;
 import com.wow.musicapi.model.MusicLink;
 import com.wow.musicapi.model.Song;
 
-import java.io.IOException;
 import java.util.List;
 
 @SuppressWarnings("SpellCheckingInspection")
@@ -15,7 +14,7 @@ public class XiamiMusicApi implements MusicApi {
             "AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1";
 
     @Override
-    public List<? extends Song> searchMusicSync(String keyword, int page, boolean needLink) throws IOException {
+    public List<? extends Song> searchMusicSync(String keyword, int page, boolean needLink) throws Throwable {
         List<? extends Song> result = new XiamiSearchMusicRequest(keyword, page).requestSync();
         return result;
     }
@@ -25,11 +24,11 @@ public class XiamiMusicApi implements MusicApi {
     }
 
     @Override
-    public List<? extends Song> getSongDetailInfoByIdsSync(boolean needLyric, String... musicIds) throws IOException {
+    public List<? extends Song> getSongDetailInfoByIdsSync(boolean needLyric, String... musicIds) throws Throwable {
         return null;
     }
 
-    public Album getAlbumInfoByIdSync(String albumId, boolean needLink) throws IOException {
+    public Album getAlbumInfoByIdSync(String albumId, boolean needLink) throws Throwable {
         XiamiAlbum album = new XiamiGetAlbumInfoRequest(albumId).requestSync();
         return album;
     }

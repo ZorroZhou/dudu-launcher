@@ -3,12 +3,8 @@ package com.wow.carlauncher.view.consoleWindow;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.PixelFormat;
-import android.os.Build;
-import android.provider.Settings;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
@@ -17,23 +13,7 @@ import android.widget.TextView;
 import com.wow.carlauncher.CarLauncherApplication;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
-import com.wow.carlauncher.view.popupWindow.event.PEventFSRefresh;
-import com.wow.frame.util.AppUtil;
-import com.wow.frame.util.CommonUtil;
-import com.wow.frame.util.DateUtil;
 import com.wow.frame.util.SharedPreUtil;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.xutils.x;
-
-import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import static com.wow.carlauncher.common.CommonData.PACKAGE_NAME;
-import static com.wow.carlauncher.common.CommonData.SDATA_POPUP_ALLOW_SHOW;
-import static com.wow.carlauncher.common.CommonData.TAG;
 
 public class ConsoleWin {
     private static class SingletonHolder {

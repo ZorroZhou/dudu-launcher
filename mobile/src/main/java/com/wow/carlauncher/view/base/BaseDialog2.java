@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
-import android.view.WindowManager;
 
 /**
  * Created by liu on 2017/1/5.

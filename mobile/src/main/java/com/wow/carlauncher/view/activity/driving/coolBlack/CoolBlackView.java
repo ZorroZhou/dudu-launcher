@@ -1,7 +1,6 @@
 package com.wow.carlauncher.view.activity.driving.coolBlack;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -14,7 +13,6 @@ import com.wow.carlauncher.R;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventNavInfo;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventState;
-import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.view.base.BaseEBusView;
 import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.DateUtil;

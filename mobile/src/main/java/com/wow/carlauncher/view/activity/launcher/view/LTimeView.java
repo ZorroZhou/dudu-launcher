@@ -20,7 +20,8 @@ import org.xutils.view.annotation.ViewInject;
 import java.util.Calendar;
 import java.util.Date;
 
-import static com.wow.carlauncher.common.CommonData.*;
+import static com.wow.carlauncher.common.CommonData.DAY_MILL;
+import static com.wow.carlauncher.common.CommonData.MINUTE_MILL;
 
 /**
  * Created by 10124 on 2018/4/20.

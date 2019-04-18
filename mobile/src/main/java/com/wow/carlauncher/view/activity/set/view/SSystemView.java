@@ -13,7 +13,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.view.SetView;

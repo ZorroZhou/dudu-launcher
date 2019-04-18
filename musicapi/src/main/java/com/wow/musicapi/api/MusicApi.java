@@ -18,7 +18,7 @@ public interface MusicApi {
      * @param keyword
      * @param page
      */
-    List<? extends Song> searchMusicSync(String keyword, int page, boolean needLink) throws IOException;
+    List<? extends Song> searchMusicSync(String keyword, int page, boolean needLink) throws Throwable;
 
     /**
      * 获取某歌曲id对应的音乐链接
@@ -27,7 +27,7 @@ public interface MusicApi {
      * @return
      * @throws Exception
      */
-    MusicLink getMusicLinkByIdSync(String musicId) throws IOException;
+    MusicLink getMusicLinkByIdSync(String musicId) throws Throwable;
 
     /**
      * 获取某歌曲ids对应的歌曲详细信息
@@ -37,7 +37,7 @@ public interface MusicApi {
      * @return
      * @throws IOException
      */
-    List<? extends Song> getSongDetailInfoByIdsSync(boolean needLyric, String... musicIds) throws IOException;
+    List<? extends Song> getSongDetailInfoByIdsSync(boolean needLyric, String... musicIds) throws Throwable;
 
     /**
      * 获取专辑id对应的专辑信息
@@ -45,5 +45,5 @@ public interface MusicApi {
      * @param albumId
      * @param needLink
      */
-    Album getAlbumInfoByIdSync(String albumId, boolean needLink) throws IOException;
+    Album getAlbumInfoByIdSync(String albumId, boolean needLink) throws Throwable;
 }

@@ -18,7 +18,6 @@ import org.xutils.x;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.List;
 
 public class MusicCoverManage {
@@ -76,7 +75,7 @@ public class MusicCoverManage {
                                 success = true;
                             }
                         }
-                    } catch (Exception e) {
+                    } catch (Throwable e) {
                         e.printStackTrace();
                     }
                     if (!success) {

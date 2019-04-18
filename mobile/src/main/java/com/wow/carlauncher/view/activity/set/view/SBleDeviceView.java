@@ -11,8 +11,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
 import com.inuker.bluetooth.library.search.SearchResult;
 import com.wow.carlauncher.R;
@@ -32,7 +30,6 @@ import com.wow.frame.util.SharedPreUtil;
 import com.wow.frame.util.ThreadObj;
 
 import org.xutils.view.annotation.ViewInject;
-import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.List;

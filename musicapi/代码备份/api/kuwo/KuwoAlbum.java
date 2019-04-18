@@ -1,6 +1,5 @@
 package com.wow.musicapi.provider.kuwo;
 
-import com.alibaba.fastjson.annotation.JSONField;
 import com.wow.musicapi.api.MusicProvider;
 import com.wow.musicapi.model.Album;
 import com.wow.musicapi.model.Artist;

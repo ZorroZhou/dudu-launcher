@@ -15,11 +15,14 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.common.CommonData;
+import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfo;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.view.activity.AboutActivity;
+import com.wow.carlauncher.view.activity.set.SetAppSingleSelectOnClickListener;
 import com.wow.carlauncher.view.base.BaseView;
 
 import org.xutils.view.annotation.ViewInject;
@@ -45,6 +48,7 @@ public class SSystemView extends BaseView {
     protected int getContent() {
         return R.layout.content_set_system;
     }
+
     @ViewInject(R.id.sv_sys_anquan)
     private SetView sv_sys_anquan;
 
@@ -61,57 +65,32 @@ public class SSystemView extends BaseView {
     @Override
     protected void initView() {
 
-        sv_sys_overlay.setOnClickListener(new View.OnClickListener() {
+        sv_sys_overlay.setOnClickListener(new SetAppSingleSelectOnClickListener(getContext()) {
             @Override
-            public void onClick(View v) {
-                if (Build.VERSION.SDK_INT >= 23) {
-                    final List<AppInfo> appInfos = new ArrayList<>(AppInfoManage.self().getOtherAppInfos());
-                    String[] items = new String[appInfos.size()];
-                    for (int i = 0; i < items.length; i++) {
-                        items[i] = appInfos.get(i).name + "(" + appInfos.get(i).clazz + ")";
-                    }
+            public String getCurr() {
+                return null;
+            }
 
-                    AlertDialog dialog = new AlertDialog.Builder(getContext()).setTitle("请选择APP").setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                        }
-                    }).setItems(items, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                                    Uri.parse("package:" + appInfos.get(which).clazz));
-                            getActivity().startActivity(intent);
-                        }
-                    }).create();
-                    dialog.show();
+            @Override
+            public void onSelect(String t) {
+                if (Build.VERSION.SDK_INT >= 23) {
+                    Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                            Uri.parse("package:" + t));
+                    getActivity().startActivity(intent);
                 } else {
                     ToastManage.self().show("这个功能是安卓6.0以上才有的");
                 }
             }
         });
 
-        sv_sys_anquan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Settings.ACTION_SECURITY_SETTINGS);
-                getActivity().startActivity(intent);
-            }
+        sv_sys_anquan.setOnClickListener(v -> {
+            Intent intent = new Intent(Settings.ACTION_SECURITY_SETTINGS);
+            getActivity().startActivity(intent);
         });
 
-        sv_sys_sdk.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ToastManage.self().show("当前SDK版本是" + Build.VERSION.SDK_INT);
-            }
-        });
+        sv_sys_sdk.setOnClickListener(v -> ToastManage.self().show("当前SDK版本是" + Build.VERSION.SDK_INT));
 
-        sv_about.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().startActivity(new Intent(getContext(), AboutActivity.class));
-            }
-        });
-
+        sv_about.setOnClickListener(v -> getActivity().startActivity(new Intent(getContext(), AboutActivity.class)));
     }
 
     private Activity getActivity() {

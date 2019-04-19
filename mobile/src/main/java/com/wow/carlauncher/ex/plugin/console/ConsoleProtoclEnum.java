@@ -1,10 +1,12 @@
 package com.wow.carlauncher.ex.plugin.console;
 
+import com.wow.carlauncher.view.activity.set.SetEnum;
+
 /**
  * Created by 10124 on 2018/3/29.
  */
 
-public enum ConsoleProtoclEnum {
+public enum ConsoleProtoclEnum implements SetEnum {
     SYSTEM("系统实现", 0), NWD("NWD", 1);
 
     private String name;

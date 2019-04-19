@@ -5,12 +5,16 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.ex.manage.ThemeManage;
+import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarInfo;
 import com.wow.carlauncher.view.base.BaseEXView;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.view.annotation.ViewInject;
 
 /**
@@ -60,4 +64,52 @@ public class LObdView extends BaseEXView {
 
     @ViewInject(R.id.tv_text1)
     private TextView tv_text1;
+
+    @ViewInject(R.id.tv_sd)
+    private TextView tv_sd;
+
+    @ViewInject(R.id.tv_zs)
+    private TextView tv_zs;
+
+    @ViewInject(R.id.tv_sw)
+    private TextView tv_sw;
+
+    @ViewInject(R.id.tv_yl)
+    private TextView tv_yl;
+
+    @ViewInject(R.id.p_sd)
+    private ProgressBar p_sd;
+
+    @ViewInject(R.id.p_zs)
+    private ProgressBar p_zs;
+
+    @ViewInject(R.id.p_sw)
+    private ProgressBar p_sw;
+
+    @ViewInject(R.id.p_yl)
+    private ProgressBar p_yl;
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventCall(final PObdEventCarInfo event) {
+        if (event.getSpeed() != null) {
+            String msg = event.getSpeed() + "KM/H";
+            tv_sd.setText(msg);
+            p_sd.setProgress(event.getSpeed());
+        }
+        if (event.getRev() != null) {
+            String msg = event.getRev() + "R/S";
+            tv_zs.setText(msg);
+            p_zs.setProgress(event.getRev());
+        }
+        if (event.getWaterTemp() != null) {
+            String msg = event.getWaterTemp() + "℃";
+            tv_sw.setText(msg);
+            p_sw.setProgress(event.getWaterTemp());
+        }
+        if (event.getOilConsumption() != null) {
+            String msg = event.getOilConsumption() + "%";
+            tv_yl.setText(msg);
+            p_yl.setProgress(event.getOilConsumption());
+        }
+    }
 }

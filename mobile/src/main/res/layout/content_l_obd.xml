@@ -85,7 +85,7 @@
                             android:layout_weight="1"
                             android:gravity="center_vertical|right"
                             android:lines="1"
-                            android:text="1000/M"
+                            android:text="1000R/S"
                             app:layout_textSizePercent="50%h" />
                     </com.zhy.android.percent.support.PercentLinearLayout>
 
@@ -95,10 +95,12 @@
                         android:layout_weight="1">
 
                         <ProgressBar
+                            android:id="@+id/p_zs"
                             style="?android:attr/progressBarStyleHorizontal"
                             android:layout_width="match_parent"
                             android:layout_height="10dp"
                             android:layout_centerInParent="true"
+                            android:max="10000"
                             android:progressDrawable="@drawable/n_music_progress" />
                     </com.zhy.android.percent.support.PercentRelativeLayout>
                 </com.zhy.android.percent.support.PercentLinearLayout>
@@ -157,10 +159,12 @@
                         android:layout_weight="1">
 
                         <ProgressBar
+                            android:id="@+id/p_sd"
                             style="?android:attr/progressBarStyleHorizontal"
                             android:layout_width="match_parent"
                             android:layout_height="10dp"
                             android:layout_centerInParent="true"
+                            android:max="200"
                             android:progressDrawable="@drawable/n_music_progress" />
                     </com.zhy.android.percent.support.PercentRelativeLayout>
                 </com.zhy.android.percent.support.PercentLinearLayout>
@@ -219,10 +223,12 @@
                         android:layout_weight="1">
 
                         <ProgressBar
+                            android:id="@+id/p_sw"
                             style="?android:attr/progressBarStyleHorizontal"
                             android:layout_width="match_parent"
                             android:layout_height="10dp"
                             android:layout_centerInParent="true"
+                            android:max="110"
                             android:progressDrawable="@drawable/n_music_progress" />
                     </com.zhy.android.percent.support.PercentRelativeLayout>
                 </com.zhy.android.percent.support.PercentLinearLayout>
@@ -281,10 +287,12 @@
                         android:layout_weight="1">
 
                         <ProgressBar
+                            android:id="@+id/p_yl"
                             style="?android:attr/progressBarStyleHorizontal"
                             android:layout_width="match_parent"
                             android:layout_height="10dp"
                             android:layout_centerInParent="true"
+                            android:max="100"
                             android:progressDrawable="@drawable/n_music_progress" />
                     </com.zhy.android.percent.support.PercentRelativeLayout>
                 </com.zhy.android.percent.support.PercentLinearLayout>

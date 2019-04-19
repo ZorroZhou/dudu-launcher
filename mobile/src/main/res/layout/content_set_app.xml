@@ -28,6 +28,15 @@
     <View style="@style/Interval" />
 
     <com.wow.carlauncher.common.view.SetView
+        android:id="@+id/sv_launcher_item_sort"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        st:titleEx="首页插件展示顺序(调整后插件会重新加载)"
+        st:type="buttonB" />
+
+    <View style="@style/Interval" />
+
+    <com.wow.carlauncher.common.view.SetView
         android:id="@+id/sv_plugin_select"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -52,16 +61,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         st:summary="全部应用将隐藏选中的项目"
-        st:titleEx="隐藏项目"
-        st:type="buttonB" />
-
-    <View style="@style/Interval" />
-
-    <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_wall_set"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        st:titleEx="壁纸设置"
+        st:titleEx="桌面隐藏项目"
         st:type="buttonB" />
 
     <View style="@style/Interval" />

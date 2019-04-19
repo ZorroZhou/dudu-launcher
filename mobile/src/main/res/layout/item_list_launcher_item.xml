@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.android.percent.support.PercentLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:padding="5dp"
+    tools:ignore="RtlHardcoded,HardcodedText,RtlSymmetry,SpUsage">
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center_vertical|left"
+        android:paddingLeft="10dp"
+        android:text="名称"
+        android:textColor="#333"
+        android:textSize="20dp" />
+
+    <CheckBox
+        android:id="@+id/cb_use"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:text="使用"
+        android:textColor="#333"
+        android:textSize="20dp" />
+
+    <Button
+        android:id="@+id/btn_up"
+        android:layout_width="60dp"
+        android:layout_height="35dp"
+        android:text="上移" />
+
+    <Button
+        android:id="@+id/btn_down"
+        android:layout_width="60dp"
+        android:layout_height="35dp"
+        android:text="下移" />
+</com.zhy.android.percent.support.PercentLinearLayout>

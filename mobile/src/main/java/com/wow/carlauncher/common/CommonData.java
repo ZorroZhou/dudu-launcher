@@ -108,4 +108,8 @@ public class CommonData {
     public static final String SDATA_APP_AUTO_OPEN2 = "SDATA_APP_AUTO_OPEN2";
     public static final String SDATA_APP_AUTO_OPEN3 = "SDATA_APP_AUTO_OPEN3";
     public static final String SDATA_APP_AUTO_OPEN4 = "SDATA_APP_AUTO_OPEN4";
+
+
+    public static final String SDATA_LAUNCHER_ITEM_SORT_ = "SDATA_LAUNCHER_ITEM_SORT_";
+    public static final String SDATA_LAUNCHER_ITEM_OPEN_ = "SDATA_LAUNCHER_ITEM_OPEN_";
 }

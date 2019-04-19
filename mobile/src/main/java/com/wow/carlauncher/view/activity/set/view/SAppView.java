@@ -3,13 +3,16 @@ package com.wow.carlauncher.view.activity.set.view;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
+import android.view.View;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.ThemeManage.ThemeMode;
+import com.wow.carlauncher.ex.manage.ble.BleManage;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.console.ConsolePlugin;
 import com.wow.carlauncher.ex.plugin.console.ConsoleProtoclEnum;
@@ -17,6 +20,7 @@ import com.wow.carlauncher.ex.plugin.music.MusicControllerEnum;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import com.wow.carlauncher.view.activity.launcher.event.LEventCityRefresh;
 import com.wow.carlauncher.view.activity.launcher.event.LauncherDockLabelShowChangeEvent;
+import com.wow.carlauncher.view.activity.set.LauncherItemAdapter;
 import com.wow.carlauncher.view.activity.set.SetAppMultipleSelectOnClickListener;
 import com.wow.carlauncher.view.activity.set.SetAppSingleSelectOnClickListener;
 import com.wow.carlauncher.view.activity.set.SetSwitchOnClickListener;
@@ -25,13 +29,17 @@ import com.wow.carlauncher.view.base.BaseView;
 import com.wow.carlauncher.view.dialog.CityDialog;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
+import com.wow.carlauncher.view.dialog.ListDialog;
 
 import org.greenrobot.eventbus.EventBus;
 import org.xutils.view.annotation.ViewInject;
 
+import java.util.List;
+
 import static com.wow.carlauncher.common.CommonData.SDATA_APP_THEME;
 import static com.wow.carlauncher.common.CommonData.SDATA_CONSOLE_MARK;
 import static com.wow.carlauncher.common.CommonData.SDATA_MUSIC_CONTROLLER;
+import static com.wow.carlauncher.view.activity.launcher.ItemEnum.AMAP;
 
 /**
  * Created by 10124 on 2018/4/22.
@@ -64,9 +72,6 @@ public class SAppView extends BaseView {
     @ViewInject(R.id.sv_plugin_select)
     private SetView sv_plugin_select;
 
-    @ViewInject(R.id.sv_wall_set)
-    private SetView sv_wall_set;
-
     @ViewInject(R.id.sv_apps_hides)
     private SetView sv_apps_hides;
 
@@ -86,8 +91,23 @@ public class SAppView extends BaseView {
     @ViewInject(R.id.sv_plugin_theme)
     private SetView sv_plugin_theme;
 
+    @ViewInject(R.id.sv_launcher_item_sort)
+    private SetView sv_launcher_item_sort;
+
     @Override
     protected void initView() {
+        sv_launcher_item_sort.setOnClickListener(v -> {
+            final LauncherItemAdapter adapter = new LauncherItemAdapter(getContext());
+            AlertDialog dialog = new AlertDialog.Builder(getContext()).setTitle("调整").setNegativeButton("取消", null).setPositiveButton("确定", (dialog12, which) -> {
+                List<LauncherItemAdapter.Item> items = adapter.getItems();
+                for (LauncherItemAdapter.Item item : items) {
+                    SharedPreUtil.getSharedPreInteger(CommonData.SDATA_LAUNCHER_ITEM_SORT_ + item.info.getId(), item.index);
+                    SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_LAUNCHER_ITEM_OPEN_ + item.info.getId(), item.check);
+                }
+            }).setAdapter(adapter, null).create();
+            dialog.show();
+        });
+
         sv_plugin_theme.setSummary(ThemeMode.getById(SharedPreUtil.getSharedPreInteger(SDATA_APP_THEME, ThemeMode.SHIJIAN.getId())).getName());
         sv_plugin_theme.setOnClickListener(new SetEnumOnClickListener<ThemeMode>(getContext(), THEME_MODEL) {
             @Override
@@ -119,7 +139,6 @@ public class SAppView extends BaseView {
             }
         });
 
-        sv_wall_set.setOnClickListener(view -> ToastManage.self().show("请使用第三方看图软件直接将图片设置为安卓壁纸即可"));
         sv_apps_hides.setOnClickListener(new SetAppMultipleSelectOnClickListener(getContext()) {
             @Override
             public String getCurr() {

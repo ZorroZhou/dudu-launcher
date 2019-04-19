@@ -2,6 +2,7 @@ package com.wow.carlauncher.repertory.amapWebservice;
 
 import android.util.Log;
 
+import com.wow.carlauncher.common.util.HttpUtil;
 import com.wow.carlauncher.repertory.amapWebservice.res.BaseRes;
 import com.wow.carlauncher.repertory.amapWebservice.res.WeatherRes;
 import com.wow.frame.SFrame;
@@ -22,7 +23,7 @@ public class AMapWebService {
     private static final String KEY = "b8a80f002ec3fe70454a4c013eaabbb7";
 
     public static void getWeatherInfo(String adcode, final CommonCallback commonCallback) {
-        RequestParams params = new RequestParams("http://restapi.amap.com/v3/weather/weatherInfo?key=" + KEY + "&city=" + getURLEncoderString(adcode));
+        RequestParams params = new RequestParams("http://restapi.amap.com/v3/weather/weatherInfo?key=" + KEY + "&city=" + HttpUtil.getURLEncoderString(adcode));
         Log.e(TAG, "这里请求了" + params);
         x.http().request(HttpMethod.GET, params, new Callback.CommonCallback<String>() {
             @Override
@@ -56,18 +57,4 @@ public class AMapWebService {
 
         }
     }
-
-    public static String getURLEncoderString(String str) {
-        String result = "";
-        if (null == str) {
-            return "";
-        }
-        try {
-            result = java.net.URLEncoder.encode(str, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
-
 }

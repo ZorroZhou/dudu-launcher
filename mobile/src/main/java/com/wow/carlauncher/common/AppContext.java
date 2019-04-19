@@ -75,7 +75,10 @@ public class AppContext implements SAppDeclare, SDatabaseDeclare {
 
     public void init(CarLauncherApplication app) {
         this.application = app;
-        SFrame.init(this);
+
+        x.Ext.init(app);
+        
+        SharedPreUtil.init(app);
         //图片加载工具
         initImage();
         //通知工具

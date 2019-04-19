@@ -31,7 +31,7 @@ import com.wow.carlauncher.ex.plugin.music.event.PMusicEventInfo;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventProgress;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventState;
 import com.wow.carlauncher.view.popupWindow.event.PEventFSRefresh;
-import com.wow.frame.util.AppUtil;
+import com.wow.carlauncher.common.util.AppUtil;
 import com.wow.frame.util.CommonUtil;
 import com.wow.frame.util.DateUtil;
 import com.wow.frame.util.SharedPreUtil;

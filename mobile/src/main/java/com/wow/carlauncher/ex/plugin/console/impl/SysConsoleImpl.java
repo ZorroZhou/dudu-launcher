@@ -9,7 +9,7 @@ import android.view.KeyEvent;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.console.ConsoleProtocl;
 import com.wow.carlauncher.ex.plugin.console.ConsoleProtoclListener;
-import com.wow.frame.util.AppUtil;
+import com.wow.carlauncher.common.util.AppUtil;
 
 import java.util.List;
 

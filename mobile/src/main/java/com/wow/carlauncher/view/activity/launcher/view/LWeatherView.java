@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
-import com.wow.carlauncher.common.WeatherIconUtil;
+import com.wow.carlauncher.common.util.WeatherIconUtil;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.location.event.MNewLocationEvent;
 import com.wow.carlauncher.ex.manage.time.event.MTimeMinuteEvent;

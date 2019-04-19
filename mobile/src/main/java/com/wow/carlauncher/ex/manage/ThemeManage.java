@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.wow.carlauncher.common.SunRiseSetUtil;
+import com.wow.carlauncher.common.util.SunRiseSetUtil;
 import com.wow.carlauncher.ex.manage.location.event.MNewLocationEvent;
 import com.wow.carlauncher.ex.manage.time.event.MTimeMinuteEvent;
 import com.wow.carlauncher.view.activity.set.SetEnum;

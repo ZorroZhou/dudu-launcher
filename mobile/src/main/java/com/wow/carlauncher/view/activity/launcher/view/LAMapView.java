@@ -22,7 +22,7 @@ import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapLukuangInfo;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapMuteStateInfo;
 import com.wow.carlauncher.ex.plugin.amapcar.model.Lukuang;
 import com.wow.carlauncher.view.base.BaseEXView;
-import com.wow.frame.util.AppUtil;
+import com.wow.carlauncher.common.util.AppUtil;
 import com.wow.frame.util.CommonUtil;
 
 import org.greenrobot.eventbus.Subscribe;

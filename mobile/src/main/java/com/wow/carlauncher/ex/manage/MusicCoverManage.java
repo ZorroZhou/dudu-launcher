@@ -9,18 +9,14 @@ import android.util.Log;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.wow.carlauncher.common.CommonData;
-import com.wow.frame.util.CommonUtil;
-import com.wow.musicapi.api.MusicApi;
-import com.wow.musicapi.api.MusicApiFactory;
-import com.wow.musicapi.api.MusicProvider;
-import com.wow.musicapi.model.Song;
+import com.wow.carlauncher.repertory.qqmusicPic.QQMusicWebService;
+import com.wow.carlauncher.repertory.qqmusicPic.res.SearchRes;
 
 import org.xutils.x;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class MusicCoverManage {
@@ -37,22 +33,17 @@ public class MusicCoverManage {
         super();
     }
 
-    private MusicApi api;
-
-    private MusicProvider musicProvider = MusicProvider.Xiami;
-
 
     private Md5FileNameGenerator nameGenerator = new Md5FileNameGenerator();
 
     public void init() {
-        api = MusicApiFactory.create(musicProvider);
         runkey = new HashSet<>();
     }
 
     private Set<String> runkey;
 
     public void loadMusicCover(final String title, final String zuojia, final Callback callback) {
-        String name = nameGenerator.generate(title + "-" + zuojia + "-" + musicProvider) + ".temp";
+        String name = nameGenerator.generate(title + "-" + zuojia) + ".temp";
         if (runkey.contains(name)) {
             return;
         }
@@ -72,37 +63,50 @@ public class MusicCoverManage {
             runkey.remove(name);
         } else {
             Log.e(CommonData.TAG, "新的封面");
-            x.task().run(() -> {
-                boolean success = false;
-                try {
-                    final List<? extends Song> songs = api.searchMusicSync(title + " " + zuojia, 1, false);
-                    if (songs.size() > 0 && CommonUtil.isNotNull(songs.get(0).getPicUrl())) {
-                        Bitmap bitmap = ImageLoader.getInstance().loadImageSync(songs.get(0).getPicUrl());
-                        File dir = new File(Environment.getExternalStorageDirectory() + File.separator + "music_cover" + File.separator);
-                        boolean direxist = true;
-                        if (!dir.exists()) {
-                            direxist = dir.mkdirs();
+
+            QQMusicWebService.searchMusic(title + " " + zuojia, 1, new QQMusicWebService.CommonCallback<SearchRes>() {
+                @Override
+                public void callback(final SearchRes res) {
+                    x.task().run(() -> {
+                        boolean success = false;
+                        if (res != null &&
+                                res.getCode() == 0 &&
+                                res.getData() != null &&
+                                res.getData().getSong() != null &&
+                                res.getData().getSong().getList() != null &&
+                                res.getData().getSong().getList().size() > 0) {
+                            SearchRes.SongItem songItem = res.getData().getSong().getList().get(0);
+                            Log.e(CommonData.TAG, "加载封面:" + QQMusicWebService.picUrl(songItem.getAlbumid()));
+                            Bitmap bitmap = ImageLoader.getInstance().loadImageSync(QQMusicWebService.picUrl(songItem.getAlbumid()));
+                            if (bitmap != null && bitmap.getWidth() > 0) {
+                                try {
+                                    File dir = new File(Environment.getExternalStorageDirectory() + File.separator + "music_cover" + File.separator);
+                                    boolean direxist = true;
+                                    if (!dir.exists()) {
+                                        direxist = dir.mkdirs();
+                                    }
+                                    cover.delete();
+                                    if (direxist && cover.createNewFile()) {
+                                        callback.loadCover(true, title, zuojia, bitmap);
+                                        FileOutputStream out = new FileOutputStream(cover);
+                                        bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+                                        success = true;
+                                        Log.e(CommonData.TAG, "封面下载成功");
+                                    } else {
+                                        Log.e(CommonData.TAG, "封面下载失败");
+                                    }
+                                } catch (Exception e) {
+
+                                }
+                            }
                         }
-                        cover.delete();
-                        boolean create = cover.createNewFile();
-                        if (bitmap != null && direxist && create) {
-                            callback.loadCover(true, title, zuojia, bitmap);
-                            FileOutputStream out = new FileOutputStream(cover);
-                            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
-                            success = true;
-                            Log.e(CommonData.TAG, "封面下载成功");
-                        } else {
+                        if (!success) {
                             Log.e(CommonData.TAG, "封面下载失败");
+                            callback.loadCover(false, title, zuojia, null);
                         }
-                    }
-                } catch (Throwable e) {
-                    e.printStackTrace();
+                        runkey.remove(name);
+                    });
                 }
-                if (!success) {
-                    Log.e(CommonData.TAG, "封面下载失败");
-                    callback.loadCover(false, title, zuojia, null);
-                }
-                runkey.remove(name);
             });
         }
     }
@@ -110,7 +114,4 @@ public class MusicCoverManage {
     public interface Callback {
         void loadCover(boolean success, String title, String zuojia, Bitmap cover);
     }
-
-
-
 }

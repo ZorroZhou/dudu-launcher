@@ -50,7 +50,6 @@ import static com.wow.carlauncher.common.CommonData.SDATA_DOCK2_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK3_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK4_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK5_CLASS;
-import static com.wow.carlauncher.common.CommonData.TAG;
 import static com.wow.carlauncher.ex.manage.ThemeManage.BLACK;
 import static com.wow.carlauncher.ex.manage.ThemeManage.WHITE;
 
@@ -72,8 +71,6 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
     @ViewInject(R.id.line1)
     private View line1;
 
-    private boolean night = false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,8 +82,12 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
         intentFilter.addAction(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
         registerReceiver(homeReceiver, intentFilter);
         initView();
-        ThemeManage.self().registerThemeChangeListener(this);
+
+        //主题处理
         onThemeChanged(ThemeManage.self());
+        ThemeManage.self().registerThemeChangeListener(this);
+        ThemeManage.self().refreshTheme();
+
         LauncherActivity.activity = this;
     }
 

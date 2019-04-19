@@ -109,19 +109,17 @@ public class LWeatherView extends BaseEXView {
         switch (view.getId()) {
             case R.id.tv_title: {
                 final CityDialog cityDialog = new CityDialog(getContext());
-                cityDialog.setOkclickListener(new BaseDialog2.OnBtnClickListener() {
-                    @Override
-                    public boolean onClick(BaseDialog2 dialog) {
-                        if (CommonUtil.isNotNull(cityDialog.getCityName()) && CommonUtil.isNotNull(cityDialog.getDistrictName())) {
-                            SharedPreUtil.saveSharedPreString(CommonData.SDATA_WEATHER_CITY, cityDialog.getDistrictName());
-                            SharedPreUtil.saveSharedPreString(CommonData.SDATA_WEATHER_SHI, cityDialog.getCityName());
-                            cityDialog.dismiss();
-                            EventBus.getDefault().post(new LEventCityRefresh());
-                            return true;
-                        } else {
-                            ToastManage.self().show("请选择城市");
-                            return false;
-                        }
+                cityDialog.setOkclickListener(dialog -> {
+                    System.out.println(cityDialog.getCityName() + "  " + cityDialog.getDistrictName());
+                    if (CommonUtil.isNotNull(cityDialog.getCityName()) && CommonUtil.isNotNull(cityDialog.getDistrictName())) {
+                        SharedPreUtil.saveSharedPreString(CommonData.SDATA_WEATHER_CITY, cityDialog.getDistrictName());
+                        SharedPreUtil.saveSharedPreString(CommonData.SDATA_WEATHER_SHI, cityDialog.getCityName());
+                        cityDialog.dismiss();
+                        EventBus.getDefault().post(new LEventCityRefresh());
+                        return true;
+                    } else {
+                        ToastManage.self().show("请选择城市");
+                        return false;
                     }
                 });
                 cityDialog.show();

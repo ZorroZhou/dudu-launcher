@@ -118,6 +118,9 @@ public class CityDialog extends BaseDialog2 implements OnWheelChangedListener {
         if (areas == null) {
             areas = new String[]{""};
         }
+        if (areas.length > 0) {
+            mCurrentDistrictName = areas[0];
+        }
         mViewDistrict.setViewAdapter(new ArrayWheelAdapter<>(getContext(), areas));
         mViewDistrict.setCurrentItem(0);
     }
@@ -131,6 +134,9 @@ public class CityDialog extends BaseDialog2 implements OnWheelChangedListener {
         String[] cities = mCitisDatasMap.get(mCurrentProviceName);
         if (cities == null) {
             cities = new String[]{""};
+        }
+        if (cities.length > 0) {
+            mCurrentCityName = cities[0];
         }
         mViewCity.setViewAdapter(new ArrayWheelAdapter<>(getContext(), cities));
         mViewCity.setCurrentItem(0);

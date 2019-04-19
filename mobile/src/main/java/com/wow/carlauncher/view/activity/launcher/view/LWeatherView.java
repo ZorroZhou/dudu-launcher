@@ -15,7 +15,7 @@ import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.location.event.MNewLocationEvent;
 import com.wow.carlauncher.ex.manage.time.event.MTimeMinuteEvent;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
-import com.wow.carlauncher.repertory.amapWebservice.WebService;
+import com.wow.carlauncher.repertory.amapWebservice.AMapWebService;
 import com.wow.carlauncher.repertory.amapWebservice.res.WeatherRes;
 import com.wow.carlauncher.view.activity.launcher.event.LEventCityRefresh;
 import com.wow.carlauncher.view.base.BaseDialog2;
@@ -163,7 +163,7 @@ public class LWeatherView extends BaseEXView {
                 }
 
                 if (CommonUtil.isNotNull(chengshi)) {
-                    WebService.getWeatherInfo(chengshi, new WebService.CommonCallback<WeatherRes>() {
+                    AMapWebService.getWeatherInfo(chengshi, new AMapWebService.CommonCallback<WeatherRes>() {
                         @Override
                         public void callback(WeatherRes res) {
                             runninng = false;

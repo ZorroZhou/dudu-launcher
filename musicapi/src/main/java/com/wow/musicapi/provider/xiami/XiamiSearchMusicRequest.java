@@ -1,7 +1,6 @@
 package com.wow.musicapi.provider.xiami;
 
-import com.google.gson.reflect.TypeToken;
-import com.wow.frame.SFrame;
+import com.alibaba.fastjson.JSONObject;
 import com.wow.musicapi.api.BaseRequest;
 import com.wow.musicapi.config.Constants;
 import com.wow.musicapi.model.Song;
@@ -9,7 +8,6 @@ import com.wow.musicapi.model.Song;
 import org.xutils.http.RequestParams;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Create by huchunyue on 2018/2/24
@@ -42,11 +40,9 @@ public class XiamiSearchMusicRequest extends BaseRequest<List<? extends Song>> {
     }
 
     protected List<XiamiSong> parseResult(String data) {
-        System.out.println(data);
-        Map json = SFrame.getGson().fromJson(data, Map.class);
-
-        List<XiamiSong> list = SFrame.getGson().fromJson(SFrame.getGson().toJson(((Map) json.get("data")).get("songs")), new TypeToken<List<XiamiSong>>() {
-        }.getType());
+        JSONObject json = JSONObject.parseObject(data);
+        List<XiamiSong> list = json.getJSONObject("data").getJSONArray("songs")
+                .toJavaList(XiamiSong.class);
         return list;
     }
 }

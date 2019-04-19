@@ -1,6 +1,9 @@
 package com.wow.musicapi.provider.xiami;
 
+import com.alibaba.fastjson.JSONObject;
 import com.wow.frame.SFrame;
+import com.wow.frame.repertory.dbTool.beanTool.BeanUtil;
+import com.wow.frame.util.JsonConvertUtil;
 import com.wow.musicapi.api.BaseRequest;
 
 import org.xutils.http.RequestParams;
@@ -25,26 +28,12 @@ public class XiamiGetAlbumInfoRequest extends BaseRequest<XiamiAlbum> {
 
         requestParams.addHeader("User-Agent", XiamiMusicApi.USER_AGENT);
         requestParams.addHeader("Referer", "http://m.xiami.com");
-
-//        params.setRequestBody(new FileBody(file, "application/octet-stream"));
-//        x.http().getSync()
-//        HttpUrl.Builder urlBuilder = HttpUrl.parse("http://api.xiami.com/web").newBuilder();
-//        urlBuilder.addQueryParameter("id", mAlbumId);
-//        urlBuilder.addQueryParameter("v", "2.0");
-//        urlBuilder.addQueryParameter("app_key", "1");
-//        urlBuilder.addQueryParameter("r", "album/detail");
-//        Request.Builder requestBuilder = new Request.Builder();
-//        requestBuilder.url(urlBuilder.build());
-//        requestBuilder.addHeader("User-Agent", XiamiMusicApi.USER_AGENT);
-//        requestBuilder.addHeader("Referer", "http://m.xiami.com");
-//        requestBuilder.get();
-//        final Request request = requestBuilder.build();
         return requestParams;
     }
 
     protected XiamiAlbum parseResult(String data) {
-        Map json = SFrame.getGson().fromJson(data, Map.class);
-        XiamiAlbum album = SFrame.getGson().fromJson(SFrame.getGson().toJson(json.get("data")), XiamiAlbum.class);
+        JSONObject json = JSONObject.parseObject(data);
+        XiamiAlbum album = json.getJSONObject("data").toJavaObject(XiamiAlbum.class);
         return album;
     }
 }

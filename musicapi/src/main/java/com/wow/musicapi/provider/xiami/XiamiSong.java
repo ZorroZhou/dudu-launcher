@@ -1,50 +1,45 @@
 package com.wow.musicapi.provider.xiami;
 
-import com.google.gson.annotations.SerializedName;
+import com.alibaba.fastjson.annotation.JSONField;
 import com.wow.musicapi.api.MusicProvider;
-import com.wow.musicapi.model.Album;
-import com.wow.musicapi.model.Artist;
-import com.wow.musicapi.model.BaseBean;
-import com.wow.musicapi.model.Lyric;
-import com.wow.musicapi.model.MusicLink;
-import com.wow.musicapi.model.Song;
+import com.wow.musicapi.model.*;
 import com.wow.musicapi.util.SongUtils;
 
 import java.util.ArrayList;
 
 @SuppressWarnings("SpellCheckingInspection")
 public class XiamiSong extends BaseBean implements Song {
-    @SerializedName("song_name")
+    @JSONField(name = "song_name")
     public String name;
 
-    @SerializedName("song_id")
+    @JSONField(name = "song_id")
     public String songId;
 
-    @SerializedName("album_id")
+    @JSONField(name = "album_id")
     public long albumId;
 
-    @SerializedName("album_name")
+    @JSONField(name = "album_name")
     public String albumName;
 
-    @SerializedName("album_logo")
+    @JSONField(name = "album_logo")
     public String albumPicUrl;
 
-    @SerializedName("artist_id")
+    @JSONField(name = "artist_id")
     public long artistId;
 
-    @SerializedName("artist_name")
+    @JSONField(name = "artist_name")
     public String artistName;
 
-    @SerializedName("artist_logo")
+    @JSONField(name = "artist_logo")
     public String artistPicUrl;
 
-    @SerializedName("listen_file")
+    @JSONField(name = "listen_file")
     public String listenUrl;
 
-    @SerializedName("lyric")
+    @JSONField(name = "lyric")
     public String lyricUrl;
 
-    @SerializedName("singers")
+    @JSONField(name = "singers")
     public String singers;
 
     @Override

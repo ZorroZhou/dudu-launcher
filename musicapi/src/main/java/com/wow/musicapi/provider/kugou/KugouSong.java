@@ -90,6 +90,9 @@ class KugouSong extends BaseBean implements Song {
 
     @Override
     public String getPicUrl() {
+        if (picUrlFormat == null) {
+            return null;
+        }
         return picUrlFormat.replace("{size}", "150");
     }
 

@@ -17,8 +17,8 @@ import java.io.UnsupportedEncodingException;
  * Created by 10124 on 2017/10/29.
  */
 
-public class WebService {
-    private static final String TAG = "WebService";
+public class AMapWebService {
+    private static final String TAG = "AMapWebService";
     private static final String KEY = "b8a80f002ec3fe70454a4c013eaabbb7";
 
     public static void getWeatherInfo(String adcode, final CommonCallback commonCallback) {

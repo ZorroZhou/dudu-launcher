@@ -1,15 +1,15 @@
 package com.wow.musicapi.provider.xiami;
 
-import com.google.gson.annotations.SerializedName;
+import com.alibaba.fastjson.annotation.JSONField;
 import com.wow.musicapi.model.Artist;
 import com.wow.musicapi.model.BaseBean;
 
 @SuppressWarnings("SpellCheckingInspection")
 class XiamiSinger extends BaseBean implements Artist {
-    @SerializedName("artist_name")
+    @JSONField(name = "artist_name")
     public String artistName;
 
-    @SerializedName("artist_id")
+    @JSONField(name = "artist_id")
     public String artistId;
 
     @Override

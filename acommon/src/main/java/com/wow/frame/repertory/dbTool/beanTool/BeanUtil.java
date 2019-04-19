@@ -1,6 +1,8 @@
 package com.wow.frame.repertory.dbTool.beanTool;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -17,7 +19,7 @@ public class BeanUtil {
             Map<String, Object> returnMap = new HashMap<String, Object>();
             for (PropertyInfo pi : pis) {
                 String propertyName = pi.getName();
-                returnMap.put(propertyName,pi.getReadMethod().invoke(bean));
+                returnMap.put(propertyName, pi.getReadMethod().invoke(bean));
             }
             return returnMap;
         } catch (Exception e) {
@@ -25,9 +27,40 @@ public class BeanUtil {
             return null;
         }
     }
-    public static <T>T map2bean(Class<T> clazz,Map<String, Object> map) {
+
+    @SuppressWarnings("unchecked")
+    public static <T> T toBean(Class<T> clazz, Object map) {
+        if (map instanceof Map) {
+            try {
+                Map<String, Object> bb = (Map<String, Object>) map;
+                return map2bean(clazz, bb);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T> List<T> toList(Class<T> clazz, Object list) {
+        List<T> res = new ArrayList<>();
+        if (list instanceof List) {
+            List l = (List) list;
+            for (Object obj : l) {
+                try {
+                    res.add(map2bean(clazz, (Map<String, Object>) obj));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+        return res;
+    }
+
+    public static <T> T map2bean(Class<T> clazz, Map<String, Object> map) {
         // 查询
-        try{
+        try {
             BeanInfo info = BeanManage.self().getBeanInfo(clazz);
             if (info == null) {
                 return null;
@@ -42,7 +75,7 @@ public class BeanUtil {
                 }
             }
             return obj;
-        }catch (Exception e){
+        } catch (Exception e) {
 
         }
         return null;

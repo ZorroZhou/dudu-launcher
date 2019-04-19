@@ -9,6 +9,7 @@ import android.util.Log;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.wow.carlauncher.common.CommonData;
+import com.wow.frame.util.CommonUtil;
 import com.wow.musicapi.api.MusicApi;
 import com.wow.musicapi.api.MusicApiFactory;
 import com.wow.musicapi.api.MusicProvider;
@@ -52,7 +53,6 @@ public class MusicCoverManage {
 
     public void loadMusicCover(final String title, final String zuojia, final Callback callback) {
         String name = nameGenerator.generate(title + "-" + zuojia + "-" + musicProvider) + ".temp";
-        System.out.println(runkey);
         if (runkey.contains(name)) {
             return;
         }
@@ -65,9 +65,9 @@ public class MusicCoverManage {
                 callback.loadCover(true, title, zuojia, bitmap);
                 Log.e(CommonData.TAG, "封面载入成功");
             } else {
-                cover.deleteOnExit();
+                cover.delete();
                 callback.loadCover(false, title, zuojia, null);
-                Log.e(CommonData.TAG, "封面载入成功");
+                Log.e(CommonData.TAG, "封面载入失败");
             }
             runkey.remove(name);
         } else {
@@ -76,14 +76,16 @@ public class MusicCoverManage {
                 boolean success = false;
                 try {
                     final List<? extends Song> songs = api.searchMusicSync(title + " " + zuojia, 1, false);
-                    if (songs.size() > 0) {
+                    if (songs.size() > 0 && CommonUtil.isNotNull(songs.get(0).getPicUrl())) {
                         Bitmap bitmap = ImageLoader.getInstance().loadImageSync(songs.get(0).getPicUrl());
                         File dir = new File(Environment.getExternalStorageDirectory() + File.separator + "music_cover" + File.separator);
                         boolean direxist = true;
                         if (!dir.exists()) {
                             direxist = dir.mkdirs();
                         }
-                        if (bitmap != null && direxist && cover.createNewFile()) {
+                        cover.delete();
+                        boolean create = cover.createNewFile();
+                        if (bitmap != null && direxist && create) {
                             callback.loadCover(true, title, zuojia, bitmap);
                             FileOutputStream out = new FileOutputStream(cover);
                             bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
@@ -97,8 +99,8 @@ public class MusicCoverManage {
                     e.printStackTrace();
                 }
                 if (!success) {
-                    callback.loadCover(false, title, zuojia, null);
                     Log.e(CommonData.TAG, "封面下载失败");
+                    callback.loadCover(false, title, zuojia, null);
                 }
                 runkey.remove(name);
             });
@@ -108,4 +110,7 @@ public class MusicCoverManage {
     public interface Callback {
         void loadCover(boolean success, String title, String zuojia, Bitmap cover);
     }
+
+
+
 }

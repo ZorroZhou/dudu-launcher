@@ -1,4 +1,4 @@
-package com.wow.musicapi.provider.kugou;
+package com.wow.musicapi.provider.baidu;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.wow.musicapi.model.Artist;
@@ -9,7 +9,7 @@ import com.wow.musicapi.model.BaseBean;
  */
 
 @SuppressWarnings("SpellCheckingInspection")
-class KugouArtist extends BaseBean implements Artist {
+class BaiduArtist extends BaseBean implements Artist {
     @JSONField(name = "name")
     public String name;
 

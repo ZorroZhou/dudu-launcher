@@ -24,7 +24,7 @@ public class XiamiMusicApi implements MusicApi {
     }
 
     @Override
-    public List<? extends Song> getSongDetailInfoByIdsSync(boolean needLyric, String... musicIds) throws Throwable {
+    public List<? extends Song> getSongDetailInfoByIdsSync(boolean needLyric, String... musicIds) {
         return null;
     }
 

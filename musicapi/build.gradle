@@ -29,6 +29,6 @@ dependencies {
     implementation 'commons-codec:commons-codec:1.10'
     implementation 'org.apache.commons:commons-text:1.2'
     implementation 'org.xutils:xutils:3.5.0'
-    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.alibaba:fastjson:1.2.46'
     api project(':acommon')
 }

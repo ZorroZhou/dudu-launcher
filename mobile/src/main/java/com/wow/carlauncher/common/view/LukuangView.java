@@ -1,4 +1,4 @@
-package com.wow.carlauncher.common;
+package com.wow.carlauncher.common.view;
 
 import android.content.Context;
 import android.graphics.Canvas;

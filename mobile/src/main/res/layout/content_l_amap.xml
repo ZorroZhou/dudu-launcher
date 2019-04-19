@@ -357,7 +357,7 @@
                 app:layout_widthPercent="34%h" />
         </com.zhy.android.percent.support.PercentRelativeLayout>
 
-        <com.wow.carlauncher.common.LukuangView
+        <com.wow.carlauncher.common.view.LukuangView
             android:id="@+id/lukuang"
             android:layout_width="5dp"
             android:layout_height="wrap_content"

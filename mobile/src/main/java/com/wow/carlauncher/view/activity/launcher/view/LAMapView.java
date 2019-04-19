@@ -13,8 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.wow.carlauncher.R;
-import com.wow.carlauncher.common.CommonData;
-import com.wow.carlauncher.common.LukuangView;
+import com.wow.carlauncher.common.view.LukuangView;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.plugin.amapcar.AMapCarPlugin;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventNavInfo;
@@ -25,7 +24,6 @@ import com.wow.carlauncher.ex.plugin.amapcar.model.Lukuang;
 import com.wow.carlauncher.view.base.BaseEXView;
 import com.wow.frame.util.AppUtil;
 import com.wow.frame.util.CommonUtil;
-import com.wow.frame.util.SharedPreUtil;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;

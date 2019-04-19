@@ -68,9 +68,9 @@ public class ThemeManage {
                 break;
             case SHIJIAN:
                 if (SunRiseSetUtil.isNight(lat, lon, new Date())) {
-                    setThemeMode(BLACK);
-                } else {
                     setThemeMode(WHITE);
+                } else {
+                    setThemeMode(BLACK);
                 }
                 break;
         }

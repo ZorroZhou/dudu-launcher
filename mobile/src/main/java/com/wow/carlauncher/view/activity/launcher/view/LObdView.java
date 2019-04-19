@@ -1,5 +1,6 @@
 package com.wow.carlauncher.view.activity.launcher.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarInfo;
+import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventConnect;
 import com.wow.carlauncher.view.base.BaseEXView;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -88,6 +90,23 @@ public class LObdView extends BaseEXView {
 
     @ViewInject(R.id.p_yl)
     private ProgressBar p_yl;
+
+    @SuppressLint("SetTextI18n")
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(final PObdEventConnect event) {
+//        boolean show = false;
+//        if (event.isConnected()) {
+//            if (ObdPlugin.self().supportTp()) {
+//                show = true;
+//            } else {
+//                tv_msg.setText("OBD设备不支持胎压");
+//            }
+//        } else {
+//            tv_msg.setText("没有连接OBD");
+//        }
+//        ll_ty.setVisibility(show ? VISIBLE : GONE);
+//        ll_msg.setVisibility(show ? GONE : VISIBLE);
+    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventCall(final PObdEventCarInfo event) {

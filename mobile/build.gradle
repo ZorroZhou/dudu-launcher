@@ -48,7 +48,6 @@ android {
 }
 
 dependencies {
-    api project(':acommon')
     implementation 'io.github.meetsl:SCardView:1.1'
     implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'org.xutils:xutils:3.5.0'

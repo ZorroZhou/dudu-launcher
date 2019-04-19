@@ -1,4 +1,4 @@
-package com.wow.carlauncher.repertory.qqmusicPic.res;
+package com.wow.carlauncher.repertory.qqmusicService.res;
 
 import java.util.List;
 

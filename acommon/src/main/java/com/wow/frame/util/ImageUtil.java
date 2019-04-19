@@ -1,4 +1,4 @@
-package com.wow.frame.util;
+package com.wow.carlauncher.common.util;
 
 import android.content.Context;
 import android.graphics.Bitmap;

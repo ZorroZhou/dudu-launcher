@@ -14,8 +14,8 @@ import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventNavInfo;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventState;
 import com.wow.carlauncher.view.base.BaseEXView;
-import com.wow.frame.util.CommonUtil;
-import com.wow.frame.util.DateUtil;
+import com.wow.carlauncher.common.util.CommonUtil;
+import com.wow.carlauncher.common.util.DateUtil;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;

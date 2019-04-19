@@ -1,7 +1,7 @@
 package com.wow.frame.repertory.dbTool.beanTool;
 
 
-import com.wow.frame.util.CommonUtil;
+import com.wow.carlauncher.common.util.CommonUtil;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

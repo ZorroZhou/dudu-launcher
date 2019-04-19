@@ -9,7 +9,7 @@ import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.wow.carlauncher.ex.ContextEx;
 import com.wow.carlauncher.ex.manage.location.event.MNewLocationEvent;
-import com.wow.frame.util.CommonUtil;
+import com.wow.carlauncher.common.util.CommonUtil;
 
 import org.greenrobot.eventbus.EventBus;
 

@@ -1,19 +1,16 @@
-package com.wow.carlauncher.repertory.qqmusicPic;
+package com.wow.carlauncher.repertory.qqmusicService;
 
 import android.util.Log;
 
+import com.wow.carlauncher.common.util.GsonUtil;
 import com.wow.carlauncher.common.util.HttpUtil;
-import com.wow.carlauncher.repertory.qqmusicPic.res.BaseRes;
-import com.wow.carlauncher.repertory.qqmusicPic.res.SearchRes;
-import com.wow.frame.SFrame;
+import com.wow.carlauncher.repertory.qqmusicService.res.BaseRes;
+import com.wow.carlauncher.repertory.qqmusicService.res.SearchRes;
 
 import org.xutils.common.Callback;
 import org.xutils.http.HttpMethod;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
-
-import java.io.UnsupportedEncodingException;
-import java.util.Map;
 
 /**
  * Created by 10124 on 2017/10/29.
@@ -36,7 +33,7 @@ public class QQMusicWebService {
                     result = result.substring(0, result.length() - 1);
                     Log.e(TAG, "onSuccess: " + result);
                     if (commonCallback != null) {
-                        commonCallback.callback(SFrame.getGson().fromJson(result, SearchRes.class));
+                        commonCallback.callback(GsonUtil.getGson().fromJson(result, SearchRes.class));
                     }
                 } else {
                     throw new RuntimeException("数据错误");

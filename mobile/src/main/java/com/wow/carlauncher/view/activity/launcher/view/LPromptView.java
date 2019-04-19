@@ -28,10 +28,10 @@ import com.wow.carlauncher.view.activity.CarInfoActivity;
 import com.wow.carlauncher.view.activity.set.SetActivity;
 import com.wow.carlauncher.view.base.BaseEXView;
 import com.wow.carlauncher.view.event.EventWifiState;
-import com.wow.frame.util.CommonUtil;
-import com.wow.frame.util.DateUtil;
-import com.wow.frame.util.NetWorkUtil;
-import com.wow.frame.util.SharedPreUtil;
+import com.wow.carlauncher.common.util.CommonUtil;
+import com.wow.carlauncher.common.util.DateUtil;
+import com.wow.carlauncher.common.util.NetWorkUtil;
+import com.wow.carlauncher.common.util.SharedPreUtil;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -44,8 +44,6 @@ import java.util.Date;
 import static com.inuker.bluetooth.library.Constants.STATUS_DEVICE_CONNECTED;
 import static com.wow.carlauncher.common.CommonData.MINUTE_MILL;
 import static com.wow.carlauncher.common.CommonData.SDATA_TIME_PLUGIN_OPEN_APP;
-import static com.wow.carlauncher.ex.manage.ThemeManage.BLACK;
-import static com.wow.carlauncher.ex.manage.ThemeManage.WHITE;
 
 /**
  * Created by 10124 on 2018/4/22.

@@ -11,13 +11,13 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 
 import com.wow.carlauncher.R;
-import com.wow.carlauncher.common.AppIconUtil;
+import com.wow.carlauncher.common.AppIconTemp;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.ex.manage.appInfo.event.MAppInfoRefreshEvent;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.view.activity.driving.DrivingActivity;
 import com.wow.carlauncher.view.activity.set.SetActivity;
-import com.wow.frame.util.CommonUtil;
+import com.wow.carlauncher.common.util.CommonUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.xutils.x;
@@ -161,7 +161,7 @@ public class AppInfoManage {
         AppInfo info = getAppInfo(app);
         if (info != null) {
             //先根据主题获取图标
-            int r = AppIconUtil.getIcon(app);
+            int r = AppIconTemp.getIcon(app);
             if (r != 0) {
                 Drawable drawable = resources.getDrawable(r);
                 if (drawable != null) {

@@ -5,7 +5,7 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 
-import com.wow.frame.util.ThreadObj;
+import com.wow.carlauncher.common.util.ThreadObj;
 
 public abstract class SetEnumOnClickListener<T extends SetEnum> implements View.OnClickListener {
     private Context context;

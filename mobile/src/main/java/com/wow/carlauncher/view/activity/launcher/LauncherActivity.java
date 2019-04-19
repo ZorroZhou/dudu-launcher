@@ -28,8 +28,8 @@ import com.wow.carlauncher.view.activity.launcher.view.LDockView;
 import com.wow.carlauncher.view.activity.launcher.view.LPage1View;
 import com.wow.carlauncher.view.activity.launcher.view.LPage2View;
 import com.wow.carlauncher.view.base.BaseView;
-import com.wow.frame.util.SharedPreUtil;
-import com.wow.frame.util.ViewUtils;
+import com.wow.carlauncher.common.util.SharedPreUtil;
+import com.wow.carlauncher.common.util.ViewUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

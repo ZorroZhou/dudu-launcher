@@ -3,7 +3,7 @@ package com.wow.frame.repertory.remote;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.wow.frame.SFrame;
+import com.wow.carlauncher.common.util.GsonUtil;
 
 import java.lang.reflect.Type;
 
@@ -15,7 +15,7 @@ public class JsonResponseParser implements JsonConverter {
     private Gson gson;
 
     public JsonResponseParser() {
-        gson = SFrame.getGson();
+        gson = GsonUtil.getGson();
     }
 
     @Override

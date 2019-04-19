@@ -1,4 +1,4 @@
-package com.wow.frame.util;
+package com.wow.carlauncher.common.util;
 
 public class ResultTool {
     public static void checkResult(boolean expression, String msg) {

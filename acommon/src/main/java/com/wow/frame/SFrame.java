@@ -6,14 +6,14 @@ import com.wow.frame.declare.SDatabaseDeclare;
 import com.wow.frame.declare.SWebServiceDeclare;
 import com.wow.frame.repertory.dbTool.DatabaseManage;
 import com.wow.frame.repertory.remote.WebServiceManage;
-import com.wow.frame.util.SharedPreUtil;
+import com.wow.carlauncher.common.util.SharedPreUtil;
 
 import org.xutils.x;
 
 /**
  * Created by 10124 on 2017/7/26.
  */
-public class SFrame {
+public class GsonUtil {
     private static boolean inited = false;
 
     private static Gson gson;
@@ -40,9 +40,9 @@ public class SFrame {
     }
 
     public static Gson getGson() {
-        if (SFrame.gson == null) {
-            SFrame.gson = new Gson();
+        if (GsonUtil.gson == null) {
+            GsonUtil.gson = new Gson();
         }
-        return SFrame.gson;
+        return GsonUtil.gson;
     }
 }

@@ -12,7 +12,7 @@ import android.util.Log;
 import com.wow.frame.repertory.dbTool.beanTool.BeanInfo;
 import com.wow.frame.repertory.dbTool.beanTool.BeanManage;
 import com.wow.frame.repertory.dbTool.beanTool.PropertyInfo;
-import com.wow.frame.util.DateUtil;
+import com.wow.carlauncher.common.util.DateUtil;
 
 import org.xutils.x;
 

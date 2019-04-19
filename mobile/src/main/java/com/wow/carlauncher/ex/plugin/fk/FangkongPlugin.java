@@ -16,8 +16,8 @@ import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventConnect;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventModel;
 import com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol;
-import com.wow.frame.util.CommonUtil;
-import com.wow.frame.util.SharedPreUtil;
+import com.wow.carlauncher.common.util.CommonUtil;
+import com.wow.carlauncher.common.util.SharedPreUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

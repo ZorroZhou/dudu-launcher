@@ -10,7 +10,7 @@ import com.google.gson.Gson;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 import com.wow.carlauncher.ex.plugin.music.MusicController;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
-import com.wow.frame.SFrame;
+import com.wow.carlauncher.common.util.GsonUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -36,7 +36,7 @@ public class QQMusicCarController extends MusicController {
 
     public void init(Context context, MusicPlugin musicView) {
         super.init(context, musicView);
-        gson = SFrame.getGson();
+        gson = GsonUtil.getGson();
 
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("com.tencent.qqmusiccar.action.PLAY_COMMAND_SEND_FOR_THIRD");

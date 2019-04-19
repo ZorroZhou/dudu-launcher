@@ -18,7 +18,7 @@ import com.wow.carlauncher.ex.manage.appInfo.event.MAppInfoRefreshEvent;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.view.adapter.AllAppAdapter;
 import com.wow.carlauncher.view.base.BaseActivity;
-import com.wow.frame.util.SharedPreUtil;
+import com.wow.carlauncher.common.util.SharedPreUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

@@ -1,8 +1,8 @@
 package com.wow.frame.repertory.dbTool;
 
 
-import com.wow.frame.util.CommonUtil;
-import com.wow.frame.util.MLogUtil;
+import com.wow.carlauncher.common.util.CommonUtil;
+import com.wow.carlauncher.common.util.MLogUtil;
 
 import java.util.ArrayList;
 import java.util.List;

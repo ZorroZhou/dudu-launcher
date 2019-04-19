@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.wow.carlauncher.CarLauncherApplication;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
-import com.wow.frame.util.SharedPreUtil;
+import com.wow.carlauncher.common.util.SharedPreUtil;
 
 public class ConsoleWin {
     private static class SingletonHolder {

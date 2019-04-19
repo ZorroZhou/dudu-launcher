@@ -9,8 +9,8 @@ import android.util.Log;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.wow.carlauncher.common.CommonData;
-import com.wow.carlauncher.repertory.qqmusicPic.QQMusicWebService;
-import com.wow.carlauncher.repertory.qqmusicPic.res.SearchRes;
+import com.wow.carlauncher.repertory.qqmusicService.QQMusicWebService;
+import com.wow.carlauncher.repertory.qqmusicService.res.SearchRes;
 
 import org.xutils.x;
 

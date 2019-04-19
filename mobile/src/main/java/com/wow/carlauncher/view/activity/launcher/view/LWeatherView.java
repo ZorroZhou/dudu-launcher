@@ -15,14 +15,14 @@ import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.location.event.MNewLocationEvent;
 import com.wow.carlauncher.ex.manage.time.event.MTimeMinuteEvent;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
-import com.wow.carlauncher.repertory.amapWebservice.AMapWebService;
-import com.wow.carlauncher.repertory.amapWebservice.res.WeatherRes;
+import com.wow.carlauncher.repertory.amapService.AMapWebService;
+import com.wow.carlauncher.repertory.amapService.res.WeatherRes;
 import com.wow.carlauncher.view.activity.launcher.event.LEventCityRefresh;
 import com.wow.carlauncher.view.base.BaseDialog2;
 import com.wow.carlauncher.view.base.BaseEXView;
 import com.wow.carlauncher.view.dialog.CityDialog;
-import com.wow.frame.util.CommonUtil;
-import com.wow.frame.util.SharedPreUtil;
+import com.wow.carlauncher.common.util.CommonUtil;
+import com.wow.carlauncher.common.util.SharedPreUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

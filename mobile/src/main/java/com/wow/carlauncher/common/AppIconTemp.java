@@ -9,7 +9,7 @@ import java.util.Map;
  * Created by 10124 on 2018/4/25.
  */
 
-public class AppIconUtil {
+public class AppIconTemp {
     private static Map<String, Integer> appiconMark;
 
     static {

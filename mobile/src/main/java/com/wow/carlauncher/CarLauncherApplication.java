@@ -6,9 +6,8 @@ import android.content.Intent;
 import com.wow.carlauncher.common.ActivityLifecycleListener;
 import com.wow.carlauncher.common.AppContext;
 import com.wow.carlauncher.service.MainService;
-import com.wow.frame.declare.SAppDeclare;
 
-public class CarLauncherApplication extends Application implements SAppDeclare {
+public class CarLauncherApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
@@ -25,10 +24,5 @@ public class CarLauncherApplication extends Application implements SAppDeclare {
     public synchronized int checkActivity(int count) {
         startedActivityCount = startedActivityCount + count;
         return startedActivityCount;
-    }
-
-    @Override
-    public Application getApplication() {
-        return this;
     }
 }

@@ -1,18 +1,16 @@
-package com.wow.carlauncher.repertory.amapWebservice;
+package com.wow.carlauncher.repertory.amapService;
 
 import android.util.Log;
 
+import com.wow.carlauncher.common.util.GsonUtil;
 import com.wow.carlauncher.common.util.HttpUtil;
-import com.wow.carlauncher.repertory.amapWebservice.res.BaseRes;
-import com.wow.carlauncher.repertory.amapWebservice.res.WeatherRes;
-import com.wow.frame.SFrame;
+import com.wow.carlauncher.repertory.amapService.res.BaseRes;
+import com.wow.carlauncher.repertory.amapService.res.WeatherRes;
 
 import org.xutils.common.Callback;
 import org.xutils.http.HttpMethod;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
-
-import java.io.UnsupportedEncodingException;
 
 /**
  * Created by 10124 on 2017/10/29.
@@ -30,7 +28,7 @@ public class AMapWebService {
             public void onSuccess(String result) {
                 Log.e(TAG, "onSuccess: " + result);
                 if (commonCallback != null) {
-                    commonCallback.callback(SFrame.getGson().fromJson(result, WeatherRes.class));
+                    commonCallback.callback(GsonUtil.getGson().fromJson(result, WeatherRes.class));
                 }
             }
 

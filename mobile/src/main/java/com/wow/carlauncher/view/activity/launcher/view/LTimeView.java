@@ -12,7 +12,7 @@ import com.wow.carlauncher.common.util.LunarUtil;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 import com.wow.carlauncher.view.base.BaseEXView;
-import com.wow.frame.util.DateUtil;
+import com.wow.carlauncher.common.util.DateUtil;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;

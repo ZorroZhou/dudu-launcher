@@ -15,8 +15,8 @@ import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfo;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.view.base.BaseView;
-import com.wow.frame.util.SharedPreUtil;
-import com.wow.frame.util.ThreadObj;
+import com.wow.carlauncher.common.util.SharedPreUtil;
+import com.wow.carlauncher.common.util.ThreadObj;
 
 import org.xutils.view.annotation.ViewInject;
 

@@ -25,9 +25,9 @@ import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.ex.plugin.obd.ObdProtocolEnum;
 import com.wow.carlauncher.view.base.BaseView;
 import com.wow.carlauncher.view.dialog.ListDialog;
-import com.wow.frame.util.CommonUtil;
-import com.wow.frame.util.SharedPreUtil;
-import com.wow.frame.util.ThreadObj;
+import com.wow.carlauncher.common.util.CommonUtil;
+import com.wow.carlauncher.common.util.SharedPreUtil;
+import com.wow.carlauncher.common.util.ThreadObj;
 
 import org.xutils.view.annotation.ViewInject;
 

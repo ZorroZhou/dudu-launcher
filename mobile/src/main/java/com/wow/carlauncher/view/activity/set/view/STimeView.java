@@ -21,9 +21,9 @@ import com.wow.carlauncher.view.activity.launcher.event.LEventCityRefresh;
 import com.wow.carlauncher.view.base.BaseDialog2;
 import com.wow.carlauncher.view.base.BaseView;
 import com.wow.carlauncher.view.dialog.CityDialog;
-import com.wow.frame.util.CommonUtil;
-import com.wow.frame.util.SharedPreUtil;
-import com.wow.frame.util.ThreadObj;
+import com.wow.carlauncher.common.util.CommonUtil;
+import com.wow.carlauncher.common.util.SharedPreUtil;
+import com.wow.carlauncher.common.util.ThreadObj;
 
 import org.greenrobot.eventbus.EventBus;
 import org.xutils.view.annotation.ViewInject;

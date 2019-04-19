@@ -10,8 +10,8 @@ import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventState;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapLukuangInfo;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapMuteStateInfo;
 import com.wow.carlauncher.ex.plugin.amapcar.model.Lukuang;
-import com.wow.frame.SFrame;
-import com.wow.frame.util.CommonUtil;
+import com.wow.carlauncher.common.util.GsonUtil;
+import com.wow.carlauncher.common.util.CommonUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -156,7 +156,7 @@ public class AMapCartReceiver extends BroadcastReceiver {
                 }
                 case RECEIVER_LUKUANG_INFO: {
                     String info = intent.getStringExtra(RECEIVER_LUKUANG_INFO_EXTAR);
-                    Lukuang lukuang = SFrame.getGson().fromJson(info, Lukuang.class);
+                    Lukuang lukuang = GsonUtil.getGson().fromJson(info, Lukuang.class);
                     if (lukuang != null) {
                         EventBus.getDefault().post(new PAmapEventState().setRunning(true));
                         EventBus.getDefault().post(new PAmapLukuangInfo().setLukuang(lukuang));

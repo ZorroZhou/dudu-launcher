@@ -18,7 +18,7 @@ import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.view.base.BaseView;
 import com.wow.carlauncher.view.popupWindow.PopupWin;
 import com.wow.carlauncher.view.popupWindow.event.PEventFSRefresh;
-import com.wow.frame.util.SharedPreUtil;
+import com.wow.carlauncher.common.util.SharedPreUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.xutils.view.annotation.ViewInject;

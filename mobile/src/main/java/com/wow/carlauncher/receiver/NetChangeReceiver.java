@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 
 import com.wow.carlauncher.view.event.EventWifiState;
-import com.wow.frame.util.NetWorkUtil;
+import com.wow.carlauncher.common.util.NetWorkUtil;
 
 import org.greenrobot.eventbus.EventBus;
 

@@ -1,4 +1,4 @@
-package com.wow.frame.util;
+package com.wow.carlauncher.common.util;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;

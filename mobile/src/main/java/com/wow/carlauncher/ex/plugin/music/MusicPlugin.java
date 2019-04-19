@@ -12,7 +12,7 @@ import com.wow.carlauncher.ex.plugin.music.plugin.JidouMusicController;
 import com.wow.carlauncher.ex.plugin.music.plugin.NwdMusicController;
 import com.wow.carlauncher.ex.plugin.music.plugin.QQMusicCarController;
 import com.wow.carlauncher.ex.plugin.music.plugin.SystemMusicController;
-import com.wow.frame.util.SharedPreUtil;
+import com.wow.carlauncher.common.util.SharedPreUtil;
 
 import org.greenrobot.eventbus.EventBus;
 

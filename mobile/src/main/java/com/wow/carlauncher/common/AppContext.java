@@ -13,6 +13,8 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.wow.carlauncher.CarLauncherApplication;
+import com.wow.carlauncher.common.util.CommonUtil;
+import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.manage.MusicCoverManage;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
@@ -25,15 +27,8 @@ import com.wow.carlauncher.ex.plugin.console.ConsolePlugin;
 import com.wow.carlauncher.ex.plugin.fk.FangkongPlugin;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
-import com.wow.carlauncher.repertory.db.AppDbInfo;
 import com.wow.carlauncher.view.consoleWindow.ConsoleWin;
 import com.wow.carlauncher.view.popupWindow.PopupWin;
-import com.wow.frame.SFrame;
-import com.wow.frame.declare.SAppDeclare;
-import com.wow.frame.declare.SDatabaseDeclare;
-import com.wow.frame.repertory.dbTool.DatabaseInfo;
-import com.wow.frame.util.CommonUtil;
-import com.wow.frame.util.SharedPreUtil;
 
 import org.xutils.x;
 
@@ -51,7 +46,7 @@ import static com.wow.carlauncher.common.CommonData.TAG;
  * Created by liuyixian on 2017/9/20.
  */
 
-public class AppContext implements SAppDeclare, SDatabaseDeclare {
+public class AppContext {
     private static AppContext self;
 
     public synchronized static AppContext self() {
@@ -77,7 +72,7 @@ public class AppContext implements SAppDeclare, SDatabaseDeclare {
         this.application = app;
 
         x.Ext.init(app);
-        
+
         SharedPreUtil.init(app);
         //图片加载工具
         initImage();
@@ -155,14 +150,8 @@ public class AppContext implements SAppDeclare, SDatabaseDeclare {
         });
     }
 
-    @Override
     public Application getApplication() {
         return this.application;
-    }
-
-    @Override
-    public DatabaseInfo getDatabaseInfo() {
-        return new AppDbInfo();
     }
 
     private void handerException() {

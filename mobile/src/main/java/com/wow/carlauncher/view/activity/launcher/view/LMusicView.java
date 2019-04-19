@@ -155,16 +155,13 @@ public class LMusicView extends BaseEXView {
                         public void loadCover(boolean success, String title, String zuojia, final Bitmap cover) {
                             String kk = title + zuojia;
                             if (key.equals(kk)) {
-                                if (success) {
-                                    x.task().autoPost(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            music_iv_cover.setImageBitmap(cover);
-                                        }
-                                    });
-                                } else {
-                                    music_iv_cover.setImageResource(R.mipmap.music_dlogo);
-                                }
+                                x.task().autoPost(() -> {
+                                    if (success) {
+                                        music_iv_cover.setImageBitmap(cover);
+                                    } else {
+                                        music_iv_cover.setImageResource(R.mipmap.music_dlogo);
+                                    }
+                                });
                             }
                         }
                     });

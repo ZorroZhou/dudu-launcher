@@ -19,6 +19,8 @@ import java.io.FileOutputStream;
 import java.util.HashSet;
 import java.util.Set;
 
+import static com.wow.carlauncher.common.CommonData.TAG;
+
 public class MusicCoverManage {
     private static class SingletonHolder {
         @SuppressLint("StaticFieldLeak")
@@ -45,24 +47,25 @@ public class MusicCoverManage {
     public void loadMusicCover(final String title, final String zuojia, final Callback callback) {
         String name = nameGenerator.generate(title + "-" + zuojia) + ".temp";
         if (runkey.contains(name)) {
+            Log.e(TAG, "loadMusicCover: ????");
             return;
         }
         runkey.add(name);
         final File cover = new File(Environment.getExternalStorageDirectory() + File.separator + "music_cover" + File.separator + name);
         if (cover.exists()) {
-            Log.e(CommonData.TAG, "已有的封面");
+            Log.e(TAG, "已有的封面");
             Bitmap bitmap = BitmapFactory.decodeFile(cover.getAbsolutePath());
             if (bitmap != null && bitmap.getWidth() > 0) {
                 callback.loadCover(true, title, zuojia, bitmap);
-                Log.e(CommonData.TAG, "封面载入成功");
+                Log.e(TAG, "封面载入成功");
             } else {
                 cover.delete();
                 callback.loadCover(false, title, zuojia, null);
-                Log.e(CommonData.TAG, "封面载入失败");
+                Log.e(TAG, "封面载入失败");
             }
             runkey.remove(name);
         } else {
-            Log.e(CommonData.TAG, "新的封面");
+            Log.e(TAG, "新的封面");
 
             QQMusicWebService.searchMusic(title + " " + zuojia, 1, new QQMusicWebService.CommonCallback<SearchRes>() {
                 @Override
@@ -76,7 +79,7 @@ public class MusicCoverManage {
                                 res.getData().getSong().getList() != null &&
                                 res.getData().getSong().getList().size() > 0) {
                             SearchRes.SongItem songItem = res.getData().getSong().getList().get(0);
-                            Log.e(CommonData.TAG, "加载封面:" + QQMusicWebService.picUrl(songItem.getAlbumid()));
+                            Log.e(TAG, "加载封面:" + QQMusicWebService.picUrl(songItem.getAlbumid()));
                             Bitmap bitmap = ImageLoader.getInstance().loadImageSync(QQMusicWebService.picUrl(songItem.getAlbumid()));
                             if (bitmap != null && bitmap.getWidth() > 0) {
                                 try {
@@ -91,20 +94,20 @@ public class MusicCoverManage {
                                         FileOutputStream out = new FileOutputStream(cover);
                                         bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
                                         success = true;
-                                        Log.e(CommonData.TAG, "封面下载成功");
+                                        Log.e(TAG, "封面下载成功");
                                     } else {
-                                        Log.e(CommonData.TAG, "封面下载失败");
+                                        Log.e(TAG, "封面下载失败");
                                     }
                                 } catch (Exception e) {
 
                                 }
                             }
                         }
+                        runkey.remove(name);
                         if (!success) {
-                            Log.e(CommonData.TAG, "封面下载失败");
+                            Log.e(TAG, "封面下载失败");
                             callback.loadCover(false, title, zuojia, null);
                         }
-                        runkey.remove(name);
                     });
                 }
             });

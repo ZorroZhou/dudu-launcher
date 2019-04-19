@@ -1,5 +1,6 @@
 package com.wow.carlauncher.common.util;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -218,11 +219,12 @@ public class SunRiseSetUtil {
         return false;
     }
 
-//    public static void main(String[] args) {
-//        String str1 = SunRiseSet.getSunrise(new BigDecimal(104.066507),new BigDecimal(30.625124),new Date());
-//        String str2 = SunRiseSet.getSunset(new BigDecimal(104.066507),new BigDecimal(30.625124),new Date());
-//        System.out.println("日出时间：" + str1);
-//        System.out.println("日落时间：" + str2);
-//    }
+    public static void main(String[] args) {
+        String str1 = getSunrise(104.066507, 30.625124, new Date());
+        String str2 = getSunset(104.066507, 30.625124, new Date());
+        System.out.println("日出时间：" + str1);
+        System.out.println("日落时间：" + str2);
+
+    }
 
 }

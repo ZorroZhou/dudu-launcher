@@ -1,7 +1,11 @@
 package com.wow.carlauncher.common;
 
+import com.wow.carlauncher.view.activity.launcher.ItemEnum;
+
 public class CommonData {
     public static final String TAG = "WOW_CAR";
+    //所有的桌面插件
+    public static final ItemEnum[] LAUNCHER_ITEMS = {ItemEnum.AMAP, ItemEnum.MUSIC, ItemEnum.OBD, ItemEnum.TAIYA, ItemEnum.TIME, ItemEnum.WEATHER};
 
     public final static long MINUTE_MILL = 60 * 1000;
     public final static long HOUR_MILL = 60 * MINUTE_MILL;
@@ -109,7 +113,8 @@ public class CommonData {
     public static final String SDATA_APP_AUTO_OPEN3 = "SDATA_APP_AUTO_OPEN3";
     public static final String SDATA_APP_AUTO_OPEN4 = "SDATA_APP_AUTO_OPEN4";
 
-
+    //首页设置
     public static final String SDATA_LAUNCHER_ITEM_SORT_ = "SDATA_LAUNCHER_ITEM_SORT_";
     public static final String SDATA_LAUNCHER_ITEM_OPEN_ = "SDATA_LAUNCHER_ITEM_OPEN_";
+    public static final String SDATA_LAUNCHER_ITEM_NUM = "SDATA_LAUNCHER_ITEM_NUM";
 }

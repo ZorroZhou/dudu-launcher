@@ -9,25 +9,20 @@ import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
-import com.wow.carlauncher.CarLauncherApplication;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.location.event.MNewLocationEvent;
 import com.wow.carlauncher.ex.plugin.console.event.PConsoleEventLightState;
 import com.wow.carlauncher.view.activity.AppSelectActivity;
+import com.wow.carlauncher.view.activity.launcher.event.LItemRefreshEvent;
 import com.wow.carlauncher.view.activity.launcher.view.LDockView;
-import com.wow.carlauncher.view.activity.launcher.view.LPage1View;
-import com.wow.carlauncher.view.activity.launcher.view.LPage2View;
-import com.wow.carlauncher.view.base.BaseView;
+import com.wow.carlauncher.view.activity.launcher.view.LPageView;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.util.ViewUtils;
 
@@ -37,6 +32,10 @@ import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import static com.wow.carlauncher.common.CommonData.IDATA_APP_MARK;
 import static com.wow.carlauncher.common.CommonData.IDATA_APP_PACKAGE_NAME;
@@ -54,6 +53,7 @@ import static com.wow.carlauncher.ex.manage.ThemeManage.BLACK;
 import static com.wow.carlauncher.ex.manage.ThemeManage.WHITE;
 
 public class LauncherActivity extends Activity implements ThemeManage.OnThemeChangeListener {
+
     public static LauncherActivity activity;
 
     @ViewInject(R.id.ll_dock)
@@ -96,10 +96,58 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
         x.view().inject(this);
 
         EventBus.getDefault().register(this);
-        LPage1View lPage1View = new LPage1View(this);
-        LPage2View lPage2View = new LPage2View(this);
+        initItem();
 
-        viewPager.setAdapter(new ViewAdapter(new View[]{lPage1View, lPage2View}));
+//        LPage1View lPage1View = new LPage1View(this);
+//        LPage2View lPage2View = new LPage2View(this);
+//
+//        viewPager.setAdapter(new ViewAdapter(new View[]{lPage1View, lPage2View}));
+
+    }
+
+    private void initItem() {
+        //计算排序
+        List<ItemModel> items = new ArrayList<>();
+        for (ItemEnum item : CommonData.LAUNCHER_ITEMS) {
+            if (SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_LAUNCHER_ITEM_OPEN_ + item.getId(), true)) {
+                items.add(new ItemModel(item,
+                        SharedPreUtil.getSharedPreInteger(CommonData.SDATA_LAUNCHER_ITEM_SORT_ + item.getId(), item.getId()),
+                        SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_LAUNCHER_ITEM_OPEN_ + item.getId(), true)
+                ));
+            }
+        }
+
+        Collections.sort(items, (o1, o2) -> o1.index - o2.index);
+        int psize = SharedPreUtil.getSharedPreInteger(CommonData.SDATA_LAUNCHER_ITEM_NUM, 3);
+        if (psize != 3) {
+            psize = 4;
+        }
+        int pnum = items.size() / psize;
+        if (items.size() % psize != 0) {
+            pnum++;
+        }
+
+        LPageView[] pageViews = new LPageView[pnum];
+
+        int npage = 0;
+        LPageView pageView = null;
+        View[] pcell = new View[psize];
+        for (int i = 0; i < items.size(); i++) {
+            if (i % psize == 0) {
+                pageViews[npage] = new LPageView(this, psize);
+                pcell = new View[psize];
+                pageView = pageViews[npage];
+                npage++;
+            }
+            pcell[i % psize] = ItemEnum.createView(this, items.get(i).info);
+            //如果是一组的最后一个,或者是列表最后一个
+            if (((i % psize == psize - 1) || (i == items.size() - 1)) && pageView != null) {
+                pageView.setItem(pcell);
+            }
+        }
+        viewPager.setAdapter(new ViewAdapter(pageViews));
+        viewPager.clearOnPageChangeListeners();
+        postion.removeAllViews();
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewUtils.dip2px(getApplicationContext(), 8), ViewUtils.dip2px(getApplicationContext(), 8));
         //设置小圆点左右之间的间隔
@@ -107,7 +155,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
 
         //根据主题处理小圆点
         boolean baise = ThemeManage.self().getThemeMode() == WHITE;
-        final View[] posts = new View[2];
+        final View[] posts = new View[pageViews.length];
         for (int i = 0; i < posts.length; i++) {
             posts[i] = new View(getApplicationContext());
             if (i == 0) {
@@ -221,6 +269,11 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
         EventBus.getDefault().unregister(this);
         ThemeManage.self().unregisterThemeChangeListener(this);
         LauncherActivity.activity = null;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(LItemRefreshEvent event) {
+        initItem();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

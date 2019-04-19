@@ -17,7 +17,7 @@ import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.view.activity.AppSelectActivity;
-import com.wow.carlauncher.view.activity.launcher.event.LauncherDockLabelShowChangeEvent;
+import com.wow.carlauncher.view.activity.launcher.event.LDockLabelShowChangeEvent;
 import com.wow.carlauncher.view.base.BaseEXView;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
@@ -199,7 +199,7 @@ public class LDockView extends BaseEXView {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(LauncherDockLabelShowChangeEvent event) {
+    public void onEvent(LDockLabelShowChangeEvent event) {
         dockLabelShow(event.show);
     }
 }

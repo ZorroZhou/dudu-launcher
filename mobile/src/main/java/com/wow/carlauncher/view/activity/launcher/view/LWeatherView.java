@@ -17,8 +17,7 @@ import com.wow.carlauncher.ex.manage.time.event.MTimeMinuteEvent;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.repertory.amapService.AMapWebService;
 import com.wow.carlauncher.repertory.amapService.res.WeatherRes;
-import com.wow.carlauncher.view.activity.launcher.event.LEventCityRefresh;
-import com.wow.carlauncher.view.base.BaseDialog2;
+import com.wow.carlauncher.view.activity.launcher.event.LCityRefreshEvent;
 import com.wow.carlauncher.view.base.BaseEXView;
 import com.wow.carlauncher.view.dialog.CityDialog;
 import com.wow.carlauncher.common.util.CommonUtil;
@@ -115,7 +114,7 @@ public class LWeatherView extends BaseEXView {
                         SharedPreUtil.saveSharedPreString(CommonData.SDATA_WEATHER_CITY, cityDialog.getDistrictName());
                         SharedPreUtil.saveSharedPreString(CommonData.SDATA_WEATHER_SHI, cityDialog.getCityName());
                         cityDialog.dismiss();
-                        EventBus.getDefault().post(new LEventCityRefresh());
+                        EventBus.getDefault().post(new LCityRefreshEvent());
                         return true;
                     } else {
                         ToastManage.self().show("请选择城市");
@@ -187,7 +186,7 @@ public class LWeatherView extends BaseEXView {
     }
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
-    public void onEvent(LEventCityRefresh event) {
+    public void onEvent(LCityRefreshEvent event) {
         refreshWeather(true);
     }
 

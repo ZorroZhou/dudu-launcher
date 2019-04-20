@@ -48,7 +48,7 @@ public class LTimeView extends BaseEXView {
     public void onThemeChanged(ThemeManage manage) {
         Context context = getContext();
 
-        rl_base.setBackgroundResource(manage.getCurrentThemeRes(context, R.drawable.n_l_item3_bg));
+        rl_base.setBackgroundResource(manage.getCurrentThemeRes(context, R.drawable.n_l_item1_bg));
         tv_text1.setTextColor(manage.getCurrentThemeColor(context, R.color.l_text1));
         tv_shijian.setBackgroundResource(manage.getCurrentThemeRes(context, R.drawable.n_cell_bg));
         tv_shijian.setTextColor(manage.getCurrentThemeColor(context, R.color.l_text2));

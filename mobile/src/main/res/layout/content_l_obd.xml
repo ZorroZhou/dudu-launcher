@@ -76,7 +76,7 @@
                             android:gravity="center_vertical|left"
                             android:lines="1"
                             android:text="转速:"
-                            app:layout_textSizePercent="50%h" />
+                            app:layout_textSizePercent="60%h" />
 
                         <TextView
                             android:id="@+id/tv_zs"
@@ -86,7 +86,7 @@
                             android:gravity="center_vertical|right"
                             android:lines="1"
                             android:text="1000R/S"
-                            app:layout_textSizePercent="50%h" />
+                            app:layout_textSizePercent="60%h" />
                     </com.zhy.android.percent.support.PercentLinearLayout>
 
                     <com.zhy.android.percent.support.PercentRelativeLayout
@@ -98,10 +98,11 @@
                             android:id="@+id/p_zs"
                             style="?android:attr/progressBarStyleHorizontal"
                             android:layout_width="match_parent"
-                            android:layout_height="10dp"
+                            android:layout_height="0dp"
                             android:layout_centerInParent="true"
                             android:max="10000"
-                            android:progressDrawable="@drawable/n_music_progress" />
+                            android:progressDrawable="@drawable/n_obd_progress"
+                            app:layout_heightPercent="50%h" />
                     </com.zhy.android.percent.support.PercentRelativeLayout>
                 </com.zhy.android.percent.support.PercentLinearLayout>
             </com.meetsl.scardview.SCardView>
@@ -140,7 +141,7 @@
                             android:gravity="center_vertical|left"
                             android:lines="1"
                             android:text="速度:"
-                            app:layout_textSizePercent="50%h" />
+                            app:layout_textSizePercent="60%h" />
 
                         <TextView
                             android:id="@+id/tv_sd"
@@ -150,7 +151,7 @@
                             android:gravity="center_vertical|right"
                             android:lines="1"
                             android:text="80KM/H"
-                            app:layout_textSizePercent="50%h" />
+                            app:layout_textSizePercent="60%h" />
                     </com.zhy.android.percent.support.PercentLinearLayout>
 
                     <com.zhy.android.percent.support.PercentRelativeLayout
@@ -162,10 +163,11 @@
                             android:id="@+id/p_sd"
                             style="?android:attr/progressBarStyleHorizontal"
                             android:layout_width="match_parent"
-                            android:layout_height="10dp"
+                            android:layout_height="0dp"
                             android:layout_centerInParent="true"
                             android:max="200"
-                            android:progressDrawable="@drawable/n_music_progress" />
+                            android:progressDrawable="@drawable/n_obd_progress"
+                            app:layout_heightPercent="50%h" />
                     </com.zhy.android.percent.support.PercentRelativeLayout>
                 </com.zhy.android.percent.support.PercentLinearLayout>
             </com.meetsl.scardview.SCardView>
@@ -204,7 +206,7 @@
                             android:gravity="center_vertical|left"
                             android:lines="1"
                             android:text="水温:"
-                            app:layout_textSizePercent="50%h" />
+                            app:layout_textSizePercent="60%h" />
 
                         <TextView
                             android:id="@+id/tv_sw"
@@ -214,7 +216,7 @@
                             android:gravity="center_vertical|right"
                             android:lines="1"
                             android:text="100°"
-                            app:layout_textSizePercent="50%h" />
+                            app:layout_textSizePercent="60%h" />
                     </com.zhy.android.percent.support.PercentLinearLayout>
 
                     <com.zhy.android.percent.support.PercentRelativeLayout
@@ -226,10 +228,11 @@
                             android:id="@+id/p_sw"
                             style="?android:attr/progressBarStyleHorizontal"
                             android:layout_width="match_parent"
-                            android:layout_height="10dp"
+                            android:layout_height="0dp"
                             android:layout_centerInParent="true"
                             android:max="110"
-                            android:progressDrawable="@drawable/n_music_progress" />
+                            android:progressDrawable="@drawable/n_obd_progress"
+                            app:layout_heightPercent="50%h" />
                     </com.zhy.android.percent.support.PercentRelativeLayout>
                 </com.zhy.android.percent.support.PercentLinearLayout>
             </com.meetsl.scardview.SCardView>
@@ -268,7 +271,7 @@
                             android:gravity="center_vertical|left"
                             android:lines="1"
                             android:text="剩余油量:"
-                            app:layout_textSizePercent="50%h" />
+                            app:layout_textSizePercent="60%h" />
 
                         <TextView
                             android:id="@+id/tv_yl"
@@ -278,7 +281,7 @@
                             android:gravity="center_vertical|right"
                             android:lines="1"
                             android:text="50%"
-                            app:layout_textSizePercent="50%h" />
+                            app:layout_textSizePercent="60%h" />
                     </com.zhy.android.percent.support.PercentLinearLayout>
 
                     <com.zhy.android.percent.support.PercentRelativeLayout
@@ -290,10 +293,11 @@
                             android:id="@+id/p_yl"
                             style="?android:attr/progressBarStyleHorizontal"
                             android:layout_width="match_parent"
-                            android:layout_height="10dp"
+                            android:layout_height="0dp"
                             android:layout_centerInParent="true"
                             android:max="100"
-                            android:progressDrawable="@drawable/n_music_progress" />
+                            android:progressDrawable="@drawable/n_obd_progress"
+                            app:layout_heightPercent="50%h" />
                     </com.zhy.android.percent.support.PercentRelativeLayout>
                 </com.zhy.android.percent.support.PercentLinearLayout>
             </com.meetsl.scardview.SCardView>

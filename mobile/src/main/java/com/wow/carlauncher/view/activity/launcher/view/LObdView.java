@@ -41,7 +41,7 @@ public class LObdView extends BaseEXView {
     @Override
     public void onThemeChanged(ThemeManage manage) {
         Context context = getContext();
-        fl_base.setBackgroundResource(manage.getCurrentThemeRes(context, R.drawable.n_l_item2_bg));
+        fl_base.setBackgroundResource(manage.getCurrentThemeRes(context, R.drawable.n_l_item1_bg));
         tv_text1.setTextColor(manage.getCurrentThemeColor(context, R.color.l_text1));
 
         manage.setViewsBackround(this, new int[]{R.id.ll_cell1, R.id.ll_cell2, R.id.ll_cell3, R.id.ll_cell4}, R.drawable.n_cell_bg);
@@ -58,6 +58,10 @@ public class LObdView extends BaseEXView {
                 R.id.tv_yl
         }, R.color.l_text2);
 
+        p_sd.setIndeterminateDrawable(getResources().getDrawable(manage.getCurrentThemeRes(context, R.drawable.n_obd_progress)));
+        p_zs.setIndeterminateDrawable(getResources().getDrawable(manage.getCurrentThemeRes(context, R.drawable.n_obd_progress)));
+        p_sw.setIndeterminateDrawable(getResources().getDrawable(manage.getCurrentThemeRes(context, R.drawable.n_obd_progress)));
+        p_yl.setIndeterminateDrawable(getResources().getDrawable(manage.getCurrentThemeRes(context, R.drawable.n_obd_progress)));
     }
 
     @ViewInject(R.id.fl_base)

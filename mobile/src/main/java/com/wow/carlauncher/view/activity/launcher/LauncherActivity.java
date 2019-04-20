@@ -19,6 +19,7 @@ import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.location.event.MNewLocationEvent;
 import com.wow.carlauncher.ex.plugin.console.event.PConsoleEventLightState;
+import com.wow.carlauncher.ex.plugin.fk.event.PFkEventAction;
 import com.wow.carlauncher.view.activity.AppSelectActivity;
 import com.wow.carlauncher.view.activity.launcher.event.LItemRefreshEvent;
 import com.wow.carlauncher.view.activity.launcher.view.LDockView;
@@ -294,6 +295,12 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
     public void onEvent(MNewLocationEvent event) {
 
     }
+
+    @Subscribe
+    public void onEvent(PFkEventAction event) {
+
+    }
+
 
     class ViewAdapter extends PagerAdapter {
         private View[] datas;

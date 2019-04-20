@@ -38,6 +38,15 @@
     <View style="@style/Interval" />
 
     <com.wow.carlauncher.common.view.SetView
+        android:id="@+id/sv_clear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        st:titleEx="清理打开的应用选项"
+        st:type="buttonB" />
+
+    <View style="@style/Interval" />
+
+    <com.wow.carlauncher.common.view.SetView
         android:id="@+id/sv_open1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

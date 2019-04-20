@@ -154,6 +154,12 @@ public class ViewUtils {
         return outMetrics;
     }
 
+    public static void setBrightness(Activity activity, int brightness) {
+        WindowManager.LayoutParams lp = activity.getWindow().getAttributes();
+        lp.screenBrightness = Float.valueOf(brightness) * (1f / 255f);
+        activity.getWindow().setAttributes(lp);
+    }
+
     public static View getDeepViewByIndex(View view, int[] deeps) {
         View r;
         for (int i = 0; i < deeps.length; i++) {

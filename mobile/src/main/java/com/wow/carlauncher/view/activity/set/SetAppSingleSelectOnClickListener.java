@@ -20,6 +20,7 @@ import static com.wow.carlauncher.common.CommonData.TAG;
 public abstract class SetAppSingleSelectOnClickListener implements View.OnClickListener {
     private Context context;
 
+
     public SetAppSingleSelectOnClickListener(Context context) {
         this.context = context;
     }

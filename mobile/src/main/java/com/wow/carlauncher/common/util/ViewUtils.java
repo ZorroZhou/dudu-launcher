@@ -2,6 +2,7 @@ package com.wow.carlauncher.common.util;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -146,6 +147,12 @@ public class ViewUtils {
         activity.getWindow().setAttributes(lp);
     }
 
+    public static DisplayMetrics getDisplayMetriocs(Context context) {
+        WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        manager.getDefaultDisplay().getMetrics(outMetrics);
+        return outMetrics;
+    }
 
     public static View getDeepViewByIndex(View view, int[] deeps) {
         View r;

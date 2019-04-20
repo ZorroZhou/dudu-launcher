@@ -10,25 +10,29 @@ import java.util.Map;
  */
 
 public class AppIconTemp {
-    private static Map<String, Integer> appiconMark;
+    private static Map<String, Integer> appiconMark = new HashMap<>();
 
     static {
-        appiconMark = new HashMap<>();
         //QQ音乐
-        appiconMark.put("com.tencent.qqmusiccar", R.mipmap.app_icon_qqmusic);
+        putIcon("com.tencent.qqmusiccar", R.mipmap.app_icon_qqmusic);
 
-        appiconMark.put("com.nwd.android.phone", R.mipmap.app_icon_phone);
-        appiconMark.put("com.nwd.android.music.ui", R.mipmap.app_icon_music);
-        appiconMark.put("com.nwd.radio", R.mipmap.app_icon_radio);
-        appiconMark.put("com.nwd.bt.music", R.mipmap.app_icon_bt_music);
+        putIcon("com.nwd.android.phone", R.mipmap.app_icon_phone);
+        putIcon("com.nwd.android.music.ui", R.mipmap.app_icon_music);
+        putIcon("com.nwd.radio", R.mipmap.app_icon_radio);
+        putIcon("com.nwd.bt.music", R.mipmap.app_icon_bt_music);
 
-        appiconMark.put("com.android.music", R.mipmap.app_icon_new_music);
-        appiconMark.put("com.android.settings", R.mipmap.app_icon_new_set);
+        putIcon("com.android.music", R.mipmap.app_icon_new_music);
+        putIcon("com.android.settings", R.mipmap.app_icon_new_set);
+    }
+
+    public static void putIcon(String pname, int r) {
+        appiconMark.put("1:" + pname, r);
     }
 
     public static int getIcon(String app) {
-        if (appiconMark.containsKey(app)) {
-            return appiconMark.get(app);
+        Integer id = appiconMark.get(app);
+        if (id != null) {
+            return id;
         }
         return 0;
     }

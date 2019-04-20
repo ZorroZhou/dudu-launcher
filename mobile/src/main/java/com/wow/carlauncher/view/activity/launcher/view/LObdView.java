@@ -58,10 +58,10 @@ public class LObdView extends BaseEXView {
                 R.id.tv_yl
         }, R.color.l_text2);
 
-        p_sd.setIndeterminateDrawable(getResources().getDrawable(manage.getCurrentThemeRes(context, R.drawable.n_obd_progress)));
-        p_zs.setIndeterminateDrawable(getResources().getDrawable(manage.getCurrentThemeRes(context, R.drawable.n_obd_progress)));
-        p_sw.setIndeterminateDrawable(getResources().getDrawable(manage.getCurrentThemeRes(context, R.drawable.n_obd_progress)));
-        p_yl.setIndeterminateDrawable(getResources().getDrawable(manage.getCurrentThemeRes(context, R.drawable.n_obd_progress)));
+        p_sd.setProgressDrawable(getResources().getDrawable(manage.getCurrentThemeRes(context, R.drawable.n_obd_progress)));
+        p_zs.setProgressDrawable(getResources().getDrawable(manage.getCurrentThemeRes(context, R.drawable.n_obd_progress)));
+        p_sw.setProgressDrawable(getResources().getDrawable(manage.getCurrentThemeRes(context, R.drawable.n_obd_progress)));
+        p_yl.setProgressDrawable(getResources().getDrawable(manage.getCurrentThemeRes(context, R.drawable.n_obd_progress)));
     }
 
     @ViewInject(R.id.fl_base)

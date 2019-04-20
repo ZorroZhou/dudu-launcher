@@ -46,7 +46,6 @@ public abstract class SetAppSingleSelectOnClickListener implements View.OnClickL
         AlertDialog dialog = new AlertDialog.Builder(context).setTitle("请选择APP")
                 .setNegativeButton("取消", null)
                 .setPositiveButton("确定", (dialog12, which) -> onSelect(appInfos.get(obj.getObj()).clazz))
-                .setSingleChoiceItems(items, select, (dialog1, which) -> obj.setObj(which)).create();
-        dialog.show();
+                .setSingleChoiceItems(items, select, (dialog1, which) -> obj.setObj(which)).show();
     }
 }

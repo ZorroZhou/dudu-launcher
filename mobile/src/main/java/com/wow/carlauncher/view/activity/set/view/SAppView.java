@@ -118,11 +118,9 @@ public class SAppView extends BaseView {
                         SharedPreUtil.saveSharedPreInteger(CommonData.SDATA_LAUNCHER_ITEM_NUM, obj.getObj() + 3);
                         sv_launcher_item_num.setSummary(itemsNum[obj.getObj()]);
                         EventBus.getDefault().post(new LItemRefreshEvent());
-                    }).setMessage("是否确认更改,会导致桌面插件重新加载").create();
-                    queren.show();
+                    }).setMessage("是否确认更改,会导致桌面插件重新加载").show();
                 }
-            }).setSingleChoiceItems(itemsNum, select, (dialog12, which) -> obj.setObj(which)).create();
-            dialog.show();
+            }).setSingleChoiceItems(itemsNum, select, (dialog12, which) -> obj.setObj(which)).show();
         });
 
         sv_launcher_item_sort_re.setOnClickListener(v -> {
@@ -132,24 +130,21 @@ public class SAppView extends BaseView {
                     SharedPreUtil.saveSharedPreBoolean(CommonData.SDATA_LAUNCHER_ITEM_OPEN_ + item.getId(), true);
                 }
                 EventBus.getDefault().post(new LItemRefreshEvent());
-            }).setMessage("是否确认更改,会导致桌面插件重新加载").create();
-            queren.show();
+            }).setMessage("是否确认更改,会导致桌面插件重新加载").show();
         });
 
         sv_launcher_item_sort.setOnClickListener(v -> {
             final LauncherItemAdapter adapter = new LauncherItemAdapter(getContext());
             AlertDialog dialog = new AlertDialog.Builder(getContext()).setTitle("调整插件顺序").setNegativeButton("取消", null).setPositiveButton("确定", (dialog1, which1) -> {
-                AlertDialog queren = new AlertDialog.Builder(getContext()).setTitle("警告!").setNegativeButton("取消", null).setPositiveButton("确定", (dialog2, which2) -> {
+                new AlertDialog.Builder(getContext()).setTitle("警告!").setNegativeButton("取消", null).setPositiveButton("确定", (dialog2, which2) -> {
                     List<ItemModel> items = adapter.getItems();
                     for (ItemModel item : items) {
                         SharedPreUtil.saveSharedPreInteger(CommonData.SDATA_LAUNCHER_ITEM_SORT_ + item.info.getId(), item.index);
                         SharedPreUtil.saveSharedPreBoolean(CommonData.SDATA_LAUNCHER_ITEM_OPEN_ + item.info.getId(), item.check);
                     }
                     EventBus.getDefault().post(new LItemRefreshEvent());
-                }).setMessage("是否确认更改,会导致桌面插件重新加载").create();
-                queren.show();
-            }).setAdapter(adapter, null).create();
-            dialog.show();
+                }).setMessage("是否确认更改,会导致桌面插件重新加载").show();
+            }).setAdapter(adapter, null).show();
 
             WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
             lp.width = (int) (ViewUtils.getDisplayMetriocs(getContext()).widthPixels * 0.8);//定义宽度

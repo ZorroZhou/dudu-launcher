@@ -103,8 +103,7 @@ public class SLoadAppView extends BaseView {
                     SharedPreUtil.saveSharedPreInteger(CommonData.SDATA_APP_AUTO_OPEN_BACK, obj.getObj() + 1);
                     sv_back_yanchi.setSummary(SharedPreUtil.getSharedPreInteger(CommonData.SDATA_APP_AUTO_OPEN_BACK, 5) + "秒");
                 }
-            }).setSingleChoiceItems(items, select, (dialog1, which) -> obj.setObj(which)).create();
-            dialog.show();
+            }).setSingleChoiceItems(items, select, (dialog1, which) -> obj.setObj(which)).show();
         });
         sv_back_yanchi.setSummary(SharedPreUtil.getSharedPreInteger(CommonData.SDATA_APP_AUTO_OPEN_BACK, 5) + "秒");
     }

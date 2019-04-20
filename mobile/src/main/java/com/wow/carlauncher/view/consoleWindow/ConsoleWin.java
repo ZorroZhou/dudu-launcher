@@ -62,8 +62,8 @@ public class ConsoleWin {
             winparams.flags = WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_FULLSCREEN;
         }
         winparams.format = PixelFormat.TRANSLUCENT;
-        winparams.width = outMetrics.widthPixels / 2;
-        winparams.height = outMetrics.heightPixels / 4;
+        winparams.width = (int) (outMetrics.widthPixels * 0.6);
+        winparams.height = (int) (outMetrics.heightPixels * 0.4);
 
         winparams.gravity = Gravity.TOP | Gravity.START;
         winparams.x = (outMetrics.widthPixels - winparams.width) / 2;

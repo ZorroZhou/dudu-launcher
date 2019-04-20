@@ -62,4 +62,5 @@ dependencies {
     implementation 'com.amap.api:location:4.4.0'
     implementation 'org.greenrobot:eventbus:3.1.1'
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+    implementation 'com.github.goweii:AnyPermission:1.1.0'
 }

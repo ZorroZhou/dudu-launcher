@@ -94,8 +94,7 @@ public class SFangKongView extends BaseView {
                     public void onClick(DialogInterface dialog, int which) {
                         obj.setObj(which);
                     }
-                }).create();
-                dialog.show();
+                }).show();
             }
         });
 

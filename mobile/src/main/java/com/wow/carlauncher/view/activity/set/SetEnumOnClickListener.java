@@ -37,7 +37,6 @@ public abstract class SetEnumOnClickListener<T extends SetEnum> implements View.
             public void onClick(DialogInterface dialog, int which) {
                 onSelect(allItem[obj.getObj()]);
             }
-        }).setSingleChoiceItems(items, select, (dialog1, which) -> obj.setObj(which)).create();
-        dialog.show();
+        }).setSingleChoiceItems(items, select, (dialog1, which) -> obj.setObj(which)).show();
     }
 }

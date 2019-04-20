@@ -50,7 +50,6 @@ public abstract class SetAppMultipleSelectOnClickListener implements View.OnClic
                 selectapp1 = selectapp1.substring(0, selectapp1.length() - 1);
             }
             onSelect(selectapp1);
-        }).setMultiChoiceItems(items, checks, (dialog1, which, isChecked) -> checks[which] = isChecked).create();
-        dialog.show();
+        }).setMultiChoiceItems(items, checks, (dialog1, which, isChecked) -> checks[which] = isChecked).show();
     }
 }

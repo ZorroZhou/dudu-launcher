@@ -190,8 +190,7 @@ public class SBleDeviceView extends BaseView {
                     FangkongPlugin.self().disconnect();
                     sv_fangkong_impl_select.setSummary("方控使用的协议：" + show[obj.getObj()].getName());
                 }
-            }).setSingleChoiceItems(items, select, (dialog12, which) -> obj.setObj(which)).create();
-            dialog.show();
+            }).setSingleChoiceItems(items, select, (dialog12, which) -> obj.setObj(which)).show();
         });
 
 

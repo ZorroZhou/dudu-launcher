@@ -68,14 +68,10 @@ public class SPopupView extends BaseView {
     @Override
     protected void initView() {
         sv_popup_window_size.setOnClickListener(view -> {
-            AlertDialog dialog = new AlertDialog.Builder(getContext()).setTitle("请选择一个尺寸").setItems(POPUP_SIZE, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    SharedPreUtil.saveSharedPreInteger(CommonData.SDATA_POPUP_SIZE, i);
-                    PopupWin.self().setRank(i + 1);
-                }
-            }).create();
-            dialog.show();
+            new AlertDialog.Builder(getContext()).setTitle("请选择一个尺寸").setItems(POPUP_SIZE, (dialogInterface, i) -> {
+                SharedPreUtil.saveSharedPreInteger(CommonData.SDATA_POPUP_SIZE, i);
+                PopupWin.self().setRank(i + 1);
+            }).show();
         });
         sv_popup_window_size.setSummary(POPUP_SIZE[SharedPreUtil.getSharedPreInteger(CommonData.SDATA_POPUP_SIZE, 1)]);
 

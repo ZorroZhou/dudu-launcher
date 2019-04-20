@@ -160,16 +160,15 @@ public class AppInfoManage {
         Resources resources = this.context.getResources();
         AppInfo info = getAppInfo(app);
         if (info != null) {
-            //先根据主题获取图标
-            int r = AppIconTemp.getIcon(app);
-            if (r != 0) {
-                Drawable drawable = resources.getDrawable(r);
-                if (drawable != null) {
-                    return drawable;
-                }
-            }
-
             if (MARK_OTHER_APP == info.appMark) {
+                //先根据主题获取图标
+                int r = AppIconTemp.getIcon(info.clazz);
+                if (r != 0) {
+                    Drawable drawable = resources.getDrawable(r);
+                    if (drawable != null) {
+                        return drawable;
+                    }
+                }
                 try {
                     PackageInfo packageInfo = packageManager.getPackageInfo(info.clazz, 0);
                     return packageInfo.applicationInfo.loadIcon(packageManager);

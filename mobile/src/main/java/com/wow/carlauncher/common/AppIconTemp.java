@@ -26,7 +26,7 @@ public class AppIconTemp {
     }
 
     public static void putIcon(String pname, int r) {
-        appiconMark.put("1:" + pname, r);
+        appiconMark.put(pname, r);
     }
 
     public static int getIcon(String app) {

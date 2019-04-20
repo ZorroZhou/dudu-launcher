@@ -201,8 +201,7 @@ public class SAppView extends BaseView {
             }
         });
 
-        ConsoleProtoclEnum c1 = ConsoleProtoclEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_CONSOLE_MARK, ConsoleProtoclEnum.SYSTEM.getId()));
-        sv_console.setSummary("控制协议：" + c1.getName());
+        sv_console.setSummary("控制协议：" + ConsoleProtoclEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_CONSOLE_MARK, ConsoleProtoclEnum.SYSTEM.getId())).getName());
         sv_console.setOnClickListener(new SetEnumOnClickListener<ConsoleProtoclEnum>(getContext(), ALL_CONSOLES) {
             @Override
             public ConsoleProtoclEnum getCurr() {

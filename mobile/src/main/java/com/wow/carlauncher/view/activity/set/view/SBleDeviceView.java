@@ -21,8 +21,11 @@ import com.wow.carlauncher.ex.manage.ble.MySearchResponse;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.fk.FangkongPlugin;
 import com.wow.carlauncher.ex.plugin.fk.FangkongProtocolEnum;
+import com.wow.carlauncher.ex.plugin.music.MusicControllerEnum;
+import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.ex.plugin.obd.ObdProtocolEnum;
+import com.wow.carlauncher.view.activity.set.SetEnumOnClickListener;
 import com.wow.carlauncher.view.base.BaseView;
 import com.wow.carlauncher.view.dialog.ListDialog;
 import com.wow.carlauncher.common.util.CommonUtil;
@@ -34,7 +37,9 @@ import org.xutils.view.annotation.ViewInject;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.wow.carlauncher.common.CommonData.OBD_CONTROLLER;
 import static com.wow.carlauncher.common.CommonData.SDATA_FANGKONG_CONTROLLER;
+import static com.wow.carlauncher.common.CommonData.SDATA_MUSIC_CONTROLLER;
 import static com.wow.carlauncher.common.CommonData.SDATA_OBD_CONTROLLER;
 import static com.wow.carlauncher.common.CommonData.SDATA_TRIP_AUTO_OPEN_DRIVING;
 import static com.wow.carlauncher.common.CommonData.SDATA_TRIP_AUTO_OPEN_DRIVING_DF;
@@ -44,7 +49,6 @@ import static com.wow.carlauncher.common.CommonData.SDATA_TRIP_AUTO_OPEN_DRIVING
  */
 
 public class SBleDeviceView extends BaseView {
-    public static final ObdProtocolEnum[] ALL_OBD_CONTROLLER = {ObdProtocolEnum.YJ_TYB};
     public static final FangkongProtocolEnum[] ALL_FANGKONG_CONTROLLER = {FangkongProtocolEnum.YLFK};
 
     public SBleDeviceView(@NonNull Context context) {
@@ -83,29 +87,19 @@ public class SBleDeviceView extends BaseView {
 
     @Override
     protected void initView() {
-        ObdProtocolEnum p1 = ObdProtocolEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_OBD_CONTROLLER, ObdProtocolEnum.YJ_TYB.getId()));
-        sv_obd_impl_select.setSummary("OBD使用的协议：" + p1.getName());
-        sv_obd_impl_select.setOnClickListener(view -> {
-            ObdProtocolEnum p = ObdProtocolEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_OBD_CONTROLLER, ObdProtocolEnum.YJ_TYB.getId()));
-            final ObdProtocolEnum[] show = ALL_OBD_CONTROLLER;
-            String[] items = new String[show.length];
-            int select = 0;
-            for (int i = 0; i < show.length; i++) {
-                items[i] = show[i].getName();
-                if (show[i].equals(p)) {
-                    select = i;
-                }
+        sv_obd_impl_select.setSummary("OBD使用的协议：" + ObdProtocolEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_OBD_CONTROLLER, ObdProtocolEnum.YJ_TYB.getId())).getName());
+        sv_obd_impl_select.setOnClickListener(new SetEnumOnClickListener<ObdProtocolEnum>(getContext(), OBD_CONTROLLER) {
+            @Override
+            public ObdProtocolEnum getCurr() {
+                return ObdProtocolEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_OBD_CONTROLLER, ObdProtocolEnum.YJ_TYB.getId()));
             }
-            final ThreadObj<Integer> obj = new ThreadObj<>(select);
-            AlertDialog dialog = new AlertDialog.Builder(getContext()).setTitle("请选择协议").setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    SharedPreUtil.saveSharedPreInteger(SDATA_OBD_CONTROLLER, show[obj.getObj()].getId());
-                    sv_obd_impl_select.setSummary("OBD使用的协议：" + show[obj.getObj()].getName());
-                    ObdPlugin.self().disconnect();
-                }
-            }).setSingleChoiceItems(items, select, (dialog1, which) -> obj.setObj(which)).create();
-            dialog.show();
+
+            @Override
+            public void onSelect(ObdProtocolEnum setEnum) {
+                SharedPreUtil.saveSharedPreInteger(SDATA_OBD_CONTROLLER, setEnum.getId());
+                sv_obd_impl_select.setSummary("OBD使用的协议：" + setEnum.getName());
+                ObdPlugin.self().disconnect();
+            }
         });
 
 

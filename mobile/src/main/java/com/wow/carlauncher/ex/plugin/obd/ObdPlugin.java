@@ -19,6 +19,7 @@ import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarInfo;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarTp;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventConnect;
+import com.wow.carlauncher.ex.plugin.obd.protocol.GoodDriverProtocol;
 import com.wow.carlauncher.ex.plugin.obd.protocol.GoodDriverTPProtocol;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
@@ -173,6 +174,10 @@ public class ObdPlugin extends ContextEx {
         switch (p1) {
             case YJ_TYB: {
                 obdProtocol = new GoodDriverTPProtocol(getContext(), address, obdProtocolListener);
+                break;
+            }
+            case YJ_PTB: {
+                obdProtocol = new GoodDriverProtocol(getContext(), address, obdProtocolListener);
                 break;
             }
             default:

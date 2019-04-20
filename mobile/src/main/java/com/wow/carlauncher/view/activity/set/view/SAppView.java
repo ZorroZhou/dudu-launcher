@@ -16,6 +16,7 @@ import com.wow.carlauncher.common.util.ViewUtils;
 import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.ThemeManage.ThemeMode;
+import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.console.ConsolePlugin;
 import com.wow.carlauncher.ex.plugin.console.ConsoleProtoclEnum;
@@ -44,6 +45,7 @@ import java.util.List;
 import static com.wow.carlauncher.common.CommonData.SDATA_APP_THEME;
 import static com.wow.carlauncher.common.CommonData.SDATA_CONSOLE_MARK;
 import static com.wow.carlauncher.common.CommonData.SDATA_MUSIC_CONTROLLER;
+import static com.wow.carlauncher.common.CommonData.SDATA_TIME_PLUGIN_OPEN_APP;
 
 /**
  * Created by 10124 on 2018/4/22.
@@ -218,17 +220,18 @@ public class SAppView extends BaseView {
                 EventBus.getDefault().post(new LDockLabelShowChangeEvent(value));
             }
         });
-
         sv_launcher_show_dock_label.setChecked(SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_LAUNCHER_DOCK_LABEL_SHOW, true));
+
+        setSTitle(SDATA_TIME_PLUGIN_OPEN_APP, time_plugin_open_app_select);
         time_plugin_open_app_select.setOnClickListener(new SetAppSingleSelectOnClickListener(getContext()) {
             @Override
             public String getCurr() {
-                return SharedPreUtil.getSharedPreString(CommonData.SDATA_TIME_PLUGIN_OPEN_APP);
+                return SharedPreUtil.getSharedPreString(SDATA_TIME_PLUGIN_OPEN_APP);
             }
 
             @Override
             public void onSelect(String t) {
-                SharedPreUtil.saveSharedPreString(CommonData.SDATA_TIME_PLUGIN_OPEN_APP, t);
+                SharedPreUtil.saveSharedPreString(SDATA_TIME_PLUGIN_OPEN_APP, t);
             }
         });
 
@@ -249,5 +252,14 @@ public class SAppView extends BaseView {
             cityDialog.show();
         });
         tianqi_city.setSummary(SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_CITY));
+    }
+
+    private void setSTitle(String key, SetView setView) {
+        String xx = SharedPreUtil.getSharedPreString(key);
+        if (CommonUtil.isNotNull(xx)) {
+            setView.setSummary(AppInfoManage.self().getName(xx).toString());
+        } else {
+            setView.setSummary("没有选择");
+        }
     }
 }

@@ -112,7 +112,7 @@ public class SLoadAppView extends BaseView {
     private void setSTitle(String key, SetView setView) {
         String xx = SharedPreUtil.getSharedPreString(key);
         if (CommonUtil.isNotNull(xx)) {
-            setView.setSummary(xx);
+            setView.setSummary(AppInfoManage.self().getName(xx).toString());
         } else {
             setView.setSummary("没有选择");
         }

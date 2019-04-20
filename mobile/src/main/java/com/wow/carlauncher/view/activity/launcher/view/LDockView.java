@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
+import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.view.activity.AppSelectActivity;
@@ -76,6 +77,16 @@ public class LDockView extends BaseEXView {
     @Override
     protected int getContent() {
         return R.layout.content_l_dock;
+    }
+
+    @Override
+    public void onThemeChanged(ThemeManage manage) {
+        manage.setTextViewsColor(this, new int[]{
+                R.id.tv_dock1,
+                R.id.tv_dock2,
+                R.id.tv_dock3,
+                R.id.tv_dock4
+        }, R.color.l_text1);
     }
 
     @Override

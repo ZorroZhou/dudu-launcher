@@ -41,7 +41,8 @@
                 android:includeFontPadding="false"
                 android:text="添加"
                 android:textColor="@color/launch_text_color"
-                app:layout_heightPercent="30%h"
+                app:layout_heightPercent="20%h"
+                app:layout_marginTopPercent="10%h"
                 app:layout_textSizePercent="18%h" />
         </com.zhy.android.percent.support.PercentLinearLayout>
 
@@ -72,7 +73,8 @@
                 android:includeFontPadding="false"
                 android:text="添加"
                 android:textColor="@color/launch_text_color"
-                app:layout_heightPercent="30%h"
+                app:layout_heightPercent="20%h"
+                app:layout_marginTopPercent="10%h"
                 app:layout_textSizePercent="18%h" />
         </com.zhy.android.percent.support.PercentLinearLayout>
 
@@ -103,7 +105,8 @@
                 android:includeFontPadding="false"
                 android:text="添加"
                 android:textColor="@color/launch_text_color"
-                app:layout_heightPercent="30%h"
+                app:layout_heightPercent="20%h"
+                app:layout_marginTopPercent="10%h"
                 app:layout_textSizePercent="18%h" />
         </com.zhy.android.percent.support.PercentLinearLayout>
 
@@ -134,7 +137,8 @@
                 android:includeFontPadding="false"
                 android:text="添加"
                 android:textColor="@color/launch_text_color"
-                app:layout_heightPercent="30%h"
+                app:layout_heightPercent="20%h"
+                app:layout_marginTopPercent="10%h"
                 app:layout_textSizePercent="18%h" />
         </com.zhy.android.percent.support.PercentLinearLayout>
     </com.zhy.android.percent.support.PercentLinearLayout>

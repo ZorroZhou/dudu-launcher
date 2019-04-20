@@ -11,16 +11,22 @@ import java.util.UUID;
 public abstract class FangkongProtocol {
     private String address;
     protected Context context;
-    protected FangkongProtocolListener changeModelCallBack;
+    protected FangkongProtocolListener listener;
+    protected boolean simulatedDClick = false;
 
     public String getAddress() {
         return address;
     }
 
-    public FangkongProtocol(String address, Context context, FangkongProtocolListener changeModelCallBack) {
+    public FangkongProtocol(String address, Context context, FangkongProtocolListener listener) {
         this.address = address;
-        this.changeModelCallBack = changeModelCallBack;
+        this.listener = listener;
         this.context = context;
+    }
+
+    public FangkongProtocol setSimulatedDClick(boolean simulatedDClick) {
+        this.simulatedDClick = simulatedDClick;
+        return this;
     }
 
     public abstract void receiveMessage(byte[] message);
@@ -30,6 +36,4 @@ public abstract class FangkongProtocol {
     public abstract UUID getCharacter();
 
     public abstract void destroy();
-
-    public abstract String getModelName();
 }

@@ -5,7 +5,7 @@ package com.wow.carlauncher.ex.plugin.fk;
  */
 
 public interface FangkongProtocolListener {
-    void changeModel(String name);
-
     void batteryLevel(Integer level, Integer total);
+
+    void onAction(int action);
 }

@@ -232,6 +232,7 @@ public class SAppView extends BaseView {
             @Override
             public void onSelect(String t) {
                 SharedPreUtil.saveSharedPreString(SDATA_TIME_PLUGIN_OPEN_APP, t);
+                setSTitle(SDATA_TIME_PLUGIN_OPEN_APP, time_plugin_open_app_select);
             }
         });
 

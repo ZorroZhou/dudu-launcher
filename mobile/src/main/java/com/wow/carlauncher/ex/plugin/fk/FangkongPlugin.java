@@ -13,8 +13,9 @@ import com.wow.carlauncher.ex.ContextEx;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
+import com.wow.carlauncher.ex.plugin.fk.event.PFkEventAction;
+import com.wow.carlauncher.ex.plugin.fk.event.PFkEventBatterLevel;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventConnect;
-import com.wow.carlauncher.ex.plugin.fk.event.PFkEventModel;
 import com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
@@ -22,6 +23,7 @@ import com.wow.carlauncher.common.util.SharedPreUtil;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.xutils.x;
 
 import java.util.UUID;
 
@@ -70,14 +72,15 @@ public class FangkongPlugin extends ContextEx {
 
     private FangkongProtocolListener changeModelCallBack = new FangkongProtocolListener() {
         @Override
-        public void changeModel(final String name) {
-            ToastManage.self().show("方控切换至:" + name);
-            EventBus.getDefault().post(new PFkEventModel().setModelName(name));
+        public void batteryLevel(Integer level, Integer total) {
+            EventBus.getDefault().post(new PFkEventBatterLevel().setLevel(level).setTotal(total));
         }
 
         @Override
-        public void batteryLevel(Integer level, Integer total) {
-
+        public void onAction(final int action) {
+            x.task().run(() -> EventBus.getDefault().post(new PFkEventAction()
+                    .setFangkongProtocol(FangkongProtocolEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_FANGKONG_CONTROLLER, FangkongProtocolEnum.YLFK.getId())))
+                    .setAction(action)));
         }
     };
 
@@ -142,11 +145,6 @@ public class FangkongPlugin extends ContextEx {
         }
     }
 
-
-    public String getModelName() {
-        return fangkongProtocol.getModelName();
-    }
-
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void onEvent(final MTimeSecondEvent event) {
         String fkaddress = SharedPreUtil.getSharedPreString(CommonData.SDATA_FANGKONG_ADDRESS);
@@ -158,5 +156,9 @@ public class FangkongPlugin extends ContextEx {
         if (CommonUtil.isNotNull(fkaddress) && BleManage.self().client().getConnectStatus(fkaddress) != STATUS_DEVICE_CONNECTED) {
             connect();
         }
+    }
+
+    public void setSimulatedDClick(boolean simulatedDClick) {
+        this.fangkongProtocol.setSimulatedDClick(simulatedDClick);
     }
 }

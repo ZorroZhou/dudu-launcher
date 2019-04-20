@@ -104,7 +104,6 @@ public class LDockView extends BaseEXView {
 
     public void loadDock() {
         String packname1 = SharedPreUtil.getSharedPreString(SDATA_DOCK1_CLASS);
-        System.out.println("packname1:" + packname1);
         if (CommonUtil.isNotNull(packname1)) {
             if (AppInfoManage.self().checkApp(packname1)) {
                 iv_dock1.setImageDrawable(AppInfoManage.self().getIcon(packname1));
@@ -115,7 +114,6 @@ public class LDockView extends BaseEXView {
             }
         }
         String packname2 = SharedPreUtil.getSharedPreString(SDATA_DOCK2_CLASS);
-        System.out.println("packname2:" + packname2);
         if (CommonUtil.isNotNull(packname2)) {
             if (AppInfoManage.self().checkApp(packname2)) {
                 iv_dock2.setImageDrawable(AppInfoManage.self().getIcon(packname2));

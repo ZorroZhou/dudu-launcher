@@ -1,13 +1,29 @@
 package com.wow.carlauncher.common;
 
+import com.wow.carlauncher.ex.plugin.music.MusicControllerEnum;
 import com.wow.carlauncher.ex.plugin.obd.ObdProtocolEnum;
 import com.wow.carlauncher.view.activity.launcher.ItemEnum;
 
 public class CommonData {
     public static final String TAG = "WOW_CAR";
     //所有的桌面插件
-    public static final ItemEnum[] LAUNCHER_ITEMS = {ItemEnum.AMAP, ItemEnum.MUSIC, ItemEnum.OBD, ItemEnum.TAIYA, ItemEnum.TIME, ItemEnum.WEATHER};
-    public static final ObdProtocolEnum[] OBD_CONTROLLER = {ObdProtocolEnum.YJ_TYB, ObdProtocolEnum.YJ_PTB};
+    public static final ItemEnum[] LAUNCHER_ITEMS = {
+            ItemEnum.AMAP,
+            ItemEnum.MUSIC,
+            ItemEnum.OBD,
+            ItemEnum.TAIYA,
+            ItemEnum.TIME,
+            ItemEnum.WEATHER};
+    //所有OBD控制器
+    public static final ObdProtocolEnum[] OBD_CONTROLLER = {
+            ObdProtocolEnum.YJ_TYB,
+            ObdProtocolEnum.YJ_PTB};
+    //所有的音乐控制器
+    public static final MusicControllerEnum[] MUSIC_CONTROLLER = {
+            MusicControllerEnum.SYSMUSIC,
+            MusicControllerEnum.QQCARMUSIC,
+            MusicControllerEnum.JIDOUMUSIC,
+            MusicControllerEnum.NWDMUSIC};
 
     public final static long MINUTE_MILL = 60 * 1000;
     public final static long HOUR_MILL = 60 * MINUTE_MILL;

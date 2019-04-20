@@ -50,10 +50,6 @@ import static com.wow.carlauncher.common.CommonData.SDATA_MUSIC_CONTROLLER;
  */
 
 public class SAppView extends BaseView {
-    private static final MusicControllerEnum[] ALL_MUSIC_CONTROLLER = {MusicControllerEnum.SYSMUSIC,
-            MusicControllerEnum.QQCARMUSIC,
-            MusicControllerEnum.JIDOUMUSIC,
-            MusicControllerEnum.NWDMUSIC};
 
     private static final ConsoleProtoclEnum[] ALL_CONSOLES = {ConsoleProtoclEnum.SYSTEM, ConsoleProtoclEnum.NWD};
 
@@ -175,7 +171,7 @@ public class SAppView extends BaseView {
 
 
         sv_plugin_select.setSummary(MusicControllerEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_MUSIC_CONTROLLER, MusicControllerEnum.SYSMUSIC.getId())).getName());
-        sv_plugin_select.setOnClickListener(new SetEnumOnClickListener<MusicControllerEnum>(getContext(), ALL_MUSIC_CONTROLLER) {
+        sv_plugin_select.setOnClickListener(new SetEnumOnClickListener<MusicControllerEnum>(getContext(), CommonData.MUSIC_CONTROLLER) {
             @Override
             public MusicControllerEnum getCurr() {
                 return MusicControllerEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_MUSIC_CONTROLLER, MusicControllerEnum.SYSMUSIC.getId()));

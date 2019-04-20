@@ -39,6 +39,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import cn.kuwo.autosdk.api.KWAPI;
+
 import static com.wow.carlauncher.common.CommonData.TAG;
 
 
@@ -149,39 +151,36 @@ public class AppContext {
     }
 
     private void handerException() {
-        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
-            @Override
-            public void uncaughtException(Thread t, Throwable e) {
-                try {
-                    String path;
+        Thread.setDefaultUncaughtExceptionHandler((t, e) -> {
+            try {
+                String path;
 
-                    if (Environment.getExternalStorageState().equals(
-                            Environment.MEDIA_MOUNTED)) {// 优先保存到SD卡中
-                        path = Environment.getExternalStorageDirectory()
-                                .getAbsolutePath() + File.separator + "carLauncherError";
-                    } else {// 如果SD卡不存在，就保存到本应用的目录下
-                        path = getApplication().getFilesDir().getAbsolutePath()
-                                + File.separator + "error";
-                    }
-
-                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault());
-                    String date = format.format(new Date(System.currentTimeMillis()));
-
-                    File file = new File(path, "log_"
-                            + date + ".log");
-                    if (!file.exists() && file.mkdirs() && file.createNewFile()) {
-                        Log.e(TAG, "创建文件");
-                    } else {
-                        return;
-                    }
-
-                    PrintWriter pw = new PrintWriter(new FileWriter(file));
-                    e.printStackTrace(pw);
-                    pw.close();
-                    System.exit(0);
-                } catch (Exception ee) {
-                    e.printStackTrace();
+                if (Environment.getExternalStorageState().equals(
+                        Environment.MEDIA_MOUNTED)) {// 优先保存到SD卡中
+                    path = Environment.getExternalStorageDirectory()
+                            .getAbsolutePath() + File.separator + "carLauncherError";
+                } else {// 如果SD卡不存在，就保存到本应用的目录下
+                    path = getApplication().getFilesDir().getAbsolutePath()
+                            + File.separator + "error";
                 }
+
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault());
+                String date = format.format(new Date(System.currentTimeMillis()));
+
+                File file = new File(path, "log_"
+                        + date + ".log");
+                if (!file.exists() && file.mkdirs() && file.createNewFile()) {
+                    Log.e(TAG, "创建文件");
+                } else {
+                    return;
+                }
+
+                PrintWriter pw = new PrintWriter(new FileWriter(file));
+                e.printStackTrace(pw);
+                pw.close();
+                System.exit(0);
+            } catch (Exception ee) {
+                e.printStackTrace();
             }
         });
     }

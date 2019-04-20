@@ -263,13 +263,8 @@ public class LPromptView extends BaseEXView {
         }
     }
 
-    @Subscribe(threadMode = ThreadMode.ASYNC)
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final PObdEventCarTp event) {
-        post(new Runnable() {
-            @Override
-            public void run() {
-                refreshTpState(event);
-            }
-        });
+        refreshTpState(event);
     }
 }

@@ -11,9 +11,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
-import com.wow.carlauncher.ex.manage.MusicCoverManage;
+import com.wow.carlauncher.ex.manage.musicCover.MusicCoverManage;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
+import com.wow.carlauncher.ex.manage.musicCover.MusicCoverRefresh;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventInfo;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventProgress;
@@ -133,8 +134,6 @@ public class LMusicView extends BaseEXView {
         }
     }
 
-    private String key = "";
-
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final PMusicEventInfo event) {
         if (tv_music_title != null && tv_zuozhe != null) {
@@ -149,28 +148,13 @@ public class LMusicView extends BaseEXView {
             } else {
                 tv_zuozhe.setText("未知作家");
             }
+        }
+    }
 
-            if (music_iv_cover != null) {
-                String nowkey = event.getTitle() + event.getArtist();
-                if (!nowkey.equals(key)) {
-                    key = nowkey;
-                    MusicCoverManage.self().loadMusicCover(event.getTitle(), event.getArtist(), new MusicCoverManage.Callback() {
-                        @Override
-                        public void loadCover(boolean success, String title, String zuojia, final Bitmap cover) {
-                            String kk = title + zuojia;
-                            if (key.equals(kk)) {
-                                x.task().autoPost(() -> {
-                                    if (success) {
-                                        music_iv_cover.setImageBitmap(cover);
-                                    } else {
-                                        music_iv_cover.setImageResource(R.mipmap.music_dlogo);
-                                    }
-                                });
-                            }
-                        }
-                    });
-                }
-            }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(final MusicCoverRefresh event) {
+        if (music_iv_cover != null) {
+            music_iv_cover.setImageBitmap(event.getCover());
         }
     }
 

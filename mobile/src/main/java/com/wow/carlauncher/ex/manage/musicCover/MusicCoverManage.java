@@ -1,6 +1,7 @@
-package com.wow.carlauncher.ex.manage;
+package com.wow.carlauncher.ex.manage.musicCover;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
@@ -8,10 +9,15 @@ import android.util.Log;
 
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
-import com.wow.carlauncher.common.CommonData;
+import com.wow.carlauncher.R;
+import com.wow.carlauncher.common.util.CommonUtil;
+import com.wow.carlauncher.ex.plugin.music.event.PMusicEventInfo;
 import com.wow.carlauncher.repertory.qqmusicService.QQMusicWebService;
 import com.wow.carlauncher.repertory.qqmusicService.res.SearchRes;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.x;
 
 import java.io.File;
@@ -38,16 +44,19 @@ public class MusicCoverManage {
 
     private Md5FileNameGenerator nameGenerator = new Md5FileNameGenerator();
 
-    public void init() {
+    public void init(Context context) {
         runkey = new HashSet<>();
+        defcover = BitmapFactory.decodeResource(context.getResources(), R.mipmap.music_dlogo);
+        EventBus.getDefault().register(this);
     }
 
+    private Bitmap defcover;
     private Set<String> runkey;
 
-    public void loadMusicCover(final String title, final String zuojia, final Callback callback) {
+    public void loadMusicCover(final String title, final String zuojia) {
         String name = nameGenerator.generate(title + "-" + zuojia) + ".temp";
+        final MusicCoverRefresh musicCoverRefresh = new MusicCoverRefresh().setArtist(zuojia).setTitle(title);
         if (runkey.contains(name)) {
-            Log.e(TAG, "loadMusicCover: ????");
             return;
         }
         runkey.add(name);
@@ -56,12 +65,10 @@ public class MusicCoverManage {
             Log.e(TAG, "已有的封面");
             Bitmap bitmap = BitmapFactory.decodeFile(cover.getAbsolutePath());
             if (bitmap != null && bitmap.getWidth() > 0) {
-                callback.loadCover(true, title, zuojia, bitmap);
-                Log.e(TAG, "封面载入成功");
+                EventBus.getDefault().post(musicCoverRefresh.setCover(bitmap));
             } else {
                 cover.delete();
-                callback.loadCover(false, title, zuojia, null);
-                Log.e(TAG, "封面载入失败");
+                EventBus.getDefault().post(musicCoverRefresh.setCover(defcover));
             }
             runkey.remove(name);
         } else {
@@ -90,7 +97,7 @@ public class MusicCoverManage {
                                     }
                                     cover.delete();
                                     if (direxist && cover.createNewFile()) {
-                                        callback.loadCover(true, title, zuojia, bitmap);
+                                        EventBus.getDefault().post(musicCoverRefresh.setCover(bitmap));
                                         FileOutputStream out = new FileOutputStream(cover);
                                         bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
                                         success = true;
@@ -99,14 +106,14 @@ public class MusicCoverManage {
                                         Log.e(TAG, "封面下载失败");
                                     }
                                 } catch (Exception e) {
-
+                                    e.printStackTrace();
                                 }
                             }
                         }
                         runkey.remove(name);
                         if (!success) {
                             Log.e(TAG, "封面下载失败");
-                            callback.loadCover(false, title, zuojia, null);
+                            EventBus.getDefault().post(musicCoverRefresh.setCover(defcover));
                         }
                     });
                 }
@@ -114,7 +121,14 @@ public class MusicCoverManage {
         }
     }
 
-    public interface Callback {
-        void loadCover(boolean success, String title, String zuojia, Bitmap cover);
+    private String key = "";
+
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void onEvent(final PMusicEventInfo event) {
+        String kk = event.getTitle() + event.getArtist();
+        if (!key.equals(kk)) {
+            key = kk;
+            loadMusicCover(event.getTitle(), event.getArtist());
+        }
     }
 }

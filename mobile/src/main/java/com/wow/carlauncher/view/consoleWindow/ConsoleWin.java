@@ -2,7 +2,6 @@ package com.wow.carlauncher.view.consoleWindow;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
 import android.util.DisplayMetrics;
@@ -19,14 +18,13 @@ import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
-import com.wow.carlauncher.ex.manage.MusicCoverManage;
-import com.wow.carlauncher.ex.manage.ThemeManage;
+import com.wow.carlauncher.ex.manage.musicCover.MusicCoverManage;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
+import com.wow.carlauncher.ex.manage.musicCover.MusicCoverRefresh;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventInfo;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventState;
-import com.wow.carlauncher.view.activity.AppSelectActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -35,16 +33,11 @@ import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
-import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_APP_TO_DOCK1;
-import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_APP_TO_DOCK2;
-import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_APP_TO_DOCK3;
-import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_APP_TO_DOCK4;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK1_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK2_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK3_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK4_CLASS;
 import static com.wow.carlauncher.common.CommonData.TAG;
-import static com.wow.carlauncher.ex.manage.ThemeManage.WHITE;
 
 public class ConsoleWin {
     private static class SingletonHolder {
@@ -253,8 +246,6 @@ public class ConsoleWin {
         }
     }
 
-    private String key = "";
-
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final PMusicEventInfo event) {
         if (music_tv_title != null) {
@@ -263,31 +254,15 @@ public class ConsoleWin {
             } else {
                 music_tv_title.setText("音乐");
             }
-
-            if (music_iv_cover != null) {
-                String nowkey = event.getTitle() + event.getArtist();
-                if (!nowkey.equals(key)) {
-                    key = nowkey;
-                    MusicCoverManage.self().loadMusicCover(event.getTitle(), event.getArtist(), new MusicCoverManage.Callback() {
-                        @Override
-                        public void loadCover(boolean success, String title, String zuojia, final Bitmap cover) {
-                            String kk = title + zuojia;
-                            if (key.equals(kk)) {
-                                x.task().autoPost(() -> {
-                                    if (success) {
-                                        music_iv_cover.setImageBitmap(cover);
-                                    } else {
-                                        music_iv_cover.setImageResource(R.mipmap.music_dlogo);
-                                    }
-                                });
-                            }
-                        }
-                    });
-                }
-            }
         }
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(final MusicCoverRefresh event) {
+        if (music_iv_cover != null) {
+            music_iv_cover.setImageBitmap(event.getCover());
+        }
+    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final PMusicEventState event) {

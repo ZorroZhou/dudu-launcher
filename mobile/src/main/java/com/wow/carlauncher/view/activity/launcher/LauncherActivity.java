@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -112,7 +113,12 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
 
         EventBus.getDefault().register(this);
         initItem();
-        //requestRuntime();
+        x.task().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                requestRuntime();
+            }
+        }, 2000);
     }
 
     private void initItem() {
@@ -383,39 +389,101 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
     private RuntimeRequester mRuntimeRequester;
 
     private void requestRuntime() {
+        final AnyPermission anyPermission = AnyPermission.with(this);
+//        <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+//    <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
+//    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+//    <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
+//    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+//    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
+//    <!-- 请求网络 -->
+//    <uses-permission android:name="android.permission.INTERNET" />
+//    <uses-permission android:name="android.permission.GET_TASKS" />
+//    <uses-permission android:name="android.permission.WAKE_LOCK" />
+//    <uses-permission android:name="android.permission.LOCATION_HARDWARE" />
+//    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+//    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+//    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+//    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+//    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+//    <uses-permission android:name="android.permission.BLUETOOTH" />
+//    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+//    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+//    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+//    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+//
+//    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+//
+//    <uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW" />
         mRuntimeRequester = AnyPermission.with(this).runtime(1)
-                .permissions(Manifest.permission.LOCATION_HARDWARE,
-                        Manifest.permission.CALL_PHONE)
-                .onBeforeRequest(new RequestInterceptor<String>() {
-                    @Override
-                    public void intercept(@NonNull final String permission, @NonNull final Executor executor) {
-                        // TODO 在每个权限申请之前调用，多次回调。可弹窗向用户说明下面将进行某个权限的申请。
-                        // processor有两个方法，必须调用其一，否则申请流程终止。
-                    }
+                .permissions(
+                        Manifest.permission.ACCESS_NETWORK_STATE,
+                        Manifest.permission.ACCESS_WIFI_STATE,
+                        Manifest.permission.CHANGE_WIFI_STATE,
+                        Manifest.permission.INTERNET,
+                        Manifest.permission.GET_TASKS,
+                        Manifest.permission.WAKE_LOCK,
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION,
+                        Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_PHONE_STATE,
+                        Manifest.permission.BLUETOOTH_ADMIN,
+                        Manifest.permission.BLUETOOTH,
+                        Manifest.permission.RECEIVE_BOOT_COMPLETED,
+                        Manifest.permission.KILL_BACKGROUND_PROCESSES,
+                        Manifest.permission.ACCESS_NETWORK_STATE
+                )
+                .onBeforeRequest((permission, executor) -> {
+                    new AlertDialog.Builder(LauncherActivity.this).setTitle("警告!")
+                            .setNegativeButton("取消", (dialog2, which2) -> executor.cancel())
+                            .setPositiveButton("确定", (dialog2, which2) -> executor.execute())
+                            .setMessage("车机助手正在申请:" + anyPermission.name(permission) + " 权限").show();
                 })
-                .onBeenDenied(new RequestInterceptor<String>() {
-                    @Override
-                    public void intercept(@NonNull final String permission, @NonNull final Executor executor) {
-                        // TODO 在每个权限被拒后调用，多次回调。可弹窗向用户说明为什么需要该权限，否则用户可能在下次申请勾选不再提示。
-                        // processor有两个方法，必须调用其一，否则申请流程终止。
-                    }
+                .onBeenDenied((permission, executor) -> {
+                    new AlertDialog.Builder(LauncherActivity.this).setTitle("警告!")
+                            .setNegativeButton("不授权", (dialog2, which2) -> executor.cancel())
+                            .setPositiveButton("重新授权", (dialog2, which2) -> executor.execute())
+                            .setMessage("车机助手需要:" + anyPermission.name(permission) + " 权限才能正常运行!").show();
                 })
-                .onGoSetting(new RequestInterceptor<String>() {
-                    @Override
-                    public void intercept(@NonNull final String permission, @NonNull final Executor executor) {
-                        // TODO 在每个权限永久被拒后调用（即用户勾选不再提示），多次回调。可弹窗引导用户前往设置打开权限，调用executor.execute()会自动跳转设置。
-                        // processor有两个方法，必须调用其一，否则申请流程将终止。
-                    }
+                .onGoSetting((permission, executor) -> {
+                    new AlertDialog.Builder(LauncherActivity.this).setTitle("警告!")
+                            .setNegativeButton("不授权", (dialog2, which2) -> executor.cancel())
+                            .setPositiveButton("重新授权", (dialog2, which2) -> executor.execute())
+                            .setMessage("车机助手需要:" + anyPermission.name(permission) + " 权限才能正常运行,前往设置界面设置!").show();
                 })
                 .request(new RequestListener() {
                     @Override
                     public void onSuccess() {
-                        // TODO 授权成功
+                        requestOverlay();
                     }
 
                     @Override
                     public void onFailed() {
-                        // TODO 授权失败
+                        ToastManage.self().show("授权失败,某些权限不足可能导致功能不可用!");
+                    }
+                });
+    }
+
+    private void requestOverlay() {
+        AnyPermission.with(this).overlay()
+                .onWithoutPermission((data, executor) -> {
+                    new AlertDialog.Builder(LauncherActivity.this).setTitle("警告!")
+                            .setNegativeButton("不授权", (dialog2, which2) -> executor.cancel())
+                            .setPositiveButton("重新授权", (dialog2, which2) -> executor.execute())
+                            .setMessage("车机助手需要悬浮窗权限才能正常运行!").show();
+                })
+                .request(new RequestListener() {
+                    @Override
+                    public void onSuccess() {
+                        ToastManage.self().show("权限检查成功");
+                    }
+
+                    @Override
+                    public void onFailed() {
+                        ToastManage.self().show("授权失败,某些权限不足可能导致功能不可用!");
                     }
                 });
     }

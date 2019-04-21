@@ -15,7 +15,7 @@ import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.wow.carlauncher.CarLauncherApplication;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
-import com.wow.carlauncher.ex.manage.MusicCoverManage;
+import com.wow.carlauncher.ex.manage.musicCover.MusicCoverManage;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
@@ -38,8 +38,6 @@ import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-
-import cn.kuwo.autosdk.api.KWAPI;
 
 import static com.wow.carlauncher.common.CommonData.TAG;
 
@@ -87,7 +85,7 @@ public class AppContext {
         //定位管理器
         LocationManage.self().init(app);
         //封面加载器
-        MusicCoverManage.self().init();
+        MusicCoverManage.self().init(app);
         //主题管理器
         ThemeManage.self().init(app);
         //app信息管理器

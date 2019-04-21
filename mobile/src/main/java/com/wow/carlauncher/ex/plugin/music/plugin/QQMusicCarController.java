@@ -52,6 +52,7 @@ public class QQMusicCarController extends MusicController {
     }
 
     public void pause() {
+        System.out.println("!!!!!!!!!");
         sendEvent(WE_DRIVE_PAUSE);
     }
 

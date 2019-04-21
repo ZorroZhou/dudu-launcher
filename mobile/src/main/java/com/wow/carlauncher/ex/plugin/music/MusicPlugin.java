@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 
 import com.wow.carlauncher.ex.ContextEx;
-import com.wow.carlauncher.ex.plugin.music.event.PMusicEventCover;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventInfo;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventProgress;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventState;
@@ -68,10 +67,6 @@ public class MusicPlugin extends ContextEx {
 
     public void refreshInfo(final String title, final String artist) {
         EventBus.getDefault().post(new PMusicEventInfo().setArtist(artist).setTitle(title));
-    }
-
-    public void refreshCover(final Bitmap cover) {
-        EventBus.getDefault().post(new PMusicEventCover().setCover(cover));
     }
 
     public void refreshProgress(final int curr_time, final int total_tim) {

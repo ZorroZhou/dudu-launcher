@@ -10,16 +10,4 @@
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
-    <ImageView
-        android:id="@+id/iv_back2"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:clickable="true"
-        android:contentDescription="@string/app_name"
-        android:focusable="true"
-        android:padding="10dp"
-        android:src="@mipmap/ic_back"
-        app:layout_heightPercent="10%h"
-        app:layout_widthPercent="10%h" />
 </com.zhy.android.percent.support.PercentRelativeLayout>

@@ -10,9 +10,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.common.AppContext;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventNavInfo;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventState;
+import com.wow.carlauncher.ex.plugin.console.ConsolePlugin;
+import com.wow.carlauncher.ex.plugin.fk.event.PFkEventAction;
 import com.wow.carlauncher.view.base.BaseEXView;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.DateUtil;
@@ -25,6 +28,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.ICONS;
+import static com.wow.carlauncher.ex.plugin.fk.FangkongProtocolEnum.YLFK;
+import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.RIGHT_BOTTOM_CLICK;
 
 /**
  * Created by 10124 on 2018/5/11.
@@ -53,35 +58,43 @@ public class CoolBlackView extends BaseEXView {
     @ViewInject(R.id.tv_trip_time)
     private TextView tv_trip_time;
 
-    @ViewInject(R.id.tv_driver_distance)
-    private TextView tv_driver_distance;
+//    @ViewInject(R.id.tv_driver_distance)
+//    private TextView tv_driver_distance;
 
 //    @ViewInject(R.id.iv_naving)
 //    private ImageView iv_naving;
 
-    @ViewInject(R.id.ll_navinfo)
-    private LinearLayout ll_navinfo;
+//    @ViewInject(R.id.ll_navinfo)
+//    private LinearLayout ll_navinfo;
 
 //    @ViewInject(R.id.ll_info_shunshiyouhao)
 //    private LinearLayout ll_info_shunshiyouhao;
 
-    @ViewInject(R.id.ll_info_dis)
-    private LinearLayout ll_info_dis;
-
-    @ViewInject(R.id.tv_amaproad)
-    private TextView tv_amaproad;
-
-    @ViewInject(R.id.tv_amapmsg)
-    private TextView tv_amapmsg;
-
-    private long startTime = System.currentTimeMillis();
+//    @ViewInject(R.id.ll_info_dis)
+//    private LinearLayout ll_info_dis;
+//
+//    @ViewInject(R.id.tv_amaproad)
+//    private TextView tv_amaproad;
+//
+//    @ViewInject(R.id.tv_amapmsg)
+//    private TextView tv_amapmsg;
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(final MTimeSecondEvent event) {
         this.tv_date.setText(DateUtil.dateToString(new Date(), "yyyy-MM-dd"));
         this.tv_time.setText(DateUtil.dateToString(new Date(), "HH:mm:ss"));
-        this.tv_trip_time.setText(DateUtil.formatDuring(System.currentTimeMillis() - startTime));
-        //this.tv_driver_distance.setText(String.format(Locale.CHINA, "%.1f", (double) TripManage.self().getTropMileage() / 1000d));
+        this.tv_trip_time.setText(DateUtil.formatDuring(System.currentTimeMillis() - AppContext.self().getStartTime()));
+    }
+
+    @Subscribe
+    public void onEvent(PFkEventAction event) {
+        if (YLFK.equals(event.getFangkongProtocol())) {
+            switch (event.getAction()) {
+                case RIGHT_BOTTOM_CLICK:
+
+                    break;
+            }
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

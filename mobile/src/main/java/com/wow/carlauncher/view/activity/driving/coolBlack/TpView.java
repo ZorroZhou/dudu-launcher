@@ -19,12 +19,12 @@ import org.xutils.view.annotation.ViewInject;
  * Created by 10124 on 2018/5/11.
  */
 
-public class BottomTpView extends BaseEXView {
-    public BottomTpView(@NonNull Context context) {
+public class TpView extends BaseEXView {
+    public TpView(@NonNull Context context) {
         super(context);
     }
 
-    public BottomTpView(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public TpView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 

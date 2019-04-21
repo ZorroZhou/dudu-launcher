@@ -613,6 +613,9 @@
             <district name="香洲区" />
             <district name="其他" />
         </city>
+        <city name="中山市">
+            <district name="中山市" />
+        </city>
     </province>
     <province name="广西壮族自治区">
         <city name="百色市">

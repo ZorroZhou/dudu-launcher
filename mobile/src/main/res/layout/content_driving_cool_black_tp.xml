@@ -20,20 +20,20 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:gravity="center"
-            android:text="0.0\n0.0℃"
+            android:gravity="center_vertical|right"
+            android:text="0.0\n0.0"
             android:textColor="#fff"
-            app:layout_textSizePercent="20%h" />
+            app:layout_textSizePercent="25%h" />
 
         <com.wow.carlauncher.common.view.PhilTextView
             android:id="@+id/tv_lb"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/driving_cool_black_tp_nodata"
+            android:gravity="center_vertical|right"
+            android:text="0.0\n0.0"
             android:textColor="#fff"
-            app:layout_textSizePercent="20%h" />
+            app:layout_textSizePercent="25%h" />
     </com.zhy.android.percent.support.PercentLinearLayout>
 
     <!--<ImageView-->
@@ -61,19 +61,19 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/driving_cool_black_tp_nodata"
+            android:gravity="center_vertical|left"
+            android:text="0.0\n0.0"
             android:textColor="#fff"
-            app:layout_textSizePercent="20%h" />
+            app:layout_textSizePercent="25%h" />
 
         <com.wow.carlauncher.common.view.PhilTextView
             android:id="@+id/tv_rb"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/driving_cool_black_tp_nodata"
+            android:gravity="center_vertical|left"
+            android:text="0.0\n0.0"
             android:textColor="#fff"
-            app:layout_textSizePercent="20%h" />
+            app:layout_textSizePercent="25%h" />
     </com.zhy.android.percent.support.PercentLinearLayout>
 </com.zhy.android.percent.support.PercentRelativeLayout>

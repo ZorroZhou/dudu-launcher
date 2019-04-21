@@ -27,12 +27,12 @@ import static com.wow.carlauncher.common.CommonData.TAG;
  * Created by 10124 on 2018/5/11.
  */
 
-public class BottomMusicView extends BaseEXView {
-    public BottomMusicView(@NonNull Context context) {
+public class MusicView extends BaseEXView {
+    public MusicView(@NonNull Context context) {
         super(context);
     }
 
-    public BottomMusicView(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public MusicView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
@@ -66,13 +66,23 @@ public class BottomMusicView extends BaseEXView {
         }
     }
 
+    private String nowTitle = "";
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(final PMusicEventInfo event) {
         if (music_tv_title != null) {
             if (CommonUtil.isNotNull(event.getTitle())) {
-                music_tv_title.setText(event.getTitle());
+                String msg = event.getTitle();
+                if (CommonUtil.isNotNull(event.getArtist())) {
+                    msg = msg + "-" + event.getArtist();
+                }
+                if (!msg.equals(nowTitle)) {
+                    nowTitle = msg;
+                    music_tv_title.setText(msg);
+                    music_tv_title.setSelected(true);
+                }
             } else {
-                music_tv_title.setText("音乐");
+                music_tv_title.setText("音乐名称");
             }
         }
     }

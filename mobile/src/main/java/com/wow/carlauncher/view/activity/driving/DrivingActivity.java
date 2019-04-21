@@ -14,13 +14,13 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
+import org.xutils.x;
 
 /**
  * Created by 10124 on 2018/4/25.
  */
 
 public class DrivingActivity extends BaseActivity {
-    private final static String TAG = "DrivingActivity";
     private boolean isFront = false;
 
     @ViewInject(R.id.content)
@@ -35,19 +35,20 @@ public class DrivingActivity extends BaseActivity {
     @Override
     public void initView() {
         hideTitle();
-        View nowContent = new CoolBlackView(this);
-        content.addView(nowContent, FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
+        loadView();
 
-//        if (ObdPlugin.self().notConnect()) {
-//            ToastManage.self().show("OBD没有连接");
-//            moveTaskToBack(isTaskRoot());
-//        }
     }
 
-    @Event(value = {R.id.iv_back2})
+    private void loadView() {
+        View nowContent = new CoolBlackView(this);
+        content.addView(nowContent, FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
+        x.view().inject(this, nowContent);
+    }
+
+    @Event(value = {R.id.btn_back})
     private void clickEvent(View view) {
         switch (view.getId()) {
-            case R.id.iv_back2: {
+            case R.id.btn_back: {
                 moveTaskToBack(isTaskRoot());
                 break;
             }

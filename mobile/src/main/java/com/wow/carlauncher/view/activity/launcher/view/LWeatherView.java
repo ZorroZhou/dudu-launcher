@@ -108,21 +108,22 @@ public class LWeatherView extends BaseEXView {
     private void clickEvent(View view) {
         switch (view.getId()) {
             case R.id.tv_title: {
-                final CityDialog cityDialog = new CityDialog(getContext());
-                cityDialog.setOkclickListener(dialog -> {
-                    System.out.println(cityDialog.getCityName() + "  " + cityDialog.getDistrictName());
-                    if (CommonUtil.isNotNull(cityDialog.getCityName()) && CommonUtil.isNotNull(cityDialog.getDistrictName())) {
-                        SharedPreUtil.saveSharedPreString(CommonData.SDATA_WEATHER_CITY, cityDialog.getDistrictName());
-                        SharedPreUtil.saveSharedPreString(CommonData.SDATA_WEATHER_SHI, cityDialog.getCityName());
-                        cityDialog.dismiss();
-                        EventBus.getDefault().post(new LCityRefreshEvent());
-                        return true;
-                    } else {
-                        ToastManage.self().show("请选择城市");
-                        return false;
-                    }
-                });
-                cityDialog.show();
+                if (CommonUtil.isNull(SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_CITY))) {
+                    final CityDialog cityDialog = new CityDialog(getContext());
+                    cityDialog.setOkclickListener(dialog -> {
+                        if (CommonUtil.isNotNull(cityDialog.getCityName()) && CommonUtil.isNotNull(cityDialog.getDistrictName())) {
+                            SharedPreUtil.saveSharedPreString(CommonData.SDATA_WEATHER_CITY, cityDialog.getDistrictName());
+                            SharedPreUtil.saveSharedPreString(CommonData.SDATA_WEATHER_SHI, cityDialog.getCityName());
+                            cityDialog.dismiss();
+                            EventBus.getDefault().post(new LCityRefreshEvent());
+                            return true;
+                        } else {
+                            ToastManage.self().show("请选择城市");
+                            return false;
+                        }
+                    });
+                    cityDialog.show();
+                }
                 break;
             }
         }

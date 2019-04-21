@@ -11,11 +11,12 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:ellipsize="end"
+        android:ellipsize="marquee"
         android:gravity="center"
-        android:lines="1"
-        android:paddingEnd="20dp"
+        android:marqueeRepeatLimit="marquee_forever"
         android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:singleLine="true"
         android:text="@string/music_name"
         android:textColor="@color/plugin_music_name"
         app:layout_textSizePercent="20%h" />
@@ -24,7 +25,7 @@
         android:id="@+id/rl_bottom"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2">
+        android:layout_weight="1">
 
         <com.zhy.android.percent.support.PercentLinearLayout
             android:id="@+id/ll_prew"

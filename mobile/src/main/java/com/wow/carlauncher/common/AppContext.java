@@ -58,11 +58,11 @@ public class AppContext {
 
     private CarLauncherApplication application;
 
-//    private BluetoothClient bluetoothClient;
-//
-//    public BluetoothClient getBluetoothClient() {
-//        return bluetoothClient;
-//    }
+    private long startTime;
+
+    public long getStartTime() {
+        return startTime;
+    }
 
     private AppContext() {
 
@@ -70,6 +70,7 @@ public class AppContext {
 
     public void init(CarLauncherApplication app) {
         this.application = app;
+        this.startTime = System.currentTimeMillis();
 
         x.Ext.init(app);
 

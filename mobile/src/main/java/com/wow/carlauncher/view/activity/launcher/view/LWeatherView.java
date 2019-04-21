@@ -53,6 +53,7 @@ public class LWeatherView extends BaseEXView {
 
     @Override
     public void onThemeChanged(ThemeManage manage) {
+        System.out.println(this + "   !!!!");
         Context context = getContext();
         rl_base.setBackgroundResource(manage.getCurrentThemeRes(context, R.drawable.n_l_item1_bg));
 

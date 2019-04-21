@@ -143,6 +143,7 @@ public class AppContext {
                 Log.e(TAG, "不唤醒其他APP");
             }
         });
+        Log.e(TAG, "APP初始化完毕 ");
     }
 
     public Application getApplication() {

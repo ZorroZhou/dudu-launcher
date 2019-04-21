@@ -15,6 +15,7 @@
         android:contentDescription="@string/app_name"
         android:scaleType="fitStart"
         android:src="@mipmap/n_weather_weizhi"
+        app:left_top_radius="10dp"
         app:right_top_radius="10dp" />
 
     <com.zhy.android.percent.support.PercentLinearLayout

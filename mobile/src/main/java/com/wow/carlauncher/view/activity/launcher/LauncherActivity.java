@@ -200,8 +200,6 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
     @Override
     public void onThemeChanged(ThemeManage manage) {
         Context context = getApplicationContext();
-        System.out.println(manage.getCurrentThemeRes(context, R.drawable.n_desk_bg) + "!!!!");
-        System.out.println(manage.getCurrentThemeRes(context, R.color.line) + "!!!!");
         fl_bg.setBackgroundResource(manage.getCurrentThemeRes(context, R.drawable.n_desk_bg));
         line1.setBackgroundResource(manage.getCurrentThemeRes(context, R.color.line));
     }

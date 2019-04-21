@@ -50,15 +50,9 @@ public class ThemeManage {
     }
 
     private double lat = 36.0577034969, lon = 120.3210639954;//这是青岛的某个坐标
-    // 默认是日间模式
     private Theme theme = WHITE;
-    // 主题模式监听器
     private List<OnThemeChangeListener> mThemeChangeListenerList = new LinkedList<>();
-    // 夜间资源的缓存，key : 资源类型, 值<key:资源名称, value:int值>
     private SparseArray<Map<String, Map<String, Integer>>> cachedResrouces = new SparseArray<>();
-    // 夜间模式资源的后缀，比如日件模式资源名为：R.color.activity_bg, 那么夜间模式就为 ：R.color.activity_bg_night
-    private static final String RESOURCE_SUFFIX = "_b";
-
 
     public void refreshTheme() {
         ThemeMode model = ThemeMode.getById(SharedPreUtil.getSharedPreInteger(SDATA_APP_THEME, ThemeMode.SHIJIAN.getId()));

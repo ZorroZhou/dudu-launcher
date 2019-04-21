@@ -152,6 +152,7 @@ public class AppContext {
 
     private void handerException() {
         Thread.setDefaultUncaughtExceptionHandler((t, e) -> {
+            e.printStackTrace();
             try {
                 String path;
 

@@ -43,6 +43,7 @@ public abstract class BaseEXView extends BaseView implements ThemeManage.OnTheme
             EventBus.getDefault().register(this);
         }
 
+        onThemeChanged(ThemeManage.self());
         ThemeManage.self().registerThemeChangeListener(this);
     }
 
@@ -58,10 +59,5 @@ public abstract class BaseEXView extends BaseView implements ThemeManage.OnTheme
     @Override
     public void onThemeChanged(ThemeManage manage) {
 
-    }
-
-    @Override
-    protected final void initViewEnd() {
-        onThemeChanged(ThemeManage.self());
     }
 }

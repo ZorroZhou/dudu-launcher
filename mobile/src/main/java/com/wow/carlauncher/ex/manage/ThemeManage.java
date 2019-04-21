@@ -21,8 +21,10 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.x;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -52,7 +54,7 @@ public class ThemeManage {
 
     private double lat = 36.0577034969, lon = 120.3210639954;//这是青岛的某个坐标
     private Theme theme = WHITE;
-    private List<OnThemeChangeListener> mThemeChangeListenerList = new LinkedList<>();
+    private List<OnThemeChangeListener> listeners = new LinkedList<>();
     private SparseArray<Map<String, Map<String, Integer>>> cachedResrouces = new SparseArray<>();
 
     public void refreshTheme() {
@@ -80,13 +82,12 @@ public class ThemeManage {
     public void setTheme(Theme theme) {
         if (this.theme != theme) {
             this.theme = theme;
-            if (mThemeChangeListenerList.size() > 0) {
+            if (listeners.size() > 0) {
                 x.task().autoPost(() -> {
-                    System.out.println(1);
-                    for (OnThemeChangeListener listener : mThemeChangeListenerList) {
-                        System.out.println(listener + "1");
+                    List<OnThemeChangeListener> temp = new ArrayList<>(listeners.size());
+                    temp.addAll(listeners);
+                    for (OnThemeChangeListener listener : temp) {
                         listener.onThemeChanged(ThemeManage.this);
-                        System.out.println(listener + "2");
                     }
                 });
             }
@@ -168,8 +169,8 @@ public class ThemeManage {
      * @param listener
      */
     public void registerThemeChangeListener(OnThemeChangeListener listener) {
-        if (!mThemeChangeListenerList.contains(listener)) {
-            mThemeChangeListenerList.add(listener);
+        if (!listeners.contains(listener)) {
+            listeners.add(listener);
         }
     }
 
@@ -179,7 +180,7 @@ public class ThemeManage {
      * @param listener
      */
     public void unregisterThemeChangeListener(OnThemeChangeListener listener) {
-        mThemeChangeListenerList.remove(listener);
+        listeners.remove(listener);
     }
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)

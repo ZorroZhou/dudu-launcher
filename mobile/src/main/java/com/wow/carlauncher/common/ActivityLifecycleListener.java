@@ -31,7 +31,6 @@ public class ActivityLifecycleListener implements Application.ActivityLifecycleC
 
     @Override
     public void onActivityStopped(Activity activity) {
-        System.out.println("!!!!!!!!!!!!1231231");
         PopupWin.self().checkShow(-1);
     }
 

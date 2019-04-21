@@ -82,8 +82,11 @@ public class ThemeManage {
             this.theme = theme;
             if (mThemeChangeListenerList.size() > 0) {
                 x.task().autoPost(() -> {
+                    System.out.println(1);
                     for (OnThemeChangeListener listener : mThemeChangeListenerList) {
+                        System.out.println(listener + "1");
                         listener.onThemeChanged(ThemeManage.this);
+                        System.out.println(listener + "2");
                     }
                 });
             }

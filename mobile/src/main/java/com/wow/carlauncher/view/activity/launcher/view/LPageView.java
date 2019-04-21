@@ -26,7 +26,14 @@ public class LPageView extends BaseEXView {
 
     @Override
     public void onThemeChanged(ThemeManage manage) {
-        setItem(item);
+//        if (item != null) {
+//            for (View view : item) {
+//                if (view.getParent() instanceof ViewGroup) {
+//                    ((ViewGroup) view.getParent()).removeView(view);
+//                }
+//            }
+//            //setItem(item);
+//        }
     }
 
     private View[] item;
@@ -40,6 +47,7 @@ public class LPageView extends BaseEXView {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT);
         params.weight = 1;
         for (View view : item) {
+            System.out.println("!!!!" + view.getParent());
             if (ThemeManage.self().getTheme() == ThemeManage.Theme.WHITE || ThemeManage.self().getTheme() == ThemeManage.Theme.BLACK) {
                 ll_base.addView(getShadowView(view), params);
             } else {

@@ -35,7 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.wow.carlauncher.common.CommonData.TAG;
-import static com.wow.carlauncher.ex.manage.ThemeManage.WHITE;
+import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.WHITE;
 import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.AMAP_PACKAGE;
 import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.ICONS;
 
@@ -156,13 +156,13 @@ public class LAMapView extends BaseEXView {
 
     private void refreshMute() {
         if (mute) {
-            if (ThemeManage.self().getThemeMode() == WHITE) {
+            if (ThemeManage.self().getTheme() == WHITE) {
                 iv_mute.setImageResource(R.mipmap.n_dh_jy);
             } else {
                 iv_mute.setImageResource(R.mipmap.n_dh_jy_b);
             }
         } else {
-            if (ThemeManage.self().getThemeMode() == WHITE) {
+            if (ThemeManage.self().getTheme() == WHITE) {
                 iv_mute.setImageResource(R.mipmap.n_dh_bjy);
             } else {
                 iv_mute.setImageResource(R.mipmap.n_dh_bjy_b);
@@ -171,7 +171,7 @@ public class LAMapView extends BaseEXView {
     }
 
     private void refreshRoad() {
-        if (ThemeManage.self().getThemeMode() == WHITE) {
+        if (ThemeManage.self().getTheme() == WHITE) {
             if (roadType == 0 || roadType == 6) {
                 iv_road.setImageResource(R.mipmap.n_road1);
             } else if (roadType == 4 || roadType == 5 || roadType == 9 || roadType == 10) {

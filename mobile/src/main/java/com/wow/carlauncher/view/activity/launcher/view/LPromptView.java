@@ -9,12 +9,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.wow.carlauncher.CarLauncherApplication;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.ex.manage.ThemeManage;
@@ -27,8 +25,6 @@ import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarTp;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventConnect;
 import com.wow.carlauncher.view.activity.AppMenuActivity;
 import com.wow.carlauncher.view.activity.CarInfoActivity;
-import com.wow.carlauncher.view.activity.launcher.ItemModel;
-import com.wow.carlauncher.view.activity.launcher.event.LItemRefreshEvent;
 import com.wow.carlauncher.view.activity.set.SetActivity;
 import com.wow.carlauncher.view.base.BaseEXView;
 import com.wow.carlauncher.view.consoleWindow.ConsoleWin;
@@ -38,7 +34,6 @@ import com.wow.carlauncher.common.util.DateUtil;
 import com.wow.carlauncher.common.util.NetWorkUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.view.annotation.Event;
@@ -46,15 +41,12 @@ import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
 import java.util.Date;
-import java.util.List;
 
 import per.goweii.anypermission.AnyPermission;
-import per.goweii.anypermission.RequestInterceptor;
 import per.goweii.anypermission.RequestListener;
 
 import static com.inuker.bluetooth.library.Constants.STATUS_DEVICE_CONNECTED;
 import static com.wow.carlauncher.common.CommonData.MINUTE_MILL;
-import static com.wow.carlauncher.common.CommonData.SDATA_TIME_PLUGIN_OPEN_APP;
 
 /**
  * Created by 10124 on 2018/4/22.
@@ -84,7 +76,7 @@ public class LPromptView extends BaseEXView {
     @Override
     public void onThemeChanged(ThemeManage manage) {
         Context context = getContext();
-        fl_base.setBackgroundResource(manage.getCurrentThemeRes(context, R.drawable.n_dock_bg));
+        fl_base.setBackgroundResource(manage.getCurrentThemeRes(context, R.drawable.n_prompt_bg));
         tv_time.setTextColor(manage.getCurrentThemeColor(context, R.color.l_text1));
         iv_home.setImageResource(manage.getCurrentThemeRes(context, R.mipmap.n_home));
     }

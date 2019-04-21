@@ -4,13 +4,16 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.support.v4.content.ContextCompat;
+import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.util.SunRiseSetUtil;
 import com.wow.carlauncher.ex.manage.location.event.MNewLocationEvent;
 import com.wow.carlauncher.ex.manage.time.event.MTimeMinuteEvent;
+import com.wow.carlauncher.ex.plugin.console.event.PConsoleEventLightState;
 import com.wow.carlauncher.view.activity.set.SetEnum;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 
@@ -22,13 +25,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import static com.wow.carlauncher.common.CommonData.SDATA_APP_THEME;
+import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.*;
 
 public class ThemeManage {
-    public static final int WHITE = 1;
-    public static final int BLACK = 2;
-    public static final int CBLACK = 3;
 
     private static class SingletonHolder {
         @SuppressLint("StaticFieldLeak")
@@ -49,11 +51,11 @@ public class ThemeManage {
 
     private double lat = 36.0577034969, lon = 120.3210639954;//这是青岛的某个坐标
     // 默认是日间模式
-    private int theme = WHITE;
+    private Theme theme = WHITE;
     // 主题模式监听器
     private List<OnThemeChangeListener> mThemeChangeListenerList = new LinkedList<>();
     // 夜间资源的缓存，key : 资源类型, 值<key:资源名称, value:int值>
-    private HashMap<String, HashMap<String, Integer>> sCachedNightResrouces = new HashMap<>();
+    private SparseArray<Map<String, Map<String, Integer>>> cachedResrouces = new SparseArray<>();
     // 夜间模式资源的后缀，比如日件模式资源名为：R.color.activity_bg, 那么夜间模式就为 ：R.color.activity_bg_night
     private static final String RESOURCE_SUFFIX = "_b";
 
@@ -62,32 +64,27 @@ public class ThemeManage {
         ThemeMode model = ThemeMode.getById(SharedPreUtil.getSharedPreInteger(SDATA_APP_THEME, ThemeMode.SHIJIAN.getId()));
         switch (model) {
             case BAISE:
-                setThemeMode(WHITE);
+                setTheme(WHITE);
                 break;
             case HEISE:
-                setThemeMode(BLACK);
+                setTheme(BLACK);
                 break;
             case SHIJIAN:
                 if (SunRiseSetUtil.isNight(lon, lat, new Date())) {
-                    setThemeMode(BLACK);
+                    setTheme(BLACK);
                 } else {
-                    setThemeMode(WHITE);
+                    setTheme(WHITE);
                 }
                 break;
         }
     }
 
     /**
-     * 设置主题模式
-     *
-     * @param themeMode
+     * 设置主题
      */
-    public void setThemeMode(int themeMode) {
-        if (themeMode != WHITE && themeMode != BLACK) {
-            return;
-        }
-        if (theme != themeMode) {
-            theme = themeMode;
+    public void setTheme(Theme theme) {
+        if (this.theme != theme) {
+            this.theme = theme;
             if (mThemeChangeListenerList.size() > 0) {
                 for (OnThemeChangeListener listener : mThemeChangeListenerList) {
                     listener.onThemeChanged(this);
@@ -108,35 +105,43 @@ public class ThemeManage {
      * @return 相应主题的resId，若为日间模式，则得到dayResId；反之夜间模式得到nightResId
      */
     public int getCurrentThemeRes(Context context, int dayResId) {
-        if (getThemeMode() == WHITE) {
+        if (getTheme() == WHITE) {
             return dayResId;
+        }
+        Map<String, Map<String, Integer>> cachedResrouce = cachedResrouces.get(getTheme().id);
+        if (cachedResrouce == null) {
+            cachedResrouce = new HashMap<>();
+            cachedResrouces.put(getTheme().id, cachedResrouce);
         }
         // 资源名
         String entryName = context.getResources().getResourceEntryName(dayResId);
         // 资源类型
         String typeName = context.getResources().getResourceTypeName(dayResId);
-        HashMap<String, Integer> cachedRes = sCachedNightResrouces.get(typeName);
+        Map<String, Integer> cachedRes = cachedResrouce.get(typeName);
         // 先从缓存中去取，如果有直接返回该id
         if (cachedRes == null) {
             cachedRes = new HashMap<>();
+            cachedResrouce.put(typeName, cachedRes);
         }
-        Integer resId = cachedRes.get(entryName + RESOURCE_SUFFIX);
+        Integer resId = cachedRes.get(entryName + getTheme().suffix);
         if (resId != null && resId != 0) {
             return resId;
         } else {
             //如果缓存中没有再根据资源id去动态获取
             try {
                 // 通过资源名，资源类型，包名得到资源int值
-                int nightResId = context.getResources().getIdentifier(entryName + RESOURCE_SUFFIX, typeName, context.getPackageName());
+                int nightResId = context.getResources().getIdentifier(entryName + getTheme().suffix, typeName, context.getPackageName());
                 // 放入缓存中
-                cachedRes.put(entryName + RESOURCE_SUFFIX, nightResId);
-                sCachedNightResrouces.put(typeName, cachedRes);
+                if (nightResId == 0) {
+                    return dayResId;
+                }
+                cachedRes.put(entryName + getTheme().suffix, nightResId);
                 return nightResId;
             } catch (Resources.NotFoundException e) {
                 e.printStackTrace();
             }
         }
-        return 0;
+        return dayResId;
     }
 
     public void setViewsBackround(ViewGroup viewGroup, int[] ids, int dayResId) {
@@ -188,12 +193,24 @@ public class ThemeManage {
         refreshTheme();
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(PConsoleEventLightState event) {
+//        ThemeManage.ThemeMode model = ThemeManage.ThemeMode.getById(SharedPreUtil.getSharedPreInteger(SDATA_APP_THEME, ThemeManage.ThemeMode.SHIJIAN.getId()));
+//        if (model.equals(ThemeManage.ThemeMode.DENGGUANG)) {
+//            if (event.isOpen()) {
+//                ThemeManage.self().setTheme(BLACK);
+//            } else {
+//                ThemeManage.self().setTheme(WHITE);
+//            }
+//        }
+    }
+
     /**
      * 得到主题模式
      *
      * @return
      */
-    public int getThemeMode() {
+    public Theme getTheme() {
         return theme;
     }
 
@@ -202,6 +219,49 @@ public class ThemeManage {
          * 主题切换时回调
          */
         void onThemeChanged(ThemeManage manage);
+    }
+
+    public enum Theme {
+        WHITE("白色主题", 0, ""),
+        BLACK("黑色主题", 1, "_b"),
+        CBLACK("纯黑主题", 2, "_cb");
+
+        private String name;
+        private Integer id;
+        private String suffix;
+
+        Theme(String name, Integer id, String suffix) {
+            this.name = name;
+            this.id = id;
+            this.suffix = suffix;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public Theme setName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Integer getId() {
+            return id;
+        }
+
+        public Theme setId(Integer id) {
+            this.id = id;
+            return this;
+        }
+
+        public String getSuffix() {
+            return suffix;
+        }
+
+        public Theme setSuffix(String suffix) {
+            this.suffix = suffix;
+            return this;
+        }
     }
 
     public enum ThemeMode implements SetEnum {

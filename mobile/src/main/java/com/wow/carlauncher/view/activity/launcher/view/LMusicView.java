@@ -1,7 +1,6 @@
 package com.wow.carlauncher.view.activity.launcher.view;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -11,7 +10,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
-import com.wow.carlauncher.ex.manage.musicCover.MusicCoverManage;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.musicCover.MusicCoverRefresh;
@@ -26,9 +24,9 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
-import org.xutils.x;
 
-import static com.wow.carlauncher.ex.manage.ThemeManage.WHITE;
+import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.WHITE;
+
 
 /**
  * Created by 10124 on 2018/4/20.
@@ -95,13 +93,13 @@ public class LMusicView extends BaseEXView {
 
     private void refreshPlay() {
         if (run) {
-            if (ThemeManage.self().getThemeMode() == WHITE) {
+            if (ThemeManage.self().getTheme() == WHITE) {
                 iv_play.setImageResource(R.mipmap.ic_pause);
             } else {
                 iv_play.setImageResource(R.mipmap.ic_pause_b);
             }
         } else {
-            if (ThemeManage.self().getThemeMode() == WHITE) {
+            if (ThemeManage.self().getTheme() == WHITE) {
                 iv_play.setImageResource(R.mipmap.ic_play);
             } else {
                 iv_play.setImageResource(R.mipmap.ic_play_b);

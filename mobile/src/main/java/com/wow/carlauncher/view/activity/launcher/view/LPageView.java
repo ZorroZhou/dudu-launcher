@@ -7,29 +7,21 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import com.meetsl.scardview.SCardView;
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.common.util.ViewUtils;
+import com.wow.carlauncher.ex.manage.ThemeManage;
+import com.wow.carlauncher.view.base.BaseEXView;
 import com.wow.carlauncher.view.base.BaseView;
 
 import org.xutils.view.annotation.ViewInject;
 
-public class LPageView extends BaseView {
-    private int num;
+public class LPageView extends BaseEXView {
 
-    public LPageView(@NonNull Context context, int num) {
+    public LPageView(@NonNull Context context) {
         super(context);
-        this.num = num;
-        if (this.num != 3) {
-            this.num = 4;
-        }
-    }
-
-    @Override
-    protected void initView() {
-        if (num == 3) {
-            sv_4.setVisibility(GONE);
-        }
     }
 
     @Override
@@ -37,43 +29,36 @@ public class LPageView extends BaseView {
         return R.layout.content_l_page;
     }
 
+    @Override
+    public void onThemeChanged(ThemeManage manage) {
+        setItem(item);
+    }
+
+    private View[] item;
+
     public void setItem(View[] item) {
-        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        if (item.length > 0 && item[0] != null) {
-            sv_1.addView(item[0], lp);
-        } else {
-            sv_1.setVisibility(INVISIBLE);
+        if (item == null) {
+            return;
         }
-        if (item.length > 1 && item[1] != null) {
-            sv_2.addView(item[1], lp);
-        } else {
-            sv_2.setVisibility(INVISIBLE);
-        }
-        if (item.length > 2 && item[2] != null) {
-            sv_3.addView(item[2], lp);
-        } else {
-            sv_3.setVisibility(INVISIBLE);
-        }
-        if (num == 3) {
-            sv_4.setVisibility(GONE);
-        } else {
-            if (item.length > 3 && item[3] != null) {
-                sv_4.addView(item[3], lp);
+        this.item = item;
+        ll_base.removeAllViews();
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT);
+        params.weight = 1;
+        for (View view : item) {
+            if (ThemeManage.self().getTheme() == ThemeManage.Theme.WHITE || ThemeManage.self().getTheme() == ThemeManage.Theme.BLACK) {
+                ll_base.addView(getShadowView(view), params);
             } else {
-                sv_4.setVisibility(INVISIBLE);
+                int margin = ViewUtils.dip2px(getContext(), 10);
+                params.setMargins(margin, margin, margin, margin);
+                ll_base.addView(view, params);
             }
         }
     }
 
-    @ViewInject(R.id.sv_1)
-    private SCardView sv_1;
+    @ViewInject(R.id.ll_base)
+    private LinearLayout ll_base;
 
-    @ViewInject(R.id.sv_2)
-    private SCardView sv_2;
-
-    @ViewInject(R.id.sv_3)
-    private SCardView sv_3;
-
-    @ViewInject(R.id.sv_4)
-    private SCardView sv_4;
+    private View getShadowView(View view) {
+        return new LShadowView(getContext()).addViewEx(view);
+    }
 }

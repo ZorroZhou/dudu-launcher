@@ -79,8 +79,9 @@ public class FangkongPlugin extends ContextEx {
         @Override
         public void onAction(final int action) {
             x.task().run(() -> EventBus.getDefault().post(new PFkEventAction()
+                    .setAction(action)
                     .setFangkongProtocol(FangkongProtocolEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_FANGKONG_CONTROLLER, FangkongProtocolEnum.YLFK.getId())))
-                    .setAction(action)));
+            ));
         }
     };
 

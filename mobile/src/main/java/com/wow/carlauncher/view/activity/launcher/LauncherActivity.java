@@ -46,7 +46,6 @@ import java.util.Collections;
 import java.util.List;
 
 import per.goweii.anypermission.AnyPermission;
-import per.goweii.anypermission.RequestInterceptor;
 import per.goweii.anypermission.RequestListener;
 import per.goweii.anypermission.RuntimeRequester;
 
@@ -57,14 +56,11 @@ import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_APP_TO_DOCK2;
 import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_APP_TO_DOCK3;
 import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_APP_TO_DOCK4;
 import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_APP_TO_DOCK5;
-import static com.wow.carlauncher.common.CommonData.SDATA_APP_THEME;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK1_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK2_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK3_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK4_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK5_CLASS;
-import static com.wow.carlauncher.ex.manage.ThemeManage.BLACK;
-import static com.wow.carlauncher.ex.manage.ThemeManage.WHITE;
 import static com.wow.carlauncher.ex.plugin.fk.FangkongProtocolEnum.YLFK;
 import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.*;
 
@@ -150,7 +146,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
         View[] pcell = new View[psize];
         for (int i = 0; i < items.size(); i++) {
             if (i % psize == 0) {
-                pageViews[npage] = new LPageView(this, psize);
+                pageViews[npage] = new LPageView(this);
                 pcell = new View[psize];
                 pageView = pageViews[npage];
                 npage++;
@@ -170,14 +166,13 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
         params.setMargins(10, 0, 10, 0);
 
         //根据主题处理小圆点
-        boolean baise = ThemeManage.self().getThemeMode() == WHITE;
         final View[] posts = new View[pageViews.length];
         for (int i = 0; i < posts.length; i++) {
             posts[i] = new View(getApplicationContext());
             if (i == 0) {
-                posts[i].setBackgroundResource(baise ? R.drawable.n_l_postion : R.drawable.n_l_postion_n);
+                posts[i].setBackgroundResource(R.drawable.n_l_postion);
             } else {
-                posts[i].setBackgroundResource(baise ? R.drawable.n_l_postion_n : R.drawable.n_l_postion);
+                posts[i].setBackgroundResource(R.drawable.n_l_postion_n);
             }
             postion.addView(posts[i], params);
         }
@@ -189,11 +184,10 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
 
             @Override
             public void onPageSelected(int i) {
-                boolean baise = ThemeManage.self().getThemeMode() == WHITE;
                 for (View post : posts) {
-                    post.setBackgroundResource(baise ? R.drawable.n_l_postion_n : R.drawable.n_l_postion);
+                    post.setBackgroundResource(R.drawable.n_l_postion_n);
                 }
-                posts[i].setBackgroundResource(baise ? R.drawable.n_l_postion : R.drawable.n_l_postion_n);
+                posts[i].setBackgroundResource(R.drawable.n_l_postion);
             }
 
             @Override
@@ -206,6 +200,8 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
     @Override
     public void onThemeChanged(ThemeManage manage) {
         Context context = getApplicationContext();
+        System.out.println(manage.getCurrentThemeRes(context, R.drawable.n_desk_bg) + "!!!!");
+        System.out.println(manage.getCurrentThemeRes(context, R.color.line) + "!!!!");
         fl_bg.setBackgroundResource(manage.getCurrentThemeRes(context, R.drawable.n_desk_bg));
         line1.setBackgroundResource(manage.getCurrentThemeRes(context, R.color.line));
     }
@@ -293,18 +289,6 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(LItemRefreshEvent event) {
         initItem();
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(PConsoleEventLightState event) {
-        ThemeManage.ThemeMode model = ThemeManage.ThemeMode.getById(SharedPreUtil.getSharedPreInteger(SDATA_APP_THEME, ThemeManage.ThemeMode.SHIJIAN.getId()));
-        if (model.equals(ThemeManage.ThemeMode.DENGGUANG)) {
-            if (event.isOpen()) {
-                ThemeManage.self().setThemeMode(BLACK);
-            } else {
-                ThemeManage.self().setThemeMode(WHITE);
-            }
-        }
     }
 
     @Override

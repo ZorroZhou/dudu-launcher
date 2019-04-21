@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.zhy.android.percent.support.PercentLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_base"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal">
@@ -65,4 +66,4 @@
         app:cardShadowEndColor="#01000000"
         app:cardShadowStartColor="#20000000"
         app:cardUseCornerArea="true" />
-</com.zhy.android.percent.support.PercentLinearLayout>
+</LinearLayout>

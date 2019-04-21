@@ -54,6 +54,7 @@
     <!--#5e6b81-->
     <color name="line">#c6d2d9</color>
     <color name="line_b">#666f80</color>
+    <color name="line_cb">#0c1414</color>
 
     <color name="l_music_title">#697380</color>
     <color name="l_music_title_b">#eee</color>

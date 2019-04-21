@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
 
+import com.wow.carlauncher.view.popupWindow.PopupWin;
+
 /**
  * Created by 10124 on 2017/10/29.
  */
@@ -15,7 +17,7 @@ public class ActivityLifecycleListener implements Application.ActivityLifecycleC
 
     @Override
     public void onActivityStarted(Activity activity) {
-        //PopupWin.self().checkShow(1);
+        PopupWin.self().checkShow(1);
     }
 
     @Override
@@ -29,7 +31,8 @@ public class ActivityLifecycleListener implements Application.ActivityLifecycleC
 
     @Override
     public void onActivityStopped(Activity activity) {
-        //PopupWin.self().checkShow(-1);
+        System.out.println("!!!!!!!!!!!!1231231");
+        PopupWin.self().checkShow(-1);
     }
 
     @Override

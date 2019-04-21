@@ -2,19 +2,14 @@ package com.wow.carlauncher.view.activity.launcher.view;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
-import com.meetsl.scardview.SCardView;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.util.ViewUtils;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.view.base.BaseEXView;
-import com.wow.carlauncher.view.base.BaseView;
 
 import org.xutils.view.annotation.ViewInject;
 

@@ -13,11 +13,11 @@ import android.support.v4.content.ContextCompat;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.AppIconTemp;
 import com.wow.carlauncher.common.CommonData;
+import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.ex.manage.appInfo.event.MAppInfoRefreshEvent;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.view.activity.driving.DrivingActivity;
 import com.wow.carlauncher.view.activity.set.SetActivity;
-import com.wow.carlauncher.common.util.CommonUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.xutils.x;

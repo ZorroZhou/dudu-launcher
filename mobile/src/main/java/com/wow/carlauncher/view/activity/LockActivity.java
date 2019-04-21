@@ -6,8 +6,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
-import com.wow.carlauncher.view.base.BaseActivity;
 import com.wow.carlauncher.common.util.DateUtil;
+import com.wow.carlauncher.view.base.BaseActivity;
 
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;

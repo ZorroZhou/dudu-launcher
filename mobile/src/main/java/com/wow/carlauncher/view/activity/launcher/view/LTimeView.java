@@ -8,11 +8,11 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.common.util.DateUtil;
 import com.wow.carlauncher.common.util.LunarUtil;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 import com.wow.carlauncher.view.base.BaseEXView;
-import com.wow.carlauncher.common.util.DateUtil;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;

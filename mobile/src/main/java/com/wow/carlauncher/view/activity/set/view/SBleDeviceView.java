@@ -3,34 +3,27 @@ package com.wow.carlauncher.view.activity.set.view;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
-import com.inuker.bluetooth.library.search.SearchResult;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
+import com.wow.carlauncher.common.util.CommonUtil;
+import com.wow.carlauncher.common.util.SharedPreUtil;
+import com.wow.carlauncher.common.util.ThreadObj;
 import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
-import com.wow.carlauncher.ex.manage.ble.MySearchResponse;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.fk.FangkongPlugin;
 import com.wow.carlauncher.ex.plugin.fk.FangkongProtocolEnum;
-import com.wow.carlauncher.ex.plugin.music.MusicControllerEnum;
-import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.ex.plugin.obd.ObdProtocolEnum;
 import com.wow.carlauncher.view.activity.set.SetEnumOnClickListener;
 import com.wow.carlauncher.view.base.BaseView;
 import com.wow.carlauncher.view.dialog.ListDialog;
-import com.wow.carlauncher.common.util.CommonUtil;
-import com.wow.carlauncher.common.util.SharedPreUtil;
-import com.wow.carlauncher.common.util.ThreadObj;
 
 import org.xutils.view.annotation.ViewInject;
 
@@ -39,7 +32,6 @@ import java.util.List;
 
 import static com.wow.carlauncher.common.CommonData.OBD_CONTROLLER;
 import static com.wow.carlauncher.common.CommonData.SDATA_FANGKONG_CONTROLLER;
-import static com.wow.carlauncher.common.CommonData.SDATA_MUSIC_CONTROLLER;
 import static com.wow.carlauncher.common.CommonData.SDATA_OBD_CONTROLLER;
 import static com.wow.carlauncher.common.CommonData.SDATA_TRIP_AUTO_OPEN_DRIVING;
 import static com.wow.carlauncher.common.CommonData.SDATA_TRIP_AUTO_OPEN_DRIVING_DF;

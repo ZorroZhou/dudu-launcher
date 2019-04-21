@@ -15,6 +15,10 @@ import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
+import com.wow.carlauncher.common.util.CommonUtil;
+import com.wow.carlauncher.common.util.DateUtil;
+import com.wow.carlauncher.common.util.NetWorkUtil;
+import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
@@ -29,10 +33,6 @@ import com.wow.carlauncher.view.activity.set.SetActivity;
 import com.wow.carlauncher.view.base.BaseEXView;
 import com.wow.carlauncher.view.consoleWindow.ConsoleWin;
 import com.wow.carlauncher.view.event.EventWifiState;
-import com.wow.carlauncher.common.util.CommonUtil;
-import com.wow.carlauncher.common.util.DateUtil;
-import com.wow.carlauncher.common.util.NetWorkUtil;
-import com.wow.carlauncher.common.util.SharedPreUtil;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;

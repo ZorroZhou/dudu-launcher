@@ -7,11 +7,12 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
-import android.view.View;
 import android.view.WindowManager;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
+import com.wow.carlauncher.common.util.CommonUtil;
+import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.util.ThreadObj;
 import com.wow.carlauncher.common.util.ViewUtils;
 import com.wow.carlauncher.common.view.SetView;
@@ -31,12 +32,10 @@ import com.wow.carlauncher.view.activity.launcher.event.LItemRefreshEvent;
 import com.wow.carlauncher.view.activity.set.LauncherItemAdapter;
 import com.wow.carlauncher.view.activity.set.SetAppMultipleSelectOnClickListener;
 import com.wow.carlauncher.view.activity.set.SetAppSingleSelectOnClickListener;
-import com.wow.carlauncher.view.activity.set.SetSwitchOnClickListener;
 import com.wow.carlauncher.view.activity.set.SetEnumOnClickListener;
+import com.wow.carlauncher.view.activity.set.SetSwitchOnClickListener;
 import com.wow.carlauncher.view.base.BaseView;
 import com.wow.carlauncher.view.dialog.CityDialog;
-import com.wow.carlauncher.common.util.CommonUtil;
-import com.wow.carlauncher.common.util.SharedPreUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.xutils.view.annotation.ViewInject;

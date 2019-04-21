@@ -7,10 +7,10 @@ import android.content.IntentFilter;
 import android.net.Uri;
 
 import com.google.gson.Gson;
+import com.wow.carlauncher.common.util.GsonUtil;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 import com.wow.carlauncher.ex.plugin.music.MusicController;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
-import com.wow.carlauncher.common.util.GsonUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

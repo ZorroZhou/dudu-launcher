@@ -1,8 +1,8 @@
 package com.wow.carlauncher.ex.plugin.music;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 
+import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.ContextEx;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventInfo;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventProgress;
@@ -11,7 +11,6 @@ import com.wow.carlauncher.ex.plugin.music.plugin.JidouMusicController;
 import com.wow.carlauncher.ex.plugin.music.plugin.NwdMusicController;
 import com.wow.carlauncher.ex.plugin.music.plugin.QQMusicCarController;
 import com.wow.carlauncher.ex.plugin.music.plugin.SystemMusicController;
-import com.wow.carlauncher.common.util.SharedPreUtil;
 
 import org.greenrobot.eventbus.EventBus;
 

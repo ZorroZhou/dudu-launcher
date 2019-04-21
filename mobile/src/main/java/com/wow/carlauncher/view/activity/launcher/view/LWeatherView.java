@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
+import com.wow.carlauncher.common.util.CommonUtil;
+import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.util.WeatherIconUtil;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.location.event.MNewLocationEvent;
@@ -20,8 +22,6 @@ import com.wow.carlauncher.repertory.amapService.res.WeatherRes;
 import com.wow.carlauncher.view.activity.launcher.event.LCityRefreshEvent;
 import com.wow.carlauncher.view.base.BaseEXView;
 import com.wow.carlauncher.view.dialog.CityDialog;
-import com.wow.carlauncher.common.util.CommonUtil;
-import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.view.event.EventNetStateChange;
 
 import org.greenrobot.eventbus.EventBus;

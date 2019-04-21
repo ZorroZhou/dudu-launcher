@@ -1,13 +1,10 @@
 package com.wow.carlauncher.view.activity.set;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 
-import com.wow.carlauncher.common.CommonData;
-import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.util.ThreadObj;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfo;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;

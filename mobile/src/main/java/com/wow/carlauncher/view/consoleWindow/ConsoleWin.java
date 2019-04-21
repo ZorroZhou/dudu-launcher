@@ -2,7 +2,6 @@ package com.wow.carlauncher.view.consoleWindow;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -18,7 +17,6 @@ import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
-import com.wow.carlauncher.ex.manage.musicCover.MusicCoverManage;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.musicCover.MusicCoverRefresh;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;

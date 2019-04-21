@@ -2,12 +2,12 @@ package com.wow.carlauncher.ex.plugin.console;
 
 import android.content.Context;
 
+import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.ContextEx;
 import com.wow.carlauncher.ex.plugin.console.event.PConsoleEventCallState;
 import com.wow.carlauncher.ex.plugin.console.event.PConsoleEventLightState;
 import com.wow.carlauncher.ex.plugin.console.impl.NwdConsoleImpl;
 import com.wow.carlauncher.ex.plugin.console.impl.SysConsoleImpl;
-import com.wow.carlauncher.common.util.SharedPreUtil;
 
 import org.greenrobot.eventbus.EventBus;
 

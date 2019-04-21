@@ -1,12 +1,12 @@
 package com.wow.frame;
 
 import com.google.gson.Gson;
+import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.frame.declare.SAppDeclare;
 import com.wow.frame.declare.SDatabaseDeclare;
 import com.wow.frame.declare.SWebServiceDeclare;
 import com.wow.frame.repertory.dbTool.DatabaseManage;
 import com.wow.frame.repertory.remote.WebServiceManage;
-import com.wow.carlauncher.common.util.SharedPreUtil;
 
 import org.xutils.x;
 

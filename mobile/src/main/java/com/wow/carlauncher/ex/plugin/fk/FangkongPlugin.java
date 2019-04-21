@@ -9,6 +9,8 @@ import com.inuker.bluetooth.library.connect.response.BleConnectResponse;
 import com.inuker.bluetooth.library.connect.response.BleNotifyResponse;
 import com.inuker.bluetooth.library.model.BleGattProfile;
 import com.wow.carlauncher.common.CommonData;
+import com.wow.carlauncher.common.util.CommonUtil;
+import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.ContextEx;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
@@ -17,8 +19,6 @@ import com.wow.carlauncher.ex.plugin.fk.event.PFkEventAction;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventBatterLevel;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventConnect;
 import com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol;
-import com.wow.carlauncher.common.util.CommonUtil;
-import com.wow.carlauncher.common.util.SharedPreUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

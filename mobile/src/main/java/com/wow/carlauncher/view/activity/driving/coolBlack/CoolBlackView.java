@@ -11,15 +11,14 @@ import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.AppContext;
+import com.wow.carlauncher.common.util.CommonUtil;
+import com.wow.carlauncher.common.util.DateUtil;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventNavInfo;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventState;
-import com.wow.carlauncher.ex.plugin.console.ConsolePlugin;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventAction;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventConnect;
 import com.wow.carlauncher.view.base.BaseEXView;
-import com.wow.carlauncher.common.util.CommonUtil;
-import com.wow.carlauncher.common.util.DateUtil;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;

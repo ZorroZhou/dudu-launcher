@@ -3,7 +3,6 @@ package com.wow.carlauncher.view.activity.set.view;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -15,6 +14,9 @@ import android.widget.ArrayAdapter;
 import com.inuker.bluetooth.library.search.SearchResult;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
+import com.wow.carlauncher.common.util.CommonUtil;
+import com.wow.carlauncher.common.util.SharedPreUtil;
+import com.wow.carlauncher.common.util.ThreadObj;
 import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
 import com.wow.carlauncher.ex.manage.ble.MySearchResponse;
@@ -23,9 +25,6 @@ import com.wow.carlauncher.ex.plugin.fk.FangkongPlugin;
 import com.wow.carlauncher.ex.plugin.fk.FangkongProtocolEnum;
 import com.wow.carlauncher.view.base.BaseView;
 import com.wow.carlauncher.view.dialog.ListDialog;
-import com.wow.carlauncher.common.util.CommonUtil;
-import com.wow.carlauncher.common.util.SharedPreUtil;
-import com.wow.carlauncher.common.util.ThreadObj;
 
 import org.xutils.view.annotation.ViewInject;
 

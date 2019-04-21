@@ -6,18 +6,17 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
-import android.view.View;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.util.CommonUtil;
+import com.wow.carlauncher.common.util.SharedPreUtil;
+import com.wow.carlauncher.common.util.ThreadObj;
 import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.view.activity.set.SetAppSingleSelectOnClickListener;
 import com.wow.carlauncher.view.activity.set.SetSwitchOnClickListener;
 import com.wow.carlauncher.view.base.BaseView;
-import com.wow.carlauncher.common.util.SharedPreUtil;
-import com.wow.carlauncher.common.util.ThreadObj;
 
 import org.xutils.view.annotation.ViewInject;
 

@@ -18,20 +18,19 @@ import android.widget.LinearLayout;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
+import com.wow.carlauncher.common.util.SharedPreUtil;
+import com.wow.carlauncher.common.util.ViewUtils;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.location.event.MNewLocationEvent;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.console.ConsolePlugin;
 import com.wow.carlauncher.ex.plugin.console.event.PConsoleEventCallState;
-import com.wow.carlauncher.ex.plugin.console.event.PConsoleEventLightState;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventAction;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import com.wow.carlauncher.view.activity.AppSelectActivity;
 import com.wow.carlauncher.view.activity.launcher.event.LItemRefreshEvent;
 import com.wow.carlauncher.view.activity.launcher.view.LDockView;
 import com.wow.carlauncher.view.activity.launcher.view.LPageView;
-import com.wow.carlauncher.common.util.SharedPreUtil;
-import com.wow.carlauncher.common.util.ViewUtils;
 import com.wow.carlauncher.view.consoleWindow.ConsoleWin;
 
 import org.greenrobot.eventbus.EventBus;
@@ -62,7 +61,14 @@ import static com.wow.carlauncher.common.CommonData.SDATA_DOCK3_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK4_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK5_CLASS;
 import static com.wow.carlauncher.ex.plugin.fk.FangkongProtocolEnum.YLFK;
-import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.*;
+import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.CENTER_CLICK;
+import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.CENTER_LONG_CLICK;
+import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.LEFT_BOTTOM_CLICK;
+import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.LEFT_TOP_CLICK;
+import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.LEFT_TOP_LONG_CLICK;
+import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.RIGHT_BOTTOM_CLICK;
+import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.RIGHT_TOP_CLICK;
+import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.RIGHT_TOP_LONG_CLICK;
 
 public class LauncherActivity extends Activity implements ThemeManage.OnThemeChangeListener {
 

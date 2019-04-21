@@ -10,11 +10,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventInfo;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventState;
 import com.wow.carlauncher.view.base.BaseEXView;
-import com.wow.carlauncher.common.util.CommonUtil;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;

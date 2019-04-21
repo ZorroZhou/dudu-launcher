@@ -9,17 +9,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.wow.carlauncher.R;
+import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.util.SunRiseSetUtil;
 import com.wow.carlauncher.ex.manage.location.event.MNewLocationEvent;
 import com.wow.carlauncher.ex.manage.time.event.MTimeMinuteEvent;
 import com.wow.carlauncher.ex.plugin.console.event.PConsoleEventLightState;
 import com.wow.carlauncher.view.activity.set.SetEnum;
-import com.wow.carlauncher.common.util.SharedPreUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.xutils.x;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -28,7 +28,8 @@ import java.util.List;
 import java.util.Map;
 
 import static com.wow.carlauncher.common.CommonData.SDATA_APP_THEME;
-import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.*;
+import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.BLACK;
+import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.WHITE;
 
 public class ThemeManage {
 
@@ -80,9 +81,11 @@ public class ThemeManage {
         if (this.theme != theme) {
             this.theme = theme;
             if (mThemeChangeListenerList.size() > 0) {
-                for (OnThemeChangeListener listener : mThemeChangeListenerList) {
-                    listener.onThemeChanged(this);
-                }
+                x.task().autoPost(() -> {
+                    for (OnThemeChangeListener listener : mThemeChangeListenerList) {
+                        listener.onThemeChanged(ThemeManage.this);
+                    }
+                });
             }
         }
     }

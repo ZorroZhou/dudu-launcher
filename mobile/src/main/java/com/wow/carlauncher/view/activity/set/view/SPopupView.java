@@ -1,35 +1,25 @@
 package com.wow.carlauncher.view.activity.set.view;
 
 import android.content.Context;
-import android.content.DialogInterface;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.View;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
+import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.view.SetView;
-import com.wow.carlauncher.ex.manage.appInfo.AppInfo;
-import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.view.activity.set.SetAppMultipleSelectOnClickListener;
 import com.wow.carlauncher.view.activity.set.SetSwitchOnClickListener;
 import com.wow.carlauncher.view.base.BaseView;
 import com.wow.carlauncher.view.popupWindow.PopupWin;
 import com.wow.carlauncher.view.popupWindow.event.PEventFSRefresh;
-import com.wow.carlauncher.common.util.SharedPreUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.xutils.view.annotation.ViewInject;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static com.wow.carlauncher.common.CommonData.POPUP_SIZE;
-import static com.wow.carlauncher.common.CommonData.TAG;
 
 /**
  * Created by 10124 on 2018/4/22.

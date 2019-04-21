@@ -3,7 +3,6 @@ package com.wow.carlauncher.view.activity.launcher.view;
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -17,7 +16,6 @@ import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarInfo;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventConnect;
-import com.wow.carlauncher.view.activity.set.SetActivity;
 import com.wow.carlauncher.view.base.BaseEXView;
 
 import org.greenrobot.eventbus.Subscribe;

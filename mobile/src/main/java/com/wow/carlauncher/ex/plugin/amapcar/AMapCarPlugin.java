@@ -6,10 +6,10 @@ import android.content.IntentFilter;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.wow.carlauncher.common.util.AppUtil;
 import com.wow.carlauncher.ex.ContextEx;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventState;
-import com.wow.carlauncher.common.util.AppUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

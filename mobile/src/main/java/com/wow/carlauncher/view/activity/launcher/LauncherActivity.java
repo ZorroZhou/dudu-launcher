@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
@@ -33,6 +32,7 @@ import com.wow.carlauncher.view.activity.launcher.view.LDockView;
 import com.wow.carlauncher.view.activity.launcher.view.LPageView;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.util.ViewUtils;
+import com.wow.carlauncher.view.consoleWindow.ConsoleWin;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -357,7 +357,24 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
                     break;
                 }
                 case CENTER_LONG_CLICK: {
-                    //TODO 这里弹出来悬浮窗
+                    AnyPermission.with(getApplicationContext()).overlay()
+                            .onWithoutPermission((data, executor) -> {
+                                new AlertDialog.Builder(getApplicationContext()).setTitle("警告!")
+                                        .setNegativeButton("取消", (dialog, which) -> executor.cancel())
+                                        .setPositiveButton("确定", (dialog2, which2) -> executor.execute())
+                                        .setMessage("请给与车机助手悬浮窗权限,否则无法使用这个功能").show();
+                            })
+                            .request(new RequestListener() {
+                                @Override
+                                public void onSuccess() {
+                                    ConsoleWin.self().show();
+                                }
+
+                                @Override
+                                public void onFailed() {
+                                    ToastManage.self().show("没有悬浮窗权限!");
+                                }
+                            });
                     break;
                 }
                 case LEFT_BOTTOM_CLICK: {
@@ -390,31 +407,6 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
 
     private void requestRuntime() {
         final AnyPermission anyPermission = AnyPermission.with(this);
-//        <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-//    <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
-//    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-//    <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
-//    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-//    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
-//    <!-- 请求网络 -->
-//    <uses-permission android:name="android.permission.INTERNET" />
-//    <uses-permission android:name="android.permission.GET_TASKS" />
-//    <uses-permission android:name="android.permission.WAKE_LOCK" />
-//    <uses-permission android:name="android.permission.LOCATION_HARDWARE" />
-//    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-//    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-//    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-//    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-//    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-//    <uses-permission android:name="android.permission.BLUETOOTH" />
-//    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-//    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-//    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
-//    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-//
-//    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
-//
-//    <uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW" />
         mRuntimeRequester = AnyPermission.with(this).runtime(1)
                 .permissions(
                         Manifest.permission.ACCESS_NETWORK_STATE,

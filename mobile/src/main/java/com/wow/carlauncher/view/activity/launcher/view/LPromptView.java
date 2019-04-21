@@ -2,7 +2,6 @@ package com.wow.carlauncher.view.activity.launcher.view;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.provider.Settings;
@@ -18,7 +17,6 @@ import android.widget.TextView;
 import com.wow.carlauncher.CarLauncherApplication;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
-import com.wow.carlauncher.common.quickCode.RequestListenerImpl;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
@@ -141,10 +139,15 @@ public class LPromptView extends BaseEXView {
                                     .setPositiveButton("确定", (dialog2, which2) -> executor.execute())
                                     .setMessage("请给与车机助手悬浮窗权限,否则无法使用这个功能").show();
                         })
-                        .request(new RequestListenerImpl() {
+                        .request(new RequestListener() {
                             @Override
                             public void onSuccess() {
                                 ConsoleWin.self().show();
+                            }
+
+                            @Override
+                            public void onFailed() {
+                                ToastManage.self().show("没有悬浮窗权限!");
                             }
                         });
 //                String packname = SharedPreUtil.getSharedPreString(SDATA_TIME_PLUGIN_OPEN_APP);

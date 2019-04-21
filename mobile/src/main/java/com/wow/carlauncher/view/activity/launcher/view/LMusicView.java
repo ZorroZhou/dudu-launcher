@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -14,6 +13,7 @@ import android.widget.TextView;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.ex.manage.MusicCoverManage;
 import com.wow.carlauncher.ex.manage.ThemeManage;
+import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventInfo;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventProgress;
@@ -27,7 +27,6 @@ import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
-import static com.wow.carlauncher.common.CommonData.TAG;
 import static com.wow.carlauncher.ex.manage.ThemeManage.WHITE;
 
 /**
@@ -110,9 +109,8 @@ public class LMusicView extends BaseEXView {
     }
 
 
-    @Event(value = {R.id.iv_play, R.id.ll_prew, R.id.ll_next})
+    @Event(value = {R.id.iv_play, R.id.ll_prew, R.id.ll_next, R.id.rl_base})
     private void clickEvent(View view) {
-        Log.d(TAG, "clickEvent: " + view);
         switch (view.getId()) {
             case R.id.ll_prew: {
                 MusicPlugin.self().pre();
@@ -124,6 +122,12 @@ public class LMusicView extends BaseEXView {
             }
             case R.id.ll_next: {
                 MusicPlugin.self().next();
+                break;
+            }
+            case R.id.rl_base: {
+                if (CommonUtil.isNotNull(MusicPlugin.self().clazz())) {
+                    AppInfoManage.self().openApp(MusicPlugin.self().clazz());
+                }
                 break;
             }
         }
@@ -183,8 +187,6 @@ public class LMusicView extends BaseEXView {
         if (progressBar != null) {
             progressBar.setVisibility(VISIBLE);
             progressBar.setProgress((int) (event.getCurrTime() * 100F / event.getTotalTime()));
-        } else {
-            progressBar.setVisibility(GONE);
         }
     }
 

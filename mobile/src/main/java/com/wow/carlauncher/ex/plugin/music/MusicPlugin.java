@@ -61,7 +61,13 @@ public class MusicPlugin extends ContextEx {
         if (musicController != null) {
             musicController.init(getContext(), this);
         }
+    }
 
+    public String clazz() {
+        if (musicController != null) {
+            return musicController.clazz();
+        }
+        return null;
     }
 
 

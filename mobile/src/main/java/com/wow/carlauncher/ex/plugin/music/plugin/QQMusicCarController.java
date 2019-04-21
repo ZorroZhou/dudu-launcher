@@ -52,7 +52,6 @@ public class QQMusicCarController extends MusicController {
     }
 
     public void pause() {
-        System.out.println("!!!!!!!!!");
         sendEvent(WE_DRIVE_PAUSE);
     }
 
@@ -86,6 +85,11 @@ public class QQMusicCarController extends MusicController {
     public void destroy() {
         EventBus.getDefault().unregister(this);
         context.unregisterReceiver(mReceiver);
+    }
+
+    @Override
+    public String clazz() {
+        return "com.tencent.qqmusiccar";
     }
 
     private int index = 2;

@@ -24,4 +24,6 @@ public abstract class MusicController {
     public abstract void next();
 
     public abstract void pre();
+
+    public abstract String clazz();
 }

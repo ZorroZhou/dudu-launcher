@@ -29,6 +29,11 @@ public class NwdMusicController extends MusicController {
 
     }
 
+    @Override
+    public String clazz() {
+        return "com.nwd.android.music.ui";
+    }
+
     public void play() {
         sendEvent(CMD_RESUME);
         musicView.refreshState(true);

@@ -175,6 +175,11 @@ public class SystemMusicController extends MusicController {
         context.unregisterReceiver(mReceiver);
     }
 
+    @Override
+    public String clazz() {
+        return null;
+    }
+
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
         public void onReceive(Context paramAnonymousContext, Intent intent) {
             try {

@@ -53,6 +53,11 @@ public class JidouMusicController extends MusicController {
         context.unregisterReceiver(mReceiver);
     }
 
+    @Override
+    public String clazz() {
+        return "com.ijidou.card.music";
+    }
+
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
         String music_title;
         String music_artist;

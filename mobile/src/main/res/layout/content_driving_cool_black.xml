@@ -90,10 +90,12 @@
                 android:layout_weight="28">
 
                 <com.zhy.android.percent.support.PercentLinearLayout
+                    android:id="@+id/ll_tp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
 
                     <TextView
@@ -113,18 +115,16 @@
                         app:layout_marginRightPercent="10%h" />
                 </com.zhy.android.percent.support.PercentLinearLayout>
 
-                <!--<ImageView-->
-                <!--android:id="@+id/iv_naving"-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_height="0dp"-->
-                <!--android:layout_gravity="center"-->
-                <!--android:contentDescription="@string/app_name"-->
-                <!--android:scaleType="centerInside"-->
-                <!--android:visibility="gone"-->
-                <!--app:layout_heightPercent="60%h"-->
-                <!--app:layout_widthPercent="60%w" />-->
-
-
+                <ImageView
+                    android:id="@+id/iv_navicon"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/hud_sou9"
+                    app:layout_heightPercent="60%h"
+                    app:layout_widthPercent="60%w" />
             </com.zhy.android.percent.support.PercentFrameLayout>
 
             <FrameLayout
@@ -133,11 +133,12 @@
                 android:layout_weight="28">
 
                 <com.zhy.android.percent.support.PercentLinearLayout
-                    android:id="@+id/ll_info_dis"
+                    android:id="@+id/ll_music"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -156,31 +157,39 @@
                         app:layout_marginRightPercent="10%h" />
                 </com.zhy.android.percent.support.PercentLinearLayout>
 
-                <!--<com.zhy.android.percent.support.PercentLinearLayout-->
-                <!--android:id="@+id/ll_navinfo"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:gravity="center"-->
-                <!--android:orientation="vertical">-->
+                <com.zhy.android.percent.support.PercentLinearLayout
+                    android:id="@+id/ll_navinfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
-                <!--<TextView-->
-                <!--android:id="@+id/tv_amaproad"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:gravity="center"-->
-                <!--android:textColor="#ccc"-->
-                <!--app:layout_heightPercent="20%h"-->
-                <!--app:layout_textSizePercent="12%h" />-->
+                    <TextView
+                        android:id="@+id/tv_amaproad"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:text="1公里后右转到达目的地"
+                        android:textColor="#ccc"
+                        app:layout_heightPercent="45%h"
+                        app:layout_marginLeftPercent="20%w"
+                        app:layout_marginRightPercent="20%w"
+                        app:layout_textSizePercent="12%h" />
 
-                <!--<TextView-->
-                <!--android:id="@+id/tv_amapmsg"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:gravity="center"-->
-                <!--android:textColor="#ccc"-->
-                <!--app:layout_heightPercent="20%h"-->
-                <!--app:layout_textSizePercent="12%h" />-->
-                <!--</com.zhy.android.percent.support.PercentLinearLayout>-->
+                    <TextView
+                        android:id="@+id/tv_amapmsg"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:lines="2"
+                        android:text="剩余5分钟到达"
+                        android:textColor="#ccc"
+                        app:layout_heightPercent="45%h"
+                        app:layout_marginLeftPercent="20%w"
+                        app:layout_marginRightPercent="20%w"
+                        app:layout_textSizePercent="12%h" />
+                </com.zhy.android.percent.support.PercentLinearLayout>
             </FrameLayout>
 
             <com.zhy.android.percent.support.PercentLinearLayout

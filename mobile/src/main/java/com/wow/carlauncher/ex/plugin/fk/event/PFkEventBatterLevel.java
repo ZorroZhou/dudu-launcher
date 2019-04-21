@@ -4,7 +4,7 @@ package com.wow.carlauncher.ex.plugin.fk.event;
  * Created by 10124 on 2018/4/22.
  */
 
-public class PFkEventBatterLevel {
+public class PFkEventBatterLevel extends PFkBaseEventAction {
     private Integer level;
     private Integer total;
 

@@ -16,6 +16,7 @@ import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventNavInfo;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventState;
 import com.wow.carlauncher.ex.plugin.console.ConsolePlugin;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventAction;
+import com.wow.carlauncher.ex.plugin.fk.event.PFkEventConnect;
 import com.wow.carlauncher.view.base.BaseEXView;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.DateUtil;
@@ -58,26 +59,26 @@ public class CoolBlackView extends BaseEXView {
     @ViewInject(R.id.tv_trip_time)
     private TextView tv_trip_time;
 
-//    @ViewInject(R.id.tv_driver_distance)
-//    private TextView tv_driver_distance;
+    @ViewInject(R.id.iv_navicon)
+    private ImageView iv_navicon;
 
-//    @ViewInject(R.id.iv_naving)
-//    private ImageView iv_naving;
+    @ViewInject(R.id.ll_navinfo)
+    private LinearLayout ll_navinfo;
 
-//    @ViewInject(R.id.ll_navinfo)
-//    private LinearLayout ll_navinfo;
+    @ViewInject(R.id.ll_tp)
+    private LinearLayout ll_tp;
 
-//    @ViewInject(R.id.ll_info_shunshiyouhao)
-//    private LinearLayout ll_info_shunshiyouhao;
+    @ViewInject(R.id.ll_music)
+    private LinearLayout ll_music;
 
-//    @ViewInject(R.id.ll_info_dis)
-//    private LinearLayout ll_info_dis;
-//
-//    @ViewInject(R.id.tv_amaproad)
-//    private TextView tv_amaproad;
-//
-//    @ViewInject(R.id.tv_amapmsg)
-//    private TextView tv_amapmsg;
+    @ViewInject(R.id.tv_amaproad)
+    private TextView tv_amaproad;
+
+    @ViewInject(R.id.tv_amapmsg)
+    private TextView tv_amapmsg;
+
+    private boolean fktuoguan = false;
+    private boolean showNav = false;
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(final MTimeSecondEvent event) {
@@ -97,54 +98,102 @@ public class CoolBlackView extends BaseEXView {
         }
     }
 
+    @Subscribe
+    public void onEvent(PFkEventConnect event) {
+        if (YLFK.equals(event.getFangkongProtocol())) {
+            fktuoguan = event.isConnected();
+        }
+    }
+
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(final PAmapEventState event) {
-//        if (event.isRunning()) {
-//            ll_info_shunshiyouhao.setVisibility(View.GONE);
-//            ll_info_dis.setVisibility(View.GONE);
-//
-//            iv_naving.setVisibility(View.VISIBLE);
-//            ll_navinfo.setVisibility(View.VISIBLE);
-//
-//        } else {
-//            ll_info_shunshiyouhao.setVisibility(View.VISIBLE);
-//            ll_info_dis.setVisibility(View.VISIBLE);
-//
-//            iv_naving.setVisibility(View.GONE);
-//            ll_navinfo.setVisibility(View.GONE);
-//
-//            iv_naving.setImageResource(0);
-//        }
+        if (fktuoguan) {
+            showNav(!showNav);
+        } else {
+            showNav(event.isRunning());
+        }
+    }
+
+    private void showNav(boolean show) {
+        showNav = show;
+        if (show) {
+            ll_tp.setVisibility(View.GONE);
+            ll_music.setVisibility(View.GONE);
+
+            iv_navicon.setVisibility(View.VISIBLE);
+            ll_navinfo.setVisibility(View.VISIBLE);
+        } else {
+            ll_tp.setVisibility(View.VISIBLE);
+            ll_music.setVisibility(View.VISIBLE);
+
+            iv_navicon.setVisibility(View.GONE);
+            ll_navinfo.setVisibility(View.GONE);
+            iv_navicon.setImageResource(0);
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(final PAmapEventNavInfo event) {
-//        if (iv_naving != null && event.getIcon() - 1 >= 0 && event.getIcon() - 1 < ICONS.length) {
-//            iv_naving.setImageResource(ICONS[event.getIcon() - 1]);
-//        }
-//        if (tv_amaproad != null && CommonUtil.isNotNull(event.getNextRoadName())) {
-//            String msg = "";
-//            if (event.getSegRemainDis() < 10) {
-//                msg = msg + "现在";
-//            } else {
-//                if (event.getSegRemainDis() > 1000) {
-//                    msg = msg + event.getSegRemainDis() / 1000 + "公里后";
-//                } else {
-//                    msg = msg + event.getSegRemainDis() + "米后";
-//                }
-//            }
-//            msg = msg + event.getNextRoadName();
-//            tv_amaproad.setText(msg);
-//        }
-//        if (tv_amapmsg != null && event.getRouteRemainTime() > -1 && event.getRouteRemainDis() > -1) {
-//            if (event.getRouteRemainTime() == 0 || event.getRouteRemainDis() == 0) {
-//                tv_amapmsg.setText("到达");
-//            } else {
-//                String msg = "剩余" + new BigDecimal(event.getRouteRemainDis() / 1000f).setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue() + "公里  " +
-//                        event.getRouteRemainTime() / 60 + "分钟";
-//                tv_amapmsg.setText(msg);
-//            }
-//        }
+        String fangxiang = "";
+        if (iv_navicon != null && event.getIcon() - 1 >= 0 && event.getIcon() - 1 < ICONS.length) {
+            iv_navicon.setImageResource(ICONS[event.getIcon() - 1]);
+            switch (event.getIcon()) {
+                case 2:
+                    fangxiang = "左拐";
+                    break;
+                case 3:
+                    fangxiang = "右拐";
+                    break;
+                case 4:
+                    fangxiang = "左前方";
+                    break;
+                case 5:
+                    fangxiang = "右前方";
+                    break;
+                case 6:
+                    fangxiang = "左后方";
+                    break;
+                case 7:
+                    fangxiang = "右后方";
+                    break;
+                case 8:
+                    fangxiang = "掉头";
+                    break;
+                case 20:
+                    fangxiang = "右方掉头";
+                    break;
+            }
+        }
+        if (tv_amaproad != null && CommonUtil.isNotNull(event.getNextRoadName())) {
+            String msg = "";
+            if (event.getSegRemainDis() < 10) {
+                msg = msg + "现在";
+            } else {
+                if (event.getSegRemainDis() > 1000) {
+                    msg = msg + event.getSegRemainDis() / 1000 + "公里后";
+                } else {
+                    msg = msg + event.getSegRemainDis() + "米后";
+                }
+            }
+            if ("目的地".equals(event.getNextRoadName())) {
+                msg = msg + fangxiang + "到达" + event.getNextRoadName();
+                tv_amaproad.setText(msg);
+            } else {
+                msg = msg + fangxiang + "进入" + event.getNextRoadName();
+                tv_amaproad.setText(msg);
+            }
+            msg = msg + event.getNextRoadName();
+        }
+        if (tv_amapmsg != null && event.getRouteRemainTime() > -1 && event.getRouteRemainDis() > -1) {
+            if (event.getRouteRemainTime() == 0 || event.getRouteRemainDis() == 0) {
+                tv_amapmsg.setText("到达");
+            } else {
+                String msg = "剩余" + new BigDecimal(event.getRouteRemainDis() / 1000f).setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue() + "公里  " +
+                        event.getRouteRemainTime() / 60 + "分钟";
+                tv_amapmsg.setText(msg);
+            }
+        }
     }
 }
 

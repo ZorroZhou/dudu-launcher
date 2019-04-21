@@ -4,14 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:ignore="HardcodedText">
 
     <com.zhy.android.percent.support.PercentLinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:orientation="vertical"
-        app:layout_widthPercent="30%w"
+        app:layout_widthPercent="40%w"
         tools:ignore="RtlHardcoded">
 
         <com.wow.carlauncher.common.view.PhilTextView
@@ -20,9 +21,9 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="@string/driving_cool_black_tp_nodata"
+            android:text="0.0\n0.0℃"
             android:textColor="#fff"
-            app:layout_textSizePercent="30%h" />
+            app:layout_textSizePercent="20%h" />
 
         <com.wow.carlauncher.common.view.PhilTextView
             android:id="@+id/tv_lb"
@@ -32,27 +33,27 @@
             android:gravity="center"
             android:text="@string/driving_cool_black_tp_nodata"
             android:textColor="#fff"
-            app:layout_textSizePercent="30%h" />
+            app:layout_textSizePercent="20%h" />
     </com.zhy.android.percent.support.PercentLinearLayout>
 
-    <ImageView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:scaleType="centerInside"
-        android:src="@mipmap/driving_black_tp_car"
-        app:layout_marginBottomPercent="10%h"
-        app:layout_marginTopPercent="10%h"
-        app:layout_widthPercent="40%w" />
+    <!--<ImageView-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentBottom="true"-->
+    <!--android:layout_alignParentTop="true"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:scaleType="centerInside"-->
+    <!--android:src="@mipmap/driving_black_tp_car"-->
+    <!--app:layout_marginBottomPercent="10%h"-->
+    <!--app:layout_marginTopPercent="10%h"-->
+    <!--app:layout_widthPercent="20%w" />-->
 
     <com.zhy.android.percent.support.PercentLinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
         android:orientation="vertical"
-        app:layout_widthPercent="30%w"
+        app:layout_widthPercent="40%w"
         tools:ignore="RtlHardcoded">
 
         <com.wow.carlauncher.common.view.PhilTextView
@@ -63,7 +64,7 @@
             android:gravity="center"
             android:text="@string/driving_cool_black_tp_nodata"
             android:textColor="#fff"
-            app:layout_textSizePercent="30%h" />
+            app:layout_textSizePercent="20%h" />
 
         <com.wow.carlauncher.common.view.PhilTextView
             android:id="@+id/tv_rb"
@@ -73,6 +74,6 @@
             android:gravity="center"
             android:text="@string/driving_cool_black_tp_nodata"
             android:textColor="#fff"
-            app:layout_textSizePercent="30%h" />
+            app:layout_textSizePercent="20%h" />
     </com.zhy.android.percent.support.PercentLinearLayout>
 </com.zhy.android.percent.support.PercentRelativeLayout>

@@ -56,14 +56,14 @@ public class CoolBlackView extends BaseEXView {
     @ViewInject(R.id.tv_driver_distance)
     private TextView tv_driver_distance;
 
-    @ViewInject(R.id.iv_naving)
-    private ImageView iv_naving;
+//    @ViewInject(R.id.iv_naving)
+//    private ImageView iv_naving;
 
     @ViewInject(R.id.ll_navinfo)
     private LinearLayout ll_navinfo;
 
-    @ViewInject(R.id.ll_info_shunshiyouhao)
-    private LinearLayout ll_info_shunshiyouhao;
+//    @ViewInject(R.id.ll_info_shunshiyouhao)
+//    private LinearLayout ll_info_shunshiyouhao;
 
     @ViewInject(R.id.ll_info_dis)
     private LinearLayout ll_info_dis;
@@ -86,52 +86,52 @@ public class CoolBlackView extends BaseEXView {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(final PAmapEventState event) {
-        if (event.isRunning()) {
-            ll_info_shunshiyouhao.setVisibility(View.GONE);
-            ll_info_dis.setVisibility(View.GONE);
-
-            iv_naving.setVisibility(View.VISIBLE);
-            ll_navinfo.setVisibility(View.VISIBLE);
-
-        } else {
-            ll_info_shunshiyouhao.setVisibility(View.VISIBLE);
-            ll_info_dis.setVisibility(View.VISIBLE);
-
-            iv_naving.setVisibility(View.GONE);
-            ll_navinfo.setVisibility(View.GONE);
-
-            iv_naving.setImageResource(0);
-        }
+//        if (event.isRunning()) {
+//            ll_info_shunshiyouhao.setVisibility(View.GONE);
+//            ll_info_dis.setVisibility(View.GONE);
+//
+//            iv_naving.setVisibility(View.VISIBLE);
+//            ll_navinfo.setVisibility(View.VISIBLE);
+//
+//        } else {
+//            ll_info_shunshiyouhao.setVisibility(View.VISIBLE);
+//            ll_info_dis.setVisibility(View.VISIBLE);
+//
+//            iv_naving.setVisibility(View.GONE);
+//            ll_navinfo.setVisibility(View.GONE);
+//
+//            iv_naving.setImageResource(0);
+//        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(final PAmapEventNavInfo event) {
-        if (iv_naving != null && event.getIcon() - 1 >= 0 && event.getIcon() - 1 < ICONS.length) {
-            iv_naving.setImageResource(ICONS[event.getIcon() - 1]);
-        }
-        if (tv_amaproad != null && CommonUtil.isNotNull(event.getNextRoadName())) {
-            String msg = "";
-            if (event.getSegRemainDis() < 10) {
-                msg = msg + "现在";
-            } else {
-                if (event.getSegRemainDis() > 1000) {
-                    msg = msg + event.getSegRemainDis() / 1000 + "公里后";
-                } else {
-                    msg = msg + event.getSegRemainDis() + "米后";
-                }
-            }
-            msg = msg + event.getNextRoadName();
-            tv_amaproad.setText(msg);
-        }
-        if (tv_amapmsg != null && event.getRouteRemainTime() > -1 && event.getRouteRemainDis() > -1) {
-            if (event.getRouteRemainTime() == 0 || event.getRouteRemainDis() == 0) {
-                tv_amapmsg.setText("到达");
-            } else {
-                String msg = "剩余" + new BigDecimal(event.getRouteRemainDis() / 1000f).setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue() + "公里  " +
-                        event.getRouteRemainTime() / 60 + "分钟";
-                tv_amapmsg.setText(msg);
-            }
-        }
+//        if (iv_naving != null && event.getIcon() - 1 >= 0 && event.getIcon() - 1 < ICONS.length) {
+//            iv_naving.setImageResource(ICONS[event.getIcon() - 1]);
+//        }
+//        if (tv_amaproad != null && CommonUtil.isNotNull(event.getNextRoadName())) {
+//            String msg = "";
+//            if (event.getSegRemainDis() < 10) {
+//                msg = msg + "现在";
+//            } else {
+//                if (event.getSegRemainDis() > 1000) {
+//                    msg = msg + event.getSegRemainDis() / 1000 + "公里后";
+//                } else {
+//                    msg = msg + event.getSegRemainDis() + "米后";
+//                }
+//            }
+//            msg = msg + event.getNextRoadName();
+//            tv_amaproad.setText(msg);
+//        }
+//        if (tv_amapmsg != null && event.getRouteRemainTime() > -1 && event.getRouteRemainDis() > -1) {
+//            if (event.getRouteRemainTime() == 0 || event.getRouteRemainDis() == 0) {
+//                tv_amapmsg.setText("到达");
+//            } else {
+//                String msg = "剩余" + new BigDecimal(event.getRouteRemainDis() / 1000f).setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue() + "公里  " +
+//                        event.getRouteRemainTime() / 60 + "分钟";
+//                tv_amapmsg.setText(msg);
+//            }
+//        }
     }
 }
 

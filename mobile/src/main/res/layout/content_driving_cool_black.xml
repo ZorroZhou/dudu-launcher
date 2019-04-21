@@ -89,51 +89,41 @@
                 android:layout_weight="28">
 
                 <com.zhy.android.percent.support.PercentLinearLayout
-                    android:id="@+id/ll_info_shunshiyouhao"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="瞬时油耗"
-                        android:textColor="#ccc"
-                        app:layout_heightPercent="20%h"
-                        app:layout_textSizePercent="12%h" />
-
-                    <com.wow.carlauncher.common.view.PhilTextView
-                        android:id="@+id/tv_driver_shunshi"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="0"
-                        android:textColor="#fff"
-                        app:layout_heightPercent="40%h"
-                        app:layout_textSizePercent="25%h" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="L/100KM"
+                        android:text="胎压"
                         android:textColor="#ccc"
                         app:layout_heightPercent="20%h"
                         app:layout_textSizePercent="12%h" />
+
+                    <com.wow.carlauncher.view.activity.driving.coolBlack.BottomTpView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        app:layout_heightPercent="80%h"
+                        app:layout_marginLeftPercent="10%h"
+                        app:layout_marginRightPercent="10%h" />
                 </com.zhy.android.percent.support.PercentLinearLayout>
 
-                <ImageView
-                    android:id="@+id/iv_naving"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_gravity="center"
-                    android:contentDescription="@string/app_name"
-                    android:scaleType="centerInside"
-                    android:visibility="gone"
-                    app:layout_heightPercent="60%h"
-                    app:layout_widthPercent="60%w" />
+                <!--<ImageView-->
+                <!--android:id="@+id/iv_naving"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="0dp"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:contentDescription="@string/app_name"-->
+                <!--android:scaleType="centerInside"-->
+                <!--android:visibility="gone"-->
+                <!--app:layout_heightPercent="60%h"-->
+                <!--app:layout_widthPercent="60%w" />-->
+
+
             </com.zhy.android.percent.support.PercentFrameLayout>
 
             <FrameLayout
@@ -238,23 +228,10 @@
         android:id="@+id/ll_bottom"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_alignParentBottom="true"
         android:layout_below="@+id/ll_center"
+        android:layout_alignParentBottom="true"
         android:layout_weight="1"
         android:orientation="horizontal">
-
-
-        <com.wow.carlauncher.view.activity.driving.coolBlack.BottomMusicView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
-
-        <View
-            android:layout_width="0.5dp"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
-            android:background="@drawable/l_bg_line2" />
 
         <com.wow.carlauncher.view.activity.driving.coolBlack.BottomTpView
             android:layout_width="0dp"

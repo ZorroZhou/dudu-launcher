@@ -108,6 +108,10 @@ public class AMapCartReceiver extends BroadcastReceiver {
                     break;
                 }
                 case RECEIVER_NAVI_INFO: {
+                    int icon = intent.getIntExtra(NaviInfoConstant.ICON, -1);
+                    if (icon == -1) {
+                        break;
+                    }
                     PAmapEventNavInfo info = new PAmapEventNavInfo()
                             .setRoadType(intent.getIntExtra(NaviInfoConstant.ROAD_TYPE, -1))
 

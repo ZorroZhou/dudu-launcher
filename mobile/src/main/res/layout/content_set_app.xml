@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:paddingLeft="16dp"
         android:paddingTop="16dp"
-        android:text="APP设置"
+        android:text="APP主题"
         android:textColor="@color/colorPrimary"
         android:textSize="14sp" />
 
@@ -53,6 +53,15 @@
         st:type="buttonB" />
 
     <View style="@style/Interval" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="16dp"
+        android:paddingTop="16dp"
+        android:text="APP设置"
+        android:textColor="@color/colorPrimary"
+        android:textSize="14sp" />
 
     <com.wow.carlauncher.common.view.SetView
         android:id="@+id/sv_plugin_select"
@@ -118,6 +127,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         st:titleEx="天气定位"
+        st:type="buttonB" />
+
+    <View style="@style/Interval" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="16dp"
+        android:paddingTop="16dp"
+        android:text="开发"
+        android:textColor="@color/colorPrimary"
+        android:textSize="14sp" />
+
+    <com.wow.carlauncher.common.view.SetView
+        android:id="@+id/sv_key_listener"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        st:titleEx="按键测试,可测试方控的按键信息,看看能不能匹配上"
         st:type="buttonB" />
 
     <View style="@style/Interval" />

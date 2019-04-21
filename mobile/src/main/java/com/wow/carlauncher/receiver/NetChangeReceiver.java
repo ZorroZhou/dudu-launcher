@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 
+import com.wow.carlauncher.view.event.EventNetStateChange;
 import com.wow.carlauncher.view.event.EventWifiState;
 import com.wow.carlauncher.common.util.NetWorkUtil;
 
@@ -24,6 +25,7 @@ public class NetChangeReceiver extends BroadcastReceiver {
             } else {
                 EventBus.getDefault().post(new EventWifiState().setUsable(false));
             }
+            EventBus.getDefault().post(new EventNetStateChange());
         }
     }
 }

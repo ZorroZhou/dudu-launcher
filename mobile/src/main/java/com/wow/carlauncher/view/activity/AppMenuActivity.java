@@ -60,27 +60,24 @@ public class AppMenuActivity extends BaseActivity implements AdapterView.OnItemC
 
     @Override
     public void loadData() {
-        x.task().run(new Runnable() {
-            @Override
-            public void run() {
-                adapter.clear();
-                final List<AppInfo> appInfos = new ArrayList<>(AppInfoManage.self().getAllAppInfos());
-                String selectapp = SharedPreUtil.getSharedPreString(CommonData.SDATA_HIDE_APPS);
-                List<AppInfo> hides = new ArrayList<>();
-                for (AppInfo appInfo : appInfos) {
-                    if (selectapp.contains("[" + appInfo.clazz + "]")) {
-                        hides.add(appInfo);
-                    }
+        x.task().run(() -> {
+            adapter.clear();
+            final List<AppInfo> appInfos = new ArrayList<>(AppInfoManage.self().getAllAppInfos());
+            String selectapp = SharedPreUtil.getSharedPreString(CommonData.SDATA_HIDE_APPS);
+            List<AppInfo> hides = new ArrayList<>();
+            for (AppInfo appInfo : appInfos) {
+                if (selectapp.contains("[" + appInfo.clazz + "]")) {
+                    hides.add(appInfo);
                 }
-                appInfos.removeAll(hides);
-
-                x.task().autoPost(new Runnable() {
-                    @Override
-                    public void run() {
-                        adapter.addItems(appInfos);
-                    }
-                });
             }
+            appInfos.removeAll(hides);
+
+            x.task().autoPost(new Runnable() {
+                @Override
+                public void run() {
+                    adapter.addItems(appInfos);
+                }
+            });
         });
     }
 

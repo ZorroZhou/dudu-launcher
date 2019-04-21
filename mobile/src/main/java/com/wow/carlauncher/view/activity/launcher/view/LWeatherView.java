@@ -22,6 +22,7 @@ import com.wow.carlauncher.view.base.BaseEXView;
 import com.wow.carlauncher.view.dialog.CityDialog;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
+import com.wow.carlauncher.view.event.EventNetStateChange;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -142,47 +143,49 @@ public class LWeatherView extends BaseEXView {
             return;
         }
         runninng = true;
-        x.task().autoPost(new Runnable() {
-            @Override
-            public void run() {
-                String chengshi = "";
-                //如果定位失败,则使用设置的地理位置
-                if (CommonUtil.isNull(adcode)) {
-                    if (CommonUtil.isNull(SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_CITY))) {
-                        tv_title.setText("点击设置城市");
-                    } else {
-                        tv_title.setText(SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_CITY));
-                        chengshi = SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_CITY);
-                    }
+        x.task().autoPost(() -> {
+            String chengshi = "";
+            //如果定位失败,则使用设置的地理位置
+            if (CommonUtil.isNull(adcode)) {
+                if (CommonUtil.isNull(SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_CITY))) {
+                    tv_title.setText("点击设置城市");
                 } else {
-                    chengshi = adcode;
-                    tv_title.setText(city);
+                    tv_title.setText(SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_CITY));
+                    chengshi = SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_CITY);
                 }
+            } else {
+                chengshi = adcode;
+                tv_title.setText(city);
+            }
 
-                if (CommonUtil.isNotNull(chengshi)) {
-                    AMapWebService.getWeatherInfo(chengshi, new AMapWebService.CommonCallback<WeatherRes>() {
-                        @Override
-                        public void callback(WeatherRes res) {
-                            runninng = false;
-                            if (Integer.valueOf(1).equals(res.getStatus()) && res.getLives().size() > 0) {
-                                lastUpdate = System.currentTimeMillis();
-                                WeatherRes.CityWeather cityWeather = res.getLives().get(0);
-                                if (cityWeather != null) {
-                                    iv_tianqi.setImageResource(WeatherIconUtil.getWeatherResId(cityWeather.getWeather()));
-                                    tv_tianqi.setText(cityWeather.getWeather());
-                                    tv_wendu1.setText(String.valueOf(cityWeather.getTemperature() + "℃"));
-                                    tv_kqsd.setText(String.valueOf(cityWeather.getHumidity()));
-                                    tv_fl.setText(String.valueOf(cityWeather.getWindpower()));
-                                    tv_fx.setText(String.valueOf(cityWeather.getWinddirection() + "风"));
-                                }
+            if (CommonUtil.isNotNull(chengshi)) {
+                AMapWebService.getWeatherInfo(chengshi, new AMapWebService.CommonCallback<WeatherRes>() {
+                    @Override
+                    public void callback(WeatherRes res) {
+                        runninng = false;
+                        if (Integer.valueOf(1).equals(res.getStatus()) && res.getLives().size() > 0) {
+                            lastUpdate = System.currentTimeMillis();
+                            WeatherRes.CityWeather cityWeather = res.getLives().get(0);
+                            if (cityWeather != null) {
+                                iv_tianqi.setImageResource(WeatherIconUtil.getWeatherResId(cityWeather.getWeather()));
+                                tv_tianqi.setText(cityWeather.getWeather());
+                                tv_wendu1.setText(String.valueOf(cityWeather.getTemperature() + "℃"));
+                                tv_kqsd.setText(String.valueOf(cityWeather.getHumidity()));
+                                tv_fl.setText(String.valueOf(cityWeather.getWindpower()));
+                                tv_fx.setText(String.valueOf(cityWeather.getWinddirection() + "风"));
                             }
                         }
-                    });
-                } else {
-                    runninng = false;
-                }
+                    }
+                });
+            } else {
+                runninng = false;
             }
         });
+    }
+
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void onEvent(EventNetStateChange event) {
+        refreshWeather(true);
     }
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)

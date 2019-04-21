@@ -218,13 +218,4 @@ public class SunRiseSetUtil {
         }
         return false;
     }
-
-    public static void main(String[] args) {
-        String str1 = getSunrise(104.066507, 30.625124, new Date());
-        String str2 = getSunset(104.066507, 30.625124, new Date());
-        System.out.println("日出时间：" + str1);
-        System.out.println("日落时间：" + str2);
-
-    }
-
 }

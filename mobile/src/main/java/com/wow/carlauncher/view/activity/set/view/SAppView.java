@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -101,9 +102,24 @@ public class SAppView extends BaseView {
     @ViewInject(R.id.sv_launcher_item_num)
     private SetView sv_launcher_item_num;
 
+    @ViewInject(R.id.sv_key_listener)
+    private SetView sv_key_listener;
+
+    private boolean showKey;
 
     @Override
     protected void initView() {
+        sv_key_listener.setOnClickListener(v -> {
+            showKey = true;
+            new AlertDialog.Builder(getContext()).setTitle("开启").setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    showKey = false;
+                }
+            }).setPositiveButton("关闭", null).show();
+        });
+
+
         final String[] itemsNum = {
                 "3个", "4个"
         };
@@ -257,5 +273,14 @@ public class SAppView extends BaseView {
         } else {
             setView.setSummary("没有选择");
         }
+    }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (showKey) {
+            ToastManage.self().show("KEY_CODE:" + keyCode);
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

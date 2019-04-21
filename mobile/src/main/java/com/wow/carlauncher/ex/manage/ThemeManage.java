@@ -28,6 +28,7 @@ import static com.wow.carlauncher.common.CommonData.SDATA_APP_THEME;
 public class ThemeManage {
     public static final int WHITE = 1;
     public static final int BLACK = 2;
+    public static final int CBLACK = 3;
 
     private static class SingletonHolder {
         @SuppressLint("StaticFieldLeak")

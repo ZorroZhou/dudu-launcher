@@ -116,10 +116,16 @@ public class ThemeManage {
             cachedResrouce = new HashMap<>();
             cachedResrouces.put(theme.id, cachedResrouce);
         }
-        // 资源名
-        String entryName = context.getResources().getResourceEntryName(dayResId);
-        // 资源类型
-        String typeName = context.getResources().getResourceTypeName(dayResId);
+        String entryName;
+        String typeName;
+        try {
+            // 资源名
+            entryName = context.getResources().getResourceEntryName(dayResId);
+            // 资源类型
+            typeName = context.getResources().getResourceTypeName(dayResId);
+        } catch (Exception e) {
+            return dayResId;
+        }
         Map<String, Integer> cachedRes = cachedResrouce.get(typeName);
         // 先从缓存中去取，如果有直接返回该id
         if (cachedRes == null) {

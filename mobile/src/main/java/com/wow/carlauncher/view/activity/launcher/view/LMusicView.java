@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.util.CommonUtil;
+import com.wow.carlauncher.common.util.ViewUtils;
+import com.wow.carlauncher.common.view.CustomRoundAngleImageView;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.musicCover.MusicCoverRefresh;
@@ -69,6 +71,12 @@ public class LMusicView extends BaseEXView {
         } else {
             tv_title.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
         }
+
+        if (currentTheme == WHITE || currentTheme == BLACK) {
+            music_iv_cover.setCircular(false);
+        } else {
+            music_iv_cover.setCircular(true);
+        }
     }
 
     private boolean run;
@@ -98,7 +106,7 @@ public class LMusicView extends BaseEXView {
     private ProgressBar progressBar;
 
     @ViewInject(R.id.music_iv_cover)
-    private ImageView music_iv_cover;
+    private CustomRoundAngleImageView music_iv_cover;
 
     private void refreshPlay() {
         if (run) {

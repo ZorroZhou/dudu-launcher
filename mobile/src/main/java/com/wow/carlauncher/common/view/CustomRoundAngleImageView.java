@@ -1,8 +1,11 @@
 package com.wow.carlauncher.common.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PaintFlagsDrawFilter;
 import android.graphics.Path;
 import android.os.Build;
 import android.support.v7.widget.AppCompatImageView;
@@ -19,6 +22,7 @@ public class CustomRoundAngleImageView extends AppCompatImageView {
     private int rightTopRadius;
     private int rightBottomRadius;
     private int leftBottomRadius;
+    private boolean circular;
 
     public CustomRoundAngleImageView(Context context) {
         this(context, null);
@@ -35,6 +39,7 @@ public class CustomRoundAngleImageView extends AppCompatImageView {
         init(context, attrs);
     }
 
+    @SuppressLint("CustomViewStyleable")
     private void init(Context context, AttributeSet attrs) {
         if (Build.VERSION.SDK_INT < 18) {
             setLayerType(View.LAYER_TYPE_SOFTWARE, null);
@@ -61,8 +66,15 @@ public class CustomRoundAngleImageView extends AppCompatImageView {
             leftBottomRadius = radius;
         }
         array.recycle();
+        circular = false;
+        pathCircle = new Path();
+        path = new Path();
     }
 
+    public void setCircular(boolean circular) {
+        this.circular = circular;
+        invalidate();
+    }
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
@@ -71,17 +83,18 @@ public class CustomRoundAngleImageView extends AppCompatImageView {
         height = getHeight();
     }
 
+    private Path path;
+    private Path pathCircle;
+
     @Override
     protected void onDraw(Canvas canvas) {
-        //这里做下判断，只有图片的宽高大于设置的圆角距离的时候才进行裁剪
-        int maxLeft = Math.max(leftTopRadius, leftBottomRadius);
-        int maxRight = Math.max(rightTopRadius, rightBottomRadius);
-        int minWidth = maxLeft + maxRight;
-        int maxTop = Math.max(leftTopRadius, rightTopRadius);
-        int maxBottom = Math.max(leftBottomRadius, rightBottomRadius);
-        int minHeight = maxTop + maxBottom;
-        if (width >= minWidth && height > minHeight) {
-            Path path = new Path();
+        canvas.save();
+        if (circular) {
+            pathCircle.reset();
+            pathCircle.addCircle(width / 2.0f, height / 2.0f, width / 2, Path.Direction.CCW);
+            canvas.clipPath(pathCircle);
+        } else {
+            path.reset();
             //四个角：右上，右下，左下，左上
             path.moveTo(leftTopRadius, 0);
             path.lineTo(width - rightTopRadius, 0);
@@ -99,6 +112,6 @@ public class CustomRoundAngleImageView extends AppCompatImageView {
             canvas.clipPath(path);
         }
         super.onDraw(canvas);
+        canvas.restore();
     }
-
 }

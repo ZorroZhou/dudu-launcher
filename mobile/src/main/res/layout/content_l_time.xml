@@ -41,19 +41,14 @@
             android:orientation="vertical"
             app:layout_marginPercent="5%w">
 
-            <com.meetsl.scardview.SCardView
+            <FrameLayout
+                android:id="@+id/fl_time_root"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
-                app:cardBackgroundColor="@android:color/transparent"
-                app:cardCornerRadius="5dp"
-                app:cardElevation="5dp"
-                app:cardPreventCornerOverlap="false"
-                app:cardShadowEndColor="#01000000"
-                app:cardShadowStartColor="#20000000"
-                app:cardUseCornerArea="true">
+                android:layout_weight="1">
 
                 <com.zhy.android.percent.support.PercentFrameLayout
+                    android:id="@+id/fl_time"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
@@ -65,8 +60,7 @@
                         android:text="09:99"
                         app:layout_textSizePercent="70%h" />
                 </com.zhy.android.percent.support.PercentFrameLayout>
-            </com.meetsl.scardview.SCardView>
-
+            </FrameLayout>
 
             <com.zhy.android.percent.support.PercentLinearLayout
                 android:layout_width="match_parent"

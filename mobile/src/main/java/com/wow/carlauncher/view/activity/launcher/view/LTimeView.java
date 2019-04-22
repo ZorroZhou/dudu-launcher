@@ -6,6 +6,8 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
@@ -22,6 +24,7 @@ import org.xutils.view.annotation.ViewInject;
 import java.util.Calendar;
 import java.util.Date;
 
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static com.wow.carlauncher.common.CommonData.DAY_MILL;
 import static com.wow.carlauncher.common.CommonData.MINUTE_MILL;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.BLACK;
@@ -59,10 +62,21 @@ public class LTimeView extends BaseEXView {
         tv_day.setTextColor(manage.getCurrentThemeColor(context, R.color.l_text2));
         tv_lunar.setTextColor(manage.getCurrentThemeColor(context, R.color.l_text2));
 
+
+        //时间组件的处理
+        fl_time_root.removeAllViews();
+        if (fl_time.getParent() != null) {
+            ((ViewGroup) fl_time.getParent()).removeView(fl_time);
+        }
+
         if (currentTheme == WHITE || currentTheme == BLACK) {
             tv_title.setGravity(Gravity.CENTER);
+
+            fl_time_root.addView(LShadowView.getShadowView(getContext(), fl_time), MATCH_PARENT, MATCH_PARENT);
         } else {
             tv_title.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
+
+            fl_time_root.addView(fl_time, MATCH_PARENT, MATCH_PARENT);
         }
     }
 
@@ -70,6 +84,12 @@ public class LTimeView extends BaseEXView {
     protected void initView() {
         onEvent(null);
     }
+
+    @ViewInject(R.id.fl_time)
+    private FrameLayout fl_time;
+
+    @ViewInject(R.id.fl_time_root)
+    private FrameLayout fl_time_root;
 
     @ViewInject(R.id.rl_base)
     private View rl_base;

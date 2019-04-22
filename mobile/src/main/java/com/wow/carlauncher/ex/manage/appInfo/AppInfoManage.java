@@ -14,6 +14,7 @@ import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.AppIconTemp;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.util.CommonUtil;
+import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.appInfo.event.MAppInfoRefreshEvent;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.view.activity.driving.DrivingActivity;
@@ -162,7 +163,7 @@ public class AppInfoManage {
         if (info != null) {
             if (MARK_OTHER_APP == info.appMark) {
                 //先根据主题获取图标
-                int r = AppIconTemp.getIcon(info.clazz);
+                int r = ThemeManage.self().getCurrentThemeRes(AppIconTemp.getIcon(info.clazz));
                 if (r != 0) {
                     Drawable drawable = resources.getDrawable(r);
                     if (drawable != null) {

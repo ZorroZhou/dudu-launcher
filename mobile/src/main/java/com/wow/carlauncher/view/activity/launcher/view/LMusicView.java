@@ -54,17 +54,16 @@ public class LMusicView extends BaseEXView {
 
     @Override
     public void changedTheme(ThemeManage manage) {
-        Context context = getContext();
-        rl_base.setBackgroundResource(manage.getCurrentThemeRes(context, R.drawable.n_l_item1_bg));
-        tv_title.setTextColor(manage.getCurrentThemeColor(context, R.color.l_text1));
+        rl_base.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_l_item1_bg));
+        tv_title.setTextColor(manage.getCurrentThemeColor(R.color.l_text1));
 
         refreshPlay();
 
-        ll_prew.setImageResource(manage.getCurrentThemeRes(context, R.mipmap.ic_prev));
-        ll_next.setImageResource(manage.getCurrentThemeRes(context, R.mipmap.ic_next));
+        ll_prew.setImageResource(manage.getCurrentThemeRes(R.mipmap.ic_prev));
+        ll_next.setImageResource(manage.getCurrentThemeRes(R.mipmap.ic_next));
 
-        tv_music_title.setTextColor(manage.getCurrentThemeColor(context, R.color.l_music_title));
-        tv_zuozhe.setTextColor(manage.getCurrentThemeColor(context, R.color.l_music_zuozhe));
+        tv_music_title.setTextColor(manage.getCurrentThemeColor(R.color.l_music_title));
+        tv_zuozhe.setTextColor(manage.getCurrentThemeColor(R.color.l_music_zuozhe));
 
         if (currentTheme == WHITE || currentTheme == BLACK) {
             tv_title.setGravity(Gravity.CENTER);

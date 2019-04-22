@@ -46,7 +46,10 @@ public class ThemeManage {
         super();
     }
 
+    private Context context;
+
     public void init(Context context) {
+        this.context = context;
         EventBus.getDefault().register(this);
     }
 
@@ -96,24 +99,22 @@ public class ThemeManage {
     }
 
 
-    public int getCurrentThemeColor(Context context, int dayResId) {
-        return ContextCompat.getColor(context, getCurrentThemeRes(context, dayResId));
+    public int getCurrentThemeColor(int dayResId) {
+        return ContextCompat.getColor(context, getCurrentThemeRes(dayResId));
     }
 
-    /**
-     * 根据传入的日间模式的resId得到相应主题的resId，注意：必须是日间模式的resId
-     *
-     * @param dayResId 日间模式的resId
-     * @return 相应主题的resId，若为日间模式，则得到dayResId；反之夜间模式得到nightResId
-     */
-    public int getCurrentThemeRes(Context context, int dayResId) {
-        if (getTheme() == WHITE) {
+    public int getCurrentThemeRes(int dayResId) {
+        return getCurrentThemeRes(getTheme(), dayResId);
+    }
+
+    public int getCurrentThemeRes(Theme theme, int dayResId) {
+        if (theme == WHITE) {
             return dayResId;
         }
-        Map<String, Map<String, Integer>> cachedResrouce = cachedResrouces.get(getTheme().id);
+        Map<String, Map<String, Integer>> cachedResrouce = cachedResrouces.get(theme.id);
         if (cachedResrouce == null) {
             cachedResrouce = new HashMap<>();
-            cachedResrouces.put(getTheme().id, cachedResrouce);
+            cachedResrouces.put(theme.id, cachedResrouce);
         }
         // 资源名
         String entryName = context.getResources().getResourceEntryName(dayResId);
@@ -125,19 +126,19 @@ public class ThemeManage {
             cachedRes = new HashMap<>();
             cachedResrouce.put(typeName, cachedRes);
         }
-        Integer resId = cachedRes.get(entryName + getTheme().suffix);
+        Integer resId = cachedRes.get(entryName + theme.suffix);
         if (resId != null && resId != 0) {
             return resId;
         } else {
             //如果缓存中没有再根据资源id去动态获取
             try {
                 // 通过资源名，资源类型，包名得到资源int值
-                int nightResId = context.getResources().getIdentifier(entryName + getTheme().suffix, typeName, context.getPackageName());
+                int nightResId = context.getResources().getIdentifier(entryName + theme.suffix, typeName, context.getPackageName());
                 // 放入缓存中
                 if (nightResId == 0) {
                     return dayResId;
                 }
-                cachedRes.put(entryName + getTheme().suffix, nightResId);
+                cachedRes.put(entryName + theme.suffix, nightResId);
                 return nightResId;
             } catch (Resources.NotFoundException e) {
                 e.printStackTrace();
@@ -150,7 +151,7 @@ public class ThemeManage {
         for (int id : ids) {
             View view = viewGroup.findViewById(id);
             if (view != null) {
-                view.setBackgroundResource(getCurrentThemeRes(viewGroup.getContext(), dayResId));
+                view.setBackgroundResource(getCurrentThemeRes(dayResId));
             }
         }
     }
@@ -159,7 +160,7 @@ public class ThemeManage {
         for (int id : ids) {
             View view = viewGroup.findViewById(id);
             if (view instanceof TextView) {
-                ((TextView) view).setTextColor(getCurrentThemeColor(viewGroup.getContext(), dayResId));
+                ((TextView) view).setTextColor(getCurrentThemeColor(dayResId));
             }
         }
     }

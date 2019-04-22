@@ -63,10 +63,9 @@ public class LAMapView extends BaseEXView {
 
     @Override
     public void changedTheme(ThemeManage manage) {
-        Context context = getContext();
-        rl_base.setBackgroundResource(manage.getCurrentThemeRes(context, R.drawable.n_l_item1_bg));
-        ll_xiansu.setBackgroundResource(manage.getCurrentThemeRes(context, R.mipmap.n_dh_quan));
-        iv_moren.setImageResource(manage.getCurrentThemeRes(context, R.mipmap.n_dh_moren));
+        rl_base.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_l_item1_bg));
+        ll_xiansu.setBackgroundResource(manage.getCurrentThemeRes(R.mipmap.n_dh_quan));
+        iv_moren.setImageResource(manage.getCurrentThemeRes(R.mipmap.n_dh_moren));
 
         manage.setTextViewsColor(this, new int[]{
                 R.id.tv_title,
@@ -85,16 +84,16 @@ public class LAMapView extends BaseEXView {
                 R.id.line6
         }, R.drawable.n_line2);
 
-        iv_dh.setImageResource(manage.getCurrentThemeRes(context, R.mipmap.n_dh_dh));
-        iv_dh_j.setImageResource(manage.getCurrentThemeRes(context, R.mipmap.n_dh_j));
-        iv_dh_gs.setImageResource(manage.getCurrentThemeRes(context, R.mipmap.n_dh_gs));
-        rl_view1.setBackgroundResource(manage.getCurrentThemeRes(context, R.drawable.n_dh2_bg));
+        iv_dh.setImageResource(manage.getCurrentThemeRes(R.mipmap.n_dh_dh));
+        iv_dh_j.setImageResource(manage.getCurrentThemeRes(R.mipmap.n_dh_j));
+        iv_dh_gs.setImageResource(manage.getCurrentThemeRes(R.mipmap.n_dh_gs));
+        rl_view1.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_dh2_bg));
 
         refreshMute();
         refreshRoad();
 
-        iv_close.setImageResource(manage.getCurrentThemeRes(context, R.mipmap.n_dh_close));
-        iv_car.setImageResource(manage.getCurrentThemeRes(context, R.mipmap.n_car));
+        iv_close.setImageResource(manage.getCurrentThemeRes(R.mipmap.n_dh_close));
+        iv_car.setImageResource(manage.getCurrentThemeRes(R.mipmap.n_car));
 
         if (currentTheme == WHITE || currentTheme == BLACK) {
             tv_title.setGravity(Gravity.CENTER);

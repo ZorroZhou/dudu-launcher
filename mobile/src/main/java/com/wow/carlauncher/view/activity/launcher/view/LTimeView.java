@@ -54,17 +54,16 @@ public class LTimeView extends BaseEXView {
 
     @Override
     public void changedTheme(ThemeManage manage) {
-        Context context = getContext();
 
-        rl_base.setBackgroundResource(manage.getCurrentThemeRes(context, R.drawable.n_l_item1_bg));
-        tv_title.setTextColor(manage.getCurrentThemeColor(context, R.color.l_title));
+        rl_base.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_l_item1_bg));
+        tv_title.setTextColor(manage.getCurrentThemeColor(R.color.l_title));
 
-        tv_shijian.setBackgroundResource(manage.getCurrentThemeRes(context, R.drawable.n_cell_bg));
+        tv_shijian.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_cell_bg));
 
-        tv_shijian.setTextColor(manage.getCurrentThemeColor(context, R.color.l_msg));
-        tv_week.setTextColor(manage.getCurrentThemeColor(context, R.color.l_msg));
-        tv_day.setTextColor(manage.getCurrentThemeColor(context, R.color.l_msg));
-        tv_lunar.setTextColor(manage.getCurrentThemeColor(context, R.color.l_msg));
+        tv_shijian.setTextColor(manage.getCurrentThemeColor(R.color.l_msg));
+        tv_week.setTextColor(manage.getCurrentThemeColor(R.color.l_msg));
+        tv_day.setTextColor(manage.getCurrentThemeColor(R.color.l_msg));
+        tv_lunar.setTextColor(manage.getCurrentThemeColor(R.color.l_msg));
 
         //时间组件的处理
         fl_time_root.removeAllViews();

@@ -55,11 +55,10 @@ public class LTaiyaView extends BaseEXView {
 
     @Override
     public void changedTheme(ThemeManage manage) {
-        Context context = getContext();
-        rl_base.setBackgroundResource(manage.getCurrentThemeRes(context, R.drawable.n_l_item1_bg));
-        tv_title.setTextColor(manage.getCurrentThemeColor(context, R.color.l_title));
-        tv_msg.setTextColor(manage.getCurrentThemeColor(context, R.color.l_msg));
-        iv_error.setImageResource(manage.getCurrentThemeRes(context, R.mipmap.ic_obderror));
+        rl_base.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_l_item1_bg));
+        tv_title.setTextColor(manage.getCurrentThemeColor(R.color.l_title));
+        tv_msg.setTextColor(manage.getCurrentThemeColor(R.color.l_msg));
+        iv_error.setImageResource(manage.getCurrentThemeRes(R.mipmap.ic_obderror));
 
         manage.setViewsBackround(this, new int[]{
                 R.id.tv_lt,

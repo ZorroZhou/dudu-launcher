@@ -9,6 +9,7 @@
     tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry">
 
     <com.zhy.android.percent.support.PercentRelativeLayout
+        android:id="@+id/rl_moren"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"

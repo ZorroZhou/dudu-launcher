@@ -9,10 +9,14 @@ import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.common.util.ViewUtils;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarTp;
@@ -25,8 +29,10 @@ import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.BLACK;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.WHITE;
+import static com.wow.carlauncher.view.activity.launcher.view.LShadowView.SizeEnum.FIVE;
 
 /**
  * Created by 10124 on 2018/4/20.
@@ -68,12 +74,42 @@ public class LTaiyaView extends BaseEXView {
                 R.id.tv_rb
         }, R.color.l_text2);
 
-        //iv_img.setImageResource(manage.getCurrentThemeRes(context, R.mipmap.n_car_b));
+        fl_lt_root.removeAllViews();
+        if (fl_lt.getParent() != null) {
+            ((ViewGroup) fl_lt.getParent()).removeView(fl_lt);
+        }
 
+        fl_rt_root.removeAllViews();
+        if (fl_rt.getParent() != null) {
+            ((ViewGroup) fl_rt.getParent()).removeView(fl_rt);
+        }
+
+        fl_lb_root.removeAllViews();
+        if (fl_lb.getParent() != null) {
+            ((ViewGroup) fl_lb.getParent()).removeView(fl_lb);
+        }
+
+        fl_rb_root.removeAllViews();
+        if (fl_rb.getParent() != null) {
+            ((ViewGroup) fl_rb.getParent()).removeView(fl_rb);
+        }
         if (currentTheme == WHITE || currentTheme == BLACK) {
             tv_title.setGravity(Gravity.CENTER);
+            fl_rt_root.addView(LShadowView.getShadowView(getContext(), fl_rt, FIVE), MATCH_PARENT, MATCH_PARENT);
+            fl_rb_root.addView(LShadowView.getShadowView(getContext(), fl_rb, FIVE), MATCH_PARENT, MATCH_PARENT);
+            fl_lb_root.addView(LShadowView.getShadowView(getContext(), fl_lb, FIVE), MATCH_PARENT, MATCH_PARENT);
+            fl_lt_root.addView(LShadowView.getShadowView(getContext(), fl_lt, FIVE), MATCH_PARENT, MATCH_PARENT);
         } else {
             tv_title.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
+
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT);
+            int margin = ViewUtils.dip2px(getContext(), 5);
+            params.setMargins(margin, margin, margin, margin);
+
+            fl_lb_root.addView(fl_lb, params);
+            fl_rt_root.addView(fl_rt, params);
+            fl_rb_root.addView(fl_rb, params);
+            fl_lt_root.addView(fl_lt, params);
         }
     }
 
@@ -95,6 +131,31 @@ public class LTaiyaView extends BaseEXView {
             }
         }
     }
+
+
+    @ViewInject(R.id.fl_rb_root)
+    private FrameLayout fl_rb_root;
+
+    @ViewInject(R.id.fl_rb)
+    private FrameLayout fl_rb;
+
+    @ViewInject(R.id.fl_lb_root)
+    private FrameLayout fl_lb_root;
+
+    @ViewInject(R.id.fl_lb)
+    private FrameLayout fl_lb;
+
+    @ViewInject(R.id.fl_rt_root)
+    private FrameLayout fl_rt_root;
+
+    @ViewInject(R.id.fl_rt)
+    private FrameLayout fl_rt;
+
+    @ViewInject(R.id.fl_lt_root)
+    private FrameLayout fl_lt_root;
+
+    @ViewInject(R.id.fl_lt)
+    private FrameLayout fl_lt;
 
     @ViewInject(R.id.tv_title)
     private TextView tv_title;

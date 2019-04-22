@@ -39,7 +39,8 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="vertical"
-            app:layout_marginPercent="5%w">
+            app:layout_marginLeftPercent="2%h"
+            app:layout_marginRightPercent="2%h">
 
             <FrameLayout
                 android:id="@+id/fl_time_root"

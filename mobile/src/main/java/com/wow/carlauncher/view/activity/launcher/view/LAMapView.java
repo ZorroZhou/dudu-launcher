@@ -84,7 +84,7 @@ public class LAMapView extends BaseEXView {
                 R.id.line4,
                 R.id.line5,
                 R.id.line6
-        }, R.color.line);
+        }, R.drawable.n_line2);
 
         iv_dh.setImageResource(manage.getCurrentThemeRes(context, R.mipmap.n_dh_dh));
         iv_dh_j.setImageResource(manage.getCurrentThemeRes(context, R.mipmap.n_dh_j));

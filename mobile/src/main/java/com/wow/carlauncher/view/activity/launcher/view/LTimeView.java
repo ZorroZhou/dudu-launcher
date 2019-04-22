@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.util.DateUtil;
 import com.wow.carlauncher.common.util.LunarUtil;
+import com.wow.carlauncher.common.util.ViewUtils;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 import com.wow.carlauncher.view.base.BaseEXView;
@@ -29,6 +30,7 @@ import static com.wow.carlauncher.common.CommonData.DAY_MILL;
 import static com.wow.carlauncher.common.CommonData.MINUTE_MILL;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.BLACK;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.WHITE;
+import static com.wow.carlauncher.view.activity.launcher.view.LShadowView.SizeEnum.FIVE;
 
 /**
  * Created by 10124 on 2018/4/20.
@@ -72,11 +74,15 @@ public class LTimeView extends BaseEXView {
         if (currentTheme == WHITE || currentTheme == BLACK) {
             tv_title.setGravity(Gravity.CENTER);
 
-            fl_time_root.addView(LShadowView.getShadowView(getContext(), fl_time,5), MATCH_PARENT, MATCH_PARENT);
+            fl_time_root.addView(LShadowView.getShadowView(getContext(), fl_time, FIVE), MATCH_PARENT, MATCH_PARENT);
         } else {
             tv_title.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
 
-            fl_time_root.addView(fl_time, MATCH_PARENT, MATCH_PARENT);
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT);
+            int margin = ViewUtils.dip2px(getContext(), 5);
+            params.setMargins(margin, margin, margin, margin);
+
+            fl_time_root.addView(fl_time, params);
         }
     }
 

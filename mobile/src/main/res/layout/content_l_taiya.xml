@@ -42,7 +42,8 @@
             android:layout_weight="1"
             android:gravity="center"
             android:visibility="gone"
-            app:layout_marginPercent="5%w">
+            app:layout_marginLeftPercent="2%h"
+            app:layout_marginRightPercent="2%h">
 
             <TextView
                 android:id="@+id/tv_msg"
@@ -57,26 +58,22 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            app:layout_marginPercent="5%w">
+            app:layout_marginLeftPercent="2%h"
+            app:layout_marginRightPercent="2%h">
 
             <com.zhy.android.percent.support.PercentRelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <com.meetsl.scardview.SCardView
+                <FrameLayout
+                    android:id="@+id/fl_lt_root"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="true"
-                    app:cardBackgroundColor="@android:color/transparent"
-                    app:cardCornerRadius="5dp"
-                    app:cardElevation="5dp"
-                    app:cardPreventCornerOverlap="false"
-                    app:cardShadowEndColor="#01000000"
-                    app:cardShadowStartColor="#20000000"
-                    app:cardUseCornerArea="true">
+                    android:layout_alignParentTop="true">
 
                     <com.zhy.android.percent.support.PercentFrameLayout
+                        android:id="@+id/fl_lt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
@@ -89,22 +86,17 @@
                             android:text="左前\n0.0\n0.0"
                             app:layout_textSizePercent="7%h" />
                     </com.zhy.android.percent.support.PercentFrameLayout>
-                </com.meetsl.scardview.SCardView>
+                </FrameLayout>
 
-                <com.meetsl.scardview.SCardView
+                <FrameLayout
+                    android:id="@+id/fl_rt_root"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
-                    android:layout_alignParentRight="true"
-                    app:cardBackgroundColor="@android:color/transparent"
-                    app:cardCornerRadius="5dp"
-                    app:cardElevation="5dp"
-                    app:cardPreventCornerOverlap="false"
-                    app:cardShadowEndColor="#01000000"
-                    app:cardShadowStartColor="#20000000"
-                    app:cardUseCornerArea="true">
+                    android:layout_alignParentRight="true">
 
                     <com.zhy.android.percent.support.PercentFrameLayout
+                        android:id="@+id/fl_rt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
@@ -118,23 +110,18 @@
                             android:text="右前\n0.0\n0.0"
                             app:layout_textSizePercent="7%h" />
                     </com.zhy.android.percent.support.PercentFrameLayout>
-                </com.meetsl.scardview.SCardView>
+                </FrameLayout>
 
 
-                <com.meetsl.scardview.SCardView
+                <FrameLayout
+                    android:id="@+id/fl_lb_root"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
-                    android:layout_alignParentBottom="true"
-                    app:cardBackgroundColor="@android:color/transparent"
-                    app:cardCornerRadius="5dp"
-                    app:cardElevation="5dp"
-                    app:cardPreventCornerOverlap="false"
-                    app:cardShadowEndColor="#01000000"
-                    app:cardShadowStartColor="#20000000"
-                    app:cardUseCornerArea="true">
+                    android:layout_alignParentBottom="true">
 
                     <com.zhy.android.percent.support.PercentFrameLayout
+                        android:id="@+id/fl_lb"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
@@ -148,22 +135,17 @@
                             android:text="左后\n0.0\n0.0"
                             app:layout_textSizePercent="7%h" />
                     </com.zhy.android.percent.support.PercentFrameLayout>
-                </com.meetsl.scardview.SCardView>
+                </FrameLayout>
 
-                <com.meetsl.scardview.SCardView
+                <FrameLayout
+                    android:id="@+id/fl_rb_root"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_alignParentBottom="true"
-                    app:cardBackgroundColor="@android:color/transparent"
-                    app:cardCornerRadius="5dp"
-                    app:cardElevation="5dp"
-                    app:cardPreventCornerOverlap="false"
-                    app:cardShadowEndColor="#01000000"
-                    app:cardShadowStartColor="#20000000"
-                    app:cardUseCornerArea="true">
+                    android:layout_alignParentBottom="true">
 
                     <com.zhy.android.percent.support.PercentFrameLayout
+                        android:id="@+id/fl_rb"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content">
 
@@ -176,7 +158,7 @@
                             android:text="右后\n0.0\n0.0"
                             app:layout_textSizePercent="7%h" />
                     </com.zhy.android.percent.support.PercentFrameLayout>
-                </com.meetsl.scardview.SCardView>
+                </FrameLayout>
 
                 <ImageView
                     android:id="@+id/iv_img"

@@ -57,7 +57,6 @@ public class LWeatherView extends BaseEXView {
 
     @Override
     public void changedTheme(ThemeManage manage) {
-        System.out.println(this + "   !!!!");
         Context context = getContext();
         rl_base.setBackgroundResource(manage.getCurrentThemeRes(context, R.drawable.n_l_item1_bg));
 
@@ -65,7 +64,7 @@ public class LWeatherView extends BaseEXView {
         tv_wendu1.setTextColor(manage.getCurrentThemeColor(context, R.color.l_text2));
         tv_title.setTextColor(manage.getCurrentThemeColor(context, R.color.l_text2));
 
-        line1.setBackgroundResource(manage.getCurrentThemeRes(context, R.color.line));
+        line1.setBackgroundResource(manage.getCurrentThemeRes(context, R.drawable.n_line2));
 
         manage.setTextViewsColor(this, new int[]{
                 R.id.tv_text2,

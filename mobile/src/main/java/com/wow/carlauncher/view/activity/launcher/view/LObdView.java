@@ -32,6 +32,7 @@ import org.xutils.x;
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.BLACK;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.WHITE;
+import static com.wow.carlauncher.view.activity.launcher.view.LShadowView.SizeEnum.FIVE;
 
 /**
  * Created by 10124 on 2018/4/20.
@@ -101,10 +102,12 @@ public class LObdView extends BaseEXView {
 
         if (currentTheme == WHITE || currentTheme == BLACK) {
             tv_title.setGravity(Gravity.CENTER);
-            fl_cell1_root.addView(LShadowView.getShadowView(getContext(), ll_cell1, 5), MATCH_PARENT, MATCH_PARENT);
-            fl_cell2_root.addView(LShadowView.getShadowView(getContext(), ll_cell2, 5), MATCH_PARENT, MATCH_PARENT);
-            fl_cell3_root.addView(LShadowView.getShadowView(getContext(), ll_cell3, 5), MATCH_PARENT, MATCH_PARENT);
-            fl_cell4_root.addView(LShadowView.getShadowView(getContext(), ll_cell4, 5), MATCH_PARENT, MATCH_PARENT);
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT);
+
+            fl_cell1_root.addView(LShadowView.getShadowView(getContext(), ll_cell1, FIVE), params);
+            fl_cell2_root.addView(LShadowView.getShadowView(getContext(), ll_cell2, FIVE), params);
+            fl_cell3_root.addView(LShadowView.getShadowView(getContext(), ll_cell3, FIVE), params);
+            fl_cell4_root.addView(LShadowView.getShadowView(getContext(), ll_cell4, FIVE), params);
         } else {
             tv_title.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
 

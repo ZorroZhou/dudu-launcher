@@ -50,9 +50,11 @@
 
     <color name="l_text3">#9ba1a9</color>
     <color name="l_text3_b">#848a95</color>
+    <color name="l_text3_cb">#848a95</color>
 
     <color name="l_text4">#333e54</color>
     <color name="l_text4_b">#8390a7</color>
+    <color name="l_text4_cb">#aaa</color>
     <!--#5e6b81-->
     <color name="line">#c6d2d9</color>
     <color name="line_b">#666f80</color>

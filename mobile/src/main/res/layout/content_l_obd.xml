@@ -17,12 +17,11 @@
             android:id="@+id/tv_title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="5dp"
             android:gravity="center"
             android:includeFontPadding="false"
             android:lines="1"
             android:text="OBD车况"
+            app:layout_marginLeftPercent="25%h"
             app:layout_textSizePercent="50%h" />
     </com.zhy.android.percent.support.PercentFrameLayout>
 
@@ -59,7 +58,7 @@
                 android:gravity="center"
                 android:includeFontPadding="false"
                 android:lines="1"
-                android:text="OBD没有连接"
+                android:text="@string/obd_not_connect"
                 app:layout_textSizePercent="50%h" />
         </com.zhy.android.percent.support.PercentFrameLayout>
     </com.zhy.android.percent.support.PercentRelativeLayout>

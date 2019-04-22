@@ -59,6 +59,7 @@ public class LTaiyaView extends BaseEXView {
         rl_base.setBackgroundResource(manage.getCurrentThemeRes(context, R.drawable.n_l_item1_bg));
         tv_title.setTextColor(manage.getCurrentThemeColor(context, R.color.l_title));
         tv_msg.setTextColor(manage.getCurrentThemeColor(context, R.color.l_msg));
+        iv_error.setImageResource(manage.getCurrentThemeRes(context, R.mipmap.ic_obderror));
 
         manage.setViewsBackround(this, new int[]{
                 R.id.tv_lt,
@@ -179,6 +180,9 @@ public class LTaiyaView extends BaseEXView {
     @ViewInject(R.id.iv_img)
     private ImageView iv_img;
 
+    @ViewInject(R.id.iv_error)
+    private ImageView iv_error;
+
     @ViewInject(R.id.tv_msg)
     private TextView tv_msg;
 
@@ -193,7 +197,6 @@ public class LTaiyaView extends BaseEXView {
         onEvent(ObdPlugin.self().getCurrentPObdEventCarTp());
     }
 
-    @SuppressLint("SetTextI18n")
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final PObdEventConnect event) {
         boolean show = false;
@@ -201,10 +204,10 @@ public class LTaiyaView extends BaseEXView {
             if (ObdPlugin.self().supportTp()) {
                 show = true;
             } else {
-                tv_msg.setText("OBD设备不支持胎压");
+                tv_msg.setText(R.string.obd_not_tp);
             }
         } else {
-            tv_msg.setText("OBD没有连接");
+            tv_msg.setText(R.string.obd_not_connect);
         }
         ll_ty.setVisibility(show ? VISIBLE : GONE);
         ll_msg.setVisibility(show ? GONE : VISIBLE);

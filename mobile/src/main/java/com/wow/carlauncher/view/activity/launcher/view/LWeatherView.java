@@ -13,7 +13,9 @@ import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
+import com.wow.carlauncher.common.util.ViewUtils;
 import com.wow.carlauncher.common.util.WeatherIconUtil;
+import com.wow.carlauncher.common.view.CustomRoundAngleImageView;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.location.event.MNewLocationEvent;
 import com.wow.carlauncher.ex.manage.time.event.MTimeMinuteEvent;
@@ -78,9 +80,9 @@ public class LWeatherView extends BaseEXView {
         }, R.color.l_text4);
 
         if (currentTheme == WHITE || currentTheme == BLACK) {
-            tv_title.setGravity(Gravity.CENTER);
+            iv_tianqi.setRightTopRadius(10);
         } else {
-            tv_title.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
+            iv_tianqi.setRightTopRadius(0);
         }
     }
 
@@ -104,7 +106,7 @@ public class LWeatherView extends BaseEXView {
     private TextView tv_title;
 
     @ViewInject(R.id.iv_tianqi)
-    private ImageView iv_tianqi;
+    private CustomRoundAngleImageView iv_tianqi;
 
     @ViewInject(R.id.tv_fl)
     private TextView tv_fl;

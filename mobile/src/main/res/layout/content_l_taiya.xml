@@ -46,7 +46,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_alignParentBottom="true"
-            app:layout_heightPercent="12%h">
+            app:layout_heightPercent="12%h"
+            app:layout_marginBottomPercent="5%h">
 
             <TextView
                 android:id="@+id/tv_msg"

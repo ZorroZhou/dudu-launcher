@@ -78,6 +78,13 @@ public class LPromptView extends BaseEXView {
         fl_base.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_prompt_bg));
         tv_time.setTextColor(manage.getCurrentThemeColor(R.color.l_text1));
         iv_home.setImageResource(manage.getCurrentThemeRes(R.mipmap.n_home));
+
+
+        iv_obd.setImageResource(manage.getCurrentThemeRes(R.mipmap.ic_l_obd));
+        iv_carinfo_tp.setImageResource(manage.getCurrentThemeRes(R.mipmap.ic_l_tp));
+        iv_fk.setImageResource(manage.getCurrentThemeRes(R.mipmap.ic_l_fk));
+        iv_wifi.setImageResource(manage.getCurrentThemeRes(R.mipmap.ic_l_wifi));
+        iv_set.setImageResource(manage.getCurrentThemeRes(R.mipmap.ic_l_set));
     }
 
     private PackageManager pm;
@@ -93,6 +100,9 @@ public class LPromptView extends BaseEXView {
 
     @ViewInject(R.id.iv_home)
     private ImageView iv_home;
+
+    @ViewInject(R.id.iv_set)
+    private ImageView iv_set;
 
     @ViewInject(R.id.iv_obd)
     private ImageView iv_obd;

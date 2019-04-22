@@ -60,7 +60,7 @@ public class LTimeView extends BaseEXView {
 
         tv_shijian.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_cell_bg));
 
-        tv_shijian.setTextColor(manage.getCurrentThemeColor(R.color.l_msg));
+        tv_shijian.setTextColor(manage.getCurrentThemeColor(R.color.l_content));
         tv_week.setTextColor(manage.getCurrentThemeColor(R.color.l_msg));
         tv_day.setTextColor(manage.getCurrentThemeColor(R.color.l_msg));
         tv_lunar.setTextColor(manage.getCurrentThemeColor(R.color.l_msg));

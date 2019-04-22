@@ -69,8 +69,7 @@ public class LAMapView extends BaseEXView {
         iv_moren.setImageResource(manage.getCurrentThemeRes(context, R.mipmap.n_dh_moren));
 
         manage.setTextViewsColor(this, new int[]{
-                R.id.tv_title1,
-                R.id.tv_title2,
+                R.id.tv_title,
                 R.id.tv_xiansu,
                 R.id.tv_text1,
                 R.id.tv_msg
@@ -98,11 +97,9 @@ public class LAMapView extends BaseEXView {
         iv_car.setImageResource(manage.getCurrentThemeRes(context, R.mipmap.n_car));
 
         if (currentTheme == WHITE || currentTheme == BLACK) {
-            tv_title1.setGravity(Gravity.CENTER);
-            tv_title2.setGravity(Gravity.CENTER);
+            tv_title.setGravity(Gravity.CENTER);
         } else {
-            tv_title1.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
-            tv_title2.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
+            tv_title.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
         }
     }
 
@@ -111,11 +108,8 @@ public class LAMapView extends BaseEXView {
 
     private int roadType = 10;
 
-    @ViewInject(R.id.tv_title1)
-    private TextView tv_title1;
-
-    @ViewInject(R.id.tv_title2)
-    private TextView tv_title2;
+    @ViewInject(R.id.tv_title)
+    private TextView tv_title;
 
     @ViewInject(R.id.rl_base)
     private View rl_base;
@@ -170,6 +164,9 @@ public class LAMapView extends BaseEXView {
 
     @ViewInject(R.id.lukuang)
     private LukuangView lukuangView;
+
+    @ViewInject(R.id.rl_daohang)
+    private View rl_daohang;
 
     private void refreshMute() {
         if (mute) {
@@ -268,8 +265,10 @@ public class LAMapView extends BaseEXView {
     public void onEvent(final PAmapEventState event) {
         if (rl_moren.getVisibility() == VISIBLE && event.isRunning()) {
             rl_moren.setVisibility(GONE);
+            rl_daohang.setVisibility(VISIBLE);
         } else if (rl_moren.getVisibility() == GONE && !event.isRunning()) {
             rl_moren.setVisibility(VISIBLE);
+            rl_daohang.setVisibility(GONE);
         }
     }
 

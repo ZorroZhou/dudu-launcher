@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.zhy.android.percent.support.PercentFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.zhy.android.percent.support.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fl_base"
@@ -8,22 +8,50 @@
     android:orientation="vertical"
     tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry">
 
-    <com.zhy.android.percent.support.PercentLinearLayout
-        android:id="@+id/rl_moren"
+    <com.zhy.android.percent.support.PercentFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_heightPercent="12%h">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:lines="1"
+            android:text="OBD车况"
+            app:layout_textSizePercent="50%h" />
+    </com.zhy.android.percent.support.PercentFrameLayout>
+
+    <com.zhy.android.percent.support.PercentRelativeLayout
+        android:id="@+id/ll_msg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:visibility="gone"
         app:layout_marginLeftPercent="2%h"
         app:layout_marginRightPercent="2%h">
 
+        <ImageView
+            android:id="@+id/iv_error"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_centerInParent="true"
+            android:src="@mipmap/ic_obderror"
+            app:layout_heightPercent="45%w"
+            app:layout_widthPercent="45%w" />
+
         <com.zhy.android.percent.support.PercentFrameLayout
-            android:id="@+id/fl_top2"
+            android:id="@+id/fl_top"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_alignParentBottom="true"
             app:layout_heightPercent="12%h">
 
             <TextView
-                android:id="@+id/tv_title"
+                android:id="@+id/tv_msg"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="5dp"
@@ -31,18 +59,28 @@
                 android:gravity="center"
                 android:includeFontPadding="false"
                 android:lines="1"
-                android:text="OBD车况"
+                android:text="OBD没有连接"
                 app:layout_textSizePercent="50%h" />
         </com.zhy.android.percent.support.PercentFrameLayout>
+    </com.zhy.android.percent.support.PercentRelativeLayout>
+
+    <com.zhy.android.percent.support.PercentLinearLayout
+        android:id="@+id/ll_obd"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_marginBottomPercent="2%h"
+        app:layout_marginLeftPercent="2%h"
+        app:layout_marginRightPercent="2%h">
+
 
         <com.zhy.android.percent.support.PercentLinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="vertical"
-            app:layout_marginBottomPercent="2%h"
-            app:layout_marginLeftPercent="2%h"
-            app:layout_marginRightPercent="2%h">
+            app:layout_marginTopPercent="12%h">
 
             <FrameLayout
                 android:id="@+id/fl_cell1_root"
@@ -285,4 +323,4 @@
             </FrameLayout>
         </com.zhy.android.percent.support.PercentLinearLayout>
     </com.zhy.android.percent.support.PercentLinearLayout>
-</com.zhy.android.percent.support.PercentFrameLayout>
+</com.zhy.android.percent.support.PercentRelativeLayout>

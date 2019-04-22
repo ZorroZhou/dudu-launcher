@@ -196,21 +196,28 @@ public class LObdView extends BaseEXView {
     @ViewInject(R.id.p_yl)
     private ProgressBar p_yl;
 
+    @ViewInject(R.id.tv_msg)
+    private TextView tv_msg;
+
+
+    @ViewInject(R.id.ll_msg)
+    private View ll_msg;
+
+    @ViewInject(R.id.ll_obd)
+    private View ll_obd;
+
+
     @SuppressLint("SetTextI18n")
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final PObdEventConnect event) {
-//        boolean show = false;
-//        if (event.isConnected()) {
-//            if (ObdPlugin.self().supportTp()) {
-//                show = true;
-//            } else {
-//                tv_msg.setText("OBD设备不支持胎压");
-//            }
-//        } else {
-//            tv_msg.setText("没有连接OBD");
-//        }
-//        ll_ty.setVisibility(show ? VISIBLE : GONE);
-//        ll_msg.setVisibility(show ? GONE : VISIBLE);
+        boolean show = false;
+        if (event.isConnected()) {
+            show = true;
+        } else {
+            tv_msg.setText("OBD没有连接");
+        }
+        ll_obd.setVisibility(show ? VISIBLE : GONE);
+        ll_msg.setVisibility(show ? GONE : VISIBLE);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

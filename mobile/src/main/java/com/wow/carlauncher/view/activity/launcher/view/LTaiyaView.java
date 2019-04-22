@@ -57,7 +57,8 @@ public class LTaiyaView extends BaseEXView {
     public void changedTheme(ThemeManage manage) {
         Context context = getContext();
         rl_base.setBackgroundResource(manage.getCurrentThemeRes(context, R.drawable.n_l_item1_bg));
-        tv_title.setTextColor(manage.getCurrentThemeColor(context, R.color.l_text1));
+        tv_title.setTextColor(manage.getCurrentThemeColor(context, R.color.l_title));
+        tv_msg.setTextColor(manage.getCurrentThemeColor(context, R.color.l_msg));
 
         manage.setViewsBackround(this, new int[]{
                 R.id.tv_lt,
@@ -178,6 +179,15 @@ public class LTaiyaView extends BaseEXView {
     @ViewInject(R.id.iv_img)
     private ImageView iv_img;
 
+    @ViewInject(R.id.tv_msg)
+    private TextView tv_msg;
+
+    @ViewInject(R.id.ll_ty)
+    private View ll_ty;
+
+    @ViewInject(R.id.ll_msg)
+    private View ll_msg;
+
     @Override
     protected void initView() {
         onEvent(ObdPlugin.self().getCurrentPObdEventCarTp());
@@ -186,18 +196,18 @@ public class LTaiyaView extends BaseEXView {
     @SuppressLint("SetTextI18n")
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final PObdEventConnect event) {
-//        boolean show = false;
-//        if (event.isConnected()) {
-//            if (ObdPlugin.self().supportTp()) {
-//                show = true;
-//            } else {
-//                tv_msg.setText("OBD设备不支持胎压");
-//            }
-//        } else {
-//            tv_msg.setText("没有连接OBD");
-//        }
-//        ll_ty.setVisibility(show ? VISIBLE : GONE);
-//        ll_msg.setVisibility(show ? GONE : VISIBLE);
+        boolean show = false;
+        if (event.isConnected()) {
+            if (ObdPlugin.self().supportTp()) {
+                show = true;
+            } else {
+                tv_msg.setText("OBD设备不支持胎压");
+            }
+        } else {
+            tv_msg.setText("OBD没有连接");
+        }
+        ll_ty.setVisibility(show ? VISIBLE : GONE);
+        ll_msg.setVisibility(show ? GONE : VISIBLE);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

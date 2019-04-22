@@ -307,7 +307,7 @@ public class ThemeManage {
                 case 3:
                     return HEISE;
                 case 4:
-                    return HEISE;
+                    return KUHEI;
             }
             return SHIJIAN;
         }

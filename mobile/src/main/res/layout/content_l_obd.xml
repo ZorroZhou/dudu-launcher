@@ -42,17 +42,13 @@
             android:orientation="vertical"
             app:layout_marginLeftPercent="2%h"
             app:layout_marginRightPercent="2%h">
-            <com.meetsl.scardview.SCardView
+
+            <FrameLayout
+                android:id="@+id/fl_cell1_root"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:background="@android:color/transparent"
-                app:cardBackgroundColor="@android:color/transparent"
-                app:cardCornerRadius="5dp"
-                app:cardElevation="5dp"
-                app:cardLightDirection="none"
-                app:cardPreventCornerOverlap="false"
-                app:cardUseCornerArea="true"
                 app:layout_heightPercent="20%h">
+
 
                 <com.zhy.android.percent.support.PercentLinearLayout
                     android:id="@+id/ll_cell1"
@@ -105,19 +101,14 @@
                             app:layout_heightPercent="50%h" />
                     </com.zhy.android.percent.support.PercentRelativeLayout>
                 </com.zhy.android.percent.support.PercentLinearLayout>
-            </com.meetsl.scardview.SCardView>
+            </FrameLayout>
 
-            <com.meetsl.scardview.SCardView
+            <FrameLayout
+                android:id="@+id/fl_cell2_root"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:background="@android:color/transparent"
-                app:cardBackgroundColor="@android:color/transparent"
-                app:cardCornerRadius="5dp"
-                app:cardElevation="5dp"
-                app:cardLightDirection="none"
-                app:cardPreventCornerOverlap="false"
-                app:cardUseCornerArea="true"
                 app:layout_heightPercent="20%h">
+
 
                 <com.zhy.android.percent.support.PercentLinearLayout
                     android:id="@+id/ll_cell2"
@@ -170,19 +161,14 @@
                             app:layout_heightPercent="50%h" />
                     </com.zhy.android.percent.support.PercentRelativeLayout>
                 </com.zhy.android.percent.support.PercentLinearLayout>
-            </com.meetsl.scardview.SCardView>
+            </FrameLayout>
 
-            <com.meetsl.scardview.SCardView
+            <FrameLayout
+                android:id="@+id/fl_cell3_root"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:background="@android:color/transparent"
-                app:cardBackgroundColor="@android:color/transparent"
-                app:cardCornerRadius="5dp"
-                app:cardElevation="5dp"
-                app:cardLightDirection="none"
-                app:cardPreventCornerOverlap="false"
-                app:cardUseCornerArea="true"
                 app:layout_heightPercent="20%h">
+
 
                 <com.zhy.android.percent.support.PercentLinearLayout
                     android:id="@+id/ll_cell3"
@@ -235,19 +221,14 @@
                             app:layout_heightPercent="50%h" />
                     </com.zhy.android.percent.support.PercentRelativeLayout>
                 </com.zhy.android.percent.support.PercentLinearLayout>
-            </com.meetsl.scardview.SCardView>
+            </FrameLayout>
 
-            <com.meetsl.scardview.SCardView
+            <FrameLayout
+                android:id="@+id/fl_cell4_root"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:background="@android:color/transparent"
-                app:cardBackgroundColor="@android:color/transparent"
-                app:cardCornerRadius="5dp"
-                app:cardElevation="5dp"
-                app:cardLightDirection="none"
-                app:cardPreventCornerOverlap="false"
-                app:cardUseCornerArea="true"
                 app:layout_heightPercent="20%h">
+
 
                 <com.zhy.android.percent.support.PercentLinearLayout
                     android:id="@+id/ll_cell4"
@@ -300,7 +281,7 @@
                             app:layout_heightPercent="50%h" />
                     </com.zhy.android.percent.support.PercentRelativeLayout>
                 </com.zhy.android.percent.support.PercentLinearLayout>
-            </com.meetsl.scardview.SCardView>
+            </FrameLayout>
         </com.zhy.android.percent.support.PercentLinearLayout>
     </com.zhy.android.percent.support.PercentLinearLayout>
 </com.zhy.android.percent.support.PercentFrameLayout>

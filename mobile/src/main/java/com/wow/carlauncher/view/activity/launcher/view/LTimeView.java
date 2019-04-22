@@ -72,7 +72,7 @@ public class LTimeView extends BaseEXView {
         if (currentTheme == WHITE || currentTheme == BLACK) {
             tv_title.setGravity(Gravity.CENTER);
 
-            fl_time_root.addView(LShadowView.getShadowView(getContext(), fl_time), MATCH_PARENT, MATCH_PARENT);
+            fl_time_root.addView(LShadowView.getShadowView(getContext(), fl_time,5), MATCH_PARENT, MATCH_PARENT);
         } else {
             tv_title.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
 

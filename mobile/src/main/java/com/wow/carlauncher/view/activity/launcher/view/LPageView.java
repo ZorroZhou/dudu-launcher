@@ -48,7 +48,7 @@ public class LPageView extends BaseEXView {
         params.weight = 1;
         for (View view : item) {
             if (ThemeManage.self().getTheme() == ThemeManage.Theme.WHITE || ThemeManage.self().getTheme() == ThemeManage.Theme.BLACK) {
-                ll_base.addView(LShadowView.getShadowView(getContext(), view), params);
+                ll_base.addView(LShadowView.getShadowView(getContext(), view, 10), params);
             } else {
                 int margin = ViewUtils.dip2px(getContext(), 10);
                 params.setMargins(margin, margin, margin, margin);

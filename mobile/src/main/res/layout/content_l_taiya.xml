@@ -21,6 +21,7 @@
             android:lines="1"
             android:text="胎压"
             app:layout_marginLeftPercent="25%h"
+            app:layout_marginRightPercent="25%h"
             app:layout_textSizePercent="50%h" />
     </com.zhy.android.percent.support.PercentFrameLayout>
 

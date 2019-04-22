@@ -55,7 +55,7 @@ public class SAppView extends BaseView {
 
     private static final ConsoleProtoclEnum[] ALL_CONSOLES = {ConsoleProtoclEnum.SYSTEM, ConsoleProtoclEnum.NWD};
 
-    private static final ThemeMode[] THEME_MODEL = {ThemeMode.SHIJIAN, ThemeMode.DENGGUANG, ThemeMode.BAISE, ThemeMode.HEISE};
+    private static final ThemeMode[] THEME_MODEL = {ThemeMode.SHIJIAN, ThemeMode.DENGGUANG, ThemeMode.BAISE, ThemeMode.HEISE, ThemeMode.KUHEI};
 
     public SAppView(@NonNull Context context) {
         super(context);

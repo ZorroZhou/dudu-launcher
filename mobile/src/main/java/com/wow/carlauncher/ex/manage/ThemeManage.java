@@ -64,6 +64,9 @@ public class ThemeManage {
             case HEISE:
                 setTheme(BLACK);
                 break;
+            case KUHEI:
+                setTheme(CBLACK);
+                break;
             case SHIJIAN:
                 if (SunRiseSetUtil.isNight(lon, lat, new Date())) {
                     setTheme(BLACK);
@@ -267,7 +270,8 @@ public class ThemeManage {
         SHIJIAN("根据日出日落切换", 0),
         DENGGUANG("根据灯光切换(部分车型支持)", 1),
         BAISE("强制白色主题", 2),
-        HEISE("强制黑色主题", 3);
+        HEISE("强制黑色主题", 3),
+        KUHEI("强制酷黑主题", 4);
         private String name;
         private Integer id;
 
@@ -301,6 +305,8 @@ public class ThemeManage {
                 case 2:
                     return BAISE;
                 case 3:
+                    return HEISE;
+                case 4:
                     return HEISE;
             }
             return SHIJIAN;

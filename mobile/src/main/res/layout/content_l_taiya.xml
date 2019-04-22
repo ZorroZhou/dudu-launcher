@@ -59,6 +59,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             app:layout_marginLeftPercent="2%h"
+            app:layout_marginBottomPercent="2%h"
             app:layout_marginRightPercent="2%h">
 
             <com.zhy.android.percent.support.PercentRelativeLayout

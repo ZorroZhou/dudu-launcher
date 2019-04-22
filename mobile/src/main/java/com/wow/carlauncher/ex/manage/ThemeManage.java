@@ -62,7 +62,7 @@ public class ThemeManage {
                 setTheme(WHITE);
                 break;
             case HEISE:
-                setTheme(CBLACK);
+                setTheme(BLACK);
                 break;
             case SHIJIAN:
                 if (SunRiseSetUtil.isNight(lon, lat, new Date())) {

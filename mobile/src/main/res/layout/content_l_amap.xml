@@ -8,134 +8,129 @@
     android:orientation="vertical"
     tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry">
 
-    <com.zhy.android.percent.support.PercentFrameLayout
-        android:id="@+id/rl_moren"
+    <com.zhy.android.percent.support.PercentRelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_marginLeftPercent="2%h"
+        app:layout_marginRightPercent="2%h">
 
-        <com.wow.carlauncher.common.view.CustomRoundAngleImageView
+        <ImageView
             android:id="@+id/iv_moren"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_centerInParent="true"
             android:contentDescription="@string/app_name"
-            android:scaleType="fitXY"
-            app:radius="10dp" />
+            app:layout_heightPercent="40%w"
+            app:layout_widthPercent="40%w" />
 
-        <com.zhy.android.percent.support.PercentRelativeLayout
+
+        <com.zhy.android.percent.support.PercentFrameLayout
+            android:id="@+id/fl_top2"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            app:layout_marginLeftPercent="2%h"
-            app:layout_marginRightPercent="2%h">
+            android:layout_height="0dp"
+            app:layout_heightPercent="12%h">
 
-
-            <com.zhy.android.percent.support.PercentFrameLayout
-                android:id="@+id/fl_top2"
+            <TextView
+                android:id="@+id/tv_title1"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                app:layout_heightPercent="12%h">
-
-                <TextView
-                    android:id="@+id/tv_title1"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="5dp"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:lines="1"
-                    android:text="高德导航"
-                    app:layout_textSizePercent="50%h" />
-            </com.zhy.android.percent.support.PercentFrameLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_alignParentBottom="true"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
                 android:gravity="center"
-                android:orientation="vertical"
-                app:layout_heightPercent="13%h">
+                android:includeFontPadding="false"
+                android:lines="1"
+                android:text="高德导航"
+                app:layout_textSizePercent="50%h" />
+        </com.zhy.android.percent.support.PercentFrameLayout>
 
-                <View
-                    android:id="@+id/line1"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_heightPercent="13%h">
+
+            <View
+                android:id="@+id/line1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp" />
+
+            <com.zhy.android.percent.support.PercentLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
                 <com.zhy.android.percent.support.PercentLinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                    android:layout_weight="1"
+                    android:gravity="left">
 
                     <com.zhy.android.percent.support.PercentLinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="left">
-
-                        <com.zhy.android.percent.support.PercentLinearLayout
-                            android:id="@+id/btn_gd"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            app:layout_widthPercent="100%h">
-
-                            <ImageView
-                                android:id="@+id/iv_dh"
-                                android:layout_width="0dp"
-                                android:layout_height="0dp"
-                                app:layout_heightPercent="60%h"
-                                app:layout_widthPercent="60%h" />
-                        </com.zhy.android.percent.support.PercentLinearLayout>
-                    </com.zhy.android.percent.support.PercentLinearLayout>
-
-                    <View
-                        android:id="@+id/line2"
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp" />
-
-                    <com.zhy.android.percent.support.PercentLinearLayout
-                        android:id="@+id/btn_nav_j"
+                        android:id="@+id/btn_gd"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        app:layout_widthPercent="110%h">
+                        app:layout_widthPercent="100%h">
 
                         <ImageView
-                            android:id="@+id/iv_dh_j"
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            app:layout_heightPercent="60%h"
-                            app:layout_widthPercent="60%h" />
-                    </com.zhy.android.percent.support.PercentLinearLayout>
-
-                    <View
-                        android:id="@+id/line3"
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp" />
-
-                    <com.zhy.android.percent.support.PercentLinearLayout
-                        android:id="@+id/btn_nav_gs"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        app:layout_widthPercent="110%h">
-
-                        <ImageView
-                            android:id="@+id/iv_dh_gs"
+                            android:id="@+id/iv_dh"
                             android:layout_width="0dp"
                             android:layout_height="0dp"
                             app:layout_heightPercent="60%h"
                             app:layout_widthPercent="60%h" />
                     </com.zhy.android.percent.support.PercentLinearLayout>
                 </com.zhy.android.percent.support.PercentLinearLayout>
-            </LinearLayout>
-        </com.zhy.android.percent.support.PercentRelativeLayout>
-    </com.zhy.android.percent.support.PercentFrameLayout>
+
+                <View
+                    android:id="@+id/line2"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp" />
+
+                <com.zhy.android.percent.support.PercentLinearLayout
+                    android:id="@+id/btn_nav_j"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    app:layout_widthPercent="110%h">
+
+                    <ImageView
+                        android:id="@+id/iv_dh_j"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        app:layout_heightPercent="60%h"
+                        app:layout_widthPercent="60%h" />
+                </com.zhy.android.percent.support.PercentLinearLayout>
+
+                <View
+                    android:id="@+id/line3"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp" />
+
+                <com.zhy.android.percent.support.PercentLinearLayout
+                    android:id="@+id/btn_nav_gs"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    app:layout_widthPercent="110%h">
+
+                    <ImageView
+                        android:id="@+id/iv_dh_gs"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        app:layout_heightPercent="60%h"
+                        app:layout_widthPercent="60%h" />
+                </com.zhy.android.percent.support.PercentLinearLayout>
+            </com.zhy.android.percent.support.PercentLinearLayout>
+        </LinearLayout>
+    </com.zhy.android.percent.support.PercentRelativeLayout>
 
     <com.zhy.android.percent.support.PercentRelativeLayout
         android:id="@+id/rl_daohang"

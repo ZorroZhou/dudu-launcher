@@ -74,7 +74,7 @@ public class LPromptView extends BaseEXView {
     }
 
     @Override
-    public void onThemeChanged(ThemeManage manage) {
+    public void changedTheme(ThemeManage manage) {
         Context context = getContext();
         fl_base.setBackgroundResource(manage.getCurrentThemeRes(context, R.drawable.n_prompt_bg));
         tv_time.setTextColor(manage.getCurrentThemeColor(context, R.color.l_text1));

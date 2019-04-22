@@ -24,14 +24,12 @@ import org.xutils.x;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import static com.wow.carlauncher.common.CommonData.SDATA_APP_THEME;
-import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.BLACK;
-import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.WHITE;
+import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.*;
 
 public class ThemeManage {
 

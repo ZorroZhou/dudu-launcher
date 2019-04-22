@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,6 +24,9 @@ import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
+
+import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.BLACK;
+import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.WHITE;
 
 /**
  * Created by 10124 on 2018/4/20.
@@ -44,10 +48,10 @@ public class LTaiyaView extends BaseEXView {
     }
 
     @Override
-    public void onThemeChanged(ThemeManage manage) {
+    public void changedTheme(ThemeManage manage) {
         Context context = getContext();
         rl_base.setBackgroundResource(manage.getCurrentThemeRes(context, R.drawable.n_l_item1_bg));
-        tv_text1.setTextColor(manage.getCurrentThemeColor(context, R.color.l_text1));
+        tv_title.setTextColor(manage.getCurrentThemeColor(context, R.color.l_text1));
 
         manage.setViewsBackround(this, new int[]{
                 R.id.tv_lt,
@@ -65,6 +69,12 @@ public class LTaiyaView extends BaseEXView {
         }, R.color.l_text2);
 
         //iv_img.setImageResource(manage.getCurrentThemeRes(context, R.mipmap.n_car_b));
+
+        if (currentTheme == WHITE || currentTheme == BLACK) {
+            tv_title.setGravity(Gravity.CENTER);
+        } else {
+            tv_title.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
+        }
     }
 
     @Event(value = {R.id.rl_base})
@@ -86,8 +96,8 @@ public class LTaiyaView extends BaseEXView {
         }
     }
 
-    @ViewInject(R.id.tv_text1)
-    private TextView tv_text1;
+    @ViewInject(R.id.tv_title)
+    private TextView tv_title;
 
     @ViewInject(R.id.tv_lt)
     private TextView tv_lt;

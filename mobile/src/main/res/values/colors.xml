@@ -42,9 +42,11 @@
 
     <color name="l_text1">#333e54</color>
     <color name="l_text1_b">#eee</color>
+    <color name="l_text1_cb">#fbfbfb</color>
 
     <color name="l_text2">#697185</color>
     <color name="l_text2_b">#eee</color>
+    <color name="l_text2_cb">#fbfbfb</color>
 
     <color name="l_text3">#9ba1a9</color>
     <color name="l_text3_b">#848a95</color>
@@ -58,6 +60,7 @@
 
     <color name="l_music_title">#697380</color>
     <color name="l_music_title_b">#eee</color>
+    <color name="l_music_title_cb">#fbfbfb</color>
 
     <color name="l_music_zuozhe">#7b8391</color>
     <color name="l_music_zuozhe_b">#818796</color>

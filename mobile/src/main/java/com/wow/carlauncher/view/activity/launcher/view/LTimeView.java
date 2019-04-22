@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
@@ -23,6 +24,8 @@ import java.util.Date;
 
 import static com.wow.carlauncher.common.CommonData.DAY_MILL;
 import static com.wow.carlauncher.common.CommonData.MINUTE_MILL;
+import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.BLACK;
+import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.WHITE;
 
 /**
  * Created by 10124 on 2018/4/20.
@@ -45,16 +48,22 @@ public class LTimeView extends BaseEXView {
     }
 
     @Override
-    public void onThemeChanged(ThemeManage manage) {
+    public void changedTheme(ThemeManage manage) {
         Context context = getContext();
 
         rl_base.setBackgroundResource(manage.getCurrentThemeRes(context, R.drawable.n_l_item1_bg));
-        tv_text1.setTextColor(manage.getCurrentThemeColor(context, R.color.l_text1));
+        tv_title.setTextColor(manage.getCurrentThemeColor(context, R.color.l_text1));
         tv_shijian.setBackgroundResource(manage.getCurrentThemeRes(context, R.drawable.n_cell_bg));
         tv_shijian.setTextColor(manage.getCurrentThemeColor(context, R.color.l_text2));
         tv_week.setTextColor(manage.getCurrentThemeColor(context, R.color.l_text2));
         tv_day.setTextColor(manage.getCurrentThemeColor(context, R.color.l_text2));
         tv_lunar.setTextColor(manage.getCurrentThemeColor(context, R.color.l_text2));
+
+        if (currentTheme == WHITE || currentTheme == BLACK) {
+            tv_title.setGravity(Gravity.CENTER);
+        } else {
+            tv_title.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
+        }
     }
 
     @Override
@@ -65,8 +74,8 @@ public class LTimeView extends BaseEXView {
     @ViewInject(R.id.rl_base)
     private View rl_base;
 
-    @ViewInject(R.id.tv_text1)
-    private TextView tv_text1;
+    @ViewInject(R.id.tv_title)
+    private TextView tv_title;
 
 
     @ViewInject(R.id.tv_shijian)

@@ -23,9 +23,10 @@
             app:layout_heightPercent="12%h">
 
             <TextView
-                android:id="@+id/tv_text1"
+                android:id="@+id/tv_title"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
                 android:layout_marginTop="5dp"
                 android:gravity="center"
                 android:includeFontPadding="false"

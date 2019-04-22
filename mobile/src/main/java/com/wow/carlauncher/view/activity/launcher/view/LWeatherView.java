@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -31,6 +32,9 @@ import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
+import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.BLACK;
+import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.WHITE;
+
 /**
  * Created by 10124 on 2018/4/20.
  */
@@ -52,7 +56,7 @@ public class LWeatherView extends BaseEXView {
 
 
     @Override
-    public void onThemeChanged(ThemeManage manage) {
+    public void changedTheme(ThemeManage manage) {
         System.out.println(this + "   !!!!");
         Context context = getContext();
         rl_base.setBackgroundResource(manage.getCurrentThemeRes(context, R.drawable.n_l_item1_bg));
@@ -74,6 +78,12 @@ public class LWeatherView extends BaseEXView {
                 R.id.tv_fl,
                 R.id.tv_fx
         }, R.color.l_text4);
+
+        if (currentTheme == WHITE || currentTheme == BLACK) {
+            tv_title.setGravity(Gravity.CENTER);
+        } else {
+            tv_title.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
+        }
     }
 
     @ViewInject(R.id.rl_base)

@@ -25,7 +25,7 @@ public class LPageView extends BaseEXView {
     }
 
     @Override
-    public void onThemeChanged(ThemeManage manage) {
+    public void changedTheme(ThemeManage manage) {
         if (item != null) {
             for (View view : item) {
                 if (view.getParent() instanceof ViewGroup) {
@@ -48,7 +48,7 @@ public class LPageView extends BaseEXView {
         params.weight = 1;
         for (View view : item) {
             if (ThemeManage.self().getTheme() == ThemeManage.Theme.WHITE || ThemeManage.self().getTheme() == ThemeManage.Theme.BLACK) {
-                ll_base.addView(getShadowView(view), params);
+                ll_base.addView(LShadowView.getShadowView(getContext(), view), params);
             } else {
                 int margin = ViewUtils.dip2px(getContext(), 10);
                 params.setMargins(margin, margin, margin, margin);
@@ -59,8 +59,4 @@ public class LPageView extends BaseEXView {
 
     @ViewInject(R.id.ll_base)
     private LinearLayout ll_base;
-
-    private View getShadowView(View view) {
-        return new LShadowView(getContext()).addViewEx(view);
-    }
 }

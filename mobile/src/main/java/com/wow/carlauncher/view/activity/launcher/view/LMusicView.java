@@ -1,9 +1,11 @@
 package com.wow.carlauncher.view.activity.launcher.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -25,13 +27,14 @@ import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
+import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.BLACK;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.WHITE;
 
 
 /**
  * Created by 10124 on 2018/4/20.
  */
-
+@SuppressLint("RtlHardcoded")
 public class LMusicView extends BaseEXView {
 
     public LMusicView(@NonNull Context context) {
@@ -48,7 +51,7 @@ public class LMusicView extends BaseEXView {
     }
 
     @Override
-    public void onThemeChanged(ThemeManage manage) {
+    public void changedTheme(ThemeManage manage) {
         Context context = getContext();
         rl_base.setBackgroundResource(manage.getCurrentThemeRes(context, R.drawable.n_l_item1_bg));
         tv_title.setTextColor(manage.getCurrentThemeColor(context, R.color.l_text1));
@@ -60,6 +63,12 @@ public class LMusicView extends BaseEXView {
 
         tv_music_title.setTextColor(manage.getCurrentThemeColor(context, R.color.l_music_title));
         tv_zuozhe.setTextColor(manage.getCurrentThemeColor(context, R.color.l_music_zuozhe));
+
+        if (currentTheme == WHITE || currentTheme == BLACK) {
+            tv_title.setGravity(Gravity.CENTER);
+        } else {
+            tv_title.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
+        }
     }
 
     private boolean run;

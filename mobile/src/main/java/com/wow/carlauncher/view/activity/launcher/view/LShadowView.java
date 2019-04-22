@@ -20,4 +20,8 @@ public class LShadowView extends FrameLayout {
         shadowView.addView(view, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         return this;
     }
+
+    public static View getShadowView(Context context, View view) {
+        return new LShadowView(context).addViewEx(view);
+    }
 }

@@ -1,11 +1,13 @@
 package com.wow.carlauncher.view.activity.launcher.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -35,6 +37,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.wow.carlauncher.common.CommonData.TAG;
+import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.BLACK;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.WHITE;
 import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.AMAP_PACKAGE;
 import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.ICONS;
@@ -42,7 +45,7 @@ import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.ICONS;
 /**
  * Created by 10124 on 2018/4/20.
  */
-
+@SuppressLint("RtlHardcoded")
 public class LAMapView extends BaseEXView {
 
     public LAMapView(@NonNull Context context) {
@@ -59,7 +62,7 @@ public class LAMapView extends BaseEXView {
     }
 
     @Override
-    public void onThemeChanged(ThemeManage manage) {
+    public void changedTheme(ThemeManage manage) {
         Context context = getContext();
         rl_base.setBackgroundResource(manage.getCurrentThemeRes(context, R.drawable.n_l_item1_bg));
         ll_xiansu.setBackgroundResource(manage.getCurrentThemeRes(context, R.mipmap.n_dh_quan));
@@ -93,12 +96,26 @@ public class LAMapView extends BaseEXView {
 
         iv_close.setImageResource(manage.getCurrentThemeRes(context, R.mipmap.n_dh_close));
         iv_car.setImageResource(manage.getCurrentThemeRes(context, R.mipmap.n_car));
+
+        if (currentTheme == WHITE || currentTheme == BLACK) {
+            tv_title1.setGravity(Gravity.CENTER);
+            tv_title2.setGravity(Gravity.CENTER);
+        } else {
+            tv_title1.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
+            tv_title2.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
+        }
     }
 
 
     private boolean mute = false;
 
     private int roadType = 10;
+
+    @ViewInject(R.id.tv_title1)
+    private TextView tv_title1;
+
+    @ViewInject(R.id.tv_title2)
+    private TextView tv_title2;
 
     @ViewInject(R.id.rl_base)
     private View rl_base;

@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -23,6 +24,9 @@ import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
+
+import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.BLACK;
+import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.WHITE;
 
 /**
  * Created by 10124 on 2018/4/20.
@@ -44,10 +48,10 @@ public class LObdView extends BaseEXView {
     }
 
     @Override
-    public void onThemeChanged(ThemeManage manage) {
+    public void changedTheme(ThemeManage manage) {
         Context context = getContext();
         fl_base.setBackgroundResource(manage.getCurrentThemeRes(context, R.drawable.n_l_item1_bg));
-        tv_text1.setTextColor(manage.getCurrentThemeColor(context, R.color.l_text1));
+        tv_title.setTextColor(manage.getCurrentThemeColor(context, R.color.l_text1));
 
         manage.setViewsBackround(this, new int[]{R.id.ll_cell1, R.id.ll_cell2, R.id.ll_cell3, R.id.ll_cell4}, R.drawable.n_cell_bg);
 
@@ -67,6 +71,12 @@ public class LObdView extends BaseEXView {
         p_zs.setProgressDrawable(getResources().getDrawable(manage.getCurrentThemeRes(context, R.drawable.n_obd_progress)));
         p_sw.setProgressDrawable(getResources().getDrawable(manage.getCurrentThemeRes(context, R.drawable.n_obd_progress)));
         p_yl.setProgressDrawable(getResources().getDrawable(manage.getCurrentThemeRes(context, R.drawable.n_obd_progress)));
+
+        if (currentTheme == WHITE || currentTheme == BLACK) {
+            tv_title.setGravity(Gravity.CENTER);
+        } else {
+            tv_title.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
+        }
     }
 
 
@@ -93,8 +103,8 @@ public class LObdView extends BaseEXView {
     private View fl_base;
 
 
-    @ViewInject(R.id.tv_text1)
-    private TextView tv_text1;
+    @ViewInject(R.id.tv_title)
+    private TextView tv_title;
 
     @ViewInject(R.id.tv_sd)
     private TextView tv_sd;

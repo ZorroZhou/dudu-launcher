@@ -25,6 +25,8 @@ public abstract class BaseEXView extends BaseView implements ThemeManage.OnTheme
         super(context, attrs);
     }
 
+    protected ThemeManage.Theme currentTheme;
+
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
@@ -58,6 +60,13 @@ public abstract class BaseEXView extends BaseView implements ThemeManage.OnTheme
 
     @Override
     public void onThemeChanged(ThemeManage manage) {
+        if (!manage.getTheme().equals(currentTheme)) {
+            currentTheme = manage.getTheme();
+            changedTheme(manage);
+        }
+    }
+
+    public void changedTheme(ThemeManage manage) {
 
     }
 }

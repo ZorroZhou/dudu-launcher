@@ -80,7 +80,7 @@ public class LDockView extends BaseEXView {
     }
 
     @Override
-    public void onThemeChanged(ThemeManage manage) {
+    public void changedTheme(ThemeManage manage) {
         manage.setTextViewsColor(this, new int[]{
                 R.id.tv_dock1,
                 R.id.tv_dock2,

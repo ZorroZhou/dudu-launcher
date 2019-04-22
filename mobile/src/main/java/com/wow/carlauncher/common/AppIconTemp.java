@@ -23,7 +23,7 @@ public class AppIconTemp {
         //NWD音乐
         putIcon("com.nwd.android.music.ui", R.mipmap.app_icon_music);
         //安卓原生音乐
-        putIcon("com.android.music", R.mipmap.app_icon_new_music);
+        putIcon("com.android.music", R.mipmap.app_icon_music);
         //酷我音乐
         putIcon("cn.kuwo.kwmusiccar", R.mipmap.app1_icon_kuwo);
         //NWD蓝牙音乐
@@ -42,7 +42,7 @@ public class AppIconTemp {
         putIcon("com.autonavi.amapauto", R.mipmap.app1_icon_new_nav);
 
         //安卓设置
-        putIcon("com.android.settings", R.mipmap.app_icon_new_set);
+        putIcon("com.android.settings", R.mipmap.app_icon_set);
 
         putIcon("com.fourtech.settings", R.mipmap.app1_icon_setting);
         putIcon("com.android.browser", R.mipmap.app1_icon_browser);

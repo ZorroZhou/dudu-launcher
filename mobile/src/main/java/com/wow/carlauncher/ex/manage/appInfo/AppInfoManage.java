@@ -182,7 +182,7 @@ public class AppInfoManage {
                         return ContextCompat.getDrawable(context, R.mipmap.ic_driving);
                     }
                     case INTERNAL_APP_SETTING: {
-                        return ContextCompat.getDrawable(context, R.mipmap.app_icon_new_set);
+                        return ContextCompat.getDrawable(context, R.mipmap.app_icon_set);
                     }
                 }
             }

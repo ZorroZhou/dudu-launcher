@@ -16,6 +16,8 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
+import com.ToxicBakery.viewpager.transforms.BackgroundToForegroundTransformer;
+import com.ToxicBakery.viewpager.transforms.RotateUpTransformer;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.util.SharedPreUtil;
@@ -29,6 +31,7 @@ import com.wow.carlauncher.ex.plugin.fk.event.PFkEventAction;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import com.wow.carlauncher.view.activity.AppSelectActivity;
 import com.wow.carlauncher.view.activity.launcher.event.LItemRefreshEvent;
+import com.wow.carlauncher.view.activity.launcher.view.LAllAppView;
 import com.wow.carlauncher.view.activity.launcher.view.LDockView;
 import com.wow.carlauncher.view.activity.launcher.view.LPageView;
 import com.wow.carlauncher.view.consoleWindow.ConsoleWin;
@@ -145,26 +148,30 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
             pnum++;
         }
 
-        LPageView[] pageViews = new LPageView[pnum];
+        View[] pageViews = new View[pnum + 1];
 
         int npage = 0;
         LPageView pageView = null;
         View[] pcell = new View[psize];
         for (int i = 0; i < items.size(); i++) {
             if (i % psize == 0) {
-                pageViews[npage] = new LPageView(this);
+                pageView = new LPageView(this);
+                pageViews[npage] = pageView;
                 pcell = new View[psize];
-                pageView = pageViews[npage];
                 npage++;
             }
             pcell[i % psize] = ItemEnum.createView(this, items.get(i).info);
             //如果是一组的最后一个,或者是列表最后一个
-            if (((i % psize == psize - 1) || (i == items.size() - 1)) && pageView != null) {
+            if (((i % psize == psize - 1) || (i == items.size() - 1))) {
                 pageView.setItem(pcell);
             }
         }
+        pageViews[pageViews.length - 1] = new LAllAppView(this);
+
         viewPager.setAdapter(new ViewAdapter(pageViews));
         viewPager.clearOnPageChangeListeners();
+        viewPager.setPageTransformer(true, new BackgroundToForegroundTransformer());
+
         postion.removeAllViews();
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewUtils.dip2px(getApplicationContext(), 8), ViewUtils.dip2px(getApplicationContext(), 8));

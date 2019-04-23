@@ -104,12 +104,11 @@ public class LObdView extends BaseEXView {
 
         if (currentTheme == WHITE || currentTheme == BLACK) {
             tv_title.setGravity(Gravity.CENTER);
-            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT);
 
-            fl_cell1_root.addView(LShadowView.getShadowView(getContext(), ll_cell1, FIVE), params);
-            fl_cell2_root.addView(LShadowView.getShadowView(getContext(), ll_cell2, FIVE), params);
-            fl_cell3_root.addView(LShadowView.getShadowView(getContext(), ll_cell3, FIVE), params);
-            fl_cell4_root.addView(LShadowView.getShadowView(getContext(), ll_cell4, FIVE), params);
+            fl_cell1_root.addView(LShadowView.getShadowView(getContext(), ll_cell1, FIVE), MATCH_PARENT, MATCH_PARENT);
+            fl_cell2_root.addView(LShadowView.getShadowView(getContext(), ll_cell2, FIVE), MATCH_PARENT, MATCH_PARENT);
+            fl_cell3_root.addView(LShadowView.getShadowView(getContext(), ll_cell3, FIVE), MATCH_PARENT, MATCH_PARENT);
+            fl_cell4_root.addView(LShadowView.getShadowView(getContext(), ll_cell4, FIVE), MATCH_PARENT, MATCH_PARENT);
         } else {
             tv_title.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
 

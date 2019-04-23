@@ -9,6 +9,8 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,6 +19,7 @@ import android.widget.Toast;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.util.AppUtil;
 import com.wow.carlauncher.common.util.CommonUtil;
+import com.wow.carlauncher.common.util.ViewUtils;
 import com.wow.carlauncher.common.view.LukuangView;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.plugin.amapcar.AMapCarPlugin;
@@ -36,11 +39,13 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static com.wow.carlauncher.common.CommonData.TAG;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.BLACK;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.WHITE;
 import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.AMAP_PACKAGE;
 import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.ICONS;
+import static com.wow.carlauncher.view.activity.launcher.view.LShadowView.SizeEnum.FIVE;
 
 /**
  * Created by 10124 on 2018/4/20.
@@ -74,20 +79,24 @@ public class LAMapView extends BaseEXView {
                 R.id.tv_msg
         }, R.color.l_text1);
 
-
+        //横线
         manage.setViewsBackround(this, new int[]{
                 R.id.line1,
+                R.id.line4
+        }, R.drawable.n_line2);
+
+        //竖线
+        manage.setViewsBackround(this, new int[]{
                 R.id.line2,
                 R.id.line3,
-                R.id.line4,
                 R.id.line5,
                 R.id.line6
-        }, R.drawable.n_line2);
+        }, R.drawable.n_line3);
 
         iv_dh.setImageResource(manage.getCurrentThemeRes(R.mipmap.n_dh_dh));
         iv_dh_j.setImageResource(manage.getCurrentThemeRes(R.mipmap.n_dh_j));
         iv_dh_gs.setImageResource(manage.getCurrentThemeRes(R.mipmap.n_dh_gs));
-        rl_view1.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_dh2_bg));
+        rl_navinfo.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_dh2_bg));
 
         refreshMute();
         refreshRoad();
@@ -95,10 +104,24 @@ public class LAMapView extends BaseEXView {
         iv_close.setImageResource(manage.getCurrentThemeRes(R.mipmap.n_dh_close));
         iv_car.setImageResource(manage.getCurrentThemeRes(R.mipmap.n_car));
 
+        fl_navinfo_root.removeAllViews();
+        if (rl_navinfo.getParent() != null) {
+            ((ViewGroup) rl_navinfo.getParent()).removeView(rl_navinfo);
+        }
+
+
         if (currentTheme == WHITE || currentTheme == BLACK) {
             tv_title.setGravity(Gravity.CENTER);
+            fl_navinfo_root.addView(LShadowView.getShadowView(getContext(), rl_navinfo, FIVE), MATCH_PARENT, MATCH_PARENT);
+
         } else {
             tv_title.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
+
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT);
+            int margin = ViewUtils.dip2px(getContext(), 5);
+            params.setMargins(margin, margin, margin, margin);
+
+            fl_navinfo_root.addView(rl_navinfo, params);
         }
     }
 
@@ -113,8 +136,11 @@ public class LAMapView extends BaseEXView {
     @ViewInject(R.id.rl_base)
     private View rl_base;
 
-    @ViewInject(R.id.rl_view1)
-    private View rl_view1;
+    @ViewInject(R.id.rl_navinfo)
+    private View rl_navinfo;
+
+    @ViewInject(R.id.fl_navinfo_root)
+    private FrameLayout fl_navinfo_root;
 
     @ViewInject(R.id.iv_dh)
     private ImageView iv_dh;
@@ -192,13 +218,21 @@ public class LAMapView extends BaseEXView {
             } else {
                 iv_road.setImageResource(R.mipmap.n_road2);
             }
-        } else {
+        } else if (ThemeManage.self().getTheme() == BLACK) {
             if (roadType == 0 || roadType == 6) {
                 iv_road.setImageResource(R.mipmap.n_road1_b);
             } else if (roadType == 4 || roadType == 5 || roadType == 9 || roadType == 10) {
                 iv_road.setImageResource(R.mipmap.n_road3_b);
             } else {
                 iv_road.setImageResource(R.mipmap.n_road2_b);
+            }
+        } else {
+            if (roadType == 0 || roadType == 6) {
+                iv_road.setImageResource(R.mipmap.n_road1_cb);
+            } else if (roadType == 4 || roadType == 5 || roadType == 9 || roadType == 10) {
+                iv_road.setImageResource(R.mipmap.n_road3_cb);
+            } else {
+                iv_road.setImageResource(R.mipmap.n_road2_cb);
             }
         }
     }
@@ -262,13 +296,13 @@ public class LAMapView extends BaseEXView {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final PAmapEventState event) {
-        if (rl_moren.getVisibility() == VISIBLE && event.isRunning()) {
-            rl_moren.setVisibility(GONE);
-            rl_daohang.setVisibility(VISIBLE);
-        } else if (rl_moren.getVisibility() == GONE && !event.isRunning()) {
-            rl_moren.setVisibility(VISIBLE);
-            rl_daohang.setVisibility(GONE);
-        }
+//        if (rl_moren.getVisibility() == VISIBLE && event.isRunning()) {
+//            rl_moren.setVisibility(GONE);
+//            rl_daohang.setVisibility(VISIBLE);
+//        } else if (rl_moren.getVisibility() == GONE && !event.isRunning()) {
+//            rl_moren.setVisibility(VISIBLE);
+//            rl_daohang.setVisibility(GONE);
+//        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

@@ -35,4 +35,6 @@
     <string name="trip_merge_time_message">OBD两次读取转速不为0的时间间隔 %1$d 分钟,默认为同一行程</string>
 
     <string name="launcher_tp">%1$s\n%2$.1f\n%3$d℃</string>
+
+    <string name="tag_key_launcher_all_all_item_theme">tag_key_launcher_all_all_item_theme</string>
 </resources>

@@ -46,7 +46,6 @@ public class LPageView extends BaseEXView {
         if (item == null) {
             return;
         }
-        System.out.println(item.length + " !!!!!!!");
         this.item = item;
         ll_base.removeAllViews();
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT);

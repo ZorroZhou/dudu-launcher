@@ -21,6 +21,7 @@ import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.view.activity.AppSelectActivity;
 import com.wow.carlauncher.view.activity.launcher.event.LDockLabelShowChangeEvent;
+import com.wow.carlauncher.view.activity.launcher.event.LDockRefreshEvent;
 import com.wow.carlauncher.view.base.BaseEXView;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -103,7 +104,7 @@ public class LDockView extends BaseEXView {
         }
     }
 
-    public void loadDock() {
+    private void loadDock() {
         String packname1 = SharedPreUtil.getSharedPreString(SDATA_DOCK1_CLASS);
         if (CommonUtil.isNotNull(packname1)) {
             if (AppInfoManage.self().checkApp(packname1)) {
@@ -214,4 +215,10 @@ public class LDockView extends BaseEXView {
     public void onEvent(LDockLabelShowChangeEvent event) {
         dockLabelShow(event.show);
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(LDockRefreshEvent event) {
+        loadDock();
+    }
+
 }

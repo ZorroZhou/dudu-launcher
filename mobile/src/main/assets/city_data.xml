@@ -422,11 +422,7 @@
     </province>
     <province name="广东省">
         <city name="东莞市">
-            <district name="莞城区" />
-            <district name="东城区" />
-            <district name="南城区" />
-            <district name="万江区" />
-            <district name="其他" />
+            <district name="东莞市" />
         </city>
         <city name="潮州市">
             <district name="潮安县" />

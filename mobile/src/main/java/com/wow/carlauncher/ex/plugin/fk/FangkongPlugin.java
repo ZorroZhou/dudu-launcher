@@ -149,14 +149,18 @@ public class FangkongPlugin extends ContextEx {
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void onEvent(final MTimeSecondEvent event) {
         String fkaddress = SharedPreUtil.getSharedPreString(CommonData.SDATA_FANGKONG_ADDRESS);
-        if (CommonUtil.isNotNull(fkaddress) && BleManage.self().client().getConnectStatus(fkaddress) == STATUS_DEVICE_CONNECTED) {
-            postEvent(new PFkEventConnect().setConnected(true));
-        } else {
-            postEvent(new PFkEventConnect().setConnected(false));
+        if (CommonUtil.isNotNull(fkaddress)) {
+            if (BleManage.self().client().getConnectStatus(fkaddress) == STATUS_DEVICE_CONNECTED) {
+                postEvent(new PFkEventConnect().setConnected(true));
+            } else {
+                postEvent(new PFkEventConnect().setConnected(false));
+                connect();
+            }
         }
-        if (CommonUtil.isNotNull(fkaddress) && BleManage.self().client().getConnectStatus(fkaddress) != STATUS_DEVICE_CONNECTED) {
-            connect();
-        }
+//
+//        if (CommonUtil.isNotNull(fkaddress) && BleManage.self().client().getConnectStatus(fkaddress) != STATUS_DEVICE_CONNECTED) {
+//            connect();
+//        }
     }
 
     public void setSimulatedDClick(boolean simulatedDClick) {

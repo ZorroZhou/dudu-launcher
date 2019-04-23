@@ -136,6 +136,24 @@ public class LPromptView extends BaseEXView {
                 break;
             }
             case R.id.tv_time: {
+//                AnyPermission.with(getContext()).overlay()
+//                        .onWithoutPermission((data, executor) -> {
+//                            new AlertDialog.Builder(getContext()).setTitle("警告!")
+//                                    .setNegativeButton("取消", (dialog, which) -> executor.cancel())
+//                                    .setPositiveButton("确定", (dialog2, which2) -> executor.execute())
+//                                    .setMessage("请给与车机助手悬浮窗权限,否则无法使用这个功能").show();
+//                        })
+//                        .request(new RequestListener() {
+//                            @Override
+//                            public void onSuccess() {
+//                                ConsoleWin.self().show();
+//                            }
+//
+//                            @Override
+//                            public void onFailed() {
+//                                ToastManage.self().show("没有悬浮窗权限!");
+//                            }
+//                        });
                 String packname = SharedPreUtil.getSharedPreString(SDATA_TIME_PLUGIN_OPEN_APP);
                 if (CommonUtil.isNotNull(packname)) {
                     Intent appIntent = pm.getLaunchIntentForPackage(packname);

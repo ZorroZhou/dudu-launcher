@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.PixelFormat;
+import android.os.Build;
 import android.support.v7.app.AlertDialog;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -32,6 +33,7 @@ import com.wow.carlauncher.ex.plugin.fk.event.PFkEventAction;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventInfo;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventState;
+import com.wow.carlauncher.view.activity.launcher.event.LDockRefreshEvent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -93,15 +95,16 @@ public class ConsoleWin implements ThemeManage.OnThemeChangeListener {
 
         this.context = context;
         wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-
-        EventBus.getDefault().register(this);
-
         DisplayMetrics outMetrics = new DisplayMetrics();
         wm.getDefaultDisplay().getMetrics(outMetrics);
 
         winparams = new WindowManager.LayoutParams();
         // 类型
-        winparams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {//6.0
+            winparams.type = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
+        } else {
+            winparams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
+        }
         if (SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_POPUP_FULL_SCREEN, true)) {
             winparams.flags = WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_FULLSCREEN;
         } else {
@@ -118,6 +121,8 @@ public class ConsoleWin implements ThemeManage.OnThemeChangeListener {
         consoleWin = (RelativeLayout) View.inflate(context, R.layout.console_window, null);
 
         x.view().inject(this, consoleWin);
+
+        EventBus.getDefault().register(this);
 
         onThemeChanged(ThemeManage.self());
         ThemeManage.self().registerThemeChangeListener(this);
@@ -381,6 +386,9 @@ public class ConsoleWin implements ThemeManage.OnThemeChangeListener {
 
     @Subscribe(priority = 100)
     public void onEvent(PFkEventAction event) {
+        if (!isShow) {
+            return;
+        }
         if (YLFK.equals(event.getFangkongProtocol())) {
             switch (event.getAction()) {
                 case LEFT_TOP_CLICK: {
@@ -474,4 +482,8 @@ public class ConsoleWin implements ThemeManage.OnThemeChangeListener {
         }
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(LDockRefreshEvent event) {
+        loadDock();
+    }
 }

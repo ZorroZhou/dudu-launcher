@@ -44,6 +44,10 @@ public class CommonUtil {
         return apiKey;
     }
 
+    public static boolean equals(Object obj1, Object obj2) {
+        return obj1 != null && obj1.equals(obj2);
+    }
+
     public static boolean isNull(Object object) {
         if (null == object) {
             return true;

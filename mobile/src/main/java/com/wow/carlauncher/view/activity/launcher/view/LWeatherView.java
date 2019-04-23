@@ -33,6 +33,8 @@ import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
+import java.util.Objects;
+
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.BLACK;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.WHITE;
@@ -127,7 +129,10 @@ public class LWeatherView extends BaseEXView {
                     tv_title.setText(msg);
                 }
             } else {
-                String msg = lastLocation.getCity() + "-" + lastLocation.getDistrict();
+                String msg = lastLocation.getCity();
+                if (CommonUtil.isNotNull(lastLocation.getDistrict())) {
+                    msg = msg + "-" + lastLocation.getDistrict();
+                }
                 tv_title.setText(msg);
             }
         });

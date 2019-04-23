@@ -82,7 +82,6 @@ public class CommonData {
     public static final int REQUEST_SELECT_APP_TO_DOCK2 = 10001;
     public static final int REQUEST_SELECT_APP_TO_DOCK3 = 10002;
     public static final int REQUEST_SELECT_APP_TO_DOCK4 = 10003;
-    public static final int REQUEST_SELECT_APP_TO_DOCK5 = 10004;
 
     //-------------------------------Intent传输数据时使用的mark-start-----------------------------------
     //应用包名
@@ -118,7 +117,6 @@ public class CommonData {
     public static final String SDATA_DOCK2_CLASS = "DOCK2_BEAN";
     public static final String SDATA_DOCK3_CLASS = "DOCK3_BEAN";
     public static final String SDATA_DOCK4_CLASS = "DOCK4_BEAN";
-    public static final String SDATA_DOCK5_CLASS = "DOCK5_BEAN";
     //dock的包名end
     //悬浮框的X坐标
     public static final String SDATA_POPUP_WIN_X = "SDATA_POPUP_WIN_X";

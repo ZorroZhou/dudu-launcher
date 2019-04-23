@@ -30,6 +30,7 @@ import com.wow.carlauncher.ex.plugin.console.event.PConsoleEventCallState;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventAction;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import com.wow.carlauncher.view.activity.AppSelectActivity;
+import com.wow.carlauncher.view.activity.launcher.event.LDockRefreshEvent;
 import com.wow.carlauncher.view.activity.launcher.event.LItemRefreshEvent;
 import com.wow.carlauncher.view.activity.launcher.event.LItemToFristEvent;
 import com.wow.carlauncher.view.activity.launcher.event.LPageTransformerChangeEvent;
@@ -60,12 +61,10 @@ import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_APP_TO_DOCK1;
 import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_APP_TO_DOCK2;
 import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_APP_TO_DOCK3;
 import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_APP_TO_DOCK4;
-import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_APP_TO_DOCK5;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK1_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK2_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK3_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK4_CLASS;
-import static com.wow.carlauncher.common.CommonData.SDATA_DOCK5_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_LAUNCHER_ITEM_TRAN;
 import static com.wow.carlauncher.ex.plugin.fk.FangkongProtocolEnum.YLFK;
 import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.CENTER_CLICK;
@@ -215,7 +214,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
                 String packName = data.getStringExtra(IDATA_APP_PACKAGE_NAME);
                 int mark = data.getIntExtra(IDATA_APP_MARK, -1);
                 SharedPreUtil.saveSharedPreString(SDATA_DOCK1_CLASS, mark + CommonData.CONSTANT_APP_PACKAGE_SEPARATE + packName);
-                ll_dock.loadDock();
+                EventBus.getDefault().post(new LDockRefreshEvent());
             }
         }
         if (requestCode == REQUEST_SELECT_APP_TO_DOCK2) {
@@ -223,7 +222,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
                 String packName = data.getStringExtra(IDATA_APP_PACKAGE_NAME);
                 int mark = data.getIntExtra(IDATA_APP_MARK, -1);
                 SharedPreUtil.saveSharedPreString(SDATA_DOCK2_CLASS, mark + CommonData.CONSTANT_APP_PACKAGE_SEPARATE + packName);
-                ll_dock.loadDock();
+                EventBus.getDefault().post(new LDockRefreshEvent());
             }
         }
         if (requestCode == REQUEST_SELECT_APP_TO_DOCK3) {
@@ -231,7 +230,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
                 String packName = data.getStringExtra(IDATA_APP_PACKAGE_NAME);
                 int mark = data.getIntExtra(IDATA_APP_MARK, -1);
                 SharedPreUtil.saveSharedPreString(SDATA_DOCK3_CLASS, mark + CommonData.CONSTANT_APP_PACKAGE_SEPARATE + packName);
-                ll_dock.loadDock();
+                EventBus.getDefault().post(new LDockRefreshEvent());
             }
         }
         if (requestCode == REQUEST_SELECT_APP_TO_DOCK4) {
@@ -239,15 +238,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
                 String packName = data.getStringExtra(IDATA_APP_PACKAGE_NAME);
                 int mark = data.getIntExtra(IDATA_APP_MARK, -1);
                 SharedPreUtil.saveSharedPreString(SDATA_DOCK4_CLASS, mark + CommonData.CONSTANT_APP_PACKAGE_SEPARATE + packName);
-                ll_dock.loadDock();
-            }
-        }
-        if (requestCode == REQUEST_SELECT_APP_TO_DOCK5) {
-            if (resultCode == RESULT_OK) {
-                String packName = data.getStringExtra(IDATA_APP_PACKAGE_NAME);
-                int mark = data.getIntExtra(IDATA_APP_MARK, -1);
-                SharedPreUtil.saveSharedPreString(SDATA_DOCK5_CLASS, mark + CommonData.CONSTANT_APP_PACKAGE_SEPARATE + packName);
-                ll_dock.loadDock();
+                EventBus.getDefault().post(new LDockRefreshEvent());
             }
         }
     }
@@ -327,7 +318,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
                     break;
                 }
                 case CENTER_LONG_CLICK: {
-                    AnyPermission.with(getApplicationContext()).overlay()
+                    x.task().autoPost(() -> AnyPermission.with(getApplicationContext()).overlay()
                             .onWithoutPermission((data, executor) -> {
                                 new AlertDialog.Builder(getApplicationContext()).setTitle("警告!")
                                         .setNegativeButton("取消", (dialog, which) -> executor.cancel())
@@ -344,7 +335,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
                                 public void onFailed() {
                                     ToastManage.self().show("没有悬浮窗权限!");
                                 }
-                            });
+                            }));
                     break;
                 }
                 case LEFT_BOTTOM_CLICK: {
@@ -359,14 +350,16 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
                     if (isCalling) {
                         ConsolePlugin.self().callHangup();
                     } else {
-                        //切换页面?
-                        if (viewPager != null && viewPager.getAdapter() != null) {
-                            if (viewPager.getAdapter().getCount() == viewPager.getCurrentItem() + 1) {
-                                viewPager.setCurrentItem(0, true);
-                            } else {
-                                viewPager.setCurrentItem(viewPager.getCurrentItem() + 1, true);
+                        x.task().autoPost(() -> {
+                            //切换页面?
+                            if (viewPager != null && viewPager.getAdapter() != null) {
+                                if (viewPager.getAdapter().getCount() == viewPager.getCurrentItem() + 1) {
+                                    viewPager.setCurrentItem(0, true);
+                                } else {
+                                    viewPager.setCurrentItem(viewPager.getCurrentItem() + 1, true);
+                                }
                             }
-                        }
+                        });
                     }
                     break;
             }

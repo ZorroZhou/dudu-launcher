@@ -9,6 +9,8 @@ public class MNewLocationEvent {
     private double longitude;
     private String adCode;
     private String city;
+    private String district;
+
 
     public double getLatitude() {
         return latitude;
@@ -43,6 +45,15 @@ public class MNewLocationEvent {
 
     public MNewLocationEvent setCity(String city) {
         this.city = city;
+        return this;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public MNewLocationEvent setDistrict(String district) {
+        this.district = district;
         return this;
     }
 }

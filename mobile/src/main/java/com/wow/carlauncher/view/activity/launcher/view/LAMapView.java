@@ -303,13 +303,13 @@ public class LAMapView extends BaseEXView {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final PAmapEventState event) {
-//        if (rl_moren.getVisibility() == VISIBLE && event.isRunning()) {
-//            rl_moren.setVisibility(GONE);
-//            rl_daohang.setVisibility(VISIBLE);
-//        } else if (rl_moren.getVisibility() == GONE && !event.isRunning()) {
-//            rl_moren.setVisibility(VISIBLE);
-//            rl_daohang.setVisibility(GONE);
-//        }
+        if (rl_moren.getVisibility() == VISIBLE && event.isRunning()) {
+            rl_moren.setVisibility(GONE);
+            rl_daohang.setVisibility(VISIBLE);
+        } else if (rl_moren.getVisibility() == GONE && !event.isRunning()) {
+            rl_moren.setVisibility(VISIBLE);
+            rl_daohang.setVisibility(GONE);
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

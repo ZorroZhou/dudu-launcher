@@ -30,8 +30,6 @@
         android:id="@+id/rl_moren"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:visibility="gone"
         app:layout_marginLeftPercent="2%h"
         app:layout_marginRightPercent="2%h">
 
@@ -136,6 +134,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:visibility="gone"
         app:layout_marginLeftPercent="2%h"
         app:layout_marginRightPercent="2%h">
 

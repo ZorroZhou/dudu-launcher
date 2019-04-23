@@ -4,8 +4,8 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,8 +13,7 @@ import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
-import com.wow.carlauncher.common.util.ViewUtils;
-import com.wow.carlauncher.common.util.WeatherIconUtil;
+import com.wow.carlauncher.common.WeatherIconTemp;
 import com.wow.carlauncher.common.view.CustomRoundAngleImageView;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.location.event.MNewLocationEvent;
@@ -34,6 +33,7 @@ import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.BLACK;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.WHITE;
 
@@ -53,38 +53,88 @@ public class LWeatherView extends BaseEXView {
 
     @Override
     protected int getContent() {
-        return R.layout.content_l_weather;
+        return R.layout.content_l_empty;
     }
 
+    private int layoutId;
 
     @Override
     public void changedTheme(ThemeManage manage) {
-        rl_base.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_l_item1_bg));
+        if (manage.getTheme() == BLACK || manage.getTheme() == WHITE) {
+            if (layoutId != R.layout.content_l_weather_b) {
+                layoutId = R.layout.content_l_weather_b;
+                fl_base.removeAllViews();
+                View view = View.inflate(getContext(), layoutId, null);
+                fl_base.addView(view, MATCH_PARENT, MATCH_PARENT);
+                x.view().inject(this, view);
+                refreshShow();
+            }
 
-        tv_tianqi.setTextColor(manage.getCurrentThemeColor(R.color.l_text3));
-        tv_wendu1.setTextColor(manage.getCurrentThemeColor(R.color.l_text2));
-        tv_title.setTextColor(manage.getCurrentThemeColor(R.color.l_text2));
+            rl_base.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_l_item1_bg));
 
-        line1.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_line2));
+            tv_tianqi.setTextColor(manage.getCurrentThemeColor(R.color.l_text3));
+            tv_wendu1.setTextColor(manage.getCurrentThemeColor(R.color.l_text2));
+            tv_title.setTextColor(manage.getCurrentThemeColor(R.color.l_text2));
 
-        manage.setTextViewsColor(this, new int[]{
-                R.id.tv_text2,
-                R.id.tv_text3,
-                R.id.tv_text4
-        }, R.color.l_text3);
+            line1.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_line2));
 
-        manage.setTextViewsColor(this, new int[]{
-                R.id.tv_kqsd,
-                R.id.tv_fl,
-                R.id.tv_fx
-        }, R.color.l_text4);
+            manage.setTextViewsColor(this, new int[]{
+                    R.id.tv_text2,
+                    R.id.tv_text3,
+                    R.id.tv_text4
+            }, R.color.l_text3);
 
-        if (currentTheme == WHITE || currentTheme == BLACK) {
-            iv_tianqi.setRightTopRadius(10);
+            manage.setTextViewsColor(this, new int[]{
+                    R.id.tv_kqsd,
+                    R.id.tv_fl,
+                    R.id.tv_fx
+            }, R.color.l_text4);
         } else {
-            iv_tianqi.setRightTopRadius(0);
+            layoutId = R.layout.content_l_weather_cb;
+            fl_base.removeAllViews();
+            View view = View.inflate(getContext(), layoutId, null);
+            fl_base.addView(view, MATCH_PARENT, MATCH_PARENT);
+            x.view().inject(this, view);
+
+            refreshShow();
         }
     }
+
+    @Override
+    protected void initView() {
+
+    }
+
+    private void refreshShow() {
+        x.task().autoPost(() -> {
+            if (cityWeather != null) {
+                iv_tianqi.setImageResource(WeatherIconTemp.getWeatherResId(cityWeather.getWeather()));
+                tv_tianqi.setText(cityWeather.getWeather());
+                if (ThemeManage.self().getTheme() == BLACK || ThemeManage.self().getTheme() == WHITE) {
+                    tv_wendu1.setText(String.valueOf(cityWeather.getTemperature() + "℃"));
+                } else {
+                    tv_wendu1.setText(String.valueOf(cityWeather.getTemperature() + ""));
+                }
+                tv_kqsd.setText(String.valueOf(cityWeather.getHumidity()));
+                tv_fl.setText(String.valueOf(cityWeather.getWindpower()));
+                tv_fx.setText(String.valueOf(cityWeather.getWinddirection() + "风"));
+            }
+            if (lastLocation == null || CommonUtil.isNull(lastLocation.getAdCode())) {
+                if (CommonUtil.isNull(SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_DISTRICT)) || CommonUtil.isNull(SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_SHI))) {
+                    tv_title.setText("点击设置城市");
+                } else {
+                    String msg = SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_SHI) + "-" + SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_DISTRICT);
+                    tv_title.setText(msg);
+                }
+            } else {
+                String msg = lastLocation.getCity() + "-" + lastLocation.getDistrict();
+                tv_title.setText(msg);
+            }
+        });
+    }
+
+    @ViewInject(R.id.fl_base)
+    private FrameLayout fl_base;
 
     @ViewInject(R.id.rl_base)
     private View rl_base;
@@ -106,7 +156,7 @@ public class LWeatherView extends BaseEXView {
     private TextView tv_title;
 
     @ViewInject(R.id.iv_tianqi)
-    private CustomRoundAngleImageView iv_tianqi;
+    private ImageView iv_tianqi;
 
     @ViewInject(R.id.tv_fl)
     private TextView tv_fl;
@@ -119,11 +169,11 @@ public class LWeatherView extends BaseEXView {
     private void clickEvent(View view) {
         switch (view.getId()) {
             case R.id.tv_title: {
-                if (CommonUtil.isNull(SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_CITY))) {
+                if (CommonUtil.isNull(SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_DISTRICT))) {
                     final CityDialog cityDialog = new CityDialog(getContext());
                     cityDialog.setOkclickListener(dialog -> {
                         if (CommonUtil.isNotNull(cityDialog.getCityName()) && CommonUtil.isNotNull(cityDialog.getDistrictName())) {
-                            SharedPreUtil.saveSharedPreString(CommonData.SDATA_WEATHER_CITY, cityDialog.getDistrictName());
+                            SharedPreUtil.saveSharedPreString(CommonData.SDATA_WEATHER_DISTRICT, cityDialog.getDistrictName());
                             SharedPreUtil.saveSharedPreString(CommonData.SDATA_WEATHER_SHI, cityDialog.getCityName());
                             cityDialog.dismiss();
                             EventBus.getDefault().post(new LCityRefreshEvent());
@@ -140,10 +190,9 @@ public class LWeatherView extends BaseEXView {
         }
     }
 
-    private String city, adcode;
-
     private long lastUpdate;
     private boolean runninng = false;
+    private WeatherRes.CityWeather cityWeather;
 
     private void refreshWeather(boolean qiangzhi) {
         if (!qiangzhi) {
@@ -157,19 +206,14 @@ public class LWeatherView extends BaseEXView {
         runninng = true;
         x.task().autoPost(() -> {
             String chengshi = "";
-            //如果定位失败,则使用设置的地理位置
-            if (CommonUtil.isNull(adcode)) {
-                if (CommonUtil.isNull(SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_CITY))) {
-                    tv_title.setText("点击设置城市");
-                } else {
-                    tv_title.setText(SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_CITY));
-                    chengshi = SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_CITY);
+            if (lastLocation == null || CommonUtil.isNull(lastLocation.getAdCode())) {
+                if (!CommonUtil.isNull(SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_DISTRICT))) {
+                    chengshi = SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_DISTRICT);
                 }
             } else {
-                chengshi = adcode;
-                tv_title.setText(city);
+                chengshi = lastLocation.getAdCode();
             }
-
+            //如果定位失败,则使用设置的地理位置
             if (CommonUtil.isNotNull(chengshi)) {
                 AMapWebService.getWeatherInfo(chengshi, new AMapWebService.CommonCallback<WeatherRes>() {
                     @Override
@@ -179,12 +223,8 @@ public class LWeatherView extends BaseEXView {
                             lastUpdate = System.currentTimeMillis();
                             WeatherRes.CityWeather cityWeather = res.getLives().get(0);
                             if (cityWeather != null) {
-                                iv_tianqi.setImageResource(WeatherIconUtil.getWeatherResId(cityWeather.getWeather()));
-                                tv_tianqi.setText(cityWeather.getWeather());
-                                tv_wendu1.setText(String.valueOf(cityWeather.getTemperature() + "℃"));
-                                tv_kqsd.setText(String.valueOf(cityWeather.getHumidity()));
-                                tv_fl.setText(String.valueOf(cityWeather.getWindpower()));
-                                tv_fx.setText(String.valueOf(cityWeather.getWinddirection() + "风"));
+                                LWeatherView.this.cityWeather = cityWeather;
+                                refreshShow();
                             }
                         }
                     }
@@ -202,6 +242,7 @@ public class LWeatherView extends BaseEXView {
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void onEvent(LCityRefreshEvent event) {
+        refreshShow();
         refreshWeather(true);
     }
 
@@ -210,14 +251,16 @@ public class LWeatherView extends BaseEXView {
         refreshWeather(false);
     }
 
+    private MNewLocationEvent lastLocation;
+
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void onEvent(MNewLocationEvent event) {
         boolean frist = false;
-        if (this.adcode == null) {
+        if (this.lastLocation == null) {
             frist = true;
         }
-        this.adcode = event.getAdCode();
-        this.city = event.getCity();
+        lastLocation = event;
+        refreshShow();
         refreshWeather(frist);
     }
 }

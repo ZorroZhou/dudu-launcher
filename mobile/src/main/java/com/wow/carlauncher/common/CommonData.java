@@ -103,7 +103,7 @@ public class CommonData {
     //控制接口实现类型,系统还是NWD
     public static final String SDATA_CONSOLE_MARK = "SDATA_CONSOLE_MARK";
     //天气所属的城市
-    public static final String SDATA_WEATHER_CITY = "SDATA_WEATHER_CITY";
+    public static final String SDATA_WEATHER_DISTRICT = "SDATA_WEATHER_DISTRICT";
 
     public static final String SDATA_WEATHER_SHI = "SDATA_WEATHER_SHI";
     //是否接受开发中的APP包

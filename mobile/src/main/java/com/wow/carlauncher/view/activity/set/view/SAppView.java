@@ -250,7 +250,7 @@ public class SAppView extends BaseView {
             final CityDialog cityDialog = new CityDialog(getContext());
             cityDialog.setOkclickListener(dialog -> {
                 if (CommonUtil.isNotNull(cityDialog.getDistrictName())) {
-                    SharedPreUtil.saveSharedPreString(CommonData.SDATA_WEATHER_CITY, cityDialog.getDistrictName());
+                    SharedPreUtil.saveSharedPreString(CommonData.SDATA_WEATHER_DISTRICT, cityDialog.getDistrictName());
                     cityDialog.dismiss();
                     EventBus.getDefault().post(new LCityRefreshEvent());
                     tianqi_city.setSummary(cityDialog.getDistrictName());
@@ -262,7 +262,7 @@ public class SAppView extends BaseView {
             });
             cityDialog.show();
         });
-        tianqi_city.setSummary(SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_CITY));
+        tianqi_city.setSummary(SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_DISTRICT));
     }
 
     private void setSTitle(String key, SetView setView) {

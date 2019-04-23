@@ -182,7 +182,6 @@ public class WeatherIconTemp {
 
     static boolean isNight() {
         int i = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
-        Log.e(TAG, "isNight: " + i);
         return (i < 6) || (i >= 18);
     }
 }

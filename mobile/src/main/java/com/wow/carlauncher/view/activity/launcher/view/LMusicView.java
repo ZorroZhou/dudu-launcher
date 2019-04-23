@@ -65,16 +65,18 @@ public class LMusicView extends BaseEXView {
                 new ViewTreeObserver.OnPreDrawListener() {
                     @Override
                     public boolean onPreDraw() {
-                        ll_play.getViewTreeObserver().removeOnPreDrawListener(this);
-                        ViewGroup.LayoutParams lp = iv_play.getLayoutParams();
-                        if (currentTheme == WHITE || currentTheme == BLACK) {
-                            lp.width = ll_prew.getHeight();
-                            lp.height = ll_prew.getHeight();
-                        } else {
-                            lp.width = (int) (ll_prew.getHeight() * 0.5);
-                            lp.height = (int) (ll_prew.getHeight() * 0.5);
+                        if (ll_play.getHeight() > 0) {
+                            ll_play.getViewTreeObserver().removeOnPreDrawListener(this);
+                            ViewGroup.LayoutParams lp = iv_play.getLayoutParams();
+                            if (currentTheme == WHITE || currentTheme == BLACK) {
+                                lp.width = ll_play.getHeight();
+                                lp.height = ll_play.getHeight();
+                            } else {
+                                lp.width = (int) (ll_play.getHeight() * 0.5);
+                                lp.height = (int) (ll_play.getHeight() * 0.5);
+                            }
+                            iv_play.setLayoutParams(lp);
                         }
-                        iv_play.setLayoutParams(lp);
                         return true;
                     }
                 });
@@ -84,16 +86,18 @@ public class LMusicView extends BaseEXView {
                 new ViewTreeObserver.OnPreDrawListener() {
                     @Override
                     public boolean onPreDraw() {
-                        ll_prew.getViewTreeObserver().removeOnPreDrawListener(this);
-                        ViewGroup.LayoutParams lp = iv_prew.getLayoutParams();
-                        if (currentTheme == WHITE || currentTheme == BLACK) {
-                            lp.width = (int) (ll_prew.getHeight() * 0.7);
-                            lp.height = (int) (ll_prew.getHeight() * 0.7);
-                        } else {
-                            lp.width = (int) (ll_prew.getHeight() * 0.5);
-                            lp.height = (int) (ll_prew.getHeight() * 0.5);
+                        if (ll_prew.getHeight() > 0) {
+                            ll_prew.getViewTreeObserver().removeOnPreDrawListener(this);
+                            ViewGroup.LayoutParams lp = iv_prew.getLayoutParams();
+                            if (currentTheme == WHITE || currentTheme == BLACK) {
+                                lp.width = (int) (ll_prew.getHeight() * 0.7);
+                                lp.height = (int) (ll_prew.getHeight() * 0.7);
+                            } else {
+                                lp.width = (int) (ll_prew.getHeight() * 0.5);
+                                lp.height = (int) (ll_prew.getHeight() * 0.5);
+                            }
+                            iv_prew.setLayoutParams(lp);
                         }
-                        iv_prew.setLayoutParams(lp);
                         return true;
                     }
                 });
@@ -104,16 +108,18 @@ public class LMusicView extends BaseEXView {
                 new ViewTreeObserver.OnPreDrawListener() {
                     @Override
                     public boolean onPreDraw() {
-                        ll_next.getViewTreeObserver().removeOnPreDrawListener(this);
-                        ViewGroup.LayoutParams lp = iv_next.getLayoutParams();
-                        if (currentTheme == WHITE || currentTheme == BLACK) {
-                            lp.width = (int) (ll_prew.getHeight() * 0.7);
-                            lp.height = (int) (ll_prew.getHeight() * 0.7);
-                        } else {
-                            lp.width = (int) (ll_prew.getHeight() * 0.5);
-                            lp.height = (int) (ll_prew.getHeight() * 0.5);
+                        if (ll_next.getHeight() > 0) {
+                            ll_next.getViewTreeObserver().removeOnPreDrawListener(this);
+                            ViewGroup.LayoutParams lp = iv_next.getLayoutParams();
+                            if (currentTheme == WHITE || currentTheme == BLACK) {
+                                lp.width = (int) (ll_next.getHeight() * 0.7);
+                                lp.height = (int) (ll_next.getHeight() * 0.7);
+                            } else {
+                                lp.width = (int) (ll_next.getHeight() * 0.5);
+                                lp.height = (int) (ll_next.getHeight() * 0.5);
+                            }
+                            iv_next.setLayoutParams(lp);
                         }
-                        iv_next.setLayoutParams(lp);
                         return true;
                     }
                 });

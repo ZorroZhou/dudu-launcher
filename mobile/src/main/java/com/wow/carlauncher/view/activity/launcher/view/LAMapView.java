@@ -70,7 +70,7 @@ public class LAMapView extends BaseEXView {
     public void changedTheme(ThemeManage manage) {
         rl_base.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_l_item1_bg));
         ll_xiansu.setBackgroundResource(manage.getCurrentThemeRes(R.mipmap.n_dh_quan));
-        iv_moren.setImageResource(manage.getCurrentThemeRes(R.mipmap.n_dh_moren));
+        iv_moren.setImageResource(manage.getCurrentThemeRes(R.mipmap.n_dh_moren1));
 
         tv_title.setTextColor(manage.getCurrentThemeColor(R.color.l_title));
 

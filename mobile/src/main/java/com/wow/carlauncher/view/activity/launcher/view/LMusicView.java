@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.util.CommonUtil;
-import com.wow.carlauncher.common.util.ViewUtils;
 import com.wow.carlauncher.common.view.CustomRoundAngleImageView;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
@@ -33,7 +32,6 @@ import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.BLACK;
-import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.CBLACK;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.WHITE;
 
 

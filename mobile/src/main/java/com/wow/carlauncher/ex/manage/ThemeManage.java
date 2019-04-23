@@ -31,7 +31,9 @@ import java.util.Map;
 import static com.wow.carlauncher.common.CommonData.SDATA_APP_THEME;
 import static com.wow.carlauncher.common.CommonData.SDATA_APP_THEME_DAY;
 import static com.wow.carlauncher.common.CommonData.SDATA_APP_THEME_NIGHT;
-import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.*;
+import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.BLACK;
+import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.CBLACK;
+import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.WHITE;
 
 public class ThemeManage {
 

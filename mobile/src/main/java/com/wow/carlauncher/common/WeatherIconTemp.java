@@ -1,13 +1,9 @@
 package com.wow.carlauncher.common;
 
-import android.util.Log;
-
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 
 import java.util.Calendar;
-
-import static com.wow.carlauncher.common.CommonData.TAG;
 
 /**
  * Created by 10124 on 2017/11/3.

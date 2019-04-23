@@ -11,10 +11,9 @@ import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
+import com.wow.carlauncher.common.WeatherIconTemp;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
-import com.wow.carlauncher.common.WeatherIconTemp;
-import com.wow.carlauncher.common.view.CustomRoundAngleImageView;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.location.event.MNewLocationEvent;
 import com.wow.carlauncher.ex.manage.time.event.MTimeMinuteEvent;
@@ -32,8 +31,6 @@ import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
-
-import java.util.Objects;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.BLACK;
@@ -112,11 +109,7 @@ public class LWeatherView extends BaseEXView {
             if (cityWeather != null) {
                 iv_tianqi.setImageResource(WeatherIconTemp.getWeatherResId(cityWeather.getWeather()));
                 tv_tianqi.setText(cityWeather.getWeather());
-                if (ThemeManage.self().getTheme() == BLACK || ThemeManage.self().getTheme() == WHITE) {
-                    tv_wendu1.setText(String.valueOf(cityWeather.getTemperature() + "℃"));
-                } else {
-                    tv_wendu1.setText(String.valueOf(cityWeather.getTemperature() + ""));
-                }
+                tv_wendu1.setText(String.valueOf(cityWeather.getTemperature() + "°"));
                 tv_kqsd.setText(String.valueOf(cityWeather.getHumidity()));
                 tv_fl.setText(String.valueOf(cityWeather.getWindpower()));
                 tv_fx.setText(String.valueOf(cityWeather.getWinddirection() + "风"));

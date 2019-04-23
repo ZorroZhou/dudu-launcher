@@ -1,6 +1,5 @@
 package com.wow.carlauncher.view.activity.launcher.view;
 
-import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.support.annotation.NonNull;

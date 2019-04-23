@@ -29,7 +29,10 @@ import org.xutils.x;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.wow.carlauncher.common.CommonData.*;
+import static com.wow.carlauncher.common.CommonData.SDATA_DOCK1_CLASS;
+import static com.wow.carlauncher.common.CommonData.SDATA_DOCK2_CLASS;
+import static com.wow.carlauncher.common.CommonData.SDATA_DOCK3_CLASS;
+import static com.wow.carlauncher.common.CommonData.SDATA_DOCK4_CLASS;
 
 public class LAllAppView extends BaseEXView implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
     public LAllAppView(Context context) {
@@ -61,8 +64,10 @@ public class LAllAppView extends BaseEXView implements AdapterView.OnItemClickLi
         this.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
             public boolean onPreDraw() {
-                LAllAppView.this.getViewTreeObserver().removeOnPreDrawListener(this);
-                adapter.setHeight(gridview.getHeight() / 4);
+                if (gridview.getHeight() > 0) {
+                    LAllAppView.this.getViewTreeObserver().removeOnPreDrawListener(this);
+                    adapter.setHeight(gridview.getHeight() / 4);
+                }
                 return true;
             }
         });
@@ -75,7 +80,7 @@ public class LAllAppView extends BaseEXView implements AdapterView.OnItemClickLi
     }
 
     private void loadData() {
-        x.task().run(() -> {
+        x.task().autoPost(() -> {
             adapter.clear();
             final List<AppInfo> appInfos = new ArrayList<>(AppInfoManage.self().getAllAppInfos());
 
@@ -96,8 +101,8 @@ public class LAllAppView extends BaseEXView implements AdapterView.OnItemClickLi
                 }
             }
             appInfos.removeAll(hides);
-
-            x.task().autoPost(() -> adapter.addItems(appInfos));
+            System.out.println(appInfos + "!!!!!");
+            adapter.addItems(appInfos);
         });
     }
 
@@ -148,5 +153,12 @@ public class LAllAppView extends BaseEXView implements AdapterView.OnItemClickLi
         deleteIntent.setAction(Intent.ACTION_DELETE);
         deleteIntent.setData(Uri.parse("package:" + info.clazz));
         getContext().startActivity(deleteIntent);
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        System.out.println("onDetachedFromWindow:" + this);
+
     }
 }

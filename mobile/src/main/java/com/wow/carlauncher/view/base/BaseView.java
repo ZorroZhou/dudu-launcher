@@ -7,9 +7,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.wow.carlauncher.R;
-import com.wow.carlauncher.view.activity.launcher.view.LPagerPostion;
-
 import org.xutils.x;
 
 /**

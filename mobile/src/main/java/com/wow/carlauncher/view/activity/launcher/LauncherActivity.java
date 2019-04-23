@@ -14,14 +14,10 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
 
-import com.ToxicBakery.viewpager.transforms.BackgroundToForegroundTransformer;
-import com.ToxicBakery.viewpager.transforms.RotateUpTransformer;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.util.SharedPreUtil;
-import com.wow.carlauncher.common.util.ViewUtils;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.location.event.MNewLocationEvent;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
@@ -35,7 +31,6 @@ import com.wow.carlauncher.view.activity.launcher.event.LItemRefreshEvent;
 import com.wow.carlauncher.view.activity.launcher.event.LItemToFristEvent;
 import com.wow.carlauncher.view.activity.launcher.event.LPageTransformerChangeEvent;
 import com.wow.carlauncher.view.activity.launcher.view.LAllAppView;
-import com.wow.carlauncher.view.activity.launcher.view.LDockView;
 import com.wow.carlauncher.view.activity.launcher.view.LPageView;
 import com.wow.carlauncher.view.activity.launcher.view.LPagerPostion;
 import com.wow.carlauncher.view.consoleWindow.ConsoleWin;
@@ -78,8 +73,6 @@ import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.RIGHT_TOP
 
 public class LauncherActivity extends Activity implements ThemeManage.OnThemeChangeListener {
 
-    public static LauncherActivity activity;
-
     @ViewInject(R.id.viewPager)
     private ViewPager viewPager;
 
@@ -108,8 +101,6 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
         onThemeChanged(ThemeManage.self());
         ThemeManage.self().registerThemeChangeListener(this);
         ThemeManage.self().refreshTheme();
-
-        LauncherActivity.activity = this;
     }
 
     public void initView() {
@@ -117,6 +108,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
         x.view().inject(this);
         System.out.println(postion + "   !!!!");
         viewPager.addOnPageChangeListener(postion);
+        viewPager.setPageTransformer(true, ItemTransformer.getById(SharedPreUtil.getSharedPreInteger(SDATA_LAUNCHER_ITEM_TRAN, ItemTransformer.None.getId())).getTransformer());
 
         EventBus.getDefault().register(this);
         initItem();
@@ -163,11 +155,10 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
                 pageView.setItem(pcell);
             }
         }
+        System.out.println(pageViews.length + " !!!!");
         pageViews[pageViews.length - 1] = new LAllAppView(this);
-
+        System.out.println(pageViews[pageViews.length - 1]);
         viewPager.setAdapter(new ViewAdapter(pageViews));
-        viewPager.setPageTransformer(true, ItemTransformer.getById(SharedPreUtil.getSharedPreInteger(SDATA_LAUNCHER_ITEM_TRAN, ItemTransformer.None.getId())).getTransformer());
-
         postion.loadPostion(pageViews.length);
     }
 
@@ -246,7 +237,6 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
         unregisterReceiver(homeReceiver);
         EventBus.getDefault().unregister(this);
         ThemeManage.self().unregisterThemeChangeListener(this);
-        LauncherActivity.activity = null;
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

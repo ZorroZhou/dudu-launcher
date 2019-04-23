@@ -7,7 +7,6 @@ import android.content.pm.PackageManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
@@ -27,12 +26,10 @@ import com.wow.carlauncher.ex.plugin.fk.event.PFkEventConnect;
 import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarTp;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventConnect;
-import com.wow.carlauncher.view.activity.AppMenuActivity;
 import com.wow.carlauncher.view.activity.CarInfoActivity;
 import com.wow.carlauncher.view.activity.launcher.event.LItemToFristEvent;
 import com.wow.carlauncher.view.activity.set.SetActivity;
 import com.wow.carlauncher.view.base.BaseEXView;
-import com.wow.carlauncher.view.consoleWindow.ConsoleWin;
 import com.wow.carlauncher.view.event.EventWifiState;
 
 import org.greenrobot.eventbus.EventBus;
@@ -43,9 +40,6 @@ import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
 import java.util.Date;
-
-import per.goweii.anypermission.AnyPermission;
-import per.goweii.anypermission.RequestListener;
 
 import static com.inuker.bluetooth.library.Constants.STATUS_DEVICE_CONNECTED;
 import static com.wow.carlauncher.common.CommonData.MINUTE_MILL;

@@ -20,6 +20,7 @@ import com.wow.carlauncher.ex.plugin.fk.event.PFkEventAction;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventConnect;
 import com.wow.carlauncher.view.base.BaseEXView;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.view.annotation.ViewInject;
@@ -86,13 +87,18 @@ public class CoolBlackView extends BaseEXView {
         this.tv_trip_time.setText(DateUtil.formatDuring(System.currentTimeMillis() - AppContext.self().getStartTime()));
     }
 
-    @Subscribe
+    @Subscribe(priority = 90)
     public void onEvent(PFkEventAction event) {
         if (YLFK.equals(event.getFangkongProtocol())) {
+            boolean needCancelEvent = false;
             switch (event.getAction()) {
                 case RIGHT_BOTTOM_CLICK:
-
+                    showNav(!showNav);
+                    needCancelEvent = true;
                     break;
+            }
+            if (needCancelEvent) {
+                EventBus.getDefault().cancelEventDelivery(event);
             }
         }
     }
@@ -107,9 +113,7 @@ public class CoolBlackView extends BaseEXView {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(final PAmapEventState event) {
-        if (fktuoguan) {
-            showNav(!showNav);
-        } else {
+        if (!fktuoguan) {
             showNav(event.isRunning());
         }
     }

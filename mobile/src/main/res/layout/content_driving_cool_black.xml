@@ -94,9 +94,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -123,6 +121,7 @@
                     android:contentDescription="@string/app_name"
                     android:scaleType="centerInside"
                     android:src="@mipmap/hud_sou9"
+                    android:visibility="gone"
                     app:layout_heightPercent="60%h"
                     app:layout_widthPercent="60%w" />
             </com.zhy.android.percent.support.PercentFrameLayout>
@@ -137,8 +136,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:orientation="vertical"
-                    android:visibility="gone">
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -162,7 +160,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/tv_amaproad"

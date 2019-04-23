@@ -74,26 +74,6 @@ public class CustomRoundAngleImageView extends AppCompatImageView {
         invalidate();
     }
 
-    public void setRightTopRadius(int rightTopRadius) {
-        this.rightTopRadius = rightTopRadius;
-        invalidate();
-    }
-
-    public void setLeftTopRadius(int leftTopRadius) {
-        this.leftTopRadius = leftTopRadius;
-        invalidate();
-    }
-
-    public void setRightBottomRadius(int rightBottomRadius) {
-        this.rightBottomRadius = rightBottomRadius;
-        invalidate();
-    }
-
-    public void setLeftBottomRadius(int leftBottomRadius) {
-        this.leftBottomRadius = leftBottomRadius;
-        invalidate();
-    }
-
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);

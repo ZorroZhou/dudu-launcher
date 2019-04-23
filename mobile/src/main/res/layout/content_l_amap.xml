@@ -278,8 +278,11 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:ellipsize="end"
                     android:gravity="center"
-                    app:layout_textSizePercent="40%h" />
+                    android:lines="1"
+                    android:text="剩余10.1公里"
+                    app:layout_textSizePercent="35%h" />
 
                 <View
                     android:id="@+id/line6"

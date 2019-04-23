@@ -25,16 +25,6 @@
             app:layout_textSizePercent="50%h" />
     </com.zhy.android.percent.support.PercentFrameLayout>
 
-    <ProgressBar
-        android:id="@+id/progressBar2"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:layout_alignParentBottom="true"
-        android:indeterminate="false"
-        android:max="100"
-        android:progress="0" />
-
     <com.zhy.android.percent.support.PercentLinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -71,9 +61,9 @@
             android:lines="1"
             android:text="音乐名称"
             android:textColor="#697380"
-            app:layout_heightPercent="8%h"
+            app:layout_heightPercent="10%h"
             app:layout_marginTopPercent="4%h"
-            app:layout_textSizePercent="5%h" />
+            app:layout_textSizePercent="7%h" />
 
         <TextView
             android:id="@+id/tv_zuozhe"
@@ -84,8 +74,8 @@
             android:lines="1"
             android:text="作者"
             android:textColor="#7b8391"
-            app:layout_heightPercent="7%h"
-            app:layout_textSizePercent="4%h" />
+            app:layout_heightPercent="9%h"
+            app:layout_textSizePercent="6%h" />
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -98,7 +88,7 @@
             android:visibility="gone"
             app:layout_marginLeftPercent="2%h"
             app:layout_marginRightPercent="2%h"
-            app:layout_marginTopPercent="2%h" />
+            app:layout_marginTopPercent="3%h" />
 
         <com.zhy.android.percent.support.PercentLinearLayout
             android:id="@+id/ll_controller"

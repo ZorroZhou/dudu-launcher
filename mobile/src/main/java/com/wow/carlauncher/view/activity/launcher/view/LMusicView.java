@@ -120,17 +120,6 @@ public class LMusicView extends BaseEXView {
         iv_next.setImageResource(manage.getCurrentThemeRes(R.mipmap.ic_next));
 
         progressBar.setProgressDrawable(getResources().getDrawable(manage.getCurrentThemeRes(R.drawable.n_music_progress)));
-        progressBar2.setProgressDrawable(getResources().getDrawable(manage.getCurrentThemeRes(R.drawable.n_music_progress)));
-
-        if (currentTheme == WHITE || currentTheme == BLACK) {
-            progressBar.setVisibility(VISIBLE);
-            progressBar2.setVisibility(INVISIBLE);
-            currProgressBar = progressBar;
-        } else {
-            progressBar2.setVisibility(VISIBLE);
-            progressBar.setVisibility(INVISIBLE);
-            currProgressBar = progressBar2;
-        }
 
         tv_music_title.setTextColor(manage.getCurrentThemeColor(R.color.l_music_title));
         tv_zuozhe.setTextColor(manage.getCurrentThemeColor(R.color.l_music_zuozhe));
@@ -179,12 +168,6 @@ public class LMusicView extends BaseEXView {
 
     @ViewInject(R.id.progressBar)
     private ProgressBar progressBar;
-
-    @ViewInject(R.id.progressBar2)
-    private ProgressBar progressBar2;
-
-    private ProgressBar currProgressBar;
-
 
     @ViewInject(R.id.music_iv_cover)
     private CustomRoundAngleImageView music_iv_cover;
@@ -265,16 +248,15 @@ public class LMusicView extends BaseEXView {
             refreshPlay();
             if (!run) {
                 progressBar.setVisibility(INVISIBLE);
-                progressBar2.setVisibility(INVISIBLE);
             }
         }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final PMusicEventProgress event) {
-        if (currProgressBar != null) {
-            currProgressBar.setVisibility(VISIBLE);
-            currProgressBar.setProgress((int) (event.getCurrTime() * 100F / event.getTotalTime()));
+        if (progressBar != null) {
+            progressBar.setVisibility(VISIBLE);
+            progressBar.setProgress((int) (event.getCurrTime() * 100F / event.getTotalTime()));
         }
     }
 

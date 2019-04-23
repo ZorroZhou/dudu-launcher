@@ -126,6 +126,11 @@ public class SAppView extends BaseView {
         sv_theme_night.setSummary(Theme.getById(SharedPreUtil.getSharedPreInteger(SDATA_APP_THEME_NIGHT, Theme.BLACK.getId())).getName());
         sv_theme_night.setOnClickListener(new SetEnumOnClickListener<Theme>(getContext(), THEMES) {
             @Override
+            public String title() {
+                return "请选择夜间主题";
+            }
+
+            @Override
             public Theme getCurr() {
                 return Theme.getById(SharedPreUtil.getSharedPreInteger(SDATA_APP_THEME_NIGHT, Theme.BLACK.getId()));
             }
@@ -140,6 +145,11 @@ public class SAppView extends BaseView {
 
         sv_theme_day.setSummary(Theme.getById(SharedPreUtil.getSharedPreInteger(SDATA_APP_THEME_DAY, Theme.WHITE.getId())).getName());
         sv_theme_day.setOnClickListener(new SetEnumOnClickListener<Theme>(getContext(), THEMES) {
+            @Override
+            public String title() {
+                return "请选择白天主题";
+            }
+
             @Override
             public Theme getCurr() {
                 return Theme.getById(SharedPreUtil.getSharedPreInteger(SDATA_APP_THEME_DAY, Theme.WHITE.getId()));
@@ -156,6 +166,11 @@ public class SAppView extends BaseView {
 
         sv_item_tran.setSummary(ItemTransformer.getById(SharedPreUtil.getSharedPreInteger(SDATA_LAUNCHER_ITEM_TRAN, ItemTransformer.None.getId())).getName());
         sv_item_tran.setOnClickListener(new SetEnumOnClickListener<ItemTransformer>(getContext(), CommonData.LAUNCHER_ITEMS_TRANS) {
+            @Override
+            public String title() {
+                return "请选择首页切换动画";
+            }
+
             @Override
             public ItemTransformer getCurr() {
                 return ItemTransformer.getById(SharedPreUtil.getSharedPreInteger(SDATA_LAUNCHER_ITEM_TRAN, ItemTransformer.None.getId()));
@@ -231,6 +246,11 @@ public class SAppView extends BaseView {
         sv_plugin_theme.setSummary(ThemeMode.getById(SharedPreUtil.getSharedPreInteger(SDATA_APP_THEME, ThemeMode.SHIJIAN.getId())).getName());
         sv_plugin_theme.setOnClickListener(new SetEnumOnClickListener<ThemeMode>(getContext(), THEME_MODEL) {
             @Override
+            public String title() {
+                return "请选择主题模式";
+            }
+
+            @Override
             public ThemeMode getCurr() {
                 return ThemeMode.getById(SharedPreUtil.getSharedPreInteger(SDATA_APP_THEME, ThemeMode.SHIJIAN.getId()));
             }
@@ -246,6 +266,12 @@ public class SAppView extends BaseView {
 
         sv_plugin_select.setSummary(MusicControllerEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_MUSIC_CONTROLLER, MusicControllerEnum.SYSMUSIC.getId())).getName());
         sv_plugin_select.setOnClickListener(new SetEnumOnClickListener<MusicControllerEnum>(getContext(), CommonData.MUSIC_CONTROLLER) {
+
+            @Override
+            public String title() {
+                return "请选择音乐控制协议";
+            }
+
             @Override
             public MusicControllerEnum getCurr() {
                 return MusicControllerEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_MUSIC_CONTROLLER, MusicControllerEnum.SYSMUSIC.getId()));
@@ -273,6 +299,11 @@ public class SAppView extends BaseView {
 
         sv_console.setSummary("控制协议：" + ConsoleProtoclEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_CONSOLE_MARK, ConsoleProtoclEnum.SYSTEM.getId())).getName());
         sv_console.setOnClickListener(new SetEnumOnClickListener<ConsoleProtoclEnum>(getContext(), ALL_CONSOLES) {
+            @Override
+            public String title() {
+                return "请选择系统控制协议";
+            }
+
             @Override
             public ConsoleProtoclEnum getCurr() {
                 return ConsoleProtoclEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_CONSOLE_MARK, ConsoleProtoclEnum.SYSTEM.getId()));

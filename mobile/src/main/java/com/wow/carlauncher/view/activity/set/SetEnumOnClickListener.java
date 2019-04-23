@@ -20,6 +20,8 @@ public abstract class SetEnumOnClickListener<T extends SetEnum> implements View.
 
     public abstract void onSelect(T t);
 
+    public abstract String title();
+
     @Override
     public void onClick(View v) {
         String[] items = new String[allItem.length];
@@ -32,7 +34,7 @@ public abstract class SetEnumOnClickListener<T extends SetEnum> implements View.
         }
         final ThreadObj<Integer> obj = new ThreadObj<>(select);
 
-        AlertDialog dialog = new AlertDialog.Builder(context).setTitle("请选择插件").setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+        AlertDialog dialog = new AlertDialog.Builder(context).setTitle(title()).setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 onSelect(allItem[obj.getObj()]);

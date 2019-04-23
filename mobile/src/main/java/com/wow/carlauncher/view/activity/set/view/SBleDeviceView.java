@@ -82,6 +82,11 @@ public class SBleDeviceView extends BaseView {
         sv_obd_impl_select.setSummary("OBD使用的协议：" + ObdProtocolEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_OBD_CONTROLLER, ObdProtocolEnum.YJ_TYB.getId())).getName());
         sv_obd_impl_select.setOnClickListener(new SetEnumOnClickListener<ObdProtocolEnum>(getContext(), OBD_CONTROLLER) {
             @Override
+            public String title() {
+                return "请选择OBD使用的协议";
+            }
+
+            @Override
             public ObdProtocolEnum getCurr() {
                 return ObdProtocolEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_OBD_CONTROLLER, ObdProtocolEnum.YJ_TYB.getId()));
             }

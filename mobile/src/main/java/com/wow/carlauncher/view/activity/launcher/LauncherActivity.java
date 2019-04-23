@@ -426,21 +426,18 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
                         Manifest.permission.ACCESS_NETWORK_STATE
                 )
                 .onBeforeRequest((permission, executor) -> {
-                    System.out.println("!!!!!!!!!onBeforeRequest--" + permission);
                     new AlertDialog.Builder(LauncherActivity.this).setTitle("警告!")
                             .setNegativeButton("取消", (dialog2, which2) -> executor.cancel())
                             .setPositiveButton("确定", (dialog2, which2) -> executor.execute())
                             .setMessage("车机助手正在申请:" + anyPermission.name(permission) + " 权限").show();
                 })
                 .onBeenDenied((permission, executor) -> {
-                    System.out.println("!!!!!!!!!onBeenDenied--" + permission);
                     new AlertDialog.Builder(LauncherActivity.this).setTitle("警告!")
                             .setNegativeButton("不授权", (dialog2, which2) -> executor.cancel())
                             .setPositiveButton("重新授权", (dialog2, which2) -> executor.execute())
                             .setMessage("车机助手需要:" + anyPermission.name(permission) + " 权限才能正常运行!").show();
                 })
                 .onGoSetting((permission, executor) -> {
-                    System.out.println("!!!!!!!!!onGoSetting--" + permission);
                     new AlertDialog.Builder(LauncherActivity.this).setTitle("警告!")
                             .setNegativeButton("不授权", (dialog2, which2) -> executor.cancel())
                             .setPositiveButton("重新授权", (dialog2, which2) -> executor.execute())

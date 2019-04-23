@@ -15,6 +15,7 @@ import com.wow.carlauncher.ex.manage.appInfo.AppInfo;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.appInfo.event.MAppInfoRefreshEvent;
 import com.wow.carlauncher.view.activity.launcher.AllAppAdapter;
+import com.wow.carlauncher.view.activity.launcher.event.LItemRefreshEvent;
 import com.wow.carlauncher.view.base.BaseEXView;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -46,6 +47,13 @@ public class LAllAppView extends BaseEXView implements AdapterView.OnItemClickLi
         gridview.setAdapter(adapter);
         gridview.setOnItemClickListener(this);
         gridview.setOnItemLongClickListener(this);
+        if (gridview != null) {
+            int psize = SharedPreUtil.getSharedPreInteger(CommonData.SDATA_LAUNCHER_ITEM_NUM, 3);
+            if (psize != 3) {
+                psize = 4;
+            }
+            gridview.setNumColumns(psize);
+        }
 
         this.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
@@ -88,6 +96,17 @@ public class LAllAppView extends BaseEXView implements AdapterView.OnItemClickLi
 
             x.task().autoPost(() -> adapter.addItems(appInfos));
         });
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(LItemRefreshEvent event) {
+        if (gridview != null) {
+            int psize = SharedPreUtil.getSharedPreInteger(CommonData.SDATA_LAUNCHER_ITEM_NUM, 3);
+            if (psize != 3) {
+                psize = 4;
+            }
+            gridview.setNumColumns(psize);
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)

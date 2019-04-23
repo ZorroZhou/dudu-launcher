@@ -72,8 +72,9 @@ public class LAMapView extends BaseEXView {
         ll_xiansu.setBackgroundResource(manage.getCurrentThemeRes(R.mipmap.n_dh_quan));
         iv_moren.setImageResource(manage.getCurrentThemeRes(R.mipmap.n_dh_moren));
 
+        tv_title.setTextColor(manage.getCurrentThemeColor(R.color.l_title));
+
         manage.setTextViewsColor(this, new int[]{
-                R.id.tv_title,
                 R.id.tv_xiansu,
                 R.id.tv_text1,
                 R.id.tv_msg

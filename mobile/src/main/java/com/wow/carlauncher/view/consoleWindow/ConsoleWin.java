@@ -10,15 +10,20 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.wow.carlauncher.CarLauncherApplication;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.util.CommonUtil;
+import com.wow.carlauncher.common.util.DateUtil;
+import com.wow.carlauncher.common.util.LunarUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
+import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.musicCover.MusicCoverRefresh;
+import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventInfo;
@@ -31,13 +36,20 @@ import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
+import java.util.Calendar;
+import java.util.Date;
+
+import static com.wow.carlauncher.common.CommonData.DAY_MILL;
+import static com.wow.carlauncher.common.CommonData.MINUTE_MILL;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK1_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK2_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK3_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK4_CLASS;
 import static com.wow.carlauncher.common.CommonData.TAG;
+import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.BLACK;
+import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.WHITE;
 
-public class ConsoleWin {
+public class ConsoleWin implements ThemeManage.OnThemeChangeListener {
     private static class SingletonHolder {
         @SuppressLint("StaticFieldLeak")
         private static ConsoleWin instance = new ConsoleWin();
@@ -59,10 +71,7 @@ public class ConsoleWin {
     private Boolean isShow = false;
     private CarLauncherApplication context;
     //窗口视图
-    private View consoleWin;
-    //插件试图
-    private LinearLayout pluginHome;
-    private TextView tv_time;
+    private RelativeLayout consoleWin;
 
     public void init(CarLauncherApplication context) {
 
@@ -73,7 +82,6 @@ public class ConsoleWin {
 
         DisplayMetrics outMetrics = new DisplayMetrics();
         wm.getDefaultDisplay().getMetrics(outMetrics);
-
 
         winparams = new WindowManager.LayoutParams();
         // 类型
@@ -91,11 +99,12 @@ public class ConsoleWin {
         winparams.x = 0;
         winparams.y = 0;
 
-        consoleWin = View.inflate(context, R.layout.console_window, null);
+        consoleWin = (RelativeLayout) View.inflate(context, R.layout.console_window, null);
 
         x.view().inject(this, consoleWin);
 
-        loadDock();
+        onThemeChanged(ThemeManage.self());
+        ThemeManage.self().registerThemeChangeListener(this);
     }
 
 
@@ -112,6 +121,32 @@ public class ConsoleWin {
             isShow = false;
         }
     }
+
+    @Override
+    public void onThemeChanged(ThemeManage manage) {
+        ll_item1.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_l_item1_bg));
+        ll_item2.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_l_item1_bg));
+        ll_item3.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_l_item1_bg));
+        refreshPlay();
+        music_iv_prew.setImageResource(manage.getCurrentThemeRes(R.mipmap.ic_prev2));
+        music_iv_next.setImageResource(manage.getCurrentThemeRes(R.mipmap.ic_next2));
+
+        manage.setTextViewsColor(consoleWin, new int[]{
+                R.id.tv_app_name,
+                R.id.tv_time,
+                R.id.music_tv_title
+        }, R.color.l_text1);
+
+        loadDock();
+    }
+
+    @ViewInject(R.id.ll_item1)
+    private LinearLayout ll_item1;
+    @ViewInject(R.id.ll_item2)
+    private LinearLayout ll_item2;
+    @ViewInject(R.id.ll_item3)
+    private LinearLayout ll_item3;
+
 
     @ViewInject(R.id.iv_dock1)
     private ImageView iv_dock1;
@@ -133,6 +168,38 @@ public class ConsoleWin {
 
     @ViewInject(R.id.music_iv_cover)
     private ImageView music_iv_cover;
+
+    @ViewInject(R.id.music_iv_prew)
+    private ImageView music_iv_prew;
+
+    @ViewInject(R.id.music_iv_next)
+    private ImageView music_iv_next;
+
+    @ViewInject(R.id.tv_time)
+    private TextView tv_time;
+
+    private boolean musicRun = false;
+
+    private void refreshPlay() {
+        if (musicRun) {
+            if (ThemeManage.self().getTheme() == WHITE) {
+                music_iv_play.setImageResource(R.mipmap.ic_pause2);
+            } else if (ThemeManage.self().getTheme() == BLACK) {
+                music_iv_play.setImageResource(R.mipmap.ic_pause2_b);
+            } else {
+                music_iv_play.setImageResource(R.mipmap.ic_pause2_cb);
+            }
+        } else {
+            if (ThemeManage.self().getTheme() == WHITE) {
+                music_iv_play.setImageResource(R.mipmap.ic_play2);
+            } else if (ThemeManage.self().getTheme() == BLACK) {
+                music_iv_play.setImageResource(R.mipmap.ic_play2_b);
+            } else {
+                music_iv_play.setImageResource(R.mipmap.ic_play2_cb);
+            }
+        }
+    }
+
 
     @Event(value = {R.id.ll_dock1, R.id.ll_dock2, R.id.ll_dock3, R.id.ll_dock4, R.id.music_ll_play, R.id.music_ll_prew, R.id.music_ll_next, R.id.base})
     private void clickEvent(View v) {
@@ -265,11 +332,21 @@ public class ConsoleWin {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final PMusicEventState event) {
         if (music_iv_play != null) {
-            if (event.isRun()) {
-                music_iv_play.setImageResource(R.mipmap.ic_pause2);
-            } else {
-                music_iv_play.setImageResource(R.mipmap.ic_play2);
-            }
+            musicRun = event.isRun();
+            refreshPlay();
+        }
+    }
+
+    private long cur_min = 0;
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(MTimeSecondEvent event) {
+        long time = System.currentTimeMillis();
+        long time1 = time / MINUTE_MILL;
+        if (time1 != cur_min) {
+            cur_min = time1;
+            Date d = new Date();
+            tv_time.setText(DateUtil.dateToString(d, "yyyy年MM月dd日 HH:mm"));
         }
     }
 

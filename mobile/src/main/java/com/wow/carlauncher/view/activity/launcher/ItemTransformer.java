@@ -85,10 +85,8 @@ public enum ItemTransformer implements SetEnum {
                 return new ZoomOutSlideTransformer();
             case ZoomOut:
                 return new ZoomOutTransformer();
-
-
         }
-        return null;
+        return new DefaultTransformer();
     }
 
     public static ItemTransformer getById(Integer id) {

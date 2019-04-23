@@ -80,9 +80,6 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
 
     public static LauncherActivity activity;
 
-    @ViewInject(R.id.ll_dock)
-    private LDockView ll_dock;
-
     @ViewInject(R.id.viewPager)
     private ViewPager viewPager;
 
@@ -171,7 +168,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
         viewPager.setAdapter(new ViewAdapter(pageViews));
         viewPager.setPageTransformer(true, ItemTransformer.getById(SharedPreUtil.getSharedPreInteger(SDATA_LAUNCHER_ITEM_TRAN, ItemTransformer.None.getId())).getTransformer());
 
-        postion.loadPostion(psize);
+        postion.loadPostion(pageViews.length);
     }
 
     @Override

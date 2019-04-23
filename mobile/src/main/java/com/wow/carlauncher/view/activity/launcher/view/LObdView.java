@@ -127,7 +127,7 @@ public class LObdView extends BaseEXView {
     @Event(value = {R.id.fl_base})
     private void clickEvent(View view) {
         switch (view.getId()) {
-            case R.id.rl_base: {
+            case R.id.fl_base: {
                 if (ObdPlugin.self().notConnect()) {
                     new AlertDialog.Builder(getContext()).setTitle("警告!")
                             .setNegativeButton("取消", null)

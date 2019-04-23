@@ -87,6 +87,7 @@ public class LDockView extends BaseEXView {
                 R.id.tv_dock3,
                 R.id.tv_dock4
         }, R.color.l_text1);
+        loadDock();
     }
 
     @Override

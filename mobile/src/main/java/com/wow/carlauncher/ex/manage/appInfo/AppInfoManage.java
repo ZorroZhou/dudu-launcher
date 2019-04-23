@@ -173,10 +173,10 @@ public class AppInfoManage {
             } else {
                 switch (info.clazz) {
                     case INTERNAL_APP_DRIVING: {
-                        return ContextCompat.getDrawable(context, R.mipmap.ic_driving);
+                        return ContextCompat.getDrawable(context, ThemeManage.self().getCurrentThemeRes(R.mipmap.ic_driving));
                     }
                     case INTERNAL_APP_SETTING: {
-                        return ContextCompat.getDrawable(context, R.mipmap.app_icon_set);
+                        return ContextCompat.getDrawable(context, ThemeManage.self().getCurrentThemeRes(R.mipmap.app_icon_set));
                     }
                 }
             }

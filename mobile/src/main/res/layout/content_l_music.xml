@@ -61,8 +61,8 @@
             android:lines="1"
             android:text="音乐名称"
             android:textColor="#697380"
-            app:layout_heightPercent="10%h"
-            app:layout_marginTopPercent="4%h"
+            app:layout_heightPercent="15%h"
+            app:layout_marginTopPercent="5%h"
             app:layout_textSizePercent="7%h" />
 
         <TextView
@@ -74,7 +74,7 @@
             android:lines="1"
             android:text="作者"
             android:textColor="#7b8391"
-            app:layout_heightPercent="9%h"
+            app:layout_heightPercent="10%h"
             app:layout_textSizePercent="6%h" />
 
         <ProgressBar
@@ -88,7 +88,7 @@
             android:visibility="gone"
             app:layout_marginLeftPercent="2%h"
             app:layout_marginRightPercent="2%h"
-            app:layout_marginTopPercent="3%h" />
+            app:layout_marginTopPercent="5%h" />
 
         <com.zhy.android.percent.support.PercentLinearLayout
             android:id="@+id/ll_controller"
@@ -96,7 +96,7 @@
             android:layout_height="0dp"
             android:gravity="center"
             android:orientation="horizontal"
-            app:layout_heightPercent="18%h"
+            app:layout_heightPercent="20%h"
             app:layout_marginTopPercent="5%h">
 
             <LinearLayout

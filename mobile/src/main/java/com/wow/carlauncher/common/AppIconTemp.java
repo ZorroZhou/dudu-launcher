@@ -49,7 +49,7 @@ public class AppIconTemp {
         //安卓设置
         putIcon("com.android.settings", R.mipmap.app_icon_set);
         //浏览器
-        putIcon("com.android.browser", R.mipmap.app1_icon_browser);
+        putIcon("com.android.browser", R.mipmap.app_icon_browser);
     }
 
     public static void icon1() {

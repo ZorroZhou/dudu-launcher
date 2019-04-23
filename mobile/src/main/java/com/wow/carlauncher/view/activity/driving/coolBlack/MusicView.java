@@ -91,9 +91,9 @@ public class MusicView extends BaseEXView {
     public void onEventMainThread(final PMusicEventState event) {
         if (music_iv_play != null) {
             if (event.isRun()) {
-                music_iv_play.setImageResource(R.mipmap.ic_pause2);
+                music_iv_play.setImageResource(R.mipmap.ic_pause2_b);
             } else {
-                music_iv_play.setImageResource(R.mipmap.ic_play2);
+                music_iv_play.setImageResource(R.mipmap.ic_play2_b);
             }
         }
     }

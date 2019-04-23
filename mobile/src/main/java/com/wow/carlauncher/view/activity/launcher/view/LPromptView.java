@@ -29,11 +29,13 @@ import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarTp;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventConnect;
 import com.wow.carlauncher.view.activity.AppMenuActivity;
 import com.wow.carlauncher.view.activity.CarInfoActivity;
+import com.wow.carlauncher.view.activity.launcher.event.LItemToFristEvent;
 import com.wow.carlauncher.view.activity.set.SetActivity;
 import com.wow.carlauncher.view.base.BaseEXView;
 import com.wow.carlauncher.view.consoleWindow.ConsoleWin;
 import com.wow.carlauncher.view.event.EventWifiState;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.view.annotation.Event;
@@ -129,7 +131,7 @@ public class LPromptView extends BaseEXView {
                 break;
             }
             case R.id.rl_home: {
-                getActivity().startActivity(new Intent(getContext(), AppMenuActivity.class));
+                EventBus.getDefault().post(new LItemToFristEvent());
                 break;
             }
             case R.id.tv_time: {

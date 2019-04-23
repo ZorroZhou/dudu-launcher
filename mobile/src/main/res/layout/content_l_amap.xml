@@ -202,6 +202,12 @@
             </com.zhy.android.percent.support.PercentRelativeLayout>
         </FrameLayout>
 
+        <View
+            android:id="@+id/line7"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/fl_navinfo_root" />
+
         <com.zhy.android.percent.support.PercentLinearLayout
             android:id="@+id/ll_xiansu"
             android:layout_width="0dp"

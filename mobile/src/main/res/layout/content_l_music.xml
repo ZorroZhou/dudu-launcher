@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.zhy.android.percent.support.PercentFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.zhy.android.percent.support.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rl_base"
@@ -7,30 +7,41 @@
     android:layout_height="match_parent"
     tools:ignore="HardcodedText,RtlHardcoded">
 
+    <com.zhy.android.percent.support.PercentFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_heightPercent="12%h">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:lines="1"
+            android:text="音乐"
+            app:layout_marginLeftPercent="25%h"
+            app:layout_marginRightPercent="25%h"
+            app:layout_textSizePercent="50%h" />
+    </com.zhy.android.percent.support.PercentFrameLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar2"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_alignParentBottom="true"
+        android:indeterminate="false"
+        android:max="100"
+        android:progress="0" />
+
     <com.zhy.android.percent.support.PercentLinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         app:layout_marginLeftPercent="2%h"
-        app:layout_marginRightPercent="2%h">
-
-        <com.zhy.android.percent.support.PercentFrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_heightPercent="12%h">
-
-            <TextView
-                android:id="@+id/tv_title"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:includeFontPadding="false"
-                android:lines="1"
-                android:text="音乐"
-                app:layout_textSizePercent="50%h" />
-        </com.zhy.android.percent.support.PercentFrameLayout>
+        app:layout_marginRightPercent="2%h"
+        app:layout_marginTopPercent="12%h">
 
         <com.zhy.android.percent.support.PercentRelativeLayout
             android:layout_width="match_parent"
@@ -145,4 +156,5 @@
             </LinearLayout>
         </com.zhy.android.percent.support.PercentLinearLayout>
     </com.zhy.android.percent.support.PercentLinearLayout>
-</com.zhy.android.percent.support.PercentFrameLayout>
+
+</com.zhy.android.percent.support.PercentRelativeLayout>

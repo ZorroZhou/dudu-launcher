@@ -31,6 +31,7 @@ import com.wow.carlauncher.ex.plugin.fk.event.PFkEventAction;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import com.wow.carlauncher.view.activity.AppSelectActivity;
 import com.wow.carlauncher.view.activity.launcher.event.LItemRefreshEvent;
+import com.wow.carlauncher.view.activity.launcher.event.LItemToFristEvent;
 import com.wow.carlauncher.view.activity.launcher.view.LAllAppView;
 import com.wow.carlauncher.view.activity.launcher.view.LDockView;
 import com.wow.carlauncher.view.activity.launcher.view.LPageView;
@@ -299,6 +300,11 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(LItemRefreshEvent event) {
         initItem();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(LItemToFristEvent event) {
+        viewPager.setCurrentItem(0, true);
     }
 
     @Override

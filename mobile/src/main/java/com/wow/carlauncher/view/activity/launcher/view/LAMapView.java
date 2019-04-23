@@ -82,6 +82,7 @@ public class LAMapView extends BaseEXView {
         //横线
         manage.setViewsBackround(this, new int[]{
                 R.id.line1,
+                R.id.line7,
                 R.id.line4
         }, R.drawable.n_line2);
 
@@ -114,6 +115,7 @@ public class LAMapView extends BaseEXView {
             tv_title.setGravity(Gravity.CENTER);
             fl_navinfo_root.addView(LShadowView.getShadowView(getContext(), rl_navinfo, FIVE), MATCH_PARENT, MATCH_PARENT);
 
+            line7.setVisibility(GONE);
         } else {
             tv_title.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
 
@@ -122,6 +124,8 @@ public class LAMapView extends BaseEXView {
             params.setMargins(margin, margin, margin, margin);
 
             fl_navinfo_root.addView(rl_navinfo, params);
+
+            line7.setVisibility(VISIBLE);
         }
     }
 
@@ -135,6 +139,9 @@ public class LAMapView extends BaseEXView {
 
     @ViewInject(R.id.rl_base)
     private View rl_base;
+
+    @ViewInject(R.id.line7)
+    private View line7;
 
     @ViewInject(R.id.rl_navinfo)
     private View rl_navinfo;

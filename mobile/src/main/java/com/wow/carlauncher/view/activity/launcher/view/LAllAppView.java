@@ -8,18 +8,24 @@ import android.widget.GridView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
+import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfo;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
+import com.wow.carlauncher.ex.manage.appInfo.event.MAppInfoRefreshEvent;
 import com.wow.carlauncher.view.activity.launcher.AllAppAdapter;
 import com.wow.carlauncher.view.base.BaseEXView;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.wow.carlauncher.common.CommonData.*;
 
 public class LAllAppView extends BaseEXView implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
     public LAllAppView(Context context) {
@@ -61,22 +67,32 @@ public class LAllAppView extends BaseEXView implements AdapterView.OnItemClickLi
         x.task().run(() -> {
             adapter.clear();
             final List<AppInfo> appInfos = new ArrayList<>(AppInfoManage.self().getAllAppInfos());
+
+            String packname1 = SharedPreUtil.getSharedPreString(SDATA_DOCK1_CLASS);
+            String packname2 = SharedPreUtil.getSharedPreString(SDATA_DOCK2_CLASS);
+            String packname3 = SharedPreUtil.getSharedPreString(SDATA_DOCK3_CLASS);
+            String packname4 = SharedPreUtil.getSharedPreString(SDATA_DOCK4_CLASS);
+
             String selectapp = SharedPreUtil.getSharedPreString(CommonData.SDATA_HIDE_APPS);
             List<AppInfo> hides = new ArrayList<>();
             for (AppInfo appInfo : appInfos) {
-                if (selectapp.contains("[" + appInfo.clazz + "]")) {
+                if (selectapp.contains("[" + appInfo.clazz + "]")
+                        || (CommonUtil.isNotNull(packname1) && packname1.contains(appInfo.clazz))
+                        || (CommonUtil.isNotNull(packname2) && packname2.contains(appInfo.clazz))
+                        || (CommonUtil.isNotNull(packname3) && packname3.contains(appInfo.clazz))
+                        || (CommonUtil.isNotNull(packname4) && packname4.contains(appInfo.clazz))) {
                     hides.add(appInfo);
                 }
             }
             appInfos.removeAll(hides);
 
-            x.task().autoPost(new Runnable() {
-                @Override
-                public void run() {
-                    adapter.addItems(appInfos);
-                }
-            });
+            x.task().autoPost(() -> adapter.addItems(appInfos));
         });
+    }
+
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void onEvent(final MAppInfoRefreshEvent event) {
+        loadData();
     }
 
     @ViewInject(R.id.gridview)

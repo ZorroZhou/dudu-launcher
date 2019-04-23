@@ -76,9 +76,8 @@
                 android:contentDescription="@string/app_name"
                 android:scaleType="fitCenter"
                 android:src="@mipmap/n_weather_weizhi_cb"
-                app:layout_heightPercent="90%h"
-                app:layout_marginPercent="5%h"
-                app:layout_widthPercent="90%h" />
+                app:layout_heightPercent="100%h"
+                app:layout_widthPercent="100%h" />
 
         </com.zhy.android.percent.support.PercentRelativeLayout>
 

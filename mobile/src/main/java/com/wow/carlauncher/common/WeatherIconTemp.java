@@ -99,22 +99,22 @@ public class WeatherIconTemp {
                 if (!isNight()) {
                     return R.mipmap.n_weather_q_cb;
                 } else {
-                    return R.mipmap.n_weather_q_cb;
+                    return R.mipmap.n_weather_q_n_cb;
                 }
             } else if (paramString.equals("多云")) {
                 if (!isNight()) {
-                    return R.mipmap.n_weather_yin_cb;
+                    return R.mipmap.n_weather_duoyun_cb;
                 } else {
-                    return R.mipmap.n_weather_yin_cb;
+                    return R.mipmap.n_weather_duoyun_n_cb;
                 }
             } else if (paramString.equals("阴")) {
                 return R.mipmap.n_weather_yin_cb;
             } else if (paramString.equals("阵雨")) {
                 return R.mipmap.n_weather_xy_cb;
             } else if (paramString.equals("雷阵雨")) {
-                return R.mipmap.n_weather_lei_cb;
+                return R.mipmap.n_weather_leizhenyu_cb;
             } else if (paramString.equals("雷阵雨伴有冰雹")) {
-                return R.mipmap.n_weather_lei_cb;
+                return R.mipmap.n_weather_leibanbingbao_cb;
             } else if (paramString.equals("雨夹雪")) {
                 return R.mipmap.n_weather_xx_cb;
             } else if (paramString.equals("小雨")) {
@@ -122,55 +122,59 @@ public class WeatherIconTemp {
             } else if (paramString.equals("中雨")) {
                 return R.mipmap.n_weather_zy_cb;
             } else if (paramString.equals("大雨")) {
-                return R.mipmap.n_weather_zy_cb;
+                return R.mipmap.n_weather_dy_cb;
             } else if (paramString.equals("暴雨")) {
-                return R.mipmap.n_weather_zy_cb;
+                return R.mipmap.n_weather_by_cb;
             } else if (paramString.equals("大暴雨")) {
-                return R.mipmap.n_weather_zy_cb;
+                return R.mipmap.n_weather_dby_cb;
             } else if (paramString.equals("特大暴雨")) {
-                return R.mipmap.n_weather_zy_cb;
+                return R.mipmap.n_weather_tdby_cb;
             } else if (paramString.equals("阵雪")) {
-                return R.mipmap.n_weather_xx_cb;
+                if (!isNight()) {
+                    return R.mipmap.n_weather_zhenxue_cb;
+                } else {
+                    return R.mipmap.n_weather_zhenxue_n_cb;
+                }
             } else if (paramString.equals("小雪")) {
                 return R.mipmap.n_weather_xx_cb;
             } else if (paramString.equals("中雪")) {
                 return R.mipmap.n_weather_zx_cb;
             } else if (paramString.equals("大雪")) {
-                return R.mipmap.n_weather_zx_cb;
+                return R.mipmap.n_weather_dx_cb;
             } else if (paramString.equals("暴雪")) {
-                return R.mipmap.n_weather_zx_cb;
+                return R.mipmap.n_weather_bx_cb;
             } else if (paramString.equals("雾")) {
-                return R.mipmap.n_weather_wu;
+                return R.mipmap.n_weather_wu_cb;
             } else if (paramString.equals("冻雨")) {
-                return R.mipmap.n_weather_xy_cb;
+                return R.mipmap.n_weather_yujiaxue_cb;
             } else if (paramString.equals("小雨-中雨")) {
                 return R.mipmap.n_weather_zy_cb;
             } else if (paramString.equals("中雨-大雨")) {
-                return R.mipmap.n_weather_zy_cb;
+                return R.mipmap.n_weather_dy_cb;
             } else if (paramString.equals("大雨-暴雨")) {
-                return R.mipmap.n_weather_dy_cb;
+                return R.mipmap.n_weather_by_cb;
             } else if (paramString.equals("暴雨-大暴雨")) {
-                return R.mipmap.n_weather_dy_cb;
+                return R.mipmap.n_weather_dby_cb;
             } else if (paramString.equals("大暴雨-特大暴雨")) {
-                return R.mipmap.n_weather_dy_cb;
+                return R.mipmap.n_weather_tdby_cb;
             } else if (paramString.equals("小雪-中雪")) {
-                return R.mipmap.n_weather_xx_cb;
+                return R.mipmap.n_weather_zx_cb;
             } else if (paramString.equals("中雪-大雪")) {
-                return R.mipmap.n_weather_zx_cb;
+                return R.mipmap.n_weather_dx_cb;
             } else if (paramString.equals("大雪-暴雪")) {
-                return R.mipmap.n_weather_zx_cb;
+                return R.mipmap.n_weather_bx_cb;
             } else if (paramString.equals("沙尘暴")) {
-                return R.mipmap.n_weather_sha;
+                return R.mipmap.n_weather_shachenbao_cb;
             } else if (paramString.equals("浮沉")) {
-                return R.mipmap.n_weather_mai;
+                return R.mipmap.n_weather_fuchen_cb;
             } else if (paramString.equals("扬沙")) {
-                return R.mipmap.n_weather_sha;
+                return R.mipmap.n_weather_yangsha_cb;
             } else if (paramString.equals("强沙尘暴")) {
-                return R.mipmap.n_weather_sha;
+                return R.mipmap.n_weather_qiangshachenbao_cb;
             } else if (paramString.equals("轻雾")) {
-                return R.mipmap.n_weather_wu;
+                return R.mipmap.n_weather_wu_cb;
             } else if (paramString.equals("霾")) {
-                return R.mipmap.n_weather_mai;
+                return R.mipmap.n_weather_mai_cb;
             }
             return R.mipmap.n_weather_weizhi_cb;
         }

@@ -26,9 +26,11 @@ import com.wow.carlauncher.ex.plugin.music.MusicControllerEnum;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import com.wow.carlauncher.view.activity.launcher.ItemEnum;
 import com.wow.carlauncher.view.activity.launcher.ItemModel;
+import com.wow.carlauncher.view.activity.launcher.ItemTransformer;
 import com.wow.carlauncher.view.activity.launcher.event.LCityRefreshEvent;
 import com.wow.carlauncher.view.activity.launcher.event.LDockLabelShowChangeEvent;
 import com.wow.carlauncher.view.activity.launcher.event.LItemRefreshEvent;
+import com.wow.carlauncher.view.activity.launcher.event.LPageTransformerChangeEvent;
 import com.wow.carlauncher.view.activity.set.LauncherItemAdapter;
 import com.wow.carlauncher.view.activity.set.SetAppMultipleSelectOnClickListener;
 import com.wow.carlauncher.view.activity.set.SetAppSingleSelectOnClickListener;
@@ -44,6 +46,7 @@ import java.util.List;
 
 import static com.wow.carlauncher.common.CommonData.SDATA_APP_THEME;
 import static com.wow.carlauncher.common.CommonData.SDATA_CONSOLE_MARK;
+import static com.wow.carlauncher.common.CommonData.SDATA_LAUNCHER_ITEM_TRAN;
 import static com.wow.carlauncher.common.CommonData.SDATA_MUSIC_CONTROLLER;
 import static com.wow.carlauncher.common.CommonData.SDATA_TIME_PLUGIN_OPEN_APP;
 
@@ -104,10 +107,29 @@ public class SAppView extends BaseView {
     @ViewInject(R.id.sv_key_listener)
     private SetView sv_key_listener;
 
+    @ViewInject(R.id.sv_item_tran)
+    private SetView sv_item_tran;
+
     private boolean showKey;
 
     @Override
     protected void initView() {
+        sv_item_tran.setSummary(ItemTransformer.getById(SharedPreUtil.getSharedPreInteger(SDATA_LAUNCHER_ITEM_TRAN, ItemTransformer.None.getId())).getName());
+        sv_item_tran.setOnClickListener(new SetEnumOnClickListener<ItemTransformer>(getContext(), CommonData.LAUNCHER_ITEMS_TRANS) {
+            @Override
+            public ItemTransformer getCurr() {
+                return ItemTransformer.getById(SharedPreUtil.getSharedPreInteger(SDATA_LAUNCHER_ITEM_TRAN, ItemTransformer.None.getId()));
+            }
+
+            @Override
+            public void onSelect(ItemTransformer setEnum) {
+                SharedPreUtil.saveSharedPreInteger(SDATA_LAUNCHER_ITEM_TRAN, setEnum.getId());
+                sv_plugin_select.setSummary(setEnum.getName());
+                EventBus.getDefault().post(new LPageTransformerChangeEvent());
+            }
+        });
+
+
         sv_key_listener.setOnClickListener(v -> {
             showKey = true;
             new AlertDialog.Builder(getContext()).setTitle("开启").setOnDismissListener(new DialogInterface.OnDismissListener() {
@@ -126,10 +148,10 @@ public class SAppView extends BaseView {
         sv_launcher_item_num.setOnClickListener(v -> {
             int select = SharedPreUtil.getSharedPreInteger(CommonData.SDATA_LAUNCHER_ITEM_NUM, 3) - 3;
             final ThreadObj<Integer> obj = new ThreadObj<>(select);
-            AlertDialog dialog = new AlertDialog.Builder(getContext()).setTitle("请选择首页的插件数量").setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            new AlertDialog.Builder(getContext()).setTitle("请选择首页的插件数量").setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    AlertDialog queren = new AlertDialog.Builder(getContext()).setTitle("警告!").setNegativeButton("取消", null).setPositiveButton("确定", (dialog2, which2) -> {
+                    new AlertDialog.Builder(getContext()).setTitle("警告!").setNegativeButton("取消", null).setPositiveButton("确定", (dialog2, which2) -> {
                         SharedPreUtil.saveSharedPreInteger(CommonData.SDATA_LAUNCHER_ITEM_NUM, obj.getObj() + 3);
                         sv_launcher_item_num.setSummary(itemsNum[obj.getObj()]);
                         EventBus.getDefault().post(new LItemRefreshEvent());

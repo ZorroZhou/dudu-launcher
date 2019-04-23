@@ -3,9 +3,31 @@ package com.wow.carlauncher.common;
 import com.wow.carlauncher.ex.plugin.music.MusicControllerEnum;
 import com.wow.carlauncher.ex.plugin.obd.ObdProtocolEnum;
 import com.wow.carlauncher.view.activity.launcher.ItemEnum;
+import com.wow.carlauncher.view.activity.launcher.ItemTransformer;
 
 public class CommonData {
     public static final String TAG = "WOW_CAR";
+    //所有的桌面插件
+    public static final ItemTransformer[] LAUNCHER_ITEMS_TRANS = {
+            ItemTransformer.None,
+            ItemTransformer.BackgroundToForeground,
+            ItemTransformer.Accordion,
+            ItemTransformer.CubeIn,
+            ItemTransformer.CubeOut,
+            ItemTransformer.DepthPage,
+            ItemTransformer.Drawer,
+            ItemTransformer.FlipHorizontal,
+            ItemTransformer.FlipVertical,
+            ItemTransformer.ForegroundToBackground,
+            ItemTransformer.RotateDown,
+            ItemTransformer.RotateUp,
+            ItemTransformer.ScaleInOut,
+            ItemTransformer.Stack,
+            ItemTransformer.Tablet,
+            ItemTransformer.ZoomIn,
+            ItemTransformer.ZoomOutSlide,
+            ItemTransformer.ZoomOut,
+    };
     //所有的桌面插件
     public static final ItemEnum[] LAUNCHER_ITEMS = {
             ItemEnum.AMAP,
@@ -135,4 +157,6 @@ public class CommonData {
     public static final String SDATA_LAUNCHER_ITEM_SORT_ = "SDATA_LAUNCHER_ITEM_SORT_";
     public static final String SDATA_LAUNCHER_ITEM_OPEN_ = "SDATA_LAUNCHER_ITEM_OPEN_";
     public static final String SDATA_LAUNCHER_ITEM_NUM = "SDATA_LAUNCHER_ITEM_NUM";
+
+    public static final String SDATA_LAUNCHER_ITEM_TRAN = "SDATA_LAUNCHER_ITEM_TRAN";
 }

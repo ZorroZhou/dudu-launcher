@@ -28,6 +28,16 @@
     <View style="@style/Interval" />
 
     <com.wow.carlauncher.common.view.SetView
+        android:id="@+id/sv_item_tran"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        st:summary="未选择"
+        st:titleEx="首页切换动画"
+        st:type="buttonB" />
+
+    <View style="@style/Interval" />
+
+    <com.wow.carlauncher.common.view.SetView
         android:id="@+id/sv_launcher_item_sort"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

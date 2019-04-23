@@ -138,7 +138,7 @@ public class AppContext {
                     home.addCategory(Intent.CATEGORY_HOME);
                     home.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     application.startActivity(home);
-                }, SharedPreUtil.getSharedPreInteger(CommonData.SDATA_APP_AUTO_OPEN_BACK, 5) * 1000);
+                }, SharedPreUtil.getSharedPreInteger(CommonData.SDATA_APP_AUTO_OPEN_BACK, CommonData.SDATA_APP_AUTO_OPEN_BACK_DF) * 1000);
             } else {
                 Log.e(TAG, "不唤醒其他APP");
             }

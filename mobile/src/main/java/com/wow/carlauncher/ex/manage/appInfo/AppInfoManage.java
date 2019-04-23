@@ -61,14 +61,11 @@ public class AppInfoManage {
 
     public List<AppInfo> getAllAppInfos() {
         List<AppInfo> list = new ArrayList<>(appInfos.values());
-        Collections.sort(list, new Comparator<AppInfo>() {
-            @Override
-            public int compare(AppInfo appInfo1, AppInfo appInfo2) {
-                if (appInfo1.appMark < appInfo2.appMark) {
-                    return 1;
-                } else {
-                    return -1;
-                }
+        Collections.sort(list, (appInfo1, appInfo2) -> {
+            if (appInfo1.appMark < appInfo2.appMark) {
+                return 1;
+            } else {
+                return -1;
             }
         });
         return list;
@@ -108,12 +105,9 @@ public class AppInfoManage {
     }
 
     public void refreshAppInfo(final boolean refresh) {
-        x.task().run(new Runnable() {
-            @Override
-            public void run() {
-                loadAllApp(refresh);
-                EventBus.getDefault().post(new MAppInfoRefreshEvent());
-            }
+        x.task().run(() -> {
+            loadAllApp(refresh);
+            EventBus.getDefault().post(new MAppInfoRefreshEvent());
         });
     }
 

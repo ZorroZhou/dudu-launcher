@@ -1,6 +1,9 @@
 package com.wow.carlauncher.view.activity.launcher.view;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
@@ -125,6 +128,25 @@ public class LAllAppView extends BaseEXView implements AdapterView.OnItemClickLi
 
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        return false;
+        final AppInfo info = adapter.getItem(position);
+        if (info.appMark == AppInfo.MARK_OTHER_APP) {
+            final AlertDialog dialog = new AlertDialog.Builder(getContext()).setView(R.layout.dialog_menu_all_app).show();
+            dialog.findViewById(R.id.run).setOnClickListener(v -> {
+                dialog.dismiss();
+                AppInfoManage.self().openApp(info.appMark + CommonData.CONSTANT_APP_PACKAGE_SEPARATE + info.clazz);
+            });
+            dialog.findViewById(R.id.un).setOnClickListener(v -> {
+                dialog.dismiss();
+                un(info);
+            });
+        }
+        return true;
+    }
+
+    private void un(AppInfo info) {
+        Intent deleteIntent = new Intent();
+        deleteIntent.setAction(Intent.ACTION_DELETE);
+        deleteIntent.setData(Uri.parse("package:" + info.clazz));
+        getContext().startActivity(deleteIntent);
     }
 }

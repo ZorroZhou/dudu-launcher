@@ -94,17 +94,17 @@ public class SLoadAppView extends BaseView {
             String[] items = {
                     "1秒", "2秒", "3秒", "4秒", "5秒", "6秒", "7秒", "8秒", "9秒", "10秒"
             };
-            int select = SharedPreUtil.getSharedPreInteger(CommonData.SDATA_APP_AUTO_OPEN_BACK, 5) - 1;
+            int select = SharedPreUtil.getSharedPreInteger(CommonData.SDATA_APP_AUTO_OPEN_BACK, CommonData.SDATA_APP_AUTO_OPEN_BACK_DF) - 1;
             final ThreadObj<Integer> obj = new ThreadObj<>(select);
             AlertDialog dialog = new AlertDialog.Builder(getContext()).setTitle("请选择APP").setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     SharedPreUtil.saveSharedPreInteger(CommonData.SDATA_APP_AUTO_OPEN_BACK, obj.getObj() + 1);
-                    sv_back_yanchi.setSummary(SharedPreUtil.getSharedPreInteger(CommonData.SDATA_APP_AUTO_OPEN_BACK, 5) + "秒");
+                    sv_back_yanchi.setSummary(SharedPreUtil.getSharedPreInteger(CommonData.SDATA_APP_AUTO_OPEN_BACK, CommonData.SDATA_APP_AUTO_OPEN_BACK_DF) + "秒");
                 }
             }).setSingleChoiceItems(items, select, (dialog1, which) -> obj.setObj(which)).show();
         });
-        sv_back_yanchi.setSummary(SharedPreUtil.getSharedPreInteger(CommonData.SDATA_APP_AUTO_OPEN_BACK, 5) + "秒");
+        sv_back_yanchi.setSummary(SharedPreUtil.getSharedPreInteger(CommonData.SDATA_APP_AUTO_OPEN_BACK, CommonData.SDATA_APP_AUTO_OPEN_BACK_DF) + "秒");
     }
 
     private void setSTitle(String key, SetView setView) {

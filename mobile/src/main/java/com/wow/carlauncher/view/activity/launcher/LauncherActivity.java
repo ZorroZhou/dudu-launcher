@@ -32,6 +32,7 @@ import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import com.wow.carlauncher.view.activity.AppSelectActivity;
 import com.wow.carlauncher.view.activity.launcher.event.LItemRefreshEvent;
 import com.wow.carlauncher.view.activity.launcher.event.LItemToFristEvent;
+import com.wow.carlauncher.view.activity.launcher.event.LPageTransformerChangeEvent;
 import com.wow.carlauncher.view.activity.launcher.view.LAllAppView;
 import com.wow.carlauncher.view.activity.launcher.view.LDockView;
 import com.wow.carlauncher.view.activity.launcher.view.LPageView;
@@ -64,6 +65,7 @@ import static com.wow.carlauncher.common.CommonData.SDATA_DOCK2_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK3_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK4_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK5_CLASS;
+import static com.wow.carlauncher.common.CommonData.SDATA_LAUNCHER_ITEM_TRAN;
 import static com.wow.carlauncher.ex.plugin.fk.FangkongProtocolEnum.YLFK;
 import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.CENTER_CLICK;
 import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.CENTER_LONG_CLICK;
@@ -119,12 +121,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
 
         EventBus.getDefault().register(this);
         initItem();
-        x.task().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                requestRuntime();
-            }
-        }, 2000);
+        x.task().postDelayed(() -> requestRuntime(), 2000);
     }
 
     private void initItem() {
@@ -171,7 +168,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
 
         viewPager.setAdapter(new ViewAdapter(pageViews));
         viewPager.clearOnPageChangeListeners();
-        viewPager.setPageTransformer(true, new BackgroundToForegroundTransformer());
+        viewPager.setPageTransformer(true, ItemTransformer.getById(SharedPreUtil.getSharedPreInteger(SDATA_LAUNCHER_ITEM_TRAN, ItemTransformer.None.getId())).getTransformer());
 
         postion.removeAllViews();
 
@@ -321,6 +318,12 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
             ToastManage.self().show("定位成功:" + event.getCity());
         }
     }
+
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void onEvent(LPageTransformerChangeEvent event) {
+        viewPager.setPageTransformer(true, ItemTransformer.getById(SharedPreUtil.getSharedPreInteger(SDATA_LAUNCHER_ITEM_TRAN, ItemTransformer.None.getId())).getTransformer());
+    }
+
 
     private boolean isCalling = false;
 

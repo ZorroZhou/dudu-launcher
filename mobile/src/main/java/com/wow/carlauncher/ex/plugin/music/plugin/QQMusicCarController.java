@@ -32,6 +32,8 @@ public class QQMusicCarController extends MusicController {
     private static final int WE_DRIVE_PRE = 2;
     private static final int WE_DRIVE_RESUME = 0;
 
+    private static final int CHECK_TIME = 10;
+
     private Gson gson;
 
     public void init(Context context, MusicPlugin musicView) {
@@ -92,12 +94,12 @@ public class QQMusicCarController extends MusicController {
         return "com.tencent.qqmusiccar";
     }
 
-    private int index = 2;
+    private int index = CHECK_TIME;
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void onEvent(final MTimeSecondEvent event) {
         index++;
-        if (index > 2) {
+        if (index > CHECK_TIME) {
             index = 1;
             refreshInfo();
         }

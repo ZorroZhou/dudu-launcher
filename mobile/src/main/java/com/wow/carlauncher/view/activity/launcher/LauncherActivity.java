@@ -36,6 +36,7 @@ import com.wow.carlauncher.view.activity.launcher.event.LPageTransformerChangeEv
 import com.wow.carlauncher.view.activity.launcher.view.LAllAppView;
 import com.wow.carlauncher.view.activity.launcher.view.LDockView;
 import com.wow.carlauncher.view.activity.launcher.view.LPageView;
+import com.wow.carlauncher.view.activity.launcher.view.LPagerPostion;
 import com.wow.carlauncher.view.consoleWindow.ConsoleWin;
 
 import org.greenrobot.eventbus.EventBus;
@@ -86,14 +87,14 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
     @ViewInject(R.id.viewPager)
     private ViewPager viewPager;
 
-    @ViewInject(R.id.postion)
-    private LinearLayout postion;
-
     @ViewInject(R.id.fl_bg)
     private View fl_bg;
 
     @ViewInject(R.id.line1)
     private View line1;
+
+    @ViewInject(R.id.postion)
+    private LPagerPostion postion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,10 +119,12 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
     public void initView() {
         setContentView(R.layout.activity_lanncher);
         x.view().inject(this);
+        System.out.println(postion + "   !!!!");
+        viewPager.addOnPageChangeListener(postion);
 
         EventBus.getDefault().register(this);
         initItem();
-        x.task().postDelayed(() -> requestRuntime(), 2000);
+        x.task().postDelayed(this::requestRuntime, 2000);
     }
 
     private void initItem() {
@@ -167,45 +170,9 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
         pageViews[pageViews.length - 1] = new LAllAppView(this);
 
         viewPager.setAdapter(new ViewAdapter(pageViews));
-        viewPager.clearOnPageChangeListeners();
         viewPager.setPageTransformer(true, ItemTransformer.getById(SharedPreUtil.getSharedPreInteger(SDATA_LAUNCHER_ITEM_TRAN, ItemTransformer.None.getId())).getTransformer());
 
-        postion.removeAllViews();
-
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewUtils.dip2px(getApplicationContext(), 8), ViewUtils.dip2px(getApplicationContext(), 8));
-        //设置小圆点左右之间的间隔
-        params.setMargins(10, 0, 10, 0);
-
-        //根据主题处理小圆点
-        final View[] posts = new View[pageViews.length];
-        for (int i = 0; i < posts.length; i++) {
-            posts[i] = new View(getApplicationContext());
-            if (i == 0) {
-                posts[i].setBackgroundResource(R.drawable.n_l_postion);
-            } else {
-                posts[i].setBackgroundResource(R.drawable.n_l_postion_n);
-            }
-            postion.addView(posts[i], params);
-        }
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int i, float v, int i1) {
-
-            }
-
-            @Override
-            public void onPageSelected(int i) {
-                for (View post : posts) {
-                    post.setBackgroundResource(R.drawable.n_l_postion_n);
-                }
-                posts[i].setBackgroundResource(R.drawable.n_l_postion);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int i) {
-
-            }
-        });
+        postion.loadPostion(psize);
     }
 
     @Override

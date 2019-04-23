@@ -7,6 +7,9 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.wow.carlauncher.R;
+import com.wow.carlauncher.view.activity.launcher.view.LPagerPostion;
+
 import org.xutils.x;
 
 /**
@@ -25,9 +28,9 @@ public abstract class BaseView extends FrameLayout {
     }
 
     private void startInit() {
-        View amapView = View.inflate(getContext(), getContent(), null);
-        this.addView(amapView, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-        x.view().inject(this);
+        View view = View.inflate(getContext(), getContent(), null);
+        this.addView(view, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+        x.view().inject(this, view);
         initView();
     }
 

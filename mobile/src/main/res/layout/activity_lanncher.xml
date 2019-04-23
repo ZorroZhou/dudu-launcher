@@ -41,7 +41,7 @@
                 app:layout_marginRightPercent="2%h"
                 app:layout_marginTopPercent="2%h" />
 
-            <LinearLayout
+            <com.wow.carlauncher.view.activity.launcher.view.LPagerPostion
                 android:id="@+id/postion"
                 android:layout_width="match_parent"
                 android:layout_height="15dp"

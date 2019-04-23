@@ -48,7 +48,7 @@
             android:layout_alignParentBottom="true"
             android:gravity="center"
             android:orientation="vertical"
-            app:layout_heightPercent="13%h">
+            app:layout_heightPercent="15%h">
 
             <View
                 android:id="@+id/line1"
@@ -244,7 +244,7 @@
             android:layout_alignParentBottom="true"
             android:gravity="center"
             android:orientation="vertical"
-            app:layout_heightPercent="13%h">
+            app:layout_heightPercent="15%h">
 
             <View
                 android:id="@+id/line4"

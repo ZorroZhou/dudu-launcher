@@ -72,8 +72,8 @@ public class LMusicView extends BaseEXView {
                                 lp.width = ll_play.getHeight();
                                 lp.height = ll_play.getHeight();
                             } else {
-                                lp.width = (int) (ll_play.getHeight() * 0.5);
-                                lp.height = (int) (ll_play.getHeight() * 0.5);
+                                lp.width = (int) (ll_play.getHeight() * 0.55);
+                                lp.height = (int) (ll_play.getHeight() * 0.55);
                             }
                             iv_play.setLayoutParams(lp);
                         }

@@ -2,7 +2,9 @@ package com.wow.carlauncher.view.consoleWindow;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.PixelFormat;
+import android.support.v7.app.AlertDialog;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
@@ -25,6 +27,8 @@ import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.musicCover.MusicCoverRefresh;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
+import com.wow.carlauncher.ex.plugin.console.ConsolePlugin;
+import com.wow.carlauncher.ex.plugin.fk.event.PFkEventAction;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventInfo;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventState;
@@ -39,6 +43,9 @@ import org.xutils.x;
 import java.util.Calendar;
 import java.util.Date;
 
+import per.goweii.anypermission.AnyPermission;
+import per.goweii.anypermission.RequestListener;
+
 import static com.wow.carlauncher.common.CommonData.DAY_MILL;
 import static com.wow.carlauncher.common.CommonData.MINUTE_MILL;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK1_CLASS;
@@ -48,6 +55,15 @@ import static com.wow.carlauncher.common.CommonData.SDATA_DOCK4_CLASS;
 import static com.wow.carlauncher.common.CommonData.TAG;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.BLACK;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.WHITE;
+import static com.wow.carlauncher.ex.plugin.fk.FangkongProtocolEnum.YLFK;
+import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.CENTER_CLICK;
+import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.CENTER_LONG_CLICK;
+import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.LEFT_BOTTOM_CLICK;
+import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.LEFT_TOP_CLICK;
+import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.LEFT_TOP_LONG_CLICK;
+import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.RIGHT_BOTTOM_CLICK;
+import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.RIGHT_TOP_CLICK;
+import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.RIGHT_TOP_LONG_CLICK;
 
 public class ConsoleWin implements ThemeManage.OnThemeChangeListener {
     private static class SingletonHolder {
@@ -112,6 +128,7 @@ public class ConsoleWin implements ThemeManage.OnThemeChangeListener {
         if (!isShow) {
             wm.addView(consoleWin, winparams);
             isShow = true;
+            selectApp(0);
         }
     }
 
@@ -139,6 +156,58 @@ public class ConsoleWin implements ThemeManage.OnThemeChangeListener {
 
         loadDock();
     }
+
+    private int selectApp = 0;
+
+    private void selectApp(int selectApp) {
+        this.selectApp = selectApp;
+        x.task().autoPost(() -> {
+            ll_dock1.setBackgroundResource(android.R.color.transparent);
+            ll_dock2.setBackgroundResource(android.R.color.transparent);
+            ll_dock3.setBackgroundResource(android.R.color.transparent);
+            ll_dock4.setBackgroundResource(android.R.color.transparent);
+            music_ll_prew.setBackgroundResource(android.R.color.transparent);
+            music_ll_play.setBackgroundResource(android.R.color.transparent);
+            music_ll_next.setBackgroundResource(android.R.color.transparent);
+            if (selectApp == 0) {
+                ll_dock1.setBackgroundResource(ThemeManage.self().getCurrentThemeRes(R.drawable.n_cell_bg));
+            } else if (selectApp == 1) {
+                ll_dock2.setBackgroundResource(ThemeManage.self().getCurrentThemeRes(R.drawable.n_cell_bg));
+            } else if (selectApp == 2) {
+                ll_dock3.setBackgroundResource(ThemeManage.self().getCurrentThemeRes(R.drawable.n_cell_bg));
+            } else if (selectApp == 3) {
+                ll_dock4.setBackgroundResource(ThemeManage.self().getCurrentThemeRes(R.drawable.n_cell_bg));
+            } else if (selectApp == 4) {
+                music_ll_prew.setBackgroundResource(ThemeManage.self().getCurrentThemeRes(R.drawable.n_cell_bg));
+            } else if (selectApp == 5) {
+                music_ll_play.setBackgroundResource(ThemeManage.self().getCurrentThemeRes(R.drawable.n_cell_bg));
+            } else if (selectApp == 6) {
+                music_ll_next.setBackgroundResource(ThemeManage.self().getCurrentThemeRes(R.drawable.n_cell_bg));
+            }
+        });
+    }
+
+    @ViewInject(R.id.music_ll_prew)
+    private LinearLayout music_ll_prew;
+
+    @ViewInject(R.id.music_ll_play)
+    private LinearLayout music_ll_play;
+
+    @ViewInject(R.id.music_ll_next)
+    private LinearLayout music_ll_next;
+
+    @ViewInject(R.id.ll_dock1)
+    private LinearLayout ll_dock1;
+
+    @ViewInject(R.id.ll_dock2)
+    private LinearLayout ll_dock2;
+
+    @ViewInject(R.id.ll_dock3)
+    private LinearLayout ll_dock3;
+
+    @ViewInject(R.id.ll_dock4)
+    private LinearLayout ll_dock4;
+
 
     @ViewInject(R.id.ll_item1)
     private LinearLayout ll_item1;
@@ -199,7 +268,6 @@ public class ConsoleWin implements ThemeManage.OnThemeChangeListener {
             }
         }
     }
-
 
     @Event(value = {R.id.ll_dock1, R.id.ll_dock2, R.id.ll_dock3, R.id.ll_dock4, R.id.music_ll_play, R.id.music_ll_prew, R.id.music_ll_next, R.id.base})
     private void clickEvent(View v) {
@@ -308,6 +376,62 @@ public class ConsoleWin implements ThemeManage.OnThemeChangeListener {
                 ToastManage.self().show("dock4加载失败");
                 SharedPreUtil.saveSharedPreString(SDATA_DOCK4_CLASS, null);
             }
+        }
+    }
+
+    @Subscribe(priority = 100)
+    public void onEvent(PFkEventAction event) {
+        if (YLFK.equals(event.getFangkongProtocol())) {
+            switch (event.getAction()) {
+                case LEFT_TOP_CLICK: {
+                    if (selectApp == 0) {
+                        selectApp = 6;
+                    } else {
+                        selectApp = selectApp - 1;
+                    }
+                    selectApp(selectApp);
+                    break;
+                }
+                case RIGHT_TOP_CLICK: {
+                    if (selectApp == 6) {
+                        selectApp = 0;
+                    } else {
+                        selectApp = selectApp + 1;
+                    }
+                    selectApp(selectApp);
+                    break;
+                }
+                case CENTER_CLICK: {
+                    switch (selectApp) {
+                        case 0:
+                            clickEvent(ll_dock1);
+                            break;
+                        case 1:
+                            clickEvent(ll_dock2);
+                            break;
+                        case 2:
+                            clickEvent(ll_dock3);
+                            break;
+                        case 3:
+                            clickEvent(ll_dock4);
+                            break;
+                        case 4:
+                            clickEvent(music_ll_prew);
+                            break;
+                        case 5:
+                            clickEvent(music_ll_play);
+                            break;
+                        case 6:
+                            clickEvent(music_ll_next);
+                            break;
+                    }
+                    break;
+                }
+                default: {
+                    hide();
+                }
+            }
+            EventBus.getDefault().cancelEventDelivery(event);
         }
     }
 

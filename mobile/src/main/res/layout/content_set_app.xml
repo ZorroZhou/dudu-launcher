@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@android:color/white"
     android:orientation="vertical"
-    tools:ignore="HardcodedText,RtlHardcoded">
+    tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry">
 
     <TextView
         android:layout_width="match_parent"
@@ -26,6 +26,36 @@
         st:type="buttonB" />
 
     <View style="@style/Interval" />
+
+    <com.wow.carlauncher.common.view.SetView
+        android:id="@+id/sv_theme_day"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        st:summary="未选择"
+        st:titleEx="白天主题"
+        st:type="buttonB" />
+
+    <View style="@style/Interval" />
+
+    <com.wow.carlauncher.common.view.SetView
+        android:id="@+id/sv_theme_night"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        st:summary="未选择"
+        st:titleEx="夜间主题"
+        st:type="buttonB" />
+
+
+    <View style="@style/Interval" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="16dp"
+        android:paddingTop="16dp"
+        android:text="首页标签"
+        android:textColor="@color/colorPrimary"
+        android:textSize="14sp" />
 
     <com.wow.carlauncher.common.view.SetView
         android:id="@+id/sv_item_tran"

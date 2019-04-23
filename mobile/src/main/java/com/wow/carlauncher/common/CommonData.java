@@ -1,5 +1,7 @@
 package com.wow.carlauncher.common;
 
+import com.wow.carlauncher.ex.manage.ThemeManage;
+import com.wow.carlauncher.ex.manage.ThemeManage.Theme;
 import com.wow.carlauncher.ex.plugin.music.MusicControllerEnum;
 import com.wow.carlauncher.ex.plugin.obd.ObdProtocolEnum;
 import com.wow.carlauncher.view.activity.launcher.ItemEnum;
@@ -28,6 +30,21 @@ public class CommonData {
             ItemTransformer.ZoomOutSlide,
             ItemTransformer.ZoomOut,
     };
+
+    //所有主题
+    public static final Theme[] THEMES = {
+            Theme.WHITE,
+            Theme.BLACK,
+            Theme.CBLACK};
+
+    //主题切换模式
+    public static final ThemeManage.ThemeMode[] THEME_MODEL = {
+            ThemeManage.ThemeMode.SHIJIAN,
+            ThemeManage.ThemeMode.DENGGUANG,
+            ThemeManage.ThemeMode.BAISE,
+            ThemeManage.ThemeMode.HEISE,
+            ThemeManage.ThemeMode.KUHEI};
+
     //所有的桌面插件
     public static final ItemEnum[] LAUNCHER_ITEMS = {
             ItemEnum.AMAP,
@@ -56,6 +73,9 @@ public class CommonData {
     public static final String PACKAGE_NAME = "com.wow.carlauncher";
 
     public static final String SDATA_APP_THEME = "SDATA_APP_THEME";
+
+    public static final String SDATA_APP_THEME_DAY = "SDATA_APP_THEME_DAY";
+    public static final String SDATA_APP_THEME_NIGHT = "SDATA_APP_THEME_NIGHT";
 
     //
     public static final int REQUEST_SELECT_APP_TO_DOCK1 = 10000;
@@ -132,11 +152,6 @@ public class CommonData {
     public static final String SDATA_ALLOW_DEBUG_APP = "SDATA_ALLOW_DEBUG_APP";
     //应用包名标记使用的间隔
     public static final String CONSTANT_APP_PACKAGE_SEPARATE = ":";
-
-    //行程合并间隔
-    public static final String SDATA_TRIP_MERGE_TIME = "SDATA_TRIP_MERGE_TIME";
-    //默认值
-    public static final int SDATA_TRIP_MERGE_TIME_DF = 1;
     //是否自动启动驾驶界面
     public static final String SDATA_TRIP_AUTO_OPEN_DRIVING = "SDATA_TRIP_AUTO_OPEN_DRIVING";
     //以上默认值
@@ -157,6 +172,7 @@ public class CommonData {
     public static final String SDATA_LAUNCHER_ITEM_SORT_ = "SDATA_LAUNCHER_ITEM_SORT_";
     public static final String SDATA_LAUNCHER_ITEM_OPEN_ = "SDATA_LAUNCHER_ITEM_OPEN_";
     public static final String SDATA_LAUNCHER_ITEM_NUM = "SDATA_LAUNCHER_ITEM_NUM";
-
     public static final String SDATA_LAUNCHER_ITEM_TRAN = "SDATA_LAUNCHER_ITEM_TRAN";
+
+
 }

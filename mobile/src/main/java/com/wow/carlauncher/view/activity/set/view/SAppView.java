@@ -17,6 +17,7 @@ import com.wow.carlauncher.common.util.ThreadObj;
 import com.wow.carlauncher.common.util.ViewUtils;
 import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.ex.manage.ThemeManage;
+import com.wow.carlauncher.ex.manage.ThemeManage.Theme;
 import com.wow.carlauncher.ex.manage.ThemeManage.ThemeMode;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
@@ -45,10 +46,14 @@ import org.xutils.view.annotation.ViewInject;
 import java.util.List;
 
 import static com.wow.carlauncher.common.CommonData.SDATA_APP_THEME;
+import static com.wow.carlauncher.common.CommonData.SDATA_APP_THEME_DAY;
+import static com.wow.carlauncher.common.CommonData.SDATA_APP_THEME_NIGHT;
 import static com.wow.carlauncher.common.CommonData.SDATA_CONSOLE_MARK;
 import static com.wow.carlauncher.common.CommonData.SDATA_LAUNCHER_ITEM_TRAN;
 import static com.wow.carlauncher.common.CommonData.SDATA_MUSIC_CONTROLLER;
 import static com.wow.carlauncher.common.CommonData.SDATA_TIME_PLUGIN_OPEN_APP;
+import static com.wow.carlauncher.common.CommonData.THEMES;
+import static com.wow.carlauncher.common.CommonData.THEME_MODEL;
 
 /**
  * Created by 10124 on 2018/4/22.
@@ -57,8 +62,6 @@ import static com.wow.carlauncher.common.CommonData.SDATA_TIME_PLUGIN_OPEN_APP;
 public class SAppView extends BaseView {
 
     private static final ConsoleProtoclEnum[] ALL_CONSOLES = {ConsoleProtoclEnum.SYSTEM, ConsoleProtoclEnum.NWD};
-
-    private static final ThemeMode[] THEME_MODEL = {ThemeMode.SHIJIAN, ThemeMode.DENGGUANG, ThemeMode.BAISE, ThemeMode.HEISE, ThemeMode.KUHEI};
 
     public SAppView(@NonNull Context context) {
         super(context);
@@ -110,10 +113,47 @@ public class SAppView extends BaseView {
     @ViewInject(R.id.sv_item_tran)
     private SetView sv_item_tran;
 
+    @ViewInject(R.id.sv_theme_day)
+    private SetView sv_theme_day;
+
+    @ViewInject(R.id.sv_theme_night)
+    private SetView sv_theme_night;
+
     private boolean showKey;
 
     @Override
     protected void initView() {
+        sv_theme_night.setSummary(Theme.getById(SharedPreUtil.getSharedPreInteger(SDATA_APP_THEME_NIGHT, Theme.BLACK.getId())).getName());
+        sv_theme_night.setOnClickListener(new SetEnumOnClickListener<Theme>(getContext(), THEMES) {
+            @Override
+            public Theme getCurr() {
+                return Theme.getById(SharedPreUtil.getSharedPreInteger(SDATA_APP_THEME_NIGHT, Theme.BLACK.getId()));
+            }
+
+            @Override
+            public void onSelect(Theme setEnum) {
+                SharedPreUtil.saveSharedPreInteger(SDATA_APP_THEME_NIGHT, setEnum.getId());
+                sv_theme_night.setSummary(setEnum.getName());
+                ThemeManage.self().refreshTheme();
+            }
+        });
+
+        sv_theme_day.setSummary(Theme.getById(SharedPreUtil.getSharedPreInteger(SDATA_APP_THEME_DAY, Theme.WHITE.getId())).getName());
+        sv_theme_day.setOnClickListener(new SetEnumOnClickListener<Theme>(getContext(), THEMES) {
+            @Override
+            public Theme getCurr() {
+                return Theme.getById(SharedPreUtil.getSharedPreInteger(SDATA_APP_THEME_DAY, Theme.WHITE.getId()));
+            }
+
+            @Override
+            public void onSelect(Theme setEnum) {
+                SharedPreUtil.saveSharedPreInteger(SDATA_APP_THEME_DAY, setEnum.getId());
+                sv_theme_day.setSummary(setEnum.getName());
+                ThemeManage.self().refreshTheme();
+            }
+        });
+
+
         sv_item_tran.setSummary(ItemTransformer.getById(SharedPreUtil.getSharedPreInteger(SDATA_LAUNCHER_ITEM_TRAN, ItemTransformer.None.getId())).getName());
         sv_item_tran.setOnClickListener(new SetEnumOnClickListener<ItemTransformer>(getContext(), CommonData.LAUNCHER_ITEMS_TRANS) {
             @Override

@@ -29,6 +29,8 @@ import java.util.List;
 import java.util.Map;
 
 import static com.wow.carlauncher.common.CommonData.SDATA_APP_THEME;
+import static com.wow.carlauncher.common.CommonData.SDATA_APP_THEME_DAY;
+import static com.wow.carlauncher.common.CommonData.SDATA_APP_THEME_NIGHT;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.*;
 
 public class ThemeManage {
@@ -72,9 +74,9 @@ public class ThemeManage {
                 break;
             case SHIJIAN:
                 if (SunRiseSetUtil.isNight(lon, lat, new Date())) {
-                    setTheme(BLACK);
+                    setTheme(Theme.getById(SharedPreUtil.getSharedPreInteger(SDATA_APP_THEME_NIGHT, Theme.BLACK.getId())));
                 } else {
-                    setTheme(WHITE);
+                    setTheme(Theme.getById(SharedPreUtil.getSharedPreInteger(SDATA_APP_THEME_DAY, Theme.WHITE.getId())));
                 }
                 break;
         }
@@ -230,7 +232,7 @@ public class ThemeManage {
         void onThemeChanged(ThemeManage manage);
     }
 
-    public enum Theme {
+    public enum Theme implements SetEnum {
         WHITE("白色主题", 0, ""),
         BLACK("黑色主题", 1, "_b"),
         CBLACK("纯黑主题", 2, "_cb");
@@ -270,6 +272,18 @@ public class ThemeManage {
         public Theme setSuffix(String suffix) {
             this.suffix = suffix;
             return this;
+        }
+
+        public static Theme getById(Integer id) {
+            switch (id) {
+                case 0:
+                    return WHITE;
+                case 1:
+                    return BLACK;
+                case 2:
+                    return CBLACK;
+            }
+            return WHITE;
         }
     }
 

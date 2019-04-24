@@ -29,7 +29,8 @@
     <FrameLayout
         android:id="@+id/rl_moren"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/iv_moren"
@@ -138,7 +139,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:visibility="gone"
         app:layout_marginLeftPercent="2%h"
         app:layout_marginRightPercent="2%h">
 
@@ -155,6 +155,7 @@
                 android:layout_height="match_parent">
 
                 <com.zhy.android.percent.support.PercentRelativeLayout
+                    android:id="@+id/rl_icon"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     app:layout_heightPercent="100%h"
@@ -177,30 +178,32 @@
                     android:layout_height="0dp"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentRight="true"
+                    android:layout_toRightOf="@id/rl_icon"
                     android:ellipsize="marquee"
-                    android:gravity="center"
+                    android:gravity="right|bottom"
                     android:marqueeRepeatLimit="marquee_forever"
                     android:paddingRight="10dp"
                     android:singleLine="true"
-                    android:text="100M后"
+                    android:text="现在"
                     android:textColor="#fff"
-                    app:layout_heightPercent="78%h"
+                    app:layout_heightPercent="55%h"
                     app:layout_textSizePercent="35%h" />
 
                 <TextView
                     android:id="@+id/tv_next_road"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentBottom="true"
+                    android:layout_toRightOf="@id/rl_icon"
                     android:ellipsize="marquee"
-                    android:gravity="center"
+                    android:gravity="right|top"
                     android:marqueeRepeatLimit="marquee_forever"
                     android:paddingRight="10dp"
                     android:singleLine="true"
-                    android:text="进入香港路"
+                    android:text="relax放松一下"
                     android:textColor="#ddd"
-                    app:layout_heightPercent="54%h"
+                    app:layout_heightPercent="35%h"
                     app:layout_textSizePercent="22%h" />
             </com.zhy.android.percent.support.PercentRelativeLayout>
         </FrameLayout>

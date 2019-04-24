@@ -2,6 +2,7 @@ package com.wow.carlauncher.ex.manage.location;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
@@ -65,6 +66,7 @@ public class LocationManage extends ContextEx implements AMapLocationListener {
     @Override
     public void onLocationChanged(AMapLocation aMapLocation) {
         if (aMapLocation != null && aMapLocation.getErrorCode() == 0 && CommonUtil.isNotNull(aMapLocation.getCity())) {
+            Log.d(TAG, "定位成功: " + aMapLocation.getCity());
             EventBus.getDefault().post(new MNewLocationEvent()
                     .setDistrict(aMapLocation.getDistrict())
                     .setCity(aMapLocation.getCity())

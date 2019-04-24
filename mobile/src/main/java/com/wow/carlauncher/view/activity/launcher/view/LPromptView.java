@@ -21,7 +21,6 @@ import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
-import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventConnect;
 import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarTp;
@@ -43,7 +42,6 @@ import java.util.Date;
 
 import static com.inuker.bluetooth.library.Constants.STATUS_DEVICE_CONNECTED;
 import static com.wow.carlauncher.common.CommonData.MINUTE_MILL;
-import static com.wow.carlauncher.common.CommonData.SDATA_TIME_PLUGIN_OPEN_APP;
 
 /**
  * Created by 10124 on 2018/4/22.

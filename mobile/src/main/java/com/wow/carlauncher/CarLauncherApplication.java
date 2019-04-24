@@ -1,13 +1,13 @@
 package com.wow.carlauncher;
 
-import android.app.Application;
 import android.content.Intent;
+import android.support.multidex.MultiDexApplication;
 
 import com.wow.carlauncher.common.ActivityLifecycleListener;
 import com.wow.carlauncher.common.AppContext;
 import com.wow.carlauncher.service.MainService;
 
-public class CarLauncherApplication extends Application {
+public class CarLauncherApplication extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();

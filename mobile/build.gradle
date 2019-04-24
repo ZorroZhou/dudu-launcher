@@ -8,6 +8,7 @@ android {
         targetSdkVersion 28
         versionCode 101
         versionName "2.001"
+        multiDexEnabled true
     }
     buildTypes {
         release {

@@ -63,7 +63,16 @@ import static com.wow.carlauncher.common.CommonData.SDATA_DOCK3_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK4_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_LAUNCHER_ITEM_TRAN;
 import static com.wow.carlauncher.ex.plugin.fk.FangkongProtocolEnum.YLFK;
-import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.*;
+import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.CENTER_CLICK;
+import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.CENTER_LONG_CLICK;
+import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.LEFT_BOTTOM_CLICK;
+import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.LEFT_BOTTOM_LONG_CLICK;
+import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.LEFT_TOP_CLICK;
+import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.LEFT_TOP_LONG_CLICK;
+import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.RIGHT_BOTTOM_CLICK;
+import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.RIGHT_BOTTOM_LONG_CLICK;
+import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.RIGHT_TOP_CLICK;
+import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.RIGHT_TOP_LONG_CLICK;
 
 public class LauncherActivity extends Activity implements ThemeManage.OnThemeChangeListener {
 

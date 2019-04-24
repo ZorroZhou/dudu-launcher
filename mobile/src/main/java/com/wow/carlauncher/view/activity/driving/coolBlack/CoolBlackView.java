@@ -20,7 +20,6 @@ import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventState;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventAction;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventConnect;
 import com.wow.carlauncher.view.activity.driving.DrivingView;
-import com.wow.carlauncher.view.base.BaseEXView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

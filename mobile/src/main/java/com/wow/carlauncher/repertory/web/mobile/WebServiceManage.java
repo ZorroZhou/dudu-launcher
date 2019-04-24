@@ -1,4 +1,4 @@
-package com.wow.carlauncher.repertory.mobileService;
+package com.wow.carlauncher.repertory.web.mobile;
 
 import android.content.Context;
 import android.util.Log;

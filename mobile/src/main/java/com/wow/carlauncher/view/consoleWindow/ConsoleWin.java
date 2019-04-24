@@ -20,13 +20,14 @@ import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.DateUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
+import com.wow.carlauncher.ex.manage.ImageManage;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
-import com.wow.carlauncher.ex.manage.musicCover.MusicCoverRefresh;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventAction;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
+import com.wow.carlauncher.ex.plugin.music.event.PMusicEventCoverRefresh;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventInfo;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventState;
 import com.wow.carlauncher.view.activity.launcher.event.LDockRefreshEvent;
@@ -441,9 +442,9 @@ public class ConsoleWin implements ThemeManage.OnThemeChangeListener {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(final MusicCoverRefresh event) {
+    public void onEvent(final PMusicEventCoverRefresh event) {
         if (music_iv_cover != null) {
-            music_iv_cover.setImageBitmap(event.getCover());
+            ImageManage.self().loadImage(event.getUrl(), music_iv_cover, R.mipmap.music_dlogo);
         }
     }
 

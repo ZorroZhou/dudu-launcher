@@ -5,21 +5,14 @@ import android.content.Intent;
 import android.os.Environment;
 import android.util.Log;
 
-import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
-import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
-import com.nostra13.universalimageloader.core.DisplayImageOptions;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
-import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.wow.carlauncher.CarLauncherApplication;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
+import com.wow.carlauncher.ex.manage.ImageManage;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
 import com.wow.carlauncher.ex.manage.location.LocationManage;
-import com.wow.carlauncher.ex.manage.musicCover.MusicCoverManage;
 import com.wow.carlauncher.ex.manage.time.TimeManage;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.amapcar.AMapCarPlugin;
@@ -27,6 +20,9 @@ import com.wow.carlauncher.ex.plugin.console.ConsolePlugin;
 import com.wow.carlauncher.ex.plugin.fk.FangkongPlugin;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
+import com.wow.carlauncher.repertory.db.entiy.CoverTemp;
+import com.wow.carlauncher.repertory.db.manage.DatabaseInfo;
+import com.wow.carlauncher.repertory.db.manage.DatabaseManage;
 import com.wow.carlauncher.view.consoleWindow.ConsoleWin;
 import com.wow.carlauncher.view.popupWindow.PopupWin;
 
@@ -75,8 +71,10 @@ public class AppContext {
         x.Ext.init(app);
 
         SharedPreUtil.init(app);
+
+        DatabaseManage.init(app, getDatabaseInfo());
         //图片加载工具
-        initImage();
+        ImageManage.self().init(app);
         //通知工具
         ToastManage.self().init(app);
         //时间管理器
@@ -85,8 +83,6 @@ public class AppContext {
         BleManage.self().init(app);
         //定位管理器
         LocationManage.self().init(app);
-        //封面加载器
-        MusicCoverManage.self().init(app);
         //主题管理器
         ThemeManage.self().init(app);
         //app信息管理器
@@ -187,28 +183,22 @@ public class AppContext {
     }
 
 
-    private void initImage() {
-        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this.application)
-                .memoryCacheExtraOptions(480, 800)
-                // 缓存在内存的图片的宽和高度
-                // default = device screen dimensions
-                .diskCacheExtraOptions(480, 800, null)
-                .threadPoolSize(3)
-                // 线程池内加载的数量
-                .threadPriority(Thread.NORM_PRIORITY - 2)
-                .tasksProcessingOrder(QueueProcessingType.FIFO)
-                .denyCacheImageMultipleSizesInMemory()
-                .memoryCache(new LruMemoryCache(2 * 1024 * 1024))//你可以通过自己的内存缓存实现
-                .memoryCacheSize(3 * 1024 * 1024)// 缓存到内存的最大数据
-                .memoryCacheSizePercentage(13)
-                .diskCacheSize(50 * 1024 * 1024)// //缓存到文件的最大数据
-                .diskCacheFileCount(99999)// 文件数量
-                .diskCacheFileNameGenerator(new Md5FileNameGenerator())//将保存的时候的URI名称用MD5 加密
-                .imageDownloader(new BaseImageDownloader(this.application)) // default
-                .defaultDisplayImageOptions(DisplayImageOptions.createSimple()) // default
-                .writeDebugLogs()// Remove for release app
-                .build();
-        // Initialize ImageLoader with configuration.
-        ImageLoader.getInstance().init(config);// 初始化
+    private DatabaseInfo getDatabaseInfo() {
+        return new DatabaseInfo() {
+            @Override
+            public String getDbPath() {
+                return "wow_car";
+            }
+
+            @Override
+            public int getDbVersion() {
+                return 1;
+            }
+
+            @Override
+            public Class<?>[] getBeanClass() {
+                return new Class[]{CoverTemp.class};
+            }
+        };
     }
 }

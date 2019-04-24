@@ -1,11 +1,11 @@
-package com.wow.carlauncher.repertory.qqmusicService;
+package com.wow.carlauncher.repertory.web.qqmusic;
 
 import android.util.Log;
 
 import com.wow.carlauncher.common.util.GsonUtil;
 import com.wow.carlauncher.common.util.HttpUtil;
-import com.wow.carlauncher.repertory.qqmusicService.res.BaseRes;
-import com.wow.carlauncher.repertory.qqmusicService.res.SearchRes;
+import com.wow.carlauncher.repertory.web.qqmusic.res.BaseRes;
+import com.wow.carlauncher.repertory.web.qqmusic.res.SearchRes;
 
 import org.xutils.common.Callback;
 import org.xutils.http.HttpMethod;

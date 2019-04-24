@@ -4,9 +4,26 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.os.Environment;
+import android.util.Log;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.wow.carlauncher.ex.manage.ImageManage;
 import com.wow.carlauncher.ex.plugin.music.MusicController;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
+import com.wow.carlauncher.repertory.db.entiy.CoverTemp;
+import com.wow.carlauncher.repertory.db.manage.DatabaseManage;
+import com.wow.carlauncher.repertory.web.qqmusic.QQMusicWebService;
+import com.wow.carlauncher.repertory.web.qqmusic.res.SearchRes;
+
+import org.greenrobot.eventbus.EventBus;
+import org.xutils.x;
+
+import java.io.File;
+import java.io.FileOutputStream;
+
+import static com.wow.carlauncher.common.CommonData.TAG;
 
 /**
  * Created by 10124 on 2017/10/26.
@@ -74,6 +91,34 @@ public class NwdMusicController extends MusicController {
                     String title = intent.getStringExtra("track");
                     String artist = intent.getStringExtra("artist");
                     musicPlugin.refreshInfo(title, artist);
+                    x.task().run(() -> {
+                        CoverTemp temp = DatabaseManage.getBean(CoverTemp.class, " key='" + title + "-" + artist + "'");
+                        if (temp == null) {
+                            QQMusicWebService.searchMusic(title + " " + artist, 1, new QQMusicWebService.CommonCallback<SearchRes>() {
+                                @Override
+                                public void callback(final SearchRes res) {
+                                    if (res != null &&
+                                            res.getCode() == 0 &&
+                                            res.getData() != null &&
+                                            res.getData().getSong() != null &&
+                                            res.getData().getSong().getList() != null &&
+                                            res.getData().getSong().getList().size() > 0) {
+                                        SearchRes.SongItem songItem = res.getData().getSong().getList().get(0);
+                                        String url = QQMusicWebService.picUrl(songItem.getAlbumid());
+                                        musicPlugin.refreshCover(url);
+                                        DatabaseManage.insert(new CoverTemp().setKey(title + "-" + artist).setUrl(url));
+                                    }
+                                }
+                            });
+                        } else {
+                            Bitmap cover = ImageManage.self().loadImageSync(temp.getUrl());
+                            if (cover == null || cover.getWidth() < 10) {
+                                musicPlugin.refreshCover(null);
+                            } else {
+                                musicPlugin.refreshCover(temp.getUrl());
+                            }
+                        }
+                    });
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

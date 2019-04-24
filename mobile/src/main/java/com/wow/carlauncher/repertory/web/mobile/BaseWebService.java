@@ -1,10 +1,10 @@
-package com.wow.carlauncher.repertory.mobileService;
+package com.wow.carlauncher.repertory.web.mobile;
 
 import android.content.Context;
 import android.util.Log;
 
-import com.wow.carlauncher.repertory.mobileService.callback.SCallBack;
-import com.wow.carlauncher.repertory.mobileService.callback.SProgressCallback;
+import com.wow.carlauncher.repertory.web.mobile.callback.SCallBack;
+import com.wow.carlauncher.repertory.web.mobile.callback.SProgressCallback;
 
 import org.xutils.common.Callback;
 import org.xutils.http.HttpMethod;

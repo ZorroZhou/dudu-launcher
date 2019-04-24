@@ -1,4 +1,4 @@
-package com.wow.carlauncher.repertory.mobileService;
+package com.wow.carlauncher.repertory.web.mobile;
 
 /**
  * Created by 10124 on 2017/7/27.

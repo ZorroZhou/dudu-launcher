@@ -1,4 +1,4 @@
-package com.wow.carlauncher.repertory.mobileService;
+package com.wow.carlauncher.repertory.web.mobile;
 
 /**
  * Created by LC on 2016/4/15.

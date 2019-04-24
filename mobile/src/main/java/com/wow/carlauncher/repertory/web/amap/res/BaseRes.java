@@ -1,4 +1,4 @@
-package com.wow.carlauncher.repertory.amapService.res;
+package com.wow.carlauncher.repertory.web.amap.res;
 
 /**
  * Created by 10124 on 2017/10/29.

@@ -8,18 +8,15 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.util.Log;
-import android.view.View;
 
 import com.google.gson.Gson;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.nostra13.universalimageloader.core.assist.FailReason;
-import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.util.GsonUtil;
-import com.wow.carlauncher.ex.manage.musicCover.MusicCoverRefresh;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 import com.wow.carlauncher.ex.plugin.music.MusicController;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
+import com.wow.carlauncher.repertory.db.entiy.CoverTemp;
+import com.wow.carlauncher.repertory.db.manage.DatabaseManage;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -152,27 +149,7 @@ public class QQMusicCarController extends MusicController {
                     } else if (value.startsWith("{\"module\":\"play\",\"command\":{\"method\":\"update_album\"")) {
                         UpdateAlbumMessage message = gson.fromJson(value, UpdateAlbumMessage.class);
                         final UpdateAlbumData data = message.getCommand().getData();
-//                        ImageLoader.getInstance().loadImage(data.getAlbum_url(), new SimpleImageLoadingListener() {
-//                            @Override
-//                            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
-//                                String artist = "";
-//                                if (data.getKey_artist() != null && data.getKey_artist().size() > 0) {
-//                                    artist = data.getKey_artist().get(0).getSinger();
-//                                }
-//                                EventBus.getDefault().post(new MusicCoverRefresh().setArtist(artist).setTitle(data.getKey_title()).setCover(defcover));
-//                            }
-//
-//                            @Override
-//                            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
-//                                String artist = "";
-//                                if (data.getKey_artist() != null && data.getKey_artist().size() > 0) {
-//                                    artist = data.getKey_artist().get(0).getSinger();
-//                                }
-//                                EventBus.getDefault().post(new MusicCoverRefresh().setArtist(artist).setTitle(data.getKey_title()).setCover(loadedImage));
-//                            }
-//                        });
-
-
+                        musicPlugin.refreshCover(data.getAlbum_url());
                     } else if (value.startsWith("{\"module\":\"play\",\"command\":{\"method\":\"update_lyric\"")) {
                         UpdateLyricMessage message = gson.fromJson(value, UpdateLyricMessage.class);
                     }

@@ -2,8 +2,10 @@ package com.wow.carlauncher.ex.plugin.music;
 
 import android.content.Context;
 
+import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.ContextEx;
+import com.wow.carlauncher.ex.plugin.music.event.PMusicEventCoverRefresh;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventInfo;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventProgress;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventState;
@@ -91,16 +93,25 @@ public class MusicPlugin extends ContextEx {
         EventBus.getDefault().post(lastMusicState);
     }
 
+    private PMusicEventCoverRefresh lastMusicCover;
+
+    public void refreshCover(final String url) {
+        lastMusicCover = new PMusicEventCoverRefresh().setUrl(url);
+        EventBus.getDefault().post(lastMusicCover);
+    }
+
     public void requestLast() {
         if (lastMusicState != null) {
             EventBus.getDefault().post(lastMusicState);
         }
         if (lastMusicInfo != null) {
-            System.out.println("123123123");
             EventBus.getDefault().post(lastMusicInfo);
         }
         if (lastMusicProgress != null) {
             EventBus.getDefault().post(lastMusicProgress);
+        }
+        if (lastMusicCover != null) {
+            EventBus.getDefault().post(lastMusicCover);
         }
     }
 

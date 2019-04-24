@@ -1,4 +1,4 @@
-package com.wow.carlauncher.repertory.qqmusicService.res;
+package com.wow.carlauncher.repertory.web.qqmusic.res;
 
 public class BaseRes<T> {
     private Integer code;

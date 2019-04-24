@@ -17,10 +17,11 @@ import android.widget.TextView;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.view.CustomRoundAngleImageView;
+import com.wow.carlauncher.ex.manage.ImageManage;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
-import com.wow.carlauncher.ex.manage.musicCover.MusicCoverRefresh;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
+import com.wow.carlauncher.ex.plugin.music.event.PMusicEventCoverRefresh;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventInfo;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventProgress;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventState;
@@ -245,13 +246,6 @@ public class LMusicView extends BaseEXView {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(final MusicCoverRefresh event) {
-        if (music_iv_cover != null) {
-            music_iv_cover.setImageBitmap(event.getCover());
-        }
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final PMusicEventState event) {
         if (iv_play != null) {
             run = event.isRun();
@@ -268,6 +262,13 @@ public class LMusicView extends BaseEXView {
     public void onEvent(final PMusicEventProgress event) {
         if (progressBar != null) {
             progressBar.setProgress((int) (event.getCurrTime() * 100F / event.getTotalTime()));
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(final PMusicEventCoverRefresh event) {
+        if (music_iv_cover != null) {
+            ImageManage.self().loadImage(event.getUrl(), music_iv_cover, R.mipmap.music_dlogo);
         }
     }
 

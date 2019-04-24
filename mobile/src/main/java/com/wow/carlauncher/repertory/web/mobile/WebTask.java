@@ -1,6 +1,6 @@
-package com.wow.carlauncher.repertory.mobileService;
+package com.wow.carlauncher.repertory.web.mobile;
 
-import com.wow.carlauncher.repertory.mobileService.callback.SCallBack;
+import com.wow.carlauncher.repertory.web.mobile.callback.SCallBack;
 
 import org.xutils.common.Callback;
 

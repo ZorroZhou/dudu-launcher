@@ -11,8 +11,11 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.util.GsonUtil;
+import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
+import com.wow.carlauncher.ex.plugin.music.MusciCoverUtil;
 import com.wow.carlauncher.ex.plugin.music.MusicController;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import com.wow.carlauncher.repertory.db.entiy.CoverTemp;
@@ -145,11 +148,17 @@ public class QQMusicCarController extends MusicController {
                                 artist = data.getKey_artist().get(0).getSinger();
                             }
                             musicPlugin.refreshInfo(data.getKey_title(), artist);
+
+                            if (!SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_MUSIC_INSIDE_COVER, true)) {
+                                MusciCoverUtil.loadCover(data.getKey_title(), artist, musicPlugin);
+                            }
                         }
                     } else if (value.startsWith("{\"module\":\"play\",\"command\":{\"method\":\"update_album\"")) {
                         UpdateAlbumMessage message = gson.fromJson(value, UpdateAlbumMessage.class);
                         final UpdateAlbumData data = message.getCommand().getData();
-                        musicPlugin.refreshCover(data.getAlbum_url());
+                        if (SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_MUSIC_INSIDE_COVER, true)) {
+                            musicPlugin.refreshCover(data.getAlbum_url());
+                        }
                     } else if (value.startsWith("{\"module\":\"play\",\"command\":{\"method\":\"update_lyric\"")) {
                         UpdateLyricMessage message = gson.fromJson(value, UpdateLyricMessage.class);
                     }

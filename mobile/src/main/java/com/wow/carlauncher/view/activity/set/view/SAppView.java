@@ -119,10 +119,17 @@ public class SAppView extends BaseView {
     @ViewInject(R.id.sv_theme_night)
     private SetView sv_theme_night;
 
+    @ViewInject(R.id.sv_music_inside_cover)
+    private SetView sv_music_inside_cover;
+
     private boolean showKey;
 
     @Override
     protected void initView() {
+        sv_music_inside_cover.setOnValueChangeListener(new SetSwitchOnClickListener(CommonData.SDATA_MUSIC_INSIDE_COVER));
+        sv_music_inside_cover.setChecked(SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_MUSIC_INSIDE_COVER, true));
+
+
         sv_theme_night.setSummary(Theme.getById(SharedPreUtil.getSharedPreInteger(SDATA_APP_THEME_NIGHT, Theme.BLACK.getId())).getName());
         sv_theme_night.setOnClickListener(new SetEnumOnClickListener<Theme>(getContext(), THEMES) {
             @Override

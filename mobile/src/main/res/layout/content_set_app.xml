@@ -164,14 +164,14 @@
         android:textColor="@color/colorPrimary"
         android:textSize="14sp" />
 
-    <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/time_plugin_open_app_select"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        st:titleEx="时间位置点击打开的APP"
-        st:type="buttonB" />
+    <!--<com.wow.carlauncher.common.view.SetView-->
+        <!--android:id="@+id/time_plugin_open_app_select"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--st:titleEx="时间位置点击打开的APP"-->
+        <!--st:type="buttonB" />-->
 
-    <View style="@style/Interval" />
+    <!--<View style="@style/Interval" />-->
 
     <com.wow.carlauncher.common.view.SetView
         android:id="@+id/tianqi_city"

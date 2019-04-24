@@ -4,15 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fl_base"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="40dp"
     tools:ignore="RtlHardcoded">
 
     <TextView
         android:id="@+id/tv_time"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
+        android:gravity="center_vertical|left"
         android:text="1月1日 星期一 23:59:59"
+        app:layout_marginLeftPercent="25%h"
         app:layout_textSizePercent="50%h" />
 
     <com.zhy.android.percent.support.PercentLinearLayout
@@ -21,68 +22,62 @@
         android:gravity="right"
         android:orientation="horizontal">
 
-        <com.zhy.android.percent.support.PercentRelativeLayout
-            android:id="@+id/rl_home"
-            android:layout_width="0dp"
+        <!--<com.zhy.android.percent.support.PercentRelativeLayout-->
+        <!--android:id="@+id/rl_home"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="7">-->
+
+        <!--<ImageView-->
+        <!--android:id="@+id/iv_home"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_centerInParent="true"-->
+        <!--app:layout_heightPercent="50%h" />-->
+        <!--</com.zhy.android.percent.support.PercentRelativeLayout>-->
+
+
+        <ImageView
+            android:id="@+id/iv_carinfo_tp"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="7">
+            android:contentDescription="@string/app_name"
+            app:layout_widthPercent="100%h" />
 
-            <ImageView
-                android:id="@+id/iv_home"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_centerInParent="true"
-                app:layout_heightPercent="50%h" />
-        </com.zhy.android.percent.support.PercentRelativeLayout>
-
-        <com.zhy.android.percent.support.PercentLinearLayout
-            android:layout_width="1dp"
+        <ImageView
+            android:id="@+id/iv_obd"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="60"
-            android:gravity="right">
+            android:contentDescription="@string/app_name"
+            app:layout_widthPercent="100%h" />
 
-            <ImageView
-                android:id="@+id/iv_carinfo_tp"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:contentDescription="@string/app_name"
-                app:layout_widthPercent="100%h" />
+        <ImageView
+            android:id="@+id/iv_fk"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/app_name"
+            app:layout_widthPercent="100%h" />
 
-            <ImageView
-                android:id="@+id/iv_obd"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:contentDescription="@string/app_name"
-                app:layout_widthPercent="100%h" />
+        <!--<ImageView-->
+        <!--android:id="@+id/iv_ble"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:contentDescription="@string/app_name"-->
+        <!--app:layout_widthPercent="100%h" />-->
 
-            <ImageView
-                android:id="@+id/iv_fk"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:contentDescription="@string/app_name"
-                app:layout_widthPercent="100%h" />
+        <ImageView
+            android:id="@+id/iv_wifi"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/app_name"
+            app:layout_widthPercent="100%h" />
 
-            <!--<ImageView-->
-            <!--android:id="@+id/iv_ble"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:contentDescription="@string/app_name"-->
-            <!--app:layout_widthPercent="100%h" />-->
-
-            <ImageView
-                android:id="@+id/iv_wifi"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:contentDescription="@string/app_name"
-                app:layout_widthPercent="100%h" />
-
-            <ImageView
-                android:id="@+id/iv_set"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:contentDescription="@string/app_name"
-                android:src="@mipmap/ic_l_set"
-                app:layout_widthPercent="100%h" />
-        </com.zhy.android.percent.support.PercentLinearLayout>
+        <ImageView
+            android:id="@+id/iv_set"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/app_name"
+            android:src="@mipmap/ic_l_set"
+            app:layout_widthPercent="100%h" />
     </com.zhy.android.percent.support.PercentLinearLayout>
 </com.zhy.android.percent.support.PercentFrameLayout>

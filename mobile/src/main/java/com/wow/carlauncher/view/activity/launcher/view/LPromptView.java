@@ -74,7 +74,7 @@ public class LPromptView extends BaseEXView {
     public void changedTheme(ThemeManage manage) {
         fl_base.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_prompt_bg));
         tv_time.setTextColor(manage.getCurrentThemeColor(R.color.l_text1));
-        iv_home.setImageResource(manage.getCurrentThemeRes(R.mipmap.n_home));
+        //iv_home.setImageResource(manage.getCurrentThemeRes(R.mipmap.n_home));
 
 
         iv_obd.setImageResource(manage.getCurrentThemeRes(R.mipmap.ic_l_obd));
@@ -95,8 +95,8 @@ public class LPromptView extends BaseEXView {
     @ViewInject(R.id.iv_carinfo_tp)
     private ImageView iv_carinfo_tp;
 
-    @ViewInject(R.id.iv_home)
-    private ImageView iv_home;
+//    @ViewInject(R.id.iv_home)
+//    private ImageView iv_home;
 
     @ViewInject(R.id.iv_set)
     private ImageView iv_set;
@@ -110,7 +110,7 @@ public class LPromptView extends BaseEXView {
     @ViewInject(R.id.iv_wifi)
     private ImageView iv_wifi;
 
-    @Event(value = {R.id.iv_set, R.id.iv_wifi, R.id.iv_obd, R.id.rl_home, R.id.tv_time})
+    @Event(value = {R.id.iv_set, R.id.iv_wifi, R.id.iv_obd, R.id.tv_time, R.id.tv_time})
     private void clickEvent(View view) {
         switch (view.getId()) {
             case R.id.iv_set: {
@@ -125,39 +125,8 @@ public class LPromptView extends BaseEXView {
                 getActivity().startActivity(new Intent(getContext(), CarInfoActivity.class));
                 break;
             }
-            case R.id.rl_home: {
-                EventBus.getDefault().post(new LItemToFristEvent());
-                break;
-            }
             case R.id.tv_time: {
-//                AnyPermission.with(getContext()).overlay()
-//                        .onWithoutPermission((data, executor) -> {
-//                            new AlertDialog.Builder(getContext()).setTitle("警告!")
-//                                    .setNegativeButton("取消", (dialog, which) -> executor.cancel())
-//                                    .setPositiveButton("确定", (dialog2, which2) -> executor.execute())
-//                                    .setMessage("请给与车机助手悬浮窗权限,否则无法使用这个功能").show();
-//                        })
-//                        .request(new RequestListener() {
-//                            @Override
-//                            public void onSuccess() {
-//                                ConsoleWin.self().show();
-//                            }
-//
-//                            @Override
-//                            public void onFailed() {
-//                                ToastManage.self().show("没有悬浮窗权限!");
-//                            }
-//                        });
-                String packname = SharedPreUtil.getSharedPreString(SDATA_TIME_PLUGIN_OPEN_APP);
-                if (CommonUtil.isNotNull(packname)) {
-                    Intent appIntent = pm.getLaunchIntentForPackage(packname);
-                    if (appIntent != null) {
-                        appIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        getActivity().startActivity(appIntent);
-                    } else {
-                        ToastManage.self().show("APP丢失");
-                    }
-                }
+                EventBus.getDefault().post(new LItemToFristEvent());
                 break;
             }
         }
@@ -223,26 +192,23 @@ public class LPromptView extends BaseEXView {
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        x.task().autoPost(new Runnable() {
-            @Override
-            public void run() {
-                refreshWifiState();
-                String fkaddress = SharedPreUtil.getSharedPreString(CommonData.SDATA_FANGKONG_ADDRESS);
-                if (CommonUtil.isNotNull(fkaddress) && BleManage.self().client().getConnectStatus(fkaddress) != STATUS_DEVICE_CONNECTED) {
-                    refreshFKState(new PFkEventConnect().setConnected(true));
-                } else {
-                    refreshFKState(new PFkEventConnect().setConnected(false));
-                }
-
-                String obdaddress = SharedPreUtil.getSharedPreString(CommonData.SDATA_OBD_ADDRESS);
-                if (CommonUtil.isNotNull(obdaddress) && BleManage.self().client().getConnectStatus(obdaddress) != STATUS_DEVICE_CONNECTED) {
-                    refreshObdState(new PObdEventConnect().setConnected(true));
-                } else {
-                    refreshObdState(new PObdEventConnect().setConnected(false));
-                }
-
-                refreshTpState(ObdPlugin.self().getCurrentPObdEventCarTp());
+        x.task().autoPost(() -> {
+            refreshWifiState();
+            String fkaddress = SharedPreUtil.getSharedPreString(CommonData.SDATA_FANGKONG_ADDRESS);
+            if (CommonUtil.isNotNull(fkaddress) && BleManage.self().client().getConnectStatus(fkaddress) != STATUS_DEVICE_CONNECTED) {
+                refreshFKState(new PFkEventConnect().setConnected(true));
+            } else {
+                refreshFKState(new PFkEventConnect().setConnected(false));
             }
+
+            String obdaddress = SharedPreUtil.getSharedPreString(CommonData.SDATA_OBD_ADDRESS);
+            if (CommonUtil.isNotNull(obdaddress) && BleManage.self().client().getConnectStatus(obdaddress) != STATUS_DEVICE_CONNECTED) {
+                refreshObdState(new PObdEventConnect().setConnected(true));
+            } else {
+                refreshObdState(new PObdEventConnect().setConnected(false));
+            }
+
+            refreshTpState(ObdPlugin.self().getCurrentPObdEventCarTp());
         });
     }
 
@@ -259,7 +225,7 @@ public class LPromptView extends BaseEXView {
         if (time1 != cur_min) {
             cur_min = time1;
             Date d = new Date();
-            String date = DateUtil.dateToString(d, "MM月dd日 " + DateUtil.getWeekOfDate(d) + " HH:mm");
+            String date = DateUtil.dateToString(d, "yyyy年 MM月 dd日 " + DateUtil.getWeekOfDate(d) + " HH:mm");
             if (date.startsWith("0")) {
                 date = date.substring(1);
             }

@@ -89,8 +89,8 @@ public class SAppView extends BaseView {
     @ViewInject(R.id.sv_launcher_show_dock_label)
     private SetView sv_launcher_show_dock_label;
 
-    @ViewInject(R.id.time_plugin_open_app_select)
-    private SetView time_plugin_open_app_select;
+//    @ViewInject(R.id.time_plugin_open_app_select)
+//    private SetView time_plugin_open_app_select;
 
 
     @ViewInject(R.id.tianqi_city)
@@ -334,19 +334,19 @@ public class SAppView extends BaseView {
         });
         sv_launcher_show_dock_label.setChecked(SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_LAUNCHER_DOCK_LABEL_SHOW, true));
 
-        setSTitle(SDATA_TIME_PLUGIN_OPEN_APP, time_plugin_open_app_select);
-        time_plugin_open_app_select.setOnClickListener(new SetAppSingleSelectOnClickListener(getContext()) {
-            @Override
-            public String getCurr() {
-                return SharedPreUtil.getSharedPreString(SDATA_TIME_PLUGIN_OPEN_APP);
-            }
-
-            @Override
-            public void onSelect(String t) {
-                SharedPreUtil.saveSharedPreString(SDATA_TIME_PLUGIN_OPEN_APP, t);
-                setSTitle(SDATA_TIME_PLUGIN_OPEN_APP, time_plugin_open_app_select);
-            }
-        });
+//        setSTitle(SDATA_TIME_PLUGIN_OPEN_APP, time_plugin_open_app_select);
+//        time_plugin_open_app_select.setOnClickListener(new SetAppSingleSelectOnClickListener(getContext()) {
+//            @Override
+//            public String getCurr() {
+//                return SharedPreUtil.getSharedPreString(SDATA_TIME_PLUGIN_OPEN_APP);
+//            }
+//
+//            @Override
+//            public void onSelect(String t) {
+//                SharedPreUtil.saveSharedPreString(SDATA_TIME_PLUGIN_OPEN_APP, t);
+//                setSTitle(SDATA_TIME_PLUGIN_OPEN_APP, time_plugin_open_app_select);
+//            }
+//        });
 
         tianqi_city.setOnClickListener(view -> {
             final CityDialog cityDialog = new CityDialog(getContext());
@@ -368,14 +368,14 @@ public class SAppView extends BaseView {
         tianqi_city.setSummary(SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_DISTRICT));
     }
 
-    private void setSTitle(String key, SetView setView) {
-        String xx = SharedPreUtil.getSharedPreString(key);
-        if (CommonUtil.isNotNull(xx)) {
-            setView.setSummary(AppInfoManage.self().getName(xx).toString());
-        } else {
-            setView.setSummary("没有选择");
-        }
-    }
+//    private void setSTitle(String key, SetView setView) {
+//        String xx = SharedPreUtil.getSharedPreString(key);
+//        if (CommonUtil.isNotNull(xx)) {
+//            setView.setSummary(AppInfoManage.self().getName(xx).toString());
+//        } else {
+//            setView.setSummary("没有选择");
+//        }
+//    }
 
 
     @Override

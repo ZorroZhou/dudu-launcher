@@ -163,7 +163,7 @@ public class LWeatherView extends BaseEXView {
     private TextView tv_fx;
 
 
-    @Event(value = {R.id.tv_title})
+    @Event(value = {R.id.tv_title, R.id.fl_base})
     private void clickEvent(View view) {
         switch (view.getId()) {
             case R.id.tv_title: {

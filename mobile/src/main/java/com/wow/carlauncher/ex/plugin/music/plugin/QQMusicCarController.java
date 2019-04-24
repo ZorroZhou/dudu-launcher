@@ -18,8 +18,6 @@ import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 import com.wow.carlauncher.ex.plugin.music.MusciCoverUtil;
 import com.wow.carlauncher.ex.plugin.music.MusicController;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
-import com.wow.carlauncher.repertory.db.entiy.CoverTemp;
-import com.wow.carlauncher.repertory.db.manage.DatabaseManage;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

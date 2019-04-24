@@ -4,26 +4,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.Bitmap;
-import android.os.Environment;
-import android.util.Log;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.wow.carlauncher.ex.manage.ImageManage;
 import com.wow.carlauncher.ex.plugin.music.MusicController;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
-import com.wow.carlauncher.repertory.db.entiy.CoverTemp;
-import com.wow.carlauncher.repertory.db.manage.DatabaseManage;
-import com.wow.carlauncher.repertory.web.qqmusic.QQMusicWebService;
-import com.wow.carlauncher.repertory.web.qqmusic.res.SearchRes;
-
-import org.greenrobot.eventbus.EventBus;
-import org.xutils.x;
-
-import java.io.File;
-import java.io.FileOutputStream;
-
-import static com.wow.carlauncher.common.CommonData.TAG;
 
 /**
  * Created by 10124 on 2017/10/26.

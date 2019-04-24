@@ -2,7 +2,6 @@ package com.wow.carlauncher.ex.plugin.music;
 
 import android.content.Context;
 
-import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.ContextEx;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventCoverRefresh;

@@ -119,7 +119,7 @@
         android:layout_height="wrap_content"
         st:summary="@string/set_yes"
         st:summary2="@string/set_no"
-        st:titleEx="音乐播放器内置封面(某些音乐播放器会内置封面,比较准确,关闭后使用搜索获取封面,可能不准确)"
+        st:titleEx="音乐播放器内置封面(内置封面比较准确,搜索封面可能不准确)"
         st:type="switchB" />
 
     <View style="@style/Interval" />

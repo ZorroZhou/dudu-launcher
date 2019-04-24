@@ -20,6 +20,7 @@ import com.wow.carlauncher.view.base.BaseEXView;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
 import java.util.Calendar;
@@ -84,6 +85,11 @@ public class LTimeView extends BaseEXView {
 
             fl_time_root.addView(fl_time, params);
         }
+    }
+
+    @Event(value = {R.id.fl_base})
+    private void clickEvent(View view) {
+
     }
 
     @Override

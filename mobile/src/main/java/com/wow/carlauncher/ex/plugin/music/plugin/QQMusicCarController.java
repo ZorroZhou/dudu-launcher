@@ -4,10 +4,19 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.util.Log;
+import android.view.View;
 
 import com.google.gson.Gson;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.util.GsonUtil;
+import com.wow.carlauncher.ex.manage.musicCover.MusicCoverRefresh;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 import com.wow.carlauncher.ex.plugin.music.MusicController;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
@@ -17,7 +26,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by 10124 on 2017/10/26.
@@ -31,8 +39,7 @@ public class QQMusicCarController extends MusicController {
     private static final int WE_DRIVE_PAUSE = 1;
     private static final int WE_DRIVE_PRE = 2;
     private static final int WE_DRIVE_RESUME = 0;
-
-    private static final int CHECK_TIME = 10;
+    private Bitmap defcover;
 
     private Gson gson;
 
@@ -45,7 +52,13 @@ public class QQMusicCarController extends MusicController {
         intentFilter.addAction("com.android.music.playstatechanged");
         this.context.registerReceiver(mReceiver, intentFilter);
 
+        Intent intent2 = new Intent("com.tencent.qqmusiccar.action");
+        intent2.setClassName(PACKAGE_NAME, CLASS_NAME);
+        intent2.setData(Uri.parse("qqmusiccar://asdasd?action=100"));
+        context.sendBroadcast(intent2);
+
         EventBus.getDefault().register(this);
+        defcover = BitmapFactory.decodeResource(context.getResources(), R.mipmap.music_dlogo);
     }
 
 
@@ -72,17 +85,6 @@ public class QQMusicCarController extends MusicController {
         context.sendBroadcast(intent);
     }
 
-    private void refreshInfo() {
-        if (waitMsg) {
-            return;
-        }
-        waitMsg = true;
-        Intent intent2 = new Intent("com.tencent.qqmusiccar.action");
-        intent2.setClassName(PACKAGE_NAME, CLASS_NAME);
-        intent2.setData(Uri.parse("qqmusiccar://asdasd?action=100"));
-        context.sendBroadcast(intent2);
-    }
-
     @Override
     public void destroy() {
         EventBus.getDefault().unregister(this);
@@ -94,44 +96,85 @@ public class QQMusicCarController extends MusicController {
         return "com.tencent.qqmusiccar";
     }
 
-    private int index = CHECK_TIME;
+    private boolean run = false;
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void onEvent(final MTimeSecondEvent event) {
-        index++;
-        if (index > CHECK_TIME) {
-            index = 1;
-            refreshInfo();
+        //每隔一秒钟上报一下进度信息
+        int ccc = (int) (totalTime + System.currentTimeMillis() - overTime);
+        if (ccc < totalTime && run) {
+            musicPlugin.refreshProgress((int) (totalTime + System.currentTimeMillis() - overTime), totalTime);
         }
     }
 
-    private boolean waitMsg = false;
+    private long overTime;
+    private int totalTime;
+
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
         public void onReceive(Context paramAnonymousContext, Intent intent) {
             try {
-                if ("com.tencent.qqmusiccar.action.PLAY_COMMAND_SEND_FOR_THIRD".equals(intent.getAction()) && intent.getStringExtra("com.tencent.qqmusiccar.EXTRA_COMMAND_DATA") != null && waitMsg) {
-                    waitMsg = false;
+                //&& waitMsg
+                if ("com.tencent.qqmusiccar.action.PLAY_COMMAND_SEND_FOR_THIRD".equals(intent.getAction()) && intent.getStringExtra("com.tencent.qqmusiccar.EXTRA_COMMAND_DATA") != null) {
                     String value = intent.getStringExtra("com.tencent.qqmusiccar.EXTRA_COMMAND_DATA");
-                    Map m = gson.fromJson(value, Map.class);
-                    Map c = (Map) m.get("command");
-                    if ("update_state".equals(c.get("method"))) {
-                        Map d = (Map) c.get("data");
-                        String title = d.get("key_title") + "";
-                        List<Map> as = (List<Map>) d.get("key_artist");
-                        String artist = "";
-                        if (as != null && as.size() > 0) {
-                            Map a = as.get(0);
-                            artist = a.get("singer") + "";
+                    Log.e(PACKAGE_NAME, "onReceive: " + value);
+                    //更新状态的命令
+                    if (value.startsWith("{\"module\":\"play\",\"command\":{\"method\":\"update_state\"")) {
+                        UpdateStateMessage message = gson.fromJson(value, UpdateStateMessage.class);
+                        UpdateStateData data = message.getCommand().getData();
+                        if (data != null) {
+                            int curr_time = data.getCurr_time();
+                            totalTime = data.getTotal_time();
+                            overTime = System.currentTimeMillis() + totalTime - curr_time;
+                            String artist = "";
+                            if (data.getKey_artist() != null && data.getKey_artist().size() > 0) {
+                                artist = data.getKey_artist().get(0).getSinger();
+                            }
+                            musicPlugin.refreshInfo(data.getKey_title(), artist);
+
+                            if (data.getState() == 2) {
+                                musicPlugin.refreshState(true, true);
+                                run = true;
+                            } else {
+                                musicPlugin.refreshState(false, true);
+                                run = false;
+                            }
                         }
-                        int curr_time = ((Double) d.get("curr_time")).intValue();
-                        int total_time = ((Double) d.get("total_time")).intValue();
-                        musicView.refreshInfo(title, artist);
-                        musicView.refreshProgress(curr_time, total_time);
-                        if (d.get("state") != null && (double) d.get("state") == 2) {
-                            musicView.refreshState(true);
-                        } else {
-                            musicView.refreshState(false);
+                    } else if (value.startsWith("{\"module\":\"play\",\"command\":{\"method\":\"update_song\"")) {
+                        UpdateSongMessage message = gson.fromJson(value, UpdateSongMessage.class);
+                        BaseSongInfo data = message.getCommand().getData();
+                        if (data != null) {
+                            String artist = "";
+                            if (data.getKey_artist() != null && data.getKey_artist().size() > 0) {
+                                artist = data.getKey_artist().get(0).getSinger();
+                            }
+                            musicPlugin.refreshInfo(data.getKey_title(), artist);
                         }
+                    } else if (value.startsWith("{\"module\":\"play\",\"command\":{\"method\":\"update_album\"")) {
+                        UpdateAlbumMessage message = gson.fromJson(value, UpdateAlbumMessage.class);
+                        final UpdateAlbumData data = message.getCommand().getData();
+//                        ImageLoader.getInstance().loadImage(data.getAlbum_url(), new SimpleImageLoadingListener() {
+//                            @Override
+//                            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+//                                String artist = "";
+//                                if (data.getKey_artist() != null && data.getKey_artist().size() > 0) {
+//                                    artist = data.getKey_artist().get(0).getSinger();
+//                                }
+//                                EventBus.getDefault().post(new MusicCoverRefresh().setArtist(artist).setTitle(data.getKey_title()).setCover(defcover));
+//                            }
+//
+//                            @Override
+//                            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+//                                String artist = "";
+//                                if (data.getKey_artist() != null && data.getKey_artist().size() > 0) {
+//                                    artist = data.getKey_artist().get(0).getSinger();
+//                                }
+//                                EventBus.getDefault().post(new MusicCoverRefresh().setArtist(artist).setTitle(data.getKey_title()).setCover(loadedImage));
+//                            }
+//                        });
+
+
+                    } else if (value.startsWith("{\"module\":\"play\",\"command\":{\"method\":\"update_lyric\"")) {
+                        UpdateLyricMessage message = gson.fromJson(value, UpdateLyricMessage.class);
                     }
                 }
             } catch (Exception e) {
@@ -139,4 +182,199 @@ public class QQMusicCarController extends MusicController {
             }
         }
     };
+
+
+    private static class UpdateStateMessage extends BaseMessage<BaseCommand<UpdateStateData>, UpdateStateData> {
+    }
+
+    private static class UpdateSongMessage extends BaseMessage<BaseCommand<BaseSongInfo>, BaseSongInfo> {
+    }
+
+    private static class UpdateAlbumMessage extends BaseMessage<BaseCommand<UpdateAlbumData>, UpdateAlbumData> {
+    }
+
+    private static class UpdateLyricMessage extends BaseMessage<BaseCommand<UpdateLyricData>, UpdateLyricData> {
+    }
+
+    static class BaseMessage<T extends BaseCommand<D>, D> {
+        private String module;
+        private T command;
+
+        public String getModule() {
+            return module;
+        }
+
+        public BaseMessage<T, D> setModule(String module) {
+            this.module = module;
+            return this;
+        }
+
+        public T getCommand() {
+            return command;
+        }
+
+        public BaseMessage<T, D> setCommand(T command) {
+            this.command = command;
+            return this;
+        }
+    }
+
+    static class BaseCommand<T> {
+        private String method;
+        private T data;
+
+        public String getMethod() {
+            return method;
+        }
+
+        public BaseCommand<T> setMethod(String method) {
+            this.method = method;
+            return this;
+        }
+
+        public T getData() {
+            return data;
+        }
+
+        public BaseCommand<T> setData(T data) {
+            this.data = data;
+            return this;
+        }
+    }
+
+    private static class KeyArtist {
+        private String singer;
+
+        public String getSinger() {
+            return singer;
+        }
+
+        public KeyArtist setSinger(String singer) {
+            this.singer = singer;
+            return this;
+        }
+    }
+
+    static class BaseSongInfo {
+        private String key_title;
+        private String key_album;
+        private int key_is_fav;
+        private List<KeyArtist> key_artist;
+
+        public String getKey_title() {
+            return key_title;
+        }
+
+        public BaseSongInfo setKey_title(String key_title) {
+            this.key_title = key_title;
+            return this;
+        }
+
+        public String getKey_album() {
+            return key_album;
+        }
+
+        public BaseSongInfo setKey_album(String key_album) {
+            this.key_album = key_album;
+            return this;
+        }
+
+        public int getKey_is_fav() {
+            return key_is_fav;
+        }
+
+        public BaseSongInfo setKey_is_fav(int key_is_fav) {
+            this.key_is_fav = key_is_fav;
+            return this;
+        }
+
+        public List<KeyArtist> getKey_artist() {
+            return key_artist;
+        }
+
+        public BaseSongInfo setKey_artist(List<KeyArtist> key_artist) {
+            this.key_artist = key_artist;
+            return this;
+        }
+    }
+
+    static class UpdateStateData extends BaseSongInfo {
+        private int state;
+        private int curr_time;
+        private int total_time;
+
+        public int getState() {
+            return state;
+        }
+
+        public UpdateStateData setState(int state) {
+            this.state = state;
+            return this;
+        }
+
+        public int getCurr_time() {
+            return curr_time;
+        }
+
+        public UpdateStateData setCurr_time(int curr_time) {
+            this.curr_time = curr_time;
+            return this;
+        }
+
+        public int getTotal_time() {
+            return total_time;
+        }
+
+        public UpdateStateData setTotal_time(int total_time) {
+            this.total_time = total_time;
+            return this;
+        }
+    }
+
+    static class UpdateAlbumData extends BaseSongInfo {
+        private int code;
+        private String album_url;
+
+        public int getCode() {
+            return code;
+        }
+
+        public UpdateAlbumData setCode(int code) {
+            this.code = code;
+            return this;
+        }
+
+        public String getAlbum_url() {
+            return album_url;
+        }
+
+        public UpdateAlbumData setAlbum_url(String album_url) {
+            this.album_url = album_url;
+            return this;
+        }
+    }
+
+    static class UpdateLyricData extends BaseSongInfo {
+        private int code;
+        private String lyric;
+
+        public int getCode() {
+            return code;
+        }
+
+        public UpdateLyricData setCode(int code) {
+            this.code = code;
+            return this;
+        }
+
+        public String getLyric() {
+            return lyric;
+        }
+
+        public UpdateLyricData setLyric(String lyric) {
+            this.lyric = lyric;
+            return this;
+        }
+    }
+
 }

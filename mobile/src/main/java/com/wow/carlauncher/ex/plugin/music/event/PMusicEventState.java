@@ -6,6 +6,7 @@ package com.wow.carlauncher.ex.plugin.music.event;
 
 public class PMusicEventState {
     private boolean run;
+    private boolean showProgress;
 
     public boolean isRun() {
         return run;
@@ -21,5 +22,14 @@ public class PMusicEventState {
 
     public PMusicEventState(boolean run) {
         this.run = run;
+    }
+
+    public boolean isShowProgress() {
+        return showProgress;
+    }
+
+    public PMusicEventState setShowProgress(boolean showProgress) {
+        this.showProgress = showProgress;
+        return this;
     }
 }

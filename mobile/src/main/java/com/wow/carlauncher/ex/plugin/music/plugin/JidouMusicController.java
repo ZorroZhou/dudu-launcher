@@ -65,17 +65,17 @@ public class JidouMusicController extends MusicController {
         public void onReceive(Context paramAnonymousContext, Intent intent) {
             if (intent.getAction().equals("com.ijidou.card.music")) {
                 boolean music_status = intent.getBooleanExtra("music_status", false);
-                musicView.refreshState(music_status);
+                musicPlugin.refreshState(music_status,false);
                 music_artist = intent.getStringExtra("music_artist");
                 music_title = intent.getStringExtra("music_title");
                 if (music_title != null && music_artist != null) {
-                    musicView.refreshInfo(music_title, music_artist);
+                    musicPlugin.refreshInfo(music_title, music_artist);
                 }
             }
             if (intent.getAction().equals("com.ijidou.action.UPDATE_PROGRESS")) {
                 int elapse = intent.getIntExtra("elapse", 0);
                 int duration = intent.getIntExtra("duration", 0);
-                musicView.refreshProgress(elapse, duration);
+                musicPlugin.refreshProgress(elapse, duration);
             }
         }
     };

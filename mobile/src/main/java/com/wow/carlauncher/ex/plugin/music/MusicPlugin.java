@@ -69,18 +69,39 @@ public class MusicPlugin extends ContextEx {
         return null;
     }
 
+    private PMusicEventInfo lastMusicInfo;
 
     public void refreshInfo(final String title, final String artist) {
+        lastMusicInfo = new PMusicEventInfo().setArtist(artist).setTitle(title);
         EventBus.getDefault().post(new PMusicEventInfo().setArtist(artist).setTitle(title));
     }
 
+    private PMusicEventProgress lastMusicProgress;
+
     public void refreshProgress(final int curr_time, final int total_tim) {
-        EventBus.getDefault().post(new PMusicEventProgress().setCurrTime(curr_time).setTotalTime(total_tim));
+        lastMusicProgress = new PMusicEventProgress().setCurrTime(curr_time).setTotalTime(total_tim);
+        EventBus.getDefault().post(lastMusicProgress);
     }
 
-    public void refreshState(final boolean run) {
+    private PMusicEventState lastMusicState;
+
+    public void refreshState(final boolean run, final boolean showProgress) {
         playing = run;
-        EventBus.getDefault().post(new PMusicEventState().setRun(run));
+        lastMusicState = new PMusicEventState().setRun(run).setShowProgress(showProgress);
+        EventBus.getDefault().post(lastMusicState);
+    }
+
+    public void requestLast() {
+        if (lastMusicState != null) {
+            EventBus.getDefault().post(lastMusicState);
+        }
+        if (lastMusicInfo != null) {
+            System.out.println("123123123");
+            EventBus.getDefault().post(lastMusicInfo);
+        }
+        if (lastMusicProgress != null) {
+            EventBus.getDefault().post(lastMusicProgress);
+        }
     }
 
     public void playOrPause() {

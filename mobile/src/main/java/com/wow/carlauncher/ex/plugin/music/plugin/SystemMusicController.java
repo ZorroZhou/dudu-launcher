@@ -193,16 +193,16 @@ public class SystemMusicController extends MusicController {
             if ("com.android.music.playstatechanged".equals(intent.getAction())) {
                 try {
                     Boolean playstate = intent.getBooleanExtra("playstate", false);
-                    musicView.refreshState(playstate);
+                    musicPlugin.refreshState(playstate, false);
                 } catch (Exception e) {
                 }
                 try {
                     int playstate = intent.getIntExtra("playstate", -1);
                     if (playstate == 3 || playstate == 4) {
                         if (playstate == 3) {
-                            musicView.refreshState(true);
+                            musicPlugin.refreshState(true, false);
                         } else {
-                            musicView.refreshState(false);
+                            musicPlugin.refreshState(false, false);
                         }
                     }
                 } catch (Exception e) {
@@ -210,7 +210,7 @@ public class SystemMusicController extends MusicController {
 
                 try {
                     if (intent.getStringExtra("artist") != null && intent.getStringExtra("track") != null) {
-                        musicView.refreshInfo(intent.getStringExtra("track"), intent.getStringExtra("artist"));
+                        musicPlugin.refreshInfo(intent.getStringExtra("track"), intent.getStringExtra("artist"));
                     }
                 } catch (Exception e) {
                 }

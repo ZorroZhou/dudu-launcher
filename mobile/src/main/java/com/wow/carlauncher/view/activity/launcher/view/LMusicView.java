@@ -30,6 +30,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
+import org.xutils.x;
 
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.BLACK;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.WHITE;
@@ -52,6 +53,11 @@ public class LMusicView extends BaseEXView {
     @Override
     protected int getContent() {
         return R.layout.content_l_music;
+    }
+
+    @Override
+    protected void initView() {
+        x.task().postDelayed(() -> MusicPlugin.self().requestLast(), 500);
     }
 
     @Override
@@ -250,8 +256,10 @@ public class LMusicView extends BaseEXView {
         if (iv_play != null) {
             run = event.isRun();
             refreshPlay();
-            if (!run) {
-                progressBar.setVisibility(INVISIBLE);
+            if (event.isShowProgress()) {
+                progressBar.setVisibility(VISIBLE);
+            } else {
+                progressBar.setVisibility(GONE);
             }
         }
     }
@@ -259,7 +267,6 @@ public class LMusicView extends BaseEXView {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final PMusicEventProgress event) {
         if (progressBar != null) {
-            progressBar.setVisibility(VISIBLE);
             progressBar.setProgress((int) (event.getCurrTime() * 100F / event.getTotalTime()));
         }
     }

@@ -44,80 +44,121 @@ public class MusicCoverManage {
     private Md5FileNameGenerator nameGenerator = new Md5FileNameGenerator();
 
     public void init(Context context) {
-        runkey = new HashSet<>();
         defcover = BitmapFactory.decodeResource(context.getResources(), R.mipmap.music_dlogo);
         EventBus.getDefault().register(this);
     }
 
     private Bitmap defcover;
-    private Set<String> runkey;
 
     public void loadMusicCover(final String title, final String zuojia) {
-        String name = nameGenerator.generate(title + "-" + zuojia) + ".temp";
-        final MusicCoverRefresh musicCoverRefresh = new MusicCoverRefresh().setArtist(zuojia).setTitle(title);
-        if (runkey.contains(name)) {
-            return;
-        }
-        runkey.add(name);
-        final File cover = new File(Environment.getExternalStorageDirectory() + File.separator + "music_cover" + File.separator + name);
-        if (cover.exists()) {
-            Log.e(TAG, "已有的封面");
-            Bitmap bitmap = BitmapFactory.decodeFile(cover.getAbsolutePath());
-            if (bitmap != null && bitmap.getWidth() > 0) {
-                EventBus.getDefault().post(musicCoverRefresh.setCover(bitmap));
+        x.task().run(() -> {
+            String name = nameGenerator.generate(title + "-" + zuojia) + ".temp";
+            final MusicCoverRefresh musicCoverRefresh = new MusicCoverRefresh().setArtist(zuojia).setTitle(title);
+            final File cover = new File(Environment.getExternalStorageDirectory() + File.separator + "music_cover" + File.separator + name);
+            if (cover.exists()) {
+                Log.e(TAG, "已有的封面");
+                Bitmap bitmap = BitmapFactory.decodeFile(cover.getAbsolutePath());
+                if (bitmap != null && bitmap.getWidth() > 0) {
+                    EventBus.getDefault().post(musicCoverRefresh.setCover(bitmap));
+                } else {
+                    cover.delete();
+                    EventBus.getDefault().post(musicCoverRefresh.setCover(defcover));
+                }
             } else {
-                cover.delete();
-                EventBus.getDefault().post(musicCoverRefresh.setCover(defcover));
-            }
-            runkey.remove(name);
-        } else {
-            Log.e(TAG, "新的封面");
+                Log.e(TAG, "新的封面");
 
-            QQMusicWebService.searchMusic(title + " " + zuojia, 1, new QQMusicWebService.CommonCallback<SearchRes>() {
-                @Override
-                public void callback(final SearchRes res) {
-                    x.task().run(() -> {
-                        boolean success = false;
-                        if (res != null &&
-                                res.getCode() == 0 &&
-                                res.getData() != null &&
-                                res.getData().getSong() != null &&
-                                res.getData().getSong().getList() != null &&
-                                res.getData().getSong().getList().size() > 0) {
-                            SearchRes.SongItem songItem = res.getData().getSong().getList().get(0);
-                            Log.e(TAG, "加载封面:" + QQMusicWebService.picUrl(songItem.getAlbumid()));
-                            Bitmap bitmap = ImageLoader.getInstance().loadImageSync(QQMusicWebService.picUrl(songItem.getAlbumid()));
-                            if (bitmap != null && bitmap.getWidth() > 0) {
-                                try {
-                                    File dir = new File(Environment.getExternalStorageDirectory() + File.separator + "music_cover" + File.separator);
-                                    boolean direxist = true;
-                                    if (!dir.exists()) {
-                                        direxist = dir.mkdirs();
+                QQMusicWebService.searchMusic(title + " " + zuojia, 1, new QQMusicWebService.CommonCallback<SearchRes>() {
+                    @Override
+                    public void callback(final SearchRes res) {
+                        x.task().run(() -> {
+                            boolean success = false;
+                            if (res != null &&
+                                    res.getCode() == 0 &&
+                                    res.getData() != null &&
+                                    res.getData().getSong() != null &&
+                                    res.getData().getSong().getList() != null &&
+                                    res.getData().getSong().getList().size() > 0) {
+                                SearchRes.SongItem songItem = res.getData().getSong().getList().get(0);
+                                Log.e(TAG, "加载封面:" + QQMusicWebService.picUrl(songItem.getAlbumid()));
+                                Bitmap bitmap = ImageLoader.getInstance().loadImageSync(QQMusicWebService.picUrl(songItem.getAlbumid()));
+                                if (bitmap != null && bitmap.getWidth() > 0) {
+                                    try {
+                                        File dir = new File(Environment.getExternalStorageDirectory() + File.separator + "music_cover" + File.separator);
+                                        boolean direxist = true;
+                                        if (!dir.exists()) {
+                                            direxist = dir.mkdirs();
+                                        }
+                                        cover.delete();
+                                        if (direxist && cover.createNewFile()) {
+                                            EventBus.getDefault().post(musicCoverRefresh.setCover(bitmap));
+                                            FileOutputStream out = new FileOutputStream(cover);
+                                            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+                                            success = true;
+                                            Log.e(TAG, "封面下载成功");
+                                        } else {
+                                            Log.e(TAG, "封面下载失败");
+                                        }
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
                                     }
-                                    cover.delete();
-                                    if (direxist && cover.createNewFile()) {
-                                        EventBus.getDefault().post(musicCoverRefresh.setCover(bitmap));
-                                        FileOutputStream out = new FileOutputStream(cover);
-                                        bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
-                                        success = true;
-                                        Log.e(TAG, "封面下载成功");
-                                    } else {
-                                        Log.e(TAG, "封面下载失败");
-                                    }
-                                } catch (Exception e) {
-                                    e.printStackTrace();
                                 }
                             }
-                        }
-                        runkey.remove(name);
-                        if (!success) {
-                            Log.e(TAG, "封面下载失败");
-                            EventBus.getDefault().post(musicCoverRefresh.setCover(defcover));
-                        }
-                    });
+                            if (!success) {
+                                Log.e(TAG, "封面下载失败");
+                                EventBus.getDefault().post(musicCoverRefresh.setCover(defcover));
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    }
+
+    public void loadMusicCover(final String title, final String zuojia, String url) {
+        x.task().run(() -> {
+            String name = nameGenerator.generate(title + "-" + zuojia + "-" + zuojia) + ".temp";
+            final MusicCoverRefresh musicCoverRefresh = new MusicCoverRefresh().setArtist(zuojia).setTitle(title);
+            final File cover = new File(Environment.getExternalStorageDirectory() + File.separator + "music_cover" + File.separator + name);
+            if (cover.exists()) {
+                Log.e(TAG, "已有的封面");
+                Bitmap bitmap = BitmapFactory.decodeFile(cover.getAbsolutePath());
+                if (bitmap != null && bitmap.getWidth() > 0) {
+                    EventBus.getDefault().post(musicCoverRefresh.setCover(bitmap));
+                } else {
+                    cover.delete();
+                    EventBus.getDefault().post(musicCoverRefresh.setCover(defcover));
                 }
-            });
-        }
+            } else {
+                Log.e(TAG, "新的封面");
+                Bitmap bitmap = ImageLoader.getInstance().loadImageSync(url);
+                boolean success = false;
+                if (bitmap != null && bitmap.getWidth() > 0) {
+                    try {
+                        File dir = new File(Environment.getExternalStorageDirectory() + File.separator + "music_cover" + File.separator);
+                        boolean direxist = true;
+                        if (!dir.exists()) {
+                            direxist = dir.mkdirs();
+                        }
+                        cover.delete();
+                        if (direxist && cover.createNewFile()) {
+                            EventBus.getDefault().post(musicCoverRefresh.setCover(bitmap));
+                            FileOutputStream out = new FileOutputStream(cover);
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+                            success = true;
+                            Log.e(TAG, "封面下载成功");
+                        } else {
+                            Log.e(TAG, "封面下载失败");
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                if (!success) {
+                    Log.e(TAG, "封面下载失败");
+                    EventBus.getDefault().post(musicCoverRefresh.setCover(defcover));
+                }
+            }
+        });
     }
 
     private String key = "";
@@ -129,5 +170,10 @@ public class MusicCoverManage {
             key = kk;
             loadMusicCover(event.getTitle(), event.getArtist());
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void onEvent(final MusicCoverRefresh event) {
+        key = "";
     }
 }

@@ -88,7 +88,7 @@
             android:visibility="gone"
             app:layout_marginLeftPercent="2%h"
             app:layout_marginRightPercent="2%h"
-            app:layout_marginTopPercent="2%h" />
+            app:layout_marginTopPercent="4%h" />
 
         <com.zhy.android.percent.support.PercentLinearLayout
             android:id="@+id/ll_controller"
@@ -97,7 +97,7 @@
             android:gravity="center"
             android:orientation="horizontal"
             app:layout_heightPercent="20%h"
-            app:layout_marginTopPercent="2%h">
+            app:layout_marginTopPercent="4%h">
 
             <LinearLayout
                 android:id="@+id/ll_prew"

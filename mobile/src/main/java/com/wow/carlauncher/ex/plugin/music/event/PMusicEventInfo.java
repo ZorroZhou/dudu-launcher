@@ -33,4 +33,12 @@ public class PMusicEventInfo {
         this.title = title;
         this.artist = artist;
     }
+
+    @Override
+    public String toString() {
+        return "PMusicEventInfo{" +
+                "title='" + title + '\'' +
+                ", artist='" + artist + '\'' +
+                '}';
+    }
 }

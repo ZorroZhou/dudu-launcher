@@ -8,11 +8,11 @@ import android.content.Context;
 
 public abstract class MusicController {
     protected Context context;
-    protected MusicPlugin musicView;
+    protected MusicPlugin musicPlugin;
 
-    public void init(Context context, MusicPlugin musicView) {
+    public void init(Context context, MusicPlugin musicPlugin) {
         this.context = context;
-        this.musicView = musicView;
+        this.musicPlugin = musicPlugin;
     }
 
     public abstract void destroy();

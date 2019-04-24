@@ -36,22 +36,22 @@ public class NwdMusicController extends MusicController {
 
     public void play() {
         sendEvent(CMD_RESUME);
-        musicView.refreshState(true);
+        musicPlugin.refreshState(true, false);
     }
 
     public void pause() {
         sendEvent(CMD_PAUSE);
-        musicView.refreshState(false);
+        musicPlugin.refreshState(false, false);
     }
 
     public void next() {
         sendEvent(CMD_NEXT);
-        musicView.refreshState(true);
+        musicPlugin.refreshState(true, false);
     }
 
     public void pre() {
         sendEvent(CMD_PRE);
-        musicView.refreshState(true);
+        musicPlugin.refreshState(true, false);
     }
 
     private void sendEvent(int event) {
@@ -73,13 +73,13 @@ public class NwdMusicController extends MusicController {
                 try {
                     String title = intent.getStringExtra("track");
                     String artist = intent.getStringExtra("artist");
-                    musicView.refreshInfo(title, artist);
+                    musicPlugin.refreshInfo(title, artist);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
                 try {
                     boolean playing = intent.getBooleanExtra("playing", false);
-                    musicView.refreshState(playing);
+                    musicPlugin.refreshState(playing, false);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

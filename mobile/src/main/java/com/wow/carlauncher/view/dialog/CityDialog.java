@@ -42,7 +42,7 @@ public class CityDialog extends BaseDialog2 implements OnWheelChangedListener {
     private String mCurrentDistrictName = "";
 
     public String getCityName() {
-        return dCurrentCityName;
+        return mCurrentCityName;
     }
 
     public String getDistrictName() {

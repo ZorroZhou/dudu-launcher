@@ -50,27 +50,22 @@ public class TpView extends BaseEXView {
     @ViewInject(R.id.tv_rb)
     private TextView tv_rb;
 
-    @Subscribe(threadMode = ThreadMode.ASYNC)
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(final PObdEventCarTp event) {
-        post(new Runnable() {
-            @Override
-            public void run() {
-                if (tv_lf != null && event.getlFTirePressure() != null) {
-                    tv_lf.setText(getContext().getString(R.string.driving_cool_black_tp, event.getlFTirePressure(), event.getlFTemp()));
-                }
+        if (tv_lf != null && event.getlFTirePressure() != null) {
+            tv_lf.setText(getContext().getString(R.string.driving_cool_black_tp, event.getlFTirePressure(), event.getlFTemp()));
+        }
 
-                if (tv_lb != null && event.getlBTirePressure() != null) {
-                    tv_lb.setText(getContext().getString(R.string.driving_cool_black_tp, event.getlBTirePressure(), event.getlBTemp()));
-                }
+        if (tv_lb != null && event.getlBTirePressure() != null) {
+            tv_lb.setText(getContext().getString(R.string.driving_cool_black_tp, event.getlBTirePressure(), event.getlBTemp()));
+        }
 
-                if (tv_rf != null && event.getrFTirePressure() != null) {
-                    tv_rf.setText(getContext().getString(R.string.driving_cool_black_tp, event.getrFTirePressure(), event.getrFTemp()));
-                }
+        if (tv_rf != null && event.getrFTirePressure() != null) {
+            tv_rf.setText(getContext().getString(R.string.driving_cool_black_tp, event.getrFTirePressure(), event.getrFTemp()));
+        }
 
-                if (tv_rb != null && event.getrBTirePressure() != null) {
-                    tv_rb.setText(getContext().getString(R.string.driving_cool_black_tp, event.getrBTirePressure(), event.getrBTemp()));
-                }
-            }
-        });
+        if (tv_rb != null && event.getrBTirePressure() != null) {
+            tv_rb.setText(getContext().getString(R.string.driving_cool_black_tp, event.getrBTirePressure(), event.getrBTemp()));
+        }
     }
 }

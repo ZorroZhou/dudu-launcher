@@ -26,6 +26,8 @@ public class DrivingActivity extends BaseActivity {
     @ViewInject(R.id.content)
     private FrameLayout content;
 
+    private CoolBlackView nowContent;
+
     @Override
     public void init() {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -40,7 +42,7 @@ public class DrivingActivity extends BaseActivity {
     }
 
     private void loadView() {
-        View nowContent = new CoolBlackView(this);
+        nowContent = new CoolBlackView(this);
         content.addView(nowContent, FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
         x.view().inject(this, nowContent);
     }
@@ -59,12 +61,18 @@ public class DrivingActivity extends BaseActivity {
     public void onResume() {
         super.onResume();
         isFront = true;
+        if (nowContent != null) {
+            nowContent.setFront(true);
+        }
     }
 
     @Override
     public void onPause() {
         super.onPause();
         isFront = false;
+        if (nowContent != null) {
+            nowContent.setFront(false);
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

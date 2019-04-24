@@ -292,11 +292,11 @@ public class LAMapView extends BaseEXView {
                 break;
             }
             case R.id.btn_gd: {
-                if (!AppUtil.isInstall(getContext(), AMAP_PACKAGE)) {
-                    Toast.makeText(getContext(), "没有安装高德地图", Toast.LENGTH_SHORT).show();
-                    break;
-                }
-                AMapCarPlugin.self().testNavi();
+//                if (!AppUtil.isInstall(getContext(), AMAP_PACKAGE)) {
+//                    Toast.makeText(getContext(), "没有安装高德地图", Toast.LENGTH_SHORT).show();
+//                    break;
+//                }
+//                AMapCarPlugin.self().testNavi();
                 break;
             }
         }
@@ -360,9 +360,9 @@ public class LAMapView extends BaseEXView {
                 msg = msg + "现在";
             } else {
                 if (event.getSegRemainDis() > 1000) {
-                    msg = msg + new BigDecimal(event.getSegRemainDis() / 1000).setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue() + "公里后";
+                    msg = msg + new BigDecimal(event.getSegRemainDis() / 1000).setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue() + "kM后";
                 } else {
-                    msg = msg + event.getSegRemainDis() + "米后";
+                    msg = msg + event.getSegRemainDis() + "M后";
                 }
             }
             tv_next_dis.setText(msg);
@@ -390,7 +390,7 @@ public class LAMapView extends BaseEXView {
             if (event.getRouteRemainTime() == 0 || event.getRouteRemainDis() == 0) {
                 tv_msg.setText("到达");
             } else {
-                String msg = "剩余" + new BigDecimal(event.getRouteRemainDis() / 1000f).setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue() + "公里";
+                String msg = "剩余" + new BigDecimal(event.getRouteRemainDis() / 1000f).setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue() + "KM";
                 tv_msg.setText(msg);
             }
         }

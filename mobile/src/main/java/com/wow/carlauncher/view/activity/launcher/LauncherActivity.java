@@ -68,6 +68,7 @@ import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.LEFT_BOTT
 import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.LEFT_TOP_CLICK;
 import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.LEFT_TOP_LONG_CLICK;
 import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.RIGHT_BOTTOM_CLICK;
+import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.RIGHT_BOTTOM_LONG_CLICK;
 import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.RIGHT_TOP_CLICK;
 import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.RIGHT_TOP_LONG_CLICK;
 
@@ -337,7 +338,9 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
                         x.task().autoPost(() -> {
                             //切换页面?
                             if (viewPager != null && viewPager.getAdapter() != null) {
-                                if (viewPager.getAdapter().getCount() == viewPager.getCurrentItem() + 1) {
+                                if (viewPager.getAdapter().getCount() - 1 == viewPager.getCurrentItem()) {
+                                    viewPager.setCurrentItem(0, true);
+                                } else if (viewPager.getAdapter().getCount() - 1 == viewPager.getCurrentItem() + 1) {
                                     viewPager.setCurrentItem(0, true);
                                 } else {
                                     viewPager.setCurrentItem(viewPager.getCurrentItem() + 1, true);
@@ -346,6 +349,14 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
                         });
                     }
                     break;
+                case RIGHT_BOTTOM_LONG_CLICK:
+                    x.task().autoPost(() -> {
+                        if (viewPager != null) {
+                            viewPager.setCurrentItem(viewPager.getAdapter().getCount() - 1, true);
+                        }
+                    });
+                    break;
+
             }
         }
     }

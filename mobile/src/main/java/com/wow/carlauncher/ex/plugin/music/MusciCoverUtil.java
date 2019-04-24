@@ -19,9 +19,13 @@ public class MusciCoverUtil {
         }
         run = true;
         x.task().run(() -> {
-            CoverTemp temp = DatabaseManage.getBean(CoverTemp.class, " key='" + title + "-" + artist + "'");
+            String key = title;
+            if (artist != null) {
+                key = key + artist;
+            }
+            CoverTemp temp = DatabaseManage.getBean(CoverTemp.class, " key='" + key + "'");
             if (temp == null) {
-                QQMusicWebService.searchMusic(title + " " + artist, 1, new QQMusicWebService.CommonCallback<SearchRes>() {
+                QQMusicWebService.searchMusic(key, 1, new QQMusicWebService.CommonCallback<SearchRes>() {
                     @Override
                     public void callback(final SearchRes res) {
                         if (res != null &&

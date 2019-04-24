@@ -213,7 +213,7 @@ public class LPromptView extends BaseEXView {
             if (warn) {
                 iv_carinfo_tp.setImageResource(R.mipmap.ic_l_tp_warn);
             } else {
-                iv_carinfo_tp.setImageResource(R.mipmap.ic_l_tp);
+                iv_carinfo_tp.setImageResource(ThemeManage.self().getCurrentThemeRes(R.mipmap.ic_l_tp));
             }
         } else {
             iv_carinfo_tp.setVisibility(GONE);

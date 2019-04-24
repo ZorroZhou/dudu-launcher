@@ -20,6 +20,7 @@ import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.ThemeManage.Theme;
 import com.wow.carlauncher.ex.manage.ThemeManage.ThemeMode;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
+import com.wow.carlauncher.ex.manage.appInfo.event.MAppInfoRefreshEvent;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.console.ConsolePlugin;
 import com.wow.carlauncher.ex.plugin.console.ConsoleProtoclEnum;
@@ -186,7 +187,7 @@ public class SAppView extends BaseView {
             @Override
             public void onSelect(ItemTransformer setEnum) {
                 SharedPreUtil.saveSharedPreInteger(SDATA_LAUNCHER_ITEM_TRAN, setEnum.getId());
-                sv_plugin_select.setSummary(setEnum.getName());
+                sv_item_tran.setSummary(setEnum.getName());
                 EventBus.getDefault().post(new LPageTransformerChangeEvent());
             }
         });
@@ -301,6 +302,7 @@ public class SAppView extends BaseView {
             @Override
             public void onSelect(String t) {
                 SharedPreUtil.saveSharedPreString(CommonData.SDATA_HIDE_APPS, t);
+                EventBus.getDefault().post(new MAppInfoRefreshEvent());
             }
         });
 

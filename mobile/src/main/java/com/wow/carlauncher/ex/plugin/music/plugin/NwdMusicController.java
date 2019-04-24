@@ -4,9 +4,28 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.os.Environment;
+import android.util.Log;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.wow.carlauncher.common.util.CommonUtil;
+import com.wow.carlauncher.ex.manage.ImageManage;
+import com.wow.carlauncher.ex.plugin.music.MusciCoverUtil;
 import com.wow.carlauncher.ex.plugin.music.MusicController;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
+import com.wow.carlauncher.repertory.db.entiy.CoverTemp;
+import com.wow.carlauncher.repertory.db.manage.DatabaseManage;
+import com.wow.carlauncher.repertory.web.qqmusic.QQMusicWebService;
+import com.wow.carlauncher.repertory.web.qqmusic.res.SearchRes;
+
+import org.greenrobot.eventbus.EventBus;
+import org.xutils.x;
+
+import java.io.File;
+import java.io.FileOutputStream;
+
+import static com.wow.carlauncher.common.CommonData.TAG;
 
 /**
  * Created by 10124 on 2017/10/26.
@@ -73,7 +92,18 @@ public class NwdMusicController extends MusicController {
                 try {
                     String title = intent.getStringExtra("track");
                     String artist = intent.getStringExtra("artist");
+                    if (title.contains(".")) {
+                        title = title.substring(0, title.indexOf("."));
+                    }
+                    if (title.contains("-")) {
+                        String[] temp = title.split("-");
+                        title = temp[0];
+                        if (CommonUtil.isNull(artist)) {
+                            artist = temp[1];
+                        }
+                    }
                     musicPlugin.refreshInfo(title, artist);
+                    MusciCoverUtil.loadCover(title, null, musicPlugin);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

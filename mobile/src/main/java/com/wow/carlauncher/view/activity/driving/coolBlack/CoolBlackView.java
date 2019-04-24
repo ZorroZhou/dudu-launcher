@@ -14,6 +14,7 @@ import com.wow.carlauncher.common.AppContext;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.DateUtil;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
+import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventNavInfo;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventState;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventAction;
@@ -24,6 +25,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.view.annotation.ViewInject;
+import org.xutils.x;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -34,6 +36,7 @@ import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.RIGHT_BOT
 
 /**
  * Created by 10124 on 2018/5/11.
+ * todo 这里应该加个接口做isFront的传值
  */
 
 public class CoolBlackView extends BaseEXView {
@@ -77,6 +80,13 @@ public class CoolBlackView extends BaseEXView {
     @ViewInject(R.id.tv_amapmsg)
     private TextView tv_amapmsg;
 
+    private boolean isFront = true;
+
+    public CoolBlackView setFront(boolean front) {
+        isFront = front;
+        return this;
+    }
+
     private boolean fktuoguan = false;
     private boolean showNav = false;
 
@@ -89,11 +99,18 @@ public class CoolBlackView extends BaseEXView {
 
     @Subscribe(priority = 90)
     public void onEvent(PFkEventAction event) {
+        if (!isFront) {
+            return;
+        }
         if (YLFK.equals(event.getFangkongProtocol())) {
             boolean needCancelEvent = false;
             switch (event.getAction()) {
                 case RIGHT_BOTTOM_CLICK:
-                    showNav(!showNav);
+                    if (inNav) {
+                        x.task().autoPost(() -> showNav(!showNav));
+                    } else {
+                        ToastManage.self().show("没有开启导航!");
+                    }
                     needCancelEvent = true;
                     break;
             }
@@ -110,9 +127,11 @@ public class CoolBlackView extends BaseEXView {
         }
     }
 
+    private boolean inNav = false;
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(final PAmapEventState event) {
+        inNav = event.isRunning();
         if (!fktuoguan) {
             showNav(event.isRunning());
         }
@@ -198,5 +217,6 @@ public class CoolBlackView extends BaseEXView {
             }
         }
     }
+
 }
 

@@ -34,6 +34,7 @@ public class AboutActivity extends BaseActivity {
                 "1,酷我音乐车机版本无法支持,无秘钥,废弃\n" +
                 "2,巡航信息只有路名,不做支持了\n" +
                 "软件已经完全开源,源代码请到QQ交流群\n" +
+                "任何修改版,请保留以上信息,同时在下方添加修改说明!\n" +
                 "QQ交流群：109799213";
         about.setText(msg);
     }

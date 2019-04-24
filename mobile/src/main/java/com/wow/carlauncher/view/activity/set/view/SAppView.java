@@ -349,8 +349,9 @@ public class SAppView extends BaseView {
         tianqi_city.setOnClickListener(view -> {
             final CityDialog cityDialog = new CityDialog(getContext());
             cityDialog.setOkclickListener(dialog -> {
-                if (CommonUtil.isNotNull(cityDialog.getDistrictName())) {
+                if (CommonUtil.isNotNull(cityDialog.getCityName()) && CommonUtil.isNotNull(cityDialog.getDistrictName())) {
                     SharedPreUtil.saveSharedPreString(CommonData.SDATA_WEATHER_DISTRICT, cityDialog.getDistrictName());
+                    SharedPreUtil.saveSharedPreString(CommonData.SDATA_WEATHER_SHI, cityDialog.getCityName());
                     cityDialog.dismiss();
                     EventBus.getDefault().post(new LCityRefreshEvent());
                     tianqi_city.setSummary(cityDialog.getDistrictName());

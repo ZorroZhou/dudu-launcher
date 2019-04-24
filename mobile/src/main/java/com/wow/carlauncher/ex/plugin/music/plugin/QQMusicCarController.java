@@ -24,6 +24,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 10124 on 2017/10/26.
@@ -115,8 +116,12 @@ public class QQMusicCarController extends MusicController {
                 if ("com.tencent.qqmusiccar.action.PLAY_COMMAND_SEND_FOR_THIRD".equals(intent.getAction()) && intent.getStringExtra("com.tencent.qqmusiccar.EXTRA_COMMAND_DATA") != null) {
                     String value = intent.getStringExtra("com.tencent.qqmusiccar.EXTRA_COMMAND_DATA");
                     Log.e(PACKAGE_NAME, "onReceive: " + value);
+                    Map map = gson.fromJson(value, Map.class);
                     //更新状态的命令
-                    if (value.startsWith("{\"module\":\"play\",\"command\":{\"method\":\"update_state\"")) {
+                    String cmd = ((Map) map.get("command")).get("method") + "";
+
+                    if (cmd.equals("update_state")) {
+                        Log.d(PACKAGE_NAME, "onReceive: 1");
                         UpdateStateMessage message = gson.fromJson(value, UpdateStateMessage.class);
                         UpdateStateData data = message.getCommand().getData();
                         if (data != null) {
@@ -137,7 +142,8 @@ public class QQMusicCarController extends MusicController {
                                 run = false;
                             }
                         }
-                    } else if (value.startsWith("{\"module\":\"play\",\"command\":{\"method\":\"update_song\"")) {
+                    } else if (cmd.equals("update_song")) {
+                        Log.d(PACKAGE_NAME, "onReceive: 2");
                         UpdateSongMessage message = gson.fromJson(value, UpdateSongMessage.class);
                         BaseSongInfo data = message.getCommand().getData();
                         if (data != null) {
@@ -151,13 +157,13 @@ public class QQMusicCarController extends MusicController {
                                 MusciCoverUtil.loadCover(data.getKey_title(), artist, musicPlugin);
                             }
                         }
-                    } else if (value.startsWith("{\"module\":\"play\",\"command\":{\"method\":\"update_album\"")) {
+                    } else if (cmd.equals("update_album")) {
                         UpdateAlbumMessage message = gson.fromJson(value, UpdateAlbumMessage.class);
                         final UpdateAlbumData data = message.getCommand().getData();
                         if (SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_MUSIC_INSIDE_COVER, true)) {
                             musicPlugin.refreshCover(data.getAlbum_url());
                         }
-                    } else if (value.startsWith("{\"module\":\"play\",\"command\":{\"method\":\"update_lyric\"")) {
+                    } else if (cmd.equals("update_lyric")) {
                         UpdateLyricMessage message = gson.fromJson(value, UpdateLyricMessage.class);
                     }
                 }

@@ -91,6 +91,9 @@ public class NwdMusicController extends MusicController {
                     || "com.android.music.playstatechanged".equals(intent.getAction())) {
                 try {
                     String title = intent.getStringExtra("track");
+                    if (CommonUtil.isNull(title)) {
+                        return;
+                    }
                     String artist = intent.getStringExtra("artist");
                     if (title.contains(".")) {
                         title = title.substring(0, title.indexOf("."));

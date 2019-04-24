@@ -26,6 +26,7 @@ import com.wow.carlauncher.ex.plugin.console.event.PConsoleEventCallState;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventAction;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import com.wow.carlauncher.view.activity.AppSelectActivity;
+import com.wow.carlauncher.view.activity.driving.DrivingActivity;
 import com.wow.carlauncher.view.activity.launcher.event.LDockRefreshEvent;
 import com.wow.carlauncher.view.activity.launcher.event.LItemRefreshEvent;
 import com.wow.carlauncher.view.activity.launcher.event.LItemToFristEvent;
@@ -62,15 +63,7 @@ import static com.wow.carlauncher.common.CommonData.SDATA_DOCK3_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK4_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_LAUNCHER_ITEM_TRAN;
 import static com.wow.carlauncher.ex.plugin.fk.FangkongProtocolEnum.YLFK;
-import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.CENTER_CLICK;
-import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.CENTER_LONG_CLICK;
-import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.LEFT_BOTTOM_CLICK;
-import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.LEFT_TOP_CLICK;
-import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.LEFT_TOP_LONG_CLICK;
-import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.RIGHT_BOTTOM_CLICK;
-import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.RIGHT_BOTTOM_LONG_CLICK;
-import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.RIGHT_TOP_CLICK;
-import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.RIGHT_TOP_LONG_CLICK;
+import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.*;
 
 public class LauncherActivity extends Activity implements ThemeManage.OnThemeChangeListener {
 
@@ -329,6 +322,12 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
                     } else {
                         ConsolePlugin.self().mute();
                     }
+                    break;
+                }
+                case LEFT_BOTTOM_LONG_CLICK: {
+                    Intent appIntent = new Intent(getApplicationContext(), DrivingActivity.class);
+                    appIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(appIntent);
                     break;
                 }
                 case RIGHT_BOTTOM_CLICK:

@@ -44,7 +44,7 @@ public class AppIconTemp {
         putIcon("com.nwd.radio", R.mipmap.app_icon_radio);
 
         //高德导航
-        putIcon("com.autonavi.amapauto", R.mipmap.app_icon_nav);
+        putIcon("com.autonavi.amapauto", R.mipmap.app_icon_amap);
 
         //安卓设置
         putIcon("com.android.settings", R.mipmap.app_icon_set);

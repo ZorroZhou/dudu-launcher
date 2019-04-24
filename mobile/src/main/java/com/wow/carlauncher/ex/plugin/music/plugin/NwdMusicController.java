@@ -114,6 +114,7 @@ public class NwdMusicController extends MusicController {
                             Bitmap cover = ImageManage.self().loadImageSync(temp.getUrl());
                             if (cover == null || cover.getWidth() < 10) {
                                 musicPlugin.refreshCover(null);
+                                DatabaseManage.delete(CoverTemp.class, " key='" + title + "-" + artist + "'");
                             } else {
                                 musicPlugin.refreshCover(temp.getUrl());
                             }

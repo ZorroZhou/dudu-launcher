@@ -56,4 +56,5 @@ dependencies {
     implementation 'com.github.goweii:AnyPermission:1.1.0'
     implementation 'com.ToxicBakery.viewpager.transforms:view-pager-transforms:2.0.24'
     implementation 'io.netty:netty-all:4.1.31.Final'
+    implementation 'com.google.guava:guava:24.1.1-android'
 }

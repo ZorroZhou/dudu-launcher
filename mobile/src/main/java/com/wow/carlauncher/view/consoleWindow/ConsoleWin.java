@@ -92,7 +92,7 @@ public class ConsoleWin implements ThemeManage.OnThemeChangeListener {
         } else {
             winparams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
         }
-        if (SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_POPUP_FULL_SCREEN, true)) {
+        if (SharedPreUtil.getBoolean(CommonData.SDATA_POPUP_FULL_SCREEN, true)) {
             winparams.flags = WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_FULLSCREEN;
         } else {
             winparams.flags = WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_FULLSCREEN;
@@ -282,7 +282,7 @@ public class ConsoleWin implements ThemeManage.OnThemeChangeListener {
                 break;
             }
             case R.id.ll_dock1: {
-                String packname = SharedPreUtil.getSharedPreString(SDATA_DOCK1_CLASS);
+                String packname = SharedPreUtil.getString(SDATA_DOCK1_CLASS);
                 if (CommonUtil.isNull(packname)) {
                     ToastManage.self().show("没有选择APP,请跳转至首页选取");
                 } else {
@@ -292,7 +292,7 @@ public class ConsoleWin implements ThemeManage.OnThemeChangeListener {
                 break;
             }
             case R.id.ll_dock2: {
-                String packname = SharedPreUtil.getSharedPreString(SDATA_DOCK2_CLASS);
+                String packname = SharedPreUtil.getString(SDATA_DOCK2_CLASS);
                 if (CommonUtil.isNull(packname)) {
                     ToastManage.self().show("没有选择APP,请跳转至首页选取");
                 } else {
@@ -302,7 +302,7 @@ public class ConsoleWin implements ThemeManage.OnThemeChangeListener {
                 break;
             }
             case R.id.ll_dock3: {
-                String packname = SharedPreUtil.getSharedPreString(SDATA_DOCK3_CLASS);
+                String packname = SharedPreUtil.getString(SDATA_DOCK3_CLASS);
                 if (CommonUtil.isNull(packname)) {
                     ToastManage.self().show("没有选择APP,请跳转至首页选取");
                 } else {
@@ -312,7 +312,7 @@ public class ConsoleWin implements ThemeManage.OnThemeChangeListener {
                 break;
             }
             case R.id.ll_dock4: {
-                String packname = SharedPreUtil.getSharedPreString(SDATA_DOCK4_CLASS);
+                String packname = SharedPreUtil.getString(SDATA_DOCK4_CLASS);
                 if (CommonUtil.isNull(packname)) {
                     ToastManage.self().show("没有选择APP,请跳转至首页选取");
                 } else {
@@ -331,42 +331,42 @@ public class ConsoleWin implements ThemeManage.OnThemeChangeListener {
     }
 
     private void loadDock() {
-        String packname1 = SharedPreUtil.getSharedPreString(SDATA_DOCK1_CLASS);
+        String packname1 = SharedPreUtil.getString(SDATA_DOCK1_CLASS);
         if (CommonUtil.isNotNull(packname1)) {
             if (AppInfoManage.self().checkApp(packname1)) {
                 iv_dock1.setImageDrawable(AppInfoManage.self().getIcon(packname1));
             } else {
                 ToastManage.self().show("dock1加载失败");
-                SharedPreUtil.saveSharedPreString(SDATA_DOCK1_CLASS, null);
+                SharedPreUtil.saveString(SDATA_DOCK1_CLASS, null);
             }
         }
-        String packname2 = SharedPreUtil.getSharedPreString(SDATA_DOCK2_CLASS);
+        String packname2 = SharedPreUtil.getString(SDATA_DOCK2_CLASS);
         if (CommonUtil.isNotNull(packname2)) {
             if (AppInfoManage.self().checkApp(packname2)) {
                 iv_dock2.setImageDrawable(AppInfoManage.self().getIcon(packname2));
             } else {
                 ToastManage.self().show("dock2加载失败");
-                SharedPreUtil.saveSharedPreString(SDATA_DOCK2_CLASS, null);
+                SharedPreUtil.saveString(SDATA_DOCK2_CLASS, null);
             }
         }
 
-        String packname3 = SharedPreUtil.getSharedPreString(SDATA_DOCK3_CLASS);
+        String packname3 = SharedPreUtil.getString(SDATA_DOCK3_CLASS);
         if (CommonUtil.isNotNull(packname3)) {
             if (AppInfoManage.self().checkApp(packname3)) {
                 iv_dock3.setImageDrawable(AppInfoManage.self().getIcon(packname3));
             } else {
                 ToastManage.self().show("dock3加载失败");
-                SharedPreUtil.saveSharedPreString(SDATA_DOCK3_CLASS, null);
+                SharedPreUtil.saveString(SDATA_DOCK3_CLASS, null);
             }
         }
 
-        String packname4 = SharedPreUtil.getSharedPreString(SDATA_DOCK4_CLASS);
+        String packname4 = SharedPreUtil.getString(SDATA_DOCK4_CLASS);
         if (CommonUtil.isNotNull(packname4)) {
             if (AppInfoManage.self().checkApp(packname4)) {
                 iv_dock4.setImageDrawable(AppInfoManage.self().getIcon(packname4));
             } else {
                 ToastManage.self().show("dock4加载失败");
-                SharedPreUtil.saveSharedPreString(SDATA_DOCK4_CLASS, null);
+                SharedPreUtil.saveString(SDATA_DOCK4_CLASS, null);
             }
         }
     }

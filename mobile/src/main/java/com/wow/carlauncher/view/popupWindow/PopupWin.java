@@ -113,7 +113,7 @@ public class PopupWin {
         } else {
             winparams.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
         }
-        if (SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_POPUP_FULL_SCREEN, true)) {
+        if (SharedPreUtil.getBoolean(CommonData.SDATA_POPUP_FULL_SCREEN, true)) {
             winparams.flags = WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_FULLSCREEN;
         } else {
             winparams.flags = WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_FULLSCREEN;
@@ -123,8 +123,8 @@ public class PopupWin {
         winparams.height = oheight * rank;
 
         winparams.gravity = Gravity.TOP | Gravity.START;
-        winparams.x = SharedPreUtil.getSharedPreInteger(CommonData.SDATA_POPUP_WIN_X, 0);
-        winparams.y = SharedPreUtil.getSharedPreInteger(CommonData.SDATA_POPUP_WIN_Y, 0);
+        winparams.x = SharedPreUtil.getInteger(CommonData.SDATA_POPUP_WIN_X, 0);
+        winparams.y = SharedPreUtil.getInteger(CommonData.SDATA_POPUP_WIN_Y, 0);
 
         popupWindow = View.inflate(context, R.layout.popup_window, null);
         pluginHome = (LinearLayout) popupWindow.findViewById(R.id.ll_plugin);
@@ -138,7 +138,7 @@ public class PopupWin {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(PEventFSRefresh event) {
         Log.e(TAG, "onEventMainThread: " + event);
-        if (SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_POPUP_FULL_SCREEN, true)) {
+        if (SharedPreUtil.getBoolean(CommonData.SDATA_POPUP_FULL_SCREEN, true)) {
             winparams.flags = WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_FULLSCREEN;
         } else {
             winparams.flags = WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
@@ -152,7 +152,7 @@ public class PopupWin {
 
     private void checkShowApp(final String app) {
         //如果APP是空的,则说明用户没有打开权限,则直接不显示了
-        if (!SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_POPUP_SHOW_TYPE, true)) {
+        if (!SharedPreUtil.getBoolean(CommonData.SDATA_POPUP_SHOW_TYPE, true)) {
             if (CommonUtil.isNull(app)) {
                 x.task().autoPost(new Runnable() {
                     @Override
@@ -178,8 +178,8 @@ public class PopupWin {
         x.task().autoPost(new Runnable() {
             @Override
             public void run() {
-                if (!SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_POPUP_SHOW_TYPE, true)) {
-                    final String selectapp = SharedPreUtil.getSharedPreString(CommonData.SDATA_POPUP_SHOW_APPS);
+                if (!SharedPreUtil.getBoolean(CommonData.SDATA_POPUP_SHOW_TYPE, true)) {
+                    final String selectapp = SharedPreUtil.getString(CommonData.SDATA_POPUP_SHOW_APPS);
                     if (selectapp.contains("[" + app + "]")) {
                         popupWindow.setVisibility(View.VISIBLE);
                     } else {
@@ -197,7 +197,7 @@ public class PopupWin {
     }
 
     private void showPlugin(boolean goNext) {
-        int pluginId = SharedPreUtil.getSharedPreInteger(SDATA_POPUP_CURRENT_PLUGIN, 1);
+        int pluginId = SharedPreUtil.getInteger(SDATA_POPUP_CURRENT_PLUGIN, 1);
         if (goNext) {
             if (pluginId >= 3) {
                 pluginId = 1;
@@ -205,7 +205,7 @@ public class PopupWin {
                 pluginId = pluginId + 1;
             }
         }
-        SharedPreUtil.saveSharedPreInteger(SDATA_POPUP_CURRENT_PLUGIN, pluginId);
+        SharedPreUtil.saveInteger(SDATA_POPUP_CURRENT_PLUGIN, pluginId);
         if (pluginId == 1) {
             pluginHome.setVisibility(View.GONE);
             winparams.width = owidth * rank;
@@ -325,7 +325,7 @@ public class PopupWin {
         if (Build.VERSION.SDK_INT >= 23 && !Settings.canDrawOverlays(context)) {
             return;
         }
-        if (!SharedPreUtil.getSharedPreBoolean(SDATA_POPUP_ALLOW_SHOW, true)) {
+        if (!SharedPreUtil.getBoolean(SDATA_POPUP_ALLOW_SHOW, true)) {
             return;
         }
         if (!isShow) {
@@ -370,8 +370,8 @@ public class PopupWin {
                 wm.updateViewLayout(popupWindow, winparams);
                 return true;
             } else if (e.getAction() == MotionEvent.ACTION_UP) {
-                SharedPreUtil.saveSharedPreInteger(CommonData.SDATA_POPUP_WIN_X, winparams.x);
-                SharedPreUtil.saveSharedPreInteger(CommonData.SDATA_POPUP_WIN_Y, winparams.y);
+                SharedPreUtil.saveInteger(CommonData.SDATA_POPUP_WIN_X, winparams.x);
+                SharedPreUtil.saveInteger(CommonData.SDATA_POPUP_WIN_Y, winparams.y);
                 return true;
             }
             return false;

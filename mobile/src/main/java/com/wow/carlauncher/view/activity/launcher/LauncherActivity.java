@@ -110,7 +110,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
         setContentView(R.layout.activity_lanncher);
         x.view().inject(this);
         viewPager.addOnPageChangeListener(postion);
-        viewPager.setPageTransformer(true, ItemTransformer.getById(SharedPreUtil.getSharedPreInteger(SDATA_LAUNCHER_ITEM_TRAN, ItemTransformer.None.getId())).getTransformer());
+        viewPager.setPageTransformer(true, ItemTransformer.getById(SharedPreUtil.getInteger(SDATA_LAUNCHER_ITEM_TRAN, ItemTransformer.None.getId())).getTransformer());
 
         EventBus.getDefault().register(this);
         initItem();
@@ -121,16 +121,16 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
         //计算排序
         List<ItemModel> items = new ArrayList<>();
         for (ItemEnum item : CommonData.LAUNCHER_ITEMS) {
-            if (SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_LAUNCHER_ITEM_OPEN_ + item.getId(), true)) {
+            if (SharedPreUtil.getBoolean(CommonData.SDATA_LAUNCHER_ITEM_OPEN_ + item.getId(), true)) {
                 items.add(new ItemModel(item,
-                        SharedPreUtil.getSharedPreInteger(CommonData.SDATA_LAUNCHER_ITEM_SORT_ + item.getId(), item.getId()),
-                        SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_LAUNCHER_ITEM_OPEN_ + item.getId(), true)
+                        SharedPreUtil.getInteger(CommonData.SDATA_LAUNCHER_ITEM_SORT_ + item.getId(), item.getId()),
+                        SharedPreUtil.getBoolean(CommonData.SDATA_LAUNCHER_ITEM_OPEN_ + item.getId(), true)
                 ));
             }
         }
 
         Collections.sort(items, (o1, o2) -> o1.index - o2.index);
-        int psize = SharedPreUtil.getSharedPreInteger(CommonData.SDATA_LAUNCHER_ITEM_NUM, 3);
+        int psize = SharedPreUtil.getInteger(CommonData.SDATA_LAUNCHER_ITEM_NUM, 3);
         if (psize != 3) {
             psize = 4;
         }
@@ -201,7 +201,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
             if (resultCode == RESULT_OK) {
                 String packName = data.getStringExtra(IDATA_APP_PACKAGE_NAME);
                 int mark = data.getIntExtra(IDATA_APP_MARK, -1);
-                SharedPreUtil.saveSharedPreString(SDATA_DOCK1_CLASS, mark + CommonData.CONSTANT_APP_PACKAGE_SEPARATE + packName);
+                SharedPreUtil.saveString(SDATA_DOCK1_CLASS, mark + CommonData.CONSTANT_APP_PACKAGE_SEPARATE + packName);
                 EventBus.getDefault().post(new LDockRefreshEvent());
             }
         }
@@ -209,7 +209,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
             if (resultCode == RESULT_OK) {
                 String packName = data.getStringExtra(IDATA_APP_PACKAGE_NAME);
                 int mark = data.getIntExtra(IDATA_APP_MARK, -1);
-                SharedPreUtil.saveSharedPreString(SDATA_DOCK2_CLASS, mark + CommonData.CONSTANT_APP_PACKAGE_SEPARATE + packName);
+                SharedPreUtil.saveString(SDATA_DOCK2_CLASS, mark + CommonData.CONSTANT_APP_PACKAGE_SEPARATE + packName);
                 EventBus.getDefault().post(new LDockRefreshEvent());
             }
         }
@@ -217,7 +217,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
             if (resultCode == RESULT_OK) {
                 String packName = data.getStringExtra(IDATA_APP_PACKAGE_NAME);
                 int mark = data.getIntExtra(IDATA_APP_MARK, -1);
-                SharedPreUtil.saveSharedPreString(SDATA_DOCK3_CLASS, mark + CommonData.CONSTANT_APP_PACKAGE_SEPARATE + packName);
+                SharedPreUtil.saveString(SDATA_DOCK3_CLASS, mark + CommonData.CONSTANT_APP_PACKAGE_SEPARATE + packName);
                 EventBus.getDefault().post(new LDockRefreshEvent());
             }
         }
@@ -225,7 +225,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
             if (resultCode == RESULT_OK) {
                 String packName = data.getStringExtra(IDATA_APP_PACKAGE_NAME);
                 int mark = data.getIntExtra(IDATA_APP_MARK, -1);
-                SharedPreUtil.saveSharedPreString(SDATA_DOCK4_CLASS, mark + CommonData.CONSTANT_APP_PACKAGE_SEPARATE + packName);
+                SharedPreUtil.saveString(SDATA_DOCK4_CLASS, mark + CommonData.CONSTANT_APP_PACKAGE_SEPARATE + packName);
                 EventBus.getDefault().post(new LDockRefreshEvent());
             }
         }
@@ -266,7 +266,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void onEvent(LPageTransformerChangeEvent event) {
-        viewPager.setPageTransformer(true, ItemTransformer.getById(SharedPreUtil.getSharedPreInteger(SDATA_LAUNCHER_ITEM_TRAN, ItemTransformer.None.getId())).getTransformer());
+        viewPager.setPageTransformer(true, ItemTransformer.getById(SharedPreUtil.getInteger(SDATA_LAUNCHER_ITEM_TRAN, ItemTransformer.None.getId())).getTransformer());
     }
 
 

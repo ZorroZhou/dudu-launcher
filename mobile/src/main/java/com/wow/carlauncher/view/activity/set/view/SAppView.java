@@ -125,10 +125,10 @@ public class SAppView extends BaseView {
     @Override
     protected void initView() {
         sv_music_inside_cover.setOnValueChangeListener(new SetSwitchOnClickListener(CommonData.SDATA_MUSIC_INSIDE_COVER));
-        sv_music_inside_cover.setChecked(SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_MUSIC_INSIDE_COVER, true));
+        sv_music_inside_cover.setChecked(SharedPreUtil.getBoolean(CommonData.SDATA_MUSIC_INSIDE_COVER, true));
 
 
-        sv_theme_night.setSummary(Theme.getById(SharedPreUtil.getSharedPreInteger(SDATA_APP_THEME_NIGHT, Theme.BLACK.getId())).getName());
+        sv_theme_night.setSummary(Theme.getById(SharedPreUtil.getInteger(SDATA_APP_THEME_NIGHT, Theme.BLACK.getId())).getName());
         sv_theme_night.setOnClickListener(new SetEnumOnClickListener<Theme>(getContext(), THEMES) {
             @Override
             public String title() {
@@ -137,18 +137,18 @@ public class SAppView extends BaseView {
 
             @Override
             public Theme getCurr() {
-                return Theme.getById(SharedPreUtil.getSharedPreInteger(SDATA_APP_THEME_NIGHT, Theme.BLACK.getId()));
+                return Theme.getById(SharedPreUtil.getInteger(SDATA_APP_THEME_NIGHT, Theme.BLACK.getId()));
             }
 
             @Override
             public void onSelect(Theme setEnum) {
-                SharedPreUtil.saveSharedPreInteger(SDATA_APP_THEME_NIGHT, setEnum.getId());
+                SharedPreUtil.saveInteger(SDATA_APP_THEME_NIGHT, setEnum.getId());
                 sv_theme_night.setSummary(setEnum.getName());
                 ThemeManage.self().refreshTheme();
             }
         });
 
-        sv_theme_day.setSummary(Theme.getById(SharedPreUtil.getSharedPreInteger(SDATA_APP_THEME_DAY, Theme.WHITE.getId())).getName());
+        sv_theme_day.setSummary(Theme.getById(SharedPreUtil.getInteger(SDATA_APP_THEME_DAY, Theme.WHITE.getId())).getName());
         sv_theme_day.setOnClickListener(new SetEnumOnClickListener<Theme>(getContext(), THEMES) {
             @Override
             public String title() {
@@ -157,19 +157,19 @@ public class SAppView extends BaseView {
 
             @Override
             public Theme getCurr() {
-                return Theme.getById(SharedPreUtil.getSharedPreInteger(SDATA_APP_THEME_DAY, Theme.WHITE.getId()));
+                return Theme.getById(SharedPreUtil.getInteger(SDATA_APP_THEME_DAY, Theme.WHITE.getId()));
             }
 
             @Override
             public void onSelect(Theme setEnum) {
-                SharedPreUtil.saveSharedPreInteger(SDATA_APP_THEME_DAY, setEnum.getId());
+                SharedPreUtil.saveInteger(SDATA_APP_THEME_DAY, setEnum.getId());
                 sv_theme_day.setSummary(setEnum.getName());
                 ThemeManage.self().refreshTheme();
             }
         });
 
 
-        sv_item_tran.setSummary(ItemTransformer.getById(SharedPreUtil.getSharedPreInteger(SDATA_LAUNCHER_ITEM_TRAN, ItemTransformer.None.getId())).getName());
+        sv_item_tran.setSummary(ItemTransformer.getById(SharedPreUtil.getInteger(SDATA_LAUNCHER_ITEM_TRAN, ItemTransformer.None.getId())).getName());
         sv_item_tran.setOnClickListener(new SetEnumOnClickListener<ItemTransformer>(getContext(), CommonData.LAUNCHER_ITEMS_TRANS) {
             @Override
             public String title() {
@@ -178,12 +178,12 @@ public class SAppView extends BaseView {
 
             @Override
             public ItemTransformer getCurr() {
-                return ItemTransformer.getById(SharedPreUtil.getSharedPreInteger(SDATA_LAUNCHER_ITEM_TRAN, ItemTransformer.None.getId()));
+                return ItemTransformer.getById(SharedPreUtil.getInteger(SDATA_LAUNCHER_ITEM_TRAN, ItemTransformer.None.getId()));
             }
 
             @Override
             public void onSelect(ItemTransformer setEnum) {
-                SharedPreUtil.saveSharedPreInteger(SDATA_LAUNCHER_ITEM_TRAN, setEnum.getId());
+                SharedPreUtil.saveInteger(SDATA_LAUNCHER_ITEM_TRAN, setEnum.getId());
                 sv_item_tran.setSummary(setEnum.getName());
                 EventBus.getDefault().post(new LPageTransformerChangeEvent());
             }
@@ -204,15 +204,15 @@ public class SAppView extends BaseView {
         final String[] itemsNum = {
                 "3个", "4个"
         };
-        sv_launcher_item_num.setSummary(SharedPreUtil.getSharedPreInteger(CommonData.SDATA_LAUNCHER_ITEM_NUM, 3) + "个");
+        sv_launcher_item_num.setSummary(SharedPreUtil.getInteger(CommonData.SDATA_LAUNCHER_ITEM_NUM, 3) + "个");
         sv_launcher_item_num.setOnClickListener(v -> {
-            int select = SharedPreUtil.getSharedPreInteger(CommonData.SDATA_LAUNCHER_ITEM_NUM, 3) - 3;
+            int select = SharedPreUtil.getInteger(CommonData.SDATA_LAUNCHER_ITEM_NUM, 3) - 3;
             final ThreadObj<Integer> obj = new ThreadObj<>(select);
             new AlertDialog.Builder(getContext()).setTitle("请选择首页的插件数量").setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     new AlertDialog.Builder(getContext()).setTitle("警告!").setNegativeButton("取消", null).setPositiveButton("确定", (dialog2, which2) -> {
-                        SharedPreUtil.saveSharedPreInteger(CommonData.SDATA_LAUNCHER_ITEM_NUM, obj.getObj() + 3);
+                        SharedPreUtil.saveInteger(CommonData.SDATA_LAUNCHER_ITEM_NUM, obj.getObj() + 3);
                         sv_launcher_item_num.setSummary(itemsNum[obj.getObj()]);
                         EventBus.getDefault().post(new LItemRefreshEvent());
                     }).setMessage("是否确认更改,会导致桌面插件重新加载").show();
@@ -223,8 +223,8 @@ public class SAppView extends BaseView {
         sv_launcher_item_sort_re.setOnClickListener(v -> {
             AlertDialog queren = new AlertDialog.Builder(getContext()).setTitle("警告!").setNegativeButton("取消", null).setPositiveButton("确定", (dialog2, which2) -> {
                 for (ItemEnum item : CommonData.LAUNCHER_ITEMS) {
-                    SharedPreUtil.saveSharedPreInteger(CommonData.SDATA_LAUNCHER_ITEM_SORT_ + item.getId(), item.getId());
-                    SharedPreUtil.saveSharedPreBoolean(CommonData.SDATA_LAUNCHER_ITEM_OPEN_ + item.getId(), true);
+                    SharedPreUtil.saveInteger(CommonData.SDATA_LAUNCHER_ITEM_SORT_ + item.getId(), item.getId());
+                    SharedPreUtil.saveBoolean(CommonData.SDATA_LAUNCHER_ITEM_OPEN_ + item.getId(), true);
                 }
                 EventBus.getDefault().post(new LItemRefreshEvent());
             }).setMessage("是否确认更改,会导致桌面插件重新加载").show();
@@ -236,8 +236,8 @@ public class SAppView extends BaseView {
                 new AlertDialog.Builder(getContext()).setTitle("警告!").setNegativeButton("取消", null).setPositiveButton("确定", (dialog2, which2) -> {
                     List<ItemModel> items = adapter.getItems();
                     for (ItemModel item : items) {
-                        SharedPreUtil.saveSharedPreInteger(CommonData.SDATA_LAUNCHER_ITEM_SORT_ + item.info.getId(), item.index);
-                        SharedPreUtil.saveSharedPreBoolean(CommonData.SDATA_LAUNCHER_ITEM_OPEN_ + item.info.getId(), item.check);
+                        SharedPreUtil.saveInteger(CommonData.SDATA_LAUNCHER_ITEM_SORT_ + item.info.getId(), item.index);
+                        SharedPreUtil.saveBoolean(CommonData.SDATA_LAUNCHER_ITEM_OPEN_ + item.info.getId(), item.check);
                     }
                     EventBus.getDefault().post(new LItemRefreshEvent());
                 }).setMessage("是否确认更改,会导致桌面插件重新加载").show();
@@ -248,7 +248,7 @@ public class SAppView extends BaseView {
             dialog.getWindow().setAttributes(lp);
         });
 
-        sv_plugin_theme.setSummary(ThemeMode.getById(SharedPreUtil.getSharedPreInteger(SDATA_APP_THEME, ThemeMode.SHIJIAN.getId())).getName());
+        sv_plugin_theme.setSummary(ThemeMode.getById(SharedPreUtil.getInteger(SDATA_APP_THEME, ThemeMode.SHIJIAN.getId())).getName());
         sv_plugin_theme.setOnClickListener(new SetEnumOnClickListener<ThemeMode>(getContext(), THEME_MODEL) {
             @Override
             public String title() {
@@ -257,19 +257,19 @@ public class SAppView extends BaseView {
 
             @Override
             public ThemeMode getCurr() {
-                return ThemeMode.getById(SharedPreUtil.getSharedPreInteger(SDATA_APP_THEME, ThemeMode.SHIJIAN.getId()));
+                return ThemeMode.getById(SharedPreUtil.getInteger(SDATA_APP_THEME, ThemeMode.SHIJIAN.getId()));
             }
 
             @Override
             public void onSelect(ThemeMode setEnum) {
-                SharedPreUtil.saveSharedPreInteger(SDATA_APP_THEME, setEnum.getId());
+                SharedPreUtil.saveInteger(SDATA_APP_THEME, setEnum.getId());
                 sv_plugin_theme.setSummary(setEnum.getName());
                 ThemeManage.self().refreshTheme();
             }
         });
 
 
-        sv_plugin_select.setSummary(MusicControllerEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_MUSIC_CONTROLLER, MusicControllerEnum.SYSMUSIC.getId())).getName());
+        sv_plugin_select.setSummary(MusicControllerEnum.getById(SharedPreUtil.getInteger(SDATA_MUSIC_CONTROLLER, MusicControllerEnum.SYSMUSIC.getId())).getName());
         sv_plugin_select.setOnClickListener(new SetEnumOnClickListener<MusicControllerEnum>(getContext(), CommonData.MUSIC_CONTROLLER) {
 
             @Override
@@ -279,12 +279,12 @@ public class SAppView extends BaseView {
 
             @Override
             public MusicControllerEnum getCurr() {
-                return MusicControllerEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_MUSIC_CONTROLLER, MusicControllerEnum.SYSMUSIC.getId()));
+                return MusicControllerEnum.getById(SharedPreUtil.getInteger(SDATA_MUSIC_CONTROLLER, MusicControllerEnum.SYSMUSIC.getId()));
             }
 
             @Override
             public void onSelect(MusicControllerEnum setEnum) {
-                SharedPreUtil.saveSharedPreInteger(SDATA_MUSIC_CONTROLLER, setEnum.getId());
+                SharedPreUtil.saveInteger(SDATA_MUSIC_CONTROLLER, setEnum.getId());
                 MusicPlugin.self().setController(setEnum);
                 sv_plugin_select.setSummary(setEnum.getName());
             }
@@ -293,17 +293,17 @@ public class SAppView extends BaseView {
         sv_apps_hides.setOnClickListener(new SetAppMultipleSelectOnClickListener(getContext()) {
             @Override
             public String getCurr() {
-                return SharedPreUtil.getSharedPreString(CommonData.SDATA_HIDE_APPS);
+                return SharedPreUtil.getString(CommonData.SDATA_HIDE_APPS);
             }
 
             @Override
             public void onSelect(String t) {
-                SharedPreUtil.saveSharedPreString(CommonData.SDATA_HIDE_APPS, t);
+                SharedPreUtil.saveString(CommonData.SDATA_HIDE_APPS, t);
                 EventBus.getDefault().post(new MAppInfoRefreshEvent());
             }
         });
 
-        sv_console.setSummary("控制协议：" + ConsoleProtoclEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_CONSOLE_MARK, ConsoleProtoclEnum.SYSTEM.getId())).getName());
+        sv_console.setSummary("控制协议：" + ConsoleProtoclEnum.getById(SharedPreUtil.getInteger(SDATA_CONSOLE_MARK, ConsoleProtoclEnum.SYSTEM.getId())).getName());
         sv_console.setOnClickListener(new SetEnumOnClickListener<ConsoleProtoclEnum>(getContext(), ALL_CONSOLES) {
             @Override
             public String title() {
@@ -312,12 +312,12 @@ public class SAppView extends BaseView {
 
             @Override
             public ConsoleProtoclEnum getCurr() {
-                return ConsoleProtoclEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_CONSOLE_MARK, ConsoleProtoclEnum.SYSTEM.getId()));
+                return ConsoleProtoclEnum.getById(SharedPreUtil.getInteger(SDATA_CONSOLE_MARK, ConsoleProtoclEnum.SYSTEM.getId()));
             }
 
             @Override
             public void onSelect(ConsoleProtoclEnum setEnum) {
-                SharedPreUtil.saveSharedPreInteger(SDATA_CONSOLE_MARK, setEnum.getId());
+                SharedPreUtil.saveInteger(SDATA_CONSOLE_MARK, setEnum.getId());
                 sv_plugin_select.setSummary("控制协议：" + setEnum.getName());
                 ConsolePlugin.self().loadConsole();
             }
@@ -329,18 +329,18 @@ public class SAppView extends BaseView {
                 EventBus.getDefault().post(new LDockLabelShowChangeEvent(value));
             }
         });
-        sv_launcher_show_dock_label.setChecked(SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_LAUNCHER_DOCK_LABEL_SHOW, true));
+        sv_launcher_show_dock_label.setChecked(SharedPreUtil.getBoolean(CommonData.SDATA_LAUNCHER_DOCK_LABEL_SHOW, true));
 
 //        setSTitle(SDATA_TIME_PLUGIN_OPEN_APP, time_plugin_open_app_select);
 //        time_plugin_open_app_select.setOnClickListener(new SetAppSingleSelectOnClickListener(getContext()) {
 //            @Override
 //            public String getCurr() {
-//                return SharedPreUtil.getSharedPreString(SDATA_TIME_PLUGIN_OPEN_APP);
+//                return SharedPreUtil.getString(SDATA_TIME_PLUGIN_OPEN_APP);
 //            }
 //
 //            @Override
 //            public void onSelect(String t) {
-//                SharedPreUtil.saveSharedPreString(SDATA_TIME_PLUGIN_OPEN_APP, t);
+//                SharedPreUtil.saveString(SDATA_TIME_PLUGIN_OPEN_APP, t);
 //                setSTitle(SDATA_TIME_PLUGIN_OPEN_APP, time_plugin_open_app_select);
 //            }
 //        });
@@ -349,8 +349,8 @@ public class SAppView extends BaseView {
             final CityDialog cityDialog = new CityDialog(getContext());
             cityDialog.setOkclickListener(dialog -> {
                 if (CommonUtil.isNotNull(cityDialog.getCityName()) && CommonUtil.isNotNull(cityDialog.getDistrictName())) {
-                    SharedPreUtil.saveSharedPreString(CommonData.SDATA_WEATHER_DISTRICT, cityDialog.getDistrictName());
-                    SharedPreUtil.saveSharedPreString(CommonData.SDATA_WEATHER_SHI, cityDialog.getCityName());
+                    SharedPreUtil.saveString(CommonData.SDATA_WEATHER_DISTRICT, cityDialog.getDistrictName());
+                    SharedPreUtil.saveString(CommonData.SDATA_WEATHER_SHI, cityDialog.getCityName());
                     cityDialog.dismiss();
                     EventBus.getDefault().post(new LCityRefreshEvent());
                     tianqi_city.setSummary(cityDialog.getDistrictName());
@@ -362,11 +362,11 @@ public class SAppView extends BaseView {
             });
             cityDialog.show();
         });
-        tianqi_city.setSummary(SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_DISTRICT));
+        tianqi_city.setSummary(SharedPreUtil.getString(CommonData.SDATA_WEATHER_DISTRICT));
     }
 
 //    private void setSTitle(String key, SetView setView) {
-//        String xx = SharedPreUtil.getSharedPreString(key);
+//        String xx = SharedPreUtil.getString(key);
 //        if (CommonUtil.isNotNull(xx)) {
 //            setView.setSummary(AppInfoManage.self().getName(xx).toString());
 //        } else {

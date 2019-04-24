@@ -79,7 +79,7 @@ public class SBleDeviceView extends BaseView {
 
     @Override
     protected void initView() {
-        sv_obd_impl_select.setSummary("OBD使用的协议：" + ObdProtocolEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_OBD_CONTROLLER, ObdProtocolEnum.YJ_TYB.getId())).getName());
+        sv_obd_impl_select.setSummary("OBD使用的协议：" + ObdProtocolEnum.getById(SharedPreUtil.getInteger(SDATA_OBD_CONTROLLER, ObdProtocolEnum.YJ_TYB.getId())).getName());
         sv_obd_impl_select.setOnClickListener(new SetEnumOnClickListener<ObdProtocolEnum>(getContext(), OBD_CONTROLLER) {
             @Override
             public String title() {
@@ -88,12 +88,12 @@ public class SBleDeviceView extends BaseView {
 
             @Override
             public ObdProtocolEnum getCurr() {
-                return ObdProtocolEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_OBD_CONTROLLER, ObdProtocolEnum.YJ_TYB.getId()));
+                return ObdProtocolEnum.getById(SharedPreUtil.getInteger(SDATA_OBD_CONTROLLER, ObdProtocolEnum.YJ_TYB.getId()));
             }
 
             @Override
             public void onSelect(ObdProtocolEnum setEnum) {
-                SharedPreUtil.saveSharedPreInteger(SDATA_OBD_CONTROLLER, setEnum.getId());
+                SharedPreUtil.saveInteger(SDATA_OBD_CONTROLLER, setEnum.getId());
                 sv_obd_impl_select.setSummary("OBD使用的协议：" + setEnum.getName());
                 ObdPlugin.self().disconnect();
             }
@@ -101,17 +101,17 @@ public class SBleDeviceView extends BaseView {
 
 
         sv_obd_disconnect.setOnClickListener(view -> {
-            SharedPreUtil.saveSharedPreString(CommonData.SDATA_OBD_ADDRESS, null);
-            SharedPreUtil.saveSharedPreString(CommonData.SDATA_OBD_NAME, null);
+            SharedPreUtil.saveString(CommonData.SDATA_OBD_ADDRESS, null);
+            SharedPreUtil.saveString(CommonData.SDATA_OBD_NAME, null);
             ObdPlugin.self().disconnect();
             ToastManage.self().show("OBD绑定已删除");
             sv_obd_select.setSummary("没有绑定蓝牙设备");
         });
 
 
-        String address = SharedPreUtil.getSharedPreString(CommonData.SDATA_OBD_ADDRESS);
+        String address = SharedPreUtil.getString(CommonData.SDATA_OBD_ADDRESS);
         if (CommonUtil.isNotNull(address)) {
-            sv_obd_select.setSummary("绑定了设备:" + SharedPreUtil.getSharedPreString(CommonData.SDATA_OBD_NAME) + "  地址:" + address);
+            sv_obd_select.setSummary("绑定了设备:" + SharedPreUtil.getString(CommonData.SDATA_OBD_NAME) + "  地址:" + address);
         } else {
             sv_obd_select.setSummary("没有绑定蓝牙设备");
         }
@@ -150,26 +150,26 @@ public class SBleDeviceView extends BaseView {
             dialog.getListView().setOnItemClickListener((adapterView, view12, i, l) -> {
                 dialog.dismiss();
                 BluetoothDevice device = devices.get(i);
-                SharedPreUtil.saveSharedPreString(CommonData.SDATA_OBD_ADDRESS, device.getAddress());
-                SharedPreUtil.saveSharedPreString(CommonData.SDATA_OBD_NAME, device.getName());
+                SharedPreUtil.saveString(CommonData.SDATA_OBD_ADDRESS, device.getAddress());
+                SharedPreUtil.saveString(CommonData.SDATA_OBD_NAME, device.getName());
                 sv_obd_select.setSummary("绑定了设备:" + device.getName() + "  地址:" + device.getAddress());
             });
         });
 
         sv_auto_open_driving.setOnValueChangeListener((newValue, oldValue) -> {
             if ("1".equals(newValue)) {
-                SharedPreUtil.saveSharedPreBoolean(SDATA_TRIP_AUTO_OPEN_DRIVING, true);
+                SharedPreUtil.saveBoolean(SDATA_TRIP_AUTO_OPEN_DRIVING, true);
             } else {
-                SharedPreUtil.saveSharedPreBoolean(SDATA_TRIP_AUTO_OPEN_DRIVING, false);
+                SharedPreUtil.saveBoolean(SDATA_TRIP_AUTO_OPEN_DRIVING, false);
             }
         });
-        sv_auto_open_driving.setChecked(SharedPreUtil.getSharedPreBoolean(SDATA_TRIP_AUTO_OPEN_DRIVING, SDATA_TRIP_AUTO_OPEN_DRIVING_DF));
+        sv_auto_open_driving.setChecked(SharedPreUtil.getBoolean(SDATA_TRIP_AUTO_OPEN_DRIVING, SDATA_TRIP_AUTO_OPEN_DRIVING_DF));
 
 
-        FangkongProtocolEnum fkp1 = FangkongProtocolEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_FANGKONG_CONTROLLER, FangkongProtocolEnum.YLFK.getId()));
+        FangkongProtocolEnum fkp1 = FangkongProtocolEnum.getById(SharedPreUtil.getInteger(SDATA_FANGKONG_CONTROLLER, FangkongProtocolEnum.YLFK.getId()));
         sv_fangkong_impl_select.setSummary("方控使用的协议：" + fkp1.getName());
         sv_fangkong_impl_select.setOnClickListener(view -> {
-            FangkongProtocolEnum p = FangkongProtocolEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_FANGKONG_CONTROLLER, FangkongProtocolEnum.YLFK.getId()));
+            FangkongProtocolEnum p = FangkongProtocolEnum.getById(SharedPreUtil.getInteger(SDATA_FANGKONG_CONTROLLER, FangkongProtocolEnum.YLFK.getId()));
             final FangkongProtocolEnum[] show = ALL_FANGKONG_CONTROLLER;
             String[] items = new String[show.length];
             int select = 0;
@@ -183,7 +183,7 @@ public class SBleDeviceView extends BaseView {
             AlertDialog dialog = new AlertDialog.Builder(getContext()).setTitle("请选择协议").setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    SharedPreUtil.saveSharedPreInteger(SDATA_FANGKONG_CONTROLLER, show[obj.getObj()].getId());
+                    SharedPreUtil.saveInteger(SDATA_FANGKONG_CONTROLLER, show[obj.getObj()].getId());
                     FangkongPlugin.self().disconnect();
                     sv_fangkong_impl_select.setSummary("方控使用的协议：" + show[obj.getObj()].getName());
                 }
@@ -192,17 +192,17 @@ public class SBleDeviceView extends BaseView {
 
 
         sv_fangkong_remove.setOnClickListener(view -> {
-            SharedPreUtil.saveSharedPreString(CommonData.SDATA_FANGKONG_ADDRESS, null);
-            SharedPreUtil.saveSharedPreString(CommonData.SDATA_FANGKONG_NAME, null);
+            SharedPreUtil.saveString(CommonData.SDATA_FANGKONG_ADDRESS, null);
+            SharedPreUtil.saveString(CommonData.SDATA_FANGKONG_NAME, null);
             FangkongPlugin.self().disconnect();
             ToastManage.self().show("方控绑定已删除");
             sv_fangkong_select.setSummary("没有绑定蓝牙设备");
         });
 
 
-        String fkaddress = SharedPreUtil.getSharedPreString(CommonData.SDATA_FANGKONG_ADDRESS);
+        String fkaddress = SharedPreUtil.getString(CommonData.SDATA_FANGKONG_ADDRESS);
         if (CommonUtil.isNotNull(fkaddress)) {
-            sv_fangkong_select.setSummary("绑定了设备:" + SharedPreUtil.getSharedPreString(CommonData.SDATA_FANGKONG_NAME) + "  地址:" + fkaddress);
+            sv_fangkong_select.setSummary("绑定了设备:" + SharedPreUtil.getString(CommonData.SDATA_FANGKONG_NAME) + "  地址:" + fkaddress);
         } else {
             sv_fangkong_select.setSummary("没有绑定蓝牙设备");
         }
@@ -237,8 +237,8 @@ public class SBleDeviceView extends BaseView {
             dialog.getListView().setOnItemClickListener((adapterView, view1, i, l) -> {
                 dialog.dismiss();
                 BluetoothDevice device = devices.get(i);
-                SharedPreUtil.saveSharedPreString(CommonData.SDATA_FANGKONG_ADDRESS, device.getAddress());
-                SharedPreUtil.saveSharedPreString(CommonData.SDATA_FANGKONG_NAME, device.getName());
+                SharedPreUtil.saveString(CommonData.SDATA_FANGKONG_ADDRESS, device.getAddress());
+                SharedPreUtil.saveString(CommonData.SDATA_FANGKONG_NAME, device.getName());
                 sv_fangkong_select.setSummary("绑定了设备:" + device.getName() + "  地址:" + device.getAddress());
             });
         });

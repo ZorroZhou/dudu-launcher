@@ -63,7 +63,7 @@ public class ThemeManage {
     private SparseArray<Map<String, Map<String, Integer>>> cachedResrouces = new SparseArray<>();
 
     public void refreshTheme() {
-        ThemeMode model = ThemeMode.getById(SharedPreUtil.getSharedPreInteger(SDATA_APP_THEME, ThemeMode.SHIJIAN.getId()));
+        ThemeMode model = ThemeMode.getById(SharedPreUtil.getInteger(SDATA_APP_THEME, ThemeMode.SHIJIAN.getId()));
         switch (model) {
             case BAISE:
                 setTheme(WHITE);
@@ -76,9 +76,9 @@ public class ThemeManage {
                 break;
             case SHIJIAN:
                 if (SunRiseSetUtil.isNight(lon, lat, new Date())) {
-                    setTheme(Theme.getById(SharedPreUtil.getSharedPreInteger(SDATA_APP_THEME_NIGHT, Theme.BLACK.getId())));
+                    setTheme(Theme.getById(SharedPreUtil.getInteger(SDATA_APP_THEME_NIGHT, Theme.BLACK.getId())));
                 } else {
-                    setTheme(Theme.getById(SharedPreUtil.getSharedPreInteger(SDATA_APP_THEME_DAY, Theme.WHITE.getId())));
+                    setTheme(Theme.getById(SharedPreUtil.getInteger(SDATA_APP_THEME_DAY, Theme.WHITE.getId())));
                 }
                 break;
         }
@@ -208,7 +208,7 @@ public class ThemeManage {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(PConsoleEventLightState event) {
-//        ThemeManage.ThemeMode model = ThemeManage.ThemeMode.getById(SharedPreUtil.getSharedPreInteger(SDATA_APP_THEME, ThemeManage.ThemeMode.SHIJIAN.getId()));
+//        ThemeManage.ThemeMode model = ThemeManage.ThemeMode.getById(SharedPreUtil.getInteger(SDATA_APP_THEME, ThemeManage.ThemeMode.SHIJIAN.getId()));
 //        if (model.equals(ThemeManage.ThemeMode.DENGGUANG)) {
 //            if (event.isOpen()) {
 //                ThemeManage.self().setTheme(BLACK);

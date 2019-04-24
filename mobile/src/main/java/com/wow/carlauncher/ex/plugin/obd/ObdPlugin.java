@@ -164,13 +164,13 @@ public class ObdPlugin extends ContextEx {
     private boolean connecting = false;
 
     private synchronized void connect() {
-        final String address = SharedPreUtil.getSharedPreString(CommonData.SDATA_OBD_ADDRESS);
+        final String address = SharedPreUtil.getString(CommonData.SDATA_OBD_ADDRESS);
         Log.d(TAG, "connect: " + Constants.getStatusText(BleManage.self().client().getConnectStatus(address)) + "  " + CommonUtil.isNull(address) + "  " + Constants.getStatusText(BleManage.self().client().getConnectStatus(address)));
         if (connecting || CommonUtil.isNull(address) || BleManage.self().client().getConnectStatus(address) == STATUS_DEVICE_CONNECTED) {
             return;
         }
         connecting = true;
-        ObdProtocolEnum p1 = ObdProtocolEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_OBD_CONTROLLER, ObdProtocolEnum.YJ_TYB.getId()));
+        ObdProtocolEnum p1 = ObdProtocolEnum.getById(SharedPreUtil.getInteger(SDATA_OBD_CONTROLLER, ObdProtocolEnum.YJ_TYB.getId()));
         switch (p1) {
             case YJ_TYB: {
                 obdProtocol = new GoodDriverTPProtocol(getContext(), address, obdProtocolListener);
@@ -249,7 +249,7 @@ public class ObdPlugin extends ContextEx {
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void onEvent(final MTimeSecondEvent event) {
-        String fkaddress = SharedPreUtil.getSharedPreString(CommonData.SDATA_OBD_ADDRESS);
+        String fkaddress = SharedPreUtil.getString(CommonData.SDATA_OBD_ADDRESS);
 
         if (CommonUtil.isNotNull(fkaddress) && BleManage.self().client().getConnectStatus(fkaddress) == STATUS_DEVICE_CONNECTED) {
             connect = true;

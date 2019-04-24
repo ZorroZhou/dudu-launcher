@@ -37,7 +37,7 @@ public class MusicPlugin extends ContextEx {
 
     public void init(Context context) {
         setContext(context);
-        setController(MusicControllerEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_MUSIC_CONTROLLER, MusicControllerEnum.SYSMUSIC.getId())));
+        setController(MusicControllerEnum.getById(SharedPreUtil.getInteger(SDATA_MUSIC_CONTROLLER, MusicControllerEnum.SYSMUSIC.getId())));
     }
 
     public void setController(MusicControllerEnum controller) {

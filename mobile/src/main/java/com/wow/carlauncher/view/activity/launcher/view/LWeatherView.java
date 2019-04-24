@@ -115,10 +115,10 @@ public class LWeatherView extends BaseEXView {
                 tv_fx.setText(String.valueOf(cityWeather.getWinddirection() + "风"));
             }
             if (lastLocation == null || CommonUtil.isNull(lastLocation.getAdCode())) {
-                if (CommonUtil.isNull(SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_DISTRICT)) || CommonUtil.isNull(SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_SHI))) {
+                if (CommonUtil.isNull(SharedPreUtil.getString(CommonData.SDATA_WEATHER_DISTRICT)) || CommonUtil.isNull(SharedPreUtil.getString(CommonData.SDATA_WEATHER_SHI))) {
                     tv_title.setText("点击设置城市");
                 } else {
-                    String msg = SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_SHI) + "-" + SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_DISTRICT);
+                    String msg = SharedPreUtil.getString(CommonData.SDATA_WEATHER_SHI) + "-" + SharedPreUtil.getString(CommonData.SDATA_WEATHER_DISTRICT);
                     tv_title.setText(msg);
                 }
             } else {
@@ -167,12 +167,12 @@ public class LWeatherView extends BaseEXView {
     private void clickEvent(View view) {
         switch (view.getId()) {
             case R.id.tv_title: {
-                if (CommonUtil.isNull(SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_DISTRICT))) {
+                if (CommonUtil.isNull(SharedPreUtil.getString(CommonData.SDATA_WEATHER_DISTRICT))) {
                     final CityDialog cityDialog = new CityDialog(getContext());
                     cityDialog.setOkclickListener(dialog -> {
                         if (CommonUtil.isNotNull(cityDialog.getCityName()) && CommonUtil.isNotNull(cityDialog.getDistrictName())) {
-                            SharedPreUtil.saveSharedPreString(CommonData.SDATA_WEATHER_DISTRICT, cityDialog.getDistrictName());
-                            SharedPreUtil.saveSharedPreString(CommonData.SDATA_WEATHER_SHI, cityDialog.getCityName());
+                            SharedPreUtil.saveString(CommonData.SDATA_WEATHER_DISTRICT, cityDialog.getDistrictName());
+                            SharedPreUtil.saveString(CommonData.SDATA_WEATHER_SHI, cityDialog.getCityName());
                             cityDialog.dismiss();
                             EventBus.getDefault().post(new LCityRefreshEvent());
                             return true;
@@ -205,8 +205,8 @@ public class LWeatherView extends BaseEXView {
         x.task().autoPost(() -> {
             String chengshi = "";
             if (lastLocation == null || CommonUtil.isNull(lastLocation.getAdCode())) {
-                if (!CommonUtil.isNull(SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_DISTRICT))) {
-                    chengshi = SharedPreUtil.getSharedPreString(CommonData.SDATA_WEATHER_DISTRICT);
+                if (!CommonUtil.isNull(SharedPreUtil.getString(CommonData.SDATA_WEATHER_DISTRICT))) {
+                    chengshi = SharedPreUtil.getString(CommonData.SDATA_WEATHER_DISTRICT);
                 }
             } else {
                 chengshi = lastLocation.getAdCode();

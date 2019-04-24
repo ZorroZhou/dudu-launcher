@@ -19,7 +19,7 @@ public class SharedPreUtil {
      * @param value 值
      * @category 保存String键值对
      */
-    public static void saveSharedPreString(String key, String value) {
+    public static void saveString(String key, String value) {
         settings = context.getSharedPreferences(XML_Settings, Context.MODE_PRIVATE);
         settings.edit().putString(key, value).apply();
     }
@@ -28,7 +28,7 @@ public class SharedPreUtil {
      * @param key 键
      * @category 获取String键值对
      */
-    public static String getSharedPreString(String key) {
+    public static String getString(String key) {
         settings = context.getSharedPreferences(XML_Settings, Context.MODE_PRIVATE);
         return settings.getString(key, "");
     }
@@ -37,7 +37,7 @@ public class SharedPreUtil {
      * @param key 键
      * @category 获取String键值对
      */
-    public static String getSharedPreString(String key, String value) {
+    public static String getString(String key, String value) {
         settings = context.getSharedPreferences(XML_Settings, Context.MODE_PRIVATE);
         return settings.getString(key, value);
     }
@@ -47,7 +47,7 @@ public class SharedPreUtil {
      * @return
      * @category 获取boolean键值对
      */
-    public static boolean getSharedPreBoolean(String key, boolean value) {
+    public static boolean getBoolean(String key, boolean value) {
         settings = context.getSharedPreferences(XML_Settings, 0);
         return settings.getBoolean(key, value);
     }
@@ -57,7 +57,7 @@ public class SharedPreUtil {
      * @param value 值
      * @category 保存boolean键值对
      */
-    public static void saveSharedPreBoolean(String key, boolean value) {
+    public static void saveBoolean(String key, boolean value) {
         settings = context.getSharedPreferences(XML_Settings, 0);
         settings.edit().putBoolean(key, value).apply();
     }
@@ -67,7 +67,7 @@ public class SharedPreUtil {
      * @param value 值
      * @category 保存int类型的数据到SharedPreference配置文件
      */
-    public static void saveSharedPreInteger(String key, int value) {
+    public static void saveInteger(String key, int value) {
         settings = context.getSharedPreferences(XML_Settings, Context.MODE_PRIVATE);
         settings.edit().putInt(key, value).apply();
     }
@@ -77,7 +77,7 @@ public class SharedPreUtil {
      * @return 返回int类型的value值
      * @category 从SharedPreference配置文件中获取int类型的值
      */
-    public static int getSharedPreInteger(String key, int defaultValue) {
+    public static int getInteger(String key, int defaultValue) {
         settings = context.getSharedPreferences(XML_Settings, Context.MODE_PRIVATE);
         try {
             return settings.getInt(key, defaultValue);
@@ -92,7 +92,7 @@ public class SharedPreUtil {
      * @param key
      * @param value
      */
-    public static void saveSharedPreLong(String key, Long value) {
+    public static void saveLong(String key, Long value) {
         settings = context.getSharedPreferences(XML_Settings, Context.MODE_PRIVATE);
         settings.edit().putLong(key, value).apply();
     }
@@ -102,7 +102,7 @@ public class SharedPreUtil {
      * @return 返回int类型的value值
      * @category 从SharedPreference配置文件中获取int类型的值
      */
-    public static long getSharedPreLong(String key, long defaultValue) {
+    public static long getLong(String key, long defaultValue) {
         settings = context.getSharedPreferences(XML_Settings, Context.MODE_PRIVATE);
         try {
             return settings.getLong(key, defaultValue);
@@ -117,7 +117,7 @@ public class SharedPreUtil {
     public static void clearSave() {
         settings = context.getSharedPreferences(XML_Settings, 0);
         for (String name : settings.getAll().keySet()) {
-            saveSharedPreString(name, "");
+            saveString(name, "");
         }
     }
 }

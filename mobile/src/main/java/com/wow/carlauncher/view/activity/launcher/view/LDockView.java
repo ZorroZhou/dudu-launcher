@@ -105,50 +105,50 @@ public class LDockView extends BaseEXView {
     }
 
     private void loadDock() {
-        String packname1 = SharedPreUtil.getSharedPreString(SDATA_DOCK1_CLASS);
+        String packname1 = SharedPreUtil.getString(SDATA_DOCK1_CLASS);
         if (CommonUtil.isNotNull(packname1)) {
             if (AppInfoManage.self().checkApp(packname1)) {
                 iv_dock1.setImageDrawable(AppInfoManage.self().getIcon(packname1));
                 tv_dock1.setText(AppInfoManage.self().getName(packname1));
             } else {
                 ToastManage.self().show("dock1加载失败");
-                SharedPreUtil.saveSharedPreString(SDATA_DOCK1_CLASS, null);
+                SharedPreUtil.saveString(SDATA_DOCK1_CLASS, null);
             }
         }
-        String packname2 = SharedPreUtil.getSharedPreString(SDATA_DOCK2_CLASS);
+        String packname2 = SharedPreUtil.getString(SDATA_DOCK2_CLASS);
         if (CommonUtil.isNotNull(packname2)) {
             if (AppInfoManage.self().checkApp(packname2)) {
                 iv_dock2.setImageDrawable(AppInfoManage.self().getIcon(packname2));
                 tv_dock2.setText(AppInfoManage.self().getName(packname2));
             } else {
                 ToastManage.self().show("dock2加载失败");
-                SharedPreUtil.saveSharedPreString(SDATA_DOCK2_CLASS, null);
+                SharedPreUtil.saveString(SDATA_DOCK2_CLASS, null);
             }
         }
 
-        String packname3 = SharedPreUtil.getSharedPreString(SDATA_DOCK3_CLASS);
+        String packname3 = SharedPreUtil.getString(SDATA_DOCK3_CLASS);
         if (CommonUtil.isNotNull(packname3)) {
             if (AppInfoManage.self().checkApp(packname3)) {
                 iv_dock3.setImageDrawable(AppInfoManage.self().getIcon(packname3));
                 tv_dock3.setText(AppInfoManage.self().getName(packname3));
             } else {
                 ToastManage.self().show("dock3加载失败");
-                SharedPreUtil.saveSharedPreString(SDATA_DOCK3_CLASS, null);
+                SharedPreUtil.saveString(SDATA_DOCK3_CLASS, null);
             }
         }
 
-        String packname4 = SharedPreUtil.getSharedPreString(SDATA_DOCK4_CLASS);
+        String packname4 = SharedPreUtil.getString(SDATA_DOCK4_CLASS);
         if (CommonUtil.isNotNull(packname4)) {
             if (AppInfoManage.self().checkApp(packname4)) {
                 iv_dock4.setImageDrawable(AppInfoManage.self().getIcon(packname4));
                 tv_dock4.setText(AppInfoManage.self().getName(packname4));
             } else {
                 ToastManage.self().show("dock4加载失败");
-                SharedPreUtil.saveSharedPreString(SDATA_DOCK4_CLASS, null);
+                SharedPreUtil.saveString(SDATA_DOCK4_CLASS, null);
             }
         }
 
-        dockLabelShow(SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_LAUNCHER_DOCK_LABEL_SHOW, true));
+        dockLabelShow(SharedPreUtil.getBoolean(CommonData.SDATA_LAUNCHER_DOCK_LABEL_SHOW, true));
     }
 
     @Event(value = {R.id.ll_dock1, R.id.ll_dock2, R.id.ll_dock3, R.id.ll_dock4})
@@ -156,7 +156,7 @@ public class LDockView extends BaseEXView {
         Log.d(TAG, "clickEvent: " + v);
         switch (v.getId()) {
             case R.id.ll_dock1: {
-                String packname = SharedPreUtil.getSharedPreString(SDATA_DOCK1_CLASS);
+                String packname = SharedPreUtil.getString(SDATA_DOCK1_CLASS);
                 if (CommonUtil.isNull(packname)) {
                     getActivity().startActivityForResult(new Intent(getContext(), AppSelectActivity.class), REQUEST_SELECT_APP_TO_DOCK1);
                 } else {
@@ -165,7 +165,7 @@ public class LDockView extends BaseEXView {
                 break;
             }
             case R.id.ll_dock2: {
-                String packname = SharedPreUtil.getSharedPreString(SDATA_DOCK2_CLASS);
+                String packname = SharedPreUtil.getString(SDATA_DOCK2_CLASS);
                 if (CommonUtil.isNull(packname)) {
                     getActivity().startActivityForResult(new Intent(getContext(), AppSelectActivity.class), REQUEST_SELECT_APP_TO_DOCK2);
                 } else {
@@ -174,7 +174,7 @@ public class LDockView extends BaseEXView {
                 break;
             }
             case R.id.ll_dock3: {
-                String packname = SharedPreUtil.getSharedPreString(SDATA_DOCK3_CLASS);
+                String packname = SharedPreUtil.getString(SDATA_DOCK3_CLASS);
                 if (CommonUtil.isNull(packname)) {
                     getActivity().startActivityForResult(new Intent(getContext(), AppSelectActivity.class), REQUEST_SELECT_APP_TO_DOCK3);
                 } else {
@@ -183,7 +183,7 @@ public class LDockView extends BaseEXView {
                 break;
             }
             case R.id.ll_dock4: {
-                String packname = SharedPreUtil.getSharedPreString(SDATA_DOCK4_CLASS);
+                String packname = SharedPreUtil.getString(SDATA_DOCK4_CLASS);
                 if (CommonUtil.isNull(packname)) {
                     getActivity().startActivityForResult(new Intent(getContext(), AppSelectActivity.class), REQUEST_SELECT_APP_TO_DOCK4);
                 } else {

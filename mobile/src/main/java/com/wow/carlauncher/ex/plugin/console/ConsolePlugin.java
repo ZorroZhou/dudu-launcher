@@ -55,7 +55,7 @@ public class ConsolePlugin extends ContextEx {
             console.destroy();
         }
 
-        ConsoleProtoclEnum consoleProtoclEnum = ConsoleProtoclEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_CONSOLE_MARK, ConsoleProtoclEnum.SYSTEM.getId()));
+        ConsoleProtoclEnum consoleProtoclEnum = ConsoleProtoclEnum.getById(SharedPreUtil.getInteger(SDATA_CONSOLE_MARK, ConsoleProtoclEnum.SYSTEM.getId()));
         switch (consoleProtoclEnum) {
             case SYSTEM: {
                 console = new SysConsoleImpl(getContext(), consoleListener);

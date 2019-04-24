@@ -154,8 +154,8 @@ public class CommonData {
     public static final String SDATA_TRIP_AUTO_OPEN_DRIVING = "SDATA_TRIP_AUTO_OPEN_DRIVING";
     //以上默认值
     public static final boolean SDATA_TRIP_AUTO_OPEN_DRIVING_DF = true;
-    //-------------------------------本地缓存使用的mark-end-----------------------------------
 
+    //-------------------------------本地缓存使用的mark-end-----------------------------------
     //APP启动后自动任务相关
     public static final String SDATA_APP_AUTO_OPEN_USE = "SDATA_APP_AUTO_OPEN_USE";
     public static final String SDATA_APP_AUTO_OPEN_BACK = "SDATA_APP_AUTO_OPEN_BACK";
@@ -174,4 +174,11 @@ public class CommonData {
 
     //是否允许悬浮框展示
     public static final String SDATA_MUSIC_INSIDE_COVER = "SDATA_MUSIC_INSIDE_COVER";
+
+    //-------------------------------本地缓存使用的mark-end-----------------------------------
+
+
+    //是否允许悬浮框展示
+    public static final String SDATA_SERVER = "SDATA_SERVER";
+
 }

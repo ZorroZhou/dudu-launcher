@@ -75,10 +75,10 @@ public class SLoadAppView extends BaseView {
         setSTitle(SDATA_APP_AUTO_OPEN4, sv_open4);
 
         sv_clear.setOnClickListener(v -> {
-            SharedPreUtil.saveSharedPreString(SDATA_APP_AUTO_OPEN1, "");
-            SharedPreUtil.saveSharedPreString(SDATA_APP_AUTO_OPEN2, "");
-            SharedPreUtil.saveSharedPreString(SDATA_APP_AUTO_OPEN3, "");
-            SharedPreUtil.saveSharedPreString(SDATA_APP_AUTO_OPEN4, "");
+            SharedPreUtil.saveString(SDATA_APP_AUTO_OPEN1, "");
+            SharedPreUtil.saveString(SDATA_APP_AUTO_OPEN2, "");
+            SharedPreUtil.saveString(SDATA_APP_AUTO_OPEN3, "");
+            SharedPreUtil.saveString(SDATA_APP_AUTO_OPEN4, "");
 
 
             setSTitle(SDATA_APP_AUTO_OPEN1, sv_open1);
@@ -88,27 +88,27 @@ public class SLoadAppView extends BaseView {
         });
 
         sv_load_use.setOnValueChangeListener(new SetSwitchOnClickListener(CommonData.SDATA_APP_AUTO_OPEN_USE));
-        sv_load_use.setChecked(SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_APP_AUTO_OPEN_USE, false));
+        sv_load_use.setChecked(SharedPreUtil.getBoolean(CommonData.SDATA_APP_AUTO_OPEN_USE, false));
 
         sv_back_yanchi.setOnClickListener(v -> {
             String[] items = {
                     "1秒", "2秒", "3秒", "4秒", "5秒", "6秒", "7秒", "8秒", "9秒", "10秒"
             };
-            int select = SharedPreUtil.getSharedPreInteger(CommonData.SDATA_APP_AUTO_OPEN_BACK, CommonData.SDATA_APP_AUTO_OPEN_BACK_DF) - 1;
+            int select = SharedPreUtil.getInteger(CommonData.SDATA_APP_AUTO_OPEN_BACK, CommonData.SDATA_APP_AUTO_OPEN_BACK_DF) - 1;
             final ThreadObj<Integer> obj = new ThreadObj<>(select);
             AlertDialog dialog = new AlertDialog.Builder(getContext()).setTitle("请选择APP").setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    SharedPreUtil.saveSharedPreInteger(CommonData.SDATA_APP_AUTO_OPEN_BACK, obj.getObj() + 1);
-                    sv_back_yanchi.setSummary(SharedPreUtil.getSharedPreInteger(CommonData.SDATA_APP_AUTO_OPEN_BACK, CommonData.SDATA_APP_AUTO_OPEN_BACK_DF) + "秒");
+                    SharedPreUtil.saveInteger(CommonData.SDATA_APP_AUTO_OPEN_BACK, obj.getObj() + 1);
+                    sv_back_yanchi.setSummary(SharedPreUtil.getInteger(CommonData.SDATA_APP_AUTO_OPEN_BACK, CommonData.SDATA_APP_AUTO_OPEN_BACK_DF) + "秒");
                 }
             }).setSingleChoiceItems(items, select, (dialog1, which) -> obj.setObj(which)).show();
         });
-        sv_back_yanchi.setSummary(SharedPreUtil.getSharedPreInteger(CommonData.SDATA_APP_AUTO_OPEN_BACK, CommonData.SDATA_APP_AUTO_OPEN_BACK_DF) + "秒");
+        sv_back_yanchi.setSummary(SharedPreUtil.getInteger(CommonData.SDATA_APP_AUTO_OPEN_BACK, CommonData.SDATA_APP_AUTO_OPEN_BACK_DF) + "秒");
     }
 
     private void setSTitle(String key, SetView setView) {
-        String xx = SharedPreUtil.getSharedPreString(key);
+        String xx = SharedPreUtil.getString(key);
         if (CommonUtil.isNotNull(xx)) {
             setView.setSummary(AppInfoManage.self().getName(xx).toString());
         } else {
@@ -126,12 +126,12 @@ public class SLoadAppView extends BaseView {
 
         @Override
         public String getCurr() {
-            return SharedPreUtil.getSharedPreString(key);
+            return SharedPreUtil.getString(key);
         }
 
         @Override
         public void onSelect(String t) {
-            SharedPreUtil.saveSharedPreString(key, t);
+            SharedPreUtil.saveString(key, t);
             if (key.equals(SDATA_APP_AUTO_OPEN1)) {
                 setSTitle(SDATA_APP_AUTO_OPEN1, sv_open1);
             } else if (key.equals(SDATA_APP_AUTO_OPEN2)) {

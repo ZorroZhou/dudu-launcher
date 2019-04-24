@@ -54,7 +54,7 @@ public class LAllAppView extends BaseEXView implements AdapterView.OnItemClickLi
         gridview.setOnItemClickListener(this);
         gridview.setOnItemLongClickListener(this);
         if (gridview != null) {
-            int psize = SharedPreUtil.getSharedPreInteger(CommonData.SDATA_LAUNCHER_ITEM_NUM, 3);
+            int psize = SharedPreUtil.getInteger(CommonData.SDATA_LAUNCHER_ITEM_NUM, 3);
             if (psize != 3) {
                 psize = 4;
             }
@@ -84,12 +84,12 @@ public class LAllAppView extends BaseEXView implements AdapterView.OnItemClickLi
             adapter.clear();
             final List<AppInfo> appInfos = new ArrayList<>(AppInfoManage.self().getAllAppInfos());
 
-            String packname1 = SharedPreUtil.getSharedPreString(SDATA_DOCK1_CLASS);
-            String packname2 = SharedPreUtil.getSharedPreString(SDATA_DOCK2_CLASS);
-            String packname3 = SharedPreUtil.getSharedPreString(SDATA_DOCK3_CLASS);
-            String packname4 = SharedPreUtil.getSharedPreString(SDATA_DOCK4_CLASS);
+            String packname1 = SharedPreUtil.getString(SDATA_DOCK1_CLASS);
+            String packname2 = SharedPreUtil.getString(SDATA_DOCK2_CLASS);
+            String packname3 = SharedPreUtil.getString(SDATA_DOCK3_CLASS);
+            String packname4 = SharedPreUtil.getString(SDATA_DOCK4_CLASS);
 
-            String selectapp = SharedPreUtil.getSharedPreString(CommonData.SDATA_HIDE_APPS);
+            String selectapp = SharedPreUtil.getString(CommonData.SDATA_HIDE_APPS);
             List<AppInfo> hides = new ArrayList<>();
             for (AppInfo appInfo : appInfos) {
                 if (selectapp.contains("[" + appInfo.clazz + "]")
@@ -108,7 +108,7 @@ public class LAllAppView extends BaseEXView implements AdapterView.OnItemClickLi
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(LItemRefreshEvent event) {
         if (gridview != null) {
-            int psize = SharedPreUtil.getSharedPreInteger(CommonData.SDATA_LAUNCHER_ITEM_NUM, 3);
+            int psize = SharedPreUtil.getInteger(CommonData.SDATA_LAUNCHER_ITEM_NUM, 3);
             if (psize != 3) {
                 psize = 4;
             }

@@ -153,14 +153,14 @@ public class QQMusicCarController extends MusicController {
                             }
                             musicPlugin.refreshInfo(data.getKey_title(), artist);
 
-                            if (!SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_MUSIC_INSIDE_COVER, true)) {
+                            if (!SharedPreUtil.getBoolean(CommonData.SDATA_MUSIC_INSIDE_COVER, true)) {
                                 MusciCoverUtil.loadCover(data.getKey_title(), artist, musicPlugin);
                             }
                         }
                     } else if (cmd.equals("update_album")) {
                         UpdateAlbumMessage message = gson.fromJson(value, UpdateAlbumMessage.class);
                         final UpdateAlbumData data = message.getCommand().getData();
-                        if (SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_MUSIC_INSIDE_COVER, true)) {
+                        if (SharedPreUtil.getBoolean(CommonData.SDATA_MUSIC_INSIDE_COVER, true)) {
                             musicPlugin.refreshCover(data.getAlbum_url());
                         }
                     } else if (cmd.equals("update_lyric")) {

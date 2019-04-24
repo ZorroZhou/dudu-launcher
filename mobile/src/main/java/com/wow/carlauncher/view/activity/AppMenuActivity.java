@@ -63,7 +63,7 @@ public class AppMenuActivity extends BaseActivity implements AdapterView.OnItemC
         x.task().run(() -> {
             adapter.clear();
             final List<AppInfo> appInfos = new ArrayList<>(AppInfoManage.self().getAllAppInfos());
-            String selectapp = SharedPreUtil.getSharedPreString(CommonData.SDATA_HIDE_APPS);
+            String selectapp = SharedPreUtil.getString(CommonData.SDATA_HIDE_APPS);
             List<AppInfo> hides = new ArrayList<>();
             for (AppInfo appInfo : appInfos) {
                 if (selectapp.contains("[" + appInfo.clazz + "]")) {

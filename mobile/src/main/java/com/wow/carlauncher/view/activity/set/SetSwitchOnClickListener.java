@@ -13,10 +13,10 @@ public class SetSwitchOnClickListener implements SetView.OnValueChangeListener {
     @Override
     public void onValueChange(String newValue, String oldValue) {
         if ("1".equals(newValue)) {
-            SharedPreUtil.saveSharedPreBoolean(this.key, true);
+            SharedPreUtil.saveBoolean(this.key, true);
             newValue(true);
         } else {
-            SharedPreUtil.saveSharedPreBoolean(this.key, false);
+            SharedPreUtil.saveBoolean(this.key, false);
             newValue(false);
         }
     }

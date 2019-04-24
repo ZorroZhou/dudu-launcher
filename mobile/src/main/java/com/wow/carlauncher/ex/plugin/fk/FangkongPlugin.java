@@ -80,7 +80,7 @@ public class FangkongPlugin extends ContextEx {
         public void onAction(final int action) {
             x.task().run(() -> EventBus.getDefault().post(new PFkEventAction()
                     .setAction(action)
-                    .setFangkongProtocol(FangkongProtocolEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_FANGKONG_CONTROLLER, FangkongProtocolEnum.YLFK.getId())))
+                    .setFangkongProtocol(FangkongProtocolEnum.getById(SharedPreUtil.getInteger(SDATA_FANGKONG_CONTROLLER, FangkongProtocolEnum.YLFK.getId())))
             ));
         }
     };
@@ -88,13 +88,13 @@ public class FangkongPlugin extends ContextEx {
     private boolean connecting = false;
 
     private synchronized void connect() {
-        final String fkaddress = SharedPreUtil.getSharedPreString(CommonData.SDATA_FANGKONG_ADDRESS);
+        final String fkaddress = SharedPreUtil.getString(CommonData.SDATA_FANGKONG_ADDRESS);
         Log.d(TAG, "connect: " + Constants.getStatusText(BleManage.self().client().getConnectStatus(fkaddress)) + "  " + CommonUtil.isNull(fkaddress) + "  " + Constants.getStatusText(BleManage.self().client().getConnectStatus(fkaddress)));
         if (connecting || CommonUtil.isNull(fkaddress) || BleManage.self().client().getConnectStatus(fkaddress) == STATUS_DEVICE_CONNECTED) {
             return;
         }
         connecting = true;
-        FangkongProtocolEnum p1 = FangkongProtocolEnum.getById(SharedPreUtil.getSharedPreInteger(SDATA_FANGKONG_CONTROLLER, FangkongProtocolEnum.YLFK.getId()));
+        FangkongProtocolEnum p1 = FangkongProtocolEnum.getById(SharedPreUtil.getInteger(SDATA_FANGKONG_CONTROLLER, FangkongProtocolEnum.YLFK.getId()));
         switch (p1) {
             case YLFK: {
                 fangkongProtocol = new YiLianProtocol(fkaddress, getContext(), changeModelCallBack);
@@ -148,7 +148,7 @@ public class FangkongPlugin extends ContextEx {
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void onEvent(final MTimeSecondEvent event) {
-        String fkaddress = SharedPreUtil.getSharedPreString(CommonData.SDATA_FANGKONG_ADDRESS);
+        String fkaddress = SharedPreUtil.getString(CommonData.SDATA_FANGKONG_ADDRESS);
         if (CommonUtil.isNotNull(fkaddress)) {
             if (BleManage.self().client().getConnectStatus(fkaddress) == STATUS_DEVICE_CONNECTED) {
                 postEvent(new PFkEventConnect().setConnected(true));

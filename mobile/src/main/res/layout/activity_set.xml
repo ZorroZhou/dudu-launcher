@@ -11,7 +11,7 @@
     <FrameLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1">
+        android:layout_weight="3">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -81,7 +81,7 @@
     <FrameLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="3">
+        android:layout_weight="7">
 
         <ScrollView
             android:layout_width="match_parent"

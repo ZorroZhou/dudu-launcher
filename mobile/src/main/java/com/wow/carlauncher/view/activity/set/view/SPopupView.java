@@ -59,11 +59,11 @@ public class SPopupView extends BaseView {
     protected void initView() {
         sv_popup_window_size.setOnClickListener(view -> {
             new AlertDialog.Builder(getContext()).setTitle("请选择一个尺寸").setItems(POPUP_SIZE, (dialogInterface, i) -> {
-                SharedPreUtil.saveSharedPreInteger(CommonData.SDATA_POPUP_SIZE, i);
+                SharedPreUtil.saveInteger(CommonData.SDATA_POPUP_SIZE, i);
                 PopupWin.self().setRank(i + 1);
             }).show();
         });
-        sv_popup_window_size.setSummary(POPUP_SIZE[SharedPreUtil.getSharedPreInteger(CommonData.SDATA_POPUP_SIZE, 1)]);
+        sv_popup_window_size.setSummary(POPUP_SIZE[SharedPreUtil.getInteger(CommonData.SDATA_POPUP_SIZE, 1)]);
 
         sv_popup_full_screen.setOnValueChangeListener(new SetSwitchOnClickListener(CommonData.SDATA_POPUP_FULL_SCREEN) {
             @Override
@@ -71,26 +71,26 @@ public class SPopupView extends BaseView {
                 EventBus.getDefault().post(new PEventFSRefresh());
             }
         });
-        sv_popup_full_screen.setChecked(SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_POPUP_FULL_SCREEN, true));
+        sv_popup_full_screen.setChecked(SharedPreUtil.getBoolean(CommonData.SDATA_POPUP_FULL_SCREEN, true));
 
         sv_allow_popup_window.setOnValueChangeListener(new SetSwitchOnClickListener(CommonData.SDATA_POPUP_ALLOW_SHOW));
-        sv_allow_popup_window.setChecked(SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_POPUP_ALLOW_SHOW, true));
+        sv_allow_popup_window.setChecked(SharedPreUtil.getBoolean(CommonData.SDATA_POPUP_ALLOW_SHOW, true));
 
         sv_popup_window_showapps.setOnClickListener(new SetAppMultipleSelectOnClickListener(getContext()) {
             @Override
             public String getCurr() {
-                return SharedPreUtil.getSharedPreString(CommonData.SDATA_POPUP_SHOW_APPS);
+                return SharedPreUtil.getString(CommonData.SDATA_POPUP_SHOW_APPS);
             }
 
             @Override
             public void onSelect(String t) {
-                SharedPreUtil.saveSharedPreString(CommonData.SDATA_POPUP_SHOW_APPS, t);
+                SharedPreUtil.saveString(CommonData.SDATA_POPUP_SHOW_APPS, t);
             }
         });
 
 
         sv_popup_window_showtype.setOnValueChangeListener(new SetSwitchOnClickListener(CommonData.SDATA_POPUP_SHOW_TYPE));
-        sv_popup_window_showtype.setChecked(SharedPreUtil.getSharedPreBoolean(CommonData.SDATA_POPUP_SHOW_TYPE, true));
+        sv_popup_window_showtype.setChecked(SharedPreUtil.getBoolean(CommonData.SDATA_POPUP_SHOW_TYPE, true));
 
     }
 }

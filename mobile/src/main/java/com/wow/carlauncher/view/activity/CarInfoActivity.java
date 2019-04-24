@@ -76,7 +76,7 @@ public class CarInfoActivity extends BaseActivity {
     }
 
     private void refreshObdState() {
-        String address = SharedPreUtil.getSharedPreString(CommonData.SDATA_OBD_ADDRESS);
+        String address = SharedPreUtil.getString(CommonData.SDATA_OBD_ADDRESS);
         if (CommonUtil.isNotNull(address)) {
             if (BleManage.self().client().getConnectStatus(address) == STATUS_DEVICE_CONNECTED) {
                 setTitle("OBD(已连接)");

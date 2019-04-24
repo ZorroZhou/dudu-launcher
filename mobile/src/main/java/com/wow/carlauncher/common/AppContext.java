@@ -161,12 +161,16 @@ public class AppContext {
                             + File.separator + "error";
                 }
 
+                File pathFile = new File(path);
+                if (!pathFile.exists()) {
+                    pathFile.mkdirs();
+                }
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault());
                 String date = format.format(new Date(System.currentTimeMillis()));
 
                 File file = new File(path, "log_"
                         + date + ".log");
-                if (!file.exists() && file.mkdirs() && file.createNewFile()) {
+                if (!file.exists() && file.createNewFile()) {
                     Log.e(TAG, "创建文件");
                 } else {
                     return;

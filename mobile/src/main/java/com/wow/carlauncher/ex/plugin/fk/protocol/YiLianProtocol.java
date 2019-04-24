@@ -50,7 +50,6 @@ public class YiLianProtocol extends FangkongProtocol {
     public void receiveMessage(byte[] message) {
         if (message != null && message.length == 2) {
             short cmd = Shorts.fromByteArray(message);
-            System.out.println("cmd:" + cmd);
             switch (cmd) {
                 case LEFT_TOP_CLICK:
                     if (simulatedDClick) {

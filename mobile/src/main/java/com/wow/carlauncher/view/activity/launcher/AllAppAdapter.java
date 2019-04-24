@@ -36,11 +36,13 @@ public class AllAppAdapter extends BaseAdapterEx<AppInfo> {
         if (convertView == null) {
             convertView = inflate.inflate(R.layout.grid_item_launcher_all_app, viewGroup, false);
         }
+        boolean needUpdateIcon = false;
         if (!ThemeManage.self().getTheme().equals(convertView.getTag(R.string.tag_key_launcher_all_all_item_theme))) {
             convertView.setTag(R.string.tag_key_launcher_all_all_item_theme, ThemeManage.self().getTheme());
             convertView.findViewById(R.id.ll_base).setBackgroundResource(ThemeManage.self().getCurrentThemeRes(R.drawable.n_cell_bg));
             convertView.findViewById(R.id.line1).setBackgroundResource(ThemeManage.self().getCurrentThemeRes(R.drawable.n_line3));
             ((TextView) convertView.findViewById(R.id.name)).setTextColor(ThemeManage.self().getCurrentThemeColor(R.color.l_msg));
+            needUpdateIcon = true;
         }
         ViewGroup.LayoutParams layoutParams = convertView.getLayoutParams();
         if (layoutParams.height != height) {
@@ -51,8 +53,11 @@ public class AllAppAdapter extends BaseAdapterEx<AppInfo> {
         AppInfo model = items.get(position);
         if (!model.equals(convertView.getTag())) {
             ((TextView) convertView.findViewById(R.id.name)).setText(model.name);
-            ((ImageView) convertView.findViewById(R.id.icon)).setImageDrawable(AppInfoManage.self().getIcon(model.clazz));
             convertView.setTag(model);
+            needUpdateIcon = true;
+        }
+        if (needUpdateIcon) {
+            ((ImageView) convertView.findViewById(R.id.icon)).setImageDrawable(AppInfoManage.self().getIcon(model.clazz));
         }
         return convertView;
     }

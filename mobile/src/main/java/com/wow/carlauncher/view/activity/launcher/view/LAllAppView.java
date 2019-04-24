@@ -101,7 +101,6 @@ public class LAllAppView extends BaseEXView implements AdapterView.OnItemClickLi
                 }
             }
             appInfos.removeAll(hides);
-            System.out.println(appInfos + "!!!!!");
             adapter.addItems(appInfos);
         });
     }
@@ -158,7 +157,5 @@ public class LAllAppView extends BaseEXView implements AdapterView.OnItemClickLi
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        System.out.println("onDetachedFromWindow:" + this);
-
     }
 }

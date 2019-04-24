@@ -106,7 +106,6 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
     public void initView() {
         setContentView(R.layout.activity_lanncher);
         x.view().inject(this);
-        System.out.println(postion + "   !!!!");
         viewPager.addOnPageChangeListener(postion);
         viewPager.setPageTransformer(true, ItemTransformer.getById(SharedPreUtil.getSharedPreInteger(SDATA_LAUNCHER_ITEM_TRAN, ItemTransformer.None.getId())).getTransformer());
 
@@ -155,9 +154,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
                 pageView.setItem(pcell);
             }
         }
-        System.out.println(pageViews.length + " !!!!");
         pageViews[pageViews.length - 1] = new LAllAppView(this);
-        System.out.println(pageViews[pageViews.length - 1]);
         viewPager.setAdapter(new ViewAdapter(pageViews));
         postion.loadPostion(pageViews.length);
     }

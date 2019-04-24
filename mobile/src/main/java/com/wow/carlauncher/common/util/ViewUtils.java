@@ -11,19 +11,6 @@ import android.widget.GridView;
 import android.widget.LinearLayout;
 
 public class ViewUtils {
-
-    public static void printView(String paramString, View paramView) {
-        System.out.println(paramString + "=" + paramView);
-        if (paramView == null)
-            return;
-        System.out.print("[" + paramView.getLeft());
-        System.out.print(", " + paramView.getTop());
-        System.out.print(", w=" + paramView.getWidth());
-        System.out.println(", h=" + paramView.getHeight() + "]");
-        System.out.println("mw=" + paramView.getMeasuredWidth() + ", mh=" + paramView.getMeasuredHeight());
-        System.out.println("scroll [" + paramView.getScrollX() + "," + paramView.getScrollY() + "]");
-    }
-
     /**
      * 根据手机的分辨率�? px(像素) 的单�? 转成�? dp
      */

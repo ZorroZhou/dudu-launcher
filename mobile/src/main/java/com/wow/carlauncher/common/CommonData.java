@@ -159,7 +159,7 @@ public class CommonData {
     //APP启动后自动任务相关
     public static final String SDATA_APP_AUTO_OPEN_USE = "SDATA_APP_AUTO_OPEN_USE";
     public static final String SDATA_APP_AUTO_OPEN_BACK = "SDATA_APP_AUTO_OPEN_BACK";
-    public static final int SDATA_APP_AUTO_OPEN_BACK_DF = 5000;
+    public static final int SDATA_APP_AUTO_OPEN_BACK_DF = 5;
     //第一个打开的APP
     public static final String SDATA_APP_AUTO_OPEN1 = "SDATA_APP_AUTO_OPEN1";
     public static final String SDATA_APP_AUTO_OPEN2 = "SDATA_APP_AUTO_OPEN2";

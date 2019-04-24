@@ -19,6 +19,7 @@ import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventNavInfo;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventState;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventAction;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventConnect;
+import com.wow.carlauncher.view.activity.driving.DrivingView;
 import com.wow.carlauncher.view.base.BaseEXView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -36,10 +37,9 @@ import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.RIGHT_BOT
 
 /**
  * Created by 10124 on 2018/5/11.
- * todo 这里应该加个接口做isFront的传值
  */
 
-public class CoolBlackView extends BaseEXView {
+public class CoolBlackView extends DrivingView {
     public CoolBlackView(@NonNull Context context) {
         super(context);
     }
@@ -82,9 +82,8 @@ public class CoolBlackView extends BaseEXView {
 
     private boolean isFront = true;
 
-    public CoolBlackView setFront(boolean front) {
+    public void setFront(boolean front) {
         isFront = front;
-        return this;
     }
 
     private boolean fktuoguan = false;

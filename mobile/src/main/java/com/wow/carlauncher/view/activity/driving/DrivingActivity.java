@@ -26,7 +26,7 @@ public class DrivingActivity extends BaseActivity {
     @ViewInject(R.id.content)
     private FrameLayout content;
 
-    private CoolBlackView nowContent;
+    private DrivingView nowContent;
 
     @Override
     public void init() {

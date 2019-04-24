@@ -360,7 +360,7 @@ public class LAMapView extends BaseEXView {
                 msg = msg + "现在";
             } else {
                 if (event.getSegRemainDis() > 1000) {
-                    msg = msg + event.getSegRemainDis() / 1000 + "公里后";
+                    msg = msg + new BigDecimal(event.getSegRemainDis() / 1000).setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue() + "公里后";
                 } else {
                     msg = msg + event.getSegRemainDis() + "米后";
                 }

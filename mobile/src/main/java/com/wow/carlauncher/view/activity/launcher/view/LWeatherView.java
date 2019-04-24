@@ -256,6 +256,10 @@ public class LWeatherView extends BaseEXView {
         boolean frist = false;
         if (this.lastLocation == null) {
             frist = true;
+        } else {
+            if (!CommonUtil.equals(lastLocation.getAdCode(), event.getAdCode())) {
+                frist = true;
+            }
         }
         lastLocation = event;
         refreshShow();

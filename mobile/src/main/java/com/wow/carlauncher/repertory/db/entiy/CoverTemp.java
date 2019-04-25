@@ -25,4 +25,12 @@ public class CoverTemp extends BaseEntity {
         this.url = url;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "CoverTemp{" +
+                "key='" + key + '\'' +
+                ", url='" + url + '\'' +
+                '}';
+    }
 }

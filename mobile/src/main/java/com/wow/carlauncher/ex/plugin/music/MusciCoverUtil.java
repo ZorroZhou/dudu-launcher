@@ -23,7 +23,8 @@ public class MusciCoverUtil {
             if (artist != null) {
                 key = key + artist;
             }
-            CoverTemp temp = DatabaseManage.getBean(CoverTemp.class, " key='" + key + "'");
+            String fkey = key;
+            CoverTemp temp = DatabaseManage.getBean(CoverTemp.class, " key='" + fkey + "'");
             if (temp == null) {
                 QQMusicWebService.searchMusic(key, 1, new QQMusicWebService.CommonCallback<SearchRes>() {
                     @Override
@@ -37,7 +38,7 @@ public class MusciCoverUtil {
                             SearchRes.SongItem songItem = res.getData().getSong().getList().get(0);
                             String url = QQMusicWebService.picUrl(songItem.getAlbumid());
                             musicPlugin.refreshCover(url);
-                            DatabaseManage.insert(new CoverTemp().setKey(title + "-" + artist).setUrl(url));
+                            DatabaseManage.insert(new CoverTemp().setKey(fkey).setUrl(url));
                         }
                         run = false;
                     }
@@ -46,7 +47,7 @@ public class MusciCoverUtil {
                 Bitmap cover = ImageManage.self().loadImageSync(temp.getUrl());
                 if (cover == null || cover.getWidth() < 10) {
                     musicPlugin.refreshCover(null);
-                    DatabaseManage.delete(CoverTemp.class, " key='" + title + "-" + artist + "'");
+                    DatabaseManage.delete(CoverTemp.class, " key='" + fkey + "'");
                 } else {
                     musicPlugin.refreshCover(temp.getUrl());
                 }

@@ -38,7 +38,6 @@ public class QQMusicCarController extends MusicController {
     private static final int WE_DRIVE_PAUSE = 1;
     private static final int WE_DRIVE_PRE = 2;
     private static final int WE_DRIVE_RESUME = 0;
-    private Bitmap defcover;
 
     private Gson gson;
 
@@ -57,7 +56,6 @@ public class QQMusicCarController extends MusicController {
         context.sendBroadcast(intent2);
 
         EventBus.getDefault().register(this);
-        defcover = BitmapFactory.decodeResource(context.getResources(), R.mipmap.music_dlogo);
     }
 
 

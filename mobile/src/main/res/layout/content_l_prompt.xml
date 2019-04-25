@@ -49,6 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:contentDescription="@string/app_name"
+            android:visibility="gone"
             app:layout_widthPercent="100%h" />
 
         <ImageView
@@ -56,6 +57,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:contentDescription="@string/app_name"
+            android:visibility="gone"
             app:layout_widthPercent="100%h" />
 
         <ImageView
@@ -63,6 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:contentDescription="@string/app_name"
+            android:visibility="gone"
             app:layout_widthPercent="100%h" />
 
         <ImageView
@@ -70,6 +73,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:contentDescription="@string/app_name"
+            android:visibility="gone"
             app:layout_widthPercent="100%h" />
 
         <ImageView

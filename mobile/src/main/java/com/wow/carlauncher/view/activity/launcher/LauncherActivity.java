@@ -81,6 +81,8 @@ import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.RIGHT_TOP
 
 public class LauncherActivity extends Activity implements ThemeManage.OnThemeChangeListener {
 
+    private static LauncherActivity old;
+
     @ViewInject(R.id.viewPager)
     private ViewPager viewPager;
 
@@ -98,6 +100,12 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //防止初始化两次
+        if (old != null) {
+            old.finish();
+        }
+        old = this;
+
         //超级大坑,必去全局设置才能用
         ThemeManage.self().refreshTheme();
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);

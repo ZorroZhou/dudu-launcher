@@ -5,9 +5,18 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
     <TextView
         android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/music_name"
+        android:textColor="#ccc"
+        app:layout_textSizePercent="18%h" />
+
+    <TextView
+        android:id="@+id/tv_zuojia"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -17,9 +26,9 @@
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
         android:singleLine="true"
-        android:text="@string/music_name"
+        android:text="作者"
         android:textColor="@color/plugin_music_name"
-        app:layout_textSizePercent="20%h" />
+        app:layout_textSizePercent="18%h" />
 
     <LinearLayout
         android:id="@+id/rl_bottom"

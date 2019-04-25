@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.zhy.android.percent.support.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.zhy.android.percent.support.PercentLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,66 +7,81 @@
     android:orientation="vertical"
     tools:ignore="HardcodedText">
 
-    <com.zhy.android.percent.support.PercentLinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:orientation="vertical"
-        app:layout_widthPercent="45%w"
-        tools:ignore="RtlHardcoded">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="胎压"
+        android:textColor="#ccc"
+        app:layout_textSizePercent="18%h" />
 
-        <TextView
-            android:id="@+id/tv_lf"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="@color/color_red"
-            android:gravity="center_vertical|right"
-            android:lineSpacingExtra="2dp"
-            android:text="2.1\n16°"
-            android:textColor="#fff"
-            app:layout_textSizePercent="20%h" />
+    <com.zhy.android.percent.support.PercentRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2">
 
-        <TextView
-            android:id="@+id/tv_lb"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:gravity="center_vertical|right"
-            android:lineSpacingExtra="2dp"
-            android:text="2.1\n16°"
-            android:textColor="#fff"
-            app:layout_textSizePercent="20%h" />
-    </com.zhy.android.percent.support.PercentLinearLayout>
 
-    <com.zhy.android.percent.support.PercentLinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_alignParentRight="true"
-        android:orientation="vertical"
-        app:layout_widthPercent="45%w"
-        tools:ignore="RtlHardcoded">
+        <com.zhy.android.percent.support.PercentLinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:orientation="vertical"
+            app:layout_widthPercent="45%w"
+            tools:ignore="RtlHardcoded">
 
-        <TextView
-            android:id="@+id/tv_rf"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:gravity="center_vertical|left"
-            android:lineSpacingExtra="2dp"
-            android:text="2.1\n16°"
-            android:textColor="#fff"
-            app:layout_textSizePercent="20%h" />
+            <TextView
+                android:id="@+id/tv_lf"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical|right"
+                android:lineSpacingExtra="2dp"
+                android:text="2.1/16°"
+                android:textColor="#fff"
+                app:layout_textSizePercent="25%h" />
 
-        <TextView
-            android:id="@+id/tv_rb"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:gravity="center_vertical|left"
-            android:lineSpacingExtra="2dp"
-            android:text="2.1\n16°"
-            android:textColor="#fff"
-            app:layout_textSizePercent="20%h" />
-    </com.zhy.android.percent.support.PercentLinearLayout>
-</com.zhy.android.percent.support.PercentRelativeLayout>
+            <TextView
+                android:id="@+id/tv_lb"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical|right"
+                android:lineSpacingExtra="2dp"
+                android:text="2.1/16°"
+                android:textColor="#fff"
+                app:layout_textSizePercent="25%h" />
+        </com.zhy.android.percent.support.PercentLinearLayout>
+
+        <com.zhy.android.percent.support.PercentLinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:orientation="vertical"
+            app:layout_widthPercent="45%w"
+            tools:ignore="RtlHardcoded">
+
+            <TextView
+                android:id="@+id/tv_rf"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical|left"
+                android:lineSpacingExtra="2dp"
+                android:text="2.1/16°"
+                android:textColor="#fff"
+                app:layout_textSizePercent="25%h" />
+
+            <TextView
+                android:id="@+id/tv_rb"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical|left"
+                android:lineSpacingExtra="2dp"
+                android:text="2.1/16°"
+                android:textColor="#fff"
+                app:layout_textSizePercent="25%h" />
+        </com.zhy.android.percent.support.PercentLinearLayout>
+    </com.zhy.android.percent.support.PercentRelativeLayout>
+</com.zhy.android.percent.support.PercentLinearLayout>

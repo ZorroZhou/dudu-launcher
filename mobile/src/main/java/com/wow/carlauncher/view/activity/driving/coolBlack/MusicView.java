@@ -42,10 +42,13 @@ public class MusicView extends BaseEXView {
     }
 
     @ViewInject(R.id.iv_play)
-    private ImageView music_iv_play;
+    private ImageView iv_play;
 
     @ViewInject(R.id.tv_title)
-    private TextView music_tv_title;
+    private TextView tv_title;
+
+    @ViewInject(R.id.tv_zuojia)
+    private TextView tv_zuojia;
 
     @Event(value = {R.id.iv_play, R.id.ll_prew, R.id.ll_next})
     private void clickEvent(View view) {
@@ -66,34 +69,26 @@ public class MusicView extends BaseEXView {
         }
     }
 
-    private String nowTitle = "";
-
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(final PMusicEventInfo event) {
-        if (music_tv_title != null) {
+        if (tv_title != null) {
             if (CommonUtil.isNotNull(event.getTitle())) {
-                String msg = event.getTitle();
-                if (CommonUtil.isNotNull(event.getArtist())) {
-                    msg = msg + "-" + event.getArtist();
-                }
-                if (!msg.equals(nowTitle)) {
-                    nowTitle = msg;
-                    music_tv_title.setText(msg);
-                    music_tv_title.setSelected(true);
-                }
+                tv_title.setText(event.getTitle());
+                tv_zuojia.setText(event.getArtist());
             } else {
-                music_tv_title.setText("音乐名称");
+                tv_title.setText("音乐名称");
+                tv_zuojia.setText("");
             }
         }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(final PMusicEventState event) {
-        if (music_iv_play != null) {
+        if (iv_play != null) {
             if (event.isRun()) {
-                music_iv_play.setImageResource(R.mipmap.ic_pause2_b);
+                iv_play.setImageResource(R.mipmap.ic_pause2_b);
             } else {
-                music_iv_play.setImageResource(R.mipmap.ic_play2_b);
+                iv_play.setImageResource(R.mipmap.ic_play2_b);
             }
         }
     }

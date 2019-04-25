@@ -7,6 +7,8 @@ import com.google.common.base.Strings;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.util.SharedPreUtil;
+import com.wow.carlauncher.repertory.nio.warp.BaseWarp;
+import com.wow.carlauncher.repertory.nio.warp.WarpConverter;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -15,6 +17,8 @@ import java.util.concurrent.TimeUnit;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelHandlerAdapter;
+import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOutboundHandlerAdapter;
@@ -23,6 +27,9 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
+import io.netty.handler.codec.LineBasedFrameDecoder;
+import io.netty.handler.codec.string.StringDecoder;
+import io.netty.handler.codec.string.StringEncoder;
 import io.netty.handler.timeout.IdleStateHandler;
 
 import static com.wow.carlauncher.repertory.nio.base.NioConnectState.CONNECTED;
@@ -49,14 +56,12 @@ public abstract class NioClient {
 
     private ExecutorService singleThreadPool;
     protected NioClientListener listener;
-    protected int id;
 
     public void setListener(NioClientListener listener) {
         this.listener = listener;
     }
 
-    public NioClient(int id) {
-        this.id = id;
+    public NioClient() {
         listener = new NioClientListenerImpl();
         singleThreadPool = new ThreadPoolExecutor(1, 1,
                 0L, TimeUnit.MILLISECONDS,
@@ -90,9 +95,22 @@ public abstract class NioClient {
                 protected void initChannel(Channel channel) throws Exception {
                     ChannelPipeline pipeline = channel.pipeline();
                     // 字符串解码 和 编码
-                    pipeline.addLast("decoder", getDecoder());
-                    pipeline.addLast("encoder", getEncoder());
-                    pipeline.addLast("IdleStateHandler", new IdleStateHandler(30, 30, 30));
+                    pipeline.addLast(new LineBasedFrameDecoder(1024));
+                    pipeline.addLast(new StringDecoder());
+                    pipeline.addLast(new StringEncoder());
+                    pipeline.addLast(new ChannelInboundHandlerAdapter() {
+                        @Override
+                        public void channelRead(ChannelHandlerContext ctx, Object msg) {
+                            if (msg != null) {
+                                String body = msg.toString();
+                                BaseWarp warp = getWarpConverter().bytes2Warp(body);
+                                if (warp != null) {
+                                    ctx.fireChannelRead(warp);
+                                }
+                            }
+                        }
+                    });
+                    pipeline.addLast(new IdleStateHandler(30, 30, 30));
                     pipeline.addLast("messageHandler", getMessageHandler());
                 }
             });
@@ -120,9 +138,7 @@ public abstract class NioClient {
         });
     }
 
-    public abstract LengthFieldBasedFrameDecoder getDecoder();
-
-    public abstract ChannelOutboundHandlerAdapter getEncoder();
+    public abstract WarpConverter getWarpConverter();
 
     public abstract ChannelInboundHandlerAdapter getMessageHandler();
 }

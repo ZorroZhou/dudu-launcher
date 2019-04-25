@@ -20,7 +20,9 @@ import com.wow.carlauncher.common.util.NetWorkUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
+import com.wow.carlauncher.ex.manage.location.event.MNewLocationEvent;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
+import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventConnect;
 import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarTp;
@@ -64,25 +66,17 @@ public class LPromptView extends BaseEXView {
     }
 
     @Override
-    protected void initView() {
-        pm = getActivity().getPackageManager();
-    }
-
-    @Override
     public void changedTheme(ThemeManage manage) {
         fl_base.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_prompt_bg));
         tv_time.setTextColor(manage.getCurrentThemeColor(R.color.l_text1));
-        //iv_home.setImageResource(manage.getCurrentThemeRes(R.mipmap.n_home));
 
-
+        iv_location.setImageResource(manage.getCurrentThemeRes(R.mipmap.ic_l_location));
         iv_obd.setImageResource(manage.getCurrentThemeRes(R.mipmap.ic_l_obd));
         iv_carinfo_tp.setImageResource(manage.getCurrentThemeRes(R.mipmap.ic_l_tp));
         iv_fk.setImageResource(manage.getCurrentThemeRes(R.mipmap.ic_l_fk));
         iv_wifi.setImageResource(manage.getCurrentThemeRes(R.mipmap.ic_l_wifi));
         iv_set.setImageResource(manage.getCurrentThemeRes(R.mipmap.ic_l_set));
     }
-
-    private PackageManager pm;
 
     @ViewInject(R.id.fl_base)
     private View fl_base;
@@ -93,8 +87,8 @@ public class LPromptView extends BaseEXView {
     @ViewInject(R.id.iv_carinfo_tp)
     private ImageView iv_carinfo_tp;
 
-//    @ViewInject(R.id.iv_home)
-//    private ImageView iv_home;
+    @ViewInject(R.id.iv_location)
+    private ImageView iv_location;
 
     @ViewInject(R.id.iv_set)
     private ImageView iv_set;
@@ -108,9 +102,15 @@ public class LPromptView extends BaseEXView {
     @ViewInject(R.id.iv_wifi)
     private ImageView iv_wifi;
 
-    @Event(value = {R.id.iv_set, R.id.iv_wifi, R.id.iv_obd, R.id.tv_time, R.id.tv_time})
+    @Event(value = {R.id.iv_set, R.id.iv_wifi, R.id.iv_obd, R.id.tv_time, R.id.tv_time, R.id.iv_location})
     private void clickEvent(View view) {
         switch (view.getId()) {
+            case R.id.iv_location: {
+                if (locationEvent != null) {
+                    ToastManage.self().show("当前定位:" + locationEvent.getCity());
+                }
+                break;
+            }
             case R.id.iv_set: {
                 getActivity().startActivity(new Intent(getContext(), SetActivity.class));
                 break;
@@ -229,6 +229,14 @@ public class LPromptView extends BaseEXView {
             }
             this.tv_time.setText(date);
         }
+    }
+
+    private MNewLocationEvent locationEvent;
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(MNewLocationEvent event) {
+        this.locationEvent = event;
+        iv_location.setVisibility(VISIBLE);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

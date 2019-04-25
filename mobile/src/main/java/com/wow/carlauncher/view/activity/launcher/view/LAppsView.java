@@ -92,7 +92,6 @@ public class LAppsView extends BaseEXView implements View.OnClickListener, View.
             if (model != null) {
                 cellView = View.inflate(getContext(), R.layout.content_app_grid_item, null);
                 ((TextView) cellView.findViewById(R.id.name)).setText(model.name);
-                ((ImageView) cellView.findViewById(R.id.icon)).setImageDrawable(AppInfoManage.self().getIcon(model.clazz));
                 cellView.setOnClickListener(this);
                 cellView.setOnLongClickListener(this);
                 cellView.setTag(i);
@@ -128,6 +127,11 @@ public class LAppsView extends BaseEXView implements View.OnClickListener, View.
                 cell.findViewById(R.id.ll_base).setBackgroundResource(ThemeManage.self().getCurrentThemeRes(R.drawable.n_cell_bg));
                 cell.findViewById(R.id.line1).setBackgroundResource(ThemeManage.self().getCurrentThemeRes(R.drawable.n_line3));
                 ((TextView) cell.findViewById(R.id.name)).setTextColor(ThemeManage.self().getCurrentThemeColor(R.color.l_msg));
+
+                if (index < appInfos.size()) {
+                    AppInfo model = appInfos.get(index);
+                    ((ImageView) cell.findViewById(R.id.icon)).setImageDrawable(AppInfoManage.self().getIcon(model.clazz));
+                }
             }
         }
     }

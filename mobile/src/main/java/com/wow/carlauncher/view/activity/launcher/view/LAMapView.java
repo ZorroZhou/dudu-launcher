@@ -404,19 +404,19 @@ public class LAMapView extends BaseEXView {
     public void onEvent(final PAmapLukuangInfo event) {
         Lukuang lukuang = event.getLukuang();
         if (lukuangView != null) {
-            //if (lukuang.isTmc_segment_enabled()) {
-            lukuangView.setVisibility(VISIBLE);
-            List<LukuangView.LukuangModel> models = new ArrayList<>();
-            for (Lukuang.TmcInfo tmcInfo : lukuang.getTmc_info()) {
-                models.add(new LukuangView.LukuangModel()
-                        .setDistance(tmcInfo.getTmc_segment_distance())
-                        .setStatus(tmcInfo.getTmc_status())
-                        .setNumber(tmcInfo.getTmc_segment_number()));
+            if (lukuang.isTmc_segment_enabled()) {
+                lukuangView.setVisibility(VISIBLE);
+                List<LukuangView.LukuangModel> models = new ArrayList<>();
+                for (Lukuang.TmcInfo tmcInfo : lukuang.getTmc_info()) {
+                    models.add(new LukuangView.LukuangModel()
+                            .setDistance(tmcInfo.getTmc_segment_distance())
+                            .setStatus(tmcInfo.getTmc_status())
+                            .setNumber(tmcInfo.getTmc_segment_number()));
+                }
+                lukuangView.setLukuangs(models);
+            } else {
+                lukuangView.setVisibility(GONE);
             }
-            lukuangView.setLukuangs(models);
-//            } else {
-//                lukuangView.setVisibility(GONE);
-//            }
 
         }
     }

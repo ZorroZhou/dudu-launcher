@@ -55,32 +55,29 @@ public class GoodDriverProtocol extends ObdProtocol {
         cmdCloseTitle = false;
         cmdProtocolAuto = false;
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                running = true;
-                while (running) {
-                    if (listener.isConnect()) {
-                        baseCheckTask();
+        new Thread(() -> {
+            running = true;
+            while (running) {
+                if (listener.isConnect()) {
+                    baseCheckTask();
 
-                        if (mark % infoMark == 0) {
-                            addTask(new GetSpeedTask());
-                            addTask(new GetRevTask());
-                        }
+                    if (mark % infoMark == 0) {
+                        addTask(new GetSpeedTask());
+                        addTask(new GetRevTask());
+                    }
 
-                        if (mark % 20 == 0) {
-                            addTask(new GetWaterTempTask());
-                            addTask(new GetOilConTask());
-                        }
-                        mark++;
-                    } else {
-                        running = false;
+                    if (mark % 20 == 0) {
+                        addTask(new GetWaterTempTask());
+                        addTask(new GetOilConTask());
                     }
-                    try {
-                        Thread.sleep(300);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                    mark++;
+                } else {
+                    running = false;
+                }
+                try {
+                    Thread.sleep(300);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
         }).start();

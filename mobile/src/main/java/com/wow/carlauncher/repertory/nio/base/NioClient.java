@@ -25,7 +25,10 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.timeout.IdleStateHandler;
 
-import static com.wow.carlauncher.repertory.nio.base.NioConnectState.*;
+import static com.wow.carlauncher.repertory.nio.base.NioConnectState.CONNECTED;
+import static com.wow.carlauncher.repertory.nio.base.NioConnectState.CONNECTING;
+import static com.wow.carlauncher.repertory.nio.base.NioConnectState.LOGIN_SUCCESS;
+import static com.wow.carlauncher.repertory.nio.base.NioConnectState.NOT_CONNECT;
 
 /**
  * 基础的客户端，负责处理nio连接，等相关的功能，可自定义解析器

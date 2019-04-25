@@ -20,4 +20,13 @@ public class AppInfo {
     public int appMark = MARK_OTHER_APP;//app的标记,标记是自己的APP还是其他的
     public String clazz;
     public CharSequence name;
+
+    @Override
+    public String toString() {
+        return "AppInfo{" +
+                "appMark=" + appMark +
+                ", clazz='" + clazz + '\'' +
+                ", name=" + name +
+                '}';
+    }
 }

@@ -69,9 +69,6 @@
             android:name=".view.activity.LockActivity"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".view.activity.AppMenuActivity"
-            android:screenOrientation="landscape" />
-        <activity
             android:name=".view.activity.set.SetActivity"
             android:screenOrientation="landscape" />
         <activity

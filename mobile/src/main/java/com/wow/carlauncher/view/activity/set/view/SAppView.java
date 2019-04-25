@@ -19,7 +19,7 @@ import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.ThemeManage.Theme;
 import com.wow.carlauncher.ex.manage.ThemeManage.ThemeMode;
-import com.wow.carlauncher.ex.manage.appInfo.event.MAppInfoRefreshEvent;
+import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.console.ConsolePlugin;
 import com.wow.carlauncher.ex.plugin.console.ConsoleProtoclEnum;
@@ -299,7 +299,7 @@ public class SAppView extends BaseView {
             @Override
             public void onSelect(String t) {
                 SharedPreUtil.saveString(CommonData.SDATA_HIDE_APPS, t);
-                EventBus.getDefault().post(new MAppInfoRefreshEvent());
+                AppInfoManage.self().refreshShowApp();
             }
         });
 

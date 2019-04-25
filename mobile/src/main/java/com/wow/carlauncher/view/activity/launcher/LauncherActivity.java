@@ -11,6 +11,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -19,6 +20,8 @@ import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.manage.ThemeManage;
+import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
+import com.wow.carlauncher.ex.manage.appInfo.event.MAppInfoRefreshShowEvent;
 import com.wow.carlauncher.ex.manage.location.event.MNewLocationEvent;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.console.ConsolePlugin;
@@ -31,7 +34,7 @@ import com.wow.carlauncher.view.activity.launcher.event.LDockRefreshEvent;
 import com.wow.carlauncher.view.activity.launcher.event.LItemRefreshEvent;
 import com.wow.carlauncher.view.activity.launcher.event.LItemToFristEvent;
 import com.wow.carlauncher.view.activity.launcher.event.LPageTransformerChangeEvent;
-import com.wow.carlauncher.view.activity.launcher.view.LAllAppView;
+import com.wow.carlauncher.view.activity.launcher.view.LAppsView;
 import com.wow.carlauncher.view.activity.launcher.view.LPageView;
 import com.wow.carlauncher.view.activity.launcher.view.LPagerPostion;
 import com.wow.carlauncher.view.consoleWindow.ConsoleWin;
@@ -62,6 +65,7 @@ import static com.wow.carlauncher.common.CommonData.SDATA_DOCK2_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK3_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK4_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_LAUNCHER_ITEM_TRAN;
+import static com.wow.carlauncher.common.CommonData.TAG;
 import static com.wow.carlauncher.ex.plugin.fk.FangkongProtocolEnum.YLFK;
 import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.CENTER_CLICK;
 import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.CENTER_LONG_CLICK;
@@ -114,10 +118,15 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
 
         EventBus.getDefault().register(this);
         initItem();
+        initApps();
+        refreshViewPager();
         x.task().postDelayed(this::requestRuntime, 2000);
     }
 
+    private LPageView[] itemPager;
+
     private void initItem() {
+        Log.e(TAG, "initItem");
         //计算排序
         List<ItemModel> items = new ArrayList<>();
         for (ItemEnum item : CommonData.LAUNCHER_ITEMS) {
@@ -128,39 +137,77 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
                 ));
             }
         }
-
         Collections.sort(items, (o1, o2) -> o1.index - o2.index);
-        int psize = SharedPreUtil.getInteger(CommonData.SDATA_LAUNCHER_ITEM_NUM, 3);
-        if (psize != 3) {
-            psize = 4;
-        }
-        int pnum = items.size() / psize;
+        //获取每页的item数量
+        int psize = getPageItemNum();
+
+        //计算全部展示需要几页
+        int pageNum = items.size() / psize;
         if (items.size() % psize != 0) {
-            pnum++;
+            pageNum++;
+        }
+        itemPager = new LPageView[pageNum];
+        for (int i = 0; i < itemPager.length; i++) {
+            itemPager[i] = new LPageView(this);
         }
 
-        View[] pageViews = new View[pnum + 1];
-
-        int npage = 0;
-        LPageView pageView = null;
-        View[] pcell = new View[psize];
+        //记录当前第几页,这里应该是-1,因为下面会从0开始,直接+1
+        int npage = -1;
+        //声明一个空页
+        View[] pageItems = new View[psize];
+        //循环可用的items
         for (int i = 0; i < items.size(); i++) {
+            ItemModel model = items.get(i);
+            //当一页满后,下一页重新创建一个页面View
             if (i % psize == 0) {
-                pageView = new LPageView(this);
-                pageViews[npage] = pageView;
-                pcell = new View[psize];
+                pageItems = new View[psize];
                 npage++;
             }
-            pcell[i % psize] = ItemEnum.createView(this, items.get(i).info);
+            //根据信息创建一个View
+            pageItems[i % psize] = ItemEnum.createView(this, model.info);
             //如果是一组的最后一个,或者是列表最后一个
             if (((i % psize == psize - 1) || (i == items.size() - 1))) {
-                pageView.setItem(pcell);
+                itemPager[npage].setItem(pageItems);
+            }
+
+        }
+        //初始化完毕
+    }
+
+    private LAppsView[] appsPager;
+
+    private void initApps() {
+        Log.e(TAG, "initApps");
+        //获取每页的item数量
+        int psize = getPageItemNum();
+        int appsize = AppInfoManage.self().getShowAppInfos().size();
+        int pageSize = psize * 4;
+        int appPageNum = appsize / pageSize;
+        if (appsize % pageSize != 0) {
+            appPageNum++;
+        }
+
+        appsPager = new LAppsView[appPageNum];
+        for (int i = 0; i < appPageNum; i++) {
+            appsPager[i] = new LAppsView(this, psize, i);
+        }
+    }
+
+
+    private void refreshViewPager() {
+        //最后合并一下两个数组,展示出来
+        View[] showViews = new View[itemPager.length + appsPager.length];
+        for (int i = 0; i < showViews.length; i++) {
+            if (i < itemPager.length) {
+                showViews[i] = itemPager[i];
+            } else {
+                showViews[i] = appsPager[i - itemPager.length];
             }
         }
-        pageViews[pageViews.length - 1] = new LAllAppView(this);
-        viewPager.setAdapter(new ViewAdapter(pageViews));
-        postion.loadPostion(pageViews.length);
+        viewPager.setAdapter(new ViewAdapter(showViews));
+        postion.loadPostion(showViews.length);
     }
+
 
     @Override
     public void onThemeChanged(ThemeManage manage) {
@@ -231,6 +278,20 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
         }
     }
 
+    private boolean show = false;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        show = true;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        show = false;
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -240,8 +301,16 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(final MAppInfoRefreshShowEvent event) {
+        initApps();
+        refreshViewPager();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(LItemRefreshEvent event) {
         initItem();
+        initApps();
+        refreshViewPager();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -298,31 +367,18 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
                     break;
                 }
                 case CENTER_CLICK: {
-                    Intent home = new Intent(Intent.ACTION_MAIN);
-                    home.addCategory(Intent.CATEGORY_HOME);
-                    home.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(home);
+                    if (show) {
+                        showConsoleWin();
+                    } else {
+                        Intent home = new Intent(Intent.ACTION_MAIN);
+                        home.addCategory(Intent.CATEGORY_HOME);
+                        home.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(home);
+                    }
                     break;
                 }
                 case CENTER_LONG_CLICK: {
-                    x.task().autoPost(() -> AnyPermission.with(getApplicationContext()).overlay()
-                            .onWithoutPermission((data, executor) -> {
-                                new AlertDialog.Builder(getApplicationContext()).setTitle("警告!")
-                                        .setNegativeButton("取消", (dialog, which) -> executor.cancel())
-                                        .setPositiveButton("确定", (dialog2, which2) -> executor.execute())
-                                        .setMessage("请给与车机助手悬浮窗权限,否则无法使用这个功能").show();
-                            })
-                            .request(new RequestListener() {
-                                @Override
-                                public void onSuccess() {
-                                    ConsoleWin.self().show();
-                                }
-
-                                @Override
-                                public void onFailed() {
-                                    ToastManage.self().show("没有悬浮窗权限!");
-                                }
-                            }));
+                    showConsoleWin();
                     break;
                 }
                 case LEFT_BOTTOM_CLICK: {
@@ -367,6 +423,35 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
 
             }
         }
+    }
+
+    private int getPageItemNum() {
+        int psize = SharedPreUtil.getInteger(CommonData.SDATA_LAUNCHER_ITEM_NUM, 3);
+        if (psize != 3) {
+            psize = 4;
+        }
+        return psize;
+    }
+
+    private void showConsoleWin() {
+        x.task().autoPost(() -> AnyPermission.with(getApplicationContext()).overlay()
+                .onWithoutPermission((data, executor) -> {
+                    new AlertDialog.Builder(getApplicationContext()).setTitle("警告!")
+                            .setNegativeButton("取消", (dialog, which) -> executor.cancel())
+                            .setPositiveButton("确定", (dialog2, which2) -> executor.execute())
+                            .setMessage("请给与车机助手悬浮窗权限,否则无法使用这个功能").show();
+                })
+                .request(new RequestListener() {
+                    @Override
+                    public void onSuccess() {
+                        ConsoleWin.self().show();
+                    }
+
+                    @Override
+                    public void onFailed() {
+                        ToastManage.self().show("没有悬浮窗权限!");
+                    }
+                }));
     }
 
     private RuntimeRequester mRuntimeRequester;

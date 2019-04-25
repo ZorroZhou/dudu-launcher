@@ -14,8 +14,9 @@ import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.AppIconTemp;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.util.CommonUtil;
+import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.manage.ThemeManage;
-import com.wow.carlauncher.ex.manage.appInfo.event.MAppInfoRefreshEvent;
+import com.wow.carlauncher.ex.manage.appInfo.event.MAppInfoRefreshShowEvent;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.view.activity.driving.DrivingActivity;
 import com.wow.carlauncher.view.activity.set.SetActivity;
@@ -29,6 +30,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static com.wow.carlauncher.common.CommonData.SDATA_DOCK1_CLASS;
+import static com.wow.carlauncher.common.CommonData.SDATA_DOCK2_CLASS;
+import static com.wow.carlauncher.common.CommonData.SDATA_DOCK3_CLASS;
+import static com.wow.carlauncher.common.CommonData.SDATA_DOCK4_CLASS;
 import static com.wow.carlauncher.ex.manage.appInfo.AppInfo.INTERNAL_APP_DRIVING;
 import static com.wow.carlauncher.ex.manage.appInfo.AppInfo.INTERNAL_APP_SETTING;
 import static com.wow.carlauncher.ex.manage.appInfo.AppInfo.MARK_INTERNAL_APP;
@@ -53,82 +58,50 @@ public class AppInfoManage {
     }
 
     private Context context;
+
     private PackageManager packageManager;
-    private Map<String, AppInfo> appInfos;
-    private Map<String, AppInfo> internalApps;
-    private List<ResolveInfo> appResolveInfo;
+    private Map<String, AppInfo> allAppInfosMap;
+    private Map<String, AppInfo> internalAppsInfoMap;
 
+
+    private List<AppInfo> allAppInfosList;
+    private List<AppInfo> showAppInfosList;
+    private List<AppInfo> otherAppInfosList;
+
+    //todo 需要优化效率
     public List<AppInfo> getAllAppInfos() {
-        List<AppInfo> list = new ArrayList<>(appInfos.values());
-        Collections.sort(list, (appInfo1, appInfo2) -> {
-            if (appInfo1.appMark < appInfo2.appMark) {
-                return 1;
-            } else {
-                return -1;
-            }
-        });
-        return list;
+        return new ArrayList<>(allAppInfosList);
     }
 
+    //todo 需要优化效率
+    public List<AppInfo> getShowAppInfos() {
+        return new ArrayList<>(showAppInfosList);
+    }
+
+    //todo 需要优化效率
     public List<AppInfo> getOtherAppInfos() {
-        List<AppInfo> list = new ArrayList<>();
-        for (AppInfo appInfo : appInfos.values()) {
-            if (appInfo.appMark == MARK_OTHER_APP) {
-                list.add(appInfo);
-            }
-        }
-        return list;
+        return new ArrayList<>(otherAppInfosList);
     }
 
+    //todo 需要优化效率
     public List<AppInfo> getInternalAppInfos() {
-        List<AppInfo> list = new ArrayList<>();
-        for (AppInfo appInfo : appInfos.values()) {
-            if (appInfo.appMark == MARK_INTERNAL_APP) {
-                list.add(appInfo);
-            }
-        }
-        return list;
+        return new ArrayList<>(allAppInfosMap.values());
     }
 
     public void init(Context c) {
         this.context = c;
         this.packageManager = this.context.getPackageManager();
 
-        appResolveInfo = new ArrayList<>();
+        allAppInfosList = Collections.synchronizedList(new ArrayList<>());
+        showAppInfosList = Collections.synchronizedList(new ArrayList<>());
+        otherAppInfosList = Collections.synchronizedList(new ArrayList<>());
 
-        appInfos = new ConcurrentHashMap<>();
-        internalApps = new ConcurrentHashMap<>();
-        internalApps.put(INTERNAL_APP_DRIVING, new InternalAppInfo("驾驶", INTERNAL_APP_DRIVING, MARK_INTERNAL_APP, DrivingActivity.class));
-        internalApps.put(INTERNAL_APP_SETTING, new InternalAppInfo("桌面设置", INTERNAL_APP_SETTING, MARK_INTERNAL_APP, SetActivity.class));
-        refreshAppInfo(false);
-    }
+        allAppInfosMap = new ConcurrentHashMap<>();
 
-    public void refreshAppInfo(final boolean refresh) {
-        x.task().run(() -> {
-            loadAllApp(refresh);
-            EventBus.getDefault().post(new MAppInfoRefreshEvent());
-        });
-    }
-
-    private synchronized void loadAllApp(boolean refresh) {
-        if (appInfos.isEmpty()) {
-            refresh = true;
-        }
-        if (refresh) {
-            Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
-            mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-            final List<ResolveInfo> apps = packageManager.queryIntentActivities(
-                    mainIntent, 0);
-            Collections.sort(apps, new ResolveInfo.DisplayNameComparator(packageManager));
-            final int count = apps.size();
-            appInfos.clear();
-            appInfos.putAll(internalApps);
-            for (int i = 0; i < count; i++) {
-                ResolveInfo info = apps.get(i);
-                String packageName = apps.get(i).activityInfo.applicationInfo.packageName;
-                appInfos.put(packageName, new AppInfo(info.loadLabel(packageManager).toString(), packageName, MARK_OTHER_APP));
-            }
-        }
+        internalAppsInfoMap = new ConcurrentHashMap<>();
+        internalAppsInfoMap.put(INTERNAL_APP_DRIVING, new InternalAppInfo("驾驶", INTERNAL_APP_DRIVING, MARK_INTERNAL_APP, DrivingActivity.class));
+        internalAppsInfoMap.put(INTERNAL_APP_SETTING, new InternalAppInfo("桌面设置", INTERNAL_APP_SETTING, MARK_INTERNAL_APP, SetActivity.class));
+        refreshAppInfo();
     }
 
     private AppInfo getAppInfo(String app) {
@@ -141,11 +114,8 @@ public class AppInfoManage {
                 app = xx[1];
             }
         }
-        //先刷新一遍,防止出现没加载的情况
-        loadAllApp(false);
-
-        if (appInfos.containsKey(app)) {
-            return appInfos.get(app);
+        if (allAppInfosMap.containsKey(app)) {
+            return allAppInfosMap.get(app);
         }
         return null;
     }
@@ -222,4 +192,70 @@ public class AppInfoManage {
         }
         return false;
     }
+
+    private static final byte[] LOCK1 = new byte[0];
+
+    public void refreshAppInfo() {
+        x.task().run(() -> {
+            synchronized (LOCK1) {
+                Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
+                mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+                final List<ResolveInfo> apps = packageManager.queryIntentActivities(
+                        mainIntent, 0);
+                Collections.sort(apps, new ResolveInfo.DisplayNameComparator(packageManager));
+                final int count = apps.size();
+                //清理所有的存储
+                allAppInfosMap.clear();
+                allAppInfosList.clear();
+
+                allAppInfosMap.putAll(internalAppsInfoMap);
+                for (int i = 0; i < count; i++) {
+                    ResolveInfo info = apps.get(i);
+                    String packageName = apps.get(i).activityInfo.applicationInfo.packageName;
+                    allAppInfosMap.put(packageName, new AppInfo(info.loadLabel(packageManager).toString(), packageName, MARK_OTHER_APP));
+                }
+
+                allAppInfosList.addAll(allAppInfosMap.values());
+                Collections.sort(allAppInfosList, (appInfo1, appInfo2) -> appInfo2.appMark - appInfo1.appMark);
+
+                otherAppInfosList.clear();
+                for (AppInfo appInfo : allAppInfosMap.values()) {
+                    if (appInfo.appMark == MARK_OTHER_APP) {
+                        otherAppInfosList.add(appInfo);
+                    }
+                }
+            }
+            refreshShowApp();
+        });
+    }
+
+    private static final byte[] LOCK2 = new byte[0];
+
+    public void refreshShowApp() {
+        x.task().run(() -> {
+            synchronized (LOCK2) {
+                showAppInfosList.clear();
+                showAppInfosList.addAll(allAppInfosList);
+                String packname1 = SharedPreUtil.getString(SDATA_DOCK1_CLASS);
+                String packname2 = SharedPreUtil.getString(SDATA_DOCK2_CLASS);
+                String packname3 = SharedPreUtil.getString(SDATA_DOCK3_CLASS);
+                String packname4 = SharedPreUtil.getString(SDATA_DOCK4_CLASS);
+                String selectapp = SharedPreUtil.getString(CommonData.SDATA_HIDE_APPS);
+                List<AppInfo> hides = new ArrayList<>();
+                for (AppInfo appInfo : showAppInfosList) {
+                    if (selectapp.contains("[" + appInfo.clazz + "]")
+                            || (CommonUtil.isNotNull(packname1) && packname1.contains(appInfo.clazz))
+                            || (CommonUtil.isNotNull(packname2) && packname2.contains(appInfo.clazz))
+                            || (CommonUtil.isNotNull(packname3) && packname3.contains(appInfo.clazz))
+                            || (CommonUtil.isNotNull(packname4) && packname4.contains(appInfo.clazz))) {
+                        hides.add(appInfo);
+                    }
+                }
+                showAppInfosList.removeAll(hides);
+
+                EventBus.getDefault().post(new MAppInfoRefreshShowEvent());
+            }
+        });
+    }
+
 }

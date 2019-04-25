@@ -2,8 +2,6 @@ package com.wow.carlauncher.repertory.nio.warp;
 
 import android.util.Log;
 
-import com.google.common.primitives.Bytes;
-import com.google.common.primitives.Shorts;
 import com.wow.carlauncher.common.util.GsonUtil;
 
 import io.netty.buffer.ByteBuf;

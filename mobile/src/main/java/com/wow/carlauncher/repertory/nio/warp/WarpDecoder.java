@@ -1,9 +1,5 @@
 package com.wow.carlauncher.repertory.nio.warp;
 
-import java.nio.charset.Charset;
-
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.handler.codec.LineBasedFrameDecoder;
 import io.netty.handler.codec.string.StringEncoder;
 
 public class WarpDecoder extends StringEncoder {

@@ -16,7 +16,7 @@ public class AppInstallReceiver extends BroadcastReceiver {
         if (intent.getAction() != null && (intent.getAction().equals(Intent.ACTION_PACKAGE_ADDED) ||
                 intent.getAction().equals(Intent.ACTION_PACKAGE_REMOVED) ||
                 intent.getAction().equals(Intent.ACTION_PACKAGE_REPLACED))) {
-            AppInfoManage.self().refreshAppInfo(true);
+            AppInfoManage.self().refreshAppInfo();
         }
     }
 }

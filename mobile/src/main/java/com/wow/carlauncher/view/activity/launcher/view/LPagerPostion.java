@@ -9,13 +9,14 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.common.ViewPagerOnPageChangeListener;
 import com.wow.carlauncher.common.util.ViewUtils;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.view.base.BaseEXView;
 
 import org.xutils.view.annotation.ViewInject;
 
-public class LPagerPostion extends BaseEXView implements ViewPager.OnPageChangeListener {
+public class LPagerPostion extends BaseEXView implements ViewPagerOnPageChangeListener {
     public LPagerPostion(@NonNull Context context) {
         super(context);
     }
@@ -66,11 +67,6 @@ public class LPagerPostion extends BaseEXView implements ViewPager.OnPageChangeL
     private View[] postionViews;
 
     @Override
-    public void onPageScrolled(int i, float v, int i1) {
-
-    }
-
-    @Override
     public void onPageSelected(int i) {
         if (postionViews != null) {
             select = i;
@@ -81,10 +77,5 @@ public class LPagerPostion extends BaseEXView implements ViewPager.OnPageChangeL
                 postionViews[i].setBackgroundResource(ThemeManage.self().getCurrentThemeRes(R.drawable.n_l_postion));
             }
         }
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int i) {
-
     }
 }

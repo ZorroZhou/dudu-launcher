@@ -18,6 +18,7 @@ import android.view.WindowManager;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
+import com.wow.carlauncher.common.ViewPagerOnPageChangeListener;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
@@ -92,6 +93,8 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
     @ViewInject(R.id.postion)
     private LPagerPostion postion;
 
+    private int lastPagerNum = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,6 +117,12 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
         setContentView(R.layout.activity_lanncher);
         x.view().inject(this);
         viewPager.addOnPageChangeListener(postion);
+        viewPager.addOnPageChangeListener(new ViewPagerOnPageChangeListener() {
+            @Override
+            public void onPageSelected(int i) {
+                lastPagerNum = i;
+            }
+        });
         viewPager.setPageTransformer(true, ItemTransformer.getById(SharedPreUtil.getInteger(SDATA_LAUNCHER_ITEM_TRAN, ItemTransformer.None.getId())).getTransformer());
 
         EventBus.getDefault().register(this);
@@ -169,7 +178,6 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
             if (((i % psize == psize - 1) || (i == items.size() - 1))) {
                 itemPager[npage].setItem(pageItems);
             }
-
         }
         //初始化完毕
     }
@@ -204,8 +212,15 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
                 showViews[i] = appsPager[i - itemPager.length];
             }
         }
-        viewPager.setAdapter(new ViewAdapter(showViews));
+        ViewAdapter viewAdapter = new ViewAdapter(showViews);
+        viewPager.setAdapter(viewAdapter);
         postion.loadPostion(showViews.length);
+
+        //放到小圆点后面
+        if (lastPagerNum >= viewAdapter.getCount()) {
+            lastPagerNum = viewAdapter.getCount() - 1;
+        }
+        viewPager.setCurrentItem(lastPagerNum);
     }
 
 
@@ -401,10 +416,8 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
                     } else {
                         x.task().autoPost(() -> {
                             //切换页面?
-                            if (viewPager != null && viewPager.getAdapter() != null) {
-                                if (viewPager.getAdapter().getCount() - 1 == viewPager.getCurrentItem()) {
-                                    viewPager.setCurrentItem(0, true);
-                                } else if (viewPager.getAdapter().getCount() - 1 == viewPager.getCurrentItem() + 1) {
+                            if (viewPager != null && viewPager.getAdapter() != null && itemPager.length > 0) {
+                                if (viewPager.getCurrentItem() >= itemPager.length - 1) {
                                     viewPager.setCurrentItem(0, true);
                                 } else {
                                     viewPager.setCurrentItem(viewPager.getCurrentItem() + 1, true);
@@ -415,8 +428,8 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
                     break;
                 case RIGHT_BOTTOM_LONG_CLICK:
                     x.task().autoPost(() -> {
-                        if (viewPager != null) {
-                            viewPager.setCurrentItem(viewPager.getAdapter().getCount() - 1, true);
+                        if (viewPager != null && appsPager.length > 0) {
+                            viewPager.setCurrentItem(itemPager.length, true);
                         }
                     });
                     break;

@@ -93,6 +93,8 @@ public class LAppsView extends BaseEXView implements View.OnClickListener, View.
                 cellView = View.inflate(getContext(), R.layout.content_app_grid_item, null);
                 ((TextView) cellView.findViewById(R.id.name)).setText(model.name);
                 ((ImageView) cellView.findViewById(R.id.icon)).setImageDrawable(AppInfoManage.self().getIcon(model.clazz));
+                cellView.setOnClickListener(this);
+                cellView.setOnLongClickListener(this);
                 cellView.setTag(i);
             } else {
                 cellView = new View(getContext());

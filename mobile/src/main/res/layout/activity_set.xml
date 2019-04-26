@@ -42,7 +42,7 @@
                 <View style="@style/Interval" />
 
                 <com.wow.carlauncher.common.view.SetView
-                    android:id="@+id/sg_item"
+                    android:id="@+id/sg_home"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     st:titleEx="首页标签"

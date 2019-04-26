@@ -38,19 +38,19 @@ import static com.wow.carlauncher.common.CommonData.SDATA_MUSIC_CONTROLLER;
  * Created by 10124 on 2018/4/22.
  */
 
-public class SItemView extends BaseEXView {
+public class SHomeView extends BaseEXView {
 
-    public SItemView(@NonNull Context context) {
+    public SHomeView(@NonNull Context context) {
         super(context);
     }
 
-    public SItemView(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public SHomeView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
     @Override
     protected int getContent() {
-        return R.layout.content_set_item;
+        return R.layout.content_set_home;
     }
 
     @ViewInject(R.id.sv_launcher_item_sort)

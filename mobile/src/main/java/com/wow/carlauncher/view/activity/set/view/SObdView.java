@@ -2,10 +2,8 @@ package com.wow.carlauncher.view.activity.set.view;
 
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
 import android.widget.ArrayAdapter;
 
@@ -17,7 +15,6 @@ import com.wow.carlauncher.common.util.ThreadObj;
 import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
-import com.wow.carlauncher.ex.plugin.fk.FangkongPlugin;
 import com.wow.carlauncher.ex.plugin.fk.FangkongProtocolEnum;
 import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.ex.plugin.obd.ObdProtocolEnum;
@@ -31,7 +28,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.wow.carlauncher.common.CommonData.OBD_CONTROLLER;
-import static com.wow.carlauncher.common.CommonData.SDATA_FANGKONG_CONTROLLER;
 import static com.wow.carlauncher.common.CommonData.SDATA_OBD_CONTROLLER;
 import static com.wow.carlauncher.common.CommonData.SDATA_TRIP_AUTO_OPEN_DRIVING;
 import static com.wow.carlauncher.common.CommonData.SDATA_TRIP_AUTO_OPEN_DRIVING_DF;

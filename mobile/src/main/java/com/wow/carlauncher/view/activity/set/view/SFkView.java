@@ -19,9 +19,6 @@ import com.wow.carlauncher.ex.manage.ble.BleManage;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.fk.FangkongPlugin;
 import com.wow.carlauncher.ex.plugin.fk.FangkongProtocolEnum;
-import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
-import com.wow.carlauncher.ex.plugin.obd.ObdProtocolEnum;
-import com.wow.carlauncher.view.activity.set.SetEnumOnClickListener;
 import com.wow.carlauncher.view.base.BaseView;
 import com.wow.carlauncher.view.dialog.ListDialog;
 
@@ -30,11 +27,7 @@ import org.xutils.view.annotation.ViewInject;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.wow.carlauncher.common.CommonData.OBD_CONTROLLER;
 import static com.wow.carlauncher.common.CommonData.SDATA_FANGKONG_CONTROLLER;
-import static com.wow.carlauncher.common.CommonData.SDATA_OBD_CONTROLLER;
-import static com.wow.carlauncher.common.CommonData.SDATA_TRIP_AUTO_OPEN_DRIVING;
-import static com.wow.carlauncher.common.CommonData.SDATA_TRIP_AUTO_OPEN_DRIVING_DF;
 
 /**
  * Created by 10124 on 2018/4/22.

@@ -7,10 +7,7 @@ import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -46,7 +43,6 @@ import java.util.Date;
 
 import static com.inuker.bluetooth.library.Constants.STATUS_DEVICE_CONNECTED;
 import static com.wow.carlauncher.common.CommonData.MINUTE_MILL;
-import static com.wow.carlauncher.common.CommonData.TAG;
 
 /**
  * Created by 10124 on 2018/4/22.

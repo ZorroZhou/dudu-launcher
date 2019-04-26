@@ -4,34 +4,23 @@ import android.app.Activity;
 import android.appwidget.AppWidgetHost;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.WindowManager;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
-import com.wow.carlauncher.common.util.ThreadObj;
-import com.wow.carlauncher.common.util.ViewUtils;
 import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.console.ConsolePlugin;
 import com.wow.carlauncher.ex.plugin.console.ConsoleProtoclEnum;
 import com.wow.carlauncher.ex.plugin.music.MusicControllerEnum;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
-import com.wow.carlauncher.view.activity.launcher.ItemEnum;
-import com.wow.carlauncher.view.activity.launcher.ItemModel;
-import com.wow.carlauncher.view.activity.launcher.ItemTransformer;
 import com.wow.carlauncher.view.activity.launcher.event.LCityRefreshEvent;
-import com.wow.carlauncher.view.activity.launcher.event.LItemRefreshEvent;
-import com.wow.carlauncher.view.activity.launcher.event.LPageTransformerChangeEvent;
-import com.wow.carlauncher.view.activity.set.LauncherItemAdapter;
 import com.wow.carlauncher.view.activity.set.SetEnumOnClickListener;
 import com.wow.carlauncher.view.activity.set.SetSwitchOnClickListener;
 import com.wow.carlauncher.view.activity.set.event.SEventRefreshAmapPlugin;
@@ -43,13 +32,10 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.view.annotation.ViewInject;
 
-import java.util.List;
-
 import static com.wow.carlauncher.common.CommonData.APP_WIDGET_AMAP_PLUGIN;
 import static com.wow.carlauncher.common.CommonData.APP_WIDGET_HOST_ID;
 import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_AMAP_PLUGIN;
 import static com.wow.carlauncher.common.CommonData.SDATA_CONSOLE_MARK;
-import static com.wow.carlauncher.common.CommonData.SDATA_LAUNCHER_ITEM_TRAN;
 import static com.wow.carlauncher.common.CommonData.SDATA_MUSIC_CONTROLLER;
 
 /**

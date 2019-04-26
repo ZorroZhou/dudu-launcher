@@ -14,8 +14,6 @@ import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.util.ThreadObj;
 import com.wow.carlauncher.common.util.ViewUtils;
 import com.wow.carlauncher.common.view.SetView;
-import com.wow.carlauncher.ex.plugin.music.MusicControllerEnum;
-import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import com.wow.carlauncher.view.activity.launcher.ItemEnum;
 import com.wow.carlauncher.view.activity.launcher.ItemModel;
 import com.wow.carlauncher.view.activity.launcher.ItemTransformer;
@@ -23,7 +21,6 @@ import com.wow.carlauncher.view.activity.launcher.event.LItemRefreshEvent;
 import com.wow.carlauncher.view.activity.launcher.event.LPageTransformerChangeEvent;
 import com.wow.carlauncher.view.activity.set.LauncherItemAdapter;
 import com.wow.carlauncher.view.activity.set.SetEnumOnClickListener;
-import com.wow.carlauncher.view.activity.set.SetSwitchOnClickListener;
 import com.wow.carlauncher.view.base.BaseEXView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -32,7 +29,6 @@ import org.xutils.view.annotation.ViewInject;
 import java.util.List;
 
 import static com.wow.carlauncher.common.CommonData.SDATA_LAUNCHER_ITEM_TRAN;
-import static com.wow.carlauncher.common.CommonData.SDATA_MUSIC_CONTROLLER;
 
 /**
  * Created by 10124 on 2018/4/22.

@@ -3,15 +3,12 @@ package com.wow.carlauncher.common.util;
 import android.app.Activity;
 import android.content.Context;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.GridView;
 import android.widget.LinearLayout;
-
-import static com.wow.carlauncher.common.CommonData.TAG;
 
 public class ViewUtils {
 

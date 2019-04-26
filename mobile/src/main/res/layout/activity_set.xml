@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:st="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -23,6 +23,32 @@
                 android:background="@android:color/white"
                 android:orientation="vertical">
 
+                <LinearLayout
+                    android:id="@+id/ll_user"
+                    android:layout_width="match_parent"
+                    android:layout_height="140dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <com.wow.carlauncher.common.view.CustomImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:src="@mipmap/music_dlogo"
+                        app:ccircle="true" />
+
+                    <TextView
+                        android:id="@+id/tv_nickname"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingTop="5dp"
+                        android:text="点击登录"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <View style="@style/Interval" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -36,8 +62,8 @@
                     android:id="@+id/sg_theme"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    st:titleEx="主题设置"
-                    st:type="buttonB" />
+                    app:titleEx="主题设置"
+                    app:type="buttonB" />
 
                 <View style="@style/Interval" />
 
@@ -45,8 +71,8 @@
                     android:id="@+id/sg_home"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    st:titleEx="首页标签"
-                    st:type="buttonB" />
+                    app:titleEx="首页标签"
+                    app:type="buttonB" />
 
                 <View style="@style/Interval" />
 
@@ -54,8 +80,8 @@
                     android:id="@+id/sg_item"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    st:titleEx="插件设置"
-                    st:type="buttonB" />
+                    app:titleEx="插件设置"
+                    app:type="buttonB" />
 
                 <View style="@style/Interval" />
 
@@ -63,8 +89,8 @@
                     android:id="@+id/sg_load_app"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    st:titleEx="APP联动启动"
-                    st:type="buttonB" />
+                    app:titleEx="APP联动启动"
+                    app:type="buttonB" />
 
                 <View style="@style/Interval" />
 
@@ -81,8 +107,8 @@
                     android:id="@+id/sg_obd"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    st:titleEx="OBD设置"
-                    st:type="buttonB" />
+                    app:titleEx="OBD设置"
+                    app:type="buttonB" />
 
                 <View style="@style/Interval" />
 
@@ -90,8 +116,8 @@
                     android:id="@+id/sg_fk"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    st:titleEx="方控设置"
-                    st:type="buttonB" />
+                    app:titleEx="方控设置"
+                    app:type="buttonB" />
 
                 <View style="@style/Interval" />
 
@@ -108,8 +134,8 @@
                     android:id="@+id/sg_popup"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    st:titleEx="悬浮窗"
-                    st:type="buttonB" />
+                    app:titleEx="悬浮窗"
+                    app:type="buttonB" />
 
                 <View style="@style/Interval" />
 
@@ -117,8 +143,8 @@
                     android:id="@+id/sg_system_set"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    st:titleEx="系统"
-                    st:type="buttonB" />
+                    app:titleEx="系统"
+                    app:type="buttonB" />
 
                 <View style="@style/Interval" />
             </LinearLayout>

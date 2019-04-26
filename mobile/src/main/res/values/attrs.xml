@@ -46,4 +46,9 @@
         <attr name="right_bottom_radius" format="dimension" />
         <attr name="left_bottom_radius" format="dimension" />
     </declare-styleable>
+
+    <declare-styleable name="CustomImageView">
+        <attr name="ccircle" format="boolean" />
+        <attr name="cradius" format="dimension" />
+    </declare-styleable>
 </resources>

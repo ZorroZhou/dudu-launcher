@@ -5,10 +5,13 @@ import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.view.SetView;
+import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.view.activity.set.event.SEventRefreshAmapPlugin;
 import com.wow.carlauncher.view.activity.set.view.SFkView;
 import com.wow.carlauncher.view.activity.set.view.SHomeView;
@@ -39,10 +42,15 @@ public class SetActivity extends BaseActivity {
     @ViewInject(R.id.ll_set)
     private FrameLayout ll_set;
 
+    @ViewInject(R.id.ll_user)
+    private LinearLayout ll_user;
+
+
     @Override
     public void initView() {
         setTitle("设置");
         clickEvent(sg_theme);
+        ll_user.setOnClickListener(v -> ToastManage.self().show("还没开发呢"));
     }
 
     @Event(value = {R.id.sg_item, R.id.sg_theme, R.id.sg_home, R.id.sg_obd, R.id.sg_fk, R.id.sg_load_app, R.id.sg_popup, R.id.sg_system_set})

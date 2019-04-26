@@ -28,6 +28,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
+import org.xutils.x;
 
 import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_APP_TO_DOCK1;
 import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_APP_TO_DOCK2;
@@ -88,7 +89,7 @@ public class LDockView extends BaseEXView {
                 R.id.tv_dock3,
                 R.id.tv_dock4
         }, R.color.l_text1);
-        loadDock();
+        x.task().postDelayed(this::loadDock, 200);
     }
 
     @Override

@@ -590,9 +590,15 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
                 String reason = intent.getStringExtra(SYSTEM_REASON);
                 if (TextUtils.equals(reason, SYSTEM_HOME_KEY)) {
                     //表示按了home键,程序到了后台
-                    Intent i = new Intent(Intent.ACTION_MAIN, null);
-                    i.addCategory(Intent.CATEGORY_HOME);
-                    context.startActivity(i);
+                    if (show) {
+                        if (viewPager != null) {
+                            viewPager.setCurrentItem(0, true);
+                        }
+                    } else {
+                        Intent i = new Intent(Intent.ACTION_MAIN, null);
+                        i.addCategory(Intent.CATEGORY_HOME);
+                        context.startActivity(i);
+                    }
                 }
             }
         }

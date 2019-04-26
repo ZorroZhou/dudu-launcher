@@ -68,6 +68,9 @@ public class AMapCarPlugin extends ContextEx {
         context.registerReceiver(amapReceiver, intentFilter);
 
         EventBus.getDefault().register(this);
+
+
+        // final View launcherWidgetView = AppWidgetManage.self().getWidgetById(launcher);
     }
 
     private AMapCartReceiver amapReceiver;
@@ -93,7 +96,7 @@ public class AMapCarPlugin extends ContextEx {
         intent.putExtra("EXTRA_DNAME", "椰风寨");
         intent.putExtra("EXTRA_DEV", 0);
         intent.putExtra("EXTRA_M", 0);
-        intent.putExtra("KEY_RECYLE_SIMUNAVI", false);
+        intent.putExtra("KEY_RECYLE_SIMUNAVI", true);
         getContext().sendBroadcast(intent);
 
         Intent intent2 = new Intent();

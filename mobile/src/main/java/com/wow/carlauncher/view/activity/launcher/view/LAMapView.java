@@ -292,11 +292,11 @@ public class LAMapView extends BaseEXView {
                 break;
             }
             case R.id.btn_gd: {
-//                if (!AppUtil.isInstall(getContext(), AMAP_PACKAGE)) {
-//                    Toast.makeText(getContext(), "没有安装高德地图", Toast.LENGTH_SHORT).show();
-//                    break;
-//                }
-//                AMapCarPlugin.self().testNavi();
+                if (!AppUtil.isInstall(getContext(), AMAP_PACKAGE)) {
+                    Toast.makeText(getContext(), "没有安装高德地图", Toast.LENGTH_SHORT).show();
+                    break;
+                }
+                AMapCarPlugin.self().testNavi();
                 break;
             }
         }

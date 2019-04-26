@@ -68,6 +68,8 @@ public class CommonData {
     public final static long HOUR_MILL = 60 * MINUTE_MILL;
     public final static long DAY_MILL = 24 * HOUR_MILL;
 
+    public static final int APP_WIDGET_HOST_ID = 0x200;
+
     public static final String[] POPUP_SIZE = {"小", "中", "大"};
 
     public static final String PACKAGE_NAME = "com.wow.carlauncher";

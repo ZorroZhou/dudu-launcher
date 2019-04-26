@@ -23,13 +23,11 @@ public class BootReceiver extends BroadcastReceiver {
             Intent startIntent = new Intent(context, MainService.class);
             context.startService(startIntent);
 
-            x.task().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    Intent intent2 = new Intent(context, LauncherActivity.class);
-                    intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(intent2);
-                }
+            x.task().postDelayed(() -> {
+                Intent home = new Intent(Intent.ACTION_MAIN);
+                home.addCategory(Intent.CATEGORY_HOME);
+                home.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(home);
             }, 2000);
         }
     }

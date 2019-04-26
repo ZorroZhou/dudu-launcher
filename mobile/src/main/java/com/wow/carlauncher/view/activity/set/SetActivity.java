@@ -95,4 +95,59 @@ public class SetActivity extends BaseActivity {
         sg_ble_device.setOnClickListener(groupClick);
         sg_load_app.setOnClickListener(groupClick);
     }
+
+
+
+//    private void selectWidgetRequest(int request) {
+//        int widgetId = appWidgetHost.allocateAppWidgetId();
+//        Intent pickIntent = new Intent(AppWidgetManager.ACTION_APPWIDGET_PICK);
+//        pickIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
+//        startActivityForResult(pickIntent, request);
+//    }
+//
+//
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        if (resultCode == RESULT_OK) {
+//            switch (requestCode) {
+//                case REQUEST_SELECT_NCM_WIDGET1: {
+//                    int id = data.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1);
+//                    if (id != -1) {
+//                        SharedPreUtil.saveSharedPreInteger(SDATA_MUSIC_PLUGIN_NCM_WIDGET1, id);
+//                        String msg = "已选择：" + id;
+//                        ncm_w1.setSummary(msg);
+//                    }
+//                    break;
+//                }
+//                case REQUEST_SELECT_NCM_WIDGET2: {
+//                    int id = data.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1);
+//                    if (id != -1) {
+//                        SharedPreUtil.saveSharedPreInteger(SDATA_MUSIC_PLUGIN_NCM_WIDGET2, id);
+//                        String msg = "已选择：" + id;
+//                        ncm_w2.setSummary(msg);
+//                    }
+//                    break;
+//                }
+//                case REQUEST_SELECT_QQMUSIC_WIDGET1: {
+//                    int id = data.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1);
+//                    if (id != -1) {
+//                        SharedPreUtil.saveSharedPreInteger(SDATA_MUSIC_PLUGIN_QQMUSIC_WIDGET1, id);
+//                        String msg = "已选择：" + id;
+//                        qqm_w1.setSummary(msg);
+//                    }
+//                    break;
+//                }
+//                case REQUEST_SELECT_QQMUSIC_WIDGET2: {
+//                    int id = data.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1);
+//                    if (id != -1) {
+//                        SharedPreUtil.saveSharedPreInteger(SDATA_MUSIC_PLUGIN_QQMUSIC_WIDGET2, id);
+//                        String msg = "已选择：" + id;
+//                        qqm_w2.setSummary(msg);
+//                    }
+//                    break;
+//                }
+//                default:
+//                    break;
+//            }
+//        }
+//    }
 }

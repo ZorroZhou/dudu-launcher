@@ -51,6 +51,15 @@
                 <View style="@style/Interval" />
 
                 <com.wow.carlauncher.common.view.SetView
+                    android:id="@+id/sg_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    st:titleEx="插件设置"
+                    st:type="buttonB" />
+
+                <View style="@style/Interval" />
+
+                <com.wow.carlauncher.common.view.SetView
                     android:id="@+id/sg_load_app"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -69,10 +78,19 @@
                     android:textSize="14sp" />
 
                 <com.wow.carlauncher.common.view.SetView
-                    android:id="@+id/sg_ble"
+                    android:id="@+id/sg_obd"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    st:titleEx="蓝牙设置"
+                    st:titleEx="OBD设置"
+                    st:type="buttonB" />
+
+                <View style="@style/Interval" />
+
+                <com.wow.carlauncher.common.view.SetView
+                    android:id="@+id/sg_fk"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    st:titleEx="方控设置"
                     st:type="buttonB" />
 
                 <View style="@style/Interval" />

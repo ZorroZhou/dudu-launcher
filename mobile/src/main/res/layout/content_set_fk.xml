@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:paddingLeft="16dp"
         android:paddingTop="16dp"
-        android:text="方控设置"
+        android:text="方控"
         android:textColor="@color/colorPrimary"
         android:textSize="14sp" />
 
@@ -40,5 +40,4 @@
         android:layout_height="wrap_content"
         st:titleEx="方控协议"
         st:type="buttonB" />
-
 </LinearLayout>

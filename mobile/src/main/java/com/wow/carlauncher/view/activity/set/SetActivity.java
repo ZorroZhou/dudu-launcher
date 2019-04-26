@@ -12,8 +12,11 @@ import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.view.activity.set.event.SEventRefreshAmapPlugin;
 import com.wow.carlauncher.view.activity.set.view.SAppView;
 import com.wow.carlauncher.view.activity.set.view.SBleDeviceView;
+import com.wow.carlauncher.view.activity.set.view.SFkView;
 import com.wow.carlauncher.view.activity.set.view.SHomeView;
+import com.wow.carlauncher.view.activity.set.view.SItemView;
 import com.wow.carlauncher.view.activity.set.view.SLoadAppView;
+import com.wow.carlauncher.view.activity.set.view.SObdView;
 import com.wow.carlauncher.view.activity.set.view.SPopupView;
 import com.wow.carlauncher.view.activity.set.view.SSystemView;
 import com.wow.carlauncher.view.activity.set.view.SThemeView;
@@ -44,7 +47,7 @@ public class SetActivity extends BaseActivity {
         clickEvent(sg_theme);
     }
 
-    @Event(value = {R.id.sg_theme, R.id.sg_home, R.id.sg_other, R.id.sg_ble, R.id.sg_load_app, R.id.sg_popup, R.id.sg_system_set})
+    @Event(value = {R.id.sg_item, R.id.sg_theme, R.id.sg_home, R.id.sg_other, R.id.sg_obd, R.id.sg_fk, R.id.sg_load_app, R.id.sg_popup, R.id.sg_system_set})
     private void clickEvent(View view) {
         ViewGroup setView = null;
         switch (view.getId()) {
@@ -56,15 +59,22 @@ public class SetActivity extends BaseActivity {
                 setView = new SHomeView(this);
                 break;
             }
+            case R.id.sg_item: {
+                setView = new SItemView(this);
+                break;
+            }
             case R.id.sg_other: {
                 setView = new SAppView(this);
                 break;
             }
-            case R.id.sg_ble: {
-                setView = new SBleDeviceView(this);
+            case R.id.sg_obd: {
+                setView = new SObdView(this);
                 break;
             }
-
+            case R.id.sg_fk: {
+                setView = new SFkView(this);
+                break;
+            }
             case R.id.sg_load_app: {
                 setView = new SLoadAppView(this);
                 break;

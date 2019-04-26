@@ -61,7 +61,7 @@ public class TimeManage extends ContextEx {
             @Override
             public void run() {
                 try {
-                    if (EventBus.getDefault().hasSubscriberForEvent(MTimeSecondEvent.class)) {
+                    if (EventBus.getDefault().hasSubscriberForEvent(MTimeHalfSecondEvent.class)) {
                         postEvent(new MTimeHalfSecondEvent());
                     }
                 } catch (Exception e) {
@@ -69,7 +69,7 @@ public class TimeManage extends ContextEx {
                 }
                 try {
                     if (timeMark % SECOND == 0) {
-                        if (EventBus.getDefault().hasSubscriberForEvent(MTime30MinuteEvent.class)) {
+                        if (EventBus.getDefault().hasSubscriberForEvent(MTimeSecondEvent.class)) {
                             postEvent(new MTimeSecondEvent());
                         }
                     }

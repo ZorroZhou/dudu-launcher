@@ -122,7 +122,7 @@ public class LTaiyaView extends BaseEXView {
                             .setPositiveButton("确定", (dialog2, which2) -> {
                                 BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
                                 mBluetoothAdapter.disable();
-                                x.task().postDelayed(() -> mBluetoothAdapter.enable(), 300);
+                                x.task().postDelayed(mBluetoothAdapter::enable, 300);
                             })
                             .setMessage("是否确认重启蓝牙").show();
                 }

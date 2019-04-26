@@ -3,12 +3,15 @@ package com.wow.carlauncher.common.util;
 import android.app.Activity;
 import android.content.Context;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+
+import static com.wow.carlauncher.common.CommonData.TAG;
 
 public class ViewUtils {
 
@@ -163,5 +166,35 @@ public class ViewUtils {
         }
         r = view;
         return r;
+    }
+
+    public static View getViewByIds(View view, Object[] ids) {
+        View r = view;
+        for (int i = 0; i < ids.length; i++) {
+            r = getViewById(r, ids[i]);
+            if (r == null) {
+                return null;
+            }
+        }
+        return r;
+    }
+
+    public static View getViewById(View view, Object id) {
+        if (view instanceof ViewGroup) {
+            ViewGroup vg = (ViewGroup) view;
+            for (int i = 0; i < vg.getChildCount(); i++) {
+                View cc1 = vg.getChildAt(i);
+                if (id instanceof Integer) {
+                    if (id.equals(i)) {
+                        return cc1;
+                    }
+                } else if (id instanceof String) {
+                    if (cc1.toString().endsWith("id/" + id + "}")) {
+                        return cc1;
+                    }
+                }
+            }
+        }
+        return null;
     }
 }

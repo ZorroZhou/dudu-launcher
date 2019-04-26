@@ -32,7 +32,7 @@ import org.xutils.x;
 
 import static com.wow.carlauncher.common.CommonData.APP_WIDGET_AMAP_PLUGIN;
 import static com.wow.carlauncher.common.CommonData.TAG;
-import static com.wow.carlauncher.view.activity.launcher.view.LPromptView.getViewByIds;
+import static com.wow.carlauncher.common.util.ViewUtils.getViewByIds;
 
 public class NaviWin {
     private static class SingletonHolder {

@@ -1,9 +1,13 @@
 package com.wow.carlauncher.view.activity.set;
 
+import android.appwidget.AppWidgetManager;
+import android.content.Intent;
 import android.view.View;
 
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.view.SetView;
+import com.wow.carlauncher.view.activity.set.event.SEventRefreshAmapPlugin;
 import com.wow.carlauncher.view.activity.set.view.SAppView;
 import com.wow.carlauncher.view.activity.set.view.SBleDeviceView;
 import com.wow.carlauncher.view.activity.set.view.SLoadAppView;
@@ -11,7 +15,11 @@ import com.wow.carlauncher.view.activity.set.view.SPopupView;
 import com.wow.carlauncher.view.activity.set.view.SSystemView;
 import com.wow.carlauncher.view.base.BaseActivity;
 
+import org.greenrobot.eventbus.EventBus;
 import org.xutils.view.annotation.ViewInject;
+
+import static com.wow.carlauncher.common.CommonData.APP_WIDGET_AMAP_PLUGIN;
+import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_AMAP_PLUGIN;
 
 public class SetActivity extends BaseActivity {
     @Override
@@ -97,8 +105,7 @@ public class SetActivity extends BaseActivity {
     }
 
 
-
-//    private void selectWidgetRequest(int request) {
+    //    private void selectWidgetRequest(int request) {
 //        int widgetId = appWidgetHost.allocateAppWidgetId();
 //        Intent pickIntent = new Intent(AppWidgetManager.ACTION_APPWIDGET_PICK);
 //        pickIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
@@ -106,48 +113,20 @@ public class SetActivity extends BaseActivity {
 //    }
 //
 //
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if (resultCode == RESULT_OK) {
-//            switch (requestCode) {
-//                case REQUEST_SELECT_NCM_WIDGET1: {
-//                    int id = data.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1);
-//                    if (id != -1) {
-//                        SharedPreUtil.saveSharedPreInteger(SDATA_MUSIC_PLUGIN_NCM_WIDGET1, id);
-//                        String msg = "已选择：" + id;
-//                        ncm_w1.setSummary(msg);
-//                    }
-//                    break;
-//                }
-//                case REQUEST_SELECT_NCM_WIDGET2: {
-//                    int id = data.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1);
-//                    if (id != -1) {
-//                        SharedPreUtil.saveSharedPreInteger(SDATA_MUSIC_PLUGIN_NCM_WIDGET2, id);
-//                        String msg = "已选择：" + id;
-//                        ncm_w2.setSummary(msg);
-//                    }
-//                    break;
-//                }
-//                case REQUEST_SELECT_QQMUSIC_WIDGET1: {
-//                    int id = data.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1);
-//                    if (id != -1) {
-//                        SharedPreUtil.saveSharedPreInteger(SDATA_MUSIC_PLUGIN_QQMUSIC_WIDGET1, id);
-//                        String msg = "已选择：" + id;
-//                        qqm_w1.setSummary(msg);
-//                    }
-//                    break;
-//                }
-//                case REQUEST_SELECT_QQMUSIC_WIDGET2: {
-//                    int id = data.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1);
-//                    if (id != -1) {
-//                        SharedPreUtil.saveSharedPreInteger(SDATA_MUSIC_PLUGIN_QQMUSIC_WIDGET2, id);
-//                        String msg = "已选择：" + id;
-//                        qqm_w2.setSummary(msg);
-//                    }
-//                    break;
-//                }
-//                default:
-//                    break;
-//            }
-//        }
-//    }
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case REQUEST_SELECT_AMAP_PLUGIN: {
+                    int id = data.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1);
+                    if (id != -1) {
+                        SharedPreUtil.saveInteger(APP_WIDGET_AMAP_PLUGIN, id);
+                        EventBus.getDefault().post(new SEventRefreshAmapPlugin());
+                    }
+                    break;
+                }
+                default:
+                    break;
+            }
+        }
+    }
 }

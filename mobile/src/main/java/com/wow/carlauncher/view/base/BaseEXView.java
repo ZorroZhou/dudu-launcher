@@ -30,7 +30,6 @@ public abstract class BaseEXView extends BaseView implements ThemeManage.OnTheme
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-
         //判断是否有注解,有的话再注册
         boolean have = false;
         Method[] methods = getClass().getMethods();

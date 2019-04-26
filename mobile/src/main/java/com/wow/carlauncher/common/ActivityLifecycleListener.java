@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
 
-import com.wow.carlauncher.view.popupWindow.PopupWin;
+import com.wow.carlauncher.view.popup.PopupWin;
 
 /**
  * Created by 10124 on 2017/10/29.

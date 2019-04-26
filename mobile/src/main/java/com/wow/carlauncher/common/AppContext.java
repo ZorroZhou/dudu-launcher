@@ -8,6 +8,7 @@ import android.util.Log;
 import com.wow.carlauncher.CarLauncherApplication;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
+import com.wow.carlauncher.ex.manage.AppWidgetManage;
 import com.wow.carlauncher.ex.manage.ImageManage;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
@@ -23,8 +24,9 @@ import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.repertory.db.entiy.CoverTemp;
 import com.wow.carlauncher.repertory.db.manage.DatabaseInfo;
 import com.wow.carlauncher.repertory.db.manage.DatabaseManage;
-import com.wow.carlauncher.view.consoleWindow.ConsoleWin;
-import com.wow.carlauncher.view.popupWindow.PopupWin;
+import com.wow.carlauncher.view.popup.ConsoleWin;
+import com.wow.carlauncher.view.popup.NaviWin;
+import com.wow.carlauncher.view.popup.PopupWin;
 
 import org.xutils.x;
 
@@ -72,6 +74,8 @@ public class AppContext {
 
         SharedPreUtil.init(app);
 
+        AppWidgetManage.self().init(app);
+
         DatabaseManage.init(app, getDatabaseInfo());
         //图片加载工具
         ImageManage.self().init(app);
@@ -103,6 +107,8 @@ public class AppContext {
         PopupWin.self().init(app);
         //控制窗口
         ConsoleWin.self().init(app);
+        //导航窗口
+        NaviWin.self().init(app);
 
         int size = SharedPreUtil.getInteger(CommonData.SDATA_POPUP_SIZE, 1);
         PopupWin.self().setRank(size + 1);

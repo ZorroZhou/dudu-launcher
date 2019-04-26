@@ -70,6 +70,9 @@ public class CommonData {
 
     public static final int APP_WIDGET_HOST_ID = 0x200;
 
+    public static final String APP_WIDGET_AMAP_PLUGIN = "APP_WIDGET_AMAP_PLUGIN";
+
+
     public static final String[] POPUP_SIZE = {"小", "中", "大"};
 
     public static final String PACKAGE_NAME = "com.wow.carlauncher";
@@ -84,6 +87,8 @@ public class CommonData {
     public static final int REQUEST_SELECT_APP_TO_DOCK2 = 10001;
     public static final int REQUEST_SELECT_APP_TO_DOCK3 = 10002;
     public static final int REQUEST_SELECT_APP_TO_DOCK4 = 10003;
+    public static final int REQUEST_SELECT_AMAP_PLUGIN = 10004;
+
 
     //-------------------------------Intent传输数据时使用的mark-start-----------------------------------
     //应用包名
@@ -176,6 +181,9 @@ public class CommonData {
 
     //是否允许悬浮框展示
     public static final String SDATA_MUSIC_INSIDE_COVER = "SDATA_MUSIC_INSIDE_COVER";
+
+
+    public static final String SDATA_USE_NAVI = "SDATA_USE_NAVI";
 
     //-------------------------------本地缓存使用的mark-end-----------------------------------
 

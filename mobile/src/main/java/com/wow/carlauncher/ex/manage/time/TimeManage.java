@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.wow.carlauncher.ex.ContextEx;
 import com.wow.carlauncher.ex.manage.time.event.MTime30MinuteEvent;
+import com.wow.carlauncher.ex.manage.time.event.MTimeHalfSecondEvent;
 import com.wow.carlauncher.ex.manage.time.event.MTimeMinuteEvent;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 
@@ -39,7 +40,17 @@ public class TimeManage extends ContextEx {
         startTimer();
     }
 
-    private final static int SECOND = 1000;
+    private final static int ZHOUQI = 500;
+
+    private final static int MSECOND = 1000;
+    private final static int SECOND = MSECOND / ZHOUQI;
+
+    private final static int MMINUTE = 60 * 1000;
+    private final static int MINUTE = MMINUTE / ZHOUQI;
+
+    private final static int MMINUTE30 = 30 * 60 * 1000;
+    private final static int MINUTE30 = MMINUTE30 / ZHOUQI;
+
     private Timer timer;
     private long timeMark = 0L;
 
@@ -51,13 +62,22 @@ public class TimeManage extends ContextEx {
             public void run() {
                 try {
                     if (EventBus.getDefault().hasSubscriberForEvent(MTimeSecondEvent.class)) {
-                        postEvent(new MTimeSecondEvent());
+                        postEvent(new MTimeHalfSecondEvent());
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
                 try {
-                    if (timeMark % (60 * 30) == 0) {
+                    if (timeMark % SECOND == 0) {
+                        if (EventBus.getDefault().hasSubscriberForEvent(MTime30MinuteEvent.class)) {
+                            postEvent(new MTimeSecondEvent());
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                try {
+                    if (timeMark % MINUTE30 == 0) {
                         if (EventBus.getDefault().hasSubscriberForEvent(MTime30MinuteEvent.class)) {
                             postEvent(new MTime30MinuteEvent());
                         }
@@ -67,7 +87,7 @@ public class TimeManage extends ContextEx {
                 }
 
                 try {
-                    if (timeMark % 60 == 0) {
+                    if (timeMark % MINUTE == 0) {
                         if (EventBus.getDefault().hasSubscriberForEvent(MTimeMinuteEvent.class)) {
                             postEvent(new MTimeMinuteEvent());
                         }
@@ -77,7 +97,7 @@ public class TimeManage extends ContextEx {
                 }
                 timeMark++;
             }
-        }, SECOND, SECOND);
+        }, ZHOUQI, ZHOUQI);
     }
 
     private void stopTimer() {

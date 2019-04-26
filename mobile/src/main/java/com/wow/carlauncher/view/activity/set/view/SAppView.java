@@ -1,12 +1,17 @@
 package com.wow.carlauncher.view.activity.set.view;
 
+import android.app.Activity;
+import android.appwidget.AppWidgetHost;
+import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.WindowManager;
 
 import com.wow.carlauncher.R;
@@ -23,6 +28,7 @@ import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.console.ConsolePlugin;
 import com.wow.carlauncher.ex.plugin.console.ConsoleProtoclEnum;
+import com.wow.carlauncher.ex.plugin.console.event.PConsoleEventCallState;
 import com.wow.carlauncher.ex.plugin.music.MusicControllerEnum;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import com.wow.carlauncher.view.activity.launcher.ItemEnum;
@@ -36,14 +42,21 @@ import com.wow.carlauncher.view.activity.set.LauncherItemAdapter;
 import com.wow.carlauncher.view.activity.set.SetAppMultipleSelectOnClickListener;
 import com.wow.carlauncher.view.activity.set.SetEnumOnClickListener;
 import com.wow.carlauncher.view.activity.set.SetSwitchOnClickListener;
+import com.wow.carlauncher.view.activity.set.event.SEventRefreshAmapPlugin;
+import com.wow.carlauncher.view.base.BaseEXView;
 import com.wow.carlauncher.view.base.BaseView;
 import com.wow.carlauncher.view.dialog.CityDialog;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.view.annotation.ViewInject;
 
 import java.util.List;
 
+import static com.wow.carlauncher.common.CommonData.APP_WIDGET_AMAP_PLUGIN;
+import static com.wow.carlauncher.common.CommonData.APP_WIDGET_HOST_ID;
+import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_AMAP_PLUGIN;
 import static com.wow.carlauncher.common.CommonData.SDATA_APP_THEME;
 import static com.wow.carlauncher.common.CommonData.SDATA_APP_THEME_DAY;
 import static com.wow.carlauncher.common.CommonData.SDATA_APP_THEME_NIGHT;
@@ -57,7 +70,7 @@ import static com.wow.carlauncher.common.CommonData.THEME_MODEL;
  * Created by 10124 on 2018/4/22.
  */
 
-public class SAppView extends BaseView {
+public class SAppView extends BaseEXView {
 
     private static final ConsoleProtoclEnum[] ALL_CONSOLES = {ConsoleProtoclEnum.SYSTEM, ConsoleProtoclEnum.NWD};
 
@@ -120,10 +133,43 @@ public class SAppView extends BaseView {
     @ViewInject(R.id.sv_music_inside_cover)
     private SetView sv_music_inside_cover;
 
+    @ViewInject(R.id.sv_gaode_chajian)
+    private SetView sv_gaode_chajian;
+
+    @ViewInject(R.id.sv_use_navc_popup)
+    private SetView sv_use_navc_popup;
+
+
     private boolean showKey;
+    private AppWidgetHost appWidgetHost;
 
     @Override
     protected void initView() {
+        appWidgetHost = new AppWidgetHost(getContext(), APP_WIDGET_HOST_ID);
+
+
+        sv_use_navc_popup.setOnValueChangeListener(new SetSwitchOnClickListener(CommonData.SDATA_USE_NAVI));
+        sv_use_navc_popup.setChecked(SharedPreUtil.getBoolean(CommonData.SDATA_USE_NAVI, false));
+
+
+        int amapPluginId = SharedPreUtil.getInteger(APP_WIDGET_AMAP_PLUGIN, 0);
+        if (amapPluginId > 0) {
+            sv_gaode_chajian.setSummary("已选择,ID为:" + amapPluginId);
+        } else {
+            sv_gaode_chajian.setSummary("未选择");
+        }
+
+        sv_gaode_chajian.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int widgetId = appWidgetHost.allocateAppWidgetId();
+                Intent pickIntent = new Intent(AppWidgetManager.ACTION_APPWIDGET_PICK);
+                pickIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
+                ((Activity) getContext()).startActivityForResult(pickIntent, REQUEST_SELECT_AMAP_PLUGIN);
+            }
+        });
+
+
         sv_music_inside_cover.setOnValueChangeListener(new SetSwitchOnClickListener(CommonData.SDATA_MUSIC_INSIDE_COVER));
         sv_music_inside_cover.setChecked(SharedPreUtil.getBoolean(CommonData.SDATA_MUSIC_INSIDE_COVER, true));
 
@@ -381,5 +427,11 @@ public class SAppView extends BaseView {
             ToastManage.self().show("KEY_CODE:" + keyCode);
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void onEvent(final SEventRefreshAmapPlugin event) {
+        sv_gaode_chajian.setSummary("已选择,ID为:" + SharedPreUtil.getInteger(APP_WIDGET_AMAP_PLUGIN, 0));
     }
 }

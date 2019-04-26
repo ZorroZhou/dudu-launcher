@@ -2,13 +2,19 @@ package com.wow.carlauncher.view.activity.launcher.view;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,6 +24,8 @@ import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.DateUtil;
 import com.wow.carlauncher.common.util.NetWorkUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
+import com.wow.carlauncher.common.util.ViewUtils;
+import com.wow.carlauncher.ex.manage.AppWidgetManage;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
 import com.wow.carlauncher.ex.manage.location.event.MNewLocationEvent;
@@ -28,6 +36,7 @@ import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarTp;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventConnect;
 import com.wow.carlauncher.view.activity.CarInfoActivity;
+import com.wow.carlauncher.view.activity.launcher.event.LItemRefreshEvent;
 import com.wow.carlauncher.view.activity.launcher.event.LItemToFristEvent;
 import com.wow.carlauncher.view.activity.set.SetActivity;
 import com.wow.carlauncher.view.base.BaseEXView;
@@ -43,7 +52,9 @@ import org.xutils.x;
 import java.util.Date;
 
 import static com.inuker.bluetooth.library.Constants.STATUS_DEVICE_CONNECTED;
+import static com.wow.carlauncher.common.CommonData.APP_WIDGET_AMAP_PLUGIN;
 import static com.wow.carlauncher.common.CommonData.MINUTE_MILL;
+import static com.wow.carlauncher.common.CommonData.TAG;
 
 /**
  * Created by 10124 on 2018/4/22.
@@ -124,7 +135,19 @@ public class LPromptView extends BaseEXView {
                 break;
             }
             case R.id.tv_time: {
-                EventBus.getDefault().post(new LItemToFristEvent());
+                //EventBus.getDefault().post(new LItemToFristEvent());
+//                int popup = SharedPreUtil.getInteger(APP_WIDGET_AMAP_PLUGIN, 0);
+//                if (popup != 0) {
+//                    final View amapView = AppWidgetManage.self().getWidgetById(popup);
+//                    Log.e(TAG, "clickEvent: " + amapView.getId());
+//                    if (amapView instanceof ViewGroup) {
+//                        View vv = getViewByIds(amapView, new Object[]{"widget_container", "daohang_container", 0, "gongban_daohang_right_blank_container", "daohang_widget_image"});
+//                        ((ViewGroup) vv.getParent()).removeView(vv);
+//                        new AlertDialog.Builder(getContext())
+//                                .setTitle("测试")
+//                                .setPositiveButton("确定", null).setView(vv).show();
+//                    }
+//                }
                 break;
             }
         }
@@ -266,4 +289,91 @@ public class LPromptView extends BaseEXView {
     public void onEvent(final PObdEventCarTp event) {
         refreshTpState(event);
     }
+
+    private void chuliAmap(View view) {
+        if (view instanceof ViewGroup) {
+            ViewGroup vg = (ViewGroup) view;
+            for (int i = 0; i < vg.getChildCount(); i++) {
+                View cc1 = vg.getChildAt(i);
+                if (cc1 instanceof FrameLayout) {
+                    FrameLayout vg2 = (FrameLayout) cc1;
+                    for (int i2 = 0; i2 < vg2.getChildCount(); i2++) {
+                        Log.e(TAG, "clickEvent: " + vg2.getChildAt(i2));
+                    }
+                }
+            }
+        }
+    }
+
+    public static View getViewByIds(View view, Object[] ids) {
+        View r = view;
+        for (int i = 0; i < ids.length; i++) {
+            r = getViewById(r, ids[i]);
+            if (r == null) {
+                return null;
+            }
+        }
+        return r;
+    }
+
+    public static View getViewById(View view, Object id) {
+        if (view instanceof ViewGroup) {
+            ViewGroup vg = (ViewGroup) view;
+            for (int i = 0; i < vg.getChildCount(); i++) {
+                Log.e(TAG, id + ": " + vg.getChildAt(i));
+            }
+
+            for (int i = 0; i < vg.getChildCount(); i++) {
+                View cc1 = vg.getChildAt(i);
+                System.out.println(id + " " + i);
+                if (id instanceof Integer) {
+                    if (id.equals(i)) {
+                        return cc1;
+                    }
+                } else if (id instanceof String) {
+                    if (cc1.toString().endsWith("id/" + id + "}")) {
+                        return cc1;
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+//    public String toString() {
+//        StringBuilder out = new StringBuilder(128);
+//        final int id = getId();
+//        if (id != NO_ID) {
+//            out.append(" #");
+//            out.append(Integer.toHexString(id));
+//            final Resources r = mResources;
+//            if (id > 0 && Resources.resourceHasPackage(id) && r != null) {
+//                try {
+//                    String pkgname;
+//                    switch (id&0xff000000) {
+//                        case 0x7f000000:
+//                            pkgname="app";
+//                            break;
+//                        case 0x01000000:
+//                            pkgname="android";
+//                            break;
+//                        default:
+//                            pkgname = r.getResourcePackageName(id);
+//                            break;
+//                    }
+//                    String typename = r.getResourceTypeName(id);
+//                    String entryname = r.getResourceEntryName(id);
+//                    out.append(" ");
+//                    out.append(pkgname);
+//                    out.append(":");
+//                    out.append(typename);
+//                    out.append("/");
+//                    out.append(entryname);
+//                } catch (Resources.NotFoundException e) {
+//                }
+//            }
+//        }
+//        out.append("}");
+//        return out.toString();
+//    }
 }

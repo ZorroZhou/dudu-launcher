@@ -13,8 +13,7 @@ import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.view.activity.set.SetAppMultipleSelectOnClickListener;
 import com.wow.carlauncher.view.activity.set.SetSwitchOnClickListener;
 import com.wow.carlauncher.view.base.BaseView;
-import com.wow.carlauncher.view.popupWindow.PopupWin;
-import com.wow.carlauncher.view.popupWindow.event.PEventFSRefresh;
+import com.wow.carlauncher.view.popup.PopupWin;
 
 import org.greenrobot.eventbus.EventBus;
 import org.xutils.view.annotation.ViewInject;
@@ -68,7 +67,7 @@ public class SPopupView extends BaseView {
         sv_popup_full_screen.setOnValueChangeListener(new SetSwitchOnClickListener(CommonData.SDATA_POPUP_FULL_SCREEN) {
             @Override
             public void newValue(boolean value) {
-                EventBus.getDefault().post(new PEventFSRefresh());
+                EventBus.getDefault().post(new PopupWin.PEventFSRefresh());
             }
         });
         sv_popup_full_screen.setChecked(SharedPreUtil.getBoolean(CommonData.SDATA_POPUP_FULL_SCREEN, true));

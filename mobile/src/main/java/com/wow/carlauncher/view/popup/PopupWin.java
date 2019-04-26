@@ -1,4 +1,4 @@
-package com.wow.carlauncher.view.popupWindow;
+package com.wow.carlauncher.view.popup;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -34,7 +34,6 @@ import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventInfo;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventProgress;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventState;
-import com.wow.carlauncher.view.popupWindow.event.PEventFSRefresh;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -126,7 +125,7 @@ public class PopupWin {
         winparams.x = SharedPreUtil.getInteger(CommonData.SDATA_POPUP_WIN_X, 0);
         winparams.y = SharedPreUtil.getInteger(CommonData.SDATA_POPUP_WIN_Y, 0);
 
-        popupWindow = View.inflate(context, R.layout.popup_window, null);
+        popupWindow = View.inflate(context, R.layout.popup_quick, null);
         pluginHome = (LinearLayout) popupWindow.findViewById(R.id.ll_plugin);
         tv_time = (TextView) popupWindow.findViewById(R.id.tv_time);
 
@@ -238,7 +237,7 @@ public class PopupWin {
 
     private View amapView() {
         if (amapView == null) {
-            amapView = (FrameLayout) View.inflate(context, R.layout.popup_amap, null);
+            amapView = (FrameLayout) View.inflate(context, R.layout.popup_quick_amap, null);
             View.OnClickListener clickListener = new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -272,7 +271,7 @@ public class PopupWin {
 
     private View musicView() {
         if (musicView == null) {
-            musicView = (LinearLayout) View.inflate(context, R.layout.popup_music, null);
+            musicView = (LinearLayout) View.inflate(context, R.layout.popup_quick_music, null);
             View.OnClickListener clickListener = new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -468,4 +467,9 @@ public class PopupWin {
             }
         }
     }
+
+
+    public static class PEventFSRefresh {
+    }
+
 }

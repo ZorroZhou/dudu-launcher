@@ -356,13 +356,14 @@ public class LAMapView extends BaseEXView {
 
         if (tv_next_dis != null && CommonUtil.isNotNull(event.getSegRemainDis())) {
             String msg = "";
-            if (event.getSegRemainDis() < 10) {
+            if (event.getSegRemainDis() <= 10) {
                 msg = msg + "现在";
             } else {
                 if (event.getSegRemainDis() > 1000) {
                     msg = msg + new BigDecimal(event.getSegRemainDis() / 1000).setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue() + "kM后";
                 } else {
-                    msg = msg + event.getSegRemainDis() + "M后";
+                    int mmm = event.getSegRemainDis() - 10;
+                    msg = msg + mmm + "M后";
                 }
             }
             tv_next_dis.setText(msg);
@@ -390,7 +391,7 @@ public class LAMapView extends BaseEXView {
             if (event.getRouteRemainTime() == 0 || event.getRouteRemainDis() == 0) {
                 tv_msg.setText("到达");
             } else {
-                String msg = "剩余" + new BigDecimal(event.getRouteRemainDis() / 1000f).setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue() + "KM";
+                String msg = new BigDecimal(event.getRouteRemainDis() / 1000f).setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue() + "KM";
                 tv_msg.setText(msg);
             }
         }

@@ -1,4 +1,4 @@
-package com.wow.carlauncher.view.consoleWindow;
+package com.wow.carlauncher.view.popup;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -105,7 +105,7 @@ public class ConsoleWin implements ThemeManage.OnThemeChangeListener {
         winparams.x = 0;
         winparams.y = 0;
 
-        consoleWin = (RelativeLayout) View.inflate(context, R.layout.console_window, null);
+        consoleWin = (RelativeLayout) View.inflate(context, R.layout.popup_console, null);
 
         x.view().inject(this, consoleWin);
 

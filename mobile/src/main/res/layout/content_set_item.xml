@@ -13,94 +13,73 @@
         android:layout_height="wrap_content"
         android:paddingLeft="16dp"
         android:paddingTop="16dp"
-        android:text="APP设置"
+        android:text="首页标签"
         android:textColor="@color/colorPrimary"
         android:textSize="14sp" />
 
     <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_console"
+        android:id="@+id/sv_item_tran"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         st:summary="未选择"
-        st:titleEx="控制层实现，如声音控制，一件清理等功能的实现，不同的车机可能处理方式不同。"
+        st:titleEx="首页切换动画"
         st:type="buttonB" />
 
     <View style="@style/Interval" />
 
     <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_apps_hides"
+        android:id="@+id/sv_launcher_item_sort"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        st:summary="全部应用将隐藏选中的项目"
-        st:titleEx="桌面隐藏项目"
+        st:titleEx="首页插件展示顺序(调整后插件会重新加载)"
         st:type="buttonB" />
 
     <View style="@style/Interval" />
 
     <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_launcher_show_dock_label"
+        android:id="@+id/sv_launcher_item_sort_re"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        st:summary="@string/set_show"
-        st:summary2="@string/set_hide"
-        st:titleEx="展示dock标签"
-        st:type="switchB" />
+        st:titleEx="首页插件展示顺序重置"
+        st:type="buttonB" />
 
     <View style="@style/Interval" />
+
+    <com.wow.carlauncher.common.view.SetView
+        android:id="@+id/sv_launcher_item_num"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        st:titleEx="首页插件数量"
+        st:type="buttonB" />
+
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="16dp"
         android:paddingTop="16dp"
-        android:text="时间和天气"
+        android:text="音乐插件设置"
         android:textColor="@color/colorPrimary"
         android:textSize="14sp" />
 
     <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/tianqi_city"
+        android:id="@+id/sv_plugin_select"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        st:titleEx="天气定位"
+        st:summary="未选择"
+        st:titleEx="音乐播放器控制器，可使用APP控制第三方音乐播放器"
         st:type="buttonB" />
 
     <View style="@style/Interval" />
 
     <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_gaode_chajian"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        st:titleEx="高德插件(4*3)"
-        st:type="buttonB" />
-
-    <View style="@style/Interval" />
-
-    <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_use_navc_popup"
+        android:id="@+id/sv_music_inside_cover"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         st:summary="@string/set_yes"
         st:summary2="@string/set_no"
-        st:titleEx="导航弹出窗"
+        st:titleEx="音乐播放器内置封面(内置封面比较准确,搜索封面可能不准确)"
         st:type="switchB" />
-
-    <View style="@style/Interval" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingTop="16dp"
-        android:text="开发"
-        android:textColor="@color/colorPrimary"
-        android:textSize="14sp" />
-
-    <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_key_listener"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        st:titleEx="按键测试,可测试方控的按键信息,看看能不能匹配上"
-        st:type="buttonB" />
 
     <View style="@style/Interval" />
 </LinearLayout>

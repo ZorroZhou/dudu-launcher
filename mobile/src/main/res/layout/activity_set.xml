@@ -23,11 +23,29 @@
                 android:background="@android:color/white"
                 android:orientation="vertical">
 
-                <com.wow.carlauncher.common.view.SetView
-                    android:id="@+id/sg_app"
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    st:titleEx="应用设置"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="16dp"
+                    android:text="常用设置"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="14sp" />
+
+                <com.wow.carlauncher.common.view.SetView
+                    android:id="@+id/sg_theme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    st:titleEx="主题设置"
+                    st:type="buttonB" />
+
+                <View style="@style/Interval" />
+
+                <com.wow.carlauncher.common.view.SetView
+                    android:id="@+id/sg_item"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    st:titleEx="首页标签"
                     st:type="buttonB" />
 
                 <View style="@style/Interval" />
@@ -41,11 +59,38 @@
 
                 <View style="@style/Interval" />
 
-                <com.wow.carlauncher.common.view.SetView
-                    android:id="@+id/sg_ble_device"
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    st:titleEx="蓝牙设备"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="16dp"
+                    android:text="蓝牙设置"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="14sp" />
+
+                <com.wow.carlauncher.common.view.SetView
+                    android:id="@+id/sg_ble"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    st:titleEx="蓝牙设置"
+                    st:type="buttonB" />
+
+                <View style="@style/Interval" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="16dp"
+                    android:text="其他设置"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="14sp" />
+
+                <com.wow.carlauncher.common.view.SetView
+                    android:id="@+id/sg_other"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    st:titleEx="其他设置"
                     st:type="buttonB" />
 
                 <View style="@style/Interval" />
@@ -67,7 +112,6 @@
                     st:type="buttonB" />
 
                 <View style="@style/Interval" />
-
             </LinearLayout>
         </ScrollView>
 
@@ -87,41 +131,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <LinearLayout
+            <FrameLayout
+                android:id="@+id/ll_set"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <com.wow.carlauncher.view.activity.set.view.SAppView
-                    android:id="@+id/ll_app"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-
-                <com.wow.carlauncher.view.activity.set.view.SBleDeviceView
-                    android:id="@+id/ll_obd"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="gone" />
-
-                <com.wow.carlauncher.view.activity.set.view.SPopupView
-                    android:id="@+id/ll_popup"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="gone" />
-
-                <com.wow.carlauncher.view.activity.set.view.SSystemView
-                    android:id="@+id/ll_system"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="gone" />
-
-                <com.wow.carlauncher.view.activity.set.view.SLoadAppView
-                    android:id="@+id/ll_load_app"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="gone" />
-
-            </LinearLayout>
+                android:orientation="vertical" />
         </ScrollView>
     </FrameLayout>
 </LinearLayout>

@@ -39,7 +39,6 @@ import com.wow.carlauncher.view.activity.launcher.view.LAppsView;
 import com.wow.carlauncher.view.activity.launcher.view.LPageView;
 import com.wow.carlauncher.view.activity.launcher.view.LPagerPostion;
 import com.wow.carlauncher.view.popup.ConsoleWin;
-import com.wow.carlauncher.view.popup.NaviWin;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

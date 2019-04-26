@@ -13,30 +13,14 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.wow.carlauncher.CarLauncherApplication;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
-import com.wow.carlauncher.common.util.CommonUtil;
-import com.wow.carlauncher.common.util.DateUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
-import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.ex.manage.AppWidgetManage;
-import com.wow.carlauncher.ex.manage.ImageManage;
-import com.wow.carlauncher.ex.manage.ThemeManage;
-import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.time.event.MTimeHalfSecondEvent;
-import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
-import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventNavInfo;
-import com.wow.carlauncher.ex.plugin.fk.event.PFkEventAction;
-import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
-import com.wow.carlauncher.ex.plugin.music.event.PMusicEventCoverRefresh;
-import com.wow.carlauncher.ex.plugin.music.event.PMusicEventInfo;
-import com.wow.carlauncher.ex.plugin.music.event.PMusicEventState;
-import com.wow.carlauncher.view.activity.launcher.event.LDockRefreshEvent;
 import com.wow.carlauncher.view.activity.set.event.SEventRefreshAmapPlugin;
 
 import org.greenrobot.eventbus.EventBus;
@@ -46,21 +30,8 @@ import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
-import java.util.Date;
-
 import static com.wow.carlauncher.common.CommonData.APP_WIDGET_AMAP_PLUGIN;
-import static com.wow.carlauncher.common.CommonData.MINUTE_MILL;
-import static com.wow.carlauncher.common.CommonData.SDATA_DOCK1_CLASS;
-import static com.wow.carlauncher.common.CommonData.SDATA_DOCK2_CLASS;
-import static com.wow.carlauncher.common.CommonData.SDATA_DOCK3_CLASS;
-import static com.wow.carlauncher.common.CommonData.SDATA_DOCK4_CLASS;
 import static com.wow.carlauncher.common.CommonData.TAG;
-import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.BLACK;
-import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.WHITE;
-import static com.wow.carlauncher.ex.plugin.fk.FangkongProtocolEnum.YLFK;
-import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.CENTER_CLICK;
-import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.LEFT_TOP_CLICK;
-import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.RIGHT_TOP_CLICK;
 import static com.wow.carlauncher.view.activity.launcher.view.LPromptView.getViewByIds;
 
 public class NaviWin {

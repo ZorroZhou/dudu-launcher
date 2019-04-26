@@ -74,8 +74,6 @@ public class LDockView extends BaseEXView {
     @ViewInject(R.id.tv_dock4)
     private TextView tv_dock4;
 
-    private PackageManager pm;
-
     @Override
     protected int getContent() {
         return R.layout.content_l_dock;
@@ -89,13 +87,11 @@ public class LDockView extends BaseEXView {
                 R.id.tv_dock3,
                 R.id.tv_dock4
         }, R.color.l_text1);
-        x.task().postDelayed(this::loadDock, 200);
+        x.task().postDelayed(this::loadDock, 500);
     }
 
     @Override
     protected void initView() {
-        pm = getContext().getPackageManager();
-        //这里要先添加事件，要不然ID重复，会导致读取的子view错误
         loadDock();
     }
 

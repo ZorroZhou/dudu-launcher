@@ -184,7 +184,7 @@ public class SItemView extends BaseEXView {
         });
     }
 
-    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final SEventRefreshAmapPlugin event) {
         sv_gaode_chajian.setSummary("已选择,ID为:" + SharedPreUtil.getInteger(APP_WIDGET_AMAP_PLUGIN, 0));
     }

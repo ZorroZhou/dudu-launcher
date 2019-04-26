@@ -52,34 +52,4 @@
         st:titleEx="首页插件数量"
         st:type="buttonB" />
 
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingTop="16dp"
-        android:text="音乐插件设置"
-        android:textColor="@color/colorPrimary"
-        android:textSize="14sp" />
-
-    <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_plugin_select"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        st:summary="未选择"
-        st:titleEx="音乐播放器控制器，可使用APP控制第三方音乐播放器"
-        st:type="buttonB" />
-
-    <View style="@style/Interval" />
-
-    <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_music_inside_cover"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        st:summary="@string/set_yes"
-        st:summary2="@string/set_no"
-        st:titleEx="音乐播放器内置封面(内置封面比较准确,搜索封面可能不准确)"
-        st:type="switchB" />
-
-    <View style="@style/Interval" />
 </LinearLayout>

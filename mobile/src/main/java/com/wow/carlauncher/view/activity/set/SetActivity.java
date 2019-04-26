@@ -11,7 +11,6 @@ import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.view.activity.set.event.SEventRefreshAmapPlugin;
 import com.wow.carlauncher.view.activity.set.view.SAppView;
-import com.wow.carlauncher.view.activity.set.view.SBleDeviceView;
 import com.wow.carlauncher.view.activity.set.view.SFkView;
 import com.wow.carlauncher.view.activity.set.view.SHomeView;
 import com.wow.carlauncher.view.activity.set.view.SItemView;

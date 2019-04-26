@@ -65,12 +65,6 @@ public class SHomeView extends BaseEXView {
     @ViewInject(R.id.sv_item_tran)
     private SetView sv_item_tran;
 
-    @ViewInject(R.id.sv_plugin_select)
-    private SetView sv_plugin_select;
-
-    @ViewInject(R.id.sv_music_inside_cover)
-    private SetView sv_music_inside_cover;
-
     @Override
     protected void initView() {
 
@@ -115,7 +109,7 @@ public class SHomeView extends BaseEXView {
         });
 
         sv_launcher_item_sort_re.setOnClickListener(v -> {
-            AlertDialog queren = new AlertDialog.Builder(getContext()).setTitle("警告!").setNegativeButton("取消", null).setPositiveButton("确定", (dialog2, which2) -> {
+            new AlertDialog.Builder(getContext()).setTitle("警告!").setNegativeButton("取消", null).setPositiveButton("确定", (dialog2, which2) -> {
                 for (ItemEnum item : CommonData.LAUNCHER_ITEMS) {
                     SharedPreUtil.saveInteger(CommonData.SDATA_LAUNCHER_ITEM_SORT_ + item.getId(), item.getId());
                     SharedPreUtil.saveBoolean(CommonData.SDATA_LAUNCHER_ITEM_OPEN_ + item.getId(), true);
@@ -141,32 +135,6 @@ public class SHomeView extends BaseEXView {
             lp.width = (int) (ViewUtils.getDisplayMetriocs(getContext()).widthPixels * 0.8);//定义宽度
             dialog.getWindow().setAttributes(lp);
         });
-
-        sv_plugin_select.setSummary(MusicControllerEnum.getById(SharedPreUtil.getInteger(SDATA_MUSIC_CONTROLLER, MusicControllerEnum.SYSMUSIC.getId())).getName());
-        sv_plugin_select.setOnClickListener(new SetEnumOnClickListener<MusicControllerEnum>(getContext(), CommonData.MUSIC_CONTROLLER) {
-
-            @Override
-            public String title() {
-                return "请选择音乐控制协议";
-            }
-
-            @Override
-            public MusicControllerEnum getCurr() {
-                return MusicControllerEnum.getById(SharedPreUtil.getInteger(SDATA_MUSIC_CONTROLLER, MusicControllerEnum.SYSMUSIC.getId()));
-            }
-
-            @Override
-            public void onSelect(MusicControllerEnum setEnum) {
-                SharedPreUtil.saveInteger(SDATA_MUSIC_CONTROLLER, setEnum.getId());
-                MusicPlugin.self().setController(setEnum);
-                sv_plugin_select.setSummary(setEnum.getName());
-            }
-        });
-
-
-        sv_music_inside_cover.setOnValueChangeListener(new SetSwitchOnClickListener(CommonData.SDATA_MUSIC_INSIDE_COVER));
-        sv_music_inside_cover.setChecked(SharedPreUtil.getBoolean(CommonData.SDATA_MUSIC_INSIDE_COVER, true));
-
 
     }
 }

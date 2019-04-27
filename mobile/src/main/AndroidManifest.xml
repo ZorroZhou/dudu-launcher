@@ -44,6 +44,20 @@
         tools:ignore="GoogleAppIndexingWarning">
 
         <meta-data
+            android:name="com.baidu.speech.APP_ID"
+            android:value="11197584" />
+        <meta-data
+            android:name="com.baidu.speech.API_KEY"
+            android:value="Vj8d2RT0SiuvZOdYwTM28ZRs" />
+        <meta-data
+            android:name="com.baidu.speech.SECRET_KEY"
+            android:value="fbfc9b5d4034df79b2cec8deb73f26cd" />
+
+        <service
+            android:name="com.baidu.speech.VoiceRecognitionService"
+            android:exported="false" />
+
+        <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="e1694394877b1496323326374c651547" />
         <service android:name="com.amap.api.location.APSService" />
@@ -135,17 +149,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-
-
-        <meta-data android:name="com.baidu.speech.APP_ID"
-            android:value="11197584" />
-        <meta-data
-            android:name="com.baidu.speech.API_KEY"
-            android:value="Vj8d2RT0SiuvZOdYwTM28ZRs" />
-        <meta-data
-            android:name="com.baidu.speech.SECRET_KEY"
-            android:value="fbfc9b5d4034df79b2cec8deb73f26cd" />
-        <service android:name="com.baidu.speech.VoiceRecognitionService" android:exported="false" />
     </application>
 
 </manifest>

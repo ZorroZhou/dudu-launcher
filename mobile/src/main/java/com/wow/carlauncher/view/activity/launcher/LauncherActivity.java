@@ -20,6 +20,7 @@ import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.ViewPagerOnPageChangeListener;
 import com.wow.carlauncher.common.util.SharedPreUtil;
+import com.wow.carlauncher.ex.manage.BaiduVoiceAssistant;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.appInfo.event.MAppInfoRefreshShowEvent;
@@ -119,6 +120,20 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
         onThemeChanged(ThemeManage.self());
         ThemeManage.self().registerThemeChangeListener(this);
         ThemeManage.self().refreshTheme();
+
+
+//        BaiduVoiceAssistant.self().init(this);
+//        x.task().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                new Thread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        BaiduVoiceAssistant.self().start();
+//                    }
+//                }).start();
+//            }
+//        }, 1000);
     }
 
     public void initView() {
@@ -496,7 +511,8 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
                         Manifest.permission.BLUETOOTH,
                         Manifest.permission.RECEIVE_BOOT_COMPLETED,
                         Manifest.permission.KILL_BACKGROUND_PROCESSES,
-                        Manifest.permission.ACCESS_NETWORK_STATE
+                        Manifest.permission.ACCESS_NETWORK_STATE,
+                        Manifest.permission.RECORD_AUDIO
                 )
                 .onBeforeRequest((permission, executor) -> {
                     new AlertDialog.Builder(LauncherActivity.this).setTitle("警告!")

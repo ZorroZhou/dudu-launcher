@@ -9,6 +9,7 @@ import com.wow.carlauncher.CarLauncherApplication;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.manage.AppWidgetManage;
+import com.wow.carlauncher.ex.manage.BaiduVoiceAssistant;
 import com.wow.carlauncher.ex.manage.ImageManage;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;

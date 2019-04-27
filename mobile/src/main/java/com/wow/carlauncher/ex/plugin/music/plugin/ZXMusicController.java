@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Bundle;
 import android.util.Log;
 
 import com.wow.carlauncher.common.util.CommonUtil;
@@ -29,7 +30,6 @@ public class ZXMusicController extends MusicController {
         IntentFilter intentFilter2 = new IntentFilter();
         intentFilter2.addAction("update.widget.playbtnstate");
         intentFilter2.addAction("update.widget.update_proBar");
-        intentFilter2.addAction("cupdate.widget.songname");
         this.context.registerReceiver(mReceiver, intentFilter2);
     }
 
@@ -64,42 +64,11 @@ public class ZXMusicController extends MusicController {
         context.unregisterReceiver(mReceiver);
     }
 
-
-//    Intent localIntent = new Intent("update.widget.songname");
-//    localIntent.putExtra("curplaysong", paramString1);
-//    localIntent.putExtra("PlayState", paramBoolean);
-//    localIntent.putExtra("curplaysongpath", paramString2);
-//    localIntent.putExtra("curMusicIndex", getPlayList().getCurPlayIndex());
-//    localIntent.putExtra("totalMusicCount", getPlayList().size());
-//    localIntent.putExtra("artistPicPath", getArtistImagePath(paramString1));
-
-//    Intent localIntent = new Intent("update.widget.playbtnstate");
-//    localIntent.putExtra("PlayState", false);
-
-//    Intent localIntent = new Intent("update.widget.update_proBar");
-//    localIntent.putExtra("proBarmax", paramInt1);
-//    localIntent.putExtra("proBarvalue", paramInt2);
-//    localIntent.putExtra("curplaytime", StringUtils.generateTime(paramLong));
-//    localIntent.putExtra("isExistMusicApp", paramBoolean);
-//    localIntent.putExtra("curplaysong", paramString);
-//    localIntent.putExtra("artistPicPath", getArtistImagePath(paramString));
-
+    private String lastCover = "";
+    private String lastTitle = "";
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
         public void onReceive(Context paramAnonymousContext, Intent intent) {
             if ("update.widget.playbtnstate".equals(intent.getAction())) {
-                try {
-                    boolean playing = intent.getBooleanExtra("PlayState", false);
-                    musicPlugin.refreshState(playing, true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            } else if ("update.widget.songname".equals(intent.getAction())) {
-                try {
-                    String curplaysong = intent.getStringExtra("curplaysong");
-                    musicPlugin.refreshInfo(curplaysong, "");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
                 try {
                     boolean playing = intent.getBooleanExtra("PlayState", false);
                     musicPlugin.refreshState(playing, true);
@@ -110,8 +79,20 @@ public class ZXMusicController extends MusicController {
                 try {
                     int proBarmax = intent.getIntExtra("proBarmax", 0);
                     int proBarvalue = intent.getIntExtra("proBarvalue", 0);
-                    musicPlugin.refreshInfo(intent.getStringExtra("curplaysong"), "");
+                    String title = intent.getStringExtra("curplaysong");
+                    musicPlugin.refreshState(true, true);
                     musicPlugin.refreshProgress(proBarvalue, proBarmax);
+                    if (CommonUtil.isNotNull(title) && !title.equals(lastTitle)) {
+                        lastTitle = title;
+                        musicPlugin.refreshInfo(lastTitle, "");
+                        String xx = intent.getStringExtra("artistPicPath");
+                        if (CommonUtil.isNotNull(xx) && !xx.equals(lastCover)) {
+                            lastCover = xx;
+                            musicPlugin.refreshCover("file:/" + xx);
+                        } else if (CommonUtil.isNull(xx)) {
+                            MusciCoverUtil.loadCover(title, null, musicPlugin);
+                        }
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

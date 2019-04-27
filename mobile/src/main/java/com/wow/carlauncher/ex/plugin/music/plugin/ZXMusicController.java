@@ -60,7 +60,6 @@ public class ZXMusicController extends MusicController {
         context.unregisterReceiver(mReceiver);
     }
 
-    private String lastCover = "";
     private String lastTitle = "";
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
         public void onReceive(Context paramAnonymousContext, Intent intent) {
@@ -82,10 +81,9 @@ public class ZXMusicController extends MusicController {
                         lastTitle = title;
                         musicPlugin.refreshInfo(lastTitle, "");
                         String xx = intent.getStringExtra("artistPicPath");
-                        if (CommonUtil.isNotNull(xx) && !xx.equals(lastCover)) {
-                            lastCover = xx;
+                        if (CommonUtil.isNotNull(xx)) {
                             musicPlugin.refreshCover("file:/" + xx);
-                        } else if (CommonUtil.isNull(xx)) {
+                        } else {
                             MusciCoverUtil.loadCover(title, null, musicPlugin);
                         }
                     }

@@ -17,6 +17,7 @@ import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
+import com.wow.carlauncher.ex.manage.appInfo.event.MAppInfoRefreshShowEvent;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.view.activity.AppSelectActivity;
 import com.wow.carlauncher.view.activity.launcher.event.LDockLabelShowChangeEvent;
@@ -86,62 +87,55 @@ public class LDockView extends BaseEXView {
                 R.id.tv_dock3,
                 R.id.tv_dock4
         }, R.color.l_text1);
-        x.task().postDelayed(this::loadDock, 500);
-    }
 
-    @Override
-    protected void initView() {
-        loadDock();
+        loadDock(false);
     }
 
     private void openDock(String clazz) {
         if (!AppInfoManage.self().openApp(clazz)) {
-            loadDock();
+            ToastManage.self().show("APP打开失败,可能需要重新选择");
         }
     }
 
-    private void loadDock() {
+    private void loadDock(boolean removeIfError) {
         String packname1 = SharedPreUtil.getString(SDATA_DOCK1_CLASS);
-        if (CommonUtil.isNotNull(packname1)) {
-            if (AppInfoManage.self().checkApp(packname1)) {
-                iv_dock1.setImageDrawable(AppInfoManage.self().getIcon(packname1));
-                tv_dock1.setText(AppInfoManage.self().getName(packname1));
-            } else {
-                ToastManage.self().show("dock1加载失败");
-                SharedPreUtil.saveString(SDATA_DOCK1_CLASS, null);
-            }
+        Log.e(TAG, "loadDock: " + packname1);
+        if (CommonUtil.isNotNull(packname1) && AppInfoManage.self().checkApp(packname1)) {
+            iv_dock1.setImageDrawable(AppInfoManage.self().getIcon(packname1));
+            tv_dock1.setText(AppInfoManage.self().getName(packname1));
+        } else if (removeIfError) {
+            iv_dock1.setImageResource(R.mipmap.ic_add_app);
+            tv_dock1.setText("添加");
+            SharedPreUtil.saveString(SDATA_DOCK1_CLASS, "");
         }
         String packname2 = SharedPreUtil.getString(SDATA_DOCK2_CLASS);
-        if (CommonUtil.isNotNull(packname2)) {
-            if (AppInfoManage.self().checkApp(packname2)) {
-                iv_dock2.setImageDrawable(AppInfoManage.self().getIcon(packname2));
-                tv_dock2.setText(AppInfoManage.self().getName(packname2));
-            } else {
-                ToastManage.self().show("dock2加载失败");
-                SharedPreUtil.saveString(SDATA_DOCK2_CLASS, null);
-            }
+        if (CommonUtil.isNotNull(packname2) && AppInfoManage.self().checkApp(packname2)) {
+            iv_dock2.setImageDrawable(AppInfoManage.self().getIcon(packname2));
+            tv_dock2.setText(AppInfoManage.self().getName(packname2));
+        } else if (removeIfError) {
+            iv_dock2.setImageResource(R.mipmap.ic_add_app);
+            tv_dock2.setText("添加");
+            SharedPreUtil.saveString(SDATA_DOCK2_CLASS, "");
         }
 
         String packname3 = SharedPreUtil.getString(SDATA_DOCK3_CLASS);
-        if (CommonUtil.isNotNull(packname3)) {
-            if (AppInfoManage.self().checkApp(packname3)) {
-                iv_dock3.setImageDrawable(AppInfoManage.self().getIcon(packname3));
-                tv_dock3.setText(AppInfoManage.self().getName(packname3));
-            } else {
-                ToastManage.self().show("dock3加载失败");
-                SharedPreUtil.saveString(SDATA_DOCK3_CLASS, null);
-            }
+        if (CommonUtil.isNotNull(packname3) && AppInfoManage.self().checkApp(packname3)) {
+            iv_dock3.setImageDrawable(AppInfoManage.self().getIcon(packname3));
+            tv_dock3.setText(AppInfoManage.self().getName(packname3));
+        } else if (removeIfError) {
+            iv_dock3.setImageResource(R.mipmap.ic_add_app);
+            tv_dock3.setText("添加");
+            SharedPreUtil.saveString(SDATA_DOCK3_CLASS, "");
         }
 
         String packname4 = SharedPreUtil.getString(SDATA_DOCK4_CLASS);
-        if (CommonUtil.isNotNull(packname4)) {
-            if (AppInfoManage.self().checkApp(packname4)) {
-                iv_dock4.setImageDrawable(AppInfoManage.self().getIcon(packname4));
-                tv_dock4.setText(AppInfoManage.self().getName(packname4));
-            } else {
-                ToastManage.self().show("dock4加载失败");
-                SharedPreUtil.saveString(SDATA_DOCK4_CLASS, null);
-            }
+        if (CommonUtil.isNotNull(packname4) && AppInfoManage.self().checkApp(packname4)) {
+            iv_dock4.setImageDrawable(AppInfoManage.self().getIcon(packname4));
+            tv_dock4.setText(AppInfoManage.self().getName(packname4));
+        } else if (removeIfError) {
+            iv_dock4.setImageResource(R.mipmap.ic_add_app);
+            tv_dock4.setText("添加");
+            SharedPreUtil.saveString(SDATA_DOCK4_CLASS, "");
         }
 
         dockLabelShow(SharedPreUtil.getBoolean(CommonData.SDATA_LAUNCHER_DOCK_LABEL_SHOW, true));
@@ -214,7 +208,12 @@ public class LDockView extends BaseEXView {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(LDockRefreshEvent event) {
-        loadDock();
+        loadDock(false);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(final MAppInfoRefreshShowEvent event) {
+        loadDock(true);
     }
 
 }

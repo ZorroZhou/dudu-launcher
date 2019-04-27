@@ -272,6 +272,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
                 String packName = data.getStringExtra(IDATA_APP_PACKAGE_NAME);
                 int mark = data.getIntExtra(IDATA_APP_MARK, -1);
                 SharedPreUtil.saveString(SDATA_DOCK1_CLASS, mark + CommonData.CONSTANT_APP_PACKAGE_SEPARATE + packName);
+                System.out.println("!!!!" + SharedPreUtil.getString(SDATA_DOCK1_CLASS));
                 EventBus.getDefault().post(new LDockRefreshEvent());
             }
         }

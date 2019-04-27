@@ -86,17 +86,17 @@ public class SHomeView extends BaseEXView {
         });
 
         final String[] itemsNum = {
-                "3个", "4个"
+                "2个", "3个", "4个"
         };
         sv_launcher_item_num.setSummary(SharedPreUtil.getInteger(CommonData.SDATA_LAUNCHER_ITEM_NUM, 3) + "个");
         sv_launcher_item_num.setOnClickListener(v -> {
-            int select = SharedPreUtil.getInteger(CommonData.SDATA_LAUNCHER_ITEM_NUM, 3) - 3;
+            int select = SharedPreUtil.getInteger(CommonData.SDATA_LAUNCHER_ITEM_NUM, 3) - 2;
             final ThreadObj<Integer> obj = new ThreadObj<>(select);
             new AlertDialog.Builder(getContext()).setTitle("请选择首页的插件数量").setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     new AlertDialog.Builder(getContext()).setTitle("警告!").setNegativeButton("取消", null).setPositiveButton("确定", (dialog2, which2) -> {
-                        SharedPreUtil.saveInteger(CommonData.SDATA_LAUNCHER_ITEM_NUM, obj.getObj() + 3);
+                        SharedPreUtil.saveInteger(CommonData.SDATA_LAUNCHER_ITEM_NUM, obj.getObj() + 2);
                         sv_launcher_item_num.setSummary(itemsNum[obj.getObj()]);
                         EventBus.getDefault().post(new LItemRefreshEvent());
                     }).setMessage("是否确认更改,会导致桌面插件重新加载").show();

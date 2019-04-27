@@ -148,14 +148,15 @@
 
                 <View style="@style/Interval" />
 
-                <!--<com.wow.carlauncher.common.view.SetView-->
-                <!--android:id="@+id/sg_dev"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--app:titleEx="测试"-->
-                <!--app:type="buttonB" />-->
+                <com.wow.carlauncher.common.view.SetView
+                    android:id="@+id/sg_dev"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    app:titleEx="测试"
+                    app:type="buttonB" />
 
-                <!--<View style="@style/Interval" />-->
+                <View style="@style/Interval" />
             </LinearLayout>
         </ScrollView>
 

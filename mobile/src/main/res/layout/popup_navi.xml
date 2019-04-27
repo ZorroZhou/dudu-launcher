@@ -13,6 +13,7 @@
         android:layout_height="0dp"
         android:background="@drawable/n_l_item1_bg_cb"
         android:padding="5dp"
+        android:visibility="gone"
         app:layout_heightPercent="45%w"
         app:layout_widthPercent="45%w">
 
@@ -29,5 +30,6 @@
         android:id="@+id/fl_plugin"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone" />
+        app:layout_heightPercent="45%w"
+        app:layout_widthPercent="45%w" />
 </com.zhy.android.percent.support.PercentLinearLayout>

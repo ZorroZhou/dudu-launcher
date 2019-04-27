@@ -7,7 +7,6 @@ import android.util.Log;
 
 import com.wow.carlauncher.CarLauncherApplication;
 import com.wow.carlauncher.common.util.CommonUtil;
-import com.wow.carlauncher.common.util.GsonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.manage.AppWidgetManage;
 import com.wow.carlauncher.ex.manage.ImageManage;
@@ -25,7 +24,6 @@ import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.repertory.db.entiy.CoverTemp;
 import com.wow.carlauncher.repertory.db.manage.DatabaseInfo;
 import com.wow.carlauncher.repertory.db.manage.DatabaseManage;
-import com.wow.carlauncher.repertory.web.mobile.frame.ResultConvertor;
 import com.wow.carlauncher.repertory.web.mobile.frame.ResultHandle;
 import com.wow.carlauncher.repertory.web.mobile.frame.WebApiInfo;
 import com.wow.carlauncher.repertory.web.mobile.frame.WebApiManage;

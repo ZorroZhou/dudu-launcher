@@ -296,7 +296,7 @@ public class LAMapView extends BaseEXView {
                     Toast.makeText(getContext(), "没有安装高德地图", Toast.LENGTH_SHORT).show();
                     break;
                 }
-                //AMapCarPlugin.self().testNavi();
+                AMapCarPlugin.self().testNavi();
                 break;
             }
         }
@@ -360,7 +360,7 @@ public class LAMapView extends BaseEXView {
                 msg = msg + "现在";
             } else {
                 if (event.getSegRemainDis() > 1000) {
-                    msg = msg + new BigDecimal(event.getSegRemainDis() / 1000).setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue() + "kM后";
+                    msg = msg + new BigDecimal(((double) event.getSegRemainDis()) / 1000).setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue() + "kM后";
                 } else {
                     int mmm = event.getSegRemainDis() - 10;
                     msg = msg + mmm + "M后";

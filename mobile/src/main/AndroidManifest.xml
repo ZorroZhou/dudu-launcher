@@ -25,6 +25,7 @@
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <uses-permission
         android:name="android.permission.PACKAGE_USAGE_STATS"
@@ -134,6 +135,17 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
+
+        <meta-data android:name="com.baidu.speech.APP_ID"
+            android:value="11197584" />
+        <meta-data
+            android:name="com.baidu.speech.API_KEY"
+            android:value="Vj8d2RT0SiuvZOdYwTM28ZRs" />
+        <meta-data
+            android:name="com.baidu.speech.SECRET_KEY"
+            android:value="fbfc9b5d4034df79b2cec8deb73f26cd" />
+        <service android:name="com.baidu.speech.VoiceRecognitionService" android:exported="false" />
     </application>
 
 </manifest>

@@ -152,7 +152,7 @@ public class NaviWin {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final MTimeHalfSecondEvent event) {
         if (iv_gaode != null && iv_info != null && isShow) {
-            iv_info.setImageDrawable(iv_gaode.getDrawable());
+            //iv_info.setImageDrawable(iv_gaode.getDrawable());
         }
     }
 

@@ -4,11 +4,14 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.util.Log;
 
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.ex.plugin.music.MusciCoverUtil;
 import com.wow.carlauncher.ex.plugin.music.MusicController;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
+
+import static com.wow.carlauncher.common.CommonData.TAG;
 
 /**
  * Created by 10124 on 2017/10/26.
@@ -37,22 +40,18 @@ public class ZXMusicController extends MusicController {
 
     public void play() {
         sendEvent(CMD_PAUSE_OR_PLAY);
-        musicPlugin.refreshState(true, false);
     }
 
     public void pause() {
         sendEvent(CMD_PAUSE_OR_PLAY);
-        musicPlugin.refreshState(false, false);
     }
 
     public void next() {
         sendEvent(CMD_NEXT);
-        musicPlugin.refreshState(true, false);
     }
 
     public void pre() {
         sendEvent(CMD_PRE);
-        musicPlugin.refreshState(true, false);
     }
 
     private void sendEvent(String event) {

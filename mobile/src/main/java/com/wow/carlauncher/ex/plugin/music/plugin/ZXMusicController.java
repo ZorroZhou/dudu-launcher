@@ -110,7 +110,7 @@ public class ZXMusicController extends MusicController {
                 try {
                     int proBarmax = intent.getIntExtra("proBarmax", 0);
                     int proBarvalue = intent.getIntExtra("proBarvalue", 0);
-
+                    musicPlugin.refreshInfo(intent.getStringExtra("curplaysong"), "");
                     musicPlugin.refreshProgress(proBarvalue, proBarmax);
                 } catch (Exception e) {
                     e.printStackTrace();

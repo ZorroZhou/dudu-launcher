@@ -12,6 +12,7 @@ import com.wow.carlauncher.ex.plugin.music.plugin.JidouMusicController;
 import com.wow.carlauncher.ex.plugin.music.plugin.NwdMusicController;
 import com.wow.carlauncher.ex.plugin.music.plugin.QQMusicCarController;
 import com.wow.carlauncher.ex.plugin.music.plugin.SystemMusicController;
+import com.wow.carlauncher.ex.plugin.music.plugin.ZXMusicController;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -57,10 +58,14 @@ public class MusicPlugin extends ContextEx {
             case NWDMUSIC:
                 musicController = new NwdMusicController();
                 break;
+            case ZXMUSIC:
+                musicController = new ZXMusicController();
+                break;
+            default:
+                musicController = new SystemMusicController();
+                break;
         }
-        if (musicController != null) {
-            musicController.init(getContext(), this);
-        }
+        musicController.init(getContext(), this);
     }
 
     public String clazz() {

@@ -14,7 +14,7 @@ public enum MusicControllerEnum implements SetEnum {
     QQCARMUSIC("QQ音乐车机版", 6),
     JIDOUMUSIC("极豆音乐", 7),
     NWDMUSIC("NWD音乐", 9),
-    ZXMUSIC("掌讯音乐", 10);
+    ZXMUSIC("掌讯音乐(测试版)", 10);
     private String name;
     private Integer id;
 

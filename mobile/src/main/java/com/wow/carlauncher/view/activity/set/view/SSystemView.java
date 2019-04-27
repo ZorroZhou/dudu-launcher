@@ -1,9 +1,11 @@
 package com.wow.carlauncher.view.activity.set.view;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
@@ -28,6 +30,7 @@ import com.wow.carlauncher.view.base.BaseView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.xutils.view.annotation.ViewInject;
+import org.xutils.x;
 
 /**
  * Created by 10124 on 2018/4/22.
@@ -70,16 +73,34 @@ public class SSystemView extends BaseView {
     private SetView sv_key_listener;
 
     private boolean showKey;
+    private BroadcastReceiver nwdKeyTestReceiver = new BroadcastReceiver() {
+        public void onReceive(Context paramContext, Intent paramIntent) {
+            if ("com.nwd.action.ACTION_KEY_VALUE".equals(paramIntent.getAction())) {
+                int key = paramIntent.getByteExtra("extra_key_value", (byte) 0);
+                x.task().autoPost(new Runnable() {
+                    @Override
+                    public void run() {
+                        ToastManage.self().show("NWD按键测试触发:" + key);
+                    }
+                });
+            }
+        }
+    };
 
     @Override
     protected void initView() {
 
         sv_key_listener.setOnClickListener(v -> {
             showKey = true;
+            IntentFilter intentFilter2 = new IntentFilter();
+            intentFilter2.addAction("com.nwd.action.ACTION_KEY_VALUE");
+            getContext().registerReceiver(nwdKeyTestReceiver, intentFilter2);
+
             new AlertDialog.Builder(getContext()).setTitle("开启").setOnDismissListener(new DialogInterface.OnDismissListener() {
                 @Override
                 public void onDismiss(DialogInterface dialog) {
                     showKey = false;
+                    getContext().unregisterReceiver(nwdKeyTestReceiver);
                 }
             }).setPositiveButton("关闭", null).show();
         });
@@ -141,7 +162,7 @@ public class SSystemView extends BaseView {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (showKey) {
-            ToastManage.self().show("KEY_CODE:" + keyCode);
+            ToastManage.self().show("系统按键触发 KEY_CODE:" + keyCode);
         }
         return super.onKeyDown(keyCode, event);
     }

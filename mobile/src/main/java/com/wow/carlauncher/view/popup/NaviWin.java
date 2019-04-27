@@ -20,6 +20,7 @@ import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.manage.AppWidgetManage;
 import com.wow.carlauncher.ex.manage.time.event.MTimeHalfSecondEvent;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventNavInfo;
+import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventState;
 import com.wow.carlauncher.view.activity.set.event.SEventRefreshAmapPlugin;
 
 import org.greenrobot.eventbus.EventBus;
@@ -169,6 +170,13 @@ public class NaviWin {
             if (System.currentTimeMillis() - lastTime > 10000 && isShow) {
                 hide();
             }
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(final PAmapEventState event) {
+        if (!event.isRunning()) {
+            hide();
         }
     }
 }

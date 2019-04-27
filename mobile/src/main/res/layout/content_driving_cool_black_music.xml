@@ -11,6 +11,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:gravity="center"
+        android:singleLine="true"
         android:text="@string/music_name"
         android:textColor="#ccc"
         app:layout_textSizePercent="18%h" />

@@ -1,4 +1,4 @@
-package com.wow.carlauncher.repertory.web.mobile;
+package com.wow.carlauncher.repertory.web.mobile.frame;
 
 import java.lang.reflect.Type;
 

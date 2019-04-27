@@ -6,13 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.view.activity.set.event.SEventRefreshAmapPlugin;
+import com.wow.carlauncher.view.activity.set.view.SDevView;
 import com.wow.carlauncher.view.activity.set.view.SFkView;
 import com.wow.carlauncher.view.activity.set.view.SHomeView;
 import com.wow.carlauncher.view.activity.set.view.SItemView;
@@ -53,7 +53,7 @@ public class SetActivity extends BaseActivity {
         ll_user.setOnClickListener(v -> ToastManage.self().show("还没开发呢"));
     }
 
-    @Event(value = {R.id.sg_item, R.id.sg_theme, R.id.sg_home, R.id.sg_obd, R.id.sg_fk, R.id.sg_load_app, R.id.sg_popup, R.id.sg_system_set})
+    @Event(value = {R.id.sg_dev, R.id.sg_item, R.id.sg_theme, R.id.sg_home, R.id.sg_obd, R.id.sg_fk, R.id.sg_load_app, R.id.sg_popup, R.id.sg_system_set})
     private void clickEvent(View view) {
         ViewGroup setView = null;
         switch (view.getId()) {
@@ -87,6 +87,10 @@ public class SetActivity extends BaseActivity {
             }
             case R.id.sg_system_set: {
                 setView = new SSystemView(this);
+                break;
+            }
+            case R.id.sg_dev: {
+                setView = new SDevView(this);
                 break;
             }
         }

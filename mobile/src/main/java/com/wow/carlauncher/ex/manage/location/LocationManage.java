@@ -66,7 +66,6 @@ public class LocationManage extends ContextEx implements AMapLocationListener {
     @Override
     public void onLocationChanged(AMapLocation aMapLocation) {
         if (aMapLocation != null && aMapLocation.getErrorCode() == 0 && CommonUtil.isNotNull(aMapLocation.getCity())) {
-            Log.d(TAG, "定位成功: " + aMapLocation.getCity());
             EventBus.getDefault().post(new MNewLocationEvent()
                     .setDistrict(aMapLocation.getDistrict())
                     .setCity(aMapLocation.getCity())

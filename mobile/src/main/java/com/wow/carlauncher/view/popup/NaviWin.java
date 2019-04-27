@@ -5,7 +5,6 @@ import android.content.Context;
 import android.graphics.PixelFormat;
 import android.os.Build;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +30,6 @@ import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
 import static com.wow.carlauncher.common.CommonData.APP_WIDGET_AMAP_PLUGIN;
-import static com.wow.carlauncher.common.CommonData.TAG;
 import static com.wow.carlauncher.common.util.ViewUtils.getViewByIds;
 
 public class NaviWin {
@@ -116,11 +114,16 @@ public class NaviWin {
             fl_plugin.addView(amapView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             if (amapView instanceof ViewGroup) {
                 View vv = getViewByIds(amapView, new Object[]{"widget_container", "daohang_container", 0, "gongban_daohang_right_blank_container", "daohang_widget_image"});
-                Log.e(TAG, "!!!!loadPlugin: " + vv);
                 if (vv instanceof ImageView) {
                     iv_gaode = (ImageView) vv;
+                } else {
+                    iv_gaode = null;
                 }
+            } else {
+                iv_gaode = null;
             }
+        } else {
+            iv_gaode = null;
         }
     }
 

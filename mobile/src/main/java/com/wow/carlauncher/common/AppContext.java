@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.wow.carlauncher.CarLauncherApplication;
 import com.wow.carlauncher.common.util.CommonUtil;
+import com.wow.carlauncher.common.util.GsonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.manage.AppWidgetManage;
 import com.wow.carlauncher.ex.manage.ImageManage;
@@ -24,6 +25,12 @@ import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.repertory.db.entiy.CoverTemp;
 import com.wow.carlauncher.repertory.db.manage.DatabaseInfo;
 import com.wow.carlauncher.repertory.db.manage.DatabaseManage;
+import com.wow.carlauncher.repertory.web.mobile.frame.ResultConvertor;
+import com.wow.carlauncher.repertory.web.mobile.frame.ResultHandle;
+import com.wow.carlauncher.repertory.web.mobile.frame.WebApiInfo;
+import com.wow.carlauncher.repertory.web.mobile.frame.WebApiManage;
+import com.wow.carlauncher.repertory.web.mobile.packet.Response;
+import com.wow.carlauncher.repertory.web.mobile.service.CommonApi;
 import com.wow.carlauncher.view.popup.ConsoleWin;
 import com.wow.carlauncher.view.popup.NaviWin;
 import com.wow.carlauncher.view.popup.PopupWin;
@@ -33,6 +40,7 @@ import org.xutils.x;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -75,6 +83,8 @@ public class AppContext {
         SharedPreUtil.init(app);
 
         AppWidgetManage.self().init(app);
+
+        WebApiManage.init(app, getWebServiceInfo());
 
         DatabaseManage.init(app, getDatabaseInfo());
         //图片加载工具
@@ -208,6 +218,35 @@ public class AppContext {
             @Override
             public Class<?>[] getBeanClass() {
                 return new Class[]{CoverTemp.class};
+            }
+        };
+    }
+
+    private WebApiInfo getWebServiceInfo() {
+        return new WebApiInfo() {
+            @Override
+            public Class<?>[] getInterFaceClass() {
+                return new Class[]{
+                        CommonApi.class
+                };
+            }
+
+            @Override
+            public String getServerUrl() {
+                return "http://192.168.31.158:8100";
+            }
+
+            @Override
+            public ResultHandle getDefaultResultHandle() {
+                return new ResultHandle() {
+                    @Override
+                    public <T> String handle(Response<T> t) {
+                        if (t.getCode() == 0) {
+                            return null;
+                        }
+                        return t.getMsg();
+                    }
+                };
             }
         };
     }

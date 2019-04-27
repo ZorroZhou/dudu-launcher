@@ -1,4 +1,4 @@
-package com.wow.carlauncher.repertory.web.mobile.callback;
+package com.wow.carlauncher.repertory.web.mobile.frame.callback;
 
 /**
  * Created by Che on 2016/11/22 0022.

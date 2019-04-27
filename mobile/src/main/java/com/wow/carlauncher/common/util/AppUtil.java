@@ -1,5 +1,6 @@
 package com.wow.carlauncher.common.util;
 
+import android.annotation.SuppressLint;
 import android.app.ActivityManager;
 import android.app.Instrumentation;
 import android.app.WallpaperManager;
@@ -14,6 +15,7 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
+import android.provider.Settings;
 
 import java.util.List;
 
@@ -109,5 +111,11 @@ public class AppUtil {
 
     public static boolean isLivingWallpaper(Context paramContext) {
         return (WallpaperManager.getInstance(paramContext).getWallpaperInfo() != null);
+    }
+
+
+    @SuppressLint("HardwareIds")
+    public static String getAndroidId(Context context) {
+        return Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
     }
 }

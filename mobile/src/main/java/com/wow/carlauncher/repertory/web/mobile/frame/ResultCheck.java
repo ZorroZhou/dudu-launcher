@@ -1,4 +1,4 @@
-package com.wow.carlauncher.repertory.web.mobile;
+package com.wow.carlauncher.repertory.web.mobile.frame;
 
 public class ResultCheck {
     public static void checkResult(boolean expression, String msg) {

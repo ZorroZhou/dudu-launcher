@@ -1,10 +1,16 @@
-package com.wow.carlauncher.repertory.web.mobile;
+package com.wow.carlauncher.repertory.web.mobile.frame;
 
 import android.content.Context;
 import android.util.Log;
 
-import com.wow.carlauncher.repertory.web.mobile.callback.SCallBack;
-import com.wow.carlauncher.repertory.web.mobile.callback.SProgressCallback;
+import com.google.gson.Gson;
+import com.google.gson.internal.$Gson$Types;
+import com.google.gson.reflect.TypeToken;
+import com.wow.carlauncher.common.util.CommonUtil;
+import com.wow.carlauncher.common.util.GsonUtil;
+import com.wow.carlauncher.repertory.web.mobile.frame.callback.SCallBack;
+import com.wow.carlauncher.repertory.web.mobile.frame.callback.SProgressCallback;
+import com.wow.carlauncher.repertory.web.mobile.packet.Response;
 
 import org.xutils.common.Callback;
 import org.xutils.http.HttpMethod;
@@ -21,7 +27,7 @@ import static android.content.ContentValues.TAG;
 /**
  * Created by Che on 2016/11/21 0021.
  */
-public class BaseWebService {
+public class BaseApi {
     protected Context context;
 
     public void setContext(Context context) {
@@ -32,12 +38,6 @@ public class BaseWebService {
 
     public void setDefaultResultHandle(ResultHandle resultHandle) {
         this.resultHandle = resultHandle;
-    }
-
-    private ResultConvertor resultConvertor;
-
-    public void setDefaultResultConvertor(ResultConvertor resultConvertor) {
-        this.resultConvertor = resultConvertor;
     }
 
     private String server;
@@ -56,7 +56,7 @@ public class BaseWebService {
         this.jsonConverter = jsonConverter;
     }
 
-    public BaseWebService() {
+    public BaseApi() {
     }
 
     public RequestParams getRequestParams(String url) {
@@ -65,21 +65,11 @@ public class BaseWebService {
         return requestParams;
     }
 
-
-    public <ResultType> WebTask<ResultType> request(final String url, Object params, SCallBack<ResultType> callBack, final Type type) {
-        return request(url, params, callBack, WebServiceManage.defaultSingleTask, type);
-    }
-
-    public <ResultType> WebTask<ResultType> requestUnSingle(final String url, Object params, SCallBack<ResultType> callBack, final Type type) {
-        return request(url, params, callBack, false, type);
-    }
-
-    public <ResultType> WebTask<ResultType> updateFile(String url, File file, SCallBack<ResultType> callBack) {
+    public <ResultType> WebTask<ResultType> updateFile(String url, File file) {
         RequestParams params = new RequestParams(url);
-        final WebTask<ResultType> webTask = new WebTask();
+        final WebTask<ResultType> webTask = new WebTask<>();
         try {
             params.setRequestBody(new FileBody(file, "application/octet-stream"));
-            webTask.setCallback(callBack);
 
             webTask.setXhttpTask(x.http().request(HttpMethod.PUT, params, new Callback.ProgressCallback<String>() {
                 @Override
@@ -142,24 +132,22 @@ public class BaseWebService {
         return webTask;
     }
 
-    public <ResultType> WebTask<ResultType> request(String url, Object params, SCallBack<ResultType> callBack, final boolean singleTask, final Type type) {
+    public <ResultType> WebTask<ResultType> request(String url, Class<ResultType> clazz) {
+        return request(url, null, clazz);
+    }
+
+    public <ResultType> WebTask<ResultType> request(String url, Object params, Class<ResultType> clazz) {
         final String completeUrl = server + url;
         Log.e(TAG, "request: " + completeUrl);
         RequestParams requestParams = getRequestParams(completeUrl);
-        for (String key : WebServiceManage.getDefaultHeadFeild().keySet()) {
-            requestParams.addHeader(key, WebServiceManage.getDefaultHeadFeild().get(key));
+        for (String key : WebApiManage.getDefaultHeadFeild().keySet()) {
+            requestParams.addHeader(key, WebApiManage.getDefaultHeadFeild().get(key));
         }
 
         if (params != null) {
             requestParams.setBodyContent(jsonConverter.toJson(params));
         }
-        final WebTask<ResultType> webTask = new WebTask();
-        if (singleTask) {
-            WebServiceManage.removeTask(completeUrl);
-            WebServiceManage.addTask(completeUrl, webTask);
-        }
-
-        webTask.setCallback(callBack);
+        final WebTask<ResultType> webTask = new WebTask<>();
         webTask.setXhttpTask(x.http().post(requestParams, new Callback.ProgressCallback<String>() {
             @Override
             public void onWaiting() {
@@ -183,12 +171,18 @@ public class BaseWebService {
 
             @Override
             public void onSuccess(String res) {
-                ResultType r;
                 Log.d(TAG, "接口返回的json" + res);
-                r = resultConvertor.convertor(res, type);
+                Response<ResultType> r = GsonUtil.getGson().fromJson(res, $Gson$Types.newParameterizedTypeWithOwner(null, Response.class, clazz));
                 String msg = resultHandle.handle(r);
-                if (webTask.getCallback() != null) {
-                    webTask.getCallback().callback(true, msg, r);
+                if (CommonUtil.isNull(msg)) {
+                    if (webTask.getCallback() != null) {
+                        webTask.getCallback().callback(true, null, r.getData());
+
+                    }
+                } else {
+                    if (webTask.getCallback() != null) {
+                        webTask.getCallback().callback(false, msg, r.getData());
+                    }
                 }
             }
 
@@ -214,24 +208,14 @@ public class BaseWebService {
 
             @Override
             public void onFinished() {
-                if (singleTask) {
-                    WebServiceManage.removeTask(webTask);
-                }
             }
         }));
 
         return webTask;
     }
 
-    public <ResultType> WebTask<ResultType> downFile(String url, Map<String, Object> params, SCallBack<ResultType> callBack, final boolean singleTask, String savePath) {
+    public <ResultType> WebTask<ResultType> downFile(String url, Map<String, Object> params, SCallBack<ResultType> callBack, String savePath) {
         final String completeUrl = server + url;
-
-        if (singleTask) {
-            WebTask<?> oldTask = WebServiceManage.getTask(completeUrl);
-            if (oldTask != null) {
-                oldTask.cancelTask();
-            }
-        }
 
         RequestParams requestParams = getRequestParams(completeUrl);
         requestParams.setSaveFilePath(savePath);
@@ -296,15 +280,8 @@ public class BaseWebService {
 
             @Override
             public void onFinished() {
-                if (singleTask) {
-                    WebServiceManage.removeTask(completeUrl);
-                }
             }
         }));
-        if (singleTask) {
-            WebServiceManage.addTask(completeUrl, webTask);
-        }
-
         return webTask;
     }
 

@@ -9,14 +9,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.view.SetView;
-import com.wow.carlauncher.ex.manage.AppWidgetManage;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.console.ConsolePlugin;
 import com.wow.carlauncher.ex.plugin.console.ConsoleProtoclEnum;
@@ -39,7 +37,6 @@ import static com.wow.carlauncher.common.CommonData.APP_WIDGET_HOST_ID;
 import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_AMAP_PLUGIN;
 import static com.wow.carlauncher.common.CommonData.SDATA_CONSOLE_MARK;
 import static com.wow.carlauncher.common.CommonData.SDATA_MUSIC_CONTROLLER;
-import static com.wow.carlauncher.common.util.ViewUtils.getViewByIds;
 
 /**
  * Created by 10124 on 2018/4/22.
@@ -97,22 +94,13 @@ public class SItemView extends BaseEXView {
             sv_gaode_chajian.setSummary("未选择");
         }
 
-        sv_gaode_chajian.setOnClickListener(v -> {
-            boolean check = false;
-            int widgetId = appWidgetHost.allocateAppWidgetId();
-            if (widgetId > 0) {
-                final View amapView = AppWidgetManage.self().getWidgetById(widgetId);
-                View vv = getViewByIds(amapView, new Object[]{"widget_container", "daohang_container", 0, "gongban_daohang_right_blank_container", "daohang_widget_image"});
-                if (vv instanceof ImageView) {
-                    check = true;
-                }
-            }
-            if (check) {
+        sv_gaode_chajian.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int widgetId = appWidgetHost.allocateAppWidgetId();
                 Intent pickIntent = new Intent(AppWidgetManager.ACTION_APPWIDGET_PICK);
                 pickIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
                 ((Activity) getContext()).startActivityForResult(pickIntent, REQUEST_SELECT_AMAP_PLUGIN);
-            } else {
-                ToastManage.self().show("错误的插件!!");
             }
         });
 

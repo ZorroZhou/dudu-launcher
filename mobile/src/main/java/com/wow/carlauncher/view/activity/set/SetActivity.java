@@ -1,15 +1,18 @@
 package com.wow.carlauncher.view.activity.set;
 
+import android.app.Activity;
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.view.SetView;
+import com.wow.carlauncher.ex.manage.AppWidgetManage;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.view.activity.set.event.SEventRefreshAmapPlugin;
 import com.wow.carlauncher.view.activity.set.view.SDevView;
@@ -29,6 +32,7 @@ import org.xutils.view.annotation.ViewInject;
 
 import static com.wow.carlauncher.common.CommonData.APP_WIDGET_AMAP_PLUGIN;
 import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_AMAP_PLUGIN;
+import static com.wow.carlauncher.common.util.ViewUtils.getViewByIds;
 
 public class SetActivity extends BaseActivity {
     @Override
@@ -105,9 +109,19 @@ public class SetActivity extends BaseActivity {
             switch (requestCode) {
                 case REQUEST_SELECT_AMAP_PLUGIN: {
                     int id = data.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1);
-                    if (id != -1) {
+                    boolean check = false;
+                    if (id > 0) {
+                        final View amapView = AppWidgetManage.self().getWidgetById(id);
+                        View vv = getViewByIds(amapView, new Object[]{"widget_container", "daohang_container", 0, "gongban_daohang_right_blank_container", "daohang_widget_image"});
+                        if (vv instanceof ImageView) {
+                            check = true;
+                        }
+                    }
+                    if (check) {
                         SharedPreUtil.saveInteger(APP_WIDGET_AMAP_PLUGIN, id);
                         EventBus.getDefault().post(new SEventRefreshAmapPlugin());
+                    } else {
+                        ToastManage.self().show("错误的插件!!");
                     }
                     break;
                 }

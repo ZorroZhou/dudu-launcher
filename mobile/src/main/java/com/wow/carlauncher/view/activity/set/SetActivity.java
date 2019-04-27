@@ -1,6 +1,5 @@
 package com.wow.carlauncher.view.activity.set;
 
-import android.app.Activity;
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.view.View;

@@ -1,19 +1,12 @@
 package com.wow.carlauncher.view.activity.set.view;
 
 import android.content.Context;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.telephony.TelephonyManager;
 import android.util.AttributeSet;
 import android.view.View;
 
 import com.wow.carlauncher.R;
-import com.wow.carlauncher.common.util.AppUtil;
-import com.wow.carlauncher.repertory.web.mobile.frame.WebApiManage;
-import com.wow.carlauncher.repertory.web.mobile.frame.callback.SCallBack;
-import com.wow.carlauncher.repertory.web.mobile.packet.user.LoginRes;
-import com.wow.carlauncher.repertory.web.mobile.service.CommonApi;
 import com.wow.carlauncher.view.base.BaseEXView;
 
 import org.xutils.view.annotation.Event;

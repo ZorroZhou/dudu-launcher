@@ -3,9 +3,7 @@ package com.wow.carlauncher.repertory.web.mobile.frame;
 import android.content.Context;
 import android.util.Log;
 
-import com.google.gson.Gson;
 import com.google.gson.internal.$Gson$Types;
-import com.google.gson.reflect.TypeToken;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.GsonUtil;
 import com.wow.carlauncher.repertory.web.mobile.frame.callback.SCallBack;
@@ -19,7 +17,6 @@ import org.xutils.http.body.FileBody;
 import org.xutils.x;
 
 import java.io.File;
-import java.lang.reflect.Type;
 import java.util.Map;
 
 import static android.content.ContentValues.TAG;

@@ -28,7 +28,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
-import org.xutils.x;
 
 import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_APP_TO_DOCK1;
 import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_APP_TO_DOCK2;

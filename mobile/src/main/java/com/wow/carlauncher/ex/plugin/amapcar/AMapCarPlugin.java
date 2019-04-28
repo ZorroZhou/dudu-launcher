@@ -9,6 +9,7 @@ import android.widget.Toast;
 import com.wow.carlauncher.common.util.AppUtil;
 import com.wow.carlauncher.ex.ContextEx;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
+import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventState;
 
 import org.greenrobot.eventbus.EventBus;
@@ -151,7 +152,7 @@ public class AMapCarPlugin extends ContextEx {
 
     public void getHome() {
         if (!AppUtil.isInstall(getContext(), AMAP_PACKAGE)) {
-            Toast.makeText(getContext(), "没有安装高德地图", Toast.LENGTH_SHORT).show();
+            ToastManage.self().show("没有安装高德地图");
             return;
         }
 

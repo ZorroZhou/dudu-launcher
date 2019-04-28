@@ -3,7 +3,7 @@ package com.wow.carlauncher.ex.plugin.fk.protocol;
 import android.content.Context;
 import android.util.Log;
 
-import com.google.common.primitives.Shorts;
+import com.wow.carlauncher.base.Shorts;
 import com.wow.carlauncher.ex.plugin.fk.FKSimulateDoubleClick;
 import com.wow.carlauncher.ex.plugin.fk.FangkongProtocol;
 import com.wow.carlauncher.ex.plugin.fk.FangkongProtocolListener;

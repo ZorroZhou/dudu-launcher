@@ -26,6 +26,10 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
 
     <uses-permission
         android:name="android.permission.PACKAGE_USAGE_STATS"
@@ -45,13 +49,13 @@
 
         <meta-data
             android:name="com.baidu.speech.APP_ID"
-            android:value="11197584" />
+            android:value="16133161" />
         <meta-data
             android:name="com.baidu.speech.API_KEY"
-            android:value="Vj8d2RT0SiuvZOdYwTM28ZRs" />
+            android:value="xBtPGPTS1h25VAHDpgBUcckg" />
         <meta-data
             android:name="com.baidu.speech.SECRET_KEY"
-            android:value="fbfc9b5d4034df79b2cec8deb73f26cd" />
+            android:value="F67oqdOCcuoOQD5aHOkAlqefxhGH10MV" />
 
         <service
             android:name="com.baidu.speech.VoiceRecognitionService"

@@ -8,7 +8,6 @@ android {
         targetSdkVersion 28
         versionCode 104
         versionName "2.004"
-        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -57,5 +56,4 @@ dependencies {
     implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     implementation 'com.github.goweii:AnyPermission:1.1.0'
     implementation 'com.ToxicBakery.viewpager.transforms:view-pager-transforms:2.0.24'
-    implementation 'com.google.guava:guava:24.1.1-android'
 }

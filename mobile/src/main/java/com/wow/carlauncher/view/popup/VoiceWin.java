@@ -7,10 +7,7 @@ import android.os.Build;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -18,14 +15,10 @@ import com.wow.carlauncher.CarLauncherApplication;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.util.SharedPreUtil;
-import com.wow.carlauncher.ex.manage.AppWidgetManage;
-import com.wow.carlauncher.ex.manage.appInfo.event.MAppInfoRefreshShowEvent;
 import com.wow.carlauncher.ex.manage.baiduVoice.BaiduVoiceAssistant;
+import com.wow.carlauncher.ex.manage.baiduVoice.event.MVaAsrStateChange;
 import com.wow.carlauncher.ex.manage.baiduVoice.event.MVaNewWordFind;
-import com.wow.carlauncher.ex.manage.time.event.MTimeHalfSecondEvent;
-import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventNavInfo;
-import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventState;
-import com.wow.carlauncher.view.activity.set.event.SEventRefreshAmapPlugin;
+import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -33,9 +26,6 @@ import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
-
-import static com.wow.carlauncher.common.CommonData.APP_WIDGET_AMAP_PLUGIN;
-import static com.wow.carlauncher.common.util.ViewUtils.getViewByIds;
 
 public class VoiceWin {
     private static class SingletonHolder {
@@ -60,6 +50,8 @@ public class VoiceWin {
     private CarLauncherApplication context;
     //窗口视图
     private LinearLayout consoleWin;
+
+    private long actionTime = 0;
 
     public void init(CarLauncherApplication context) {
 
@@ -91,16 +83,15 @@ public class VoiceWin {
         consoleWin = (LinearLayout) View.inflate(context, R.layout.popup_voice, null);
 
         x.view().inject(this, consoleWin);
+        EventBus.getDefault().register(this);
     }
 
     public void show() {
         if (!isShow) {
             wm.addView(consoleWin, winparams);
             isShow = true;
-
-            EventBus.getDefault().register(this);
-            BaiduVoiceAssistant.self().stopWakeUp();
-            BaiduVoiceAssistant.self().startAsr();
+            tv_message.setText("你好请讲!");
+            actionTime = System.currentTimeMillis();
         }
     }
 
@@ -108,10 +99,6 @@ public class VoiceWin {
         if (isShow) {
             wm.removeView(consoleWin);
             isShow = false;
-
-            EventBus.getDefault().unregister(this);
-            BaiduVoiceAssistant.self().stopAsr();
-            BaiduVoiceAssistant.self().startWakeUp();
         }
     }
 
@@ -122,20 +109,34 @@ public class VoiceWin {
     private void clickEvent(View view) {
         switch (view.getId()) {
             case R.id.base: {
-                hide();
+                BaiduVoiceAssistant.self().stopAsr();
             }
         }
     }
 
-
-    @Subscribe(threadMode = ThreadMode.BACKGROUND)
-    public void onEvent(final MVaNewWordFind event) {
-        x.task().autoPost(() -> {
-            if (tv_message != null) {
-                tv_message.setText(event.getWord());
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(final MTimeSecondEvent event) {
+        if (isShow) {
+            if (System.currentTimeMillis() - actionTime > 30 * 1000) {
+                BaiduVoiceAssistant.self().stopAsr();
             }
-        });
+        }
+    }
 
-        
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(final MVaAsrStateChange event) {
+        if (event.isRun()) {
+            show();
+        } else {
+            hide();
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(final MVaNewWordFind event) {
+        if (tv_message != null) {
+            tv_message.setText(event.getWord());
+            actionTime = System.currentTimeMillis();
+        }
     }
 }

@@ -126,9 +126,6 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
         ThemeManage.self().registerThemeChangeListener(this);
         ThemeManage.self().refreshTheme();
         x.task().postDelayed(this::requestRuntime, 1000);
-
-
-        VoiceWin.self().show();
     }
 
     public void initView() {

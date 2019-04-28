@@ -78,6 +78,7 @@ public class AppContext {
         this.startTime = System.currentTimeMillis();
 
         x.Ext.init(app);
+        TaskExecutor.self().init();
 
         SharedPreUtil.init(app);
 

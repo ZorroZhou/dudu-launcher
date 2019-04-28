@@ -33,15 +33,12 @@ public class ToastManage extends ContextEx {
     private static Toast toast;
 
     public synchronized void show(final String msg) {
-        x.task().autoPost(new Runnable() {
-            @Override
-            public void run() {
-                if (toast != null) {
-                    toast.cancel();
-                }
-                toast = Toast.makeText(getContext(), msg, Toast.LENGTH_LONG);
-                toast.show();
+        x.task().autoPost(() -> {
+            if (toast != null) {
+                toast.cancel();
             }
+            toast = Toast.makeText(getContext(), msg, Toast.LENGTH_LONG);
+            toast.show();
         });
     }
 }

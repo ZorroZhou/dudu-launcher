@@ -202,16 +202,19 @@ public class LDockView extends BaseEXView {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(LDockLabelShowChangeEvent event) {
+        Log.e(TAG, "onEvent:LDockLabelShowChangeEvent ");
         dockLabelShow(event.show);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(LDockRefreshEvent event) {
+        Log.e(TAG, "onEvent:LDockRefreshEvent ");
         loadDock(false);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final MAppInfoRefreshShowEvent event) {
+        Log.e(TAG, "onEvent:MAppInfoRefreshShowEvent ");
         loadDock(true);
     }
 

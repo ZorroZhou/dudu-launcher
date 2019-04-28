@@ -9,6 +9,7 @@ import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.AppIconTemp;
@@ -198,6 +199,7 @@ public class AppInfoManage {
     public void refreshAppInfo() {
         x.task().run(() -> {
             synchronized (LOCK1) {
+                Log.e(CommonData.TAG, "refreshAppInfo: ");
                 Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
                 mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
                 final List<ResolveInfo> apps = packageManager.queryIntentActivities(

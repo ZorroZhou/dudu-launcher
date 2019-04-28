@@ -1,9 +1,13 @@
 package com.wow.carlauncher.ex.manage.baiduVoice;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.baidu.speech.EventListener;
 import com.baidu.speech.EventManager;
@@ -13,25 +17,27 @@ import com.baidu.tts.client.SpeechSynthesizer;
 import com.baidu.tts.client.SpeechSynthesizerListener;
 import com.baidu.tts.client.TtsMode;
 import com.wow.carlauncher.common.TaskExecutor;
+import com.wow.carlauncher.common.util.AppUtil;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.GsonUtil;
+import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
+import com.wow.carlauncher.ex.manage.baiduVoice.bean.AsrEventParam;
 import com.wow.carlauncher.ex.manage.baiduVoice.bean.AsrEventPartial;
-import com.wow.carlauncher.ex.manage.baiduVoice.bean.AsrLoadEngine;
 import com.wow.carlauncher.ex.manage.baiduVoice.bean.AsrStart;
 import com.wow.carlauncher.ex.manage.baiduVoice.bean.WakeUpStart;
 import com.wow.carlauncher.ex.manage.baiduVoice.event.MVaAsrStateChange;
 import com.wow.carlauncher.ex.manage.baiduVoice.event.MVaNewWordFind;
+import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.amapcar.AMapCarPlugin;
 import com.wow.carlauncher.ex.plugin.console.ConsolePlugin;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
-import com.wow.carlauncher.view.activity.launcher.event.LItemToFristEvent;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.Arrays;
-import java.util.Map;
 
 import static com.wow.carlauncher.common.CommonData.TAG;
+import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.AMAP_PACKAGE;
 
 public class BaiduVoiceAssistant {
     private static BaiduVoiceAssistant self;
@@ -51,7 +57,6 @@ public class BaiduVoiceAssistant {
 
     private static final String BAIDU_MODEL_FILE = "bd_etts_common_speech_as_mand_eng_high_am_v3.0.0_20170516.dat";
     private static final String BAIDU_TEXT_FILE = "bd_etts_text.dat";
-    private static final String BAIDU_SPEECH_GRAMMAR = "baidu_speech_grammar.bsg";
 
     private static String APP_ID;
     private static String API_KEY;
@@ -68,8 +73,6 @@ public class BaiduVoiceAssistant {
     private static final byte[] asrRunLock = new byte[0];
 
     private KeyWord[] keyWords;
-
-    private AsrLoadEngine loadEngine;
 
     public void init(Context context) {
         this.context = context;
@@ -126,28 +129,15 @@ public class BaiduVoiceAssistant {
             asrRun = true;
             wakeup.send(SpeechConstant.WAKEUP_STOP, null, null, 0, 0); //
             asr.send(SpeechConstant.ASR_START, GsonUtil.getGson().toJson(new AsrStart()), null, 0, 0);
-            if (loadEngine != null) {
-                asr.send(SpeechConstant.ASR_KWS_LOAD_ENGINE, GsonUtil.getGson().toJson(loadEngine), null, 0, 0);
-            }
-            ss.speak("你好,请讲");
+            ss.speak("你好");
             EventBus.getDefault().post(new MVaAsrStateChange().setRun(true));
-        }
-    }
-
-    public void loadCode(Map<String, Object> code) {
-        if (init) {
-            try {
-                loadEngine = new AsrLoadEngine().setSlotData(GsonUtil.getGson().toJson(code)).setFilePath(FileUtil.copyAssetsFile(context, BAIDU_SPEECH_GRAMMAR));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
         }
     }
 
     public void stopAsr() {
         synchronized (asrRunLock) {
             asrRun = false;
-            asr.send(SpeechConstant.ASR_STOP, null, null, 0, 0); //
+            asr.send(SpeechConstant.ASR_STOP, null, null, 0, 0);
             startWakeUp();
             EventBus.getDefault().post(new MVaAsrStateChange().setRun(false));
         }
@@ -170,22 +160,25 @@ public class BaiduVoiceAssistant {
         }
     };
 
-    private EventListener eventListener = new EventListener() {
-        @Override
-        public void onEvent(String name, String params, byte[] data, int offset, int length) {
-            Log.e(getClass().getSimpleName(), "name: " + name);
-            Log.e(getClass().getSimpleName(), "params: " + params);
-            switch (name) {
-                case SpeechConstant.CALLBACK_EVENT_WAKEUP_SUCCESS:
-                    startAsr();
-                    break;
-                case SpeechConstant.CALLBACK_EVENT_ASR_PARTIAL:
-                    handleAsrPartial(params);
-                    break;
-            }
+    private EventListener eventListener = (name, params, data, offset, length) -> {
+        Log.e(TAG, "eventListener.name: " + name);
+        Log.e(TAG, "eventListener.params: " + params);
+        switch (name) {
+            case SpeechConstant.CALLBACK_EVENT_WAKEUP_SUCCESS:
+                startAsr();
+                break;
+            case SpeechConstant.CALLBACK_EVENT_ASR_PARTIAL:
+                handleAsrPartial(params);
+                break;
+            case SpeechConstant.CALLBACK_EVENT_ASR_FINISH:
+                AsrEventParam asrEventPartial = GsonUtil.getGson().fromJson(params, AsrEventParam.class);
+                if (asrEventPartial.getError() != 0) {
+                    ToastManage.self().show("出现错误,可能是网络不通畅");
+                    stopAsr();
+                }
+                break;
         }
     };
-
 
     private void handleAsrPartial(String param) {
         try {
@@ -195,79 +188,84 @@ public class BaiduVoiceAssistant {
                 TaskExecutor.self().run(() -> {
                     String word = asrEventPartial.getBest_result();
                     Log.e(TAG, "handleAsrPartial: " + word);
+                    if (word.endsWith("。") || word.endsWith("？")) {
+                        word = word.substring(0, word.length() - 1);
+                    }
                     KeyWord keyWord = getAction(word);
                     Log.e(TAG, "handleAsrPartial: " + keyWord);
                     if (keyWord != null) {
                         switch (keyWord.action) {
+                            case ACTION_HI: {
+                                ss.speak("你好");
+                                break;
+                            }
                             case ACTION_STOP_ASR: {
-                                Log.e(TAG, "onEvent: ACTION_STOP_ASR");
                                 ss.speak("再见");
                                 stopAsr();
                                 break;
                             }
                             case ACTION_NAV_COMP: {
                                 AMapCarPlugin.self().naviToComp();
-                                Log.e(TAG, "onEvent: ACTION_NAV_COMP");
                                 ss.speak("正在发起导航");
                                 stopAsr();
                                 break;
                             }
                             case ACTION_NAV_HOME: {
                                 AMapCarPlugin.self().naviToHome();
-                                Log.e(TAG, "onEvent: ACTION_NAV_HOME");
                                 ss.speak("回家喽");
                                 stopAsr();
                                 break;
                             }
                             case ACTION_MUSIC_NEXT: {
                                 MusicPlugin.self().next();
-                                Log.e(TAG, "onEvent: ACTION_MUSIC_NEXT");
                                 ss.speak("播放下一首歌");
                                 stopAsr();
                                 break;
                             }
                             case ACTION_MUSIC_PLAY: {
                                 MusicPlugin.self().playOrPause();
-                                Log.e(TAG, "onEvent: ACTION_MUSIC_PLAY");
                                 ss.speak("music");
                                 stopAsr();
                                 break;
                             }
                             case ACTION_MUSIC_PREV: {
                                 MusicPlugin.self().pre();
-                                Log.e(TAG, "onEvent: ACTION_MUSIC_PREV");
                                 ss.speak("播放上一首歌");
                                 stopAsr();
                                 break;
                             }
                             case ACTION_SMUTE: {
                                 ConsolePlugin.self().mute();
-                                Log.e(TAG, "onEvent: ACTION_SMUTE");
                                 ss.speak("好的");
                                 stopAsr();
                                 break;
                             }
                             case ACTION_SXIAO: {
                                 ConsolePlugin.self().decVolume();
-                                Log.e(TAG, "onEvent: ACTION_SXIAO");
                                 ss.speak("好的");
                                 stopAsr();
                                 break;
                             }
                             case ACTION_SDA: {
                                 ConsolePlugin.self().incVolume();
-                                Log.e(TAG, "onEvent: ACTION_SDA");
                                 ss.speak("好的");
+                                stopAsr();
+                                break;
+                            }
+                            case ACTION_OPEN_APP: {
+                                ss.speak("好的");
+                                openApp(word.substring(2));
                                 stopAsr();
                                 break;
                             }
                             case ACTION_TOHOME: {
-                                EventBus.getDefault().post(new LItemToFristEvent());
-                                Log.e(TAG, "onEvent: ACTION_TOHOME");
                                 ss.speak("好的");
+                                goHome();
                                 stopAsr();
                                 break;
                             }
+
+
                         }
                     } else {
                         ss.speak("我不太明白");
@@ -279,18 +277,38 @@ public class BaiduVoiceAssistant {
         }
     }
 
+    private void goHome() {
+        Intent home = new Intent(Intent.ACTION_MAIN);
+        home.addCategory(Intent.CATEGORY_HOME);
+        home.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(home);
+    }
+
+    private void openApp(String name) {
+        if ("主页".equals(name) || "首页".equals(name) || "".equals(name)) {
+            goHome();
+        } else if ("高德".equals(name) || "导航".equals(name) || "地图".equals(name)) {
+            if (!AppUtil.isInstall(context, AMAP_PACKAGE)) {
+                Toast.makeText(context, "没有安装高德地图", Toast.LENGTH_SHORT).show();
+            } else {
+                AppInfoManage.self().openApp(AMAP_PACKAGE);
+            }
+        }
+    }
+
     private void initKey() {
         keyWords = new KeyWord[]{
+                new KeyWord("你好", CONTAINS, ACTION_HI),
+                new KeyWord("返回首页", EQ, ACTION_TOHOME),
                 new KeyWord("关闭吧|没事了|退出吧|取消吧", CONTAINS, ACTION_STOP_ASR),
                 new KeyWord("安静|闭嘴|静音", CONTAINS, ACTION_SMUTE),
                 new KeyWord(new String[]{"大", "音量"}, ALL_CONTAINS, ACTION_SDA),
                 new KeyWord(new String[]{"小", "音量"}, ALL_CONTAINS, ACTION_SXIAO),
                 new KeyWord(new String[]{"大", "声"}, ALL_CONTAINS, ACTION_SDA),
                 new KeyWord(new String[]{"小", "声"}, ALL_CONTAINS, ACTION_SXIAO),
-                new KeyWord("打开主页", CONTAINS, ACTION_TOHOME),
-                new KeyWord("播放音乐", CONTAINS, ACTION_MUSIC_PLAY),
                 new KeyWord(new String[]{"听", "音乐"}, ALL_CONTAINS, ACTION_MUSIC_PLAY),
                 new KeyWord(new String[]{"放", "音乐"}, ALL_CONTAINS, ACTION_MUSIC_PLAY),
+                new KeyWord(new String[]{"唱", "歌"}, ALL_CONTAINS, ACTION_MUSIC_PLAY),
                 new KeyWord(new String[]{"听", "歌"}, ALL_CONTAINS, ACTION_MUSIC_PLAY),
                 new KeyWord(new String[]{"放", "歌"}, ALL_CONTAINS, ACTION_MUSIC_PLAY),
                 new KeyWord(new String[]{"换", "歌"}, ALL_CONTAINS, ACTION_MUSIC_NEXT),
@@ -300,6 +318,7 @@ public class BaiduVoiceAssistant {
                 new KeyWord("我要回家", EQ, ACTION_NAV_HOME),
                 new KeyWord("回公司,去公司", CONTAINS, ACTION_NAV_COMP),
                 new KeyWord("打开", START_WIDTH, ACTION_OPEN_APP),
+                new KeyWord("启动", START_WIDTH, ACTION_OPEN_APP)
         };
     }
 
@@ -317,7 +336,7 @@ public class BaiduVoiceAssistant {
                         break;
                     }
                     case START_WIDTH: {
-                        if (keyWord.key.startsWith(key)) {
+                        if (key.startsWith(keyWord.key)) {
                             return keyWord;
                         }
                         break;
@@ -349,6 +368,8 @@ public class BaiduVoiceAssistant {
         return null;
     }
 
+
+    private final static int ACTION_HI = 0;//停止
     private final static int ACTION_STOP_ASR = 1;//停止
     private final static int ACTION_NAV_HOME = 2;//导航回家
     private final static int ACTION_NAV_COMP = 3;//导航去公司

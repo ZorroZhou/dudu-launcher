@@ -83,7 +83,7 @@ public class MusicView extends BaseEXView {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(final PMusicEventState event) {
+    public void onEvent(final PMusicEventState event) {
         if (iv_play != null) {
             if (event.isRun()) {
                 iv_play.setImageResource(R.mipmap.ic_pause2_b);

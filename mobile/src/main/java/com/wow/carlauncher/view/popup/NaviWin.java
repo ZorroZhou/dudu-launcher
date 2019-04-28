@@ -153,7 +153,7 @@ public class NaviWin {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final MTimeHalfSecondEvent event) {
         if (iv_gaode != null && iv_info != null && isShow) {
-            //iv_info.setImageDrawable(iv_gaode.getDrawable());
+            iv_info.setImageDrawable(iv_gaode.getDrawable());
         }
     }
 
@@ -161,13 +161,13 @@ public class NaviWin {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final PAmapEventNavInfo event) {
-        if (event.getSegRemainDis() <= 200) {
+        if (event.getSegRemainDis() <= 100) {
             if (!isShow && SharedPreUtil.getBoolean(CommonData.SDATA_USE_NAVI, false)) {
                 show();
                 lastTime = System.currentTimeMillis();
             }
         } else {
-            if (System.currentTimeMillis() - lastTime > 10000 && isShow) {
+            if (System.currentTimeMillis() - lastTime > 5000 && isShow) {
                 hide();
             }
         }

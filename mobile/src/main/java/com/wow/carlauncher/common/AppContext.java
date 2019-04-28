@@ -169,8 +169,6 @@ public class AppContext {
                     @Override
                     public void run() {
                         Map<String, Object> pp = new HashMap<>();
-                        pp.put("appname", new String[]{"音乐"});
-                        BaiduVoiceAssistant.self().loadCode(pp);
                         BaiduVoiceAssistant.self().startWakeUp();
                     }
                 }).start();

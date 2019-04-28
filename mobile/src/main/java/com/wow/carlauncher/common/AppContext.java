@@ -124,6 +124,11 @@ public class AppContext {
         //语音窗口
         VoiceWin.self().init(app);
 
+        if (SharedPreUtil.getBoolean(CommonData.SDATA_USE_VA, false)) {
+            BaiduVoiceAssistant.self().init(app);
+            x.task().postDelayed(() -> BaiduVoiceAssistant.self().startWakeUp(), 1000);
+        }
+
         int size = SharedPreUtil.getInteger(CommonData.SDATA_POPUP_SIZE, 1);
         PopupWin.self().setRank(size + 1);
         handerException();
@@ -160,20 +165,6 @@ public class AppContext {
             }
         });
         Log.e(TAG, "APP初始化完毕 ");
-
-        BaiduVoiceAssistant.self().init(app);
-        x.task().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Map<String, Object> pp = new HashMap<>();
-                        BaiduVoiceAssistant.self().startWakeUp();
-                    }
-                }).start();
-            }
-        }, 2000);
     }
 
     public Application getApplication() {

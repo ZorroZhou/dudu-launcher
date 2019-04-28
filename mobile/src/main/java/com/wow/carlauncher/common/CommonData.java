@@ -192,4 +192,6 @@ public class CommonData {
     //是否允许悬浮框展示
     public static final String SDATA_HOME_FULL = "SDATA_HOME_FULL";
 
+    public static final String SDATA_USE_VA = "SDATA_USE_VA";
+
 }

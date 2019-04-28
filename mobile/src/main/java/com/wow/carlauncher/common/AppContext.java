@@ -42,7 +42,9 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 import static com.wow.carlauncher.common.CommonData.TAG;
 
@@ -166,6 +168,9 @@ public class AppContext {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
+                        Map<String, Object> pp = new HashMap<>();
+                        pp.put("appname", new String[]{"音乐"});
+                        BaiduVoiceAssistant.self().loadCode(pp);
                         BaiduVoiceAssistant.self().startWakeUp();
                     }
                 }).start();

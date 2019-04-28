@@ -115,6 +115,7 @@ public class AMapCarPlugin extends ContextEx {
         param.put(REQUEST_GO_HC_DEST, REQUEST_GO_HC_DEST_HOME);
         param.put("IS_START_NAVI", 0);
         sendReceiver(REQUEST_GO_HC, param);
+        sendReceiver(REQUEST_GO_BACK, null);
     }
 
     public void exitNav() {
@@ -150,18 +151,18 @@ public class AMapCarPlugin extends ContextEx {
     }
 
 
-    public void getHome() {
-        if (!AppUtil.isInstall(getContext(), AMAP_PACKAGE)) {
-            ToastManage.self().show("没有安装高德地图");
-            return;
-        }
-
-        amapReceiver.setGetHcNext(GETHC_NEXT_TO_NAVI);
-
-        Map<String, Object> param = new HashMap<>();
-        param.put(EXTRA_TYPE, REQUEST_GETHC_EXTRA_TYPE_HOME);
-        sendReceiver(REQUEST_GETHC, param);
-    }
+//    public void getHome() {
+//        if (!AppUtil.isInstall(getContext(), AMAP_PACKAGE)) {
+//            ToastManage.self().show("没有安装高德地图");
+//            return;
+//        }
+//
+//        amapReceiver.setGetHcNext(GETHC_NEXT_TO_NAVI);
+//
+//        Map<String, Object> param = new HashMap<>();
+//        param.put(EXTRA_TYPE, REQUEST_GETHC_EXTRA_TYPE_HOME);
+//        sendReceiver(REQUEST_GETHC, param);
+//    }
 
     public void naviToComp() {
         if (!AppUtil.isInstall(getContext(), AMAP_PACKAGE)) {
@@ -173,20 +174,22 @@ public class AMapCarPlugin extends ContextEx {
         param.put(REQUEST_GO_HC_DEST, REQUEST_GO_HC_DEST_COMP);
         param.put("IS_START_NAVI", 0);
         sendReceiver(REQUEST_GO_HC, param);
+
+        sendReceiver(REQUEST_GO_BACK, null);
     }
 
-    public void getComp() {
-        if (!AppUtil.isInstall(getContext(), AMAP_PACKAGE)) {
-            Toast.makeText(getContext(), "没有安装高德地图", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        amapReceiver.setGetHcNext(GETHC_NEXT_TO_NAVI);
-
-        Map<String, Object> param = new HashMap<>();
-        param.put(EXTRA_TYPE, REQUEST_GETHC_EXTRA_TYPE_COMP);
-        sendReceiver(REQUEST_GETHC, param);
-    }
+//    public void getComp() {
+//        if (!AppUtil.isInstall(getContext(), AMAP_PACKAGE)) {
+//            Toast.makeText(getContext(), "没有安装高德地图", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//
+//        amapReceiver.setGetHcNext(GETHC_NEXT_TO_NAVI);
+//
+//        Map<String, Object> param = new HashMap<>();
+//        param.put(EXTRA_TYPE, REQUEST_GETHC_EXTRA_TYPE_COMP);
+//        sendReceiver(REQUEST_GETHC, param);
+//    }
 
     void toBack() {
         sendReceiver(REQUEST_GO_BACK, null);

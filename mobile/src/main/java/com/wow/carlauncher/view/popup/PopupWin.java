@@ -252,10 +252,10 @@ public class PopupWin {
                             context.startActivity(appIntent);
                             break;
                         case R.id.btn_go_home:
-                            AMapCarPlugin.self().getHome();
+                            AMapCarPlugin.self().naviToHome();
                             break;
                         case R.id.btn_go_company:
-                            AMapCarPlugin.self().getComp();
+                            AMapCarPlugin.self().naviToComp();
                             break;
                     }
                 }

@@ -33,6 +33,8 @@ import org.xutils.x;
 
 import java.util.List;
 
+import per.goweii.anypermission.AnyPermission;
+
 import static com.wow.carlauncher.common.CommonData.SDATA_LAUNCHER_ITEM_TRAN;
 
 /**
@@ -81,8 +83,8 @@ public class SHomeView extends BaseEXView {
                 } else {
                     BaiduVoiceAssistant.self().init(getContext());
                     x.task().postDelayed(() -> {
+                        ToastManage.self().show("正在开启语音助手,如果没有异常提示,则开启成功!");
                         BaiduVoiceAssistant.self().startWakeUp();
-                        ToastManage.self().show("语音助手已开启");
                     }, 1000);
                 }
             }

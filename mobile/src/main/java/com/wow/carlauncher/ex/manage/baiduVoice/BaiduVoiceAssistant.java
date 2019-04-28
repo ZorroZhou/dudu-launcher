@@ -18,6 +18,7 @@ import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.AppUtil;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.GsonUtil;
+import com.wow.carlauncher.ex.manage.appInfo.AppInfo;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.baiduVoice.bean.AsrEventParam;
 import com.wow.carlauncher.ex.manage.baiduVoice.bean.AsrEventPartial;
@@ -162,6 +163,9 @@ public class BaiduVoiceAssistant {
         Log.e(TAG, "eventListener.name: " + name);
         Log.e(TAG, "eventListener.params: " + params);
         switch (name) {
+            case SpeechConstant.CALLBACK_EVENT_WAKEUP_ERROR:
+                ToastManage.self().show("无法启动唤醒功能,可能是权限不足!");
+                break;
             case SpeechConstant.CALLBACK_EVENT_WAKEUP_SUCCESS:
                 startAsr();
                 break;
@@ -291,6 +295,14 @@ public class BaiduVoiceAssistant {
             } else {
                 AppInfoManage.self().openApp(AMAP_PACKAGE);
             }
+        } else {
+            for (AppInfo appInfo : AppInfoManage.self().getShowAppInfos()) {
+                if (appInfo.name.equals(name)) {
+                    AppInfoManage.self().openApp(appInfo.clazz);
+                    return;
+                }
+            }
+            Toast.makeText(context, "没有找到APP", Toast.LENGTH_SHORT).show();
         }
     }
 

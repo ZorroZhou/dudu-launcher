@@ -8,6 +8,7 @@ import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -15,6 +16,7 @@ import com.wow.carlauncher.CarLauncherApplication;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.util.SharedPreUtil;
+import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.baiduVoice.BaiduVoiceAssistant;
 import com.wow.carlauncher.ex.manage.baiduVoice.event.MVaAsrStateChange;
 import com.wow.carlauncher.ex.manage.baiduVoice.event.MVaNewWordFind;
@@ -27,7 +29,7 @@ import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
-public class VoiceWin {
+public class VoiceWin implements ThemeManage.OnThemeChangeListener {
     private static class SingletonHolder {
         @SuppressLint("StaticFieldLeak")
         private static VoiceWin instance = new VoiceWin();
@@ -84,6 +86,9 @@ public class VoiceWin {
 
         x.view().inject(this, consoleWin);
         EventBus.getDefault().register(this);
+
+        onThemeChanged(ThemeManage.self());
+        ThemeManage.self().registerThemeChangeListener(this);
     }
 
     public void show() {
@@ -101,6 +106,19 @@ public class VoiceWin {
             isShow = false;
         }
     }
+
+    @Override
+    public void onThemeChanged(ThemeManage manage) {
+        ll_win.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_l_item1_bg));
+        iv_icon.setImageResource(manage.getCurrentThemeRes(R.mipmap.app_voice));
+        tv_message.setTextColor(manage.getCurrentThemeColor(R.color.l_text1));
+    }
+
+    @ViewInject(R.id.iv_icon)
+    private ImageView iv_icon;
+
+    @ViewInject(R.id.ll_win)
+    private LinearLayout ll_win;
 
     @ViewInject(R.id.tv_message)
     private TextView tv_message;

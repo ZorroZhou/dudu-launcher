@@ -17,6 +17,7 @@
         app:layout_marginTopPercent="80%h">
 
         <ImageView
+            android:id="@+id/iv_icon"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:src="@mipmap/app_voice"

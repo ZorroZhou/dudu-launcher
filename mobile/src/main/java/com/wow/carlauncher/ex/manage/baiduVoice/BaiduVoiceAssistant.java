@@ -12,10 +12,12 @@ import com.baidu.speech.asr.SpeechConstant;
 import com.baidu.tts.client.SpeechSynthesizer;
 import com.baidu.tts.client.SpeechSynthesizerListener;
 import com.baidu.tts.client.TtsMode;
+import com.google.gson.Gson;
 import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.GsonUtil;
 import com.wow.carlauncher.ex.manage.baiduVoice.bean.AsrEventPartial;
+import com.wow.carlauncher.ex.manage.baiduVoice.bean.AsrLoadEngine;
 import com.wow.carlauncher.ex.manage.baiduVoice.bean.AsrStart;
 import com.wow.carlauncher.ex.manage.baiduVoice.bean.WakeUpStart;
 import com.wow.carlauncher.ex.manage.baiduVoice.event.MVaAsrStateChange;
@@ -26,11 +28,9 @@ import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import com.wow.carlauncher.view.activity.launcher.event.LItemToFristEvent;
 
 import org.greenrobot.eventbus.EventBus;
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.Map;
 
 import static com.wow.carlauncher.common.CommonData.TAG;
 
@@ -52,6 +52,7 @@ public class BaiduVoiceAssistant {
 
     private static final String BAIDU_MODEL_FILE = "bd_etts_common_speech_as_mand_eng_high_am_v3.0.0_20170516.dat";
     private static final String BAIDU_TEXT_FILE = "bd_etts_text.dat";
+    private static final String BAIDU_SPEECH_GRAMMAR = "baidu_speech_grammar.bsg";
 
     private static String APP_ID;
     private static String API_KEY;
@@ -69,6 +70,8 @@ public class BaiduVoiceAssistant {
 
     private KeyWord[] keyWords;
 
+    private AsrLoadEngine loadEngine;
+
     public void init(Context context) {
         this.context = context;
         if (init) {
@@ -85,6 +88,8 @@ public class BaiduVoiceAssistant {
             init = true;
         } catch (Exception e) {
             e.printStackTrace();
+            wakeup.send(SpeechConstant.WAKEUP_STOP, null, null, 0, 0);
+            stopAsr();
         }
     }
 
@@ -119,21 +124,22 @@ public class BaiduVoiceAssistant {
         synchronized (asrRunLock) {
             asrRun = true;
             wakeup.send(SpeechConstant.WAKEUP_STOP, null, null, 0, 0); //
-//            HashMap<String,Object> map = new HashMap<>();
-//            map.put(SpeechConstant.DECODER, 2);
-//// 0:在线 2.离在线融合(在线优先)
-//            map.put(SpeechConstant.ASR_OFFLINE_ENGINE_GRAMMER_FILE_PATH, "/sdcard/yourpath/baidu_speech_grammar.bsg");
-//            JSONObject json = new JSONObject();
-//            json.put("name", new JSONArray().put("王自强").put("叶问")).put("appname", new JSONArray().put("手百").put("度秘"));
-//            map.put(SpeechConstant.SLOT_DATA, json.toString());
-//            //map.put(SpeechConstant.ASR_OFFLINE_ENGINE_GRAMMER_FILE_PATH, "/sdcard/yourpath/baidu_speech_grammar.bsg");
-//            asr.send(SpeechConstant.ASR_KWS_LOAD_ENGINE,new JSONObject(map).toString());
             asr.send(SpeechConstant.ASR_START, GsonUtil.getGson().toJson(new AsrStart()), null, 0, 0);
+            if (loadEngine != null) {
+                asr.send(SpeechConstant.ASR_KWS_LOAD_ENGINE, GsonUtil.getGson().toJson(loadEngine), null, 0, 0);
+            }
             ss.speak("你好,请讲");
             EventBus.getDefault().post(new MVaAsrStateChange().setRun(true));
         }
     }
 
+    public void loadCode(Map<String, Object> code) {
+        try {
+            loadEngine = new AsrLoadEngine().setSlotData(GsonUtil.getGson().toJson(code)).setFilePath(FileUtil.copyAssetsFile(context, BAIDU_SPEECH_GRAMMAR));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public void stopAsr() {
         synchronized (asrRunLock) {

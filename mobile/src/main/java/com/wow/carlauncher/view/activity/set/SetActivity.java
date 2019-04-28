@@ -45,15 +45,15 @@ public class SetActivity extends BaseActivity {
     @ViewInject(R.id.ll_set)
     private FrameLayout ll_set;
 
-    @ViewInject(R.id.ll_user)
-    private LinearLayout ll_user;
-
+//    @ViewInject(R.id.ll_user)
+//    private LinearLayout ll_user;
+//
 
     @Override
     public void initView() {
         setTitle("设置");
         clickEvent(sg_theme);
-        ll_user.setOnClickListener(v -> ToastManage.self().show("还没开发呢"));
+        //ll_user.setOnClickListener(v -> ToastManage.self().show("还没开发呢"));
     }
 
     @Event(value = {R.id.sg_dev, R.id.sg_item, R.id.sg_theme, R.id.sg_home, R.id.sg_obd, R.id.sg_fk, R.id.sg_load_app, R.id.sg_popup, R.id.sg_system_set})

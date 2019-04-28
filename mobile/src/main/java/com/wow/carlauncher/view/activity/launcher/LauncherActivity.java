@@ -42,6 +42,7 @@ import com.wow.carlauncher.view.activity.launcher.view.LPageView;
 import com.wow.carlauncher.view.activity.launcher.view.LPagerPostion;
 import com.wow.carlauncher.view.activity.set.event.SEventSetHomeFull;
 import com.wow.carlauncher.view.popup.ConsoleWin;
+import com.wow.carlauncher.view.popup.VoiceWin;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -125,6 +126,9 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
         ThemeManage.self().registerThemeChangeListener(this);
         ThemeManage.self().refreshTheme();
         x.task().postDelayed(this::requestRuntime, 1000);
+
+
+        VoiceWin.self().show();
     }
 
     public void initView() {

@@ -33,6 +33,7 @@ import com.wow.carlauncher.repertory.web.mobile.service.CommonApi;
 import com.wow.carlauncher.view.popup.ConsoleWin;
 import com.wow.carlauncher.view.popup.NaviWin;
 import com.wow.carlauncher.view.popup.PopupWin;
+import com.wow.carlauncher.view.popup.VoiceWin;
 
 import org.xutils.x;
 
@@ -117,6 +118,8 @@ public class AppContext {
         ConsoleWin.self().init(app);
         //导航窗口
         NaviWin.self().init(app);
+        //语音窗口
+        VoiceWin.self().init(app);
 
         int size = SharedPreUtil.getInteger(CommonData.SDATA_POPUP_SIZE, 1);
         PopupWin.self().setRank(size + 1);

@@ -5,31 +5,43 @@
     android:id="@+id/base"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
+    android:gravity="left"
     tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry,NestedWeights">
 
-    <LinearLayout
-        android:layout_width="0dp"
+    <com.zhy.android.percent.support.PercentLinearLayout
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@drawable/n_l_item1_bg_cb"
-        android:padding="5dp"
-        android:visibility="gone"
-        app:layout_heightPercent="60%h"
-        app:layout_widthPercent="60%h">
+        android:background="@drawable/n_l_item1_bg"
+        app:layout_heightPercent="20%h"
+        app:layout_marginTopPercent="80%h">
 
         <ImageView
-            android:id="@+id/iv_info"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:src="@mipmap/app_voice"
+            app:layout_heightPercent="80%h"
+            app:layout_marginPercent="10%h"
+            app:layout_widthPercent="80%h" />
+
+        <TextView
+            android:id="@+id/tv_message"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:background="#ff525252"
-            android:scaleType="centerCrop" />
-    </LinearLayout>
+            android:layout_weight="1"
+            app:layout_marginPercent="10%h" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="确认"
+            app:layout_marginPercent="10%h" />
 
-    <FrameLayout
-        android:id="@+id/fl_plugin"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_heightPercent="60%w"
-        app:layout_widthPercent="60%w" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="取消"
+            app:layout_marginPercent="10%h" />
+    </com.zhy.android.percent.support.PercentLinearLayout>
 </com.zhy.android.percent.support.PercentLinearLayout>

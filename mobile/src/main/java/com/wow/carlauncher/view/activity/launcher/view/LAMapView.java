@@ -404,6 +404,7 @@ public class LAMapView extends BaseEXView {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final PAmapLukuangInfo event) {
         Lukuang lukuang = event.getLukuang();
+        System.out.println("lukuang!!!!!!!!");
         if (lukuangView != null) {
             if (lukuang.isTmc_segment_enabled()) {
                 lukuangView.setVisibility(VISIBLE);
@@ -418,7 +419,6 @@ public class LAMapView extends BaseEXView {
             } else {
                 lukuangView.setVisibility(GONE);
             }
-
         }
     }
 }

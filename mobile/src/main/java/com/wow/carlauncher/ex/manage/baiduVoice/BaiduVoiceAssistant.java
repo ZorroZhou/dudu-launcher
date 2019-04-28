@@ -2,8 +2,6 @@ package com.wow.carlauncher.ex.manage.baiduVoice;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 
 import com.baidu.speech.EventListener;
@@ -13,16 +11,11 @@ import com.baidu.speech.asr.SpeechConstant;
 import com.wow.carlauncher.common.util.GsonUtil;
 import com.wow.carlauncher.ex.manage.baiduVoice.bean.AsrPartial;
 import com.wow.carlauncher.ex.manage.baiduVoice.bean.AsrStart;
-import com.wow.carlauncher.ex.manage.baiduVoice.bean.AutoCheck;
 import com.wow.carlauncher.ex.manage.baiduVoice.bean.WakeUpStart;
 import com.wow.carlauncher.ex.manage.baiduVoice.event.MVaNewWordFind;
-import com.wow.carlauncher.view.activity.VoiceAssistantActivity;
+import com.wow.carlauncher.view.popup.VoiceWin;
 
 import org.greenrobot.eventbus.EventBus;
-import org.json.JSONObject;
-
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 public class BaiduVoiceAssistant implements EventListener {
     private static BaiduVoiceAssistant self;
@@ -92,9 +85,7 @@ public class BaiduVoiceAssistant implements EventListener {
     }
 
     private void openAssistant() {
-        Intent intent = new Intent(context, VoiceAssistantActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
+        VoiceWin.self().show();
     }
 
     private void checkAsrPartial(String param) {

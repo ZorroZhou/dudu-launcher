@@ -84,7 +84,6 @@ public class SHomeView extends BaseEXView {
                         BaiduVoiceAssistant.self().startWakeUp();
                         ToastManage.self().show("语音助手已开启");
                     }, 1000);
-
                 }
             }
         });

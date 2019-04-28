@@ -71,7 +71,7 @@
                     android:id="@+id/sg_home"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:titleEx="首页标签"
+                    app:titleEx="首页"
                     app:type="buttonB" />
 
                 <View style="@style/Interval" />

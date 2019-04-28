@@ -67,7 +67,7 @@
             android:clearTaskOnLaunch="true"
             android:configChanges="keyboardHidden|orientation|screenSize|locale|screenLayout|mcc|mnc"
             android:excludeFromRecents="true"
-            android:launchMode="singleTask"
+            android:launchMode="singleInstance"
             android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -98,6 +98,9 @@
             android:name=".view.activity.CarInfoActivity"
             android:screenOrientation="landscape" />
         <activity android:name=".view.activity.BluetoothMusicActivity" />
+        <activity
+            android:name=".view.activity.VoiceAssistantActivity"
+            android:launchMode="singleInstance" />
 
         <receiver
             android:name=".receiver.BootReceiver"

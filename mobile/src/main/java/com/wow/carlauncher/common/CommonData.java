@@ -91,7 +91,7 @@ public class CommonData {
     public static final int REQUEST_SELECT_AMAP_PLUGIN = 10004;
 
 
-    //-------------------------------Intent传输数据时使用的mark-start-----------------------------------
+    //-------------------------------Intent传输数据时使用的mark-startWakeUp-----------------------------------
     //应用包名
     public static final String IDATA_APP_PACKAGE_NAME = "IDATA_APP_PACKAGE_NAME";
     //应用标记
@@ -99,11 +99,11 @@ public class CommonData {
     //-------------------------------Intent传输数据时使用的mark-end-----------------------------------
 
 
-    //-------------------------------本地缓存使用的mark-start-----------------------------------
+    //-------------------------------本地缓存使用的mark-startWakeUp-----------------------------------
     //音乐播放器的控制器
     public static final String SDATA_MUSIC_CONTROLLER = "SDATA_MUSIC_CONTROLLER";
 
-    //-------------------------------方控设置相关-start-----------------------------------
+    //-------------------------------方控设置相关-startWakeUp-----------------------------------
     //方控的控制器
     public static final String SDATA_FANGKONG_CONTROLLER = "SDATA_FANGKONG_CONTROLLER";
     //方控的名称
@@ -112,7 +112,7 @@ public class CommonData {
     public static final String SDATA_FANGKONG_ADDRESS = "SDATA_FANGKONG_ADDRESS";
     //-------------------------------方控设置相关-end-----------------------------------
 
-    //-------------------------------OBD设置相关-start-----------------------------------
+    //-------------------------------OBD设置相关-startWakeUp-----------------------------------
     //OBD的控制器
     public static final String SDATA_OBD_CONTROLLER = "SDATA_OBD_CONTROLLER";
     //OBD的名称
@@ -190,6 +190,6 @@ public class CommonData {
 
 
     //是否允许悬浮框展示
-    public static final String SDATA_SERVER = "SDATA_SERVER";
+    public static final String SDATA_HOME_FULL = "SDATA_HOME_FULL";
 
 }

@@ -21,6 +21,8 @@ import com.wow.carlauncher.view.activity.launcher.event.LItemRefreshEvent;
 import com.wow.carlauncher.view.activity.launcher.event.LPageTransformerChangeEvent;
 import com.wow.carlauncher.view.activity.set.LauncherItemAdapter;
 import com.wow.carlauncher.view.activity.set.SetEnumOnClickListener;
+import com.wow.carlauncher.view.activity.set.SetSwitchOnClickListener;
+import com.wow.carlauncher.view.activity.set.event.SEventSetHomeFull;
 import com.wow.carlauncher.view.base.BaseEXView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -61,9 +63,20 @@ public class SHomeView extends BaseEXView {
     @ViewInject(R.id.sv_item_tran)
     private SetView sv_item_tran;
 
-    @Override
+    @ViewInject(R.id.sv_home_full)
+    private SetView sv_home_full;
+
     protected void initView() {
 
+        sv_home_full.setOnValueChangeListener(new SetSwitchOnClickListener(CommonData.SDATA_HOME_FULL) {
+            @Override
+            public void newValue(boolean value) {
+                new AlertDialog.Builder(getContext()).setTitle("确认").setNegativeButton("下次重启", null).setPositiveButton("立即生效", (dialog, which) -> {
+                    EventBus.getDefault().post(new SEventSetHomeFull());
+                }).setMessage("是否立即生效,立即生效首页将会重新加载").show();
+            }
+        });
+        sv_home_full.setChecked(SharedPreUtil.getBoolean(CommonData.SDATA_HOME_FULL, true));
 
         sv_item_tran.setSummary(ItemTransformer.getById(SharedPreUtil.getInteger(SDATA_LAUNCHER_ITEM_TRAN, ItemTransformer.None.getId())).getName());
         sv_item_tran.setOnClickListener(new SetEnumOnClickListener<ItemTransformer>(getContext(), CommonData.LAUNCHER_ITEMS_TRANS) {

@@ -20,6 +20,8 @@ import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.ViewPagerOnPageChangeListener;
 import com.wow.carlauncher.common.util.SharedPreUtil;
+import com.wow.carlauncher.common.util.ViewUtils;
+import com.wow.carlauncher.ex.manage.baiduVoice.BaiduVoiceAssistant;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.appInfo.event.MAppInfoRefreshShowEvent;
@@ -38,6 +40,7 @@ import com.wow.carlauncher.view.activity.launcher.event.LPageTransformerChangeEv
 import com.wow.carlauncher.view.activity.launcher.view.LAppsView;
 import com.wow.carlauncher.view.activity.launcher.view.LPageView;
 import com.wow.carlauncher.view.activity.launcher.view.LPagerPostion;
+import com.wow.carlauncher.view.activity.set.event.SEventSetHomeFull;
 import com.wow.carlauncher.view.popup.ConsoleWin;
 
 import org.greenrobot.eventbus.EventBus;
@@ -65,6 +68,7 @@ import static com.wow.carlauncher.common.CommonData.SDATA_DOCK1_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK2_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK3_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK4_CLASS;
+import static com.wow.carlauncher.common.CommonData.SDATA_HOME_FULL;
 import static com.wow.carlauncher.common.CommonData.SDATA_LAUNCHER_ITEM_TRAN;
 import static com.wow.carlauncher.common.CommonData.TAG;
 import static com.wow.carlauncher.ex.plugin.fk.FangkongProtocolEnum.YLFK;
@@ -106,33 +110,21 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
         }
         old = this;
 
+        if (SharedPreUtil.getBoolean(SDATA_HOME_FULL, true)) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        }
+
         //超级大坑,必去全局设置才能用
         ThemeManage.self().refreshTheme();
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
         registerReceiver(homeReceiver, intentFilter);
         initView();
 
-        //主题处理
         onThemeChanged(ThemeManage.self());
         ThemeManage.self().registerThemeChangeListener(this);
         ThemeManage.self().refreshTheme();
-
-
-//        BaiduVoiceAssistant.self().init(this);
-//        x.task().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                new Thread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        BaiduVoiceAssistant.self().start();
-//                    }
-//                }).start();
-//            }
-//        }, 1000);
+        x.task().postDelayed(this::requestRuntime, 1000);
     }
 
     public void initView() {
@@ -151,7 +143,6 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
         initItem();
         initApps();
         refreshViewPager();
-        x.task().postDelayed(this::requestRuntime, 2000);
     }
 
     private LPageView[] itemPager;
@@ -336,6 +327,12 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
         unregisterReceiver(homeReceiver);
         EventBus.getDefault().unregister(this);
         ThemeManage.self().unregisterThemeChangeListener(this);
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(final SEventSetHomeFull event) {
+        this.recreate();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

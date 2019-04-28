@@ -12,6 +12,7 @@ import com.wow.carlauncher.ex.manage.AppWidgetManage;
 import com.wow.carlauncher.ex.manage.ImageManage;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
+import com.wow.carlauncher.ex.manage.baiduVoice.BaiduVoiceAssistant;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
 import com.wow.carlauncher.ex.manage.location.LocationManage;
 import com.wow.carlauncher.ex.manage.time.TimeManage;
@@ -153,6 +154,19 @@ public class AppContext {
             }
         });
         Log.e(TAG, "APP初始化完毕 ");
+
+        BaiduVoiceAssistant.self().init(app);
+        x.task().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        BaiduVoiceAssistant.self().startWakeUp();
+                    }
+                }).start();
+            }
+        }, 2000);
     }
 
     public Application getApplication() {

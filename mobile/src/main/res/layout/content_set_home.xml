@@ -52,4 +52,16 @@
         st:titleEx="首页插件数量"
         st:type="buttonB" />
 
+    <View style="@style/Interval" />
+
+    <com.wow.carlauncher.common.view.SetView
+        android:id="@+id/sv_home_full"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        st:summary="@string/set_yes"
+        st:summary2="@string/set_no"
+        st:titleEx="首页全屏"
+        st:type="switchB" />
+
+    <View style="@style/Interval" />
 </LinearLayout>

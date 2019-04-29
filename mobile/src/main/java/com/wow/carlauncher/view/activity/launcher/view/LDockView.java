@@ -2,6 +2,7 @@ package com.wow.carlauncher.view.activity.launcher.view;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -22,6 +23,7 @@ import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.appInfo.event.MAppInfoRefreshShowEvent;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.view.activity.launcher.event.LDockLabelShowChangeEvent;
+import com.wow.carlauncher.view.adapter.SelectAppAdapter;
 import com.wow.carlauncher.view.base.BaseEXView;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -213,26 +215,15 @@ public class LDockView extends BaseEXView {
     }
 
     private void showSelectDialog(String key) {
-        String selectapp = SharedPreUtil.getString(key);
         final List<AppInfo> appInfos = new ArrayList<>(AppInfoManage.self().getAllAppInfos());
-        String[] items = new String[appInfos.size()];
-        int select = -1;
-        for (int i = 0; i < items.length; i++) {
-            items[i] = appInfos.get(i).name + "(" + appInfos.get(i).clazz + ")";
-            if (appInfos.get(i).clazz.equals(selectapp)) {
-                select = i;
-            }
-        }
-        Log.e(TAG, "onClick: " + items.length + " " + select);
-        final ThreadObj<Integer> obj = new ThreadObj<>(select);
+        SelectAppAdapter adapter = new SelectAppAdapter(getContext());
+        adapter.addItems(appInfos);
         new AlertDialog.Builder(getContext()).setTitle("请选择APP")
-                .setNegativeButton("取消", null)
-                .setPositiveButton("确定", (dialog12, which) -> {
-                    AppInfo appInfo = appInfos.get(obj.getObj());
+                .setAdapter(adapter, (dialog, which) -> {
+                    AppInfo appInfo = appInfos.get(which);
                     SharedPreUtil.saveString(key, appInfo.appMark + CommonData.CONSTANT_APP_PACKAGE_SEPARATE + appInfo.clazz);
                     AppInfoManage.self().refreshShowApp();
-                })
-                .setSingleChoiceItems(items, select, (dialog1, which) -> obj.setObj(which)).show();
+                }).show();
 
     }
 

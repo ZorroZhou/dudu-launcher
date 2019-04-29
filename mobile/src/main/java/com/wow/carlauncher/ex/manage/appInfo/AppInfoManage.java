@@ -154,10 +154,18 @@ public class AppInfoManage {
             } else {
                 switch (info.clazz) {
                     case INTERNAL_APP_DRIVING: {
-                        return ContextCompat.getDrawable(context, ThemeManage.self().getCurrentThemeRes(R.mipmap.app_icon_obd));
+                        if (withTheme) {
+                            return ContextCompat.getDrawable(context, ThemeManage.self().getCurrentThemeRes(R.mipmap.app_icon_obd));
+                        } else {
+                            return ContextCompat.getDrawable(context, R.mipmap.app_icon_obd);
+                        }
                     }
                     case INTERNAL_APP_SETTING: {
-                        return ContextCompat.getDrawable(context, ThemeManage.self().getCurrentThemeRes(R.mipmap.app_icon_set));
+                        if (withTheme) {
+                            return ContextCompat.getDrawable(context, ThemeManage.self().getCurrentThemeRes(R.mipmap.app_icon_set));
+                        } else {
+                            return ContextCompat.getDrawable(context, R.mipmap.app_icon_set);
+                        }
                     }
                 }
             }

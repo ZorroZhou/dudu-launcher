@@ -88,6 +88,7 @@ public class LDockView extends BaseEXView {
         }, R.color.l_text1);
 
         loadDock(false);
+        Log.e(TAG + getClass().getSimpleName(), "changedTheme: ");
     }
 
     private void openDock(String clazz) {
@@ -138,6 +139,7 @@ public class LDockView extends BaseEXView {
         }
 
         dockLabelShow(SharedPreUtil.getBoolean(CommonData.SDATA_LAUNCHER_DOCK_LABEL_SHOW, true));
+        Log.e(TAG + getClass().getSimpleName(), "loadDock: ");
     }
 
     @Event(value = {R.id.ll_dock1, R.id.ll_dock2, R.id.ll_dock3, R.id.ll_dock4})

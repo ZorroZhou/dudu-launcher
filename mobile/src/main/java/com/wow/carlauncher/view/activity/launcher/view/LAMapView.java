@@ -128,8 +128,14 @@ public class LAMapView extends BaseEXView {
 
             line7.setVisibility(VISIBLE);
         }
+
+        Log.e(TAG + getClass().getSimpleName(), "changedTheme: ");
     }
 
+    @Override
+    protected void initView() {
+        Log.e(TAG + getClass().getSimpleName(), "initView: ");
+    }
 
     private boolean mute = false;
 

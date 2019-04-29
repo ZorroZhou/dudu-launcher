@@ -1,6 +1,7 @@
 package com.wow.carlauncher.ex.plugin.console;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.ContextEx;
@@ -12,6 +13,7 @@ import com.wow.carlauncher.ex.plugin.console.impl.SysConsoleImpl;
 import org.greenrobot.eventbus.EventBus;
 
 import static com.wow.carlauncher.common.CommonData.SDATA_CONSOLE_MARK;
+import static com.wow.carlauncher.common.CommonData.TAG;
 
 /**
  * Created by 10124 on 2017/11/9.
@@ -33,6 +35,7 @@ public class ConsolePlugin extends ContextEx {
     public void init(Context context) {
         setContext(context);
         loadConsole();
+        Log.e(TAG + getClass().getSimpleName(), "init ");
     }
 
     private ConsoleProtoclListener consoleListener = new ConsoleProtoclListener() {

@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,7 @@ import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static com.wow.carlauncher.common.CommonData.TAG;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.BLACK;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.WHITE;
 import static com.wow.carlauncher.view.activity.launcher.view.LShadowView.SizeEnum.FIVE;
@@ -110,6 +112,8 @@ public class LTaiyaView extends BaseEXView {
             fl_rb_root.addView(fl_rb, params);
             fl_lt_root.addView(fl_lt, params);
         }
+
+        Log.e(TAG + getClass().getSimpleName(), "changedTheme: ");
     }
 
     @Event(value = {R.id.rl_base})
@@ -192,6 +196,7 @@ public class LTaiyaView extends BaseEXView {
     @Override
     protected void initView() {
         onEvent(ObdPlugin.self().getCurrentPObdEventCarTp());
+        Log.e(TAG + getClass().getSimpleName(), "initView: ");
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

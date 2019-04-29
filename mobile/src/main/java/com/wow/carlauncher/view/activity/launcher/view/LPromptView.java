@@ -7,6 +7,7 @@ import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -43,6 +44,7 @@ import java.util.Date;
 
 import static com.inuker.bluetooth.library.Constants.STATUS_DEVICE_CONNECTED;
 import static com.wow.carlauncher.common.CommonData.MINUTE_MILL;
+import static com.wow.carlauncher.common.CommonData.TAG;
 
 /**
  * Created by 10124 on 2018/4/22.
@@ -75,6 +77,11 @@ public class LPromptView extends BaseEXView {
         iv_fk.setImageResource(manage.getCurrentThemeRes(R.mipmap.ic_l_fk));
         iv_wifi.setImageResource(manage.getCurrentThemeRes(R.mipmap.ic_l_wifi));
         iv_set.setImageResource(manage.getCurrentThemeRes(R.mipmap.ic_l_set));
+        Log.e(TAG + getClass().getSimpleName(), "changedTheme: ");
+    }
+    @Override
+    protected void initView() {
+        Log.e(TAG + getClass().getSimpleName(), "initView: ");
     }
 
     @ViewInject(R.id.fl_base)
@@ -124,18 +131,6 @@ public class LPromptView extends BaseEXView {
             }
             case R.id.tv_time: {
                 EventBus.getDefault().post(new LItemToFristEvent());
-//                int popup = SharedPreUtil.getInteger(APP_WIDGET_AMAP_PLUGIN, 0);
-//                if (popup != 0) {
-//                    final View amapView = AppWidgetManage.self().getWidgetById(popup);
-//                    Log.e(TAG, "clickEvent: " + amapView.getId());
-//                    if (amapView instanceof ViewGroup) {
-//                        View vv = getViewByIds(amapView, new Object[]{"widget_container", "daohang_container", 0, "gongban_daohang_right_blank_container", "daohang_widget_image"});
-//                        ((ViewGroup) vv.getParent()).removeView(vv);
-//                        new AlertDialog.Builder(getContext())
-//                                .setTitle("测试")
-//                                .setPositiveButton("确定", null).setView(vv).show();
-//                    }
-//                }
                 break;
             }
         }

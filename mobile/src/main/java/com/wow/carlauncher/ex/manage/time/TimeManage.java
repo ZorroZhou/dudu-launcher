@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 
+import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.ex.ContextEx;
 import com.wow.carlauncher.ex.manage.time.event.MTime30MinuteEvent;
 import com.wow.carlauncher.ex.manage.time.event.MTimeHalfSecondEvent;
@@ -14,6 +15,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ScheduledFuture;
 
 import static com.wow.carlauncher.common.CommonData.TAG;
 
@@ -38,6 +40,7 @@ public class TimeManage extends ContextEx {
     public void init(Context context) {
         setContext(context);
         startTimer();
+        Log.e(TAG + getClass().getSimpleName(), "init ");
     }
 
     private final static int ZHOUQI = 500;
@@ -51,13 +54,12 @@ public class TimeManage extends ContextEx {
     private final static int MMINUTE30 = 30 * 60 * 1000;
     private final static int MINUTE30 = MMINUTE30 / ZHOUQI;
 
-    private Timer timer;
+    private ScheduledFuture<?> timer;
     private long timeMark = 0L;
 
     private void startTimer() {
         stopTimer();
-        timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
+        timer = TaskExecutor.self().repeatRun(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -102,8 +104,7 @@ public class TimeManage extends ContextEx {
 
     private void stopTimer() {
         if (timer != null) {
-            Log.e(TAG, "stopTimer: ");
-            timer.cancel();
+            timer.cancel(true);
             timer = null;
         }
     }

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ import java.util.Map;
 import static com.wow.carlauncher.common.CommonData.SDATA_APP_THEME;
 import static com.wow.carlauncher.common.CommonData.SDATA_APP_THEME_DAY;
 import static com.wow.carlauncher.common.CommonData.SDATA_APP_THEME_NIGHT;
+import static com.wow.carlauncher.common.CommonData.TAG;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.BLACK;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.CBLACK;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.WHITE;
@@ -55,6 +57,8 @@ public class ThemeManage {
     public void init(Context context) {
         this.context = context;
         EventBus.getDefault().register(this);
+
+        Log.e(TAG + getClass().getSimpleName(), "init ");
     }
 
     private double lat = 36.0577034969, lon = 120.3210639954;//这是青岛的某个坐标

@@ -25,11 +25,6 @@ import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.repertory.db.entiy.CoverTemp;
 import com.wow.carlauncher.repertory.db.manage.DatabaseInfo;
 import com.wow.carlauncher.repertory.db.manage.DatabaseManage;
-import com.wow.carlauncher.repertory.web.mobile.frame.ResultHandle;
-import com.wow.carlauncher.repertory.web.mobile.frame.WebApiInfo;
-import com.wow.carlauncher.repertory.web.mobile.frame.WebApiManage;
-import com.wow.carlauncher.repertory.web.mobile.packet.Response;
-import com.wow.carlauncher.repertory.web.mobile.service.CommonApi;
 import com.wow.carlauncher.view.popup.ConsoleWin;
 import com.wow.carlauncher.view.popup.NaviWin;
 import com.wow.carlauncher.view.popup.PopupWin;
@@ -42,9 +37,7 @@ import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 
 import static com.wow.carlauncher.common.CommonData.TAG;
 
@@ -78,15 +71,12 @@ public class AppContext {
     public void init(CarLauncherApplication app) {
         this.application = app;
         this.startTime = System.currentTimeMillis();
-
         x.Ext.init(app);
         TaskExecutor.self().init();
 
         SharedPreUtil.init(app);
 
         AppWidgetManage.self().init(app);
-
-        WebApiManage.init(app, getWebServiceInfo());
 
         DatabaseManage.init(app, getDatabaseInfo());
         //图片加载工具
@@ -227,35 +217,6 @@ public class AppContext {
             @Override
             public Class<?>[] getBeanClass() {
                 return new Class[]{CoverTemp.class};
-            }
-        };
-    }
-
-    private WebApiInfo getWebServiceInfo() {
-        return new WebApiInfo() {
-            @Override
-            public Class<?>[] getInterFaceClass() {
-                return new Class[]{
-                        CommonApi.class
-                };
-            }
-
-            @Override
-            public String getServerUrl() {
-                return "http://192.168.31.158:8100";
-            }
-
-            @Override
-            public ResultHandle getDefaultResultHandle() {
-                return new ResultHandle() {
-                    @Override
-                    public <T> String handle(Response<T> t) {
-                        if (t.getCode() == 0) {
-                            return null;
-                        }
-                        return t.getMsg();
-                    }
-                };
             }
         };
     }

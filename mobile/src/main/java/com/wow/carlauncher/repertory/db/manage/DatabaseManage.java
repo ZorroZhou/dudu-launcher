@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static com.wow.carlauncher.common.CommonData.TAG;
+
 @SuppressWarnings("unchecked,unused")
 public class DatabaseManage {
     private final static String TAG = "frame.DatabaseManage";
@@ -32,6 +34,8 @@ public class DatabaseManage {
             DatabaseManage.context = context;
             DatabaseManage.dbHelper = new DatabaseHelper(DatabaseManage.context, info);
         }
+
+        Log.e(TAG + DatabaseManage.class.getSimpleName(), "init ");
     }
 
     private static boolean inited = false;

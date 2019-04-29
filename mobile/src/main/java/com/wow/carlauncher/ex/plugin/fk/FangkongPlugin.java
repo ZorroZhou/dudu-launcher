@@ -66,6 +66,7 @@ public class FangkongPlugin extends ContextEx {
         connect();
 
         EventBus.getDefault().register(this);
+        Log.e(TAG + getClass().getSimpleName(), "init ");
     }
 
     private FangkongProtocol fangkongProtocol;

@@ -34,6 +34,7 @@ import static com.inuker.bluetooth.library.Constants.REQUEST_SUCCESS;
 import static com.inuker.bluetooth.library.Constants.STATUS_CONNECTED;
 import static com.inuker.bluetooth.library.Constants.STATUS_DEVICE_CONNECTED;
 import static com.wow.carlauncher.common.CommonData.SDATA_OBD_CONTROLLER;
+import static com.wow.carlauncher.common.CommonData.TAG;
 
 /**
  * Created by 10124 on 2017/11/4.
@@ -159,6 +160,7 @@ public class ObdPlugin extends ContextEx {
         connect();
 
         EventBus.getDefault().register(this);
+        Log.e(TAG + getClass().getSimpleName(), "init ");
     }
 
     private boolean connecting = false;

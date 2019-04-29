@@ -19,6 +19,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.wow.carlauncher.common.CommonData.TAG;
 import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.AMAP_PACKAGE;
 import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.EXTRA_TYPE;
 import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.KEY_TYPE;
@@ -70,7 +71,7 @@ public class AMapCarPlugin extends ContextEx {
 
         EventBus.getDefault().register(this);
 
-
+        Log.e(TAG + getClass().getSimpleName(), "init ");
         // final View launcherWidgetView = AppWidgetManage.self().getWidgetById(launcher);
     }
 

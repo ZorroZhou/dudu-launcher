@@ -35,6 +35,7 @@ public class BleManage extends ContextEx {
     public void init(Context context) {
         setContext(context);
         bluetoothClient = new BluetoothClient(context);
+        Log.e(TAG + getClass().getSimpleName(), "init ");
     }
 
     private BluetoothClient bluetoothClient;

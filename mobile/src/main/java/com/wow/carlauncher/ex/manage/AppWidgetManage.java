@@ -4,9 +4,13 @@ import android.appwidget.AppWidgetHost;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProviderInfo;
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 
+import com.wow.carlauncher.common.util.SharedPreUtil;
+
 import static com.wow.carlauncher.common.CommonData.APP_WIDGET_HOST_ID;
+import static com.wow.carlauncher.common.CommonData.TAG;
 
 public class AppWidgetManage {
     private static AppWidgetManage self;
@@ -30,6 +34,9 @@ public class AppWidgetManage {
         appWidgetHost = new AppWidgetHost(context, APP_WIDGET_HOST_ID);
         appWidgetManager = AppWidgetManager.getInstance(context);
         appWidgetHost.startListening();
+
+
+        Log.e(TAG + getClass().getSimpleName(), "init ");
     }
 
     public View getWidgetById(int id) {

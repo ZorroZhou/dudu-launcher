@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,7 @@ import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static com.wow.carlauncher.common.CommonData.TAG;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.BLACK;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.WHITE;
 import static com.wow.carlauncher.view.activity.launcher.view.LShadowView.SizeEnum.FIVE;
@@ -120,8 +122,12 @@ public class LObdView extends BaseEXView {
             fl_cell3_root.addView(ll_cell3, params);
             fl_cell4_root.addView(ll_cell4, params);
         }
+        Log.e(TAG + getClass().getSimpleName(), "changedTheme: ");
     }
-
+    @Override
+    protected void initView() {
+        Log.e(TAG + getClass().getSimpleName(), "initView: ");
+    }
 
     @Event(value = {R.id.fl_base})
     private void clickEvent(View view) {

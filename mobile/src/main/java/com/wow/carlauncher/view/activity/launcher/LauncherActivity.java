@@ -105,6 +105,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.e(TAG + getClass().getSimpleName(), "onCreate:start ");
         //防止初始化两次
         if (old != null) {
             old.finish();
@@ -126,6 +127,8 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
         ThemeManage.self().registerThemeChangeListener(this);
         ThemeManage.self().refreshTheme();
         x.task().postDelayed(this::requestRuntime, 1000);
+
+        Log.e(TAG + getClass().getSimpleName(), "onCreate:end ");
     }
 
     public void initView() {
@@ -242,6 +245,8 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
     public void onThemeChanged(ThemeManage manage) {
         fl_bg.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_desk_bg));
         line1.setBackgroundResource(manage.getCurrentThemeRes(R.color.line));
+
+        Log.e(TAG + getClass().getSimpleName(), "onThemeChanged ");
     }
 
     @Event(value = {R.id.ll_dock1, R.id.ll_dock2, R.id.ll_dock3, R.id.ll_dock4}, type = View.OnLongClickListener.class)

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.PixelFormat;
 import android.os.Build;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
 import static com.wow.carlauncher.common.CommonData.APP_WIDGET_AMAP_PLUGIN;
+import static com.wow.carlauncher.common.CommonData.TAG;
 import static com.wow.carlauncher.common.util.ViewUtils.getViewByIds;
 
 public class NaviWin {
@@ -91,6 +93,8 @@ public class NaviWin {
         EventBus.getDefault().register(this);
 
         loadPlugin();
+
+        Log.e(TAG + getClass().getSimpleName(), "init ");
     }
 
     public void show() {

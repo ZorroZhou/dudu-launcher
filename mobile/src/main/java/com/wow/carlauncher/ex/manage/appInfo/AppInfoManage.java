@@ -35,6 +35,7 @@ import static com.wow.carlauncher.common.CommonData.SDATA_DOCK1_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK2_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK3_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK4_CLASS;
+import static com.wow.carlauncher.common.CommonData.TAG;
 import static com.wow.carlauncher.ex.manage.appInfo.AppInfo.INTERNAL_APP_DRIVING;
 import static com.wow.carlauncher.ex.manage.appInfo.AppInfo.INTERNAL_APP_SETTING;
 import static com.wow.carlauncher.ex.manage.appInfo.AppInfo.MARK_INTERNAL_APP;
@@ -103,6 +104,8 @@ public class AppInfoManage {
         internalAppsInfoMap.put(INTERNAL_APP_DRIVING, new InternalAppInfo("驾驶", INTERNAL_APP_DRIVING, MARK_INTERNAL_APP, DrivingActivity.class));
         internalAppsInfoMap.put(INTERNAL_APP_SETTING, new InternalAppInfo("桌面设置", INTERNAL_APP_SETTING, MARK_INTERNAL_APP, SetActivity.class));
         refreshAppInfo();
+
+        Log.e(TAG + getClass().getSimpleName(), "init ");
     }
 
     private AppInfo getAppInfo(String app) {

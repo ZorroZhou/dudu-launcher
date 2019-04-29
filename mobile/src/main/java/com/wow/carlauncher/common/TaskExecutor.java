@@ -1,5 +1,7 @@
 package com.wow.carlauncher.common;
 
+import android.util.Log;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ScheduledExecutorService;
@@ -7,6 +9,8 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+
+import static com.wow.carlauncher.common.CommonData.TAG;
 
 /**
  * 统一任务调度
@@ -30,6 +34,7 @@ public class TaskExecutor {
     public void init() {
         scheduled = new ScheduledThreadPoolExecutor(5);
         task = new ThreadPoolExecutor(5, 5, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
+        Log.e(TAG + getClass().getSimpleName(), "init ");
     }
 
 

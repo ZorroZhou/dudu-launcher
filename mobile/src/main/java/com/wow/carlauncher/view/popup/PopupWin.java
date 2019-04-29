@@ -131,6 +131,8 @@ public class PopupWin {
 
         popupWindow.findViewById(R.id.ll_yidong).setOnTouchListener(moveTouchListener);
         popupWindow.findViewById(R.id.ll_xunhuan).setOnClickListener(onClickListener);
+
+        Log.e(TAG + getClass().getSimpleName(), "init ");
     }
 
 

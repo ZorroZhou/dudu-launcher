@@ -3,6 +3,7 @@ package com.wow.carlauncher.ex.manage;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
@@ -12,6 +13,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
+
+import static com.wow.carlauncher.common.CommonData.TAG;
 
 public class ImageManage {
     private static class SingletonHolder {
@@ -59,6 +62,8 @@ public class ImageManage {
                 .writeDebugLogs()// Remove for release app
                 .build();
         ImageLoader.getInstance().init(config);// 初始化
+
+        Log.e(TAG + getClass().getSimpleName(), "init ");
     }
 
     public DisplayImageOptions buildDisplayOption(int resId) {

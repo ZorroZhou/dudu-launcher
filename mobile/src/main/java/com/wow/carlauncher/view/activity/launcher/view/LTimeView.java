@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,7 @@ import java.util.Date;
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static com.wow.carlauncher.common.CommonData.DAY_MILL;
 import static com.wow.carlauncher.common.CommonData.MINUTE_MILL;
+import static com.wow.carlauncher.common.CommonData.TAG;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.BLACK;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.WHITE;
 import static com.wow.carlauncher.view.activity.launcher.view.LShadowView.SizeEnum.FIVE;
@@ -85,6 +87,7 @@ public class LTimeView extends BaseEXView {
 
             fl_time_root.addView(fl_time, params);
         }
+        Log.e(TAG + getClass().getSimpleName(), "changedTheme: ");
     }
 
     @Event(value = {R.id.fl_base})
@@ -95,6 +98,8 @@ public class LTimeView extends BaseEXView {
     @Override
     protected void initView() {
         onEvent(null);
+
+        Log.e(TAG + getClass().getSimpleName(), "initView: ");
     }
 
     @ViewInject(R.id.fl_time)

@@ -125,12 +125,20 @@ public class AppInfoManage {
     }
 
     public Drawable getIcon(String app) {
+        return getIcon(app, true);
+    }
+
+    public Drawable getIcon(String app, boolean withTheme) {
         Resources resources = this.context.getResources();
         AppInfo info = getAppInfo(app);
         if (info != null) {
             if (MARK_OTHER_APP == info.appMark) {
                 //先根据主题获取图标
-                int r = ThemeManage.self().getCurrentThemeRes(AppIconTemp.getIcon(info.clazz));
+                int r = AppIconTemp.getIcon(info.clazz);
+                if (withTheme) {
+                    r = ThemeManage.self().getCurrentThemeRes(r);
+                }
+
                 if (r != 0) {
                     Drawable drawable = resources.getDrawable(r);
                     if (drawable != null) {

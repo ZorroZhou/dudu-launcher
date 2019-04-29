@@ -465,11 +465,6 @@ public class ConsoleWin implements ThemeManage.OnThemeChangeListener {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(LDockRefreshEvent event) {
-        loadDock(false);
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final MAppInfoRefreshShowEvent event) {
         loadDock(true);
     }

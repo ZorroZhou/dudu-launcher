@@ -283,8 +283,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
                 String packName = data.getStringExtra(IDATA_APP_PACKAGE_NAME);
                 int mark = data.getIntExtra(IDATA_APP_MARK, -1);
                 SharedPreUtil.saveString(SDATA_DOCK1_CLASS, mark + CommonData.CONSTANT_APP_PACKAGE_SEPARATE + packName);
-                System.out.println("!!!!" + SharedPreUtil.getString(SDATA_DOCK1_CLASS));
-                EventBus.getDefault().post(new LDockRefreshEvent());
+                AppInfoManage.self().refreshShowApp();
             }
         }
         if (requestCode == REQUEST_SELECT_APP_TO_DOCK2) {
@@ -292,7 +291,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
                 String packName = data.getStringExtra(IDATA_APP_PACKAGE_NAME);
                 int mark = data.getIntExtra(IDATA_APP_MARK, -1);
                 SharedPreUtil.saveString(SDATA_DOCK2_CLASS, mark + CommonData.CONSTANT_APP_PACKAGE_SEPARATE + packName);
-                EventBus.getDefault().post(new LDockRefreshEvent());
+                AppInfoManage.self().refreshShowApp();
             }
         }
         if (requestCode == REQUEST_SELECT_APP_TO_DOCK3) {
@@ -300,7 +299,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
                 String packName = data.getStringExtra(IDATA_APP_PACKAGE_NAME);
                 int mark = data.getIntExtra(IDATA_APP_MARK, -1);
                 SharedPreUtil.saveString(SDATA_DOCK3_CLASS, mark + CommonData.CONSTANT_APP_PACKAGE_SEPARATE + packName);
-                EventBus.getDefault().post(new LDockRefreshEvent());
+                AppInfoManage.self().refreshShowApp();
             }
         }
         if (requestCode == REQUEST_SELECT_APP_TO_DOCK4) {
@@ -308,7 +307,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
                 String packName = data.getStringExtra(IDATA_APP_PACKAGE_NAME);
                 int mark = data.getIntExtra(IDATA_APP_MARK, -1);
                 SharedPreUtil.saveString(SDATA_DOCK4_CLASS, mark + CommonData.CONSTANT_APP_PACKAGE_SEPARATE + packName);
-                EventBus.getDefault().post(new LDockRefreshEvent());
+                AppInfoManage.self().refreshShowApp();
             }
         }
     }

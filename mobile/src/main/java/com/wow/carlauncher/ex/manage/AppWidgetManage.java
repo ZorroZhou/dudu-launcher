@@ -7,8 +7,6 @@ import android.content.Context;
 import android.util.Log;
 import android.view.View;
 
-import com.wow.carlauncher.common.util.SharedPreUtil;
-
 import static com.wow.carlauncher.common.CommonData.APP_WIDGET_HOST_ID;
 import static com.wow.carlauncher.common.CommonData.TAG;
 

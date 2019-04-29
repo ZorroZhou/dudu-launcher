@@ -33,8 +33,6 @@ import org.xutils.x;
 
 import java.util.List;
 
-import per.goweii.anypermission.AnyPermission;
-
 import static com.wow.carlauncher.common.CommonData.SDATA_LAUNCHER_ITEM_TRAN;
 
 /**

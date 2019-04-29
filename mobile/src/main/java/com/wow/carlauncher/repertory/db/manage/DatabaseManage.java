@@ -22,8 +22,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static com.wow.carlauncher.common.CommonData.TAG;
-
 @SuppressWarnings("unchecked,unused")
 public class DatabaseManage {
     private final static String TAG = "frame.DatabaseManage";

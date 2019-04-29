@@ -13,8 +13,6 @@ import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.ScheduledFuture;
 
 import static com.wow.carlauncher.common.CommonData.TAG;

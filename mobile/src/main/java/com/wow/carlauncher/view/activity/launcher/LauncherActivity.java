@@ -20,8 +20,6 @@ import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.ViewPagerOnPageChangeListener;
 import com.wow.carlauncher.common.util.SharedPreUtil;
-import com.wow.carlauncher.common.util.ViewUtils;
-import com.wow.carlauncher.ex.manage.baiduVoice.BaiduVoiceAssistant;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.appInfo.event.MAppInfoRefreshShowEvent;
@@ -31,9 +29,7 @@ import com.wow.carlauncher.ex.plugin.console.ConsolePlugin;
 import com.wow.carlauncher.ex.plugin.console.event.PConsoleEventCallState;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventAction;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
-import com.wow.carlauncher.view.activity.AppSelectActivity;
 import com.wow.carlauncher.view.activity.driving.DrivingActivity;
-import com.wow.carlauncher.view.activity.launcher.event.LDockRefreshEvent;
 import com.wow.carlauncher.view.activity.launcher.event.LItemRefreshEvent;
 import com.wow.carlauncher.view.activity.launcher.event.LItemToFristEvent;
 import com.wow.carlauncher.view.activity.launcher.event.LPageTransformerChangeEvent;
@@ -42,12 +38,10 @@ import com.wow.carlauncher.view.activity.launcher.view.LPageView;
 import com.wow.carlauncher.view.activity.launcher.view.LPagerPostion;
 import com.wow.carlauncher.view.activity.set.event.SEventSetHomeFull;
 import com.wow.carlauncher.view.popup.ConsoleWin;
-import com.wow.carlauncher.view.popup.VoiceWin;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
@@ -59,16 +53,6 @@ import per.goweii.anypermission.AnyPermission;
 import per.goweii.anypermission.RequestListener;
 import per.goweii.anypermission.RuntimeRequester;
 
-import static com.wow.carlauncher.common.CommonData.IDATA_APP_MARK;
-import static com.wow.carlauncher.common.CommonData.IDATA_APP_PACKAGE_NAME;
-import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_APP_TO_DOCK1;
-import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_APP_TO_DOCK2;
-import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_APP_TO_DOCK3;
-import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_APP_TO_DOCK4;
-import static com.wow.carlauncher.common.CommonData.SDATA_DOCK1_CLASS;
-import static com.wow.carlauncher.common.CommonData.SDATA_DOCK2_CLASS;
-import static com.wow.carlauncher.common.CommonData.SDATA_DOCK3_CLASS;
-import static com.wow.carlauncher.common.CommonData.SDATA_DOCK4_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_HOME_FULL;
 import static com.wow.carlauncher.common.CommonData.SDATA_LAUNCHER_ITEM_TRAN;
 import static com.wow.carlauncher.common.CommonData.TAG;
@@ -249,67 +233,13 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
         Log.e(TAG + getClass().getSimpleName(), "onThemeChanged ");
     }
 
-    @Event(value = {R.id.ll_dock1, R.id.ll_dock2, R.id.ll_dock3, R.id.ll_dock4}, type = View.OnLongClickListener.class)
-    private boolean longClickEvent(View view) {
-        switch (view.getId()) {
-            case R.id.ll_dock1: {
-                startActivityForResult(new Intent(this, AppSelectActivity.class), REQUEST_SELECT_APP_TO_DOCK1);
-                break;
-            }
-            case R.id.ll_dock2: {
-                startActivityForResult(new Intent(this, AppSelectActivity.class), REQUEST_SELECT_APP_TO_DOCK2);
-                break;
-            }
-            case R.id.ll_dock3: {
-                startActivityForResult(new Intent(this, AppSelectActivity.class), REQUEST_SELECT_APP_TO_DOCK3);
-                break;
-            }
-            case R.id.ll_dock4: {
-                startActivityForResult(new Intent(this, AppSelectActivity.class), REQUEST_SELECT_APP_TO_DOCK4);
-                break;
-            }
-        }
-        return false;
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (mRuntimeRequester != null) {
             mRuntimeRequester.onActivityResult(requestCode);
         }
-        if (requestCode == REQUEST_SELECT_APP_TO_DOCK1) {
-            if (resultCode == RESULT_OK) {
-                String packName = data.getStringExtra(IDATA_APP_PACKAGE_NAME);
-                int mark = data.getIntExtra(IDATA_APP_MARK, -1);
-                SharedPreUtil.saveString(SDATA_DOCK1_CLASS, mark + CommonData.CONSTANT_APP_PACKAGE_SEPARATE + packName);
-                AppInfoManage.self().refreshShowApp();
-            }
-        }
-        if (requestCode == REQUEST_SELECT_APP_TO_DOCK2) {
-            if (resultCode == RESULT_OK) {
-                String packName = data.getStringExtra(IDATA_APP_PACKAGE_NAME);
-                int mark = data.getIntExtra(IDATA_APP_MARK, -1);
-                SharedPreUtil.saveString(SDATA_DOCK2_CLASS, mark + CommonData.CONSTANT_APP_PACKAGE_SEPARATE + packName);
-                AppInfoManage.self().refreshShowApp();
-            }
-        }
-        if (requestCode == REQUEST_SELECT_APP_TO_DOCK3) {
-            if (resultCode == RESULT_OK) {
-                String packName = data.getStringExtra(IDATA_APP_PACKAGE_NAME);
-                int mark = data.getIntExtra(IDATA_APP_MARK, -1);
-                SharedPreUtil.saveString(SDATA_DOCK3_CLASS, mark + CommonData.CONSTANT_APP_PACKAGE_SEPARATE + packName);
-                AppInfoManage.self().refreshShowApp();
-            }
-        }
-        if (requestCode == REQUEST_SELECT_APP_TO_DOCK4) {
-            if (resultCode == RESULT_OK) {
-                String packName = data.getStringExtra(IDATA_APP_PACKAGE_NAME);
-                int mark = data.getIntExtra(IDATA_APP_MARK, -1);
-                SharedPreUtil.saveString(SDATA_DOCK4_CLASS, mark + CommonData.CONSTANT_APP_PACKAGE_SEPARATE + packName);
-                AppInfoManage.self().refreshShowApp();
-            }
-        }
+        Log.e(TAG, "onActivityResult: !!" + requestCode + " " + resultCode);
     }
 
     private boolean show = false;

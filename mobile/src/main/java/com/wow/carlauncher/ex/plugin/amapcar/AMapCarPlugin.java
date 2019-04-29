@@ -9,7 +9,6 @@ import android.widget.Toast;
 import com.wow.carlauncher.common.util.AppUtil;
 import com.wow.carlauncher.ex.ContextEx;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
-import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventState;
 
 import org.greenrobot.eventbus.EventBus;
@@ -19,15 +18,10 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.wow.carlauncher.common.CommonData.TAG;
 import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.AMAP_PACKAGE;
-import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.EXTRA_TYPE;
 import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.KEY_TYPE;
 import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.RECEIVE_ACTION;
 import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.REQUEST_EXIT_NAV;
-import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.REQUEST_GETHC;
-import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.REQUEST_GETHC_EXTRA_TYPE_COMP;
-import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.REQUEST_GETHC_EXTRA_TYPE_HOME;
 import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.REQUEST_GET_NAVI_MUTE;
 import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.REQUEST_GO_BACK;
 import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.REQUEST_GO_HC;
@@ -38,7 +32,6 @@ import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.REQUEST_SET_
 import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.REQUEST_SET_NAVI_MUTE;
 import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.REQUEST_SET_NAVI_MUTE_MARK;
 import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.SEND_ACTION;
-import static com.wow.carlauncher.ex.plugin.amapcar.AMapCartReceiver.GETHC_NEXT_TO_NAVI;
 
 /**
  * Created by 10124 on 2017/11/4.

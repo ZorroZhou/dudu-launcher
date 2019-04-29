@@ -3,9 +3,6 @@ package com.wow.carlauncher.ex.manage.baiduVoice.bean;
 import com.baidu.speech.asr.SpeechConstant;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 public class AsrStart {
 
 //    @SerializedName(SpeechConstant.DECODER)

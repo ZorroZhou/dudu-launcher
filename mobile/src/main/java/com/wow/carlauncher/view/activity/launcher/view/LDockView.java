@@ -2,9 +2,9 @@ package com.wow.carlauncher.view.activity.launcher.view;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -15,13 +15,13 @@ import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
+import com.wow.carlauncher.common.util.ThreadObj;
 import com.wow.carlauncher.ex.manage.ThemeManage;
+import com.wow.carlauncher.ex.manage.appInfo.AppInfo;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.appInfo.event.MAppInfoRefreshShowEvent;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
-import com.wow.carlauncher.view.activity.AppSelectActivity;
 import com.wow.carlauncher.view.activity.launcher.event.LDockLabelShowChangeEvent;
-import com.wow.carlauncher.view.activity.launcher.event.LDockRefreshEvent;
 import com.wow.carlauncher.view.base.BaseEXView;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -29,10 +29,9 @@ import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
-import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_APP_TO_DOCK1;
-import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_APP_TO_DOCK2;
-import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_APP_TO_DOCK3;
-import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_APP_TO_DOCK4;
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK1_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK2_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK3_CLASS;
@@ -149,7 +148,8 @@ public class LDockView extends BaseEXView {
             case R.id.ll_dock1: {
                 String packname = SharedPreUtil.getString(SDATA_DOCK1_CLASS);
                 if (CommonUtil.isNull(packname)) {
-                    getActivity().startActivityForResult(new Intent(getContext(), AppSelectActivity.class), REQUEST_SELECT_APP_TO_DOCK1);
+                    Log.e(TAG, "clickEvent: " + getActivity());
+                    showSelectDialog(SDATA_DOCK1_CLASS);
                 } else {
                     openDock(packname);
                 }
@@ -158,7 +158,7 @@ public class LDockView extends BaseEXView {
             case R.id.ll_dock2: {
                 String packname = SharedPreUtil.getString(SDATA_DOCK2_CLASS);
                 if (CommonUtil.isNull(packname)) {
-                    getActivity().startActivityForResult(new Intent(getContext(), AppSelectActivity.class), REQUEST_SELECT_APP_TO_DOCK2);
+                    showSelectDialog(SDATA_DOCK2_CLASS);
                 } else {
                     openDock(packname);
                 }
@@ -167,7 +167,7 @@ public class LDockView extends BaseEXView {
             case R.id.ll_dock3: {
                 String packname = SharedPreUtil.getString(SDATA_DOCK3_CLASS);
                 if (CommonUtil.isNull(packname)) {
-                    getActivity().startActivityForResult(new Intent(getContext(), AppSelectActivity.class), REQUEST_SELECT_APP_TO_DOCK3);
+                    showSelectDialog(SDATA_DOCK3_CLASS);
                 } else {
                     openDock(packname);
                 }
@@ -176,7 +176,7 @@ public class LDockView extends BaseEXView {
             case R.id.ll_dock4: {
                 String packname = SharedPreUtil.getString(SDATA_DOCK4_CLASS);
                 if (CommonUtil.isNull(packname)) {
-                    getActivity().startActivityForResult(new Intent(getContext(), AppSelectActivity.class), REQUEST_SELECT_APP_TO_DOCK4);
+                    showSelectDialog(SDATA_DOCK4_CLASS);
                 } else {
                     openDock(packname);
                 }
@@ -185,8 +185,55 @@ public class LDockView extends BaseEXView {
         }
     }
 
+    @Event(value = {R.id.ll_dock1, R.id.ll_dock2, R.id.ll_dock3, R.id.ll_dock4}, type = View.OnLongClickListener.class)
+    private boolean longClickEvent(View view) {
+        switch (view.getId()) {
+            case R.id.ll_dock1: {
+                showSelectDialog(SDATA_DOCK1_CLASS);
+                break;
+            }
+            case R.id.ll_dock2: {
+                showSelectDialog(SDATA_DOCK2_CLASS);
+                break;
+            }
+            case R.id.ll_dock3: {
+                showSelectDialog(SDATA_DOCK3_CLASS);
+                break;
+            }
+            case R.id.ll_dock4: {
+                showSelectDialog(SDATA_DOCK4_CLASS);
+                break;
+            }
+        }
+        return false;
+    }
+
     private Activity getActivity() {
         return (Activity) getContext();
+    }
+
+    private void showSelectDialog(String key) {
+        String selectapp = SharedPreUtil.getString(key);
+        final List<AppInfo> appInfos = new ArrayList<>(AppInfoManage.self().getAllAppInfos());
+        String[] items = new String[appInfos.size()];
+        int select = -1;
+        for (int i = 0; i < items.length; i++) {
+            items[i] = appInfos.get(i).name + "(" + appInfos.get(i).clazz + ")";
+            if (appInfos.get(i).clazz.equals(selectapp)) {
+                select = i;
+            }
+        }
+        Log.e(TAG, "onClick: " + items.length + " " + select);
+        final ThreadObj<Integer> obj = new ThreadObj<>(select);
+        new AlertDialog.Builder(getContext()).setTitle("请选择APP")
+                .setNegativeButton("取消", null)
+                .setPositiveButton("确定", (dialog12, which) -> {
+                    AppInfo appInfo = appInfos.get(obj.getObj());
+                    SharedPreUtil.saveString(key, appInfo.appMark + CommonData.CONSTANT_APP_PACKAGE_SEPARATE + appInfo.clazz);
+                    AppInfoManage.self().refreshShowApp();
+                })
+                .setSingleChoiceItems(items, select, (dialog1, which) -> obj.setObj(which)).show();
+
     }
 
     private void dockLabelShow(boolean show) {

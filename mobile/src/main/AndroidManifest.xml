@@ -82,9 +82,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.activity.AppSelectActivity"
-            android:screenOrientation="landscape" />
-        <activity
             android:name=".view.activity.set.SetActivity"
             android:screenOrientation="landscape" />
         <activity

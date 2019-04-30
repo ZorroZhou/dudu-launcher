@@ -293,7 +293,7 @@
                     android:ellipsize="end"
                     android:gravity="center"
                     android:lines="1"
-                    android:text="剩余10.1公里"
+                    android:text="1000.1KM"
                     app:layout_textSizePercent="35%h" />
 
                 <View

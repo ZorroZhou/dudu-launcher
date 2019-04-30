@@ -84,10 +84,6 @@ public class CommonData {
     public static final String SDATA_APP_THEME_NIGHT = "SDATA_APP_THEME_NIGHT";
 
     //
-    public static final int REQUEST_SELECT_APP_TO_DOCK1 = 10000;
-    public static final int REQUEST_SELECT_APP_TO_DOCK2 = 10001;
-    public static final int REQUEST_SELECT_APP_TO_DOCK3 = 10002;
-    public static final int REQUEST_SELECT_APP_TO_DOCK4 = 10003;
     public static final int REQUEST_SELECT_AMAP_PLUGIN = 10004;
 
 

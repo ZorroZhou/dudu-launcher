@@ -61,17 +61,19 @@ public abstract class ObdProtocol {
 
     private ObdTask currentTask;
 
+    private final static byte[] LOCK = new byte[0];
 
     public void addTask(ObdTask obdTask) {
         ObdTask oldTask = null;
-        for (ObdTask task : taskArrayDeque) {
-            if (task.getReqMessage().equals(obdTask.getReqMessage())) {
-                oldTask = task;
-                break;
+        synchronized (LOCK) {
+            for (ObdTask task : taskArrayDeque) {
+                if (task.getReqMessage().equals(obdTask.getReqMessage())) {
+                    oldTask = task;
+                    break;
+                }
             }
         }
         if (oldTask != null) {
-            Log.d("task send over3", "remove old task " + oldTask);
             taskArrayDeque.remove(oldTask);
         }
         taskArrayDeque.add(obdTask);
@@ -80,14 +82,18 @@ public abstract class ObdProtocol {
 
     private void runTask() {
         if (currentTask == null && !taskArrayDeque.isEmpty()) {
-            currentTask = taskArrayDeque.pop();
+            synchronized (LOCK) {
+                currentTask = taskArrayDeque.pop();
+            }
             currentTask.setSendTime(System.currentTimeMillis());
             listener.write(currentTask.getReqWarp());
         }
     }
 
     public void destroy() {
-        this.taskArrayDeque.clear();
+        synchronized (LOCK) {
+            this.taskArrayDeque.clear();
+        }
         EventBus.getDefault().unregister(this);
     }
 
@@ -102,10 +108,12 @@ public abstract class ObdProtocol {
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void onEvent(final MTimeSecondEvent event) {
-        if (currentTask != null && System.currentTimeMillis() - currentTask.getSendTime() > 2000) {
+        if (currentTask != null && System.currentTimeMillis() - currentTask.getSendTime() > 5000) {
             ToastManage.self().show("传输包超时");
             currentTask = null;
-            this.taskArrayDeque.clear();
+            synchronized (LOCK) {
+                this.taskArrayDeque.clear();
+            }
             warpTimeOut();
         }
     }

@@ -337,13 +337,19 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
                     break;
                 }
                 case CENTER_CLICK: {
-                    if (show) {
+                    if (show && viewPager != null && viewPager.getCurrentItem() == 0) {
                         showConsoleWin();
+                    } else if (show && viewPager != null) {
+                        x.task().autoPost(() -> {
+                            viewPager.setCurrentItem(0, true);
+                        });
                     } else {
-                        Intent home = new Intent(Intent.ACTION_MAIN);
-                        home.addCategory(Intent.CATEGORY_HOME);
-                        home.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(home);
+                        x.task().autoPost(() -> {
+                            Intent home = new Intent(Intent.ACTION_MAIN);
+                            home.addCategory(Intent.CATEGORY_HOME);
+                            home.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                            startActivity(home);
+                        });
                     }
                     break;
                 }
@@ -515,7 +521,10 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             View view = datas[position];
-            container.addView(datas[position]);
+            if (view.getParent() instanceof ViewGroup) {
+                ((ViewGroup) view.getParent()).removeView(view);
+            }
+            container.addView(view);
             return view;
         }
 
@@ -541,9 +550,10 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
                             viewPager.setCurrentItem(0, true);
                         }
                     } else {
-                        Intent i = new Intent(Intent.ACTION_MAIN, null);
-                        i.addCategory(Intent.CATEGORY_HOME);
-                        context.startActivity(i);
+                        Intent home = new Intent(Intent.ACTION_MAIN);
+                        home.addCategory(Intent.CATEGORY_HOME);
+                        home.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                        startActivity(home);
                     }
                 }
             }

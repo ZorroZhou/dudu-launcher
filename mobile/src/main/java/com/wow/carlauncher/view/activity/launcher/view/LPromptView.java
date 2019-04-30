@@ -23,6 +23,7 @@ import com.wow.carlauncher.ex.manage.ble.BleManage;
 import com.wow.carlauncher.ex.manage.location.event.MNewLocationEvent;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
+import com.wow.carlauncher.ex.plugin.fk.FangkongPlugin;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventConnect;
 import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarTp;
@@ -79,6 +80,7 @@ public class LPromptView extends BaseEXView {
         iv_set.setImageResource(manage.getCurrentThemeRes(R.mipmap.ic_l_set));
         Log.e(TAG + getClass().getSimpleName(), "changedTheme: ");
     }
+
     @Override
     protected void initView() {
         Log.e(TAG + getClass().getSimpleName(), "initView: ");
@@ -198,21 +200,9 @@ public class LPromptView extends BaseEXView {
         super.onAttachedToWindow();
         x.task().autoPost(() -> {
             refreshWifiState();
-            String fkaddress = SharedPreUtil.getString(CommonData.SDATA_FANGKONG_ADDRESS);
-//            if (CommonUtil.isNotNull(fkaddress) && BleManage.self().client().getConnectStatus(fkaddress) != STATUS_DEVICE_CONNECTED) {
-//                refreshFKState(new PFkEventConnect().setConnected(true));
-//            } else {
-//                refreshFKState(new PFkEventConnect().setConnected(false));
-//            }
-//
-//            String obdaddress = SharedPreUtil.getString(CommonData.SDATA_OBD_ADDRESS);
-//            if (CommonUtil.isNotNull(obdaddress) && BleManage.self().client().getConnectStatus(obdaddress) != STATUS_DEVICE_CONNECTED) {
-//                refreshObdState(new PObdEventConnect().setConnected(true));
-//            } else {
-//                refreshObdState(new PObdEventConnect().setConnected(false));
-//            }
-
-            //refreshTpState(ObdPlugin.self().getCurrentPObdEventCarTp());
+            refreshFKState(new PFkEventConnect().setConnected(FangkongPlugin.self().isConnect()));
+            refreshObdState(new PObdEventConnect().setConnected(ObdPlugin.self().isConnect()));
+            refreshTpState(ObdPlugin.self().getCurrentPObdEventCarTp());
         });
     }
 

@@ -115,6 +115,7 @@ public class BleManage extends ContextEx {
 
                 @Override
                 public void onDeviceFounded(SearchResult device) {
+                    Log.e(TAG, "onDeviceFounded: " + device.getName() + " " + device.getAddress());
                     deviceList.add(device);
                 }
 
@@ -160,7 +161,8 @@ public class BleManage extends ContextEx {
             bluetoothClient.unregisterConnectStatusListener(mac, listener);
             statusListener.remove(mark);
         }
-        MyBleConnectStatusListener myBleConnectStatusListener = new MyBleConnectStatusListener(mark, this);
+        MyBleConnectStatusListener myBleConnectStatusListener = new MyBleConnectStatusListener(mark);
+        statusListener.put(mark, myBleConnectStatusListener);
         bluetoothClient.registerConnectStatusListener(mac, myBleConnectStatusListener);
 
         markMacMap.put(mark, mac);

@@ -23,6 +23,7 @@ import com.wow.carlauncher.ex.plugin.obd.protocol.GoodDriverTPProtocol;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.xutils.x;
 
 import static com.inuker.bluetooth.library.Constants.STATUS_CONNECTED;
 import static com.inuker.bluetooth.library.Constants.STATUS_DEVICE_CONNECTED;
@@ -188,7 +189,7 @@ public class ObdPlugin extends ContextEx {
                 obdProtocol = new GoodDriverTPProtocol(getContext(), address, obdProtocolListener);
                 break;
         }
-        BleManage.self().connect(BLE_MARK, obdProtocol.getAddress(), obdProtocol.getNotifyService(), obdProtocol.getNotifyCharacter());
+        x.task().autoPost(() -> BleManage.self().connect(BLE_MARK, obdProtocol.getAddress(), obdProtocol.getNotifyService(), obdProtocol.getNotifyCharacter()));
     }
 
     public synchronized void disconnect() {
@@ -213,7 +214,7 @@ public class ObdPlugin extends ContextEx {
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void onEvent(final BMEventFindDevice event) {
         String fkaddress = SharedPreUtil.getString(CommonData.SDATA_OBD_ADDRESS);
-        if (CommonUtil.isNotNull(fkaddress)) {
+        if (CommonUtil.isNotNull(fkaddress) && !connect) {
             boolean find = false;
             for (SearchResult device : event.getDeviceList()) {
                 if (device.getAddress().equals(fkaddress)) {

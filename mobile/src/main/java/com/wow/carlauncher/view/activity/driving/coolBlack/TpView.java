@@ -4,11 +4,16 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.ex.manage.ImageManage;
+import com.wow.carlauncher.ex.plugin.music.event.PMusicEventCoverRefresh;
 import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarTp;
+import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventConnect;
 import com.wow.carlauncher.view.base.BaseEXView;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -50,6 +55,15 @@ public class TpView extends BaseEXView {
     @ViewInject(R.id.tv_rb)
     private TextView tv_rb;
 
+    @ViewInject(R.id.music_iv_cover)
+    private ImageView music_iv_cover;
+
+    @ViewInject(R.id.ll_cover)
+    private View ll_cover;
+
+    @ViewInject(R.id.ll_tp)
+    private View ll_tp;
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(final PObdEventCarTp event) {
         if (tv_lf != null && event.getlFTirePressure() != null) {
@@ -68,4 +82,24 @@ public class TpView extends BaseEXView {
             tv_rb.setText(getContext().getString(R.string.driving_cool_black_tp, event.getrBTirePressure(), event.getrBTemp()));
         }
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(final PObdEventConnect event) {
+        boolean show = false;
+        if (event.isConnected()) {
+            if (ObdPlugin.self().supportTp()) {
+                show = true;
+            }
+        }
+        ll_tp.setVisibility(show ? VISIBLE : GONE);
+        ll_cover.setVisibility(show ? GONE : VISIBLE);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(final PMusicEventCoverRefresh event) {
+        if (music_iv_cover != null) {
+            ImageManage.self().loadImage(event.getUrl(), music_iv_cover, R.mipmap.music_dlogo);
+        }
+    }
+
 }

@@ -76,7 +76,7 @@ public class FangkongPlugin extends ContextEx {
 
         @Override
         public void connect(boolean success) {
-            postEvent(new PObdEventConnect().setConnected(success));
+            postEvent(new PFkEventConnect().setConnected(success));
             if (fangkongProtocol != null) {
                 if (success) {
                     ToastManage.self().show("方控连接成功!");
@@ -94,6 +94,8 @@ public class FangkongPlugin extends ContextEx {
         }
     };
     private boolean connect = false;
+
+    private final static byte[] LOCK = new byte[0];
 
     public boolean isConnect() {
         return connect;
@@ -118,13 +120,15 @@ public class FangkongPlugin extends ContextEx {
 
     private boolean connecting = false;
 
-    private synchronized void connect() {
+    private void connect() {
         final String fkaddress = SharedPreUtil.getString(CommonData.SDATA_FANGKONG_ADDRESS);
-        if (connecting || CommonUtil.isNull(fkaddress) || BleManage.self().getConnectStatus(fkaddress) == STATUS_DEVICE_CONNECTED) {
-            return;
-        }
+        synchronized (LOCK) {
+            if (connecting || CommonUtil.isNull(fkaddress) || BleManage.self().getConnectStatus(fkaddress) == STATUS_DEVICE_CONNECTED) {
+                return;
+            }
 
-        connecting = true;
+            connecting = true;
+        }
 
         disconnect();
 
@@ -138,11 +142,10 @@ public class FangkongPlugin extends ContextEx {
                 fangkongProtocol = new YiLianProtocol(fkaddress, getContext(), changeModelCallBack);
                 break;
         }
-
-        BleManage.self().connect(BLE_MARK, fangkongProtocol.getAddress(), fangkongProtocol.getService(), fangkongProtocol.getCharacter());
+        x.task().autoPost(() -> BleManage.self().connect(BLE_MARK, fangkongProtocol.getAddress(), fangkongProtocol.getService(), fangkongProtocol.getCharacter()));
     }
 
-    public synchronized void disconnect() {
+    public void disconnect() {
         BleManage.self().disconnect(BLE_MARK);
         if (fangkongProtocol != null) {
             fangkongProtocol.destroy();
@@ -153,8 +156,9 @@ public class FangkongPlugin extends ContextEx {
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void onEvent(final BMEventFindDevice event) {
         String fkaddress = SharedPreUtil.getString(CommonData.SDATA_FANGKONG_ADDRESS);
-        if (CommonUtil.isNotNull(fkaddress)) {
+        if (CommonUtil.isNotNull(fkaddress) && !connect) {
             boolean find = false;
+            Log.e(TAG, "onEvent: " + event.getDeviceList());
             for (SearchResult device : event.getDeviceList()) {
                 if (device.getAddress().equals(fkaddress)) {
                     find = true;
@@ -162,6 +166,7 @@ public class FangkongPlugin extends ContextEx {
                 }
             }
             if (find) {
+                Log.e(TAG, "onEvent:发现FK,开始连接");
                 connect();
             }
         }

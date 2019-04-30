@@ -92,8 +92,7 @@
                 <com.wow.carlauncher.view.activity.driving.coolBlack.TpView
                     android:id="@+id/ll_tp"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    app:layout_heightPercent="80%h"
+                    android:layout_height="match_parent"
                     app:layout_marginLeftPercent="10%h"
                     app:layout_marginRightPercent="10%h" />
 

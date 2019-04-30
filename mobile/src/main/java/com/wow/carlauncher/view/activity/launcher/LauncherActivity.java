@@ -360,9 +360,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
                     break;
                 }
                 case LEFT_BOTTOM_LONG_CLICK: {
-                    Intent appIntent = new Intent(getApplicationContext(), DrivingActivity.class);
-                    appIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(appIntent);
+                    Log.e(TAG, "这里唤醒语音比较好");
                     break;
                 }
                 case RIGHT_BOTTOM_CLICK:

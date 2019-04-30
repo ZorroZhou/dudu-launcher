@@ -60,6 +60,8 @@ public class SPopupView extends BaseView {
             new AlertDialog.Builder(getContext()).setTitle("请选择一个尺寸").setItems(POPUP_SIZE, (dialogInterface, i) -> {
                 SharedPreUtil.saveInteger(CommonData.SDATA_POPUP_SIZE, i);
                 PopupWin.self().setRank(i + 1);
+
+                sv_popup_window_size.setSummary(POPUP_SIZE[i]);
             }).show();
         });
         sv_popup_window_size.setSummary(POPUP_SIZE[SharedPreUtil.getInteger(CommonData.SDATA_POPUP_SIZE, 1)]);

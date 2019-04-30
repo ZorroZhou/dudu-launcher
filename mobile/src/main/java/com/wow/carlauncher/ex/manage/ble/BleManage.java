@@ -91,7 +91,7 @@ public class BleManage extends ContextEx {
             Log.e(TAG + getClass().getSimpleName(), "支持蓝牙并打开 ");
             return true;
         } else {
-            Log.e(TAG + getClass().getSimpleName(), "不支持蓝牙或者蓝牙未打开 ");
+            Log.e(TAG + getClass().getSimpleName(), "不支持蓝牙4.0或者蓝牙未打开 ");
             return false;
         }
     }

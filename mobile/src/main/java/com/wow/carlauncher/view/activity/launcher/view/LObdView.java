@@ -124,8 +124,11 @@ public class LObdView extends BaseEXView {
         }
         Log.e(TAG + getClass().getSimpleName(), "changedTheme: ");
     }
+
     @Override
     protected void initView() {
+        onEvent(new PObdEventConnect().setConnected(ObdPlugin.self().isConnect()));
+        onEvent(ObdPlugin.self().getCurrentPObdEventCarInfo());
         Log.e(TAG + getClass().getSimpleName(), "initView: ");
     }
 
@@ -227,7 +230,7 @@ public class LObdView extends BaseEXView {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventCall(final PObdEventCarInfo event) {
+    public void onEvent(final PObdEventCarInfo event) {
         if (event.getSpeed() != null) {
             String msg = event.getSpeed() + "KM/H";
             tv_sd.setText(msg);

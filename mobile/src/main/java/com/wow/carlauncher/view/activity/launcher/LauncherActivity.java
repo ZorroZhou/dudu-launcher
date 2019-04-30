@@ -349,6 +349,9 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
                             home.addCategory(Intent.CATEGORY_HOME);
                             home.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
                             startActivity(home);
+
+//                            Intent home = new Intent(this, LauncherActivity.class);
+//                            startActivity(home);
                         });
                     }
                     break;

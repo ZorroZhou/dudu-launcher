@@ -60,39 +60,41 @@ public class GoodDriverTPProtocol extends ObdProtocol {
         cmdCloseTitle = false;
         cmdProtocolAuto = false;
 
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                running = true;
-                while (running) {
-                    if (listener.isConnect()) {
-                        baseCheckTask();
+        new Thread(() -> {
+            running = true;
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            while (running) {
+                if (listener.isConnect()) {
+                    baseCheckTask();
 
-                        if (mark % infoMark == 0) {
-                            addTask(new GetSpeedTask());
-                            addTask(new GetRevTask());
-                        }
-
-                        if (mark % 20 == 0) {
-                            addTask(new GetWaterTempTask());
-                            addTask(new GetOilConTask());
-                        }
-
-                        if (mark % 60 == 0) {
-                            addTask(new GetTpTask(LF));
-                            addTask(new GetTpTask(RF));
-                            addTask(new GetTpTask(LB));
-                            addTask(new GetTpTask(RB));
-                        }
-                        mark++;
-                    } else {
-                        running = false;
+                    if (mark % infoMark == 0) {
+                        addTask(new GetSpeedTask());
+                        addTask(new GetRevTask());
                     }
-                    try {
-                        Thread.sleep(300);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+
+                    if (mark % 20 == 0) {
+                        addTask(new GetWaterTempTask());
+                        addTask(new GetOilConTask());
                     }
+
+                    if (mark % 60 == 0) {
+                        addTask(new GetTpTask(LF));
+                        addTask(new GetTpTask(RF));
+                        addTask(new GetTpTask(LB));
+                        addTask(new GetTpTask(RB));
+                    }
+                    mark++;
+                } else {
+                    running = false;
+                }
+                try {
+                    Thread.sleep(300);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
         }).start();

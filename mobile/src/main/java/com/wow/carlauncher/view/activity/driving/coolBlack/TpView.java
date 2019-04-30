@@ -40,7 +40,8 @@ public class TpView extends BaseEXView {
 
     @Override
     protected void initView() {
-        onEventMainThread(ObdPlugin.self().getCurrentPObdEventCarTp());
+        onEvent(new PObdEventConnect().setConnected(ObdPlugin.self().isConnect()));
+        onEvent(ObdPlugin.self().getCurrentPObdEventCarTp());
     }
 
     @ViewInject(R.id.tv_lf)
@@ -65,7 +66,7 @@ public class TpView extends BaseEXView {
     private View ll_tp;
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(final PObdEventCarTp event) {
+    public void onEvent(final PObdEventCarTp event) {
         if (tv_lf != null && event.getlFTirePressure() != null) {
             tv_lf.setText(getContext().getString(R.string.driving_cool_black_tp, event.getlFTirePressure(), event.getlFTemp()));
         }

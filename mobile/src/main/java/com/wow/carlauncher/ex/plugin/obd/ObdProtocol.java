@@ -11,6 +11,8 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -61,20 +63,22 @@ public abstract class ObdProtocol {
 
     private ObdTask currentTask;
 
-    private final static byte[] LOCK = new byte[0];
-
     public void addTask(ObdTask obdTask) {
-        ObdTask oldTask = null;
-        synchronized (LOCK) {
-            for (ObdTask task : taskArrayDeque) {
+        //出现了线程问题,暂时加上try catch
+        try {
+            ObdTask oldTask = null;
+            List<ObdTask> tempList = new ArrayList<>(taskArrayDeque);
+            for (ObdTask task : tempList) {
                 if (task.getReqMessage().equals(obdTask.getReqMessage())) {
                     oldTask = task;
                     break;
                 }
             }
-        }
-        if (oldTask != null) {
-            taskArrayDeque.remove(oldTask);
+            if (oldTask != null) {
+                taskArrayDeque.remove(oldTask);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         taskArrayDeque.add(obdTask);
         runTask();
@@ -82,18 +86,22 @@ public abstract class ObdProtocol {
 
     private void runTask() {
         if (currentTask == null && !taskArrayDeque.isEmpty()) {
-            synchronized (LOCK) {
+            try {
                 currentTask = taskArrayDeque.pop();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            currentTask.setSendTime(System.currentTimeMillis());
-            listener.write(currentTask.getReqWarp());
+            if (currentTask != null) {
+                currentTask.setSendTime(System.currentTimeMillis());
+                listener.write(currentTask.getReqWarp());
+            } else {
+                runTask();
+            }
         }
     }
 
     public void destroy() {
-        synchronized (LOCK) {
-            this.taskArrayDeque.clear();
-        }
+        this.taskArrayDeque.clear();
         EventBus.getDefault().unregister(this);
     }
 
@@ -111,9 +119,7 @@ public abstract class ObdProtocol {
         if (currentTask != null && System.currentTimeMillis() - currentTask.getSendTime() > 5000) {
             ToastManage.self().show("传输包超时");
             currentTask = null;
-            synchronized (LOCK) {
-                this.taskArrayDeque.clear();
-            }
+            this.taskArrayDeque.clear();
             warpTimeOut();
         }
     }

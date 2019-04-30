@@ -63,7 +63,7 @@
                     android:lineSpacingExtra="2dp"
                     android:text="2.1/16°"
                     android:textColor="#fff"
-                    app:layout_textSizePercent="25%h" />
+                    app:layout_textSizePercent="20%h" />
 
                 <TextView
                     android:id="@+id/tv_lb"
@@ -74,7 +74,7 @@
                     android:lineSpacingExtra="2dp"
                     android:text="2.1/16°"
                     android:textColor="#fff"
-                    app:layout_textSizePercent="25%h" />
+                    app:layout_textSizePercent="20%h" />
             </com.zhy.android.percent.support.PercentLinearLayout>
 
             <com.zhy.android.percent.support.PercentLinearLayout
@@ -94,7 +94,7 @@
                     android:lineSpacingExtra="2dp"
                     android:text="2.1/16°"
                     android:textColor="#fff"
-                    app:layout_textSizePercent="25%h" />
+                    app:layout_textSizePercent="20%h" />
 
                 <TextView
                     android:id="@+id/tv_rb"
@@ -105,7 +105,7 @@
                     android:lineSpacingExtra="2dp"
                     android:text="2.1/16°"
                     android:textColor="#fff"
-                    app:layout_textSizePercent="25%h" />
+                    app:layout_textSizePercent="20%h" />
             </com.zhy.android.percent.support.PercentLinearLayout>
         </com.zhy.android.percent.support.PercentRelativeLayout>
     </com.zhy.android.percent.support.PercentLinearLayout>

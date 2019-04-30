@@ -195,6 +195,7 @@ public class LTaiyaView extends BaseEXView {
 
     @Override
     protected void initView() {
+        onEvent(new PObdEventConnect().setConnected(ObdPlugin.self().isConnect()));
         onEvent(ObdPlugin.self().getCurrentPObdEventCarTp());
         Log.e(TAG + getClass().getSimpleName(), "initView: ");
     }

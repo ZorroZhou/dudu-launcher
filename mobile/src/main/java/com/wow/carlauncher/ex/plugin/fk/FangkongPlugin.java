@@ -8,17 +8,24 @@ import com.inuker.bluetooth.library.connect.options.BleConnectOptions;
 import com.inuker.bluetooth.library.connect.response.BleConnectResponse;
 import com.inuker.bluetooth.library.connect.response.BleNotifyResponse;
 import com.inuker.bluetooth.library.model.BleGattProfile;
+import com.inuker.bluetooth.library.search.SearchResult;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.ContextEx;
+import com.wow.carlauncher.ex.manage.ble.BleListener;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
+import com.wow.carlauncher.ex.manage.ble.event.BMEventFindDevice;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventAction;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventBatterLevel;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventConnect;
 import com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol;
+import com.wow.carlauncher.ex.plugin.obd.ObdProtocolEnum;
+import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventConnect;
+import com.wow.carlauncher.ex.plugin.obd.protocol.GoodDriverProtocol;
+import com.wow.carlauncher.ex.plugin.obd.protocol.GoodDriverTPProtocol;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -30,6 +37,7 @@ import java.util.UUID;
 import static com.inuker.bluetooth.library.Constants.REQUEST_SUCCESS;
 import static com.inuker.bluetooth.library.Constants.STATUS_DEVICE_CONNECTED;
 import static com.wow.carlauncher.common.CommonData.SDATA_FANGKONG_CONTROLLER;
+import static com.wow.carlauncher.common.CommonData.SDATA_OBD_CONTROLLER;
 import static com.wow.carlauncher.common.CommonData.TAG;
 
 /**
@@ -47,7 +55,7 @@ public class FangkongPlugin extends ContextEx {
         return self;
     }
 
-    private BleConnectOptions options;
+    public static final String BLE_MARK = "BLE_FANGKONG";
 
     private FangkongPlugin() {
 
@@ -55,18 +63,40 @@ public class FangkongPlugin extends ContextEx {
 
     public void init(Context context) {
         setContext(context);
-
-        options = new BleConnectOptions.Builder()
-                .setConnectRetry(Integer.MAX_VALUE)
-                .setConnectTimeout(5000)   // 连接超时5s
-                .setServiceDiscoverRetry(Integer.MAX_VALUE)
-                .setServiceDiscoverTimeout(5000)  // 发现服务超时5s
-                .build();
-
-        connect();
-
+        BleManage.self().addListener(bleListener);
         EventBus.getDefault().register(this);
         Log.e(TAG + getClass().getSimpleName(), "init ");
+    }
+
+    private final BleListener bleListener = new BleListener() {
+        @Override
+        public String getMark() {
+            return BLE_MARK;
+        }
+
+        @Override
+        public void connect(boolean success) {
+            postEvent(new PObdEventConnect().setConnected(success));
+            if (fangkongProtocol != null) {
+                if (success) {
+                    ToastManage.self().show("方控连接成功!");
+                }
+            }
+            connect = success;
+            connecting = false;
+        }
+
+        @Override
+        public void receiveMessage(byte[] msg) {
+            if (fangkongProtocol != null) {
+                fangkongProtocol.receiveMessage(msg);
+            }
+        }
+    };
+    private boolean connect = false;
+
+    public boolean isConnect() {
+        return connect;
     }
 
     private FangkongProtocol fangkongProtocol;
@@ -90,11 +120,14 @@ public class FangkongPlugin extends ContextEx {
 
     private synchronized void connect() {
         final String fkaddress = SharedPreUtil.getString(CommonData.SDATA_FANGKONG_ADDRESS);
-        Log.d(TAG, "connect: " + Constants.getStatusText(BleManage.self().client().getConnectStatus(fkaddress)) + "  " + CommonUtil.isNull(fkaddress) + "  " + Constants.getStatusText(BleManage.self().client().getConnectStatus(fkaddress)));
-        if (connecting || CommonUtil.isNull(fkaddress) || BleManage.self().client().getConnectStatus(fkaddress) == STATUS_DEVICE_CONNECTED) {
+        if (connecting || CommonUtil.isNull(fkaddress) || BleManage.self().getConnectStatus(fkaddress) == STATUS_DEVICE_CONNECTED) {
             return;
         }
+
         connecting = true;
+
+        disconnect();
+
         FangkongProtocolEnum p1 = FangkongProtocolEnum.getById(SharedPreUtil.getInteger(SDATA_FANGKONG_CONTROLLER, FangkongProtocolEnum.YLFK.getId()));
         switch (p1) {
             case YLFK: {
@@ -105,66 +138,32 @@ public class FangkongPlugin extends ContextEx {
                 fangkongProtocol = new YiLianProtocol(fkaddress, getContext(), changeModelCallBack);
                 break;
         }
-        Log.d(TAG, "开始连接");
-        BleManage.self().client().clearRequest(fangkongProtocol.getAddress(), 0);
-        BleManage.self().client().refreshCache(fangkongProtocol.getAddress());
-        BleManage.self().client().connect(fangkongProtocol.getAddress(), options, new BleConnectResponse() {
-            @Override
-            public void onResponse(int code, BleGattProfile data) {
-                if (code == REQUEST_SUCCESS) {
-                    BleManage.self().client().notify(fangkongProtocol.getAddress(),
-                            fangkongProtocol.getService(),
-                            fangkongProtocol.getCharacter(),
-                            new BleNotifyResponse() {
-                                @Override
-                                public void onNotify(UUID service, UUID character, byte[] msg) {
-                                    if (fangkongProtocol != null) {
-                                        fangkongProtocol.receiveMessage(msg);
-                                    }
-                                }
 
-                                @Override
-                                public void onResponse(int code) {
-                                    connecting = false;
-                                    if (code == REQUEST_SUCCESS) {
-                                        ToastManage.self().show("方控连接成功");
-                                    } else {
-                                        BleManage.self().client().disconnect(fangkongProtocol.getAddress());
-                                    }
-                                }
-                            });
-                } else {
-                    connecting = false;
-                    Log.d(TAG, "onResponse: 方控连接失败!!!");
-                }
-            }
-        });
+        BleManage.self().connect(BLE_MARK, fangkongProtocol.getAddress(), fangkongProtocol.getService(), fangkongProtocol.getCharacter());
     }
 
     public synchronized void disconnect() {
+        BleManage.self().disconnect(BLE_MARK);
         if (fangkongProtocol != null) {
-            BleManage.self().client().disconnect(fangkongProtocol.getAddress());
+            fangkongProtocol.destroy();
+            fangkongProtocol = null;
         }
     }
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
-    public void onEvent(final MTimeSecondEvent event) {
+    public void onEvent(final BMEventFindDevice event) {
         String fkaddress = SharedPreUtil.getString(CommonData.SDATA_FANGKONG_ADDRESS);
         if (CommonUtil.isNotNull(fkaddress)) {
-            if (BleManage.self().client().getConnectStatus(fkaddress) == STATUS_DEVICE_CONNECTED) {
-                postEvent(new PFkEventConnect().setConnected(true));
-            } else {
-                postEvent(new PFkEventConnect().setConnected(false));
+            boolean find = false;
+            for (SearchResult device : event.getDeviceList()) {
+                if (device.getAddress().equals(fkaddress)) {
+                    find = true;
+                    break;
+                }
+            }
+            if (find) {
                 connect();
             }
         }
-//
-//        if (CommonUtil.isNotNull(fkaddress) && BleManage.self().client().getConnectStatus(fkaddress) != STATUS_DEVICE_CONNECTED) {
-//            connect();
-//        }
-    }
-
-    public void setSimulatedDClick(boolean simulatedDClick) {
-        this.fangkongProtocol.setSimulatedDClick(simulatedDClick);
     }
 }

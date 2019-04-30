@@ -4,19 +4,15 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 
-import com.inuker.bluetooth.library.Constants;
 import com.inuker.bluetooth.library.connect.listener.BleConnectStatusListener;
-import com.inuker.bluetooth.library.connect.options.BleConnectOptions;
-import com.inuker.bluetooth.library.connect.response.BleConnectResponse;
-import com.inuker.bluetooth.library.connect.response.BleNotifyResponse;
-import com.inuker.bluetooth.library.connect.response.BleWriteResponse;
-import com.inuker.bluetooth.library.model.BleGattProfile;
+import com.inuker.bluetooth.library.search.SearchResult;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.ContextEx;
+import com.wow.carlauncher.ex.manage.ble.BleListener;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
-import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
+import com.wow.carlauncher.ex.manage.ble.event.BMEventFindDevice;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarInfo;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarTp;
@@ -28,9 +24,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.UUID;
-
-import static com.inuker.bluetooth.library.Constants.REQUEST_SUCCESS;
 import static com.inuker.bluetooth.library.Constants.STATUS_CONNECTED;
 import static com.inuker.bluetooth.library.Constants.STATUS_DEVICE_CONNECTED;
 import static com.wow.carlauncher.common.CommonData.SDATA_OBD_CONTROLLER;
@@ -55,13 +48,13 @@ public class ObdPlugin extends ContextEx {
 
     }
 
+    public static final String BLE_MARK = "BLE_OBD";
+
     private boolean connect = false;
 
-    public boolean notConnect() {
-        return !connect;
+    public boolean isConnect() {
+        return connect;
     }
-
-    private BleConnectOptions options;
 
     private ObdProtocol obdProtocol;
 
@@ -85,7 +78,7 @@ public class ObdPlugin extends ContextEx {
 
         @Override
         public boolean isConnect() {
-            return obdProtocol != null && BleManage.self().client().getConnectStatus(obdProtocol.getAddress()) == STATUS_DEVICE_CONNECTED;
+            return obdProtocol != null && BleManage.self().getConnectStatus(obdProtocol.getAddress()) == STATUS_DEVICE_CONNECTED;
         }
 
         @Override
@@ -131,33 +124,40 @@ public class ObdPlugin extends ContextEx {
         }
     };
 
-    private final BleConnectStatusListener bleConnectStatusListener = new BleConnectStatusListener() {
+    private final BleListener bleListener = new BleListener() {
+        @Override
+        public String getMark() {
+            return BLE_MARK;
+        }
 
         @Override
-        public void onConnectStatusChanged(String mac, int status) {
-            if (mac.equals(obdProtocol.getAddress())) {
-                if (status != STATUS_CONNECTED) {
+        public void connect(boolean success) {
+            postEvent(new PObdEventConnect().setConnected(success));
+            if (obdProtocol != null) {
+                if (success) {
+                    ToastManage.self().show("OBD连接成功!");
+                    obdProtocol.run();
+                } else {
                     obdProtocol.stop();
                 }
+            }
+            connect = success;
+            connecting = false;
+        }
+
+        @Override
+        public void receiveMessage(byte[] msg) {
+            if (obdProtocol != null) {
+                obdProtocol.receiveMessage(msg);
             }
         }
     };
 
     public void init(Context context) {
         setContext(context);
-
         currentPObdEventCarInfo = new PObdEventCarInfo();
         currentPObdEventCarTp = new PObdEventCarTp();
-
-        options = new BleConnectOptions.Builder()
-                .setConnectRetry(Integer.MAX_VALUE)
-                .setConnectTimeout(5000)   // 连接超时5s
-                .setServiceDiscoverRetry(Integer.MAX_VALUE)
-                .setServiceDiscoverTimeout(5000)  // 发现服务超时5s
-                .build();
-
-        connect();
-
+        BleManage.self().addListener(bleListener);
         EventBus.getDefault().register(this);
         Log.e(TAG + getClass().getSimpleName(), "init ");
     }
@@ -166,11 +166,14 @@ public class ObdPlugin extends ContextEx {
 
     private synchronized void connect() {
         final String address = SharedPreUtil.getString(CommonData.SDATA_OBD_ADDRESS);
-        Log.d(TAG, "connect: " + Constants.getStatusText(BleManage.self().client().getConnectStatus(address)) + "  " + CommonUtil.isNull(address) + "  " + Constants.getStatusText(BleManage.self().client().getConnectStatus(address)));
-        if (connecting || CommonUtil.isNull(address) || BleManage.self().client().getConnectStatus(address) == STATUS_DEVICE_CONNECTED) {
+        if (connecting || CommonUtil.isNull(address) || BleManage.self().getConnectStatus(address) == STATUS_DEVICE_CONNECTED) {
             return;
         }
+
         connecting = true;
+
+        disconnect();
+
         ObdProtocolEnum p1 = ObdProtocolEnum.getById(SharedPreUtil.getInteger(SDATA_OBD_CONTROLLER, ObdProtocolEnum.YJ_TYB.getId()));
         switch (p1) {
             case YJ_TYB: {
@@ -185,61 +188,20 @@ public class ObdPlugin extends ContextEx {
                 obdProtocol = new GoodDriverTPProtocol(getContext(), address, obdProtocolListener);
                 break;
         }
-        Log.d(TAG, "开始连接");
-        BleManage.self().client().clearRequest(obdProtocol.getAddress(), 0);
-        BleManage.self().client().refreshCache(obdProtocol.getAddress());
-        BleManage.self().client().registerConnectStatusListener(obdProtocol.getAddress(), bleConnectStatusListener);
-        BleManage.self().client().connect(obdProtocol.getAddress(), options, new BleConnectResponse() {
-            @Override
-            public void onResponse(int code, BleGattProfile data) {
-                if (code == REQUEST_SUCCESS) {
-                    BleManage.self().client().notify(obdProtocol.getAddress(),
-                            obdProtocol.getNotifyService(),
-                            obdProtocol.getNotifyCharacter(),
-                            new BleNotifyResponse() {
-                                @Override
-                                public void onNotify(UUID service, UUID character, byte[] msg) {
-                                    if (obdProtocol != null) {
-                                        obdProtocol.receiveMessage(msg);
-                                    }
-                                }
-
-                                @Override
-                                public void onResponse(int code) {
-                                    connecting = false;
-                                    Log.d(TAG, "查询状态: " + Constants.getStatusText(BleManage.self().client().getConnectStatus(obdProtocol.getAddress())));
-
-                                    Log.d(TAG, "onResponse: " + code);
-                                    if (code == REQUEST_SUCCESS) {
-                                        ToastManage.self().show("OBD连接成功");
-                                        obdProtocol.run();
-                                    } else {
-                                        BleManage.self().client().disconnect(obdProtocol.getAddress());
-                                    }
-                                }
-                            });
-                } else {
-                    connecting = false;
-                    Log.d(TAG, "onResponse: 方控连接失败!!!");
-                }
-            }
-        });
+        BleManage.self().connect(BLE_MARK, obdProtocol.getAddress(), obdProtocol.getNotifyService(), obdProtocol.getNotifyCharacter());
     }
 
     public synchronized void disconnect() {
+        BleManage.self().disconnect(BLE_MARK);
         if (obdProtocol != null) {
-            BleManage.self().client().unregisterConnectStatusListener(obdProtocol.getAddress(), bleConnectStatusListener);
-            BleManage.self().client().disconnect(obdProtocol.getAddress());
+            obdProtocol.destroy();
+            obdProtocol = null;
         }
     }
 
     private synchronized void write(byte[] msg) {
         if (obdProtocol != null) {
-            BleManage.self().client().write(obdProtocol.getAddress(), obdProtocol.getWriteService(), obdProtocol.getWriteCharacter(), msg, new BleWriteResponse() {
-                @Override
-                public void onResponse(int code) {
-
-                }
+            BleManage.self().getClient().write(obdProtocol.getAddress(), obdProtocol.getWriteService(), obdProtocol.getWriteCharacter(), msg, code -> {
             });
         }
     }
@@ -249,19 +211,19 @@ public class ObdPlugin extends ContextEx {
     }
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
-    public void onEvent(final MTimeSecondEvent event) {
+    public void onEvent(final BMEventFindDevice event) {
         String fkaddress = SharedPreUtil.getString(CommonData.SDATA_OBD_ADDRESS);
-
-        if (CommonUtil.isNotNull(fkaddress) && BleManage.self().client().getConnectStatus(fkaddress) == STATUS_DEVICE_CONNECTED) {
-            connect = true;
-            postEvent(new PObdEventConnect().setConnected(true));
-        } else {
-            connect = false;
-            postEvent(new PObdEventConnect().setConnected(false));
-        }
-
-        if (CommonUtil.isNotNull(fkaddress) && BleManage.self().client().getConnectStatus(fkaddress) != STATUS_DEVICE_CONNECTED) {
-            connect();
+        if (CommonUtil.isNotNull(fkaddress)) {
+            boolean find = false;
+            for (SearchResult device : event.getDeviceList()) {
+                if (device.getAddress().equals(fkaddress)) {
+                    find = true;
+                    break;
+                }
+            }
+            if (find) {
+                connect();
+            }
         }
     }
 }

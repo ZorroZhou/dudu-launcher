@@ -199,20 +199,20 @@ public class LPromptView extends BaseEXView {
         x.task().autoPost(() -> {
             refreshWifiState();
             String fkaddress = SharedPreUtil.getString(CommonData.SDATA_FANGKONG_ADDRESS);
-            if (CommonUtil.isNotNull(fkaddress) && BleManage.self().client().getConnectStatus(fkaddress) != STATUS_DEVICE_CONNECTED) {
-                refreshFKState(new PFkEventConnect().setConnected(true));
-            } else {
-                refreshFKState(new PFkEventConnect().setConnected(false));
-            }
+//            if (CommonUtil.isNotNull(fkaddress) && BleManage.self().client().getConnectStatus(fkaddress) != STATUS_DEVICE_CONNECTED) {
+//                refreshFKState(new PFkEventConnect().setConnected(true));
+//            } else {
+//                refreshFKState(new PFkEventConnect().setConnected(false));
+//            }
+//
+//            String obdaddress = SharedPreUtil.getString(CommonData.SDATA_OBD_ADDRESS);
+//            if (CommonUtil.isNotNull(obdaddress) && BleManage.self().client().getConnectStatus(obdaddress) != STATUS_DEVICE_CONNECTED) {
+//                refreshObdState(new PObdEventConnect().setConnected(true));
+//            } else {
+//                refreshObdState(new PObdEventConnect().setConnected(false));
+//            }
 
-            String obdaddress = SharedPreUtil.getString(CommonData.SDATA_OBD_ADDRESS);
-            if (CommonUtil.isNotNull(obdaddress) && BleManage.self().client().getConnectStatus(obdaddress) != STATUS_DEVICE_CONNECTED) {
-                refreshObdState(new PObdEventConnect().setConnected(true));
-            } else {
-                refreshObdState(new PObdEventConnect().setConnected(false));
-            }
-
-            refreshTpState(ObdPlugin.self().getCurrentPObdEventCarTp());
+            //refreshTpState(ObdPlugin.self().getCurrentPObdEventCarTp());
         });
     }
 

@@ -133,7 +133,7 @@ public class LObdView extends BaseEXView {
     private void clickEvent(View view) {
         switch (view.getId()) {
             case R.id.fl_base: {
-                if (ObdPlugin.self().notConnect()) {
+                if (!ObdPlugin.self().isConnect()) {
                     new AlertDialog.Builder(getContext()).setTitle("警告!")
                             .setNegativeButton("取消", null)
                             .setPositiveButton("确定", (dialog2, which2) -> {

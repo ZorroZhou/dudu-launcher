@@ -78,16 +78,16 @@ public class CarInfoActivity extends BaseActivity {
     private void refreshObdState() {
         String address = SharedPreUtil.getString(CommonData.SDATA_OBD_ADDRESS);
         if (CommonUtil.isNotNull(address)) {
-            if (BleManage.self().client().getConnectStatus(address) == STATUS_DEVICE_CONNECTED) {
-                setTitle("OBD(已连接)");
-                if (ObdPlugin.self().supportTp()) {
-                    tv_tp_title.setText("胎压数据:");
-                } else {
-                    tv_tp_title.setText("胎压数据(不支持):");
-                }
-            } else {
-                setTitle("OBD(未连接)");
-            }
+//            if (BleManage.self().client().getConnectStatus(address) == STATUS_DEVICE_CONNECTED) {
+//                setTitle("OBD(已连接)");
+//                if (ObdPlugin.self().supportTp()) {
+//                    tv_tp_title.setText("胎压数据:");
+//                } else {
+//                    tv_tp_title.setText("胎压数据(不支持):");
+//                }
+//            } else {
+//                setTitle("OBD(未连接)");
+//            }
         } else {
             setTitle("OBD(未绑定)");
         }

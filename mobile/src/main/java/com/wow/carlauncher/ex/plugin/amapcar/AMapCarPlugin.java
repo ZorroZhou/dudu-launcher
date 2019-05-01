@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.wow.carlauncher.common.util.AppUtil;
 import com.wow.carlauncher.ex.ContextEx;
+import com.wow.carlauncher.ex.manage.time.event.MTime5SecondEvent;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventState;
 
@@ -215,7 +216,7 @@ public class AMapCarPlugin extends ContextEx {
     }
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
-    public void onEvent(final MTimeSecondEvent event) {
+    public void onEvent(final MTime5SecondEvent event) {
         //3分钟没有收到心跳，则结束导航
         if (System.currentTimeMillis() - lastHeartbeatTime > 1000 * 60 * 3) {
             postEvent(new PAmapEventState().setRunning(false));

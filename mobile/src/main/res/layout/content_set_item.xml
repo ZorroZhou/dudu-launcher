@@ -38,6 +38,17 @@
 
     <View style="@style/Interval" />
 
+    <com.wow.carlauncher.common.view.SetView
+        android:id="@+id/sv_music_lrc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        st:summary="@string/set_yes"
+        st:summary2="@string/set_no"
+        st:titleEx="显示歌词,显示个此后,音乐作者和标题会放到一行显示"
+        st:type="switchB" />
+
+    <View style="@style/Interval" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

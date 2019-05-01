@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 
+import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.ContextEx;
 import com.wow.carlauncher.ex.plugin.fk.FangkongPlugin;
@@ -80,7 +81,10 @@ public class MusicPlugin extends ContextEx {
 
     private PMusicEventInfo lastMusicInfo;
 
-    public void refreshInfo(final String title, final String artist, final boolean havelrc) {
+    public void refreshInfo(String title, String artist, boolean havelrc) {
+        if (!SharedPreUtil.getBoolean(CommonData.SDATA_MUSIC_USE_LRC, true)) {
+            havelrc = false;
+        }
         lastMusicInfo = new PMusicEventInfo().setArtist(artist).setTitle(title).setHaveLrc(havelrc);
         postEvent(lastMusicInfo);
     }
@@ -111,8 +115,10 @@ public class MusicPlugin extends ContextEx {
     private PMusicRefresLrc pMusicRefresLrc;
 
     public void refreshLrc(String lrc) {
-        pMusicRefresLrc = new PMusicRefresLrc().setLrc(lrc);
-        postEvent(pMusicRefresLrc);
+        if (SharedPreUtil.getBoolean(CommonData.SDATA_MUSIC_USE_LRC, true)) {
+            pMusicRefresLrc = new PMusicRefresLrc().setLrc(lrc);
+            postEvent(pMusicRefresLrc);
+        }
     }
 
     public void requestLast() {

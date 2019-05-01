@@ -76,6 +76,9 @@ public class SItemView extends BaseEXView {
     @ViewInject(R.id.sv_console)
     private SetView sv_console;
 
+    @ViewInject(R.id.sv_music_lrc)
+    private SetView sv_music_lrc;
+
     private AppWidgetHost appWidgetHost;
 
     @Override
@@ -125,6 +128,8 @@ public class SItemView extends BaseEXView {
             }
         });
 
+        sv_music_lrc.setOnValueChangeListener(new SetSwitchOnClickListener(CommonData.SDATA_MUSIC_USE_LRC));
+        sv_music_lrc.setChecked(SharedPreUtil.getBoolean(CommonData.SDATA_MUSIC_USE_LRC, true));
 
         sv_music_inside_cover.setOnValueChangeListener(new SetSwitchOnClickListener(CommonData.SDATA_MUSIC_INSIDE_COVER));
         sv_music_inside_cover.setChecked(SharedPreUtil.getBoolean(CommonData.SDATA_MUSIC_INSIDE_COVER, true));

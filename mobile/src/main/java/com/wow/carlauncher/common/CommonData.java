@@ -178,7 +178,7 @@ public class CommonData {
 
     //是否允许悬浮框展示
     public static final String SDATA_MUSIC_INSIDE_COVER = "SDATA_MUSIC_INSIDE_COVER";
-
+    public static final String SDATA_MUSIC_USE_LRC = "SDATA_MUSIC_USE_LRC";
 
     public static final String SDATA_USE_NAVI = "SDATA_USE_NAVI";
 

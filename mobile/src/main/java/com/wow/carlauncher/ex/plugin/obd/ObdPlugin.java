@@ -4,15 +4,14 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 
-import com.inuker.bluetooth.library.connect.listener.BleConnectStatusListener;
-import com.inuker.bluetooth.library.search.SearchResult;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.ContextEx;
 import com.wow.carlauncher.ex.manage.ble.BleListener;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
-import com.wow.carlauncher.ex.manage.ble.event.BMEventFindDevice;
+import com.wow.carlauncher.ex.manage.ble.MyBleConnectStatusListener;
+import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarInfo;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarTp;
@@ -25,8 +24,8 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.x;
 
-import static com.inuker.bluetooth.library.Constants.STATUS_CONNECTED;
 import static com.inuker.bluetooth.library.Constants.STATUS_DEVICE_CONNECTED;
+import static com.inuker.bluetooth.library.Constants.STATUS_DEVICE_CONNECTING;
 import static com.wow.carlauncher.common.CommonData.SDATA_OBD_CONTROLLER;
 
 /**
@@ -51,13 +50,14 @@ public class ObdPlugin extends ContextEx {
 
     public static final String BLE_MARK = "BLE_OBD";
 
-    private boolean connect = false;
-
     public boolean isConnect() {
-        return connect;
+        String fkaddress = SharedPreUtil.getString(CommonData.SDATA_OBD_ADDRESS);
+        return CommonUtil.isNotNull(fkaddress) && BleManage.self().getConnectStatus(fkaddress) == STATUS_DEVICE_CONNECTED;
     }
 
     private ObdProtocol obdProtocol;
+
+    private MyBleConnectStatusListener myBleConnectStatusListener;
 
     private PObdEventCarInfo currentPObdEventCarInfo;
 
@@ -142,7 +142,6 @@ public class ObdPlugin extends ContextEx {
                     obdProtocol.stop();
                 }
             }
-            connect = success;
             connecting = false;
         }
 
@@ -159,6 +158,7 @@ public class ObdPlugin extends ContextEx {
         currentPObdEventCarInfo = new PObdEventCarInfo();
         currentPObdEventCarTp = new PObdEventCarTp();
         BleManage.self().addListener(bleListener);
+        myBleConnectStatusListener = new MyBleConnectStatusListener(BLE_MARK);
         EventBus.getDefault().register(this);
         Log.e(TAG + getClass().getSimpleName(), "init ");
     }
@@ -167,7 +167,10 @@ public class ObdPlugin extends ContextEx {
 
     private synchronized void connect() {
         final String address = SharedPreUtil.getString(CommonData.SDATA_OBD_ADDRESS);
-        if (connecting || CommonUtil.isNull(address) || BleManage.self().getConnectStatus(address) == STATUS_DEVICE_CONNECTED) {
+        if (connecting ||
+                CommonUtil.isNull(address) ||
+                BleManage.self().getConnectStatus(address) == STATUS_DEVICE_CONNECTED ||
+                BleManage.self().getConnectStatus(address) == STATUS_DEVICE_CONNECTING) {
             return;
         }
 
@@ -189,7 +192,7 @@ public class ObdPlugin extends ContextEx {
                 obdProtocol = new GoodDriverTPProtocol(getContext(), address, obdProtocolListener);
                 break;
         }
-        x.task().autoPost(() -> BleManage.self().connect(BLE_MARK, obdProtocol.getAddress(), obdProtocol.getNotifyService(), obdProtocol.getNotifyCharacter()));
+        BleManage.self().connect(BLE_MARK, obdProtocol.getAddress(), obdProtocol.getNotifyService(), obdProtocol.getNotifyCharacter(), myBleConnectStatusListener);
     }
 
     public synchronized void disconnect() {
@@ -212,19 +215,12 @@ public class ObdPlugin extends ContextEx {
     }
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
-    public void onEvent(final BMEventFindDevice event) {
+    public void onEvent(final MTimeSecondEvent event) {
         String fkaddress = SharedPreUtil.getString(CommonData.SDATA_OBD_ADDRESS);
-        if (CommonUtil.isNotNull(fkaddress) && !connect) {
-            boolean find = false;
-            for (SearchResult device : event.getDeviceList()) {
-                if (device.getAddress().equals(fkaddress)) {
-                    find = true;
-                    break;
-                }
-            }
-            if (find) {
-                connect();
-            }
+        if (CommonUtil.isNotNull(fkaddress)
+                && BleManage.self().getConnectStatus(fkaddress) != STATUS_DEVICE_CONNECTED
+                && BleManage.self().getConnectStatus(fkaddress) != STATUS_DEVICE_CONNECTING) {
+            connect();
         }
     }
 }

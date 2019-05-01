@@ -4,7 +4,7 @@ import com.inuker.bluetooth.library.connect.listener.BleConnectStatusListener;
 
 import static com.inuker.bluetooth.library.Constants.STATUS_CONNECTED;
 
-class MyBleConnectStatusListener extends BleConnectStatusListener {
+public class MyBleConnectStatusListener extends BleConnectStatusListener {
     private String mark;
 
     public MyBleConnectStatusListener(String mark) {

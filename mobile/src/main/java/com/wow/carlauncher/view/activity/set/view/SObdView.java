@@ -1,6 +1,5 @@
 package com.wow.carlauncher.view.activity.set.view;
 
-import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,8 +14,9 @@ import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.util.ThreadObj;
 import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
-import com.wow.carlauncher.ex.manage.ble.BleSearch;
+import com.wow.carlauncher.ex.manage.ble.BleSearchResponse;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
+import com.wow.carlauncher.ex.plugin.fk.FangkongPlugin;
 import com.wow.carlauncher.ex.plugin.fk.FangkongProtocolEnum;
 import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.ex.plugin.obd.ObdProtocolEnum;
@@ -108,21 +108,19 @@ public class SObdView extends BaseView {
         sv_obd_select.setOnClickListener(view -> {
             final ThreadObj<ListDialog> listTemp = new ThreadObj<>();
             final List<SearchResult> devices = new ArrayList<>();
-            BleSearch bleSearch = new BleSearch() {
-                public void findDevice(List<SearchResult> deviceList) {
-                    for (SearchResult device : deviceList) {
-                        boolean have = false;
-                        for (SearchResult d : devices) {
-                            if (d.getAddress().equals(device.getAddress())) {
-                                have = true;
-                                break;
-                            }
-                        }
-                        if (!have) {
-                            devices.add(device);
+            BleManage.self().startSearch(new BleSearchResponse() {
+                @Override
+                public void onDeviceFounded(SearchResult device) {
+                    boolean have = false;
+                    for (SearchResult d : devices) {
+                        if (d.getAddress().equals(device.getAddress())) {
+                            have = true;
+                            break;
                         }
                     }
-
+                    if (!have) {
+                        devices.add(device);
+                    }
                     String[] items = new String[devices.size()];
                     for (int i = 0; i < items.length; i++) {
                         SearchResult bluetoothDevice = devices.get(i);
@@ -130,9 +128,10 @@ public class SObdView extends BaseView {
                     }
                     x.task().autoPost(() -> listTemp.getObj().getListView().setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, items)));
                 }
-            };
+            });
+
             final ListDialog dialog = new ListDialog(getContext());
-            dialog.setOnDismissListener(dialogInterface -> bleSearch.destroy());
+            dialog.setOnDismissListener(dialogInterface -> BleManage.self().stopSearch());
 
             dialog.setTitle("请选择一个蓝牙设备");
             dialog.show();
@@ -144,6 +143,7 @@ public class SObdView extends BaseView {
                 SharedPreUtil.saveString(CommonData.SDATA_OBD_ADDRESS, device.getAddress());
                 SharedPreUtil.saveString(CommonData.SDATA_OBD_NAME, device.getName());
                 sv_obd_select.setSummary("绑定了设备:" + device.getName() + "  地址:" + device.getAddress());
+                ObdPlugin.self().disconnect();
             });
         });
 

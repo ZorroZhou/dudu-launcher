@@ -6,7 +6,6 @@ import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
-import com.wow.carlauncher.ex.manage.ble.BleManage;
 import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarInfo;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarTp;
@@ -19,8 +18,6 @@ import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.view.annotation.ViewInject;
 
 import java.util.Locale;
-
-import static com.inuker.bluetooth.library.Constants.STATUS_DEVICE_CONNECTED;
 
 /**
  * Created by 10124 on 2018/4/25.

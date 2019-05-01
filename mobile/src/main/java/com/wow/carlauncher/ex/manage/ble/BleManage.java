@@ -12,16 +12,10 @@ import com.inuker.bluetooth.library.search.SearchRequest;
 import com.inuker.bluetooth.library.search.SearchResult;
 import com.inuker.bluetooth.library.search.response.SearchResponse;
 import com.wow.carlauncher.ex.ContextEx;
-import com.wow.carlauncher.ex.manage.ble.event.BMEventFindDevice;
-import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
+import org.xutils.x;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -49,31 +43,19 @@ public class BleManage extends ContextEx {
     public void init(Context context) {
         setContext(context);
         bluetoothClient = new BluetoothClient(context);
-        deviceList = new ArrayList<>();
         listeners = new HashMap<>();
         markMacMap = new HashMap<>();
         statusListener = new HashMap<>();
         options = new BleConnectOptions.Builder()
-                .setConnectRetry(2)
                 .setConnectTimeout(5000)   // 连接超时5s
-                .setServiceDiscoverRetry(5)
                 .setServiceDiscoverTimeout(5000)  // 发现服务超时5s
                 .build();
-
-        EventBus.getDefault().register(this);
-        startTask();
     }
 
 
     private BleConnectOptions options;
 
     private BluetoothClient bluetoothClient;
-
-    private List<SearchResult> deviceList;
-
-    private boolean running = false;
-
-    private boolean taskRun = false;
 
     private Map<String, BleListener> listeners;
 
@@ -84,54 +66,44 @@ public class BleManage extends ContextEx {
     private Map<String, String> markMacMap;
 
     private Map<String, BleConnectStatusListener> statusListener;
+    private boolean search = false;
 
-    public boolean startTask() {
-        if (bluetoothClient.isBleSupported() && bluetoothClient.isBluetoothOpened()) {
-            taskRun = true;
-            Log.e(TAG + getClass().getSimpleName(), "支持蓝牙并打开 ");
-            return true;
-        } else {
-            Log.e(TAG + getClass().getSimpleName(), "不支持蓝牙4.0或者蓝牙未打开 ");
-            return false;
-        }
-    }
-
-    public void stopTask() {
-        taskRun = false;
-        bluetoothClient.stopSearch();
-    }
-
-    private void start() {
-        if (bluetoothClient.isBleSupported() && bluetoothClient.isBluetoothOpened()) {
-            running = true;
+    public void startSearch(BleSearchResponse response) {
+        if (bluetoothClient.isBleSupported() && bluetoothClient.isBluetoothOpened() && !search) {
+            search = true;
             final SearchRequest request = new SearchRequest.Builder()
-                    .searchBluetoothLeDevice(3000)//开始扫描蓝牙设备每次3s
+                    .searchBluetoothLeDevice(3000, 10)//开始扫描蓝牙设备每次3s
                     .build();
-            deviceList.clear();
             bluetoothClient.search(request, new SearchResponse() {
                 @Override
                 public void onSearchStarted() {
+                    response.onSearchStarted();
                 }
 
                 @Override
                 public void onDeviceFounded(SearchResult device) {
-                    Log.e(TAG, "onDeviceFounded: " + device.getName() + " " + device.getAddress());
-                    deviceList.add(device);
+                    response.onDeviceFounded(device);
                 }
 
                 @Override
                 public void onSearchStopped() {
-                    running = false;
-                    EventBus.getDefault().post(new BMEventFindDevice().setDeviceList(deviceList));
+                    response.onSearchStopped();
+                    search = false;
                 }
 
                 @Override
                 public void onSearchCanceled() {
-
+                    response.onSearchCanceled();
+                    search = false;
                 }
             });
         }
     }
+
+    public void stopSearch() {
+        bluetoothClient.stopSearch();
+    }
+
 
     public BluetoothClient getClient() {
         return bluetoothClient;
@@ -141,6 +113,7 @@ public class BleManage extends ContextEx {
         statusListener.remove(mark);
         if (markMacMap.containsKey(mark)) {
             bluetoothClient.disconnect(markMacMap.get(mark));
+            markMacMap.remove(mark);
         }
     }
 
@@ -152,7 +125,14 @@ public class BleManage extends ContextEx {
         listeners.remove(listener.getMark());
     }
 
-    public void connect(String mark, String mac, UUID notifyService, UUID notifyCharacter) {
+    public void connect(String mark, String mac, UUID notifyService, UUID notifyCharacter, BleConnectStatusListener myBleConnectStatusListener) {
+        if (!bluetoothClient.isBleSupported() || !bluetoothClient.isBluetoothOpened()) {
+            BleListener bleListener = listeners.get(mark);
+            if (bleListener != null) {
+                bleListener.connect(false);
+            }
+            return;
+        }
         disconnect(mark);
         bluetoothClient.clearRequest(mac, 0);
         bluetoothClient.refreshCache(mac);
@@ -161,14 +141,13 @@ public class BleManage extends ContextEx {
             bluetoothClient.unregisterConnectStatusListener(mac, listener);
             statusListener.remove(mark);
         }
-        MyBleConnectStatusListener myBleConnectStatusListener = new MyBleConnectStatusListener(mark);
         statusListener.put(mark, myBleConnectStatusListener);
         bluetoothClient.registerConnectStatusListener(mac, myBleConnectStatusListener);
 
         markMacMap.put(mark, mac);
 
         final BleListener bleListener = listeners.get(mark);
-        bluetoothClient.connect(mac, options, (code, data) -> {
+        x.task().run(() -> bluetoothClient.connect(mac, options, (code, data) -> {
             if (code == REQUEST_SUCCESS) {
                 BleManage.self().getClient().notify(mac,
                         notifyService,
@@ -193,8 +172,12 @@ public class BleManage extends ContextEx {
                                         bleListener.connect(true);
                                     } else {
                                         bleListener.connect(false);
-                                        bluetoothClient.disconnect(mac);
+
                                     }
+                                }
+                                if (code != REQUEST_SUCCESS) {
+                                    disconnect(mark);
+                                    bluetoothClient.disconnect(mac);
                                 }
                             }
                         });
@@ -202,19 +185,14 @@ public class BleManage extends ContextEx {
                 if (bleListener != null) {
                     bleListener.connect(false);
                 }
-                Log.d(TAG, "onResponse: OBD连接失败!!!");
+                disconnect(mark);
+                bluetoothClient.disconnect(mac);
+                Log.d(TAG, "onResponse: 连接失败!!!");
             }
-        });
+        }));
     }
 
     public int getConnectStatus(String mac) {
         return bluetoothClient.getConnectStatus(mac);
-    }
-
-    @Subscribe(threadMode = ThreadMode.BACKGROUND)
-    public void onEvent(final MTimeSecondEvent event) {
-        if (taskRun && !running) {
-            start();
-        }
     }
 }

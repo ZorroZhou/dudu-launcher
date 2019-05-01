@@ -3,41 +3,28 @@ package com.wow.carlauncher.ex.plugin.fk;
 import android.content.Context;
 import android.util.Log;
 
-import com.inuker.bluetooth.library.Constants;
-import com.inuker.bluetooth.library.connect.options.BleConnectOptions;
-import com.inuker.bluetooth.library.connect.response.BleConnectResponse;
-import com.inuker.bluetooth.library.connect.response.BleNotifyResponse;
-import com.inuker.bluetooth.library.model.BleGattProfile;
-import com.inuker.bluetooth.library.search.SearchResult;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.ContextEx;
 import com.wow.carlauncher.ex.manage.ble.BleListener;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
-import com.wow.carlauncher.ex.manage.ble.event.BMEventFindDevice;
+import com.wow.carlauncher.ex.manage.ble.MyBleConnectStatusListener;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventAction;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventBatterLevel;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventConnect;
 import com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol;
-import com.wow.carlauncher.ex.plugin.obd.ObdProtocolEnum;
-import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventConnect;
-import com.wow.carlauncher.ex.plugin.obd.protocol.GoodDriverProtocol;
-import com.wow.carlauncher.ex.plugin.obd.protocol.GoodDriverTPProtocol;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.x;
 
-import java.util.UUID;
-
-import static com.inuker.bluetooth.library.Constants.REQUEST_SUCCESS;
 import static com.inuker.bluetooth.library.Constants.STATUS_DEVICE_CONNECTED;
+import static com.inuker.bluetooth.library.Constants.STATUS_DEVICE_CONNECTING;
 import static com.wow.carlauncher.common.CommonData.SDATA_FANGKONG_CONTROLLER;
-import static com.wow.carlauncher.common.CommonData.SDATA_OBD_CONTROLLER;
 import static com.wow.carlauncher.common.CommonData.TAG;
 
 /**
@@ -64,10 +51,12 @@ public class FangkongPlugin extends ContextEx {
     public void init(Context context) {
         setContext(context);
         BleManage.self().addListener(bleListener);
+        myBleConnectStatusListener = new MyBleConnectStatusListener(BLE_MARK);
         EventBus.getDefault().register(this);
         Log.e(TAG + getClass().getSimpleName(), "init ");
     }
 
+    private MyBleConnectStatusListener myBleConnectStatusListener;
     private final BleListener bleListener = new BleListener() {
         @Override
         public String getMark() {
@@ -82,7 +71,6 @@ public class FangkongPlugin extends ContextEx {
                     ToastManage.self().show("方控连接成功!");
                 }
             }
-            connect = success;
             connecting = false;
         }
 
@@ -93,12 +81,10 @@ public class FangkongPlugin extends ContextEx {
             }
         }
     };
-    private boolean connect = false;
-
-    private final static byte[] LOCK = new byte[0];
 
     public boolean isConnect() {
-        return connect;
+        String fkaddress = SharedPreUtil.getString(CommonData.SDATA_OBD_ADDRESS);
+        return CommonUtil.isNotNull(fkaddress) && BleManage.self().getConnectStatus(fkaddress) == STATUS_DEVICE_CONNECTED;
     }
 
     private FangkongProtocol fangkongProtocol;
@@ -122,13 +108,13 @@ public class FangkongPlugin extends ContextEx {
 
     private void connect() {
         final String fkaddress = SharedPreUtil.getString(CommonData.SDATA_FANGKONG_ADDRESS);
-        synchronized (LOCK) {
-            if (connecting || CommonUtil.isNull(fkaddress) || BleManage.self().getConnectStatus(fkaddress) == STATUS_DEVICE_CONNECTED) {
-                return;
-            }
-
-            connecting = true;
+        if (connecting ||
+                CommonUtil.isNull(fkaddress) ||
+                BleManage.self().getConnectStatus(fkaddress) == STATUS_DEVICE_CONNECTED ||
+                BleManage.self().getConnectStatus(fkaddress) == STATUS_DEVICE_CONNECTING) {
+            return;
         }
+        connecting = true;
 
         disconnect();
 
@@ -142,7 +128,7 @@ public class FangkongPlugin extends ContextEx {
                 fangkongProtocol = new YiLianProtocol(fkaddress, getContext(), changeModelCallBack);
                 break;
         }
-        x.task().autoPost(() -> BleManage.self().connect(BLE_MARK, fangkongProtocol.getAddress(), fangkongProtocol.getService(), fangkongProtocol.getCharacter()));
+        BleManage.self().connect(BLE_MARK, fangkongProtocol.getAddress(), fangkongProtocol.getService(), fangkongProtocol.getCharacter(), myBleConnectStatusListener);
     }
 
     public void disconnect() {
@@ -154,21 +140,12 @@ public class FangkongPlugin extends ContextEx {
     }
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
-    public void onEvent(final BMEventFindDevice event) {
+    public void onEvent(final MTimeSecondEvent event) {
         String fkaddress = SharedPreUtil.getString(CommonData.SDATA_FANGKONG_ADDRESS);
-        if (CommonUtil.isNotNull(fkaddress) && !connect) {
-            boolean find = false;
-            Log.e(TAG, "onEvent: " + event.getDeviceList());
-            for (SearchResult device : event.getDeviceList()) {
-                if (device.getAddress().equals(fkaddress)) {
-                    find = true;
-                    break;
-                }
-            }
-            if (find) {
-                Log.e(TAG, "onEvent:发现FK,开始连接");
-                connect();
-            }
+        if (CommonUtil.isNotNull(fkaddress) &&
+                BleManage.self().getConnectStatus(fkaddress) != STATUS_DEVICE_CONNECTED &&
+                BleManage.self().getConnectStatus(fkaddress) != STATUS_DEVICE_CONNECTING) {
+            connect();
         }
     }
 }

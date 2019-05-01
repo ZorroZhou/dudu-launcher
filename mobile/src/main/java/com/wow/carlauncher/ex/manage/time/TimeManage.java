@@ -7,6 +7,7 @@ import android.util.Log;
 import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.ex.ContextEx;
 import com.wow.carlauncher.ex.manage.time.event.MTime30MinuteEvent;
+import com.wow.carlauncher.ex.manage.time.event.MTime5SecondEvent;
 import com.wow.carlauncher.ex.manage.time.event.MTimeHalfSecondEvent;
 import com.wow.carlauncher.ex.manage.time.event.MTimeMinuteEvent;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
@@ -46,6 +47,9 @@ public class TimeManage extends ContextEx {
     private final static int MSECOND = 1000;
     private final static int SECOND = MSECOND / ZHOUQI;
 
+    private final static int MSECOND5 = 5000;
+    private final static int SECOND5 = MSECOND5 / ZHOUQI;
+
     private final static int MMINUTE = 60 * 1000;
     private final static int MINUTE = MMINUTE / ZHOUQI;
 
@@ -76,6 +80,17 @@ public class TimeManage extends ContextEx {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+
+                try {
+                    if (timeMark % SECOND5 == 0) {
+                        if (EventBus.getDefault().hasSubscriberForEvent(MTime5SecondEvent.class)) {
+                            postEvent(new MTime5SecondEvent());
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
                 try {
                     if (timeMark % MINUTE30 == 0) {
                         if (EventBus.getDefault().hasSubscriberForEvent(MTime30MinuteEvent.class)) {

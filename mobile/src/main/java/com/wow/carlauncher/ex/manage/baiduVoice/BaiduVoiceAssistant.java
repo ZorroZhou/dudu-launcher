@@ -18,6 +18,7 @@ import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.AppUtil;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.GsonUtil;
+import com.wow.carlauncher.ex.ContextEx;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfo;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.baiduVoice.bean.AsrEventParam;
@@ -38,7 +39,7 @@ import java.util.Arrays;
 import static com.wow.carlauncher.common.CommonData.TAG;
 import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.AMAP_PACKAGE;
 
-public class BaiduVoiceAssistant {
+public class BaiduVoiceAssistant extends ContextEx {
     private static BaiduVoiceAssistant self;
 
     public static BaiduVoiceAssistant self() {
@@ -65,7 +66,6 @@ public class BaiduVoiceAssistant {
     private EventManager wakeup;
     private EventManager asr;
     private SpeechSynthesizer ss;
-    private Context context;
     private boolean init = false;
 
     private boolean asrRun = false;
@@ -74,7 +74,7 @@ public class BaiduVoiceAssistant {
     private KeyWord[] keyWords;
 
     public void init(Context context) {
-        this.context = context;
+        setContext(context);
         if (init) {
             return;
         }
@@ -96,22 +96,22 @@ public class BaiduVoiceAssistant {
 
 
     private void initVoice() {
-        wakeup = EventManagerFactory.create(context, BAIDU_WAKE_UP);
+        wakeup = EventManagerFactory.create(getContext(), BAIDU_WAKE_UP);
         // 基于SDK唤醒词集成1.3 注册输出事件
         wakeup.registerListener(eventListener); //  EventListener 中 onEvent方法
 
-        asr = EventManagerFactory.create(context, BAIDU_ASR);
+        asr = EventManagerFactory.create(getContext(), BAIDU_ASR);
         asr.registerListener(eventListener); //  EventListener 中 onEvent方法
     }
 
     private void initSpeech() throws Exception {
         ss = SpeechSynthesizer.getInstance();
-        ss.setContext(context);
+        ss.setContext(getContext());
         ss.setAppId(APP_ID);
         ss.setApiKey(API_KEY, SECRET_KEY);
         ss.setParam(SpeechSynthesizer.PARAM_SPEAKER, "4");
-        ss.setParam(SpeechSynthesizer.PARAM_TTS_TEXT_MODEL_FILE, FileUtil.copyAssetsFile(context, BAIDU_MODEL_FILE));
-        ss.setParam(SpeechSynthesizer.PARAM_TTS_SPEECH_MODEL_FILE, FileUtil.copyAssetsFile(context, BAIDU_TEXT_FILE));
+        ss.setParam(SpeechSynthesizer.PARAM_TTS_TEXT_MODEL_FILE, FileUtil.copyAssetsFile(getContext(), BAIDU_MODEL_FILE));
+        ss.setParam(SpeechSynthesizer.PARAM_TTS_SPEECH_MODEL_FILE, FileUtil.copyAssetsFile(getContext(), BAIDU_TEXT_FILE));
         ss.setSpeechSynthesizerListener(speechSynthesizerListener);
         ss.initTts(TtsMode.MIX);
     }
@@ -129,7 +129,7 @@ public class BaiduVoiceAssistant {
             wakeup.send(SpeechConstant.WAKEUP_STOP, null, null, 0, 0); //
             asr.send(SpeechConstant.ASR_START, GsonUtil.getGson().toJson(new AsrStart()), null, 0, 0);
             ss.speak("你好");
-            EventBus.getDefault().post(new MVaAsrStateChange().setRun(true));
+            postEvent(new MVaAsrStateChange().setRun(true));
         }
     }
 
@@ -138,7 +138,7 @@ public class BaiduVoiceAssistant {
             asrRun = false;
             asr.send(SpeechConstant.ASR_STOP, null, null, 0, 0);
             startWakeUp();
-            EventBus.getDefault().post(new MVaAsrStateChange().setRun(false));
+            postEvent(new MVaAsrStateChange().setRun(false));
         }
     }
 
@@ -185,7 +185,7 @@ public class BaiduVoiceAssistant {
     private void handleAsrPartial(String param) {
         try {
             AsrEventPartial asrEventPartial = GsonUtil.getGson().fromJson(param, AsrEventPartial.class);
-            EventBus.getDefault().post(new MVaNewWordFind().setOver("final_result".equals(asrEventPartial.getResult_type())).setWord(asrEventPartial.getBest_result()));
+            postEvent(new MVaNewWordFind().setOver("final_result".equals(asrEventPartial.getResult_type())).setWord(asrEventPartial.getBest_result()));
             if ("final_result".equals(asrEventPartial.getResult_type())) {
                 TaskExecutor.self().run(() -> {
                     String word = asrEventPartial.getBest_result();
@@ -283,15 +283,15 @@ public class BaiduVoiceAssistant {
         Intent home = new Intent(Intent.ACTION_MAIN);
         home.addCategory(Intent.CATEGORY_HOME);
         home.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(home);
+        getContext().startActivity(home);
     }
 
     private void openApp(String name) {
         if ("主页".equals(name) || "首页".equals(name) || "".equals(name)) {
             goHome();
         } else if ("高德".equals(name) || "导航".equals(name) || "地图".equals(name)) {
-            if (!AppUtil.isInstall(context, AMAP_PACKAGE)) {
-                Toast.makeText(context, "没有安装高德地图", Toast.LENGTH_SHORT).show();
+            if (!AppUtil.isInstall(getContext(), AMAP_PACKAGE)) {
+                Toast.makeText(getContext(), "没有安装高德地图", Toast.LENGTH_SHORT).show();
             } else {
                 AppInfoManage.self().openApp(AMAP_PACKAGE);
             }
@@ -302,7 +302,7 @@ public class BaiduVoiceAssistant {
                     return;
                 }
             }
-            Toast.makeText(context, "没有找到APP", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "没有找到APP", Toast.LENGTH_SHORT).show();
         }
     }
 

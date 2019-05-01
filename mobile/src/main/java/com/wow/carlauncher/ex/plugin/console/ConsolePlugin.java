@@ -41,12 +41,12 @@ public class ConsolePlugin extends ContextEx {
     private ConsoleProtoclListener consoleListener = new ConsoleProtoclListener() {
         @Override
         public void callState(final boolean calling) {
-            EventBus.getDefault().post(new PConsoleEventCallState().setCalling(calling));
+            postEvent(new PConsoleEventCallState().setCalling(calling));
         }
 
         @Override
         public void lightState(boolean lightState) {
-            EventBus.getDefault().post(new PConsoleEventLightState().setOpen(lightState));
+            postEvent(new PConsoleEventLightState().setOpen(lightState));
         }
     };
 

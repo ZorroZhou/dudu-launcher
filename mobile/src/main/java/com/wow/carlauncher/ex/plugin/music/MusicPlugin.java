@@ -82,14 +82,14 @@ public class MusicPlugin extends ContextEx {
 
     public void refreshInfo(final String title, final String artist) {
         lastMusicInfo = new PMusicEventInfo().setArtist(artist).setTitle(title);
-        EventBus.getDefault().post(new PMusicEventInfo().setArtist(artist).setTitle(title));
+        postEvent(new PMusicEventInfo().setArtist(artist).setTitle(title));
     }
 
     private PMusicEventProgress lastMusicProgress;
 
     public void refreshProgress(final int curr_time, final int total_tim) {
         lastMusicProgress = new PMusicEventProgress().setCurrTime(curr_time).setTotalTime(total_tim);
-        EventBus.getDefault().post(lastMusicProgress);
+        postEvent(lastMusicProgress);
     }
 
     private PMusicEventState lastMusicState;
@@ -97,28 +97,28 @@ public class MusicPlugin extends ContextEx {
     public void refreshState(final boolean run, final boolean showProgress) {
         playing = run;
         lastMusicState = new PMusicEventState().setRun(run).setShowProgress(showProgress);
-        EventBus.getDefault().post(lastMusicState);
+        postEvent(lastMusicState);
     }
 
     private PMusicEventCoverRefresh lastMusicCover;
 
     public void refreshCover(final String url) {
         lastMusicCover = new PMusicEventCoverRefresh().setUrl(url);
-        EventBus.getDefault().post(lastMusicCover);
+        postEvent(lastMusicCover);
     }
 
     public void requestLast() {
         if (lastMusicState != null) {
-            EventBus.getDefault().post(lastMusicState);
+            postEvent(lastMusicState);
         }
         if (lastMusicInfo != null) {
-            EventBus.getDefault().post(lastMusicInfo);
+            postEvent(lastMusicInfo);
         }
         if (lastMusicProgress != null) {
-            EventBus.getDefault().post(lastMusicProgress);
+            postEvent(lastMusicProgress);
         }
         if (lastMusicCover != null) {
-            EventBus.getDefault().post(lastMusicCover);
+            postEvent(lastMusicCover);
         }
     }
 

@@ -47,8 +47,8 @@ public class BleManage extends ContextEx {
         markMacMap = new HashMap<>();
         statusListener = new HashMap<>();
         options = new BleConnectOptions.Builder()
-                .setConnectTimeout(5000)   // 连接超时5s
-                .setServiceDiscoverTimeout(5000)  // 发现服务超时5s
+                .setConnectTimeout(3000)   // 连接超时5s
+                .setServiceDiscoverTimeout(2000)  // 发现服务超时5s
                 .build();
     }
 

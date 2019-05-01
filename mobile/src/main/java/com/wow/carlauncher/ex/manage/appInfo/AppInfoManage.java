@@ -16,6 +16,7 @@ import com.wow.carlauncher.common.AppIconTemp;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
+import com.wow.carlauncher.ex.ContextEx;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.appInfo.event.MAppInfoRefreshShowEvent;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
@@ -45,7 +46,7 @@ import static com.wow.carlauncher.ex.manage.appInfo.AppInfo.MARK_OTHER_APP;
  * Created by 10124 on 2017/11/13.
  */
 
-public class AppInfoManage {
+public class AppInfoManage extends ContextEx {
     private static class SingletonHolder {
         @SuppressLint("StaticFieldLeak")
         private static AppInfoManage instance = new AppInfoManage();
@@ -58,8 +59,6 @@ public class AppInfoManage {
     private AppInfoManage() {
         super();
     }
-
-    private Context context;
 
     private PackageManager packageManager;
     private Map<String, AppInfo> allAppInfosMap;
@@ -91,8 +90,8 @@ public class AppInfoManage {
     }
 
     public void init(Context c) {
-        this.context = c;
-        this.packageManager = this.context.getPackageManager();
+        setContext(c);
+        this.packageManager = getContext().getPackageManager();
 
         allAppInfosList = Collections.synchronizedList(new ArrayList<>());
         showAppInfosList = Collections.synchronizedList(new ArrayList<>());
@@ -129,7 +128,7 @@ public class AppInfoManage {
     }
 
     public Drawable getIcon(String app, boolean withTheme) {
-        Resources resources = this.context.getResources();
+        Resources resources = getContext().getResources();
         AppInfo info = getAppInfo(app);
         if (info != null) {
             if (MARK_OTHER_APP == info.appMark) {
@@ -155,16 +154,16 @@ public class AppInfoManage {
                 switch (info.clazz) {
                     case INTERNAL_APP_DRIVING: {
                         if (withTheme) {
-                            return ContextCompat.getDrawable(context, ThemeManage.self().getCurrentThemeRes(R.mipmap.app_icon_obd));
+                            return ContextCompat.getDrawable(getContext(), ThemeManage.self().getCurrentThemeRes(R.mipmap.app_icon_obd));
                         } else {
-                            return ContextCompat.getDrawable(context, R.mipmap.app_icon_obd);
+                            return ContextCompat.getDrawable(getContext(), R.mipmap.app_icon_obd);
                         }
                     }
                     case INTERNAL_APP_SETTING: {
                         if (withTheme) {
-                            return ContextCompat.getDrawable(context, ThemeManage.self().getCurrentThemeRes(R.mipmap.app_icon_set));
+                            return ContextCompat.getDrawable(getContext(), ThemeManage.self().getCurrentThemeRes(R.mipmap.app_icon_set));
                         } else {
-                            return ContextCompat.getDrawable(context, R.mipmap.app_icon_set);
+                            return ContextCompat.getDrawable(getContext(), R.mipmap.app_icon_set);
                         }
                     }
                 }
@@ -200,13 +199,13 @@ public class AppInfoManage {
                     return false;
                 }
                 appIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(appIntent);
+                getContext().startActivity(appIntent);
                 return true;
             } else {
                 InternalAppInfo appInfo = (InternalAppInfo) info;
-                Intent appIntent = new Intent(context, appInfo.loadClazz);
+                Intent appIntent = new Intent(getContext(), appInfo.loadClazz);
                 appIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(appIntent);
+                getContext().startActivity(appIntent);
                 return true;
             }
         }
@@ -274,7 +273,7 @@ public class AppInfoManage {
                 }
                 showAppInfosList.removeAll(hides);
 
-                EventBus.getDefault().post(new MAppInfoRefreshShowEvent());
+                postEvent(new MAppInfoRefreshShowEvent());
             }
         });
     }

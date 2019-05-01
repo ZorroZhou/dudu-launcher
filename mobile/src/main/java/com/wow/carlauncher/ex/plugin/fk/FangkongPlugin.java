@@ -92,12 +92,12 @@ public class FangkongPlugin extends ContextEx {
     private FangkongProtocolListener changeModelCallBack = new FangkongProtocolListener() {
         @Override
         public void batteryLevel(Integer level, Integer total) {
-            EventBus.getDefault().post(new PFkEventBatterLevel().setLevel(level).setTotal(total));
+            postEvent(new PFkEventBatterLevel().setLevel(level).setTotal(total));
         }
 
         @Override
         public void onAction(final int action) {
-            x.task().run(() -> EventBus.getDefault().post(new PFkEventAction()
+            x.task().run(() -> postEvent(new PFkEventAction()
                     .setAction(action)
                     .setFangkongProtocol(FangkongProtocolEnum.getById(SharedPreUtil.getInteger(SDATA_FANGKONG_CONTROLLER, FangkongProtocolEnum.YLFK.getId())))
             ));

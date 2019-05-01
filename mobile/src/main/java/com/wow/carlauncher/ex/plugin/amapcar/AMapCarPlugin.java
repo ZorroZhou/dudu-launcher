@@ -128,6 +128,7 @@ public class AMapCarPlugin extends ContextEx {
             Toast.makeText(getContext(), "没有安装高德地图", Toast.LENGTH_SHORT).show();
             return;
         }
+
         Map<String, Object> param = new HashMap<>();
         if (mute) {
             param.put(REQUEST_SET_NAVI_MUTE_MARK, 1);

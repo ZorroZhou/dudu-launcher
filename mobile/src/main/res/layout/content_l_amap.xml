@@ -27,7 +27,7 @@
     </com.zhy.android.percent.support.PercentFrameLayout>
 
     <FrameLayout
-        android:id="@+id/rl_moren"
+        android:id="@+id/base_moren"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -45,7 +45,41 @@
             app:layout_marginLeftPercent="2%h"
             app:layout_marginRightPercent="2%h">
 
+            <FrameLayout
+                android:id="@+id/fl_xunhang_root"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:visibility="gone"
+                app:layout_heightPercent="22%h"
+                app:layout_marginTopPercent="12%h">
+
+                <com.zhy.android.percent.support.PercentRelativeLayout
+                    android:id="@+id/rl_xunhang"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <com.wow.carlauncher.common.view.PhilTextView
+                        android:id="@+id/tv_speed"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        android:gravity="center"
+                        android:text="0"
+                        android:textColor="@android:color/white"
+                        app:layout_textSizePercent="80%h" />
+
+                </com.zhy.android.percent.support.PercentRelativeLayout>
+            </FrameLayout>
+
+            <View
+                android:id="@+id/line11"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@id/fl_xunhang_root"
+                android:visibility="gone" />
+
             <LinearLayout
+                android:id="@+id/ll_controller2"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_alignParentBottom="true"
@@ -130,11 +164,39 @@
                     </com.zhy.android.percent.support.PercentLinearLayout>
                 </com.zhy.android.percent.support.PercentLinearLayout>
             </LinearLayout>
+
+            <com.zhy.android.percent.support.PercentRelativeLayout
+                android:id="@+id/rl_che"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/ll_controller2"
+                android:layout_below="@id/fl_xunhang_root"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/iv_road2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerHorizontal="true"
+                    android:src="@mipmap/n_road1"
+                    app:layout_heightPercent="80%h"
+                    app:layout_marginTopPercent="15%h"
+                    app:layout_widthPercent="75%h" />
+
+                <ImageView
+                    android:id="@+id/iv_car2"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_centerHorizontal="true"
+                    app:layout_heightPercent="34%h"
+                    app:layout_marginTopPercent="50%h"
+                    app:layout_widthPercent="34%h" />
+            </com.zhy.android.percent.support.PercentRelativeLayout>
         </com.zhy.android.percent.support.PercentRelativeLayout>
     </FrameLayout>
 
     <com.zhy.android.percent.support.PercentRelativeLayout
-        android:id="@+id/rl_daohang"
+        android:id="@+id/base_daohang"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -358,5 +420,4 @@
             app:layout_marginTopPercent="5%h" />
 
     </com.zhy.android.percent.support.PercentRelativeLayout>
-
 </com.zhy.android.percent.support.PercentRelativeLayout>

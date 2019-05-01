@@ -22,6 +22,7 @@ import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.ViewUtils;
 import com.wow.carlauncher.common.view.LukuangView;
 import com.wow.carlauncher.ex.manage.ThemeManage;
+import com.wow.carlauncher.ex.manage.location.event.MNewLocationEvent;
 import com.wow.carlauncher.ex.plugin.amapcar.AMapCarPlugin;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventNavInfo;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventState;
@@ -84,6 +85,7 @@ public class LAMapView extends BaseEXView {
         manage.setViewsBackround(this, new int[]{
                 R.id.line1,
                 R.id.line7,
+                R.id.line11,
                 R.id.line4
         }, R.drawable.n_line2);
 
@@ -99,24 +101,33 @@ public class LAMapView extends BaseEXView {
         iv_dh_j.setImageResource(manage.getCurrentThemeRes(R.mipmap.n_dh_j));
         iv_dh_gs.setImageResource(manage.getCurrentThemeRes(R.mipmap.n_dh_gs));
         rl_navinfo.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_dh2_bg));
+        rl_xunhang.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_dh2_bg));
 
         refreshMute();
         refreshRoad();
 
         iv_close.setImageResource(manage.getCurrentThemeRes(R.mipmap.n_dh_close));
         iv_car.setImageResource(manage.getCurrentThemeRes(R.mipmap.n_car));
+        iv_car2.setImageResource(manage.getCurrentThemeRes(R.mipmap.n_car));
+        iv_road2.setImageResource(manage.getCurrentThemeRes(R.mipmap.n_road1));
 
         fl_navinfo_root.removeAllViews();
+        fl_xunhang_root.removeAllViews();
         if (rl_navinfo.getParent() != null) {
             ((ViewGroup) rl_navinfo.getParent()).removeView(rl_navinfo);
         }
 
+        if (rl_xunhang.getParent() != null) {
+            ((ViewGroup) rl_xunhang.getParent()).removeView(rl_xunhang);
+        }
 
         if (currentTheme == WHITE || currentTheme == BLACK) {
             tv_title.setGravity(Gravity.CENTER);
             fl_navinfo_root.addView(LShadowView.getShadowView(getContext(), rl_navinfo, FIVE), MATCH_PARENT, MATCH_PARENT);
+            fl_xunhang_root.addView(LShadowView.getShadowView(getContext(), rl_xunhang, FIVE), MATCH_PARENT, MATCH_PARENT);
 
             line7.setVisibility(GONE);
+            line11.setVisibility(VISIBLE);
         } else {
             tv_title.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
 
@@ -125,8 +136,10 @@ public class LAMapView extends BaseEXView {
             params.setMargins(margin, margin, margin, margin);
 
             fl_navinfo_root.addView(rl_navinfo, params);
+            fl_xunhang_root.addView(rl_xunhang, params);
 
             line7.setVisibility(VISIBLE);
+            line11.setVisibility(VISIBLE);
         }
 
         Log.e(TAG + getClass().getSimpleName(), "changedTheme: ");
@@ -150,11 +163,23 @@ public class LAMapView extends BaseEXView {
     @ViewInject(R.id.line7)
     private View line7;
 
+    @ViewInject(R.id.line11)
+    private View line11;
+
     @ViewInject(R.id.rl_navinfo)
     private View rl_navinfo;
 
+    @ViewInject(R.id.rl_xunhang)
+    private View rl_xunhang;
+
+    @ViewInject(R.id.rl_che)
+    private View rl_che;
+
     @ViewInject(R.id.fl_navinfo_root)
     private FrameLayout fl_navinfo_root;
+
+    @ViewInject(R.id.fl_xunhang_root)
+    private FrameLayout fl_xunhang_root;
 
     @ViewInject(R.id.iv_dh)
     private ImageView iv_dh;
@@ -174,11 +199,17 @@ public class LAMapView extends BaseEXView {
     @ViewInject(R.id.iv_car)
     private ImageView iv_car;
 
+    @ViewInject(R.id.iv_car2)
+    private ImageView iv_car2;
+
     @ViewInject(R.id.iv_icon)
     private ImageView amapIcon;
 
     @ViewInject(R.id.iv_road)
     private ImageView iv_road;
+
+    @ViewInject(R.id.iv_road2)
+    private ImageView iv_road2;
 
     @ViewInject(R.id.tv_next_dis)
     private TextView tv_next_dis;
@@ -195,17 +226,23 @@ public class LAMapView extends BaseEXView {
     @ViewInject(R.id.tv_msg)
     private TextView tv_msg;
 
+    @ViewInject(R.id.tv_speed)
+    private TextView tv_speed;
+
     @ViewInject(R.id.iv_mute)
     private ImageView iv_mute;
-
-    @ViewInject(R.id.rl_moren)
-    private View rl_moren;
 
     @ViewInject(R.id.lukuang)
     private LukuangView lukuangView;
 
-    @ViewInject(R.id.rl_daohang)
-    private View rl_daohang;
+    @ViewInject(R.id.base_daohang)
+    private View base_daohang;
+
+    @ViewInject(R.id.base_moren)
+    private View base_moren;
+
+    private boolean loactionOk = false;
+
 
     private void refreshMute() {
         if (mute) {
@@ -266,42 +303,22 @@ public class LAMapView extends BaseEXView {
                 break;
             }
             case R.id.btn_nav_j: {
-                if (!AppUtil.isInstall(getContext(), AMAP_PACKAGE)) {
-                    Toast.makeText(getContext(), "没有安装高德地图", Toast.LENGTH_SHORT).show();
-                    break;
-                }
                 AMapCarPlugin.self().naviToHome();
                 break;
             }
             case R.id.btn_nav_gs: {
-                if (!AppUtil.isInstall(getContext(), AMAP_PACKAGE)) {
-                    Toast.makeText(getContext(), "没有安装高德地图", Toast.LENGTH_SHORT).show();
-                    break;
-                }
                 AMapCarPlugin.self().naviToComp();
                 break;
             }
             case R.id.btn_close: {
-                if (!AppUtil.isInstall(getContext(), AMAP_PACKAGE)) {
-                    Toast.makeText(getContext(), "没有安装高德地图", Toast.LENGTH_SHORT).show();
-                    break;
-                }
                 AMapCarPlugin.self().exitNav();
                 break;
             }
             case R.id.btn_mute: {
-                if (!AppUtil.isInstall(getContext(), AMAP_PACKAGE)) {
-                    Toast.makeText(getContext(), "没有安装高德地图", Toast.LENGTH_SHORT).show();
-                    break;
-                }
                 AMapCarPlugin.self().mute(!mute);
                 break;
             }
             case R.id.btn_gd: {
-                if (!AppUtil.isInstall(getContext(), AMAP_PACKAGE)) {
-                    Toast.makeText(getContext(), "没有安装高德地图", Toast.LENGTH_SHORT).show();
-                    break;
-                }
                 AMapCarPlugin.self().testNavi();
                 break;
             }
@@ -310,12 +327,12 @@ public class LAMapView extends BaseEXView {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final PAmapEventState event) {
-        if (rl_moren.getVisibility() == VISIBLE && event.isRunning()) {
-            rl_moren.setVisibility(GONE);
-            rl_daohang.setVisibility(VISIBLE);
-        } else if (rl_moren.getVisibility() == GONE && !event.isRunning()) {
-            rl_moren.setVisibility(VISIBLE);
-            rl_daohang.setVisibility(GONE);
+        if (base_moren.getVisibility() == VISIBLE && event.isRunning()) {
+            base_moren.setVisibility(GONE);
+            base_daohang.setVisibility(VISIBLE);
+        } else if (base_moren.getVisibility() == GONE && !event.isRunning()) {
+            base_moren.setVisibility(VISIBLE);
+            base_daohang.setVisibility(GONE);
         }
     }
 
@@ -425,5 +442,18 @@ public class LAMapView extends BaseEXView {
                 lukuangView.setVisibility(GONE);
             }
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(final MNewLocationEvent event) {
+        if (!loactionOk) {
+            loactionOk = true;
+            iv_moren.setVisibility(GONE);
+            rl_che.setVisibility(VISIBLE);
+            line11.setVisibility(VISIBLE);
+            fl_xunhang_root.setVisibility(VISIBLE);
+        }
+        String msg = (int) event.getSpeed() + "";
+        tv_speed.setText(msg);
     }
 }

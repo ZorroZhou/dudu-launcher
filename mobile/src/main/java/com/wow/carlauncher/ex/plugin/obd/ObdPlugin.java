@@ -11,6 +11,7 @@ import com.wow.carlauncher.ex.ContextEx;
 import com.wow.carlauncher.ex.manage.ble.BleListener;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
 import com.wow.carlauncher.ex.manage.ble.MyBleConnectStatusListener;
+import com.wow.carlauncher.ex.manage.time.event.MTime5SecondEvent;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarInfo;
@@ -215,7 +216,7 @@ public class ObdPlugin extends ContextEx {
     }
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
-    public void onEvent(final MTimeSecondEvent event) {
+    public void onEvent(final MTime5SecondEvent event) {
         String fkaddress = SharedPreUtil.getString(CommonData.SDATA_OBD_ADDRESS);
         if (CommonUtil.isNotNull(fkaddress)
                 && BleManage.self().getConnectStatus(fkaddress) != STATUS_DEVICE_CONNECTED

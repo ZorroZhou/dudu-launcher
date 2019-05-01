@@ -133,7 +133,6 @@ public class BleManage extends ContextEx {
             }
             return;
         }
-        disconnect(mark);
         bluetoothClient.clearRequest(mac, 0);
         bluetoothClient.refreshCache(mac);
         BleConnectStatusListener listener = statusListener.get(mark);
@@ -149,7 +148,7 @@ public class BleManage extends ContextEx {
         final BleListener bleListener = listeners.get(mark);
         x.task().run(() -> bluetoothClient.connect(mac, options, (code, data) -> {
             if (code == REQUEST_SUCCESS) {
-                BleManage.self().getClient().notify(mac,
+                bluetoothClient.notify(mac,
                         notifyService,
                         notifyCharacter,
                         new BleNotifyResponse() {

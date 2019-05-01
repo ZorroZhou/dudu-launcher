@@ -1,6 +1,5 @@
 package com.wow.carlauncher.view.activity.launcher.view;
 
-import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,6 +16,7 @@ import android.widget.TextView;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.util.ViewUtils;
 import com.wow.carlauncher.ex.manage.ThemeManage;
+import com.wow.carlauncher.ex.manage.ble.BleManage;
 import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarTp;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventConnect;
@@ -124,9 +124,8 @@ public class LTaiyaView extends BaseEXView {
                     new AlertDialog.Builder(getContext()).setTitle("警告!")
                             .setNegativeButton("取消", null)
                             .setPositiveButton("确定", (dialog2, which2) -> {
-                                BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-                                mBluetoothAdapter.disable();
-                                x.task().postDelayed(mBluetoothAdapter::enable, 300);
+                                BleManage.self().getClient().closeBluetooth();
+                                x.task().postDelayed(() -> BleManage.self().getClient().openBluetooth(), 1000);
                             })
                             .setMessage("是否确认重启蓝牙").show();
                 }

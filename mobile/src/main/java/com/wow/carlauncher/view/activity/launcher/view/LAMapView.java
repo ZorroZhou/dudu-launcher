@@ -454,7 +454,10 @@ public class LAMapView extends BaseEXView {
             line11.setVisibility(VISIBLE);
             fl_xunhang_root.setVisibility(VISIBLE);
         }
-        String msg = (int) event.getSpeed() + "";
-        tv_speed.setText(msg);
+        //方向取值范围：【0，360】，其中0度表示正北方向，90度表示正东，180度表示正南，270度表示正西
+        if (tv_speed != null) {
+            String msg = (int) event.getSpeed() + "";
+            tv_speed.setText(msg);
+        }
     }
 }

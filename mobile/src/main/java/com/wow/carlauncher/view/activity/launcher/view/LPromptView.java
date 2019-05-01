@@ -13,13 +13,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
-import com.wow.carlauncher.common.CommonData;
-import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.DateUtil;
 import com.wow.carlauncher.common.util.NetWorkUtil;
-import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.manage.ThemeManage;
-import com.wow.carlauncher.ex.manage.ble.BleManage;
 import com.wow.carlauncher.ex.manage.location.event.MNewLocationEvent;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
@@ -43,7 +39,6 @@ import org.xutils.x;
 
 import java.util.Date;
 
-import static com.inuker.bluetooth.library.Constants.STATUS_DEVICE_CONNECTED;
 import static com.wow.carlauncher.common.CommonData.MINUTE_MILL;
 import static com.wow.carlauncher.common.CommonData.TAG;
 
@@ -169,7 +164,7 @@ public class LPromptView extends BaseEXView {
     }
 
     private void refreshTpState(PObdEventCarTp event) {
-        if (ObdPlugin.self().supportTp()) {
+        if (ObdPlugin.self().isConnect() && ObdPlugin.self().supportTp()) {
             iv_carinfo_tp.setVisibility(VISIBLE);
             boolean warn = false;
             if (event.getlBTirePressure() != null && event.getlBTirePressure() < 2) {

@@ -27,7 +27,7 @@ public class BootReceiver extends BroadcastReceiver {
                 home.addCategory(Intent.CATEGORY_HOME);
                 home.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
                 context.startActivity(home);
-            }, 2000);
+            }, 1000);
         }
     }
 }

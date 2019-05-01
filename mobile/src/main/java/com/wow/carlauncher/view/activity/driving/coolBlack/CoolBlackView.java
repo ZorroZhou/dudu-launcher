@@ -14,7 +14,7 @@ import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.AppContext;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.DateUtil;
-import com.wow.carlauncher.ex.manage.time.event.MTime5SecondEvent;
+import com.wow.carlauncher.ex.manage.time.event.MTime3SecondEvent;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventNavInfo;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventState;
@@ -90,7 +90,7 @@ public class CoolBlackView extends DrivingView {
     private boolean showNav = false;
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(final MTime5SecondEvent event) {
+    public void onEvent(final MTime3SecondEvent event) {
         this.tv_date.setText(DateUtil.dateToString(new Date(), "yyyy-MM-dd"));
         this.tv_time.setText(DateUtil.dateToString(new Date(), "HH:mm:ss"));
         this.tv_trip_time.setText(DateUtil.formatDuring(System.currentTimeMillis() - AppContext.self().getStartTime()));

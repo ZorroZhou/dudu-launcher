@@ -16,7 +16,7 @@ import com.wow.carlauncher.common.util.DateUtil;
 import com.wow.carlauncher.common.util.LunarUtil;
 import com.wow.carlauncher.common.util.ViewUtils;
 import com.wow.carlauncher.ex.manage.ThemeManage;
-import com.wow.carlauncher.ex.manage.time.event.MTime5SecondEvent;
+import com.wow.carlauncher.ex.manage.time.event.MTime3SecondEvent;
 import com.wow.carlauncher.view.base.BaseEXView;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -131,7 +131,7 @@ public class LTimeView extends BaseEXView {
     private long cur_day = 0L;
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(MTime5SecondEvent event) {
+    public void onEvent(MTime3SecondEvent event) {
         long time = System.currentTimeMillis();
         long time1 = time / MINUTE_MILL;
         if (time1 != cur_min) {

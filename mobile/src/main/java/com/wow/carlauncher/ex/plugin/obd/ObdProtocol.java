@@ -2,7 +2,7 @@ package com.wow.carlauncher.ex.plugin.obd;
 
 import android.content.Context;
 
-import com.wow.carlauncher.ex.manage.time.event.MTime5SecondEvent;
+import com.wow.carlauncher.ex.manage.time.event.MTime3SecondEvent;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 
 import org.greenrobot.eventbus.EventBus;
@@ -114,7 +114,7 @@ public abstract class ObdProtocol {
     }
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
-    public void onEvent(final MTime5SecondEvent event) {
+    public void onEvent(final MTime3SecondEvent event) {
         if (currentTask != null && System.currentTimeMillis() - currentTask.getSendTime() > 5000) {
             ToastManage.self().show("传输包超时");
             currentTask = null;

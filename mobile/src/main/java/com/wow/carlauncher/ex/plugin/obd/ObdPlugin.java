@@ -11,7 +11,7 @@ import com.wow.carlauncher.ex.ContextEx;
 import com.wow.carlauncher.ex.manage.ble.BleListener;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
 import com.wow.carlauncher.ex.manage.ble.MyBleConnectStatusListener;
-import com.wow.carlauncher.ex.manage.time.event.MTime5SecondEvent;
+import com.wow.carlauncher.ex.manage.time.event.MTime3SecondEvent;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarInfo;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarTp;
@@ -32,6 +32,7 @@ import static com.wow.carlauncher.common.CommonData.SDATA_OBD_CONTROLLER;
  */
 
 public class ObdPlugin extends ContextEx {
+    private static final String BLE_MARK = "BLE_OBD";
     public static final String TAG = "WOW_CAR_OBD";
 
     private static class SingletonHolder {
@@ -46,8 +47,6 @@ public class ObdPlugin extends ContextEx {
     private ObdPlugin() {
 
     }
-
-    public static final String BLE_MARK = "BLE_OBD";
 
     public boolean isConnect() {
         String fkaddress = SharedPreUtil.getString(CommonData.SDATA_OBD_ADDRESS);
@@ -214,7 +213,7 @@ public class ObdPlugin extends ContextEx {
     }
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
-    public void onEvent(final MTime5SecondEvent event) {
+    public void onEvent(final MTime3SecondEvent event) {
         String fkaddress = SharedPreUtil.getString(CommonData.SDATA_OBD_ADDRESS);
         if (CommonUtil.isNotNull(fkaddress)
                 && BleManage.self().getConnectStatus(fkaddress) != STATUS_DEVICE_CONNECTED

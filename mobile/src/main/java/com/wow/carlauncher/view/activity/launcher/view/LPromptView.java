@@ -17,7 +17,7 @@ import com.wow.carlauncher.common.util.DateUtil;
 import com.wow.carlauncher.common.util.NetWorkUtil;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.location.event.MNewLocationEvent;
-import com.wow.carlauncher.ex.manage.time.event.MTime5SecondEvent;
+import com.wow.carlauncher.ex.manage.time.event.MTime3SecondEvent;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.fk.FangkongPlugin;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventConnect;
@@ -208,7 +208,7 @@ public class LPromptView extends BaseEXView {
     private long cur_min = 0L;
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(final MTime5SecondEvent event) {
+    public void onEvent(final MTime3SecondEvent event) {
         long time = System.currentTimeMillis();
         long time1 = time / MINUTE_MILL;
         if (time1 != cur_min) {

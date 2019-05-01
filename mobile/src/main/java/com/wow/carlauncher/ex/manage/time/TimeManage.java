@@ -7,7 +7,7 @@ import android.util.Log;
 import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.ex.ContextEx;
 import com.wow.carlauncher.ex.manage.time.event.MTime30MinuteEvent;
-import com.wow.carlauncher.ex.manage.time.event.MTime5SecondEvent;
+import com.wow.carlauncher.ex.manage.time.event.MTime3SecondEvent;
 import com.wow.carlauncher.ex.manage.time.event.MTimeHalfSecondEvent;
 import com.wow.carlauncher.ex.manage.time.event.MTimeMinuteEvent;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
@@ -47,8 +47,8 @@ public class TimeManage extends ContextEx {
     private final static int MSECOND = 1000;
     private final static int SECOND = MSECOND / ZHOUQI;
 
-    private final static int MSECOND5 = 5000;
-    private final static int SECOND5 = MSECOND5 / ZHOUQI;
+    private final static int MSECOND3 = 3000;
+    private final static int SECOND3 = MSECOND3 / ZHOUQI;
 
     private final static int MMINUTE = 60 * 1000;
     private final static int MINUTE = MMINUTE / ZHOUQI;
@@ -61,57 +61,54 @@ public class TimeManage extends ContextEx {
 
     private void startTimer() {
         stopTimer();
-        timer = TaskExecutor.self().repeatRun(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    if (EventBus.getDefault().hasSubscriberForEvent(MTimeHalfSecondEvent.class)) {
-                        postEvent(new MTimeHalfSecondEvent());
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
+        timer = TaskExecutor.self().repeatRun(() -> {
+            try {
+                if (EventBus.getDefault().hasSubscriberForEvent(MTimeHalfSecondEvent.class)) {
+                    postEvent(new MTimeHalfSecondEvent());
                 }
-                try {
-                    if (timeMark % SECOND == 0) {
-                        if (EventBus.getDefault().hasSubscriberForEvent(MTimeSecondEvent.class)) {
-                            postEvent(new MTimeSecondEvent());
-                        }
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                try {
-                    if (timeMark % SECOND5 == 0) {
-                        if (EventBus.getDefault().hasSubscriberForEvent(MTime5SecondEvent.class)) {
-                            postEvent(new MTime5SecondEvent());
-                        }
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                try {
-                    if (timeMark % MINUTE30 == 0) {
-                        if (EventBus.getDefault().hasSubscriberForEvent(MTime30MinuteEvent.class)) {
-                            postEvent(new MTime30MinuteEvent());
-                        }
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                try {
-                    if (timeMark % MINUTE == 0) {
-                        if (EventBus.getDefault().hasSubscriberForEvent(MTimeMinuteEvent.class)) {
-                            postEvent(new MTimeMinuteEvent());
-                        }
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                timeMark++;
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+            try {
+                if (timeMark % SECOND == 0) {
+                    if (EventBus.getDefault().hasSubscriberForEvent(MTimeSecondEvent.class)) {
+                        postEvent(new MTimeSecondEvent());
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if (timeMark % SECOND3 == 0) {
+                    if (EventBus.getDefault().hasSubscriberForEvent(MTime3SecondEvent.class)) {
+                        postEvent(new MTime3SecondEvent());
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if (timeMark % MINUTE30 == 0) {
+                    if (EventBus.getDefault().hasSubscriberForEvent(MTime30MinuteEvent.class)) {
+                        postEvent(new MTime30MinuteEvent());
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if (timeMark % MINUTE == 0) {
+                    if (EventBus.getDefault().hasSubscriberForEvent(MTimeMinuteEvent.class)) {
+                        postEvent(new MTimeMinuteEvent());
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            timeMark++;
         }, ZHOUQI, ZHOUQI);
     }
 

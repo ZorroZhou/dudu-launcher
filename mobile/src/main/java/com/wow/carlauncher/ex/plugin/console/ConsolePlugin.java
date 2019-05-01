@@ -1,5 +1,6 @@
 package com.wow.carlauncher.ex.plugin.console;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 
@@ -9,6 +10,7 @@ import com.wow.carlauncher.ex.plugin.console.event.PConsoleEventCallState;
 import com.wow.carlauncher.ex.plugin.console.event.PConsoleEventLightState;
 import com.wow.carlauncher.ex.plugin.console.impl.NwdConsoleImpl;
 import com.wow.carlauncher.ex.plugin.console.impl.SysConsoleImpl;
+import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 
 import static com.wow.carlauncher.common.CommonData.SDATA_CONSOLE_MARK;
 import static com.wow.carlauncher.common.CommonData.TAG;
@@ -18,13 +20,13 @@ import static com.wow.carlauncher.common.CommonData.TAG;
  */
 
 public class ConsolePlugin extends ContextEx {
-    private static ConsolePlugin self;
+    private static class SingletonHolder {
+        @SuppressLint("StaticFieldLeak")
+        private static ConsolePlugin instance = new ConsolePlugin();
+    }
 
     public static ConsolePlugin self() {
-        if (self == null) {
-            self = new ConsolePlugin();
-        }
-        return self;
+        return ConsolePlugin.SingletonHolder.instance;
     }
 
     private ConsolePlugin() {

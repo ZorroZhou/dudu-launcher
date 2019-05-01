@@ -1,5 +1,6 @@
 package com.wow.carlauncher.ex.plugin.amapcar;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -8,7 +9,7 @@ import android.widget.Toast;
 
 import com.wow.carlauncher.common.util.AppUtil;
 import com.wow.carlauncher.ex.ContextEx;
-import com.wow.carlauncher.ex.manage.time.event.MTime5SecondEvent;
+import com.wow.carlauncher.ex.manage.time.event.MTime3SecondEvent;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventState;
 
 import org.greenrobot.eventbus.EventBus;
@@ -39,14 +40,16 @@ import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.SEND_ACTION;
 
 public class AMapCarPlugin extends ContextEx {
     public static final String TAG = "AMapCarPlugin";
-    private static AMapCarPlugin self;
+
+    private static class SingletonHolder {
+        @SuppressLint("StaticFieldLeak")
+        private static AMapCarPlugin instance = new AMapCarPlugin();
+    }
 
     public static AMapCarPlugin self() {
-        if (self == null) {
-            self = new AMapCarPlugin();
-        }
-        return self;
+        return AMapCarPlugin.SingletonHolder.instance;
     }
+
 
     private long lastHeartbeatTime = 0;
 
@@ -215,7 +218,7 @@ public class AMapCarPlugin extends ContextEx {
     }
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
-    public void onEvent(final MTime5SecondEvent event) {
+    public void onEvent(final MTime3SecondEvent event) {
         //3分钟没有收到心跳，则结束导航
         if (System.currentTimeMillis() - lastHeartbeatTime > 1000 * 60 * 3) {
             postEvent(new PAmapEventState().setRunning(false));

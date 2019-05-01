@@ -1,5 +1,6 @@
 package com.wow.carlauncher.ex.manage.baiduVoice;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -38,14 +39,15 @@ import static com.wow.carlauncher.common.CommonData.TAG;
 import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.AMAP_PACKAGE;
 
 public class BaiduVoiceAssistant extends ContextEx {
-    private static BaiduVoiceAssistant self;
+    private static class SingletonHolder {
+        @SuppressLint("StaticFieldLeak")
+        private static BaiduVoiceAssistant instance = new BaiduVoiceAssistant();
+    }
 
     public static BaiduVoiceAssistant self() {
-        if (self == null) {
-            self = new BaiduVoiceAssistant();
-        }
-        return self;
+        return BaiduVoiceAssistant.SingletonHolder.instance;
     }
+
 
     private BaiduVoiceAssistant() {
     }

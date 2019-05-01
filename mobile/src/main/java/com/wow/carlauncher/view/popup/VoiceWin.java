@@ -21,7 +21,7 @@ import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.baiduVoice.BaiduVoiceAssistant;
 import com.wow.carlauncher.ex.manage.baiduVoice.event.MVaAsrStateChange;
 import com.wow.carlauncher.ex.manage.baiduVoice.event.MVaNewWordFind;
-import com.wow.carlauncher.ex.manage.time.event.MTime5SecondEvent;
+import com.wow.carlauncher.ex.manage.time.event.MTime3SecondEvent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -138,7 +138,7 @@ public class VoiceWin implements ThemeManage.OnThemeChangeListener {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(final MTime5SecondEvent event) {
+    public void onEvent(final MTime3SecondEvent event) {
         if (isShow) {
             if (System.currentTimeMillis() - actionTime > 30 * 1000) {
                 BaiduVoiceAssistant.self().stopAsr();

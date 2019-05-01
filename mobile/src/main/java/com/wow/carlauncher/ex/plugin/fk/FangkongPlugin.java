@@ -1,5 +1,6 @@
 package com.wow.carlauncher.ex.plugin.fk;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 
@@ -10,12 +11,13 @@ import com.wow.carlauncher.ex.ContextEx;
 import com.wow.carlauncher.ex.manage.ble.BleListener;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
 import com.wow.carlauncher.ex.manage.ble.MyBleConnectStatusListener;
-import com.wow.carlauncher.ex.manage.time.event.MTime5SecondEvent;
+import com.wow.carlauncher.ex.manage.time.event.MTime3SecondEvent;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventAction;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventBatterLevel;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventConnect;
 import com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol;
+import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -32,17 +34,17 @@ import static com.wow.carlauncher.common.CommonData.TAG;
  */
 
 public class FangkongPlugin extends ContextEx {
+    private static final String BLE_MARK = "BLE_FANGKONG";
 
-    private static FangkongPlugin self;
 
-    public static FangkongPlugin self() {
-        if (self == null) {
-            self = new FangkongPlugin();
-        }
-        return self;
+    private static class SingletonHolder {
+        @SuppressLint("StaticFieldLeak")
+        private static FangkongPlugin instance = new FangkongPlugin();
     }
 
-    public static final String BLE_MARK = "BLE_FANGKONG";
+    public static FangkongPlugin self() {
+        return FangkongPlugin.SingletonHolder.instance;
+    }
 
     private FangkongPlugin() {
 
@@ -140,7 +142,7 @@ public class FangkongPlugin extends ContextEx {
     }
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
-    public void onEvent(final MTime5SecondEvent event) {
+    public void onEvent(final MTime3SecondEvent event) {
         String fkaddress = SharedPreUtil.getString(CommonData.SDATA_FANGKONG_ADDRESS);
         if (CommonUtil.isNotNull(fkaddress) &&
                 BleManage.self().getConnectStatus(fkaddress) != STATUS_DEVICE_CONNECTED &&

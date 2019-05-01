@@ -1,10 +1,12 @@
 package com.wow.carlauncher.ex.plugin.music;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.ContextEx;
+import com.wow.carlauncher.ex.plugin.fk.FangkongPlugin;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventCoverRefresh;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventInfo;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventProgress;
@@ -19,17 +21,16 @@ import static com.wow.carlauncher.common.CommonData.SDATA_MUSIC_CONTROLLER;
 import static com.wow.carlauncher.common.CommonData.TAG;
 
 public class MusicPlugin extends ContextEx {
-    private static MusicPlugin self;
+    private static class SingletonHolder {
+        @SuppressLint("StaticFieldLeak")
+        private static MusicPlugin instance = new MusicPlugin();
+    }
 
     public static MusicPlugin self() {
-        if (self == null) {
-            self = new MusicPlugin();
-        }
-        return self;
+        return MusicPlugin.SingletonHolder.instance;
     }
 
     private MusicPlugin() {
-
     }
 
     private MusicController musicController;

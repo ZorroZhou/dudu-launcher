@@ -216,11 +216,14 @@ public class LObdView extends BaseEXView {
     @ViewInject(R.id.iv_error)
     private ImageView iv_error;
 
+    private boolean connect = false;
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final PObdEventConnect event) {
         boolean show = false;
         if (event.isConnected()) {
             show = true;
+            connect = true;
         } else {
             tv_msg.setText(R.string.obd_not_connect);
         }
@@ -230,6 +233,10 @@ public class LObdView extends BaseEXView {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final PObdEventCarInfo event) {
+        if (!connect) {
+            onEvent(new PObdEventConnect().setConnected(ObdPlugin.self().isConnect()));
+        }
+
         if (event.getSpeed() != null) {
             String msg = event.getSpeed() + "KM/H";
             tv_sd.setText(msg);

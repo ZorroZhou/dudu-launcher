@@ -191,6 +191,7 @@ public class LTaiyaView extends BaseEXView {
 
     @ViewInject(R.id.ll_msg)
     private View ll_msg;
+    private boolean connect = false;
 
     @Override
     protected void initView() {
@@ -205,6 +206,7 @@ public class LTaiyaView extends BaseEXView {
         if (event.isConnected()) {
             if (ObdPlugin.self().supportTp()) {
                 show = true;
+                connect = true;
             } else {
                 tv_msg.setText(R.string.obd_not_tp);
             }
@@ -217,6 +219,9 @@ public class LTaiyaView extends BaseEXView {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final PObdEventCarTp event) {
+        if (!connect) {
+            onEvent(new PObdEventConnect().setConnected(ObdPlugin.self().isConnect()));
+        }
         if (tv_lt != null && event.getlFTirePressure() != null) {
             tv_lt.setText(getContext().getString(R.string.launcher_tp, "左前", event.getlFTirePressure(), event.getlFTemp()));
         }

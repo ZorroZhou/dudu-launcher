@@ -88,7 +88,7 @@ public class NwdMusicController extends MusicController {
                             artist = temp[1];
                         }
                     }
-                    musicPlugin.refreshInfo(title, artist);
+                    musicPlugin.refreshInfo(title, artist,false);
                     MusciCoverUtil.loadCover(title, null, musicPlugin);
                 } catch (Exception e) {
                     e.printStackTrace();

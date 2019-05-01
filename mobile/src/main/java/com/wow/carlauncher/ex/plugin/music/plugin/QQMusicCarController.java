@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.wow.carlauncher.common.CommonData;
+import com.wow.carlauncher.common.LrcAnalyze;
 import com.wow.carlauncher.common.util.GsonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
@@ -20,8 +21,11 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import static com.wow.carlauncher.common.CommonData.TAG;
 
 /**
  * Created by 10124 on 2017/10/26.
@@ -99,10 +103,30 @@ public class QQMusicCarController extends MusicController {
         if (ccc < totalTime && run) {
             musicPlugin.refreshProgress((int) (totalTime + System.currentTimeMillis() - overTime), totalTime);
         }
+        if (lrcDatas != null) {
+            long xxx = (int) (totalTime + System.currentTimeMillis() - overTime);
+            try {
+                LrcAnalyze.LrcData lll = null;
+                List<LrcAnalyze.LrcData> tempLrc = new ArrayList<>(lrcDatas);
+                for (LrcAnalyze.LrcData lrc : tempLrc) {
+                    if (lrc.getTimeMs() < xxx) {
+                        lll = lrc;
+                        break;
+                    }
+                }
+                lrcDatas.remove(lll);
+                if (lll != null) {
+                    musicPlugin.refreshLrc(lll.getLrcLine());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private long overTime;
     private int totalTime;
+    private List<LrcAnalyze.LrcData> lrcDatas;
 
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
         public void onReceive(Context paramAnonymousContext, Intent intent) {
@@ -110,13 +134,11 @@ public class QQMusicCarController extends MusicController {
                 //&& waitMsg
                 if ("com.tencent.qqmusiccar.action.PLAY_COMMAND_SEND_FOR_THIRD".equals(intent.getAction()) && intent.getStringExtra("com.tencent.qqmusiccar.EXTRA_COMMAND_DATA") != null) {
                     String value = intent.getStringExtra("com.tencent.qqmusiccar.EXTRA_COMMAND_DATA");
-                    Log.e(PACKAGE_NAME, "onReceive: " + value);
+                    Log.e(TAG, "onReceive: " + value);
                     Map map = gson.fromJson(value, Map.class);
                     //更新状态的命令
                     String cmd = ((Map) map.get("command")).get("method") + "";
-
                     if (cmd.equals("update_state")) {
-                        Log.d(PACKAGE_NAME, "onReceive: 1");
                         UpdateStateMessage message = gson.fromJson(value, UpdateStateMessage.class);
                         UpdateStateData data = message.getCommand().getData();
                         if (data != null) {
@@ -127,7 +149,7 @@ public class QQMusicCarController extends MusicController {
                             if (data.getKey_artist() != null && data.getKey_artist().size() > 0) {
                                 artist = data.getKey_artist().get(0).getSinger();
                             }
-                            musicPlugin.refreshInfo(data.getKey_title(), artist);
+                            musicPlugin.refreshInfo(data.getKey_title(), artist, lrcDatas != null);
 
                             if (data.getState() == 2) {
                                 musicPlugin.refreshState(true, true);
@@ -138,7 +160,6 @@ public class QQMusicCarController extends MusicController {
                             }
                         }
                     } else if (cmd.equals("update_song")) {
-                        Log.d(PACKAGE_NAME, "onReceive: 2");
                         UpdateSongMessage message = gson.fromJson(value, UpdateSongMessage.class);
                         BaseSongInfo data = message.getCommand().getData();
                         if (data != null) {
@@ -146,12 +167,13 @@ public class QQMusicCarController extends MusicController {
                             if (data.getKey_artist() != null && data.getKey_artist().size() > 0) {
                                 artist = data.getKey_artist().get(0).getSinger();
                             }
-                            musicPlugin.refreshInfo(data.getKey_title(), artist);
+                            musicPlugin.refreshInfo(data.getKey_title(), artist, false);
 
                             if (!SharedPreUtil.getBoolean(CommonData.SDATA_MUSIC_INSIDE_COVER, true)) {
                                 MusciCoverUtil.loadCover(data.getKey_title(), artist, musicPlugin);
                             }
                         }
+                        lrcDatas = null;
                     } else if (cmd.equals("update_album")) {
                         UpdateAlbumMessage message = gson.fromJson(value, UpdateAlbumMessage.class);
                         final UpdateAlbumData data = message.getCommand().getData();
@@ -160,6 +182,8 @@ public class QQMusicCarController extends MusicController {
                         }
                     } else if (cmd.equals("update_lyric")) {
                         UpdateLyricMessage message = gson.fromJson(value, UpdateLyricMessage.class);
+                        LrcAnalyze lrcAnalyze = new LrcAnalyze(message.getCommand().getData().getLyric());
+                        lrcDatas = lrcAnalyze.lrcList();
                     }
                 }
             } catch (Exception e) {

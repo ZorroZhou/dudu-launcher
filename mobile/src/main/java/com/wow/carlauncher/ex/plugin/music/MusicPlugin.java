@@ -11,6 +11,7 @@ import com.wow.carlauncher.ex.plugin.music.event.PMusicEventCoverRefresh;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventInfo;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventProgress;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventState;
+import com.wow.carlauncher.ex.plugin.music.event.PMusicRefresLrc;
 import com.wow.carlauncher.ex.plugin.music.plugin.JidouMusicController;
 import com.wow.carlauncher.ex.plugin.music.plugin.NwdMusicController;
 import com.wow.carlauncher.ex.plugin.music.plugin.QQMusicCarController;
@@ -79,9 +80,9 @@ public class MusicPlugin extends ContextEx {
 
     private PMusicEventInfo lastMusicInfo;
 
-    public void refreshInfo(final String title, final String artist) {
-        lastMusicInfo = new PMusicEventInfo().setArtist(artist).setTitle(title);
-        postEvent(new PMusicEventInfo().setArtist(artist).setTitle(title));
+    public void refreshInfo(final String title, final String artist, final boolean havelrc) {
+        lastMusicInfo = new PMusicEventInfo().setArtist(artist).setTitle(title).setHaveLrc(havelrc);
+        postEvent(lastMusicInfo);
     }
 
     private PMusicEventProgress lastMusicProgress;
@@ -106,7 +107,18 @@ public class MusicPlugin extends ContextEx {
         postEvent(lastMusicCover);
     }
 
+
+    private PMusicRefresLrc pMusicRefresLrc;
+
+    public void refreshLrc(String lrc) {
+        pMusicRefresLrc = new PMusicRefresLrc().setLrc(lrc);
+        postEvent(pMusicRefresLrc);
+    }
+
     public void requestLast() {
+        if (pMusicRefresLrc != null) {
+            postEvent(pMusicRefresLrc);
+        }
         if (lastMusicState != null) {
             postEvent(lastMusicState);
         }

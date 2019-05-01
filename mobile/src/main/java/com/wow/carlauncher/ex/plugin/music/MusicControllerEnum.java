@@ -9,7 +9,7 @@ import com.wow.carlauncher.view.activity.set.SetEnum;
 public enum MusicControllerEnum implements SetEnum {
     UNKNOW("未知", -1),
     SYSMUSIC("系统音乐(兼容性未知,需自己尝试)", 3),
-    QQCARMUSIC("QQ音乐车机版(封面,歌名,歌手,进度)", 6),
+    QQCARMUSIC("QQ音乐车机版(封面,歌名,歌手,进度,歌词)", 6),
     JIDOUMUSIC("极豆音乐(封面,歌名,歌手)", 7),
     NWDMUSIC("NWD音乐(封面,歌名,歌手)", 9),
     ZXMUSIC("掌讯音乐(封面,歌名,进度)", 10);

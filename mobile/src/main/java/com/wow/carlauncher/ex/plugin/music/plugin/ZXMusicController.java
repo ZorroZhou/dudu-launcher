@@ -79,7 +79,7 @@ public class ZXMusicController extends MusicController {
                     musicPlugin.refreshProgress(proBarvalue, proBarmax);
                     if (CommonUtil.isNotNull(title) && !title.equals(lastTitle)) {
                         lastTitle = title;
-                        musicPlugin.refreshInfo(lastTitle, "");
+                        musicPlugin.refreshInfo(lastTitle, "", false);
                         String xx = intent.getStringExtra("artistPicPath");
                         if (CommonUtil.isNotNull(xx)) {
                             musicPlugin.refreshCover("file:/" + xx);

@@ -5,25 +5,25 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
+    <com.wow.carlauncher.common.view.AutoMarqueeTextView
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:ellipsize="marquee"
         android:gravity="center"
         android:singleLine="true"
         android:text="@string/music_name"
         android:textColor="#ccc"
         app:layout_textSizePercent="18%h" />
 
-    <TextView
+    <com.wow.carlauncher.common.view.AutoMarqueeTextView
         android:id="@+id/tv_zuojia"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:ellipsize="marquee"
         android:gravity="center"
-        android:marqueeRepeatLimit="marquee_forever"
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
         android:singleLine="true"

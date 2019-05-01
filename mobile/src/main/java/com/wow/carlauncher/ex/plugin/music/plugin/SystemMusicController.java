@@ -210,7 +210,7 @@ public class SystemMusicController extends MusicController {
 
                 try {
                     if (intent.getStringExtra("artist") != null && intent.getStringExtra("track") != null) {
-                        musicPlugin.refreshInfo(intent.getStringExtra("track"), intent.getStringExtra("artist"));
+                        musicPlugin.refreshInfo(intent.getStringExtra("track"), intent.getStringExtra("artist"),false);
                     }
                 } catch (Exception e) {
                 }

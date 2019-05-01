@@ -10,7 +10,26 @@ public class MNewLocationEvent {
     private String adCode;
     private String city;
     private String district;
+    private float speed;
+    private float bearing;
 
+    public float getBearing() {
+        return bearing;
+    }
+
+    public MNewLocationEvent setBearing(float bearing) {
+        this.bearing = bearing;
+        return this;
+    }
+
+    public float getSpeed() {
+        return speed;
+    }
+
+    public MNewLocationEvent setSpeed(float speed) {
+        this.speed = speed;
+        return this;
+    }
 
     public double getLatitude() {
         return latitude;

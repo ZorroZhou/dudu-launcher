@@ -413,7 +413,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
                     new AlertDialog.Builder(getApplicationContext()).setTitle("警告!")
                             .setNegativeButton("取消", (dialog, which) -> executor.cancel())
                             .setPositiveButton("确定", (dialog2, which2) -> executor.execute())
-                            .setMessage("请给与车机助手悬浮窗权限,否则无法使用这个功能").show();
+                            .setMessage("请给与嘟嘟桌面悬浮窗权限,否则无法使用这个功能").show();
                 })
                 .request(new RequestListener() {
                     @Override
@@ -455,19 +455,19 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
                     new AlertDialog.Builder(LauncherActivity.this).setTitle("警告!")
                             .setNegativeButton("取消", (dialog2, which2) -> executor.cancel())
                             .setPositiveButton("确定", (dialog2, which2) -> executor.execute())
-                            .setMessage("车机助手正在申请:" + anyPermission.name(permission) + " 权限").show();
+                            .setMessage("嘟嘟桌面正在申请:" + anyPermission.name(permission) + " 权限").show();
                 })
                 .onBeenDenied((permission, executor) -> {
                     new AlertDialog.Builder(LauncherActivity.this).setTitle("警告!")
                             .setNegativeButton("不授权", (dialog2, which2) -> executor.cancel())
                             .setPositiveButton("重新授权", (dialog2, which2) -> executor.execute())
-                            .setMessage("车机助手需要:" + anyPermission.name(permission) + " 权限才能正常运行!").show();
+                            .setMessage("嘟嘟桌面需要:" + anyPermission.name(permission) + " 权限才能正常运行!").show();
                 })
                 .onGoSetting((permission, executor) -> {
                     new AlertDialog.Builder(LauncherActivity.this).setTitle("警告!")
                             .setNegativeButton("不授权", (dialog2, which2) -> executor.cancel())
                             .setPositiveButton("重新授权", (dialog2, which2) -> executor.execute())
-                            .setMessage("车机助手需要:" + anyPermission.name(permission) + " 权限才能正常运行,前往设置界面设置!").show();
+                            .setMessage("嘟嘟桌面需要:" + anyPermission.name(permission) + " 权限才能正常运行,前往设置界面设置!").show();
                 })
                 .request(new RequestListener() {
                     @Override
@@ -488,7 +488,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
                     new AlertDialog.Builder(LauncherActivity.this).setTitle("警告!")
                             .setNegativeButton("不授权", (dialog2, which2) -> executor.cancel())
                             .setPositiveButton("重新授权", (dialog2, which2) -> executor.execute())
-                            .setMessage("车机助手需要悬浮窗权限才能正常运行!").show();
+                            .setMessage("嘟嘟桌面需要悬浮窗权限才能正常运行!").show();
                 })
                 .request(new RequestListener() {
                     @Override

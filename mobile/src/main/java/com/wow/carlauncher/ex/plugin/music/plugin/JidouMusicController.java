@@ -69,7 +69,7 @@ public class JidouMusicController extends MusicController {
                 music_artist = intent.getStringExtra("music_artist");
                 music_title = intent.getStringExtra("music_title");
                 if (music_title != null && music_artist != null) {
-                    musicPlugin.refreshInfo(music_title, music_artist);
+                    musicPlugin.refreshInfo(music_title, music_artist,false);
                 }
             }
             if (intent.getAction().equals("com.ijidou.action.UPDATE_PROGRESS")) {

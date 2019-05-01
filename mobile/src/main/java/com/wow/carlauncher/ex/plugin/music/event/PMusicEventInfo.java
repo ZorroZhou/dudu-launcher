@@ -7,6 +7,16 @@ package com.wow.carlauncher.ex.plugin.music.event;
 public class PMusicEventInfo {
     private String title;
     private String artist;
+    private boolean haveLrc = false;
+
+    public boolean isHaveLrc() {
+        return haveLrc;
+    }
+
+    public PMusicEventInfo setHaveLrc(boolean haveLrc) {
+        this.haveLrc = haveLrc;
+        return this;
+    }
 
     public String getTitle() {
         return title;

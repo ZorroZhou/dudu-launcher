@@ -26,6 +26,7 @@ import com.wow.carlauncher.ex.plugin.music.event.PMusicEventCoverRefresh;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventInfo;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventProgress;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventState;
+import com.wow.carlauncher.ex.plugin.music.event.PMusicRefresLrc;
 import com.wow.carlauncher.view.base.BaseEXView;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -233,18 +234,39 @@ public class LMusicView extends BaseEXView {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(final PMusicEventInfo event) {
-        if (tv_music_title != null && tv_zuozhe != null) {
-            if (CommonUtil.isNotNull(event.getTitle())) {
-                tv_music_title.setText(event.getTitle());
-            } else {
-                tv_music_title.setText("音乐");
-            }
+    public void onEvent(final PMusicRefresLrc event) {
+        tv_zuozhe.setText(event.getLrc());
+    }
 
-            if (CommonUtil.isNotNull(event.getArtist())) {
-                tv_zuozhe.setText(event.getArtist());
-            } else {
-                tv_zuozhe.setText("未知作家");
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(final PMusicEventInfo event) {
+        if (!event.isHaveLrc()) {
+            if (tv_music_title != null && tv_zuozhe != null) {
+                if (CommonUtil.isNotNull(event.getTitle())) {
+                    tv_music_title.setText(event.getTitle());
+                } else {
+                    tv_music_title.setText("音乐");
+                }
+
+                if (CommonUtil.isNotNull(event.getArtist())) {
+                    tv_zuozhe.setText(event.getArtist());
+                } else {
+                    tv_zuozhe.setText("未知作家");
+                }
+            }
+        } else {
+            if (tv_music_title != null && tv_zuozhe != null) {
+                if (CommonUtil.isNotNull(event.getTitle())) {
+                    String msg = event.getTitle();
+                    if (CommonUtil.isNotNull(event.getArtist())) {
+                        msg = msg + "-" + event.getArtist();
+                    }
+                    tv_music_title.setText(msg);
+                } else {
+                    tv_music_title.setText("音乐");
+                }
+
+                tv_zuozhe.setText("");
             }
         }
     }

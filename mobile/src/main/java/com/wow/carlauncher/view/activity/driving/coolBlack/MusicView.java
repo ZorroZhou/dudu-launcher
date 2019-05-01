@@ -70,7 +70,7 @@ public class MusicView extends BaseEXView {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(final PMusicEventInfo event) {
+    public void onEvent(final PMusicEventInfo event) {
         if (tv_title != null) {
             if (CommonUtil.isNotNull(event.getTitle())) {
                 tv_title.setText(event.getTitle());

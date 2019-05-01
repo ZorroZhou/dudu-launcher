@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amap.api.location.AMapLocation;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.util.AppUtil;
 import com.wow.carlauncher.common.util.CommonUtil;
@@ -446,7 +447,7 @@ public class LAMapView extends BaseEXView {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final MNewLocationEvent event) {
-        if (!loactionOk) {
+        if (!loactionOk && event.getLocationType() == AMapLocation.LOCATION_TYPE_GPS) {
             loactionOk = true;
             iv_moren.setVisibility(GONE);
             rl_che.setVisibility(VISIBLE);

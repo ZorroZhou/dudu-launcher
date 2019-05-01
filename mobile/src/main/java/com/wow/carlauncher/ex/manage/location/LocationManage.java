@@ -67,6 +67,7 @@ public class LocationManage extends ContextEx implements AMapLocationListener {
     public void onLocationChanged(AMapLocation aMapLocation) {
         if (aMapLocation != null && aMapLocation.getErrorCode() == 0 && CommonUtil.isNotNull(aMapLocation.getCity())) {
             postEvent(new MNewLocationEvent()
+                    .setLocationType(aMapLocation.getLocationType())
                     .setBearing(aMapLocation.getBearing())
                     .setSpeed(aMapLocation.getSpeed())
                     .setDistrict(aMapLocation.getDistrict())

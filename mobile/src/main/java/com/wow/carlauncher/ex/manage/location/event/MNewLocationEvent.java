@@ -12,6 +12,16 @@ public class MNewLocationEvent {
     private String district;
     private float speed;
     private float bearing;
+    private int locationType;
+
+    public int getLocationType() {
+        return locationType;
+    }
+
+    public MNewLocationEvent setLocationType(int locationType) {
+        this.locationType = locationType;
+        return this;
+    }
 
     public float getBearing() {
         return bearing;

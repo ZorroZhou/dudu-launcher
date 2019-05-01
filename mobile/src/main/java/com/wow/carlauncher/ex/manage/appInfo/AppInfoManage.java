@@ -23,7 +23,6 @@ import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.view.activity.driving.DrivingActivity;
 import com.wow.carlauncher.view.activity.set.SetActivity;
 
-import org.greenrobot.eventbus.EventBus;
 import org.xutils.x;
 
 import java.util.ArrayList;

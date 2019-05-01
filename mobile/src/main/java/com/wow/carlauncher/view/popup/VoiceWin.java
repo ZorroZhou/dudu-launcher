@@ -22,7 +22,6 @@ import com.wow.carlauncher.ex.manage.baiduVoice.BaiduVoiceAssistant;
 import com.wow.carlauncher.ex.manage.baiduVoice.event.MVaAsrStateChange;
 import com.wow.carlauncher.ex.manage.baiduVoice.event.MVaNewWordFind;
 import com.wow.carlauncher.ex.manage.time.event.MTime5SecondEvent;
-import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

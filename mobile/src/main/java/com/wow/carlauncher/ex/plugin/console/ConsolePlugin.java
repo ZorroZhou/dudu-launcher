@@ -10,8 +10,6 @@ import com.wow.carlauncher.ex.plugin.console.event.PConsoleEventLightState;
 import com.wow.carlauncher.ex.plugin.console.impl.NwdConsoleImpl;
 import com.wow.carlauncher.ex.plugin.console.impl.SysConsoleImpl;
 
-import org.greenrobot.eventbus.EventBus;
-
 import static com.wow.carlauncher.common.CommonData.SDATA_CONSOLE_MARK;
 import static com.wow.carlauncher.common.CommonData.TAG;
 

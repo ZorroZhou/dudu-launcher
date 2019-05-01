@@ -15,8 +15,6 @@ import com.wow.carlauncher.ex.plugin.music.plugin.QQMusicCarController;
 import com.wow.carlauncher.ex.plugin.music.plugin.SystemMusicController;
 import com.wow.carlauncher.ex.plugin.music.plugin.ZXMusicController;
 
-import org.greenrobot.eventbus.EventBus;
-
 import static com.wow.carlauncher.common.CommonData.SDATA_MUSIC_CONTROLLER;
 import static com.wow.carlauncher.common.CommonData.TAG;
 

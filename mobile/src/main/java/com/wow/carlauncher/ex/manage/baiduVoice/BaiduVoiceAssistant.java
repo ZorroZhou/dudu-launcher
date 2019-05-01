@@ -32,8 +32,6 @@ import com.wow.carlauncher.ex.plugin.amapcar.AMapCarPlugin;
 import com.wow.carlauncher.ex.plugin.console.ConsolePlugin;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 
-import org.greenrobot.eventbus.EventBus;
-
 import java.util.Arrays;
 
 import static com.wow.carlauncher.common.CommonData.TAG;

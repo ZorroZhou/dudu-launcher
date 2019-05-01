@@ -12,8 +12,6 @@ import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.ex.ContextEx;
 import com.wow.carlauncher.ex.manage.location.event.MNewLocationEvent;
 
-import org.greenrobot.eventbus.EventBus;
-
 /**
  * Created by 10124 on 2018/5/12.
  */

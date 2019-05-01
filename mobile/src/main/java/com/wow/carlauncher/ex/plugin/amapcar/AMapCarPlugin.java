@@ -9,7 +9,6 @@ import android.widget.Toast;
 import com.wow.carlauncher.common.util.AppUtil;
 import com.wow.carlauncher.ex.ContextEx;
 import com.wow.carlauncher.ex.manage.time.event.MTime5SecondEvent;
-import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventState;
 
 import org.greenrobot.eventbus.EventBus;

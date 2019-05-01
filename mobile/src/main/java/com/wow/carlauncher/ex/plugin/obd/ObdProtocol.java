@@ -3,7 +3,6 @@ package com.wow.carlauncher.ex.plugin.obd;
 import android.content.Context;
 
 import com.wow.carlauncher.ex.manage.time.event.MTime5SecondEvent;
-import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 
 import org.greenrobot.eventbus.EventBus;

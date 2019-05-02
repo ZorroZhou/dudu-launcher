@@ -15,9 +15,7 @@ public class MyBleConnectStatusListener extends BleConnectStatusListener {
     public void onConnectStatusChanged(String mac, int status) {
         BleListener listener = BleManage.self().getListeners().get(mark);
         if (listener != null) {
-            if (status == STATUS_CONNECTED) {
-                listener.connect(true);
-            } else {
+            if (status != STATUS_CONNECTED) {
                 listener.connect(false);
             }
         }

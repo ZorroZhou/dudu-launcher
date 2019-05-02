@@ -148,6 +148,7 @@ public class BleManage extends ContextEx {
         final BleListener bleListener = listeners.get(mark);
         x.task().run(() -> bluetoothClient.connect(mac, options, (code, data) -> {
             if (code == REQUEST_SUCCESS) {
+                Log.d(TAG, mac + "onResponse: 连接成功!!!");
                 bluetoothClient.notify(mac,
                         notifyService,
                         notifyCharacter,
@@ -171,7 +172,6 @@ public class BleManage extends ContextEx {
                                         bleListener.connect(true);
                                     } else {
                                         bleListener.connect(false);
-
                                     }
                                 }
                                 if (code != REQUEST_SUCCESS) {
@@ -186,7 +186,7 @@ public class BleManage extends ContextEx {
                 }
                 disconnect(mark);
                 bluetoothClient.disconnect(mac);
-                Log.d(TAG, "onResponse: 连接失败!!!");
+                Log.d(TAG, mac + "onResponse: 连接失败!!!");
             }
         }));
     }

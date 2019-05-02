@@ -71,6 +71,8 @@ public class FangkongPlugin extends ContextEx {
             if (fangkongProtocol != null) {
                 if (success) {
                     ToastManage.self().show("方控连接成功!");
+                } else {
+                    disconnect();
                 }
             }
             connecting = false;
@@ -144,9 +146,7 @@ public class FangkongPlugin extends ContextEx {
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void onEvent(final MTime3SecondEvent event) {
         String fkaddress = SharedPreUtil.getString(CommonData.SDATA_FANGKONG_ADDRESS);
-        if (CommonUtil.isNotNull(fkaddress) &&
-                BleManage.self().getConnectStatus(fkaddress) != STATUS_DEVICE_CONNECTED &&
-                BleManage.self().getConnectStatus(fkaddress) != STATUS_DEVICE_CONNECTING) {
+        if (CommonUtil.isNotNull(fkaddress)) {
             connect();
         }
     }

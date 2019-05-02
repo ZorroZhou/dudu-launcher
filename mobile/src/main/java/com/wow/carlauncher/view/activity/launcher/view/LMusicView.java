@@ -250,8 +250,9 @@ public class LMusicView extends BaseEXView {
 
                 if (CommonUtil.isNotNull(event.getArtist())) {
                     tv_zuozhe.setText(event.getArtist());
+                    tv_zuozhe.setVisibility(VISIBLE);
                 } else {
-                    tv_zuozhe.setText("未知作家");
+                    tv_zuozhe.setVisibility(GONE);
                 }
             }
         } else {

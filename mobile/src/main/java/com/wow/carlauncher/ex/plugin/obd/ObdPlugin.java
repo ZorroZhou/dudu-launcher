@@ -77,7 +77,7 @@ public class ObdPlugin extends ContextEx {
 
         @Override
         public boolean isConnect() {
-            return obdProtocol != null && BleManage.self().getConnectStatus(obdProtocol.getAddress()) == STATUS_DEVICE_CONNECTED;
+            return obdProtocol != null;
         }
 
         @Override
@@ -138,6 +138,7 @@ public class ObdPlugin extends ContextEx {
                     obdProtocol.run();
                 } else {
                     obdProtocol.stop();
+                    disconnect();
                 }
             }
             connecting = false;
@@ -215,9 +216,7 @@ public class ObdPlugin extends ContextEx {
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void onEvent(final MTime3SecondEvent event) {
         String fkaddress = SharedPreUtil.getString(CommonData.SDATA_OBD_ADDRESS);
-        if (CommonUtil.isNotNull(fkaddress)
-                && BleManage.self().getConnectStatus(fkaddress) != STATUS_DEVICE_CONNECTED
-                && BleManage.self().getConnectStatus(fkaddress) != STATUS_DEVICE_CONNECTING) {
+        if (CommonUtil.isNotNull(fkaddress)) {
             connect();
         }
     }

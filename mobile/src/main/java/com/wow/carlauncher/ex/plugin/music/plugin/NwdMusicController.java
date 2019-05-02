@@ -77,6 +77,9 @@ public class NwdMusicController extends MusicController {
                     if (CommonUtil.isNull(title)) {
                         return;
                     }
+                    if (title.contains(".")) {
+                        title = title.substring(0, title.lastIndexOf("."));
+                    }
                     String artist = intent.getStringExtra("artist");
                     musicPlugin.refreshInfo(title, artist, false);
                     MusciCoverUtil.loadCover(title, null, musicPlugin);

@@ -76,12 +76,12 @@ public class GoodDriverTPProtocol extends ObdProtocol {
                         addTask(new GetRevTask());
                     }
 
-                    if (mark % 20 == 0) {
+                    if (mark % 10 == 0) {
                         addTask(new GetWaterTempTask());
                         addTask(new GetOilConTask());
                     }
 
-                    if (mark % 60 == 0) {
+                    if (mark % 200 == 0) {
                         addTask(new GetTpTask(LF));
                         addTask(new GetTpTask(RF));
                         addTask(new GetTpTask(LB));
@@ -92,13 +92,12 @@ public class GoodDriverTPProtocol extends ObdProtocol {
                     running = false;
                 }
                 try {
-                    Thread.sleep(300);
+                    Thread.sleep(500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
         }).start();
-        Log.d(TAG, "!!!!!!!!!!!!!!!run: 开始运行");
     }
 
     private void baseCheckTask() {
@@ -132,7 +131,6 @@ public class GoodDriverTPProtocol extends ObdProtocol {
     public void receiveMessage(byte[] message) {
         synchronized (resMessageTemp) {
             resMessageTemp.append(new String(message));
-            Log.d(TAG, "receiveMessage: " + resMessageTemp);
             if (resMessageTemp.indexOf(">") > -1) {
                 //拿出来消息进行回掉
                 setTaskRes(resMessageTemp.substring(0, resMessageTemp.indexOf(">")));

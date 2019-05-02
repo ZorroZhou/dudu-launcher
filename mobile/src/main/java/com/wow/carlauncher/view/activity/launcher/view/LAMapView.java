@@ -128,7 +128,7 @@ public class LAMapView extends BaseEXView {
             fl_xunhang_root.addView(LShadowView.getShadowView(getContext(), rl_xunhang, FIVE), MATCH_PARENT, MATCH_PARENT);
 
             line7.setVisibility(GONE);
-            line11.setVisibility(VISIBLE);
+            line11.setVisibility(GONE);
         } else {
             tv_title.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
 
@@ -451,7 +451,11 @@ public class LAMapView extends BaseEXView {
             loactionOk = true;
             iv_moren.setVisibility(GONE);
             rl_che.setVisibility(VISIBLE);
-            line11.setVisibility(VISIBLE);
+            if (currentTheme == WHITE || currentTheme == BLACK) {
+                line11.setVisibility(GONE);
+            } else {
+                line11.setVisibility(VISIBLE);
+            }
             fl_xunhang_root.setVisibility(VISIBLE);
         }
         //方向取值范围：【0，360】，其中0度表示正北方向，90度表示正东，180度表示正南，270度表示正西

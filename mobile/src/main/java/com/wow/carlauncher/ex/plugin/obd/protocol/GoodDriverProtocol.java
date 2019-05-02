@@ -66,7 +66,7 @@ public class GoodDriverProtocol extends ObdProtocol {
                         addTask(new GetRevTask());
                     }
 
-                    if (mark % 20 == 0) {
+                    if (mark % 10 == 0) {
                         addTask(new GetWaterTempTask());
                         addTask(new GetOilConTask());
                     }
@@ -75,7 +75,7 @@ public class GoodDriverProtocol extends ObdProtocol {
                     running = false;
                 }
                 try {
-                    Thread.sleep(300);
+                    Thread.sleep(500);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

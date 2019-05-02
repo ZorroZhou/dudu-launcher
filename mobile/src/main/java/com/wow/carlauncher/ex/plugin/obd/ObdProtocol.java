@@ -93,8 +93,6 @@ public abstract class ObdProtocol {
             if (currentTask != null) {
                 currentTask.setSendTime(System.currentTimeMillis());
                 listener.write(currentTask.getReqWarp());
-            } else {
-                runTask();
             }
         }
     }

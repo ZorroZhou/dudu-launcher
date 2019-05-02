@@ -91,31 +91,28 @@ public class CarInfoActivity extends BaseActivity {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(PObdEventConnect event) {
+    public void onEvent(PObdEventConnect event) {
         refreshObdState();
     }
 
     @Subscribe(threadMode = ThreadMode.ASYNC)
     public void onEventCall(final PObdEventCarInfo event) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (event.getSpeed() != null) {
-                    String msg = "车速:" + event.getSpeed() + "KM/H";
-                    tv_info_speed.setText(msg);
-                }
-                if (event.getRev() != null) {
-                    String msg = "转速:" + event.getRev() + "R/S";
-                    tv_info_rev.setText(msg);
-                }
-                if (event.getWaterTemp() != null) {
-                    String msg = "水温:" + event.getWaterTemp() + "℃";
-                    tv_info_wtemp.setText(msg);
-                }
-                if (event.getOilConsumption() != null) {
-                    String msg = "油量:" + event.getOilConsumption() + "%";
-                    tv_info_oil.setText(msg);
-                }
+        runOnUiThread(() -> {
+            if (event.getSpeed() != null) {
+                String msg = "车速:" + event.getSpeed() + "KM/H";
+                tv_info_speed.setText(msg);
+            }
+            if (event.getRev() != null) {
+                String msg = "转速:" + event.getRev() + "R/S";
+                tv_info_rev.setText(msg);
+            }
+            if (event.getWaterTemp() != null) {
+                String msg = "水温:" + event.getWaterTemp() + "℃";
+                tv_info_wtemp.setText(msg);
+            }
+            if (event.getOilConsumption() != null) {
+                String msg = "油量:" + event.getOilConsumption() + "%";
+                tv_info_oil.setText(msg);
             }
         });
     }

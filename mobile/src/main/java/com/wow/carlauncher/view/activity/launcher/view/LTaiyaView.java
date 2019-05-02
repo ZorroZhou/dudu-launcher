@@ -206,13 +206,13 @@ public class LTaiyaView extends BaseEXView {
         if (event.isConnected()) {
             if (ObdPlugin.self().supportTp()) {
                 show = true;
-                connect = true;
             } else {
                 tv_msg.setText(R.string.obd_not_tp);
             }
         } else {
             tv_msg.setText(R.string.obd_not_connect);
         }
+        connect = show;
         ll_ty.setVisibility(show ? VISIBLE : GONE);
         ll_msg.setVisibility(show ? GONE : VISIBLE);
     }
@@ -220,6 +220,7 @@ public class LTaiyaView extends BaseEXView {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final PObdEventCarTp event) {
         if (!connect) {
+            connect = true;
             onEvent(new PObdEventConnect().setConnected(ObdPlugin.self().isConnect()));
         }
         if (tv_lt != null && event.getlFTirePressure() != null) {

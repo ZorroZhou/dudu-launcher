@@ -129,7 +129,7 @@ public class CoolBlackView extends DrivingView {
     private boolean inNav = false;
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(final PAmapEventState event) {
+    public void onEvent(final PAmapEventState event) {
         inNav = event.isRunning();
         if (!fktuoguan) {
             showNav(event.isRunning());
@@ -155,7 +155,7 @@ public class CoolBlackView extends DrivingView {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEventMainThread(final PAmapEventNavInfo event) {
+    public void onEvent(final PAmapEventNavInfo event) {
         String fangxiang = "";
         if (iv_navicon != null && event.getIcon() - 1 >= 0 && event.getIcon() - 1 < ICONS.length) {
             iv_navicon.setImageResource(ICONS[event.getIcon() - 1]);

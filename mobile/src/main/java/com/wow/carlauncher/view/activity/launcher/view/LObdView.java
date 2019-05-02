@@ -223,10 +223,10 @@ public class LObdView extends BaseEXView {
         boolean show = false;
         if (event.isConnected()) {
             show = true;
-            connect = true;
         } else {
             tv_msg.setText(R.string.obd_not_connect);
         }
+        connect = show;
         ll_obd.setVisibility(show ? VISIBLE : GONE);
         ll_msg.setVisibility(show ? GONE : VISIBLE);
     }
@@ -235,6 +235,7 @@ public class LObdView extends BaseEXView {
     public void onEvent(final PObdEventCarInfo event) {
         if (!connect) {
             onEvent(new PObdEventConnect().setConnected(ObdPlugin.self().isConnect()));
+            connect = true;
         }
 
         if (event.getSpeed() != null) {

@@ -212,14 +212,14 @@ public class ThemeManage {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(PConsoleEventLightState event) {
-//        ThemeManage.ThemeMode model = ThemeManage.ThemeMode.getById(SharedPreUtil.getInteger(SDATA_APP_THEME, ThemeManage.ThemeMode.SHIJIAN.getId()));
-//        if (model.equals(ThemeManage.ThemeMode.DENGGUANG)) {
-//            if (event.isOpen()) {
-//                ThemeManage.self().setTheme(BLACK);
-//            } else {
-//                ThemeManage.self().setTheme(WHITE);
-//            }
-//        }
+        ThemeManage.ThemeMode model = ThemeManage.ThemeMode.getById(SharedPreUtil.getInteger(SDATA_APP_THEME, ThemeManage.ThemeMode.SHIJIAN.getId()));
+        if (model.equals(ThemeManage.ThemeMode.DENGGUANG)) {
+            if (event.isOpen()) {
+                setTheme(Theme.getById(SharedPreUtil.getInteger(SDATA_APP_THEME_NIGHT, Theme.BLACK.getId())));
+            } else {
+                setTheme(Theme.getById(SharedPreUtil.getInteger(SDATA_APP_THEME_DAY, Theme.WHITE.getId())));
+            }
+        }
     }
 
     /**

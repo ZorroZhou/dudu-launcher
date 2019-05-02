@@ -18,8 +18,10 @@ import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.util.AppUtil;
 import com.wow.carlauncher.common.util.CommonUtil;
+import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.util.ViewUtils;
 import com.wow.carlauncher.common.view.LukuangView;
 import com.wow.carlauncher.ex.manage.ThemeManage;
@@ -30,6 +32,7 @@ import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventState;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapLukuangInfo;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapMuteStateInfo;
 import com.wow.carlauncher.ex.plugin.amapcar.model.Lukuang;
+import com.wow.carlauncher.view.activity.launcher.event.LAMapCloseXunhang;
 import com.wow.carlauncher.view.base.BaseEXView;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -447,7 +450,7 @@ public class LAMapView extends BaseEXView {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final MNewLocationEvent event) {
-        if (!loactionOk && event.getLocationType() == AMapLocation.LOCATION_TYPE_GPS) {
+        if (!loactionOk && event.getLocationType() == AMapLocation.LOCATION_TYPE_GPS && SharedPreUtil.getBoolean(CommonData.SDATA_USE_NAVI_XUNHYANG, false)) {
             loactionOk = true;
             iv_moren.setVisibility(GONE);
             rl_che.setVisibility(VISIBLE);
@@ -463,5 +466,13 @@ public class LAMapView extends BaseEXView {
             String msg = (int) event.getSpeed() + "";
             tv_speed.setText(msg);
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(final LAMapCloseXunhang event) {
+        iv_moren.setVisibility(VISIBLE);
+        rl_che.setVisibility(GONE);
+        line11.setVisibility(GONE);
+        fl_xunhang_root.setVisibility(GONE);
     }
 }

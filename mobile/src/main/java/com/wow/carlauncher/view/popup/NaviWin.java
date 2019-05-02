@@ -166,7 +166,7 @@ public class NaviWin {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final PAmapEventNavInfo event) {
         if (event.getSegRemainDis() <= 100 && event.getRouteRemainDis() > 100) {
-            if (!isShow && SharedPreUtil.getBoolean(CommonData.SDATA_USE_NAVI, false)) {
+            if (!isShow && SharedPreUtil.getBoolean(CommonData.SDATA_USE_NAVI_POP, false)) {
                 show();
                 lastTime = System.currentTimeMillis();
             }

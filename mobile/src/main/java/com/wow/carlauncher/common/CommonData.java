@@ -180,12 +180,13 @@ public class CommonData {
     public static final String SDATA_MUSIC_INSIDE_COVER = "SDATA_MUSIC_INSIDE_COVER";
     public static final String SDATA_MUSIC_USE_LRC = "SDATA_MUSIC_USE_LRC";
 
-    public static final String SDATA_USE_NAVI = "SDATA_USE_NAVI";
+    public static final String SDATA_USE_NAVI_POP = "SDATA_USE_NAVI_POP";
+
+    public static final String SDATA_USE_NAVI_XUNHYANG = "SDATA_USE_NAVI_XUNHYANG";
 
     //-------------------------------本地缓存使用的mark-end-----------------------------------
 
 
-    //是否允许悬浮框展示
     public static final String SDATA_HOME_FULL = "SDATA_HOME_FULL";
 
     public static final String SDATA_USE_VA = "SDATA_USE_VA";

@@ -20,6 +20,7 @@ import com.wow.carlauncher.ex.plugin.console.ConsolePlugin;
 import com.wow.carlauncher.ex.plugin.console.ConsoleProtoclEnum;
 import com.wow.carlauncher.ex.plugin.music.MusicControllerEnum;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
+import com.wow.carlauncher.view.activity.launcher.event.LAMapCloseXunhang;
 import com.wow.carlauncher.view.activity.launcher.event.LCityRefreshEvent;
 import com.wow.carlauncher.view.activity.set.SetEnumOnClickListener;
 import com.wow.carlauncher.view.activity.set.SetSwitchOnClickListener;
@@ -79,15 +80,28 @@ public class SItemView extends BaseEXView {
     @ViewInject(R.id.sv_music_lrc)
     private SetView sv_music_lrc;
 
+    @ViewInject(R.id.sv_amap_xunhang)
+    private SetView sv_amap_xunhang;
+
     private AppWidgetHost appWidgetHost;
 
     @Override
     protected void initView() {
         appWidgetHost = new AppWidgetHost(getContext(), APP_WIDGET_HOST_ID);
 
+        sv_amap_xunhang.setOnValueChangeListener(new SetSwitchOnClickListener(CommonData.SDATA_USE_NAVI_XUNHYANG) {
+            @Override
+            public void newValue(boolean value) {
+                if (!value) {
+                    EventBus.getDefault().post(new LAMapCloseXunhang());
+                }
+            }
+        });
+        sv_amap_xunhang.setChecked(SharedPreUtil.getBoolean(CommonData.SDATA_USE_NAVI_XUNHYANG, false));
 
-        sv_use_navc_popup.setOnValueChangeListener(new SetSwitchOnClickListener(CommonData.SDATA_USE_NAVI));
-        sv_use_navc_popup.setChecked(SharedPreUtil.getBoolean(CommonData.SDATA_USE_NAVI, false));
+
+        sv_use_navc_popup.setOnValueChangeListener(new SetSwitchOnClickListener(CommonData.SDATA_USE_NAVI_POP));
+        sv_use_navc_popup.setChecked(SharedPreUtil.getBoolean(CommonData.SDATA_USE_NAVI_POP, false));
 
 
         int amapPluginId = SharedPreUtil.getInteger(APP_WIDGET_AMAP_PLUGIN, 0);

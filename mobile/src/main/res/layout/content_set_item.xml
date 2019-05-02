@@ -77,6 +77,17 @@
         android:textSize="14sp" />
 
     <com.wow.carlauncher.common.view.SetView
+        android:id="@+id/sv_amap_xunhang"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        st:summary="@string/set_yes"
+        st:summary2="@string/set_no"
+        st:titleEx="不导航时使用巡航"
+        st:type="switchB" />
+
+    <View style="@style/Interval" />
+
+    <com.wow.carlauncher.common.view.SetView
         android:id="@+id/sv_gaode_chajian"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

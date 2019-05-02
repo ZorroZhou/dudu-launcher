@@ -17,7 +17,6 @@ import com.wow.carlauncher.ex.plugin.fk.event.PFkEventAction;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventBatterLevel;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventConnect;
 import com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol;
-import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;

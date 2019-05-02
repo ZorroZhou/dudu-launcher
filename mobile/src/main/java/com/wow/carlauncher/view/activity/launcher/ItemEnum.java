@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 
 import com.wow.carlauncher.view.activity.launcher.view.LAMapView;
+import com.wow.carlauncher.view.activity.launcher.view.LFmView;
 import com.wow.carlauncher.view.activity.launcher.view.LMusicView;
 import com.wow.carlauncher.view.activity.launcher.view.LObdView;
 import com.wow.carlauncher.view.activity.launcher.view.LTaiyaView;
@@ -17,7 +18,8 @@ public enum ItemEnum implements SetEnum {
     WEATHER("天气", 3),
     TAIYA("胎压", 4),
     OBD("车况", 5),
-    TIME("时间", 6);
+    TIME("时间", 6),
+    FM("收音机", 7);
     private String name;
     private Integer id;
 
@@ -57,6 +59,8 @@ public enum ItemEnum implements SetEnum {
                 return TAIYA;
             case 6:
                 return OBD;
+            case 7:
+                return FM;
         }
         throw new RuntimeException();
     }
@@ -75,6 +79,8 @@ public enum ItemEnum implements SetEnum {
                 return new LTaiyaView(context);
             case OBD:
                 return new LObdView(context);
+            case FM:
+                return new LFmView(context);
         }
         return null;
     }

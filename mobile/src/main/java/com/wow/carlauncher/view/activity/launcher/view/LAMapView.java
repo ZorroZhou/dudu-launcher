@@ -143,7 +143,7 @@ public class LAMapView extends BaseEXView {
             fl_xunhang_root.addView(rl_xunhang, params);
 
             line7.setVisibility(VISIBLE);
-            line11.setVisibility(VISIBLE);
+            line11.setVisibility(fl_xunhang_root.getVisibility());
         }
 
         Log.e(TAG + getClass().getSimpleName(), "changedTheme: ");

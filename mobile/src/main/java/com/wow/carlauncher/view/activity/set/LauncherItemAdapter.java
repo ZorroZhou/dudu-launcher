@@ -25,10 +25,17 @@ public class LauncherItemAdapter extends BaseAdapterEx<ItemModel> implements Vie
 
         List<ItemModel> item = new ArrayList<>();
         for (ItemEnum itemEnum : CommonData.LAUNCHER_ITEMS) {
-            item.add(new ItemModel(itemEnum,
-                    SharedPreUtil.getInteger(CommonData.SDATA_LAUNCHER_ITEM_SORT_ + itemEnum.getId(), itemEnum.getId()),
-                    SharedPreUtil.getBoolean(CommonData.SDATA_LAUNCHER_ITEM_OPEN_ + itemEnum.getId(), true)
-            ));
+            if (itemEnum.equals(ItemEnum.FM)) {
+                item.add(new ItemModel(itemEnum,
+                        SharedPreUtil.getInteger(CommonData.SDATA_LAUNCHER_ITEM_SORT_ + itemEnum.getId(), itemEnum.getId()),
+                        SharedPreUtil.getBoolean(CommonData.SDATA_LAUNCHER_ITEM_OPEN_ + itemEnum.getId(), false)
+                ));
+            } else {
+                item.add(new ItemModel(itemEnum,
+                        SharedPreUtil.getInteger(CommonData.SDATA_LAUNCHER_ITEM_SORT_ + itemEnum.getId(), itemEnum.getId()),
+                        SharedPreUtil.getBoolean(CommonData.SDATA_LAUNCHER_ITEM_OPEN_ + itemEnum.getId(), true)
+                ));
+            }
         }
 
         Collections.sort(item, (o1, o2) -> o1.index - o2.index);

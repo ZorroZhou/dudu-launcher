@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.android.percent.support.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_base"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry">
+
+    <com.zhy.android.percent.support.PercentFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_heightPercent="12%h">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:lines="1"
+            android:text="收音机"
+            app:layout_marginLeftPercent="25%h"
+            app:layout_marginRightPercent="25%h"
+            app:layout_textSizePercent="50%h" />
+    </com.zhy.android.percent.support.PercentFrameLayout>
+
+    <com.zhy.android.percent.support.PercentLinearLayout
+        android:id="@+id/ll_msg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_marginLeftPercent="2%h"
+        app:layout_marginRightPercent="2%h"
+        app:layout_marginTopPercent="12%h">
+
+        <com.wow.carlauncher.common.view.AutoMarqueeTextView
+            android:id="@+id/tv_music_title"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:ellipsize="marquee"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:singleLine="true"
+            android:text="FM97.0"
+            android:textColor="#697380"
+            app:layout_heightPercent="20%h"
+            app:layout_marginTopPercent="5%h"
+            app:layout_textSizePercent="15%h" />
+
+        <com.wow.carlauncher.common.view.AutoMarqueeTextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:ellipsize="marquee"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:singleLine="true"
+            android:text="爱车94.0"
+            android:textColor="#697380"
+            app:layout_heightPercent="10%h"
+            app:layout_textSizePercent="6%h" />
+
+        <com.zhy.android.percent.support.PercentLinearLayout
+            android:id="@+id/ll_controller"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_heightPercent="20%h"
+            app:layout_marginTopPercent="4%h">
+
+            <LinearLayout
+                android:id="@+id/ll_prew"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/iv_prew"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="fitCenter" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_play"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/iv_play"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="fitCenter" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_next"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/iv_next"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="fitCenter" />
+            </LinearLayout>
+        </com.zhy.android.percent.support.PercentLinearLayout>
+    </com.zhy.android.percent.support.PercentLinearLayout>
+</com.zhy.android.percent.support.PercentRelativeLayout>

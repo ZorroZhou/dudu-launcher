@@ -52,7 +52,9 @@ public class CommonData {
             ItemEnum.OBD,
             ItemEnum.TAIYA,
             ItemEnum.TIME,
-            ItemEnum.WEATHER};
+            ItemEnum.WEATHER,
+            ItemEnum.FM
+    };
     //所有OBD控制器
     public static final ObdProtocolEnum[] OBD_CONTROLLER = {
             ObdProtocolEnum.YJ_TYB,

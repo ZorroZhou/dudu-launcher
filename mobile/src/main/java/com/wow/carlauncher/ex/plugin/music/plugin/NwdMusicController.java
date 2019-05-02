@@ -78,17 +78,7 @@ public class NwdMusicController extends MusicController {
                         return;
                     }
                     String artist = intent.getStringExtra("artist");
-                    if (title.contains(".")) {
-                        title = title.substring(0, title.indexOf("."));
-                    }
-                    if (title.contains("-")) {
-                        String[] temp = title.split("-");
-                        title = temp[0];
-                        if (CommonUtil.isNull(artist)) {
-                            artist = temp[1];
-                        }
-                    }
-                    musicPlugin.refreshInfo(title, artist,false);
+                    musicPlugin.refreshInfo(title, artist, false);
                     MusciCoverUtil.loadCover(title, null, musicPlugin);
                 } catch (Exception e) {
                     e.printStackTrace();

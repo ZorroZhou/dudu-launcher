@@ -8,6 +8,7 @@ import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.xutils.x;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -80,7 +81,7 @@ public abstract class ObdProtocol {
             e.printStackTrace();
         }
         taskArrayDeque.add(obdTask);
-        runTask();
+        x.task().run(this::runTask);
     }
 
     private void runTask() {

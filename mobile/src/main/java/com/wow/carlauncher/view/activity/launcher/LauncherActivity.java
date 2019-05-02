@@ -2,6 +2,7 @@ package com.wow.carlauncher.view.activity.launcher;
 
 import android.Manifest;
 import android.app.Activity;
+import android.appwidget.AppWidgetManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -15,11 +16,13 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ImageView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.ViewPagerOnPageChangeListener;
 import com.wow.carlauncher.common.util.SharedPreUtil;
+import com.wow.carlauncher.ex.manage.AppWidgetManage;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.appInfo.event.MAppInfoRefreshShowEvent;
@@ -29,12 +32,14 @@ import com.wow.carlauncher.ex.plugin.console.ConsolePlugin;
 import com.wow.carlauncher.ex.plugin.console.event.PConsoleEventCallState;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventAction;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
+import com.wow.carlauncher.view.activity.launcher.event.LEventRefreshFmPluginTest;
 import com.wow.carlauncher.view.activity.launcher.event.LItemRefreshEvent;
 import com.wow.carlauncher.view.activity.launcher.event.LItemToFristEvent;
 import com.wow.carlauncher.view.activity.launcher.event.LPageTransformerChangeEvent;
 import com.wow.carlauncher.view.activity.launcher.view.LAppsView;
 import com.wow.carlauncher.view.activity.launcher.view.LPageView;
 import com.wow.carlauncher.view.activity.launcher.view.LPagerPostion;
+import com.wow.carlauncher.view.activity.set.event.SEventRefreshAmapPlugin;
 import com.wow.carlauncher.view.activity.set.event.SEventSetHomeFull;
 import com.wow.carlauncher.view.popup.ConsoleWin;
 
@@ -52,9 +57,14 @@ import per.goweii.anypermission.AnyPermission;
 import per.goweii.anypermission.RequestListener;
 import per.goweii.anypermission.RuntimeRequester;
 
+import static com.wow.carlauncher.common.CommonData.APP_WIDGET_AMAP_PLUGIN;
+import static com.wow.carlauncher.common.CommonData.APP_WIDGET_FM_PLUGIN;
+import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_AMAP_PLUGIN;
+import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_FM_PLUGIN;
 import static com.wow.carlauncher.common.CommonData.SDATA_HOME_FULL;
 import static com.wow.carlauncher.common.CommonData.SDATA_LAUNCHER_ITEM_TRAN;
 import static com.wow.carlauncher.common.CommonData.TAG;
+import static com.wow.carlauncher.common.util.ViewUtils.getViewByIds;
 import static com.wow.carlauncher.ex.plugin.fk.FangkongProtocolEnum.YLFK;
 import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.CENTER_CLICK;
 import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.CENTER_LONG_CLICK;
@@ -245,7 +255,18 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
         if (mRuntimeRequester != null) {
             mRuntimeRequester.onActivityResult(requestCode);
         }
-        Log.e(TAG, "onActivityResult: !!" + requestCode + " " + resultCode);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case REQUEST_SELECT_FM_PLUGIN: {
+                    int id = data.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1);
+                    SharedPreUtil.saveInteger(APP_WIDGET_FM_PLUGIN, id);
+                    EventBus.getDefault().post(new LEventRefreshFmPluginTest());
+                    break;
+                }
+                default:
+                    break;
+            }
+        }
     }
 
     private boolean show = false;

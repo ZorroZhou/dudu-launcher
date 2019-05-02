@@ -1,6 +1,11 @@
 package com.wow.carlauncher.view.activity.launcher.view;
 
+import android.app.Activity;
+import android.appwidget.AppWidgetHost;
+import android.appwidget.AppWidgetManager;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -13,15 +18,20 @@ import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.util.ViewUtils;
+import com.wow.carlauncher.ex.manage.AppWidgetManage;
 import com.wow.carlauncher.ex.manage.ThemeManage;
+import com.wow.carlauncher.ex.manage.appInfo.event.MAppInfoRefreshShowEvent;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
 import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarTp;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventConnect;
+import com.wow.carlauncher.view.activity.launcher.event.LEventRefreshFmPluginTest;
 import com.wow.carlauncher.view.base.BaseEXView;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -31,7 +41,13 @@ import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static com.wow.carlauncher.common.CommonData.APP_WIDGET_AMAP_PLUGIN;
+import static com.wow.carlauncher.common.CommonData.APP_WIDGET_FM_PLUGIN;
+import static com.wow.carlauncher.common.CommonData.APP_WIDGET_HOST_ID;
+import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_AMAP_PLUGIN;
+import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_FM_PLUGIN;
 import static com.wow.carlauncher.common.CommonData.TAG;
+import static com.wow.carlauncher.common.util.ViewUtils.getViewByIds;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.BLACK;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.WHITE;
 import static com.wow.carlauncher.view.activity.launcher.view.LShadowView.SizeEnum.FIVE;
@@ -145,13 +161,133 @@ public class LFmView extends BaseEXView {
     @ViewInject(R.id.iv_next)
     private ImageView iv_next;
 
+    @ViewInject(R.id.fl_www)
+    private FrameLayout fl_www;
+
     @ViewInject(R.id.rl_base)
     private View rl_base;
 
-    @Event(value = {R.id.rl_base})
+    @Event(value = {R.id.rl_base, R.id.ll_prew, R.id.ll_next, R.id.ll_play})
     private void clickEvent(View view) {
+        switch (view.getId()) {
+            case R.id.rl_base: {
+                int widgetId = appWidgetHost.allocateAppWidgetId();
+                Intent pickIntent = new Intent(AppWidgetManager.ACTION_APPWIDGET_PICK);
+                pickIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
+                ((Activity) getContext()).startActivityForResult(pickIntent, REQUEST_SELECT_FM_PLUGIN);
+                break;
+            }
+            case R.id.ll_next: {
+                Intent intent2 = new Intent("com.nwd.action.SL_WIDGET_COMMAND");
+                intent2.putExtra("extra_SL_WIDGET_COMMAND", "decrease");
+                getContext().sendBroadcast(intent2);
+                break;
+            }
+            case R.id.ll_prew: {
+                Intent intent2 = new Intent("com.nwd.action.SL_WIDGET_COMMAND");
+                intent2.putExtra("extra_SL_WIDGET_COMMAND", "increase");
+                getContext().sendBroadcast(intent2);
+                break;
+            }
+        }
     }
 
+    //com.nwd.action.ACTION_SEND_RADIO_FREQUENCE
+    //设置频率   extra_radio_frequence  String 频率
+
+//    public void onReceive(Context paramContext, Intent paramIntent)
+//    {
+//        String str1 = paramIntent.getAction();
+//        String str2;
+//        Intent localIntent;
+//        if (str1.equals("com.nwd.action.SL_WIDGET_COMMAND"))
+//        {
+//            str2 = paramIntent.getStringExtra("extra_SL_WIDGET_COMMAND");
+//            LOG.print("current source id = " + mSourceID);
+//            if (4 != mSourceID) {
+//                KernelUtils.requestChangeSourceDirect(paramContext, (byte)4);
+//            }
+//            localIntent = new Intent("com.nwd.action.ACTION_KEY_VALUE");
+//            if (!str2.equals("decrease")) {
+//                break label126;
+//            }
+//            LOG.print("-----decrease-----");
+//            localIntent.putExtra("extra_key_value", (byte)63);
+//        }
+//        for (;;)
+//        {
+//            paramContext.sendBroadcast(localIntent);
+//            if (str1.equals("com.nwd.action.ACTION_CHANGE_SOURCE")) {
+//                mSourceID = paramIntent.getByteExtra("extra_source_id", (byte)0);
+//            }
+//            return;
+//            label126:
+//            if (str2.equals("increase"))
+//            {
+//                LOG.print("-----increase-----");
+//                localIntent.putExtra("extra_key_value", (byte)62);
+//            }
+//            else if (str2.equals("switch_band"))
+//            {
+//                LOG.print("-----switch band-----");
+//                localIntent.putExtra("extra_key_value", (byte)4);
+//            }
+//            else if (str2.equals("radio_ams"))
+//            {
+//                LOG.print("-----radio ams-----");
+//                localIntent.putExtra("extra_key_value", (byte)46);
+//            }
+//        }
+//    }
+
+//    String str = paramIntent.getAction();
+//    if (this.mIUpdateMusicWidget != null)
+//    {
+//        if (!str.equals("com.nwd.action.ACTION_SEND_RADIO_FREQUENCE")) {
+//            break label45;
+//        }
+//        this.frequency = ((Frequency)paramIntent.getParcelableExtra("extra_radio_frequence"));
+//        this.mIUpdateMusicWidget.updateView(paramContext);
+//    }
+//    label45:
+//            do
+//    {
+//        return;
+//        if ("com.nwd.ACTION_LAUNCHER_CREATE".equals(str))
+//        {
+//            this.isUpate = false;
+//            this.mIUpdateMusicWidget.releaseView(paramContext);
+//            this.frequency = null;
+//            this.mIUpdateMusicWidget.updateView(paramContext);
+//            return;
+//        }
+//    } while (!"android.intent.action.BOOT_COMPLETED".equals(str));
+//    try
+//    {
+//        this.handler = new Handler()
+//        {
+//            public void handleMessage(Message paramAnonymousMessage)
+//            {
+//                if (paramAnonymousMessage.what == 7894) {
+//                    RadioWidgetManager.this.mIUpdateMusicWidget.updateView(paramContext);
+//                }
+//            }
+//        };
+//        new UpTaskThread().start();
+//        return;
+//    }
+//    catch (Exception paramContext)
+//    {
+//        for (;;) {}
+//    }
+
+    @Override
+    protected void initView() {
+        appWidgetHost = new AppWidgetHost(getContext(), APP_WIDGET_HOST_ID);
+        loadPlugin();
+    }
+
+    private AppWidgetHost appWidgetHost;
     private boolean run = false;
 
     private void refreshPlay() {
@@ -171,6 +307,21 @@ public class LFmView extends BaseEXView {
             } else {
                 iv_play.setImageResource(R.mipmap.ic_play_cb);
             }
+        }
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(final LEventRefreshFmPluginTest event) {
+        loadPlugin();
+    }
+
+    private void loadPlugin() {
+        int popup = SharedPreUtil.getInteger(APP_WIDGET_FM_PLUGIN, 0);
+        if (popup != 0) {
+            final View amapView = AppWidgetManage.self().getWidgetById(popup);
+            fl_www.removeAllViews();
+            fl_www.addView(amapView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         }
     }
 }

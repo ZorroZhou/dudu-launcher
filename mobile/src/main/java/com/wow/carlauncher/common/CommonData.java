@@ -74,7 +74,7 @@ public class CommonData {
     public static final int APP_WIDGET_HOST_ID = 0x200;
 
     public static final String APP_WIDGET_AMAP_PLUGIN = "APP_WIDGET_AMAP_PLUGIN";
-
+    public static final String APP_WIDGET_FM_PLUGIN = "APP_WIDGET_FM_PLUGIN";
 
     public static final String[] POPUP_SIZE = {"小", "中", "大"};
 
@@ -87,7 +87,7 @@ public class CommonData {
 
     //
     public static final int REQUEST_SELECT_AMAP_PLUGIN = 10004;
-
+    public static final int REQUEST_SELECT_FM_PLUGIN = 10005;
 
     //-------------------------------Intent传输数据时使用的mark-startWakeUp-----------------------------------
     //应用包名

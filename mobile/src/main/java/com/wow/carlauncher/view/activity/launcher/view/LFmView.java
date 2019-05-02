@@ -177,6 +177,12 @@ public class LFmView extends BaseEXView {
                 ((Activity) getContext()).startActivityForResult(pickIntent, REQUEST_SELECT_FM_PLUGIN);
                 break;
             }
+            case R.id.ll_play: {
+                Intent intent2 = new Intent("com.nwd.action.SL_WIDGET_COMMAND");
+                intent2.putExtra("extra_SL_WIDGET_COMMAND", "switch_band");
+                getContext().sendBroadcast(intent2);
+                break;
+            }
             case R.id.ll_next: {
                 Intent intent2 = new Intent("com.nwd.action.SL_WIDGET_COMMAND");
                 intent2.putExtra("extra_SL_WIDGET_COMMAND", "decrease");

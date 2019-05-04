@@ -19,7 +19,9 @@ import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.view.activity.launcher.ItemEnum;
 import com.wow.carlauncher.view.activity.launcher.ItemModel;
 import com.wow.carlauncher.view.activity.launcher.ItemTransformer;
+import com.wow.carlauncher.view.activity.launcher.LayoutEnum;
 import com.wow.carlauncher.view.activity.launcher.event.LItemRefreshEvent;
+import com.wow.carlauncher.view.activity.launcher.event.LLayoutRefreshEvent;
 import com.wow.carlauncher.view.activity.launcher.event.LPageTransformerChangeEvent;
 import com.wow.carlauncher.view.activity.set.LauncherItemAdapter;
 import com.wow.carlauncher.view.activity.set.SetEnumOnClickListener;
@@ -33,7 +35,9 @@ import org.xutils.x;
 
 import java.util.List;
 
+import static com.wow.carlauncher.common.CommonData.LAUNCHER_LAYOUTS;
 import static com.wow.carlauncher.common.CommonData.SDATA_LAUNCHER_ITEM_TRAN;
+import static com.wow.carlauncher.common.CommonData.SDATA_LAUNCHER_LAYOUT;
 
 /**
  * Created by 10124 on 2018/4/22.
@@ -72,7 +76,31 @@ public class SHomeView extends BaseEXView {
     @ViewInject(R.id.sv_use_va)
     private SetView sv_use_va;
 
+    @ViewInject(R.id.sv_home_layout)
+    private SetView sv_home_layout;
+
     protected void initView() {
+        sv_home_layout.setSummary(LayoutEnum.getById(SharedPreUtil.getInteger(SDATA_LAUNCHER_LAYOUT, LayoutEnum.LAYOUT1.getId())).getName());
+        sv_home_layout.setOnClickListener(new SetEnumOnClickListener<LayoutEnum>(getContext(), LAUNCHER_LAYOUTS) {
+            @Override
+            public String title() {
+                return "请选择首页的布局";
+            }
+
+            @Override
+            public LayoutEnum getCurr() {
+                return LayoutEnum.getById(SharedPreUtil.getInteger(SDATA_LAUNCHER_LAYOUT, LayoutEnum.LAYOUT1.getId()));
+            }
+
+            @Override
+            public void onSelect(LayoutEnum setEnum) {
+                SharedPreUtil.saveInteger(SDATA_LAUNCHER_LAYOUT, setEnum.getId());
+                sv_home_layout.setSummary(setEnum.getName());
+                EventBus.getDefault().post(new LLayoutRefreshEvent());
+            }
+        });
+
+
         sv_use_va.setOnValueChangeListener(new SetSwitchOnClickListener(CommonData.SDATA_USE_VA) {
             @Override
             public void newValue(boolean value) {

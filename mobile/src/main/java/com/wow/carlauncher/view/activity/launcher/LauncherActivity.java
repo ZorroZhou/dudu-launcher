@@ -1,6 +1,7 @@
 package com.wow.carlauncher.view.activity.launcher;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.WallpaperManager;
 import android.appwidget.AppWidgetManager;
@@ -18,6 +19,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
@@ -35,10 +37,13 @@ import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import com.wow.carlauncher.view.activity.launcher.event.LEventRefreshFmPluginTest;
 import com.wow.carlauncher.view.activity.launcher.event.LItemRefreshEvent;
 import com.wow.carlauncher.view.activity.launcher.event.LItemToFristEvent;
+import com.wow.carlauncher.view.activity.launcher.event.LLayoutRefreshEvent;
 import com.wow.carlauncher.view.activity.launcher.event.LPageTransformerChangeEvent;
 import com.wow.carlauncher.view.activity.launcher.view.LAppsView;
+import com.wow.carlauncher.view.activity.launcher.view.LDockView;
 import com.wow.carlauncher.view.activity.launcher.view.LPageView;
 import com.wow.carlauncher.view.activity.launcher.view.LPagerPostion;
+import com.wow.carlauncher.view.activity.launcher.view.LPromptView;
 import com.wow.carlauncher.view.activity.set.event.SEventSetHomeFull;
 import com.wow.carlauncher.view.popup.ConsoleWin;
 
@@ -60,6 +65,7 @@ import static com.wow.carlauncher.common.CommonData.APP_WIDGET_FM_PLUGIN;
 import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_FM_PLUGIN;
 import static com.wow.carlauncher.common.CommonData.SDATA_HOME_FULL;
 import static com.wow.carlauncher.common.CommonData.SDATA_LAUNCHER_ITEM_TRAN;
+import static com.wow.carlauncher.common.CommonData.SDATA_LAUNCHER_LAYOUT;
 import static com.wow.carlauncher.common.CommonData.TAG;
 import static com.wow.carlauncher.ex.plugin.fk.FangkongProtocolEnum.YLFK;
 import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.CENTER_CLICK;
@@ -75,16 +81,26 @@ import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.RIGHT_TOP
 
 public class LauncherActivity extends Activity implements ThemeManage.OnThemeChangeListener {
 
+    @SuppressLint("StaticFieldLeak")
     private static LauncherActivity old;
 
     @ViewInject(R.id.viewPager)
     private ViewPager viewPager;
 
-    @ViewInject(R.id.fl_bg)
-    private View fl_bg;
+    @ViewInject(R.id.ll_base)
+    private LinearLayout ll_base;
+
+    @ViewInject(R.id.ll_center)
+    private LinearLayout ll_center;
 
     @ViewInject(R.id.line1)
     private View line1;
+
+    @ViewInject(R.id.ll_top)
+    private LPromptView ll_top;
+
+    @ViewInject(R.id.ll_dock)
+    private LDockView ll_dock;
 
     @ViewInject(R.id.postion)
     private LPagerPostion postion;
@@ -136,6 +152,8 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
         initItem();
         initApps();
         refreshViewPager();
+
+        loadLayout();
     }
 
     private LPageView[] itemPager;
@@ -195,6 +213,47 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
         //初始化完毕
     }
 
+    private void loadLayout() {
+        if (ll_top.getParent() != null) {
+            ((ViewGroup) ll_top.getParent()).removeView(ll_top);
+        }
+        if (ll_dock.getParent() != null) {
+            ((ViewGroup) ll_dock.getParent()).removeView(ll_dock);
+        }
+
+        LayoutEnum layoutEnum = LayoutEnum.getById(SharedPreUtil.getInteger(SDATA_LAUNCHER_LAYOUT, LayoutEnum.LAYOUT1.getId()));
+        if (layoutEnum.equals(LayoutEnum.LAYOUT1)) {
+            LinearLayout.LayoutParams dockLp = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT);
+            dockLp.weight = 7;
+            ll_center.addView(ll_dock, 0, dockLp);
+
+            LinearLayout.LayoutParams bottomLp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0);
+            bottomLp.weight = 1;
+            ll_base.addView(ll_top, bottomLp);
+
+            LinearLayout.LayoutParams centerLp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0);
+            centerLp.weight = 8;
+            ll_center.setLayoutParams(centerLp);
+        } else if (layoutEnum.equals(LayoutEnum.LAYOUT2)) {
+            LinearLayout.LayoutParams topLp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0);
+            topLp.weight = 9;
+
+            LinearLayout.LayoutParams centerLp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0);
+            centerLp.weight = 75;
+
+            LinearLayout.LayoutParams bottomLp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0);
+            bottomLp.weight = 16;
+
+            ll_base.addView(ll_top, 0, topLp);
+
+            ll_center.setLayoutParams(centerLp);
+
+            ll_base.addView(ll_dock, bottomLp);
+        }
+        ll_top.setLayoutEnum(layoutEnum);
+        ll_dock.setLayoutEnum(layoutEnum);
+    }
+
     private LAppsView[] appsPager;
 
     private void initApps() {
@@ -244,11 +303,11 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
                     .getInstance(getApplicationContext());
             // 获取当前壁纸
             Drawable wallpaperDrawable = wallpaperManager.getDrawable();
-            fl_bg.setBackground(wallpaperDrawable);
+            ll_base.setBackground(wallpaperDrawable);
             line1.setBackgroundResource(manage.getCurrentThemeRes(R.color.line));
             line1.setVisibility(View.GONE);
         } else {
-            fl_bg.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_desk_bg));
+            ll_base.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_desk_bg));
             line1.setBackgroundResource(manage.getCurrentThemeRes(R.color.line));
             line1.setVisibility(View.VISIBLE);
         }
@@ -297,6 +356,10 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
         ThemeManage.self().unregisterThemeChangeListener(this);
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(final LLayoutRefreshEvent event) {
+        loadLayout();
+    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final SEventSetHomeFull event) {

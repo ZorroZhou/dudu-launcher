@@ -34,11 +34,11 @@ public abstract class SetEnumOnClickListener<T extends SetEnum> implements View.
         }
         final ThreadObj<Integer> obj = new ThreadObj<>(select);
 
-        AlertDialog dialog = new AlertDialog.Builder(context).setTitle(title()).setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                onSelect(allItem[obj.getObj()]);
-            }
-        }).setSingleChoiceItems(items, select, (dialog1, which) -> obj.setObj(which)).show();
+        new AlertDialog.Builder(context).setTitle(title()).setNegativeButton("取消", null)
+                .setPositiveButton("确定", (dialog, which) -> {
+                    if (!allItem[obj.getObj()].equals(getCurr())) {
+                        onSelect(allItem[obj.getObj()]);
+                    }
+                }).setSingleChoiceItems(items, select, (dialog1, which) -> obj.setObj(which)).show();
     }
 }

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -25,6 +26,7 @@ import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarTp;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventConnect;
 import com.wow.carlauncher.view.activity.CarInfoActivity;
+import com.wow.carlauncher.view.activity.launcher.LayoutEnum;
 import com.wow.carlauncher.view.activity.launcher.event.LItemToFristEvent;
 import com.wow.carlauncher.view.activity.set.SetActivity;
 import com.wow.carlauncher.view.base.BaseEXView;
@@ -64,7 +66,12 @@ public class LPromptView extends BaseEXView {
 
     @Override
     public void changedTheme(ThemeManage manage) {
-        fl_base.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_prompt_bg));
+        if (this.layoutEnum.equals(LayoutEnum.LAYOUT1)) {
+            fl_base.setBackgroundResource(ThemeManage.self().getCurrentThemeRes(R.drawable.n_prompt_bg));
+        } else {
+            fl_base.setBackgroundColor(ContextCompat.getColor(getContext(), android.R.color.transparent));
+        }
+        
         tv_time.setTextColor(manage.getCurrentThemeColor(R.color.l_text1));
 
         iv_location.setImageResource(manage.getCurrentThemeRes(R.mipmap.ic_l_location));
@@ -199,6 +206,22 @@ public class LPromptView extends BaseEXView {
             refreshObdState(new PObdEventConnect().setConnected(ObdPlugin.self().isConnect()));
             refreshTpState(ObdPlugin.self().getCurrentPObdEventCarTp());
         });
+    }
+
+    private LayoutEnum layoutEnum = LayoutEnum.LAYOUT1;
+
+    public void setLayoutEnum(LayoutEnum layoutEnum) {
+        if (layoutEnum == null) {
+            return;
+        }
+        if (!layoutEnum.equals(this.layoutEnum)) {
+            this.layoutEnum = layoutEnum;
+            if (this.layoutEnum.equals(LayoutEnum.LAYOUT1)) {
+                fl_base.setBackgroundResource(ThemeManage.self().getCurrentThemeRes(R.drawable.n_prompt_bg));
+            } else {
+                fl_base.setBackgroundColor(ContextCompat.getColor(getContext(), android.R.color.transparent));
+            }
+        }
     }
 
     private Activity getActivity() {

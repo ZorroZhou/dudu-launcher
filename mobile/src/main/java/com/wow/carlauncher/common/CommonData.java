@@ -6,9 +6,16 @@ import com.wow.carlauncher.ex.plugin.music.MusicControllerEnum;
 import com.wow.carlauncher.ex.plugin.obd.ObdProtocolEnum;
 import com.wow.carlauncher.view.activity.launcher.ItemEnum;
 import com.wow.carlauncher.view.activity.launcher.ItemTransformer;
+import com.wow.carlauncher.view.activity.launcher.LayoutEnum;
 
 public class CommonData {
     public static final String TAG = "WOW_CAR";
+
+    //所有的桌面插件
+    public static final LayoutEnum[] LAUNCHER_LAYOUTS = {
+            LayoutEnum.LAYOUT1,
+            LayoutEnum.LAYOUT2
+    };
     //所有的桌面插件
     public static final ItemTransformer[] LAUNCHER_ITEMS_TRANS = {
             ItemTransformer.None,
@@ -125,6 +132,7 @@ public class CommonData {
     public static final String SDATA_DOCK2_CLASS = "DOCK2_BEAN";
     public static final String SDATA_DOCK3_CLASS = "DOCK3_BEAN";
     public static final String SDATA_DOCK4_CLASS = "DOCK4_BEAN";
+    public static final String SDATA_DOCK5_CLASS = "DOCK5_BEAN";
     //dock的包名end
     //悬浮框的X坐标
     public static final String SDATA_POPUP_WIN_X = "SDATA_POPUP_WIN_X";
@@ -179,6 +187,7 @@ public class CommonData {
     public static final String SDATA_LAUNCHER_ITEM_OPEN_ = "SDATA_LAUNCHER_ITEM_OPEN_";
     public static final String SDATA_LAUNCHER_ITEM_NUM = "SDATA_LAUNCHER_ITEM_NUM";
     public static final String SDATA_LAUNCHER_ITEM_TRAN = "SDATA_LAUNCHER_ITEM_TRAN";
+    public static final String SDATA_LAUNCHER_LAYOUT = "SDATA_LAUNCHER_LAYOUT";
 
     //是否允许悬浮框展示
     public static final String SDATA_MUSIC_INSIDE_COVER = "SDATA_MUSIC_INSIDE_COVER";

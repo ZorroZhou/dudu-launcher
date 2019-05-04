@@ -139,10 +139,11 @@ public class LDockView extends BaseEXView {
                 public boolean onPreDraw() {
                     if (ll_base.getWidth() > ll_base.getHeight() && ll_base.getHeight() > 0) {
                         ll_base.getViewTreeObserver().removeOnPreDrawListener(this);
-                        int mm = (int) (ll_base.getHeight() * 0.1);
+                        int mmbotton = (int) (ll_base.getHeight() * 0.1);
+                        int mmtop = (int) (ll_base.getHeight() * 0.05);
                         LinearLayout.LayoutParams itemLp = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT);
                         itemLp.weight = 1;
-                        itemLp.setMargins(0, 0, 0, mm);
+                        itemLp.setMargins(0, mmtop, 0, mmbotton);
                         ll_dock1.setLayoutParams(itemLp);
                         ll_dock2.setLayoutParams(itemLp);
                         ll_dock3.setLayoutParams(itemLp);

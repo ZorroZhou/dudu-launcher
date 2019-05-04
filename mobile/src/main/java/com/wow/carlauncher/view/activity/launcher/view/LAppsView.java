@@ -126,7 +126,7 @@ public class LAppsView extends BaseEXView implements View.OnClickListener, View.
         for (View cell : cellViews) {
             Integer index = (Integer) cell.getTag();
             if (index != null && index >= 0) {
-                cell.findViewById(R.id.ll_base).setBackgroundResource(ThemeManage.self().getCurrentThemeRes(R.drawable.n_cell_bg));
+                cell.findViewById(R.id.ll_base).setBackgroundResource(ThemeManage.self().getCurrentThemeRes(R.drawable.n_app_bg));
                 cell.findViewById(R.id.line1).setBackgroundResource(ThemeManage.self().getCurrentThemeRes(R.drawable.n_line3));
                 ((TextView) cell.findViewById(R.id.name)).setTextColor(ThemeManage.self().getCurrentThemeColor(R.color.l_msg));
 

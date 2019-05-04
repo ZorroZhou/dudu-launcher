@@ -2,11 +2,13 @@ package com.wow.carlauncher.view.activity.launcher;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.WallpaperManager;
 import android.appwidget.AppWidgetManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -237,9 +239,19 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
 
     @Override
     public void onThemeChanged(ThemeManage manage) {
-        fl_bg.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_desk_bg));
-        line1.setBackgroundResource(manage.getCurrentThemeRes(R.color.line));
-
+        if (manage.getTheme().equals(ThemeManage.Theme.KBLACK)) {
+            WallpaperManager wallpaperManager = WallpaperManager
+                    .getInstance(getApplicationContext());
+            // 获取当前壁纸
+            Drawable wallpaperDrawable = wallpaperManager.getDrawable();
+            fl_bg.setBackground(wallpaperDrawable);
+            line1.setBackgroundResource(manage.getCurrentThemeRes(R.color.line));
+            line1.setVisibility(View.GONE);
+        } else {
+            fl_bg.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_desk_bg));
+            line1.setBackgroundResource(manage.getCurrentThemeRes(R.color.line));
+            line1.setVisibility(View.VISIBLE);
+        }
         Log.e(TAG + getClass().getSimpleName(), "onThemeChanged ");
     }
 

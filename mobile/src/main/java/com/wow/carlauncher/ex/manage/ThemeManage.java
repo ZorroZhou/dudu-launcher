@@ -35,6 +35,7 @@ import static com.wow.carlauncher.common.CommonData.SDATA_APP_THEME_NIGHT;
 import static com.wow.carlauncher.common.CommonData.TAG;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.BLACK;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.CBLACK;
+import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.KBLACK;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.WHITE;
 
 public class ThemeManage {
@@ -75,8 +76,11 @@ public class ThemeManage {
             case HEISE:
                 setTheme(BLACK);
                 break;
-            case KUHEI:
+            case CHUNHEI:
                 setTheme(CBLACK);
+                break;
+            case KUHEI:
+                setTheme(KBLACK);
                 break;
             case SHIJIAN:
                 if (SunRiseSetUtil.isNight(lon, lat, new Date())) {
@@ -115,9 +119,9 @@ public class ThemeManage {
         return getCurrentThemeRes(getTheme(), dayResId);
     }
 
-    public int getCurrentThemeRes(Theme theme, int dayResId) {
+    public int getCurrentThemeRes(Theme theme, int originResId) {
         if (theme == WHITE) {
-            return dayResId;
+            return originResId;
         }
         Map<String, Map<String, Integer>> cachedResrouce = cachedResrouces.get(theme.id);
         if (cachedResrouce == null) {
@@ -128,11 +132,11 @@ public class ThemeManage {
         String typeName;
         try {
             // 资源名
-            entryName = context.getResources().getResourceEntryName(dayResId);
+            entryName = context.getResources().getResourceEntryName(originResId);
             // 资源类型
-            typeName = context.getResources().getResourceTypeName(dayResId);
+            typeName = context.getResources().getResourceTypeName(originResId);
         } catch (Exception e) {
-            return dayResId;
+            return originResId;
         }
         Map<String, Integer> cachedRes = cachedResrouce.get(typeName);
         // 先从缓存中去取，如果有直接返回该id
@@ -143,22 +147,25 @@ public class ThemeManage {
         Integer resId = cachedRes.get(entryName + theme.suffix);
         if (resId != null && resId != 0) {
             return resId;
-        } else {
-            //如果缓存中没有再根据资源id去动态获取
-            try {
-                // 通过资源名，资源类型，包名得到资源int值
-                int nightResId = context.getResources().getIdentifier(entryName + theme.suffix, typeName, context.getPackageName());
-                // 放入缓存中
-                if (nightResId == 0) {
-                    return dayResId;
-                }
-                cachedRes.put(entryName + theme.suffix, nightResId);
-                return nightResId;
-            } catch (Resources.NotFoundException e) {
-                e.printStackTrace();
-            }
         }
-        return dayResId;
+
+        //如果缓存中没有再根据资源id去动态获取
+        try {
+            // 通过资源名，资源类型，包名得到资源int值
+            int nightResId = context.getResources().getIdentifier(entryName + theme.suffix, typeName, context.getPackageName());
+            // 放入缓存中
+            if (nightResId == 0) {
+                nightResId = context.getResources().getIdentifier(entryName + theme.bsuffix, typeName, context.getPackageName());
+            }
+            if (nightResId == 0) {
+                nightResId = originResId;
+            }
+            cachedRes.put(entryName + theme.suffix, nightResId);
+            return nightResId;
+        } catch (Resources.NotFoundException e) {
+            e.printStackTrace();
+        }
+        return originResId;
     }
 
     public void setViewsBackround(ViewGroup viewGroup, int[] ids, int dayResId) {
@@ -239,18 +246,21 @@ public class ThemeManage {
     }
 
     public enum Theme implements SetEnum {
-        WHITE("白色主题", 0, ""),
-        BLACK("黑色主题", 1, "_b"),
-        CBLACK("纯黑主题", 2, "_cb");
+        WHITE("白色主题", 0, "", ""),
+        BLACK("黑色主题", 1, "_b", ""),
+        CBLACK("纯黑主题", 2, "_cb", ""),
+        KBLACK("酷黑主题(自定义背景)", 3, "_kb", "_cb");
 
         private String name;
         private Integer id;
         private String suffix;
+        private String bsuffix;
 
-        Theme(String name, Integer id, String suffix) {
+        Theme(String name, Integer id, String suffix, String bsuffix) {
             this.name = name;
             this.id = id;
             this.suffix = suffix;
+            this.bsuffix = bsuffix;
         }
 
         public String getName() {
@@ -288,6 +298,8 @@ public class ThemeManage {
                     return BLACK;
                 case 2:
                     return CBLACK;
+                case 3:
+                    return KBLACK;
             }
             return WHITE;
         }
@@ -298,7 +310,8 @@ public class ThemeManage {
         DENGGUANG("根据灯光切换(部分车型支持)", 1),
         BAISE("强制白色主题", 2),
         HEISE("强制黑色主题", 3),
-        KUHEI("强制酷黑主题", 4);
+        CHUNHEI("强制纯黑主题", 4),
+        KUHEI("强制酷黑主题", 5);
         private String name;
         private Integer id;
 
@@ -334,6 +347,8 @@ public class ThemeManage {
                 case 3:
                     return HEISE;
                 case 4:
+                    return CHUNHEI;
+                case 5:
                     return KUHEI;
             }
             return SHIJIAN;

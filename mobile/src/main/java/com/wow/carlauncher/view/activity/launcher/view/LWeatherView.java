@@ -91,12 +91,14 @@ public class LWeatherView extends BaseEXView {
                     R.id.tv_fx
             }, R.color.l_text4);
         } else {
-            layoutId = R.layout.content_l_weather_cb;
-            fl_base.removeAllViews();
-            View view = View.inflate(getContext(), layoutId, null);
-            fl_base.addView(view, MATCH_PARENT, MATCH_PARENT);
-            x.view().inject(this, view);
-
+            if (layoutId != R.layout.content_l_weather_cb) {
+                layoutId = R.layout.content_l_weather_cb;
+                fl_base.removeAllViews();
+                View view = View.inflate(getContext(), layoutId, null);
+                fl_base.addView(view, MATCH_PARENT, MATCH_PARENT);
+                x.view().inject(this, view);
+            }
+            rl_base.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_l_item1_bg));
             refreshShow();
         }
 

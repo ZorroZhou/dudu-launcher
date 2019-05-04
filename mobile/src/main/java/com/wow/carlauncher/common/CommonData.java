@@ -35,7 +35,8 @@ public class CommonData {
     public static final Theme[] THEMES = {
             Theme.WHITE,
             Theme.BLACK,
-            Theme.CBLACK};
+            Theme.CBLACK,
+            Theme.KBLACK};
 
     //主题切换模式
     public static final ThemeManage.ThemeMode[] THEME_MODEL = {
@@ -43,6 +44,7 @@ public class CommonData {
             ThemeManage.ThemeMode.DENGGUANG,
             ThemeManage.ThemeMode.BAISE,
             ThemeManage.ThemeMode.HEISE,
+            ThemeManage.ThemeMode.CHUNHEI,
             ThemeManage.ThemeMode.KUHEI};
 
     //所有的桌面插件

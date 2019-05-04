@@ -72,6 +72,10 @@ public class LDockView extends BaseEXView {
     @ViewInject(R.id.tv_dock4)
     private TextView tv_dock4;
 
+    @ViewInject(R.id.ll_base)
+    private View ll_base;
+
+
     @Override
     protected int getContent() {
         return R.layout.content_l_dock;

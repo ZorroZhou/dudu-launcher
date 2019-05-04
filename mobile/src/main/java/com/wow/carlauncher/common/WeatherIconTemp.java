@@ -11,7 +11,7 @@ import java.util.Calendar;
 
 public class WeatherIconTemp {
     public static int getWeatherResId(String paramString) {
-        if (ThemeManage.self().getTheme() != ThemeManage.Theme.CBLACK) {
+        if (ThemeManage.self().getTheme() != ThemeManage.Theme.CBLACK && ThemeManage.self().getTheme() != ThemeManage.Theme.KBLACK) {
             if (paramString.equals("晴")) {
                 if (!isNight()) {
                     return R.mipmap.n_weather_q;

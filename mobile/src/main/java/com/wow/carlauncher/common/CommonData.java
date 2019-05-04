@@ -52,7 +52,8 @@ public class CommonData {
             ThemeManage.ThemeMode.BAISE,
             ThemeManage.ThemeMode.HEISE,
             ThemeManage.ThemeMode.CHUNHEI,
-            ThemeManage.ThemeMode.KUHEI};
+            ThemeManage.ThemeMode.KUHEI
+    };
 
     //所有的桌面插件
     public static final ItemEnum[] LAUNCHER_ITEMS = {
@@ -62,7 +63,7 @@ public class CommonData {
             ItemEnum.TAIYA,
             ItemEnum.TIME,
             ItemEnum.WEATHER,
-            ItemEnum.FM
+            // ItemEnum.FM
     };
     //所有OBD控制器
     public static final ObdProtocolEnum[] OBD_CONTROLLER = {

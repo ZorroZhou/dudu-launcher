@@ -6,8 +6,8 @@ android {
         applicationId "com.wow.carlauncher"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 106
-        versionName "2.006"
+        versionCode 107
+        versionName "2.007"
     }
     buildTypes {
         release {

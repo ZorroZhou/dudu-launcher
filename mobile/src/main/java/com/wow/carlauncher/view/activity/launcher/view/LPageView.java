@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.util.ViewUtils;
 import com.wow.carlauncher.ex.manage.ThemeManage;
+import com.wow.carlauncher.view.activity.launcher.LayoutEnum;
 import com.wow.carlauncher.view.base.BaseEXView;
 
 import org.xutils.view.annotation.Event;
@@ -45,6 +46,29 @@ public class LPageView extends BaseEXView {
     }
 
     private View[] item;
+    private LayoutEnum layoutEnum = LayoutEnum.LAYOUT1;
+
+    public void setLayoutEnum(LayoutEnum layoutEnum) {
+        if (layoutEnum == null) {
+            return;
+        }
+        if (!layoutEnum.equals(this.layoutEnum)) {
+            this.layoutEnum = layoutEnum;
+            if (item != null && item.length > 0) {
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT);
+                params.weight = 1;
+                int margin4 = ViewUtils.dip2px(getContext(), 4);
+                int margin10 = ViewUtils.dip2px(getContext(), 4);
+                params.setMargins(margin4, margin10, margin4, margin4);
+                if (layoutEnum.equals(LayoutEnum.LAYOUT1)) {
+                    params.setMargins(margin10, margin10, margin10, margin10);
+                }
+                for (View i : item) {
+                    i.setLayoutParams(params);
+                }
+            }
+        }
+    }
 
     public void setItem(View[] item) {
         if (item == null) {
@@ -54,16 +78,25 @@ public class LPageView extends BaseEXView {
         ll_base.removeAllViews();
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT);
         params.weight = 1;
+
+        if (layoutEnum == null) {
+            layoutEnum = LayoutEnum.LAYOUT1;
+        }
+
         for (View view : item) {
             if (view == null) {
                 ll_base.addView(new View(getContext()), params);
             } else {
-                int margin = ViewUtils.dip2px(getContext(), 10);
-                params.setMargins(margin, margin, margin, margin);
+                int margin4 = ViewUtils.dip2px(getContext(), 4);
+                int margin10 = ViewUtils.dip2px(getContext(), 4);
+                params.setMargins(margin4, margin10, margin4, margin4);
+                if (layoutEnum.equals(LayoutEnum.LAYOUT1)) {
+                    params.setMargins(margin10, margin10, margin10, margin10);
+                }
                 ll_base.addView(view, params);
             }
+            Log.e(TAG + getClass().getSimpleName(), "setItem: ");
         }
-        Log.e(TAG + getClass().getSimpleName(), "setItem: ");
     }
 
     @ViewInject(R.id.ll_base)

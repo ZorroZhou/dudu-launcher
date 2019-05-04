@@ -107,7 +107,6 @@ public class LDockView extends BaseEXView {
     }
 
     private void loadLayout() {
-        Log.e(TAG, "loadLayout: " + layoutEnum);
         if (layoutEnum == null) {
             layoutEnum = LayoutEnum.LAYOUT1;
         }
@@ -116,7 +115,7 @@ public class LDockView extends BaseEXView {
             ll_base.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
                 @Override
                 public boolean onPreDraw() {
-                    if (ll_base.getHeight() > 0) {
+                    if (ll_base.getHeight() > ll_base.getWidth() && ll_base.getHeight() > 0) {
                         ll_base.getViewTreeObserver().removeOnPreDrawListener(this);
                         int mm = (int) (ll_base.getHeight() * 0.03);
                         LinearLayout.LayoutParams itemLp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0);
@@ -131,19 +130,19 @@ public class LDockView extends BaseEXView {
                     return true;
                 }
             });
-            Log.e(TAG, "setLayoutEnum: " + getHeight());
 
+            ll_dock5.setVisibility(GONE);
         } else if (layoutEnum.equals(LayoutEnum.LAYOUT2)) {
             ll_base.setOrientation(LinearLayout.HORIZONTAL);
             ll_base.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
                 @Override
                 public boolean onPreDraw() {
-                    if (ll_base.getHeight() > 0) {
+                    if (ll_base.getWidth() > ll_base.getHeight() && ll_base.getHeight() > 0) {
                         ll_base.getViewTreeObserver().removeOnPreDrawListener(this);
                         int mm = (int) (ll_base.getHeight() * 0.1);
                         LinearLayout.LayoutParams itemLp = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT);
                         itemLp.weight = 1;
-                        itemLp.setMargins(0, mm, 0, mm);
+                        itemLp.setMargins(0, 0, 0, mm);
                         ll_dock1.setLayoutParams(itemLp);
                         ll_dock2.setLayoutParams(itemLp);
                         ll_dock3.setLayoutParams(itemLp);
@@ -153,7 +152,7 @@ public class LDockView extends BaseEXView {
                     return true;
                 }
             });
-
+            ll_dock5.setVisibility(VISIBLE);
         }
     }
 

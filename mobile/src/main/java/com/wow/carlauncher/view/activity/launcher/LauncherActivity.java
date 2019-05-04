@@ -187,8 +187,10 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
             pageNum++;
         }
         itemPager = new LPageView[pageNum];
+        LayoutEnum layoutEnum = LayoutEnum.getById(SharedPreUtil.getInteger(SDATA_LAUNCHER_LAYOUT, LayoutEnum.LAYOUT1.getId()));
         for (int i = 0; i < itemPager.length; i++) {
             itemPager[i] = new LPageView(this);
+            itemPager[i].setLayoutEnum(layoutEnum);
         }
 
         //记录当前第几页,这里应该是-1,因为下面会从0开始,直接+1
@@ -211,6 +213,25 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
             }
         }
         //初始化完毕
+    }
+
+    private LAppsView[] appsPager;
+
+    private void initApps() {
+        Log.e(TAG, "initApps");
+        //获取每页的item数量
+        int psize = getPageItemNum();
+        int appsize = AppInfoManage.self().getShowAppInfos().size();
+        int pageSize = psize * 4;
+        int appPageNum = appsize / pageSize;
+        if (appsize % pageSize != 0) {
+            appPageNum++;
+        }
+
+        appsPager = new LAppsView[appPageNum];
+        for (int i = 0; i < appPageNum; i++) {
+            appsPager[i] = new LAppsView(this, psize, i);
+        }
     }
 
     private void loadLayout() {
@@ -252,27 +273,10 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
         }
         ll_top.setLayoutEnum(layoutEnum);
         ll_dock.setLayoutEnum(layoutEnum);
-    }
-
-    private LAppsView[] appsPager;
-
-    private void initApps() {
-        Log.e(TAG, "initApps");
-        //获取每页的item数量
-        int psize = getPageItemNum();
-        int appsize = AppInfoManage.self().getShowAppInfos().size();
-        int pageSize = psize * 4;
-        int appPageNum = appsize / pageSize;
-        if (appsize % pageSize != 0) {
-            appPageNum++;
-        }
-
-        appsPager = new LAppsView[appPageNum];
-        for (int i = 0; i < appPageNum; i++) {
-            appsPager[i] = new LAppsView(this, psize, i);
+        for (LPageView lPageView : itemPager) {
+            lPageView.setLayoutEnum(layoutEnum);
         }
     }
-
 
     private void refreshViewPager() {
         //最后合并一下两个数组,展示出来

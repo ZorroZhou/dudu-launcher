@@ -149,7 +149,7 @@ public class SHomeView extends BaseEXView {
         });
 
         final String[] itemsNum = {
-                "2个", "3个", "4个"
+                "2个", "3个", "4个", "5个"
         };
         sv_launcher_item_num.setSummary(SharedPreUtil.getInteger(CommonData.SDATA_LAUNCHER_ITEM_NUM, 3) + "个");
         sv_launcher_item_num.setOnClickListener(v -> {

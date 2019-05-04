@@ -507,7 +507,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
 
     private int getPageItemNum() {
         int psize = SharedPreUtil.getInteger(CommonData.SDATA_LAUNCHER_ITEM_NUM, 3);
-        if (psize != 4 && psize != 2) {
+        if (psize != 4 && psize != 2 && psize != 5) {
             psize = 3;
         }
         return psize;

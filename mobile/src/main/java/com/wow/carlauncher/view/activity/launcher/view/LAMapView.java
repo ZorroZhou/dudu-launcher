@@ -9,8 +9,6 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -19,10 +17,8 @@ import android.widget.Toast;
 import com.amap.api.location.AMapLocation;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
-import com.wow.carlauncher.common.util.AppUtil;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
-import com.wow.carlauncher.common.util.ViewUtils;
 import com.wow.carlauncher.common.view.LukuangView;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.location.event.MNewLocationEvent;
@@ -44,13 +40,11 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static com.wow.carlauncher.common.CommonData.TAG;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.BLACK;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.WHITE;
 import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.AMAP_PACKAGE;
 import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.ICONS;
-import static com.wow.carlauncher.view.activity.launcher.view.LShadowView.SizeEnum.FIVE;
 
 /**
  * Created by 10124 on 2018/4/20.
@@ -115,35 +109,14 @@ public class LAMapView extends BaseEXView {
         iv_car2.setImageResource(manage.getCurrentThemeRes(R.mipmap.n_car));
         iv_road2.setImageResource(manage.getCurrentThemeRes(R.mipmap.n_road1));
 
-        fl_navinfo_root.removeAllViews();
-        fl_xunhang_root.removeAllViews();
-        if (rl_navinfo.getParent() != null) {
-            ((ViewGroup) rl_navinfo.getParent()).removeView(rl_navinfo);
-        }
-
-        if (rl_xunhang.getParent() != null) {
-            ((ViewGroup) rl_xunhang.getParent()).removeView(rl_xunhang);
-        }
-
         if (currentTheme == WHITE || currentTheme == BLACK) {
             tv_title.setGravity(Gravity.CENTER);
-            fl_navinfo_root.addView(LShadowView.getShadowView(getContext(), rl_navinfo, FIVE), MATCH_PARENT, MATCH_PARENT);
-            fl_xunhang_root.addView(LShadowView.getShadowView(getContext(), rl_xunhang, FIVE), MATCH_PARENT, MATCH_PARENT);
 
             line7.setVisibility(GONE);
             line11.setVisibility(GONE);
         } else {
             tv_title.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
-
-            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT);
-            int margin = ViewUtils.dip2px(getContext(), 5);
-            params.setMargins(margin, margin, margin, margin);
-
-            fl_navinfo_root.addView(rl_navinfo, params);
-            fl_xunhang_root.addView(rl_xunhang, params);
-
             line7.setVisibility(VISIBLE);
-            line11.setVisibility(fl_xunhang_root.getVisibility());
         }
 
         Log.e(TAG + getClass().getSimpleName(), "changedTheme: ");
@@ -179,11 +152,8 @@ public class LAMapView extends BaseEXView {
     @ViewInject(R.id.rl_che)
     private View rl_che;
 
-    @ViewInject(R.id.fl_navinfo_root)
-    private FrameLayout fl_navinfo_root;
-
     @ViewInject(R.id.fl_xunhang_root)
-    private FrameLayout fl_xunhang_root;
+    private View fl_xunhang_root;
 
     @ViewInject(R.id.iv_dh)
     private ImageView iv_dh;

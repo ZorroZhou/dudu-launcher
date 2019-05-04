@@ -35,15 +35,13 @@
             android:id="@+id/iv_moren"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_centerInParent="true"
+            android:layout_margin="0.5dp"
             android:contentDescription="@string/app_name"
             android:scaleType="fitXY" />
 
         <com.zhy.android.percent.support.PercentRelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_marginLeftPercent="2%h"
-            app:layout_marginRightPercent="2%h">
+            android:layout_height="match_parent">
 
             <FrameLayout
                 android:id="@+id/fl_xunhang_root"
@@ -51,12 +49,15 @@
                 android:layout_height="0dp"
                 android:visibility="gone"
                 app:layout_heightPercent="22%h"
+                app:layout_marginLeftPercent="3%h"
+                app:layout_marginRightPercent="3%h"
                 app:layout_marginTopPercent="12%h">
 
                 <com.zhy.android.percent.support.PercentRelativeLayout
                     android:id="@+id/rl_xunhang"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:layout_margin="5dp">
 
                     <com.wow.carlauncher.common.view.PhilTextView
                         android:id="@+id/tv_speed"
@@ -71,10 +72,11 @@
                 </com.zhy.android.percent.support.PercentRelativeLayout>
             </FrameLayout>
 
+
             <View
                 android:id="@+id/line11"
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
+                android:layout_height="0.5dp"
                 android:layout_below="@id/fl_xunhang_root"
                 android:visibility="gone" />
 
@@ -90,7 +92,7 @@
                 <View
                     android:id="@+id/line1"
                     android:layout_width="match_parent"
-                    android:layout_height="1dp" />
+                    android:layout_height="0.5dp" />
 
                 <com.zhy.android.percent.support.PercentLinearLayout
                     android:layout_width="match_parent"
@@ -121,7 +123,7 @@
 
                     <View
                         android:id="@+id/line2"
-                        android:layout_width="1dp"
+                        android:layout_width="0.5dp"
                         android:layout_height="match_parent"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp" />
@@ -143,7 +145,7 @@
 
                     <View
                         android:id="@+id/line3"
-                        android:layout_width="1dp"
+                        android:layout_width="0.5dp"
                         android:layout_height="match_parent"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp" />
@@ -204,83 +206,79 @@
         app:layout_marginLeftPercent="2%h"
         app:layout_marginRightPercent="2%h">
 
-        <FrameLayout
-            android:id="@+id/fl_navinfo_root"
+
+        <com.zhy.android.percent.support.PercentRelativeLayout
+            android:id="@+id/rl_navinfo"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_margin="5dp"
             app:layout_heightPercent="22%h"
             app:layout_marginTopPercent="12%h">
 
             <com.zhy.android.percent.support.PercentRelativeLayout
-                android:id="@+id/rl_navinfo"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:id="@+id/rl_icon"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_heightPercent="100%h"
+                app:layout_widthPercent="100%h">
 
-                <com.zhy.android.percent.support.PercentRelativeLayout
-                    android:id="@+id/rl_icon"
+                <ImageView
+                    android:id="@+id/iv_icon"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    app:layout_heightPercent="100%h"
-                    app:layout_widthPercent="100%h">
-
-                    <ImageView
-                        android:id="@+id/iv_icon"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_centerInParent="true"
-                        android:scaleType="fitCenter"
-                        android:src="@mipmap/hud_sou9"
-                        app:layout_heightPercent="70%h"
-                        app:layout_widthPercent="70%h" />
-                </com.zhy.android.percent.support.PercentRelativeLayout>
-
-                <TextView
-                    android:id="@+id/tv_next_dis"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_toRightOf="@id/rl_icon"
-                    android:ellipsize="marquee"
-                    android:gravity="right|bottom"
-                    android:marqueeRepeatLimit="marquee_forever"
-                    android:paddingRight="10dp"
-                    android:singleLine="true"
-                    android:text="现在"
-                    android:textColor="#fff"
-                    app:layout_heightPercent="55%h"
-                    app:layout_textSizePercent="35%h" />
-
-                <TextView
-                    android:id="@+id/tv_next_road"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_toRightOf="@id/rl_icon"
-                    android:ellipsize="marquee"
-                    android:gravity="right|top"
-                    android:marqueeRepeatLimit="marquee_forever"
-                    android:paddingRight="10dp"
-                    android:singleLine="true"
-                    android:text="relax放松一下"
-                    android:textColor="#ddd"
-                    app:layout_heightPercent="35%h"
-                    app:layout_textSizePercent="22%h" />
+                    android:layout_centerInParent="true"
+                    android:scaleType="fitCenter"
+                    android:src="@mipmap/hud_sou9"
+                    app:layout_heightPercent="70%h"
+                    app:layout_widthPercent="70%h" />
             </com.zhy.android.percent.support.PercentRelativeLayout>
-        </FrameLayout>
+
+            <TextView
+                android:id="@+id/tv_next_dis"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_toRightOf="@id/rl_icon"
+                android:ellipsize="marquee"
+                android:gravity="right|bottom"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:paddingRight="10dp"
+                android:singleLine="true"
+                android:text="现在"
+                android:textColor="#fff"
+                app:layout_heightPercent="50%h"
+                app:layout_textSizePercent="30%h" />
+
+            <TextView
+                android:id="@+id/tv_next_road"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_toRightOf="@id/rl_icon"
+                android:ellipsize="marquee"
+                android:gravity="right|top"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:paddingRight="10dp"
+                android:singleLine="true"
+                android:text="relax放松一下"
+                android:textColor="#ddd"
+                app:layout_heightPercent="45%h"
+                app:layout_textSizePercent="20%h" />
+        </com.zhy.android.percent.support.PercentRelativeLayout>
 
         <View
             android:id="@+id/line7"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@id/fl_navinfo_root" />
+            android:layout_height="0.5dp"
+            android:layout_below="@id/rl_navinfo" />
 
         <com.zhy.android.percent.support.PercentLinearLayout
             android:id="@+id/ll_xiansu"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_below="@id/fl_navinfo_root"
+            android:layout_below="@id/rl_navinfo"
             android:orientation="vertical"
             app:layout_heightPercent="14%h"
             app:layout_marginLeftPercent="3%h"
@@ -318,7 +316,7 @@
             <View
                 android:id="@+id/line4"
                 android:layout_width="match_parent"
-                android:layout_height="1dp" />
+                android:layout_height="0.5dp" />
 
             <com.zhy.android.percent.support.PercentLinearLayout
                 android:layout_width="match_parent"
@@ -342,7 +340,7 @@
 
                 <View
                     android:id="@+id/line5"
-                    android:layout_width="1dp"
+                    android:layout_width="0.5dp"
                     android:layout_height="match_parent"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp" />
@@ -360,7 +358,7 @@
 
                 <View
                     android:id="@+id/line6"
-                    android:layout_width="1dp"
+                    android:layout_width="0.5dp"
                     android:layout_height="match_parent"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp" />
@@ -386,7 +384,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@id/ll_controller"
-            android:layout_below="@id/fl_navinfo_root">
+            android:layout_below="@id/rl_navinfo">
 
             <ImageView
                 android:id="@+id/iv_road"
@@ -413,7 +411,7 @@
             android:layout_width="5dp"
             android:layout_height="wrap_content"
             android:layout_above="@id/ll_controller"
-            android:layout_below="@id/fl_navinfo_root"
+            android:layout_below="@id/rl_navinfo"
             android:layout_alignParentRight="true"
             app:layout_marginBottomPercent="10%h"
             app:layout_marginRightPercent="2%h"

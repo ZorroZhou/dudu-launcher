@@ -17,8 +17,7 @@ import org.xutils.x;
  */
 
 public class QQMusicWebService {
-    private static final String TAG = "AMapWebService";
-    private static final String KEY = "b8a80f002ec3fe70454a4c013eaabbb7";
+    private static final String TAG = "QQMusicWebService";
 
     public static void searchMusic(String name, int num, final CommonCallback commonCallback) {
 

@@ -29,6 +29,7 @@
         android:id="@+id/ll_msg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone"
         app:layout_marginLeftPercent="2%h"
         app:layout_marginRightPercent="2%h">
 
@@ -68,7 +69,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:visibility="gone"
         app:layout_marginBottomPercent="2%h"
         app:layout_marginLeftPercent="2%h"
         app:layout_marginRightPercent="2%h">
@@ -79,100 +79,77 @@
             android:layout_height="match_parent"
             app:layout_marginTopPercent="12%h">
 
-            <FrameLayout
-                android:id="@+id/fl_lt_root"
+
+            <com.zhy.android.percent.support.PercentFrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true">
+                android:layout_alignParentTop="true"
+                android:layout_margin="5dp">
 
-                <com.zhy.android.percent.support.PercentFrameLayout
-                    android:id="@+id/fl_lt"
+                <TextView
+                    android:id="@+id/tv_lt"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|left"
+                    android:padding="12dp"
+                    android:text="左前\n0.0\n0.0"
+                    app:layout_textSizePercent="7%h" />
+            </com.zhy.android.percent.support.PercentFrameLayout>
 
-                    <TextView
-                        android:id="@+id/tv_lt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical|left"
-                        android:padding="12dp"
-                        android:text="左前\n0.0\n0.0"
-                        app:layout_textSizePercent="7%h" />
-                </com.zhy.android.percent.support.PercentFrameLayout>
-            </FrameLayout>
-
-            <FrameLayout
-                android:id="@+id/fl_rt_root"
+            <com.zhy.android.percent.support.PercentFrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true">
+                android:layout_alignParentRight="true"
+                android:layout_margin="5dp">
 
-                <com.zhy.android.percent.support.PercentFrameLayout
-                    android:id="@+id/fl_rt"
+                <TextView
+                    android:id="@+id/tv_rt"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/tv_rt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical|right"
-                        android:padding="12dp"
-                        android:text="右前\n0.0\n0.0"
-                        app:layout_textSizePercent="7%h" />
-                </com.zhy.android.percent.support.PercentFrameLayout>
-            </FrameLayout>
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|right"
+                    android:padding="12dp"
+                    android:text="右前\n0.0\n0.0"
+                    app:layout_textSizePercent="7%h" />
+            </com.zhy.android.percent.support.PercentFrameLayout>
 
 
-            <FrameLayout
-                android:id="@+id/fl_lb_root"
+            <com.zhy.android.percent.support.PercentFrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentBottom="true">
+                android:layout_alignParentBottom="true"
+                android:layout_margin="5dp">
 
-                <com.zhy.android.percent.support.PercentFrameLayout
-                    android:id="@+id/fl_lb"
+                <TextView
+                    android:id="@+id/tv_lb"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|left"
+                    android:padding="12dp"
+                    android:text="左后\n0.0\n0.0"
+                    app:layout_textSizePercent="7%h" />
+            </com.zhy.android.percent.support.PercentFrameLayout>
 
-                    <TextView
-                        android:id="@+id/tv_lb"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical|left"
-                        android:padding="12dp"
-                        android:text="左后\n0.0\n0.0"
-                        app:layout_textSizePercent="7%h" />
-                </com.zhy.android.percent.support.PercentFrameLayout>
-            </FrameLayout>
-
-            <FrameLayout
-                android:id="@+id/fl_rb_root"
+            <com.zhy.android.percent.support.PercentFrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true">
+                android:layout_alignParentBottom="true"
+                android:layout_margin="5dp">
 
-                <com.zhy.android.percent.support.PercentFrameLayout
-                    android:id="@+id/fl_rb"
+                <TextView
+                    android:id="@+id/tv_rb"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/tv_rb"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical|right"
-                        android:padding="12dp"
-                        android:text="右后\n0.0\n0.0"
-                        app:layout_textSizePercent="7%h" />
-                </com.zhy.android.percent.support.PercentFrameLayout>
-            </FrameLayout>
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|right"
+                    android:padding="12dp"
+                    android:text="右后\n0.0\n0.0"
+                    app:layout_textSizePercent="7%h" />
+            </com.zhy.android.percent.support.PercentFrameLayout>
 
             <ImageView
                 android:id="@+id/iv_img"

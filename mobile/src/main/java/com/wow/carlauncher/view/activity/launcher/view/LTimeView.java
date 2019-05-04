@@ -7,14 +7,12 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.util.DateUtil;
 import com.wow.carlauncher.common.util.LunarUtil;
-import com.wow.carlauncher.common.util.ViewUtils;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.time.event.MTime3SecondEvent;
 import com.wow.carlauncher.view.base.BaseEXView;
@@ -27,13 +25,11 @@ import org.xutils.view.annotation.ViewInject;
 import java.util.Calendar;
 import java.util.Date;
 
-import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static com.wow.carlauncher.common.CommonData.DAY_MILL;
 import static com.wow.carlauncher.common.CommonData.MINUTE_MILL;
 import static com.wow.carlauncher.common.CommonData.TAG;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.BLACK;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.WHITE;
-import static com.wow.carlauncher.view.activity.launcher.view.LShadowView.SizeEnum.FIVE;
 
 /**
  * Created by 10124 on 2018/4/20.
@@ -61,7 +57,7 @@ public class LTimeView extends BaseEXView {
         rl_base.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_l_item1_bg));
         tv_title.setTextColor(manage.getCurrentThemeColor(R.color.l_title));
 
-        tv_shijian.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_cell_bg));
+        fl_time.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_cell_bg));
 
         tv_shijian.setTextColor(manage.getCurrentThemeColor(R.color.l_content));
         tv_week.setTextColor(manage.getCurrentThemeColor(R.color.l_msg));
@@ -69,23 +65,10 @@ public class LTimeView extends BaseEXView {
         tv_lunar.setTextColor(manage.getCurrentThemeColor(R.color.l_msg));
 
         //时间组件的处理
-        fl_time_root.removeAllViews();
-        if (fl_time.getParent() != null) {
-            ((ViewGroup) fl_time.getParent()).removeView(fl_time);
-        }
-
         if (currentTheme == WHITE || currentTheme == BLACK) {
             tv_title.setGravity(Gravity.CENTER);
-
-            fl_time_root.addView(LShadowView.getShadowView(getContext(), fl_time, FIVE), MATCH_PARENT, MATCH_PARENT);
         } else {
             tv_title.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
-
-            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(MATCH_PARENT, MATCH_PARENT);
-            int margin = ViewUtils.dip2px(getContext(), 5);
-            params.setMargins(margin, margin, margin, margin);
-
-            fl_time_root.addView(fl_time, params);
         }
         Log.e(TAG + getClass().getSimpleName(), "changedTheme: ");
     }
@@ -104,9 +87,6 @@ public class LTimeView extends BaseEXView {
 
     @ViewInject(R.id.fl_time)
     private FrameLayout fl_time;
-
-    @ViewInject(R.id.fl_time_root)
-    private FrameLayout fl_time_root;
 
     @ViewInject(R.id.rl_base)
     private View rl_base;

@@ -155,6 +155,25 @@ public class AppContext {
             }
         });
         Log.e(TAG, "APP初始化完毕 ");
+
+//        BroadcastReceiver br = new BroadcastReceiver() {
+//            @Override
+//            public void onReceive(Context context, Intent intent) {
+//                System.out.println(intent.getAction());
+//                if (intent.getExtras() != null) {
+//                    for (String key : intent.getExtras().keySet()) {
+//                        System.out.println(key + " : " + intent.getExtras().get(key));
+//                    }
+//                }
+//            }
+//        };
+//
+//        IntentFilter intentFilter = new IntentFilter();
+//
+//        intentFilter.addAction("com.nwd.action.SL_WIDGET_COMMAND");
+//        intentFilter.addAction("com.nwd.action.ACTION_SEND_RADIO_FREQUENCE");
+//        intentFilter.addAction("com.nwd.radio.service.ACTION_RADIO_SERVICE");
+//        app.registerReceiver(br, intentFilter);
     }
 
     public Application getApplication() {

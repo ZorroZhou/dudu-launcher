@@ -16,7 +16,6 @@ import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
 import static com.wow.carlauncher.common.CommonData.TAG;
-import static com.wow.carlauncher.view.activity.launcher.view.LShadowView.SizeEnum.TEN;
 
 public class LPageView extends BaseEXView {
 
@@ -59,13 +58,9 @@ public class LPageView extends BaseEXView {
             if (view == null) {
                 ll_base.addView(new View(getContext()), params);
             } else {
-                if (ThemeManage.self().getTheme() == ThemeManage.Theme.WHITE || ThemeManage.self().getTheme() == ThemeManage.Theme.BLACK) {
-                    ll_base.addView(LShadowView.getShadowView(getContext(), view, TEN), params);
-                } else {
-                    int margin = ViewUtils.dip2px(getContext(), 10);
-                    params.setMargins(margin, margin, margin, margin);
-                    ll_base.addView(view, params);
-                }
+                int margin = ViewUtils.dip2px(getContext(), 10);
+                params.setMargins(margin, margin, margin, margin);
+                ll_base.addView(view, params);
             }
         }
         Log.e(TAG + getClass().getSimpleName(), "setItem: ");

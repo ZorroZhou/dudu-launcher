@@ -35,28 +35,23 @@
         app:layout_marginRightPercent="2%h"
         app:layout_marginTopPercent="12%h">
 
-        <FrameLayout
-            android:id="@+id/fl_time_root"
+        <com.zhy.android.percent.support.PercentFrameLayout
+            android:id="@+id/fl_time"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_margin="5dp"
             android:layout_weight="1">
 
-            <com.zhy.android.percent.support.PercentFrameLayout
-                android:id="@+id/fl_time"
+            <com.wow.carlauncher.common.view.PhilTextView
+                android:id="@+id/tv_shijian"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <com.wow.carlauncher.common.view.PhilTextView
-                    android:id="@+id/tv_shijian"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:ellipsize="marquee"
-                    android:gravity="center"
-                    android:singleLine="true"
-                    android:text="09:99"
-                    app:layout_textSizePercent="60%h" />
-            </com.zhy.android.percent.support.PercentFrameLayout>
-        </FrameLayout>
+                android:layout_height="match_parent"
+                android:ellipsize="marquee"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="09:99"
+                app:layout_textSizePercent="60%h" />
+        </com.zhy.android.percent.support.PercentFrameLayout>
 
         <com.zhy.android.percent.support.PercentLinearLayout
             android:layout_width="match_parent"

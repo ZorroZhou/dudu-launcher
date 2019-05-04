@@ -82,245 +82,223 @@
             android:orientation="vertical"
             app:layout_marginTopPercent="12%h">
 
-            <FrameLayout
-                android:id="@+id/fl_cell1_root"
+
+            <LinearLayout
+                android:id="@+id/ll_cell1"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:layout_margin="5dp"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 app:layout_heightPercent="20%h">
 
-
                 <com.zhy.android.percent.support.PercentLinearLayout
-                    android:id="@+id/ll_cell1"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp">
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
 
-                    <com.zhy.android.percent.support.PercentLinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
+                    <TextView
+                        android:id="@+id/tv_text21"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:orientation="horizontal">
+                        android:gravity="center_vertical|left"
+                        android:lines="1"
+                        android:text="转速:"
+                        app:layout_textSizePercent="60%h" />
 
-                        <TextView
-                            android:id="@+id/tv_text21"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center_vertical|left"
-                            android:lines="1"
-                            android:text="转速:"
-                            app:layout_textSizePercent="60%h" />
+                    <TextView
+                        android:id="@+id/tv_zs"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|right"
+                        android:lines="1"
+                        android:text="没有数据"
+                        app:layout_textSizePercent="60%h" />
+                </com.zhy.android.percent.support.PercentLinearLayout>
 
-                        <TextView
-                            android:id="@+id/tv_zs"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center_vertical|right"
-                            android:lines="1"
-                            android:text="1000R/S"
-                            app:layout_textSizePercent="60%h" />
-                    </com.zhy.android.percent.support.PercentLinearLayout>
+                <com.zhy.android.percent.support.PercentRelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
 
-                    <com.zhy.android.percent.support.PercentRelativeLayout
+                    <ProgressBar
+                        android:id="@+id/p_zs"
+                        style="?android:attr/progressBarStyleHorizontal"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="1">
+                        android:layout_centerInParent="true"
+                        android:max="10000"
+                        android:progressDrawable="@drawable/n_obd_progress"
+                        app:layout_heightPercent="50%h" />
+                </com.zhy.android.percent.support.PercentRelativeLayout>
+            </LinearLayout>
 
-                        <ProgressBar
-                            android:id="@+id/p_zs"
-                            style="?android:attr/progressBarStyleHorizontal"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_centerInParent="true"
-                            android:max="10000"
-                            android:progressDrawable="@drawable/n_obd_progress"
-                            app:layout_heightPercent="50%h" />
-                    </com.zhy.android.percent.support.PercentRelativeLayout>
-                </com.zhy.android.percent.support.PercentLinearLayout>
-            </FrameLayout>
-
-            <FrameLayout
-                android:id="@+id/fl_cell2_root"
+            <LinearLayout
+                android:id="@+id/ll_cell2"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:layout_margin="5dp"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 app:layout_heightPercent="20%h">
 
-
                 <com.zhy.android.percent.support.PercentLinearLayout
-                    android:id="@+id/ll_cell2"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp">
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
 
-                    <com.zhy.android.percent.support.PercentLinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
+                    <TextView
+                        android:id="@+id/tv_text22"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:orientation="horizontal">
+                        android:gravity="center_vertical|left"
+                        android:lines="1"
+                        android:text="速度:"
+                        app:layout_textSizePercent="60%h" />
 
-                        <TextView
-                            android:id="@+id/tv_text22"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center_vertical|left"
-                            android:lines="1"
-                            android:text="速度:"
-                            app:layout_textSizePercent="60%h" />
+                    <TextView
+                        android:id="@+id/tv_sd"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|right"
+                        android:lines="1"
+                        android:text="没有数据"
+                        app:layout_textSizePercent="60%h" />
+                </com.zhy.android.percent.support.PercentLinearLayout>
 
-                        <TextView
-                            android:id="@+id/tv_sd"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center_vertical|right"
-                            android:lines="1"
-                            android:text="80KM/H"
-                            app:layout_textSizePercent="60%h" />
-                    </com.zhy.android.percent.support.PercentLinearLayout>
+                <com.zhy.android.percent.support.PercentRelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
 
-                    <com.zhy.android.percent.support.PercentRelativeLayout
+                    <ProgressBar
+                        android:id="@+id/p_sd"
+                        style="?android:attr/progressBarStyleHorizontal"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="1">
+                        android:layout_centerInParent="true"
+                        android:max="200"
+                        android:progressDrawable="@drawable/n_obd_progress"
+                        app:layout_heightPercent="50%h" />
+                </com.zhy.android.percent.support.PercentRelativeLayout>
+            </LinearLayout>
 
-                        <ProgressBar
-                            android:id="@+id/p_sd"
-                            style="?android:attr/progressBarStyleHorizontal"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_centerInParent="true"
-                            android:max="200"
-                            android:progressDrawable="@drawable/n_obd_progress"
-                            app:layout_heightPercent="50%h" />
-                    </com.zhy.android.percent.support.PercentRelativeLayout>
-                </com.zhy.android.percent.support.PercentLinearLayout>
-            </FrameLayout>
-
-            <FrameLayout
-                android:id="@+id/fl_cell3_root"
+            <LinearLayout
+                android:id="@+id/ll_cell3"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:layout_margin="5dp"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 app:layout_heightPercent="20%h">
 
-
                 <com.zhy.android.percent.support.PercentLinearLayout
-                    android:id="@+id/ll_cell3"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp">
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
 
-                    <com.zhy.android.percent.support.PercentLinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
+                    <TextView
+                        android:id="@+id/tv_text23"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:orientation="horizontal">
+                        android:gravity="center_vertical|left"
+                        android:lines="1"
+                        android:text="水温:"
+                        app:layout_textSizePercent="60%h" />
 
-                        <TextView
-                            android:id="@+id/tv_text23"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center_vertical|left"
-                            android:lines="1"
-                            android:text="水温:"
-                            app:layout_textSizePercent="60%h" />
+                    <TextView
+                        android:id="@+id/tv_sw"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|right"
+                        android:lines="1"
+                        android:text="没有数据"
+                        app:layout_textSizePercent="60%h" />
+                </com.zhy.android.percent.support.PercentLinearLayout>
 
-                        <TextView
-                            android:id="@+id/tv_sw"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center_vertical|right"
-                            android:lines="1"
-                            android:text="100°"
-                            app:layout_textSizePercent="60%h" />
-                    </com.zhy.android.percent.support.PercentLinearLayout>
+                <com.zhy.android.percent.support.PercentRelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
 
-                    <com.zhy.android.percent.support.PercentRelativeLayout
+                    <ProgressBar
+                        android:id="@+id/p_sw"
+                        style="?android:attr/progressBarStyleHorizontal"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="1">
+                        android:layout_centerInParent="true"
+                        android:max="110"
+                        android:progressDrawable="@drawable/n_obd_progress"
+                        app:layout_heightPercent="50%h" />
+                </com.zhy.android.percent.support.PercentRelativeLayout>
+            </LinearLayout>
 
-                        <ProgressBar
-                            android:id="@+id/p_sw"
-                            style="?android:attr/progressBarStyleHorizontal"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_centerInParent="true"
-                            android:max="110"
-                            android:progressDrawable="@drawable/n_obd_progress"
-                            app:layout_heightPercent="50%h" />
-                    </com.zhy.android.percent.support.PercentRelativeLayout>
-                </com.zhy.android.percent.support.PercentLinearLayout>
-            </FrameLayout>
 
-            <FrameLayout
-                android:id="@+id/fl_cell4_root"
+            <LinearLayout
+                android:id="@+id/ll_cell4"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:layout_margin="5dp"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 app:layout_heightPercent="20%h">
 
-
                 <com.zhy.android.percent.support.PercentLinearLayout
-                    android:id="@+id/ll_cell4"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp">
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
 
-                    <com.zhy.android.percent.support.PercentLinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
+                    <TextView
+                        android:id="@+id/tv_text24"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:orientation="horizontal">
+                        android:gravity="center_vertical|left"
+                        android:lines="1"
+                        android:text="剩余油量:"
+                        app:layout_textSizePercent="60%h" />
 
-                        <TextView
-                            android:id="@+id/tv_text24"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center_vertical|left"
-                            android:lines="1"
-                            android:text="剩余油量:"
-                            app:layout_textSizePercent="60%h" />
+                    <TextView
+                        android:id="@+id/tv_yl"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|right"
+                        android:lines="1"
+                        android:text="没有数据"
+                        app:layout_textSizePercent="60%h" />
+                </com.zhy.android.percent.support.PercentLinearLayout>
 
-                        <TextView
-                            android:id="@+id/tv_yl"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center_vertical|right"
-                            android:lines="1"
-                            android:text="50%"
-                            app:layout_textSizePercent="60%h" />
-                    </com.zhy.android.percent.support.PercentLinearLayout>
+                <com.zhy.android.percent.support.PercentRelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
 
-                    <com.zhy.android.percent.support.PercentRelativeLayout
+                    <ProgressBar
+                        android:id="@+id/p_yl"
+                        style="?android:attr/progressBarStyleHorizontal"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="1">
-
-                        <ProgressBar
-                            android:id="@+id/p_yl"
-                            style="?android:attr/progressBarStyleHorizontal"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_centerInParent="true"
-                            android:max="100"
-                            android:progressDrawable="@drawable/n_obd_progress"
-                            app:layout_heightPercent="50%h" />
-                    </com.zhy.android.percent.support.PercentRelativeLayout>
-                </com.zhy.android.percent.support.PercentLinearLayout>
-            </FrameLayout>
+                        android:layout_centerInParent="true"
+                        android:max="100"
+                        android:progressDrawable="@drawable/n_obd_progress"
+                        app:layout_heightPercent="50%h" />
+                </com.zhy.android.percent.support.PercentRelativeLayout>
+            </LinearLayout>
         </com.zhy.android.percent.support.PercentLinearLayout>
     </com.zhy.android.percent.support.PercentLinearLayout>
 </com.zhy.android.percent.support.PercentRelativeLayout>

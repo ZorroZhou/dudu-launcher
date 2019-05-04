@@ -16,13 +16,11 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.ImageView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.ViewPagerOnPageChangeListener;
 import com.wow.carlauncher.common.util.SharedPreUtil;
-import com.wow.carlauncher.ex.manage.AppWidgetManage;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.appInfo.event.MAppInfoRefreshShowEvent;
@@ -39,7 +37,6 @@ import com.wow.carlauncher.view.activity.launcher.event.LPageTransformerChangeEv
 import com.wow.carlauncher.view.activity.launcher.view.LAppsView;
 import com.wow.carlauncher.view.activity.launcher.view.LPageView;
 import com.wow.carlauncher.view.activity.launcher.view.LPagerPostion;
-import com.wow.carlauncher.view.activity.set.event.SEventRefreshAmapPlugin;
 import com.wow.carlauncher.view.activity.set.event.SEventSetHomeFull;
 import com.wow.carlauncher.view.popup.ConsoleWin;
 
@@ -57,14 +54,11 @@ import per.goweii.anypermission.AnyPermission;
 import per.goweii.anypermission.RequestListener;
 import per.goweii.anypermission.RuntimeRequester;
 
-import static com.wow.carlauncher.common.CommonData.APP_WIDGET_AMAP_PLUGIN;
 import static com.wow.carlauncher.common.CommonData.APP_WIDGET_FM_PLUGIN;
-import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_AMAP_PLUGIN;
 import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_FM_PLUGIN;
 import static com.wow.carlauncher.common.CommonData.SDATA_HOME_FULL;
 import static com.wow.carlauncher.common.CommonData.SDATA_LAUNCHER_ITEM_TRAN;
 import static com.wow.carlauncher.common.CommonData.TAG;
-import static com.wow.carlauncher.common.util.ViewUtils.getViewByIds;
 import static com.wow.carlauncher.ex.plugin.fk.FangkongProtocolEnum.YLFK;
 import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.CENTER_CLICK;
 import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.CENTER_LONG_CLICK;

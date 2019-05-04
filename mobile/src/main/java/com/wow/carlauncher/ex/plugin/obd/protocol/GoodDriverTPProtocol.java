@@ -143,7 +143,6 @@ public class GoodDriverTPProtocol extends ObdProtocol {
     @Override
     public void taskOver(ObdTask task) {
         if (task.isSuccess()) {
-            Log.d(TAG, "taskOver: " + task);
             if (task instanceof CloseSpaceTask) {
                 cmdCloseSpace = true;
             } else if (task instanceof CloseLineFeedTask) {

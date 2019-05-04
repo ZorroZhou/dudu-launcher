@@ -68,6 +68,7 @@
             android:layout_height="0dp"
             android:gravity="center"
             android:orientation="horizontal"
+            android:visibility="gone"
             app:layout_heightPercent="20%h"
             app:layout_marginTopPercent="4%h">
 
@@ -122,6 +123,6 @@
             android:id="@+id/fl_www"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_heightPercent="40%h" />
+            app:layout_heightPercent="60%h" />
     </com.zhy.android.percent.support.PercentLinearLayout>
 </com.zhy.android.percent.support.PercentRelativeLayout>

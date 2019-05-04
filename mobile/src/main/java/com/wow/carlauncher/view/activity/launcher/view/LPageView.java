@@ -88,7 +88,7 @@ public class LPageView extends BaseEXView {
                 ll_base.addView(new View(getContext()), params);
             } else {
                 int margin4 = ViewUtils.dip2px(getContext(), 4);
-                int margin10 = ViewUtils.dip2px(getContext(), 4);
+                int margin10 = ViewUtils.dip2px(getContext(), 10);
                 params.setMargins(margin4, margin10, margin4, margin4);
                 if (layoutEnum.equals(LayoutEnum.LAYOUT1)) {
                     params.setMargins(margin10, margin10, margin10, margin10);

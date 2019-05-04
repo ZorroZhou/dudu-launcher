@@ -134,7 +134,6 @@ public class LAppsView extends BaseEXView implements View.OnClickListener, View.
         }
         if (!layoutEnum.equals(this.layoutEnum)) {
             this.layoutEnum = layoutEnum;
-
             ll_base.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
                 @Override
                 public boolean onPreDraw() {

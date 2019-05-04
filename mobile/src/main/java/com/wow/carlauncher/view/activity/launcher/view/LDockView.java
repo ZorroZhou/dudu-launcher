@@ -94,7 +94,7 @@ public class LDockView extends BaseEXView {
     @ViewInject(R.id.ll_base)
     private LinearLayout ll_base;
 
-    private LayoutEnum layoutEnum = LayoutEnum.LAYOUT1;
+    private LayoutEnum layoutEnum;
 
     public void setLayoutEnum(LayoutEnum layoutEnum) {
         if (layoutEnum == null) {
@@ -102,6 +102,7 @@ public class LDockView extends BaseEXView {
         }
         if (!layoutEnum.equals(this.layoutEnum)) {
             this.layoutEnum = layoutEnum;
+            Log.e(TAG, "onPreDraw: 22222222");
             loadLayout();
         }
     }
@@ -109,9 +110,6 @@ public class LDockView extends BaseEXView {
     private int oldHeight = 0;
 
     private void loadLayout() {
-        if (layoutEnum == null) {
-            layoutEnum = LayoutEnum.LAYOUT1;
-        }
         if (layoutEnum.equals(LayoutEnum.LAYOUT1)) {
             ll_base.setOrientation(LinearLayout.VERTICAL);
             ll_base.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
@@ -184,7 +182,6 @@ public class LDockView extends BaseEXView {
 
     @Override
     protected void initView() {
-        loadLayout();
     }
 
     private void openDock(String clazz) {

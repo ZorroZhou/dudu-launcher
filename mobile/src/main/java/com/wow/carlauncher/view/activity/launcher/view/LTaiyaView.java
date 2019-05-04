@@ -151,8 +151,8 @@ public class LTaiyaView extends BaseEXView {
             tv_msg.setText(R.string.obd_not_connect);
         }
         connect = show;
-//        ll_ty.setVisibility(show ? VISIBLE : GONE);
-//        ll_msg.setVisibility(show ? GONE : VISIBLE);
+        ll_ty.setVisibility(show ? VISIBLE : GONE);
+        ll_msg.setVisibility(show ? GONE : VISIBLE);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

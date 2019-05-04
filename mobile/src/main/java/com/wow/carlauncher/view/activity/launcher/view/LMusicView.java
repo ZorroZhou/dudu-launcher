@@ -79,11 +79,11 @@ public class LMusicView extends BaseEXView {
                             ll_play.getViewTreeObserver().removeOnPreDrawListener(this);
                             ViewGroup.LayoutParams lp = iv_play.getLayoutParams();
                             if (currentTheme == WHITE || currentTheme == BLACK) {
-                                lp.width = ll_play.getHeight();
-                                lp.height = ll_play.getHeight();
+                                lp.width = (int) (ll_play.getHeight() * 0.6);
+                                lp.height = (int) (ll_play.getHeight() * 0.6);
                             } else {
-                                lp.width = (int) (ll_play.getHeight() * 0.55);
-                                lp.height = (int) (ll_play.getHeight() * 0.55);
+                                lp.width = (int) (ll_play.getHeight() * 0.35);
+                                lp.height = (int) (ll_play.getHeight() * 0.35);
                             }
                             iv_play.setLayoutParams(lp);
                         }
@@ -100,11 +100,11 @@ public class LMusicView extends BaseEXView {
                             ll_prew.getViewTreeObserver().removeOnPreDrawListener(this);
                             ViewGroup.LayoutParams lp = iv_prew.getLayoutParams();
                             if (currentTheme == WHITE || currentTheme == BLACK) {
-                                lp.width = (int) (ll_prew.getHeight() * 0.7);
-                                lp.height = (int) (ll_prew.getHeight() * 0.7);
-                            } else {
                                 lp.width = (int) (ll_prew.getHeight() * 0.5);
                                 lp.height = (int) (ll_prew.getHeight() * 0.5);
+                            } else {
+                                lp.width = (int) (ll_prew.getHeight() * 0.35);
+                                lp.height = (int) (ll_prew.getHeight() * 0.35);
                             }
                             iv_prew.setLayoutParams(lp);
                         }
@@ -122,11 +122,11 @@ public class LMusicView extends BaseEXView {
                             ll_next.getViewTreeObserver().removeOnPreDrawListener(this);
                             ViewGroup.LayoutParams lp = iv_next.getLayoutParams();
                             if (currentTheme == WHITE || currentTheme == BLACK) {
-                                lp.width = (int) (ll_next.getHeight() * 0.7);
-                                lp.height = (int) (ll_next.getHeight() * 0.7);
-                            } else {
                                 lp.width = (int) (ll_next.getHeight() * 0.5);
                                 lp.height = (int) (ll_next.getHeight() * 0.5);
+                            } else {
+                                lp.width = (int) (ll_next.getHeight() * 0.35);
+                                lp.height = (int) (ll_next.getHeight() * 0.35);
                             }
                             iv_next.setLayoutParams(lp);
                         }

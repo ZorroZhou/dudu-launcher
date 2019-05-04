@@ -25,7 +25,7 @@
             app:layout_textSizePercent="50%h" />
     </com.zhy.android.percent.support.PercentFrameLayout>
 
-    <com.zhy.android.percent.support.PercentLinearLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -33,75 +33,84 @@
         app:layout_marginRightPercent="2%h"
         app:layout_marginTopPercent="12%h">
 
-        <com.zhy.android.percent.support.PercentRelativeLayout
+
+        <com.zhy.android.percent.support.PercentLinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_heightPercent="35%h"
-            app:layout_marginTopPercent="2%h">
+            android:layout_weight="7"
+            android:gravity="center"
+            android:orientation="vertical">
 
-            <com.wow.carlauncher.common.view.CustomRoundAngleImageView
-                android:id="@+id/music_iv_cover"
-                android:layout_width="0dp"
+            <com.zhy.android.percent.support.PercentRelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_centerInParent="true"
-                android:contentDescription="@string/app_name"
-                android:scaleType="centerCrop"
-                android:src="@mipmap/music_dlogo"
-                app:layout_heightPercent="100%h"
-                app:layout_widthPercent="100%h"
-                app:radius="6dp" />
-        </com.zhy.android.percent.support.PercentRelativeLayout>
+                app:layout_heightPercent="50%h"
+                app:layout_marginTopPercent="5%h">
 
-        <com.wow.carlauncher.common.view.AutoMarqueeTextView
-            android:id="@+id/tv_music_title"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:ellipsize="marquee"
-            android:gravity="center"
-            android:includeFontPadding="false"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:singleLine="true"
-            android:text="音乐名称"
-            android:textColor="#697380"
-            app:layout_heightPercent="15%h"
-            app:layout_marginTopPercent="5%h"
-            app:layout_textSizePercent="7%h" />
+                <com.wow.carlauncher.common.view.CustomRoundAngleImageView
+                    android:id="@+id/music_iv_cover"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_centerInParent="true"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/music_dlogo"
+                    app:layout_heightPercent="100%h"
+                    app:layout_widthPercent="100%h"
+                    app:radius="6dp" />
+            </com.zhy.android.percent.support.PercentRelativeLayout>
 
-        <com.wow.carlauncher.common.view.AutoMarqueeTextView
-            android:id="@+id/tv_zuozhe"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:ellipsize="marquee"
-            android:gravity="center"
-            android:includeFontPadding="false"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:singleLine="true"
-            android:text="作者"
-            android:textColor="#7b8391"
-            app:layout_heightPercent="10%h"
-            app:layout_textSizePercent="6%h" />
+            <com.wow.carlauncher.common.view.AutoMarqueeTextView
+                android:id="@+id/tv_music_title"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:ellipsize="marquee"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:singleLine="true"
+                android:text="音乐名称"
+                android:textColor="#697380"
+                app:layout_heightPercent="15%h"
+                app:layout_marginTopPercent="5%h"
+                app:layout_textSizePercent="10%h" />
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="3dp"
-            android:indeterminate="false"
-            android:max="100"
-            android:progress="0"
-            android:visibility="gone"
-            app:layout_marginLeftPercent="2%h"
-            app:layout_marginRightPercent="2%h"
-            app:layout_marginTopPercent="4%h" />
+            <com.wow.carlauncher.common.view.AutoMarqueeTextView
+                android:id="@+id/tv_zuozhe"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:ellipsize="marquee"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:singleLine="true"
+                android:text="作者"
+                android:textColor="#7b8391"
+                app:layout_heightPercent="15%h"
+                app:layout_textSizePercent="8%h" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:indeterminate="false"
+                android:max="100"
+                android:progress="0"
+                android:visibility="gone"
+                app:layout_marginLeftPercent="2%h"
+                app:layout_marginRightPercent="2%h"
+                app:layout_marginTopPercent="2%h" />
+        </com.zhy.android.percent.support.PercentLinearLayout>
+
 
         <com.zhy.android.percent.support.PercentLinearLayout
             android:id="@+id/ll_controller"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_weight="3"
             android:gravity="center"
-            android:orientation="horizontal"
-            app:layout_heightPercent="20%h"
-            app:layout_marginTopPercent="4%h">
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:id="@+id/ll_prew"
@@ -149,6 +158,6 @@
                     android:scaleType="fitCenter" />
             </LinearLayout>
         </com.zhy.android.percent.support.PercentLinearLayout>
-    </com.zhy.android.percent.support.PercentLinearLayout>
+    </LinearLayout>
 
 </com.zhy.android.percent.support.PercentRelativeLayout>

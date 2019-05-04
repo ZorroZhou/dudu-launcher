@@ -44,8 +44,7 @@
             <com.zhy.android.percent.support.PercentRelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                app:layout_heightPercent="50%h"
-                app:layout_marginTopPercent="5%h">
+                app:layout_heightPercent="50%h">
 
                 <com.wow.carlauncher.common.view.CustomRoundAngleImageView
                     android:id="@+id/music_iv_cover"
@@ -72,7 +71,7 @@
                 android:text="音乐名称"
                 android:textColor="#697380"
                 app:layout_heightPercent="15%h"
-                app:layout_marginTopPercent="5%h"
+                app:layout_marginTopPercent="6%h"
                 app:layout_textSizePercent="10%h" />
 
             <com.wow.carlauncher.common.view.AutoMarqueeTextView
@@ -87,6 +86,7 @@
                 android:text="作者"
                 android:textColor="#7b8391"
                 app:layout_heightPercent="15%h"
+                app:layout_marginTopPercent="1%h"
                 app:layout_textSizePercent="8%h" />
 
             <ProgressBar
@@ -100,7 +100,7 @@
                 android:visibility="gone"
                 app:layout_marginLeftPercent="2%h"
                 app:layout_marginRightPercent="2%h"
-                app:layout_marginTopPercent="2%h" />
+                app:layout_marginTopPercent="5%h" />
         </com.zhy.android.percent.support.PercentLinearLayout>
 
 

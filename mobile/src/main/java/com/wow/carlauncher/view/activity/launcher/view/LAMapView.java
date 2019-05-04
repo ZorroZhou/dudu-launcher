@@ -117,6 +117,10 @@ public class LAMapView extends BaseEXView {
         } else {
             tv_title.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
             line7.setVisibility(VISIBLE);
+            if (loactionOk) {
+                line11.setVisibility(VISIBLE);
+            }
+
         }
 
         Log.e(TAG + getClass().getSimpleName(), "changedTheme: ");

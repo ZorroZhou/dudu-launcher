@@ -273,8 +273,13 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
         }
         ll_top.setLayoutEnum(layoutEnum);
         ll_dock.setLayoutEnum(layoutEnum);
+
         for (LPageView lPageView : itemPager) {
             lPageView.setLayoutEnum(layoutEnum);
+        }
+
+        for (LAppsView lAppsView : appsPager) {
+            lAppsView.setLayoutEnum(layoutEnum);
         }
     }
 

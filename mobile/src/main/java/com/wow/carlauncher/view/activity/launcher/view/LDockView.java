@@ -106,6 +106,8 @@ public class LDockView extends BaseEXView {
         }
     }
 
+    private int oldHeight = 0;
+
     private void loadLayout() {
         if (layoutEnum == null) {
             layoutEnum = LayoutEnum.LAYOUT1;
@@ -115,7 +117,9 @@ public class LDockView extends BaseEXView {
             ll_base.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
                 @Override
                 public boolean onPreDraw() {
-                    if (ll_base.getHeight() > ll_base.getWidth() && ll_base.getHeight() > 0) {
+                    if (oldHeight != ll_base.getHeight() && ll_base.getHeight() > 0) {
+                        oldHeight = ll_base.getHeight();
+
                         ll_base.getViewTreeObserver().removeOnPreDrawListener(this);
                         int mm = (int) (ll_base.getHeight() * 0.03);
                         LinearLayout.LayoutParams itemLp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0);
@@ -137,7 +141,9 @@ public class LDockView extends BaseEXView {
             ll_base.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
                 @Override
                 public boolean onPreDraw() {
-                    if (ll_base.getWidth() > ll_base.getHeight() && ll_base.getHeight() > 0) {
+                    if (oldHeight != ll_base.getHeight() && ll_base.getHeight() > 0) {
+                        oldHeight = ll_base.getHeight();
+
                         ll_base.getViewTreeObserver().removeOnPreDrawListener(this);
                         int mmbotton = (int) (ll_base.getHeight() * 0.1);
                         int mmtop = (int) (ll_base.getHeight() * 0.05);

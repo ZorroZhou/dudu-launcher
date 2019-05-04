@@ -66,7 +66,6 @@ public class LPageView extends BaseEXView {
                 for (View i : item) {
                     i.setLayoutParams(params);
                 }
-                Log.e(TAG, "setLayoutEnum: !!!");
             }
         }
     }

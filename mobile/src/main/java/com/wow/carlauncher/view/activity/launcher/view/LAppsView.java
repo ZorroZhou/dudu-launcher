@@ -15,9 +15,11 @@ import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
+import com.wow.carlauncher.common.util.ViewUtils;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfo;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
+import com.wow.carlauncher.view.activity.launcher.LayoutEnum;
 import com.wow.carlauncher.view.base.BaseEXView;
 
 import org.xutils.view.annotation.ViewInject;
@@ -105,7 +107,8 @@ public class LAppsView extends BaseEXView implements View.OnClickListener, View.
         ll_base.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
             public boolean onPreDraw() {
-                if (ll_base.getHeight() > 0) {
+                if (oldHeight != ll_base.getHeight() && ll_base.getHeight() > 0) {
+                    oldHeight = ll_base.getHeight();
                     ll_base.getViewTreeObserver().removeOnPreDrawListener(this);
                     int h = ll_base.getHeight() / 4;
                     for (View row : rows) {
@@ -119,6 +122,36 @@ public class LAppsView extends BaseEXView implements View.OnClickListener, View.
         });
 
         Log.e(TAG + getClass().getSimpleName(), "initView: ");
+    }
+
+    private LayoutEnum layoutEnum = LayoutEnum.LAYOUT1;
+
+    private int oldHeight = 0;//用来比对布局发生改变的
+
+    public void setLayoutEnum(LayoutEnum layoutEnum) {
+        if (layoutEnum == null) {
+            return;
+        }
+        if (!layoutEnum.equals(this.layoutEnum)) {
+            this.layoutEnum = layoutEnum;
+
+            ll_base.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                @Override
+                public boolean onPreDraw() {
+                    if (oldHeight != ll_base.getHeight() && ll_base.getHeight() > 0) {
+                        oldHeight = ll_base.getHeight();
+                        ll_base.getViewTreeObserver().removeOnPreDrawListener(this);
+                        int h = ll_base.getHeight() / 4;
+                        for (View row : rows) {
+                            ViewGroup.LayoutParams lp = row.getLayoutParams();
+                            lp.height = h;
+                            row.setLayoutParams(lp);
+                        }
+                    }
+                    return true;
+                }
+            });
+        }
     }
 
     @Override

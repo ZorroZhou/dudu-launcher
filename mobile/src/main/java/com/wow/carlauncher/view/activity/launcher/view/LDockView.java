@@ -113,37 +113,45 @@ public class LDockView extends BaseEXView {
         }
         if (layoutEnum.equals(LayoutEnum.LAYOUT1)) {
             ll_base.setOrientation(LinearLayout.VERTICAL);
-            ll_base.getViewTreeObserver().addOnPreDrawListener(() -> {
-                if (ll_base.getHeight() > 0) {
-                    int mm = (int) (ll_base.getHeight() * 0.03);
-                    LinearLayout.LayoutParams itemLp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0);
-                    itemLp.weight = 1;
-                    itemLp.setMargins(0, mm, 0, mm);
-                    ll_dock1.setLayoutParams(itemLp);
-                    ll_dock2.setLayoutParams(itemLp);
-                    ll_dock3.setLayoutParams(itemLp);
-                    ll_dock4.setLayoutParams(itemLp);
-                    ll_dock5.setLayoutParams(itemLp);
+            ll_base.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                @Override
+                public boolean onPreDraw() {
+                    if (ll_base.getHeight() > 0) {
+                        ll_base.getViewTreeObserver().removeOnPreDrawListener(this);
+                        int mm = (int) (ll_base.getHeight() * 0.03);
+                        LinearLayout.LayoutParams itemLp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0);
+                        itemLp.weight = 1;
+                        itemLp.setMargins(0, mm, 0, mm);
+                        ll_dock1.setLayoutParams(itemLp);
+                        ll_dock2.setLayoutParams(itemLp);
+                        ll_dock3.setLayoutParams(itemLp);
+                        ll_dock4.setLayoutParams(itemLp);
+                        ll_dock5.setLayoutParams(itemLp);
+                    }
+                    return true;
                 }
-                return true;
             });
             Log.e(TAG, "setLayoutEnum: " + getHeight());
 
         } else if (layoutEnum.equals(LayoutEnum.LAYOUT2)) {
             ll_base.setOrientation(LinearLayout.HORIZONTAL);
-            ll_base.getViewTreeObserver().addOnPreDrawListener(() -> {
-                if (ll_base.getHeight() > 0) {
-                    int mm = (int) (ll_base.getHeight() * 0.1);
-                    LinearLayout.LayoutParams itemLp = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT);
-                    itemLp.weight = 1;
-                    itemLp.setMargins(0, mm, 0, mm);
-                    ll_dock1.setLayoutParams(itemLp);
-                    ll_dock2.setLayoutParams(itemLp);
-                    ll_dock3.setLayoutParams(itemLp);
-                    ll_dock4.setLayoutParams(itemLp);
-                    ll_dock5.setLayoutParams(itemLp);
+            ll_base.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                @Override
+                public boolean onPreDraw() {
+                    if (ll_base.getHeight() > 0) {
+                        ll_base.getViewTreeObserver().removeOnPreDrawListener(this);
+                        int mm = (int) (ll_base.getHeight() * 0.1);
+                        LinearLayout.LayoutParams itemLp = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT);
+                        itemLp.weight = 1;
+                        itemLp.setMargins(0, mm, 0, mm);
+                        ll_dock1.setLayoutParams(itemLp);
+                        ll_dock2.setLayoutParams(itemLp);
+                        ll_dock3.setLayoutParams(itemLp);
+                        ll_dock4.setLayoutParams(itemLp);
+                        ll_dock5.setLayoutParams(itemLp);
+                    }
+                    return true;
                 }
-                return true;
             });
 
         }

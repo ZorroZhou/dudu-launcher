@@ -41,10 +41,12 @@ public class LPageView extends BaseEXView {
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT);
                 params.weight = 1;
                 int margin4 = ViewUtils.dip2px(getContext(), 4);
-                int margin10 = ViewUtils.dip2px(getContext(), 10);
-                params.setMargins(margin4, 0, margin4, margin10);
+                params.setMargins(margin4, 0, margin4, margin4);
                 if (layoutEnum.equals(LayoutEnum.LAYOUT1)) {
-                    params.setMargins(margin10, margin10, margin10, margin10);
+                    int margin10 = ViewUtils.dip2px(getContext(), 10);
+                    int margin15 = ViewUtils.dip2px(getContext(), 15);
+                    int margin8 = ViewUtils.dip2px(getContext(), 8);
+                    params.setMargins(margin10, margin15, margin10, margin8);
                 }
                 for (View i : item) {
                     i.setLayoutParams(params);
@@ -71,10 +73,12 @@ public class LPageView extends BaseEXView {
                 ll_base.addView(new View(getContext()), params);
             } else {
                 int margin4 = ViewUtils.dip2px(getContext(), 4);
-                int margin10 = ViewUtils.dip2px(getContext(), 10);
-                params.setMargins(margin4, 0, margin4, margin10);
+                params.setMargins(margin4, 0, margin4, margin4);
                 if (layoutEnum.equals(LayoutEnum.LAYOUT1)) {
-                    params.setMargins(margin10, margin10, margin10, margin10);
+                    int margin10 = ViewUtils.dip2px(getContext(), 10);
+                    int margin15 = ViewUtils.dip2px(getContext(), 15);
+                    int margin8 = ViewUtils.dip2px(getContext(), 8);
+                    params.setMargins(margin10, margin15, margin10, margin8);
                 }
                 ll_base.addView(view, params);
             }

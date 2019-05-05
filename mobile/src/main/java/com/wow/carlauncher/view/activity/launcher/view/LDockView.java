@@ -122,6 +122,7 @@ public class LDockView extends BaseEXView {
 
                         ll_base.getViewTreeObserver().removeOnPreDrawListener(this);
                         int mm = (int) (ll_base.getHeight() * 0.03);
+                        int mmTop = (int) (ll_base.getHeight() * 0.015);
                         LinearLayout.LayoutParams itemLp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0);
                         itemLp.weight = 1;
                         itemLp.setMargins(0, mm, 0, mm);

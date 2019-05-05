@@ -34,17 +34,16 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 app:layout_marginLeftPercent="2%h"
-                app:layout_marginRightPercent="2%h"
-                app:layout_marginTopPercent="2%h" />
+                app:layout_marginRightPercent="2%h" />
 
             <com.wow.carlauncher.view.activity.launcher.view.LPagerPostion
                 android:id="@+id/postion"
                 android:layout_width="match_parent"
-                android:layout_height="15dp"
+                android:layout_height="22dp"
                 android:gravity="center"
                 android:orientation="horizontal"
-                android:padding="2dp"
-                app:layout_marginBottomPercent="2%h" />
+                android:paddingTop="2dp"
+                android:paddingBottom="10dp" />
         </com.zhy.android.percent.support.PercentLinearLayout>
 
     </com.zhy.android.percent.support.PercentLinearLayout>

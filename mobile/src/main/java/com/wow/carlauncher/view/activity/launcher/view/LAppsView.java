@@ -15,17 +15,22 @@ import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
+import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfo;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.view.activity.launcher.LayoutEnum;
+import com.wow.carlauncher.view.activity.set.event.SEventPromptShowRefresh;
 import com.wow.carlauncher.view.base.BaseEXView;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.wow.carlauncher.common.CommonData.SDATA_LAUNCHER_PROMPT_SHOW;
 import static com.wow.carlauncher.common.CommonData.TAG;
 
 
@@ -104,25 +109,7 @@ public class LAppsView extends BaseEXView implements View.OnClickListener, View.
             row.addView(cellView, cellLp);
             cellViews.add(cellView);
         }
-
-        ll_base.getViewTreeObserver().removeOnPreDrawListener(oldOnPreDrawListener);
-        oldOnPreDrawListener = new ViewTreeObserver.OnPreDrawListener() {
-            @Override
-            public boolean onPreDraw() {
-                if (oldHeight != ll_base.getHeight() && ll_base.getHeight() > 0) {
-                    oldHeight = ll_base.getHeight();
-                    ll_base.getViewTreeObserver().removeOnPreDrawListener(this);
-                    int h = ll_base.getHeight() / 4;
-                    for (View row : rows) {
-                        ViewGroup.LayoutParams lp = row.getLayoutParams();
-                        lp.height = h;
-                        row.setLayoutParams(lp);
-                    }
-                }
-                return true;
-            }
-        };
-        ll_base.getViewTreeObserver().addOnPreDrawListener(oldOnPreDrawListener);
+        addRefreshItemHandle();
 
         Log.e(TAG + getClass().getSimpleName(), "initView: ");
     }
@@ -137,22 +124,7 @@ public class LAppsView extends BaseEXView implements View.OnClickListener, View.
         }
         if (!layoutEnum.equals(this.layoutEnum)) {
             this.layoutEnum = layoutEnum;
-            ll_base.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
-                @Override
-                public boolean onPreDraw() {
-                    if (oldHeight != ll_base.getHeight() && ll_base.getHeight() > 0) {
-                        oldHeight = ll_base.getHeight();
-                        ll_base.getViewTreeObserver().removeOnPreDrawListener(this);
-                        int h = ll_base.getHeight() / 4;
-                        for (View row : rows) {
-                            ViewGroup.LayoutParams lp = row.getLayoutParams();
-                            lp.height = h;
-                            row.setLayoutParams(lp);
-                        }
-                    }
-                    return true;
-                }
-            });
+            addRefreshItemHandle();
         }
     }
 
@@ -174,6 +146,12 @@ public class LAppsView extends BaseEXView implements View.OnClickListener, View.
 
         Log.e(TAG + getClass().getSimpleName(), "changedTheme: ");
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(SEventPromptShowRefresh event) {
+        addRefreshItemHandle();
+    }
+
 
     @Override
     public void onClick(View cell) {
@@ -209,6 +187,27 @@ public class LAppsView extends BaseEXView implements View.OnClickListener, View.
         deleteIntent.setAction(Intent.ACTION_DELETE);
         deleteIntent.setData(Uri.parse("package:" + info.clazz));
         getContext().startActivity(deleteIntent);
+    }
+
+    private void addRefreshItemHandle() {
+        ll_base.getViewTreeObserver().removeOnPreDrawListener(oldOnPreDrawListener);
+        oldOnPreDrawListener = new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                if (oldHeight != ll_base.getHeight() && ll_base.getHeight() > 0) {
+                    oldHeight = ll_base.getHeight();
+                    ll_base.getViewTreeObserver().removeOnPreDrawListener(this);
+                    int h = ll_base.getHeight() / 4;
+                    for (View row : rows) {
+                        ViewGroup.LayoutParams lp = row.getLayoutParams();
+                        lp.height = h;
+                        row.setLayoutParams(lp);
+                    }
+                }
+                return true;
+            }
+        };
+        ll_base.getViewTreeObserver().addOnPreDrawListener(oldOnPreDrawListener);
     }
 
     @Override

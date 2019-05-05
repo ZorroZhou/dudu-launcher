@@ -437,7 +437,7 @@ public class LAMapView extends BaseEXView {
         }
         //方向取值范围：【0，360】，其中0度表示正北方向，90度表示正东，180度表示正南，270度表示正西
         if (tv_speed != null) {
-            String msg = (int) event.getSpeed() + "";
+            String msg = (int) (event.getSpeed() * 60 * 60 / 1000) + "";
             tv_speed.setText(msg);
         }
     }

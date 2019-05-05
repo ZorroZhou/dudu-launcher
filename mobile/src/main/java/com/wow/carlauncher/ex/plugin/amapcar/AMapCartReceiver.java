@@ -109,35 +109,28 @@ public class AMapCartReceiver extends BroadcastReceiver {
                 }
                 case RECEIVER_NAVI_INFO: {
                     int icon = intent.getIntExtra(NaviInfoConstant.ICON, -1);
-                    if (icon == -1) {
-                        EventBus.getDefault().post(new PAmapEventState().setRunning(false));
-                        break;
-                    }
                     PAmapEventNavInfo info = new PAmapEventNavInfo()
                             .setRoadType(intent.getIntExtra(NaviInfoConstant.ROAD_TYPE, -1))
-
                             .setType(intent.getIntExtra(NaviInfoConstant.TYPE, -1))
                             .setSegRemainDis(intent.getIntExtra(NaviInfoConstant.SEG_REMAIN_DIS, -1))
                             .setIcon(intent.getIntExtra(NaviInfoConstant.ICON, -1))
-
                             .setNextRoadName(intent.getStringExtra(NaviInfoConstant.NEXT_ROAD_NAME))
                             .setCurRoadName(intent.getStringExtra(NaviInfoConstant.CUR_ROAD_NAME))
-
                             .setRouteRemainDis(intent.getIntExtra(NaviInfoConstant.ROUTE_REMAIN_DIS, -1))
                             .setRouteRemainTime(intent.getIntExtra(NaviInfoConstant.ROUTE_REMAIN_TIME, -1))
-
                             .setRouteAllDis(intent.getIntExtra(NaviInfoConstant.ROUTE_ALL_DIS, -1))
                             .setRouteAllTime(intent.getIntExtra(NaviInfoConstant.ROUTE_ALL_TIME, -1))
-
                             .setCurSpeed(intent.getIntExtra(NaviInfoConstant.CUR_SPEED, -1))
                             .setCameraSpeed(intent.getIntExtra(NaviInfoConstant.CAMERA_SPEED, -1));
-                    if (!(info.getSegRemainDis() == 0 &&
-                            info.getRouteRemainDis() == 0 &&
-                            info.getRouteAllDis() == 0 &&
-                            CommonUtil.isNull(info.getNextRoadName()) &&
-                            CommonUtil.isNull(info.getCurRoadName()))) {
+                    if (icon != -1
+                            && info.getSegRemainDis() != 0
+                            && info.getRouteAllDis() != 0
+                            && CommonUtil.isNotNull(info.getNextRoadName())
+                            && CommonUtil.isNotNull(info.getCurRoadName())) {
                         EventBus.getDefault().post(new PAmapEventState().setRunning(true));
                         EventBus.getDefault().post(info);
+                    } else {
+                        EventBus.getDefault().post(new PAmapEventState().setRunning(false));
                     }
                     break;
                 }

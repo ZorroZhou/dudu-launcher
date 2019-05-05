@@ -84,9 +84,15 @@ public class LObdView extends BaseEXView {
     }
 
     @Override
-    protected void initView() {
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+
         onEvent(new PObdEventConnect().setConnected(ObdPlugin.self().isConnect()));
         onEvent(ObdPlugin.self().getCurrentPObdEventCarInfo());
+    }
+
+    @Override
+    protected void initView() {
         Log.e(TAG + getClass().getSimpleName(), "initView: ");
     }
 
@@ -161,8 +167,8 @@ public class LObdView extends BaseEXView {
             tv_msg.setText(R.string.obd_not_connect);
         }
         connect = show;
-//        ll_obd.setVisibility(show ? VISIBLE : GONE);
-//        ll_msg.setVisibility(show ? GONE : VISIBLE);
+        ll_obd.setVisibility(show ? VISIBLE : GONE);
+        ll_msg.setVisibility(show ? GONE : VISIBLE);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

@@ -133,8 +133,6 @@ public class LTaiyaView extends BaseEXView {
 
     @Override
     protected void initView() {
-        onEvent(new PObdEventConnect().setConnected(ObdPlugin.self().isConnect()));
-        onEvent(ObdPlugin.self().getCurrentPObdEventCarTp());
         Log.e(TAG + getClass().getSimpleName(), "initView: ");
     }
 
@@ -176,5 +174,13 @@ public class LTaiyaView extends BaseEXView {
         if (tv_rb != null && event.getrBTirePressure() != null) {
             tv_rb.setText(getContext().getString(R.string.launcher_tp, "右后", event.getrBTirePressure(), event.getrBTemp()));
         }
+    }
+
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        onEvent(new PObdEventConnect().setConnected(ObdPlugin.self().isConnect()));
+        onEvent(ObdPlugin.self().getCurrentPObdEventCarTp());
     }
 }

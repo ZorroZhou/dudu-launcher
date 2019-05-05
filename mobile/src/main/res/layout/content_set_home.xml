@@ -85,4 +85,15 @@
         st:type="switchB" />
 
     <View style="@style/Interval" />
+
+    <com.wow.carlauncher.common.view.SetView
+        android:id="@+id/sv_prompt_show"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        st:summary="@string/set_yes"
+        st:summary2="@string/set_no"
+        st:titleEx="是否展示托盘区"
+        st:type="switchB" />
+
+    <View style="@style/Interval" />
 </LinearLayout>

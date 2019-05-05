@@ -27,6 +27,7 @@ import com.wow.carlauncher.view.activity.set.LauncherItemAdapter;
 import com.wow.carlauncher.view.activity.set.SetEnumOnClickListener;
 import com.wow.carlauncher.view.activity.set.SetSwitchOnClickListener;
 import com.wow.carlauncher.view.activity.set.event.SEventSetHomeFull;
+import com.wow.carlauncher.view.activity.set.event.SEventPromptShowRefresh;
 import com.wow.carlauncher.view.base.BaseEXView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -79,7 +80,20 @@ public class SHomeView extends BaseEXView {
     @ViewInject(R.id.sv_home_layout)
     private SetView sv_home_layout;
 
+    @ViewInject(R.id.sv_prompt_show)
+    private SetView sv_prompt_show;
+
+
     protected void initView() {
+        sv_prompt_show.setOnValueChangeListener(new SetSwitchOnClickListener(CommonData.SDATA_LAUNCHER_PROMPT_SHOW) {
+            @Override
+            public void newValue(boolean value) {
+                EventBus.getDefault().post(new SEventPromptShowRefresh());
+            }
+        });
+        sv_prompt_show.setChecked(SharedPreUtil.getBoolean(CommonData.SDATA_LAUNCHER_PROMPT_SHOW, true));
+
+
         sv_home_layout.setSummary(LayoutEnum.getById(SharedPreUtil.getInteger(SDATA_LAUNCHER_LAYOUT, LayoutEnum.LAYOUT1.getId())).getName());
         sv_home_layout.setOnClickListener(new SetEnumOnClickListener<LayoutEnum>(getContext(), LAUNCHER_LAYOUTS) {
             @Override

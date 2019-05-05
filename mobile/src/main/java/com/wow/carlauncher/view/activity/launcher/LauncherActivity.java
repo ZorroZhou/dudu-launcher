@@ -45,6 +45,7 @@ import com.wow.carlauncher.view.activity.launcher.view.LPageView;
 import com.wow.carlauncher.view.activity.launcher.view.LPagerPostion;
 import com.wow.carlauncher.view.activity.launcher.view.LPromptView;
 import com.wow.carlauncher.view.activity.set.event.SEventSetHomeFull;
+import com.wow.carlauncher.view.activity.set.event.SEventPromptShowRefresh;
 import com.wow.carlauncher.view.popup.ConsoleWin;
 
 import org.greenrobot.eventbus.EventBus;
@@ -66,6 +67,7 @@ import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_FM_PLUGIN;
 import static com.wow.carlauncher.common.CommonData.SDATA_HOME_FULL;
 import static com.wow.carlauncher.common.CommonData.SDATA_LAUNCHER_ITEM_TRAN;
 import static com.wow.carlauncher.common.CommonData.SDATA_LAUNCHER_LAYOUT;
+import static com.wow.carlauncher.common.CommonData.SDATA_LAUNCHER_PROMPT_SHOW;
 import static com.wow.carlauncher.common.CommonData.TAG;
 import static com.wow.carlauncher.ex.plugin.fk.FangkongProtocolEnum.YLFK;
 import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.CENTER_CLICK;
@@ -144,12 +146,12 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
             }
         });
         viewPager.setPageTransformer(true, ItemTransformer.getById(SharedPreUtil.getInteger(SDATA_LAUNCHER_ITEM_TRAN, ItemTransformer.None.getId())).getTransformer());
+        ll_top.setVisibility(SharedPreUtil.getBoolean(SDATA_LAUNCHER_PROMPT_SHOW, true) ? View.VISIBLE : View.GONE);
 
         EventBus.getDefault().register(this);
         initItem();
         initApps();
         refreshViewPager();
-
         loadLayout();
     }
 
@@ -384,6 +386,11 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(LItemToFristEvent event) {
         viewPager.setCurrentItem(0, true);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(SEventPromptShowRefresh event) {
+        ll_top.setVisibility(SharedPreUtil.getBoolean(SDATA_LAUNCHER_PROMPT_SHOW, true) ? View.VISIBLE : View.GONE);
     }
 
     @Override

@@ -34,6 +34,7 @@ import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.RECEIVE_NAVI
 import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.RESPONSE_DISTRICT_CITY_NAME;
 import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.RESPONSE_DISTRICT_PRVINCE_NAME;
 import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.StateInfoConstant;
+import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.StateInfoConstant.NAV_DAODA;
 
 public class AMapCartReceiver extends BroadcastReceiver {
     public static final String TAG = "WOW_CAR_AMAP";
@@ -127,7 +128,6 @@ public class AMapCartReceiver extends BroadcastReceiver {
                             && info.getRouteAllDis() != 0
                             && CommonUtil.isNotNull(info.getNextRoadName())
                             && CommonUtil.isNotNull(info.getCurRoadName())) {
-                        EventBus.getDefault().post(new PAmapEventState().setRunning(true));
                         EventBus.getDefault().post(info);
                     } else {
                         EventBus.getDefault().post(new PAmapEventState().setRunning(false));
@@ -143,6 +143,7 @@ public class AMapCartReceiver extends BroadcastReceiver {
                     } else if (state == StateInfoConstant.NAV_STOP
                             || state == StateInfoConstant.MNAV_STOP
                             || state == StateInfoConstant.APP_EXIT
+                            || state == StateInfoConstant.NAV_DAODA
                             || state == StateInfoConstant.XH_STOP) {
                         EventBus.getDefault().post(new PAmapEventState().setRunning(false));
                     }
@@ -156,7 +157,6 @@ public class AMapCartReceiver extends BroadcastReceiver {
                     String info = intent.getStringExtra(RECEIVER_LUKUANG_INFO_EXTAR);
                     Lukuang lukuang = GsonUtil.getGson().fromJson(info, Lukuang.class);
                     if (lukuang != null) {
-                        EventBus.getDefault().post(new PAmapEventState().setRunning(true));
                         EventBus.getDefault().post(new PAmapLukuangInfo().setLukuang(lukuang));
                     }
                     break;

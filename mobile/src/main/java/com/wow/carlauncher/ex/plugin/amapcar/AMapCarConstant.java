@@ -192,6 +192,7 @@ public class AMapCarConstant {
         public static final int GET_ROAD_ERROR = 7;//开始算路 失败
         public static final int NAV_START = 8;//开始导航
         public static final int NAV_STOP = 9;//结束导航
+        public static final int NAV_DAODA = 19;//结束导航
         public static final int MNAV_START = 10;//开始模拟导航
         public static final int MNAV_PAUSE = 11;//暂停模拟导航
         public static final int MNAV_STOP = 12;//结束模拟导航

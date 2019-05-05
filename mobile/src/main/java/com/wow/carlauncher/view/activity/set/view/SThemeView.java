@@ -14,6 +14,7 @@ import com.wow.carlauncher.ex.manage.ThemeManage.ThemeMode;
 import com.wow.carlauncher.ex.plugin.console.ConsoleProtoclEnum;
 import com.wow.carlauncher.view.activity.set.SetEnumOnClickListener;
 import com.wow.carlauncher.view.base.BaseEXView;
+import com.wow.carlauncher.view.clickListener.PicSelectOnClickListener;
 
 import org.xutils.view.annotation.ViewInject;
 
@@ -56,7 +57,7 @@ public class SThemeView extends BaseEXView {
     @Override
     protected void initView() {
         sv_theme_night.setSummary(Theme.getById(SharedPreUtil.getInteger(SDATA_APP_THEME_NIGHT, Theme.BLACK.getId())).getName());
-        sv_theme_night.setOnClickListener(new SetEnumOnClickListener<Theme>(getContext(), THEMES) {
+        sv_theme_night.setOnClickListener(new PicSelectOnClickListener<Theme>(getContext(), THEMES) {
             @Override
             public String title() {
                 return "请选择夜间主题";
@@ -76,7 +77,7 @@ public class SThemeView extends BaseEXView {
         });
 
         sv_theme_day.setSummary(Theme.getById(SharedPreUtil.getInteger(SDATA_APP_THEME_DAY, Theme.WHITE.getId())).getName());
-        sv_theme_day.setOnClickListener(new SetEnumOnClickListener<Theme>(getContext(), THEMES) {
+        sv_theme_day.setOnClickListener(new PicSelectOnClickListener<Theme>(getContext(), THEMES) {
             @Override
             public String title() {
                 return "请选择白天主题";
@@ -97,7 +98,7 @@ public class SThemeView extends BaseEXView {
 
 
         sv_plugin_theme.setSummary(ThemeMode.getById(SharedPreUtil.getInteger(SDATA_APP_THEME, ThemeMode.SHIJIAN.getId())).getName());
-        sv_plugin_theme.setOnClickListener(new SetEnumOnClickListener<ThemeMode>(getContext(), THEME_MODEL) {
+        sv_plugin_theme.setOnClickListener(new PicSelectOnClickListener<ThemeMode>(getContext(), THEME_MODEL) {
             @Override
             public String title() {
                 return "请选择主题模式";

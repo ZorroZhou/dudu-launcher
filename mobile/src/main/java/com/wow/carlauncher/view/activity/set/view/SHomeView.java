@@ -28,6 +28,7 @@ import com.wow.carlauncher.view.activity.set.SetEnumOnClickListener;
 import com.wow.carlauncher.view.activity.set.SetSwitchOnClickListener;
 import com.wow.carlauncher.view.activity.set.event.SEventPromptShowRefresh;
 import com.wow.carlauncher.view.activity.set.event.SEventSetHomeFull;
+import com.wow.carlauncher.view.clickListener.PicSelectOnClickListener;
 import com.wow.carlauncher.view.base.BaseEXView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -95,7 +96,7 @@ public class SHomeView extends BaseEXView {
 
 
         sv_home_layout.setSummary(LayoutEnum.getById(SharedPreUtil.getInteger(SDATA_LAUNCHER_LAYOUT, LayoutEnum.LAYOUT1.getId())).getName());
-        sv_home_layout.setOnClickListener(new SetEnumOnClickListener<LayoutEnum>(getContext(), LAUNCHER_LAYOUTS) {
+        sv_home_layout.setOnClickListener(new PicSelectOnClickListener<LayoutEnum>(getContext(), LAUNCHER_LAYOUTS) {
             @Override
             public String title() {
                 return "请选择首页的布局";

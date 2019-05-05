@@ -14,11 +14,11 @@ import java.util.List;
 
 import static com.wow.carlauncher.common.CommonData.TAG;
 
-public abstract class SetAppSingleSelectOnClickListener implements View.OnClickListener {
+public abstract class SetPicSingleSelectOnClickListener implements View.OnClickListener {
     private Context context;
 
 
-    public SetAppSingleSelectOnClickListener(Context context) {
+    public SetPicSingleSelectOnClickListener(Context context) {
         this.context = context;
     }
 

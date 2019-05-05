@@ -10,12 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.util.SunRiseSetUtil;
 import com.wow.carlauncher.ex.manage.location.event.MNewLocationEvent;
 import com.wow.carlauncher.ex.manage.time.event.MTimeMinuteEvent;
 import com.wow.carlauncher.ex.plugin.console.event.PConsoleEventLightState;
 import com.wow.carlauncher.view.activity.set.SetEnum;
+import com.wow.carlauncher.view.adapter.PicSelectAdapter;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -245,7 +247,7 @@ public class ThemeManage {
         void onThemeChanged(ThemeManage manage);
     }
 
-    public enum Theme implements SetEnum {
+    public enum Theme implements PicSelectAdapter.PicModel {
         WHITE("白色主题", 0, "", ""),
         BLACK("黑色主题", 1, "_b", ""),
         CBLACK("纯黑主题", 2, "_cb", ""),
@@ -261,6 +263,23 @@ public class ThemeManage {
             this.id = id;
             this.suffix = suffix;
             this.bsuffix = bsuffix;
+        }
+
+
+        @Override
+        public int getPicRes() {
+            switch (this) {
+                case WHITE:
+                    return R.mipmap.img_app1;
+                case BLACK:
+                    return R.mipmap.img_app3;
+                case CBLACK:
+                    return R.mipmap.img_app4;
+                case KBLACK:
+                    return R.mipmap.img_app5;
+                default:
+                    return R.mipmap.img_app1;
+            }
         }
 
         public String getName() {
@@ -305,7 +324,7 @@ public class ThemeManage {
         }
     }
 
-    public enum ThemeMode implements SetEnum {
+    public enum ThemeMode implements PicSelectAdapter.PicModel {
         SHIJIAN("根据日出日落切换", 0),
         DENGGUANG("根据灯光切换(部分车型支持)", 1),
         BAISE("强制白色主题", 2),
@@ -320,8 +339,29 @@ public class ThemeManage {
             this.id = id;
         }
 
+
         public String getName() {
             return name;
+        }
+
+        @Override
+        public int getPicRes() {
+            switch (this) {
+                case SHIJIAN:
+                    return R.mipmap.img_app1;
+                case DENGGUANG:
+                    return R.mipmap.img_app1;
+                case BAISE:
+                    return R.mipmap.img_app1;
+                case HEISE:
+                    return R.mipmap.img_app3;
+                case CHUNHEI:
+                    return R.mipmap.img_app4;
+                case KUHEI:
+                    return R.mipmap.img_app5;
+                default:
+                    return R.mipmap.img_app1;
+            }
         }
 
         public void setName(String name) {

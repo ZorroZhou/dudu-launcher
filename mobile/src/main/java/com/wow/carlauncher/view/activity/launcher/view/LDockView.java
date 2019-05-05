@@ -102,17 +102,19 @@ public class LDockView extends BaseEXView {
         }
         if (!layoutEnum.equals(this.layoutEnum)) {
             this.layoutEnum = layoutEnum;
-            Log.e(TAG, "onPreDraw: 22222222");
             loadLayout();
         }
     }
 
     private int oldHeight = 0;
+    private ViewTreeObserver.OnPreDrawListener oldOnPreDrawListener;
 
     private void loadLayout() {
         if (layoutEnum.equals(LayoutEnum.LAYOUT1)) {
             ll_base.setOrientation(LinearLayout.VERTICAL);
-            ll_base.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            //使用之前先清理,要不然就混乱了
+            ll_base.getViewTreeObserver().removeOnPreDrawListener(oldOnPreDrawListener);
+            oldOnPreDrawListener = new ViewTreeObserver.OnPreDrawListener() {
                 @Override
                 public boolean onPreDraw() {
                     if (oldHeight != ll_base.getHeight() && ll_base.getHeight() > 0) {
@@ -131,12 +133,13 @@ public class LDockView extends BaseEXView {
                     }
                     return true;
                 }
-            });
-
+            };
+            ll_base.getViewTreeObserver().addOnPreDrawListener(oldOnPreDrawListener);
             ll_dock5.setVisibility(GONE);
         } else if (layoutEnum.equals(LayoutEnum.LAYOUT2)) {
             ll_base.setOrientation(LinearLayout.HORIZONTAL);
-            ll_base.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            ll_base.getViewTreeObserver().removeOnPreDrawListener(oldOnPreDrawListener);
+            oldOnPreDrawListener = new ViewTreeObserver.OnPreDrawListener() {
                 @Override
                 public boolean onPreDraw() {
                     if (oldHeight != ll_base.getHeight() && ll_base.getHeight() > 0) {
@@ -156,7 +159,8 @@ public class LDockView extends BaseEXView {
                     }
                     return true;
                 }
-            });
+            };
+            ll_base.getViewTreeObserver().addOnPreDrawListener(oldOnPreDrawListener);
             ll_dock5.setVisibility(VISIBLE);
         }
     }

@@ -66,73 +66,81 @@ public class LMusicView extends BaseEXView {
         Log.e(TAG + getClass().getSimpleName(), "initView: ");
     }
 
+    private ViewTreeObserver.OnPreDrawListener oldPlayOnPreDrawListener;
+    private ViewTreeObserver.OnPreDrawListener oldNextOnPreDrawListener;
+    private ViewTreeObserver.OnPreDrawListener oldPrewOnPreDrawListener;
+
     @Override
     public void changedTheme(ThemeManage manage) {
         rl_base.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_l_item1_bg));
         tv_title.setTextColor(manage.getCurrentThemeColor(R.color.l_text1));
 
-        ll_play.getViewTreeObserver().addOnPreDrawListener(
-                new ViewTreeObserver.OnPreDrawListener() {
-                    @Override
-                    public boolean onPreDraw() {
-                        if (ll_play.getHeight() > 0) {
-                            ll_play.getViewTreeObserver().removeOnPreDrawListener(this);
-                            ViewGroup.LayoutParams lp = iv_play.getLayoutParams();
-                            if (currentTheme == WHITE || currentTheme == BLACK) {
-                                lp.width = (int) (ll_play.getHeight() * 0.6);
-                                lp.height = (int) (ll_play.getHeight() * 0.6);
-                            } else {
-                                lp.width = (int) (ll_play.getHeight() * 0.35);
-                                lp.height = (int) (ll_play.getHeight() * 0.35);
-                            }
-                            iv_play.setLayoutParams(lp);
-                        }
-                        return true;
+        ll_play.getViewTreeObserver().removeOnPreDrawListener(oldPlayOnPreDrawListener);
+        oldPlayOnPreDrawListener = new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                if (ll_play.getHeight() > 0) {
+                    ll_play.getViewTreeObserver().removeOnPreDrawListener(this);
+                    ViewGroup.LayoutParams lp = iv_play.getLayoutParams();
+                    if (currentTheme == WHITE || currentTheme == BLACK) {
+                        lp.width = (int) (ll_play.getHeight() * 0.6);
+                        lp.height = (int) (ll_play.getHeight() * 0.6);
+                    } else {
+                        lp.width = (int) (ll_play.getHeight() * 0.35);
+                        lp.height = (int) (ll_play.getHeight() * 0.35);
                     }
-                });
+                    iv_play.setLayoutParams(lp);
+                }
+                return true;
+            }
+        };
+        ll_play.getViewTreeObserver().addOnPreDrawListener(oldPlayOnPreDrawListener);
         refreshPlay();
 
-        ll_prew.getViewTreeObserver().addOnPreDrawListener(
-                new ViewTreeObserver.OnPreDrawListener() {
-                    @Override
-                    public boolean onPreDraw() {
-                        if (ll_prew.getHeight() > 0) {
-                            ll_prew.getViewTreeObserver().removeOnPreDrawListener(this);
-                            ViewGroup.LayoutParams lp = iv_prew.getLayoutParams();
-                            if (currentTheme == WHITE || currentTheme == BLACK) {
-                                lp.width = (int) (ll_prew.getHeight() * 0.5);
-                                lp.height = (int) (ll_prew.getHeight() * 0.5);
-                            } else {
-                                lp.width = (int) (ll_prew.getHeight() * 0.35);
-                                lp.height = (int) (ll_prew.getHeight() * 0.35);
-                            }
-                            iv_prew.setLayoutParams(lp);
-                        }
-                        return true;
+
+        ll_prew.getViewTreeObserver().removeOnPreDrawListener(oldPrewOnPreDrawListener);
+        oldPrewOnPreDrawListener = new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                if (ll_prew.getHeight() > 0) {
+                    ll_prew.getViewTreeObserver().removeOnPreDrawListener(this);
+                    ViewGroup.LayoutParams lp = iv_prew.getLayoutParams();
+                    if (currentTheme == WHITE || currentTheme == BLACK) {
+                        lp.width = (int) (ll_prew.getHeight() * 0.5);
+                        lp.height = (int) (ll_prew.getHeight() * 0.5);
+                    } else {
+                        lp.width = (int) (ll_prew.getHeight() * 0.35);
+                        lp.height = (int) (ll_prew.getHeight() * 0.35);
                     }
-                });
+                    iv_prew.setLayoutParams(lp);
+                }
+                return true;
+            }
+        };
+        ll_prew.getViewTreeObserver().addOnPreDrawListener(oldPrewOnPreDrawListener);
         iv_prew.setImageResource(manage.getCurrentThemeRes(R.mipmap.ic_prev));
 
 
-        ll_next.getViewTreeObserver().addOnPreDrawListener(
-                new ViewTreeObserver.OnPreDrawListener() {
-                    @Override
-                    public boolean onPreDraw() {
-                        if (ll_next.getHeight() > 0) {
-                            ll_next.getViewTreeObserver().removeOnPreDrawListener(this);
-                            ViewGroup.LayoutParams lp = iv_next.getLayoutParams();
-                            if (currentTheme == WHITE || currentTheme == BLACK) {
-                                lp.width = (int) (ll_next.getHeight() * 0.5);
-                                lp.height = (int) (ll_next.getHeight() * 0.5);
-                            } else {
-                                lp.width = (int) (ll_next.getHeight() * 0.35);
-                                lp.height = (int) (ll_next.getHeight() * 0.35);
-                            }
-                            iv_next.setLayoutParams(lp);
-                        }
-                        return true;
+        iv_next.getViewTreeObserver().removeOnPreDrawListener(oldNextOnPreDrawListener);
+        oldNextOnPreDrawListener = new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                if (ll_next.getHeight() > 0) {
+                    ll_next.getViewTreeObserver().removeOnPreDrawListener(this);
+                    ViewGroup.LayoutParams lp = iv_next.getLayoutParams();
+                    if (currentTheme == WHITE || currentTheme == BLACK) {
+                        lp.width = (int) (ll_next.getHeight() * 0.5);
+                        lp.height = (int) (ll_next.getHeight() * 0.5);
+                    } else {
+                        lp.width = (int) (ll_next.getHeight() * 0.35);
+                        lp.height = (int) (ll_next.getHeight() * 0.35);
                     }
-                });
+                    iv_next.setLayoutParams(lp);
+                }
+                return true;
+            }
+        };
+        ll_next.getViewTreeObserver().addOnPreDrawListener(oldNextOnPreDrawListener);
         iv_next.setImageResource(manage.getCurrentThemeRes(R.mipmap.ic_next));
 
         progressBar.setProgressDrawable(getResources().getDrawable(manage.getCurrentThemeRes(R.drawable.n_music_progress)));

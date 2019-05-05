@@ -58,6 +58,7 @@ public class LAppsView extends BaseEXView implements View.OnClickListener, View.
 
     private List<View> cellViews;
     private List<LinearLayout> rows;
+    private ViewTreeObserver.OnPreDrawListener oldOnPreDrawListener;
 
     public void loadView() {
         cellViews.clear();
@@ -104,7 +105,9 @@ public class LAppsView extends BaseEXView implements View.OnClickListener, View.
             row.addView(cellView, cellLp);
             cellViews.add(cellView);
         }
-        ll_base.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+
+        ll_base.getViewTreeObserver().removeOnPreDrawListener(oldOnPreDrawListener);
+        oldOnPreDrawListener = new ViewTreeObserver.OnPreDrawListener() {
             @Override
             public boolean onPreDraw() {
                 if (oldHeight != ll_base.getHeight() && ll_base.getHeight() > 0) {
@@ -119,7 +122,8 @@ public class LAppsView extends BaseEXView implements View.OnClickListener, View.
                 }
                 return true;
             }
-        });
+        };
+        ll_base.getViewTreeObserver().addOnPreDrawListener(oldOnPreDrawListener);
 
         Log.e(TAG + getClass().getSimpleName(), "initView: ");
     }

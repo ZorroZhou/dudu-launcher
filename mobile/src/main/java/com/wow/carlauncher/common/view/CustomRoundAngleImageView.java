@@ -4,7 +4,10 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.PaintFlagsDrawFilter;
 import android.graphics.Path;
+import android.graphics.RectF;
 import android.os.Build;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
@@ -63,10 +66,12 @@ public class CustomRoundAngleImageView extends AppCompatImageView {
         if (defaultRadius == leftBottomRadius) {
             leftBottomRadius = radius;
         }
+
         array.recycle();
         circular = false;
         pathCircle = new Path();
         path = new Path();
+        paintFlagsDrawFilter = new PaintFlagsDrawFilter(0, Paint.FILTER_BITMAP_FLAG | Paint.ANTI_ALIAS_FLAG);
     }
 
     public void setCircular(boolean circular) {
@@ -77,16 +82,25 @@ public class CustomRoundAngleImageView extends AppCompatImageView {
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
-        width = getWidth();
-        height = getHeight();
+        if (width != getWidth() || height != getHeight()) {
+            width = getWidth();
+            height = getHeight();
+            rtRectF = new RectF(width - rightTopRadius * 2, 0, width, rightTopRadius * 2);
+            rbRectF = new RectF(width - rightBottomRadius * 2, height - rightBottomRadius * 2, width, height);
+            lbRectF = new RectF(0, height - leftBottomRadius * 2, leftBottomRadius * 2, height);
+            ltRectF = new RectF(0, 0, leftTopRadius * 2, leftTopRadius * 2);
+        }
     }
 
+    private PaintFlagsDrawFilter paintFlagsDrawFilter;
     private Path path;
     private Path pathCircle;
+    private RectF rtRectF, rbRectF, ltRectF, lbRectF;
 
     @Override
     protected void onDraw(Canvas canvas) {
         canvas.save();
+        canvas.setDrawFilter(paintFlagsDrawFilter);
         if (circular) {
             pathCircle.reset();
             pathCircle.addCircle(width / 2.0f, height / 2.0f, width / 2, Path.Direction.CCW);
@@ -95,17 +109,15 @@ public class CustomRoundAngleImageView extends AppCompatImageView {
             path.reset();
             //四个角：右上，右下，左下，左上
             path.moveTo(leftTopRadius, 0);
-            path.lineTo(width - rightTopRadius, 0);
-            path.quadTo(width, 0, width, rightTopRadius);
-
+            path.lineTo(width - rightTopRadius - leftTopRadius, 0);
+            path.arcTo(rtRectF, 270, 90);
             path.lineTo(width, height - rightBottomRadius);
-            path.quadTo(width, height, width - rightBottomRadius, height);
-
+            path.arcTo(rbRectF, 0, 90);
             path.lineTo(leftBottomRadius, height);
-            path.quadTo(0, height, 0, height - leftBottomRadius);
+            path.arcTo(lbRectF, 90, 90);
 
             path.lineTo(0, leftTopRadius);
-            path.quadTo(0, 0, leftTopRadius, 0);
+            path.arcTo(ltRectF, 180, 90);
 
             canvas.clipPath(path);
         }

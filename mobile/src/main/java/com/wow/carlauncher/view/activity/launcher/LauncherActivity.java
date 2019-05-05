@@ -44,8 +44,8 @@ import com.wow.carlauncher.view.activity.launcher.view.LDockView;
 import com.wow.carlauncher.view.activity.launcher.view.LPageView;
 import com.wow.carlauncher.view.activity.launcher.view.LPagerPostion;
 import com.wow.carlauncher.view.activity.launcher.view.LPromptView;
-import com.wow.carlauncher.view.activity.set.event.SEventSetHomeFull;
 import com.wow.carlauncher.view.activity.set.event.SEventPromptShowRefresh;
+import com.wow.carlauncher.view.activity.set.event.SEventSetHomeFull;
 import com.wow.carlauncher.view.popup.ConsoleWin;
 
 import org.greenrobot.eventbus.EventBus;

@@ -26,8 +26,8 @@ import com.wow.carlauncher.view.activity.launcher.event.LPageTransformerChangeEv
 import com.wow.carlauncher.view.activity.set.LauncherItemAdapter;
 import com.wow.carlauncher.view.activity.set.SetEnumOnClickListener;
 import com.wow.carlauncher.view.activity.set.SetSwitchOnClickListener;
-import com.wow.carlauncher.view.activity.set.event.SEventSetHomeFull;
 import com.wow.carlauncher.view.activity.set.event.SEventPromptShowRefresh;
+import com.wow.carlauncher.view.activity.set.event.SEventSetHomeFull;
 import com.wow.carlauncher.view.base.BaseEXView;
 
 import org.greenrobot.eventbus.EventBus;

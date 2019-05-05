@@ -9,7 +9,6 @@ import android.widget.LinearLayout;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.util.ViewUtils;
-import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.view.activity.launcher.LayoutEnum;
 import com.wow.carlauncher.view.base.BaseEXView;
 

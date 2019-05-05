@@ -3,8 +3,8 @@ package com.wow.carlauncher.view.activity.launcher;
 import com.wow.carlauncher.view.activity.set.SetEnum;
 
 public enum LayoutEnum implements SetEnum {
-    LAYOUT1("布局1", 1),
-    LAYOUT2("布局2", 2);
+    LAYOUT1("布局1(dock在左侧,托盘在底部)", 1),
+    LAYOUT2("布局2(dock在底部,托盘在顶部)", 2);
     private String name;
     private Integer id;
 

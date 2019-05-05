@@ -93,9 +93,6 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
     @ViewInject(R.id.ll_center)
     private LinearLayout ll_center;
 
-    @ViewInject(R.id.line1)
-    private View line1;
-
     @ViewInject(R.id.ll_top)
     private LPromptView ll_top;
 
@@ -313,12 +310,8 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
             // 获取当前壁纸
             Drawable wallpaperDrawable = wallpaperManager.getDrawable();
             ll_base.setBackground(wallpaperDrawable);
-            line1.setBackgroundResource(manage.getCurrentThemeRes(R.color.line));
-            line1.setVisibility(View.GONE);
         } else {
             ll_base.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_desk_bg));
-            line1.setBackgroundResource(manage.getCurrentThemeRes(R.color.line));
-            line1.setVisibility(View.VISIBLE);
         }
         Log.e(TAG + getClass().getSimpleName(), "onThemeChanged ");
     }

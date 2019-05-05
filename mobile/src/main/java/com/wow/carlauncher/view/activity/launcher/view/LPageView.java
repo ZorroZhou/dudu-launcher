@@ -29,22 +29,6 @@ public class LPageView extends BaseEXView {
         return R.layout.content_l_page;
     }
 
-    @Override
-    public void changedTheme(ThemeManage manage) {
-        if (item != null) {
-            for (View view : item) {
-                if (view != null) {
-                    if (view.getParent() instanceof ViewGroup) {
-                        ((ViewGroup) view.getParent()).removeView(view);
-                    }
-                }
-            }
-            setItem(item);
-        }
-
-        Log.e(TAG + getClass().getSimpleName(), "changedTheme: ");
-    }
-
     private View[] item;
     private LayoutEnum layoutEnum = LayoutEnum.LAYOUT1;
 
@@ -59,7 +43,7 @@ public class LPageView extends BaseEXView {
                 params.weight = 1;
                 int margin4 = ViewUtils.dip2px(getContext(), 4);
                 int margin10 = ViewUtils.dip2px(getContext(), 10);
-                params.setMargins(margin4, margin10, margin4, margin4);
+                params.setMargins(margin4, 0, margin4, margin10);
                 if (layoutEnum.equals(LayoutEnum.LAYOUT1)) {
                     params.setMargins(margin10, margin10, margin10, margin10);
                 }
@@ -89,7 +73,7 @@ public class LPageView extends BaseEXView {
             } else {
                 int margin4 = ViewUtils.dip2px(getContext(), 4);
                 int margin10 = ViewUtils.dip2px(getContext(), 10);
-                params.setMargins(margin4, margin10, margin4, margin4);
+                params.setMargins(margin4, 0, margin4, margin10);
                 if (layoutEnum.equals(LayoutEnum.LAYOUT1)) {
                     params.setMargins(margin10, margin10, margin10, margin10);
                 }

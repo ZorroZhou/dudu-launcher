@@ -16,7 +16,6 @@ import com.wow.carlauncher.common.util.SunRiseSetUtil;
 import com.wow.carlauncher.ex.manage.location.event.MNewLocationEvent;
 import com.wow.carlauncher.ex.manage.time.event.MTimeMinuteEvent;
 import com.wow.carlauncher.ex.plugin.console.event.PConsoleEventLightState;
-import com.wow.carlauncher.view.activity.set.SetEnum;
 import com.wow.carlauncher.view.adapter.PicSelectAdapter;
 
 import org.greenrobot.eventbus.EventBus;

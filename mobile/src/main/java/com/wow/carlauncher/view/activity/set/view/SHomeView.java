@@ -28,8 +28,8 @@ import com.wow.carlauncher.view.activity.set.SetEnumOnClickListener;
 import com.wow.carlauncher.view.activity.set.SetSwitchOnClickListener;
 import com.wow.carlauncher.view.activity.set.event.SEventPromptShowRefresh;
 import com.wow.carlauncher.view.activity.set.event.SEventSetHomeFull;
-import com.wow.carlauncher.view.clickListener.PicSelectOnClickListener;
 import com.wow.carlauncher.view.base.BaseEXView;
+import com.wow.carlauncher.view.clickListener.PicSelectOnClickListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.xutils.view.annotation.ViewInject;

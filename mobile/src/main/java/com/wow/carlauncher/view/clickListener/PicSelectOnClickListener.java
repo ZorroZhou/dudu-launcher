@@ -3,7 +3,6 @@ package com.wow.carlauncher.view.clickListener;
 import android.content.Context;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.GridView;

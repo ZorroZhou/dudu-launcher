@@ -12,7 +12,6 @@ import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.ThemeManage.Theme;
 import com.wow.carlauncher.ex.manage.ThemeManage.ThemeMode;
 import com.wow.carlauncher.ex.plugin.console.ConsoleProtoclEnum;
-import com.wow.carlauncher.view.activity.set.SetEnumOnClickListener;
 import com.wow.carlauncher.view.base.BaseEXView;
 import com.wow.carlauncher.view.clickListener.PicSelectOnClickListener;
 

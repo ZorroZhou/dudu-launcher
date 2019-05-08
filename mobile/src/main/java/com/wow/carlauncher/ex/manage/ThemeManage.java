@@ -30,6 +30,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import static com.wow.carlauncher.common.CommonData.HOUR_MILL;
 import static com.wow.carlauncher.common.CommonData.SDATA_APP_THEME;
 import static com.wow.carlauncher.common.CommonData.SDATA_APP_THEME_DAY;
 import static com.wow.carlauncher.common.CommonData.SDATA_APP_THEME_NIGHT;
@@ -67,6 +68,7 @@ public class ThemeManage {
     private Theme theme = WHITE;
     private List<OnThemeChangeListener> listeners = new LinkedList<>();
     private SparseArray<Map<String, Map<String, Integer>>> cachedResrouces = new SparseArray<>();
+    private long shijianUpdate = 0;
 
     public void refreshTheme() {
         ThemeMode model = ThemeMode.getById(SharedPreUtil.getInteger(SDATA_APP_THEME, ThemeMode.SHIJIAN.getId()));
@@ -84,10 +86,13 @@ public class ThemeManage {
                 setTheme(KBLACK);
                 break;
             case SHIJIAN:
-                if (SunRiseSetUtil.isNight(lon, lat, new Date())) {
-                    setTheme(Theme.getById(SharedPreUtil.getInteger(SDATA_APP_THEME_NIGHT, Theme.BLACK.getId())));
-                } else {
-                    setTheme(Theme.getById(SharedPreUtil.getInteger(SDATA_APP_THEME_DAY, Theme.WHITE.getId())));
+                if (System.currentTimeMillis() - shijianUpdate > HOUR_MILL) {
+                    shijianUpdate = System.currentTimeMillis();
+                    if (SunRiseSetUtil.isNight(lon, lat, new Date())) {
+                        setTheme(Theme.getById(SharedPreUtil.getInteger(SDATA_APP_THEME_NIGHT, Theme.BLACK.getId())));
+                    } else {
+                        setTheme(Theme.getById(SharedPreUtil.getInteger(SDATA_APP_THEME_DAY, Theme.WHITE.getId())));
+                    }
                 }
                 break;
         }

@@ -3,11 +3,15 @@ package com.wow.carlauncher.view.activity.launcher.view;
 import android.app.Activity;
 import android.appwidget.AppWidgetHost;
 import android.appwidget.AppWidgetManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -31,6 +35,7 @@ import org.xutils.view.annotation.ViewInject;
 import static com.wow.carlauncher.common.CommonData.APP_WIDGET_FM_PLUGIN;
 import static com.wow.carlauncher.common.CommonData.APP_WIDGET_HOST_ID;
 import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_FM_PLUGIN;
+import static com.wow.carlauncher.common.CommonData.TAG;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.BLACK;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.WHITE;
 
@@ -153,10 +158,6 @@ public class LFmView extends BaseEXView {
     private void clickEvent(View view) {
         switch (view.getId()) {
             case R.id.rl_base: {
-                int widgetId = appWidgetHost.allocateAppWidgetId();
-                Intent pickIntent = new Intent(AppWidgetManager.ACTION_APPWIDGET_PICK);
-                pickIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
-                ((Activity) getContext()).startActivityForResult(pickIntent, REQUEST_SELECT_FM_PLUGIN);
                 break;
             }
             case R.id.ll_play: {
@@ -172,9 +173,25 @@ public class LFmView extends BaseEXView {
                 break;
             }
             case R.id.ll_prew: {
-                Intent intent2 = new Intent("com.nwd.action.SL_WIDGET_COMMAND");
-                intent2.putExtra("extra_SL_WIDGET_COMMAND", "increase");
-                getContext().sendBroadcast(intent2);
+//                Intent intent2 = new Intent("com.nwd.action.SL_WIDGET_COMMAND");
+//                intent2.putExtra("extra_SL_WIDGET_COMMAND", "increase");
+//                getContext().sendBroadcast(intent2);
+
+                Intent localObject = new Intent(Intent.ACTION_MEDIA_BUTTON);
+                //localObject.setClassName("com.ximalaya.ting.android.car", "com.ximalaya.ting.android.opensdk.player.e.a");
+                localObject.putExtra(Intent.EXTRA_KEY_EVENT,
+                        new KeyEvent(System.currentTimeMillis(),
+                                System.currentTimeMillis() + 1,
+                                0,
+                                KeyEvent.KEYCODE_MEDIA_NEXT,
+                                0));
+                getContext().sendOrderedBroadcast(localObject, null);
+
+                localObject = new Intent(Intent.ACTION_MEDIA_BUTTON);
+                localObject.setClassName("com.ximalaya.ting.android.car", "com.ximalaya.ting.android.opensdk.player.e.a");
+                //localObject.putExtra(Intent.EXTRA_KEY_EVENT, new KeyEvent(System.currentTimeMillis(), System.currentTimeMillis() + 1, 1, KeyEvent.KEYCODE_MEDIA_NEXT, 0));
+                getContext().sendOrderedBroadcast(localObject, null);
+                Log.e(TAG, "clickEvent: !!");
                 break;
             }
         }
@@ -271,11 +288,33 @@ public class LFmView extends BaseEXView {
 
     @Override
     protected void initView() {
-        appWidgetHost = new AppWidgetHost(getContext(), APP_WIDGET_HOST_ID);
-        loadPlugin();
+        BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Log.e(TAG, "onReceive: " + intent.getAction());
+                if (intent.getExtras() != null) {
+                    for (String key : intent.getExtras().keySet()) {
+                        Log.e(TAG, key + ":" + intent.getExtras().get(key));
+                    }
+                }
+
+                Log.e(TAG, "onReceive: ------------");
+            }
+        };
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("com.ximalaya.ting.android.ACTION_PLAY_START");
+        intentFilter.addAction("com.ximalaya.ting.android.ACTION_PLAY_PAUSE");
+        intentFilter.addAction("com.ximalaya.ting.android.ACTION_COMPLETE");
+        intentFilter.addAction("com.ximalaya.ting.android.ACTION_CONTROL_PLAY_NEXT");
+        intentFilter.addAction("com.ximalaya.ting.android.ACTION_CONTROL_PLAY_PRE");
+        intentFilter.addAction("com.ximalaya.ting.android.ACTION_CONTROL_PLAY_NEXT_MAIN");
+        intentFilter.addAction("com.ximalaya.ting.android.ACTION_CONTROL_PLAY_PRE_MAIN");
+        intentFilter.addAction("com.ximalaya.ting.android.ACTION_CLOSE");
+        intentFilter.addAction("com.ximalaya.ting.android.ACTION_CLOSE_MAIN");
+        this.getContext().registerReceiver(broadcastReceiver, intentFilter);
     }
 
-    private AppWidgetHost appWidgetHost;
     private boolean run = false;
 
     private void refreshPlay() {
@@ -295,21 +334,6 @@ public class LFmView extends BaseEXView {
             } else {
                 iv_play.setImageResource(R.mipmap.ic_play_cb);
             }
-        }
-    }
-
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(final LEventRefreshFmPluginTest event) {
-        loadPlugin();
-    }
-
-    private void loadPlugin() {
-        int popup = SharedPreUtil.getInteger(APP_WIDGET_FM_PLUGIN, 0);
-        if (popup != 0) {
-            final View amapView = AppWidgetManage.self().getWidgetById(popup);
-            fl_www.removeAllViews();
-            fl_www.addView(amapView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         }
     }
 }

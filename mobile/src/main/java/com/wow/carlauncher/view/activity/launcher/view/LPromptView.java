@@ -71,7 +71,7 @@ public class LPromptView extends BaseEXView {
         } else {
             fl_base.setBackgroundColor(ContextCompat.getColor(getContext(), android.R.color.transparent));
         }
-        
+
         tv_time.setTextColor(manage.getCurrentThemeColor(R.color.l_text1));
 
         iv_location.setImageResource(manage.getCurrentThemeRes(R.mipmap.ic_l_location));
@@ -112,7 +112,7 @@ public class LPromptView extends BaseEXView {
     @ViewInject(R.id.iv_wifi)
     private ImageView iv_wifi;
 
-    @Event(value = {R.id.iv_set, R.id.iv_wifi, R.id.iv_obd, R.id.tv_time, R.id.tv_time, R.id.iv_location})
+    @Event(value = {R.id.iv_set, R.id.iv_wifi, R.id.iv_obd, R.id.tv_time, R.id.tv_time, R.id.iv_location, R.id.iv_wifi})
     private void clickEvent(View view) {
         switch (view.getId()) {
             case R.id.iv_location: {
@@ -133,8 +133,26 @@ public class LPromptView extends BaseEXView {
                 getActivity().startActivity(new Intent(getContext(), CarInfoActivity.class));
                 break;
             }
+            case R.id.iv_carinfo_tp: {
+                getActivity().startActivity(new Intent(getContext(), CarInfoActivity.class));
+                break;
+            }
             case R.id.tv_time: {
                 EventBus.getDefault().post(new LItemToFristEvent());
+                break;
+            }
+        }
+    }
+
+    @Event(value = {R.id.iv_obd, R.id.iv_fk}, type = OnLongClickListener.class)
+    private void clickLongEvent(View view) {
+        switch (view.getId()) {
+            case R.id.iv_obd: {
+                ObdPlugin.self().disconnect();
+                break;
+            }
+            case R.id.iv_fk: {
+                FangkongPlugin.self().disconnect();
                 break;
             }
         }

@@ -20,6 +20,7 @@ import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,17 +45,16 @@ public class QQMusicCarController extends MusicController {
         super.init(context, musicView);
         gson = GsonUtil.getGson();
 
+        EventBus.getDefault().register(this);
+
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("com.tencent.qqmusiccar.action.PLAY_COMMAND_SEND_FOR_THIRD");
-        intentFilter.addAction("com.android.music.playstatechanged");
         this.context.registerReceiver(mReceiver, intentFilter);
 
         Intent intent2 = new Intent("com.tencent.qqmusiccar.action");
         intent2.setClassName(PACKAGE_NAME, CLASS_NAME);
         intent2.setData(Uri.parse("qqmusiccar://asdasd?action=100"));
         context.sendBroadcast(intent2);
-
-        EventBus.getDefault().register(this);
     }
 
 

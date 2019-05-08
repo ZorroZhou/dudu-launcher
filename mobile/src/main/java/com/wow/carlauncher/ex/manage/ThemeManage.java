@@ -59,8 +59,7 @@ public class ThemeManage {
     public void init(Context context) {
         this.context = context;
         EventBus.getDefault().register(this);
-
-      LogEx.d(this, "init ");
+        LogEx.d(this, "init ");
     }
 
     private double lat = 36.0577034969, lon = 120.3210639954;//这是青岛的某个坐标

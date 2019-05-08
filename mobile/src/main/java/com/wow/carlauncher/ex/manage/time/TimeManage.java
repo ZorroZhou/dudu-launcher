@@ -4,7 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 
 import com.wow.carlauncher.common.LogEx;
-import com.wow.carlauncher.common.TaskExecutor;
+import com.wow.carlauncher.common.ScheduledTaskExecutor;
 import com.wow.carlauncher.ex.ContextEx;
 import com.wow.carlauncher.ex.manage.time.event.MTime30MinuteEvent;
 import com.wow.carlauncher.ex.manage.time.event.MTime3SecondEvent;
@@ -37,7 +37,7 @@ public class TimeManage extends ContextEx {
     public void init(Context context) {
         setContext(context);
         startTimer();
-      LogEx.d(this, "init ");
+        LogEx.d(this, "init ");
     }
 
     private final static int ZHOUQI = 500;
@@ -59,7 +59,7 @@ public class TimeManage extends ContextEx {
 
     private void startTimer() {
         stopTimer();
-        timer = TaskExecutor.self().repeatRun(() -> {
+        timer = ScheduledTaskExecutor.self().repeatRun(() -> {
             try {
                 if (EventBus.getDefault().hasSubscriberForEvent(MTimeHalfSecondEvent.class)) {
                     postEvent(new MTimeHalfSecondEvent());

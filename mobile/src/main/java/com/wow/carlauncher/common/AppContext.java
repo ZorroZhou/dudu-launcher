@@ -75,7 +75,7 @@ public class AppContext {
         LogEx.init(app);
         LogEx.setSaveFile(SharedPreUtil.getBoolean(CommonData.SDATA_LOG_OPEN, false));
 
-        TaskExecutor.self().init();
+        ScheduledTaskExecutor.self().init();
 
         AppWidgetManage.self().init(app);
 

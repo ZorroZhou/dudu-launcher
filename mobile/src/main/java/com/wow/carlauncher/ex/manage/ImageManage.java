@@ -44,13 +44,13 @@ public class ImageManage {
                 // 缓存在内存的图片的宽和高度
                 // default = device screen dimensions
                 .diskCacheExtraOptions(1000, 1000, null)
-                .threadPoolSize(3)
+                .threadPoolSize(1)
                 // 线程池内加载的数量
                 .threadPriority(Thread.NORM_PRIORITY - 2)
                 .tasksProcessingOrder(QueueProcessingType.FIFO)
                 .denyCacheImageMultipleSizesInMemory()
-                .memoryCache(new LruMemoryCache(2 * 1024 * 1024))//你可以通过自己的内存缓存实现
-                .memoryCacheSize(3 * 1024 * 1024)// 缓存到内存的最大数据
+                .memoryCache(new LruMemoryCache(024))//你可以通过自己的内存缓存实现
+                .memoryCacheSize(1024)// 缓存到内存的最大数据
                 .memoryCacheSizePercentage(13)
                 .diskCacheSize(50 * 1024 * 1024)// //缓存到文件的最大数据
                 .diskCacheFileCount(99999)// 文件数量

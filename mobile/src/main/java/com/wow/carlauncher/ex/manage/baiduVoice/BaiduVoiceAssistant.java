@@ -15,7 +15,7 @@ import com.baidu.tts.client.SpeechSynthesizer;
 import com.baidu.tts.client.SpeechSynthesizerListener;
 import com.baidu.tts.client.TtsMode;
 import com.wow.carlauncher.common.LogEx;
-import com.wow.carlauncher.common.TaskExecutor;
+import com.wow.carlauncher.common.ScheduledTaskExecutor;
 import com.wow.carlauncher.common.util.AppUtil;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.GsonUtil;
@@ -186,7 +186,7 @@ public class BaiduVoiceAssistant extends ContextEx {
             AsrEventPartial asrEventPartial = GsonUtil.getGson().fromJson(param, AsrEventPartial.class);
             postEvent(new MVaNewWordFind().setOver("final_result".equals(asrEventPartial.getResult_type())).setWord(asrEventPartial.getBest_result()));
             if ("final_result".equals(asrEventPartial.getResult_type())) {
-                TaskExecutor.self().run(() -> {
+                ScheduledTaskExecutor.self().run(() -> {
                     String word = asrEventPartial.getBest_result();
                     LogEx.d(this, "handleAsrPartial: " + word);
                     if (word.endsWith("。") || word.endsWith("？")) {

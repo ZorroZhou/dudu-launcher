@@ -54,13 +54,17 @@ public class SObdView extends BaseView {
         return R.layout.content_set_obd;
     }
 
-    @BindView(R.id.sv_obd_select)SetView sv_obd_select;
+    @BindView(R.id.sv_obd_select)
+    SetView sv_obd_select;
 
-    @BindView(R.id.sv_obd_impl_select)SetView sv_obd_impl_select;
+    @BindView(R.id.sv_obd_impl_select)
+    SetView sv_obd_impl_select;
 
-    @BindView(R.id.sv_obd_disconnect)SetView sv_obd_disconnect;
+    @BindView(R.id.sv_obd_disconnect)
+    SetView sv_obd_disconnect;
 
-    @BindView(R.id.sv_auto_open_driving)SetView sv_auto_open_driving;
+    @BindView(R.id.sv_auto_open_driving)
+    SetView sv_auto_open_driving;
 
     @Override
     protected void initView() {

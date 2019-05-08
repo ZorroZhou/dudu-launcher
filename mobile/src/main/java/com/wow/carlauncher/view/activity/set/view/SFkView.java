@@ -51,11 +51,14 @@ public class SFkView extends BaseView {
         return R.layout.content_set_fk;
     }
 
-    @BindView(R.id.sv_fangkong_select)SetView sv_fangkong_select;
+    @BindView(R.id.sv_fangkong_select)
+    SetView sv_fangkong_select;
 
-    @BindView(R.id.sv_fangkong_impl_select)SetView sv_fangkong_impl_select;
+    @BindView(R.id.sv_fangkong_impl_select)
+    SetView sv_fangkong_impl_select;
 
-    @BindView(R.id.sv_fangkong_remove)SetView sv_fangkong_remove;
+    @BindView(R.id.sv_fangkong_remove)
+    SetView sv_fangkong_remove;
 
     @Override
     protected void initView() {

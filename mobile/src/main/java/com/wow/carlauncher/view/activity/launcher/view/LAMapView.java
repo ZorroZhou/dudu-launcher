@@ -268,7 +268,7 @@ public class LAMapView extends BaseEXView {
         }
     }
 
-    @OnClick(value = {R.id.rl_base, R.id.btn_go_home, R.id.btn_close, R.id.btn_mute, R.id.btn_nav_gs, R.id.btn_nav_j, R.id.btn_gd})
+    @OnClick(value = {R.id.rl_base, R.id.btn_close, R.id.btn_mute, R.id.btn_nav_gs, R.id.btn_nav_j, R.id.btn_gd})
     public void clickEvent(View view) {
         Log.d(TAG, "clickEvent: " + view);
         switch (view.getId()) {

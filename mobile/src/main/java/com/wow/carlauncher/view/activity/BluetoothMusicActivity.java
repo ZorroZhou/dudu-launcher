@@ -35,4 +35,27 @@ public class BluetoothMusicActivity extends BaseActivity {
         }
         return false;
     }
+    //尝试接收以下通知
+    //com.bt.ACTION_BT_MUSIC_PLAY
+    //com.bt.ACTION_BT_MUSIC_PAUSE
+    // if ("com.bt.ACTION_AVRCP_MUSIC_ID3".equals(paramAnonymousContext))
+    //          {
+    //            paramAnonymousContext = paramAnonymousIntent.getStringExtra("extra_avrcp_id3_title");
+    //            paramAnonymousIntent = paramAnonymousIntent.getStringExtra("extra_avrcp_id3_artist");
+    //            BtMusicInterface.this.notifyBtMusicId3Info(paramAnonymousContext, paramAnonymousIntent);
+    //            return;
+    //          }
+    //if ("com.nwd.action.ACTION_KEY_VALUE".equals(paramAnonymousContext)) {}
+
+
+
+    //蓝牙状态
+    //localIntentFilter.addAction("com.bt.ACTION_BT_HFP_ESTABLISHED");
+    //    localIntentFilter.addAction("com.bt.ACTION_BT_END_CALL");
+    //    localIntentFilter.addAction("com.bt.ACTION_BT_HFP_RELEASE");
+    //    localIntentFilter.addAction("com.bt.ACTION_BT_BEGIN_CALL_ONLINE");
+    //    localIntentFilter.addAction("com.bt.ACTION_BT_INCOMING_CALL");
+    //    localIntentFilter.addAction("com.bt.ACTION_BT_OUTGOING_CALL");
+    //    localIntentFilter.addAction("com.bt.ACTION_BT_INCOMING_NUMBER");
+    //    localIntentFilter.addAction("com.bt.ACTION_BT_OUTGOING_NUMBER");
 }

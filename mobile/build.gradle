@@ -48,22 +48,21 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'com.squareup.okhttp3:okhttp:3.12.0'
-    implementation 'io.github.meetsl:SCardView:1.1'
-    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.squareup.okhttp3:okhttp:3.12.0'//网络请求
+    implementation 'com.google.code.gson:gson:2.8.5'//json解析
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support:design:28.0.0'
     implementation 'com.android.support:support-v4:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
-    implementation 'com.zhy:percent-support-extends:1.1.1'
-    implementation 'com.inuker.bluetooth:library:1.4.0'
-    implementation 'com.amap.api:location:4.4.0'
-    implementation 'org.greenrobot:eventbus:3.1.1'
-    implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
-    implementation 'com.github.goweii:AnyPermission:1.1.0'
-    implementation 'com.ToxicBakery.viewpager.transforms:view-pager-transforms:2.0.24'
-    implementation 'com.jakewharton:butterknife:8.8.1'
+    implementation 'com.zhy:percent-support-extends:1.1.1'//百分比布局
+    implementation 'com.inuker.bluetooth:library:1.4.0'//蓝牙
+    implementation 'com.amap.api:location:4.4.0'//定位
+    implementation 'org.greenrobot:eventbus:3.1.1'//事件总线
+    implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'//图片加载
+    implementation 'com.github.goweii:AnyPermission:1.1.0'//权限检查
+    implementation 'com.ToxicBakery.viewpager.transforms:view-pager-transforms:2.0.24'//动画
+    implementation 'com.jakewharton:butterknife:8.8.1'//视图注入
 
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-    annotationProcessor 'org.greenrobot:eventbus-annotation-processor:3.1.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'//编译视图注入,效率提高
+    annotationProcessor 'org.greenrobot:eventbus-annotation-processor:3.1.1'//编译事件总线,效率提高
 }

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -15,7 +14,7 @@ import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
-import com.wow.carlauncher.common.util.SharedPreUtil;
+import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfo;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
@@ -29,9 +28,6 @@ import org.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.wow.carlauncher.common.CommonData.SDATA_LAUNCHER_PROMPT_SHOW;
-import static com.wow.carlauncher.common.CommonData.TAG;
 
 
 public class LAppsView extends BaseEXView implements View.OnClickListener, View.OnLongClickListener {
@@ -111,7 +107,7 @@ public class LAppsView extends BaseEXView implements View.OnClickListener, View.
         }
         addRefreshItemHandle();
 
-        Log.e(TAG + getClass().getSimpleName(), "initView: ");
+        LogEx.e(this, "initView: ");
     }
 
     private LayoutEnum layoutEnum = LayoutEnum.LAYOUT1;
@@ -144,7 +140,7 @@ public class LAppsView extends BaseEXView implements View.OnClickListener, View.
             }
         }
 
-        Log.e(TAG + getClass().getSimpleName(), "changedTheme: ");
+        LogEx.e(this, "changedTheme: ");
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -208,10 +204,5 @@ public class LAppsView extends BaseEXView implements View.OnClickListener, View.
             }
         };
         ll_base.getViewTreeObserver().addOnPreDrawListener(oldOnPreDrawListener);
-    }
-
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
     }
 }

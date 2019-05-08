@@ -2,9 +2,9 @@ package com.wow.carlauncher.ex.plugin.obd;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 
 import com.wow.carlauncher.common.CommonData;
+import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.ContextEx;
@@ -159,7 +159,7 @@ public class ObdPlugin extends ContextEx {
         BleManage.self().addListener(bleListener);
         myBleConnectStatusListener = new MyBleConnectStatusListener(BLE_MARK);
         EventBus.getDefault().register(this);
-        Log.e(TAG + getClass().getSimpleName(), "init ");
+        LogEx.d(this, "init ");
     }
 
     private boolean connecting = false;

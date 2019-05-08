@@ -1,7 +1,6 @@
 package com.wow.carlauncher.repertory.web.qqmusic;
 
-import android.util.Log;
-
+import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.util.GsonUtil;
 import com.wow.carlauncher.common.util.HttpUtil;
 import com.wow.carlauncher.repertory.web.qqmusic.res.BaseRes;
@@ -22,15 +21,15 @@ public class QQMusicWebService {
     public static void searchMusic(String name, int num, final CommonCallback commonCallback) {
 
         RequestParams params = new RequestParams("https://c.y.qq.com/soso/fcgi-bin/client_search_cp?aggr=1&cr=1&flag_qc=0&p=1&n=" + num + "&w=" + HttpUtil.getURLEncoderString(name));
-        Log.e(TAG, "这里请求了" + params);
+        LogEx.d(QQMusicWebService.class, "这里请求了" + params);
         x.http().request(HttpMethod.GET, params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.e(TAG, "onSuccess: " + result);
+                LogEx.d(QQMusicWebService.class, "onSuccess: " + result);
                 if (result.length() > 10) {
                     result = result.substring(9);
                     result = result.substring(0, result.length() - 1);
-                    Log.e(TAG, "onSuccess: " + result);
+                    LogEx.d(QQMusicWebService.class, "onSuccess: " + result);
                     if (commonCallback != null) {
                         commonCallback.callback(GsonUtil.getGson().fromJson(result, SearchRes.class));
                     }
@@ -41,7 +40,7 @@ public class QQMusicWebService {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                Log.e(TAG, "onError: ");
+                LogEx.e(QQMusicWebService.class, "onError: ");
                 ex.printStackTrace();
                 if (commonCallback != null) {
                     commonCallback.callback(null);
@@ -50,12 +49,12 @@ public class QQMusicWebService {
 
             @Override
             public void onCancelled(CancelledException cex) {
-                Log.e(TAG, "onCancelled");
+                LogEx.d(QQMusicWebService.class, "onCancelled");
             }
 
             @Override
             public void onFinished() {
-                Log.e(TAG, "onFinished");
+                LogEx.e(QQMusicWebService.class, "onFinished");
             }
         });
     }

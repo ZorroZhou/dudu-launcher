@@ -2,20 +2,18 @@ package com.wow.carlauncher.view.activity.launcher.view;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.util.ViewUtils;
 import com.wow.carlauncher.view.activity.launcher.LayoutEnum;
 import com.wow.carlauncher.view.base.BaseEXView;
 
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
-
-import static com.wow.carlauncher.common.CommonData.TAG;
 
 public class LPageView extends BaseEXView {
 
@@ -82,7 +80,7 @@ public class LPageView extends BaseEXView {
                 }
                 ll_base.addView(view, params);
             }
-            Log.e(TAG + getClass().getSimpleName(), "setItem: ");
+            LogEx.d(this, "setItem: ");
         }
     }
 

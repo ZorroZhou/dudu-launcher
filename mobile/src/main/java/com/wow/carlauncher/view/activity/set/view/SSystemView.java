@@ -17,6 +17,7 @@ import android.view.KeyEvent;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
+import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
@@ -26,6 +27,7 @@ import com.wow.carlauncher.view.activity.launcher.event.LDockLabelShowChangeEven
 import com.wow.carlauncher.view.activity.set.SetAppMultipleSelectOnClickListener;
 import com.wow.carlauncher.view.activity.set.SetAppSingleSelectOnClickListener;
 import com.wow.carlauncher.view.activity.set.SetSwitchOnClickListener;
+import com.wow.carlauncher.view.activity.set.event.SEventPromptShowRefresh;
 import com.wow.carlauncher.view.base.BaseView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -72,6 +74,9 @@ public class SSystemView extends BaseView {
     @ViewInject(R.id.sv_key_listener)
     private SetView sv_key_listener;
 
+    @ViewInject(R.id.sv_open_log)
+    private SetView sv_open_log;
+
     private boolean showKey;
     private BroadcastReceiver nwdKeyTestReceiver = new BroadcastReceiver() {
         public void onReceive(Context paramContext, Intent paramIntent) {
@@ -89,6 +94,15 @@ public class SSystemView extends BaseView {
 
     @Override
     protected void initView() {
+
+        sv_open_log.setOnValueChangeListener(new SetSwitchOnClickListener(CommonData.SDATA_LAUNCHER_PROMPT_SHOW) {
+            @Override
+            public void newValue(boolean value) {
+                SharedPreUtil.saveBoolean(CommonData.SDATA_LOG_OPEN, value);
+                LogEx.setSaveFile(value);
+            }
+        });
+        sv_open_log.setChecked(SharedPreUtil.getBoolean(CommonData.SDATA_LAUNCHER_PROMPT_SHOW, true));
 
         sv_key_listener.setOnClickListener(v -> {
             showKey = true;

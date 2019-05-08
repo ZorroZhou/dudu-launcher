@@ -4,19 +4,17 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.ViewPagerOnPageChangeListener;
 import com.wow.carlauncher.common.util.ViewUtils;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.view.base.BaseEXView;
 
 import org.xutils.view.annotation.ViewInject;
-
-import static com.wow.carlauncher.common.CommonData.TAG;
 
 public class LPagerPostion extends BaseEXView implements ViewPagerOnPageChangeListener {
     public LPagerPostion(@NonNull Context context) {
@@ -43,7 +41,7 @@ public class LPagerPostion extends BaseEXView implements ViewPagerOnPageChangeLi
         if (select < postionViews.length) {
             postionViews[select].setBackgroundResource(ThemeManage.self().getCurrentThemeRes(R.drawable.n_l_postion));
         }
-        Log.e(TAG + getClass().getSimpleName(), "changedTheme: ");
+        LogEx.d(this, "changedTheme: ");
     }
 
     private int select = 0;
@@ -66,7 +64,7 @@ public class LPagerPostion extends BaseEXView implements ViewPagerOnPageChangeLi
             postion.addView(postionViews[i], params);
         }
 
-        Log.e(TAG + getClass().getSimpleName(), "loadPostion: ");
+        LogEx.e(this, "loadPostion: ");
     }
 
     private View[] postionViews;

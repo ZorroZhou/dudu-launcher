@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.amap.api.location.AMapLocation;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
+import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.view.LukuangView;
@@ -123,12 +124,12 @@ public class LAMapView extends BaseEXView {
 
         }
 
-        Log.e(TAG + getClass().getSimpleName(), "changedTheme: ");
+        LogEx.e(this, "changedTheme: ");
     }
 
     @Override
     protected void initView() {
-        Log.e(TAG + getClass().getSimpleName(), "initView: ");
+        LogEx.e(this, "initView: ");
     }
 
     private boolean mute = false;

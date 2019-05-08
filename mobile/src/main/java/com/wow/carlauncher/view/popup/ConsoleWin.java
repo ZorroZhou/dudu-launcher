@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.wow.carlauncher.CarLauncherApplication;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
+import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.DateUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
@@ -114,7 +115,7 @@ public class ConsoleWin implements ThemeManage.OnThemeChangeListener {
         onThemeChanged(ThemeManage.self());
         ThemeManage.self().registerThemeChangeListener(this);
 
-        Log.e(TAG + getClass().getSimpleName(), "init ");
+        LogEx.e(this, "init ");
     }
 
 

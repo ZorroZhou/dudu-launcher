@@ -5,7 +5,6 @@ import android.content.Context;
 import android.graphics.PixelFormat;
 import android.os.Build;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -16,6 +15,7 @@ import android.widget.TextView;
 import com.wow.carlauncher.CarLauncherApplication;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
+import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.baiduVoice.BaiduVoiceAssistant;
@@ -29,8 +29,6 @@ import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
-
-import static com.wow.carlauncher.common.CommonData.TAG;
 
 public class VoiceWin implements ThemeManage.OnThemeChangeListener {
     private static class SingletonHolder {
@@ -93,7 +91,7 @@ public class VoiceWin implements ThemeManage.OnThemeChangeListener {
         onThemeChanged(ThemeManage.self());
         ThemeManage.self().registerThemeChangeListener(this);
 
-        Log.e(TAG + getClass().getSimpleName(), "init ");
+        LogEx.e(this, "init ");
     }
 
     public void show() {

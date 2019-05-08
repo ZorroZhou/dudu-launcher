@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -12,6 +11,7 @@ import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
+import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.WeatherIconTemp;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
@@ -34,7 +34,6 @@ import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static com.wow.carlauncher.common.CommonData.TAG;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.BLACK;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.WHITE;
 
@@ -102,12 +101,12 @@ public class LWeatherView extends BaseEXView {
             refreshShow();
         }
 
-        Log.e(TAG + getClass().getSimpleName(), "changedTheme: ");
+        LogEx.d(this, "changedTheme: ");
     }
 
     @Override
     protected void initView() {
-        Log.e(TAG + getClass().getSimpleName(), "initView: ");
+        LogEx.d(this, "initView: ");
     }
 
     private void refreshShow() {

@@ -15,7 +15,6 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -23,6 +22,7 @@ import android.widget.LinearLayout;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
+import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.ViewPagerOnPageChangeListener;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.manage.ThemeManage;
@@ -68,7 +68,6 @@ import static com.wow.carlauncher.common.CommonData.SDATA_HOME_FULL;
 import static com.wow.carlauncher.common.CommonData.SDATA_LAUNCHER_ITEM_TRAN;
 import static com.wow.carlauncher.common.CommonData.SDATA_LAUNCHER_LAYOUT;
 import static com.wow.carlauncher.common.CommonData.SDATA_LAUNCHER_PROMPT_SHOW;
-import static com.wow.carlauncher.common.CommonData.TAG;
 import static com.wow.carlauncher.ex.plugin.fk.FangkongProtocolEnum.YLFK;
 import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.CENTER_CLICK;
 import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.CENTER_LONG_CLICK;
@@ -109,7 +108,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.e(TAG + getClass().getSimpleName(), "onCreate:start ");
+        LogEx.e(this, "onCreate:start ");
         //防止初始化两次
         if (old != null) {
             old.finish();
@@ -132,7 +131,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
         ThemeManage.self().refreshTheme();
         x.task().postDelayed(this::requestRuntime, 1000);
 
-        Log.e(TAG + getClass().getSimpleName(), "onCreate:end ");
+        LogEx.e(this, "onCreate:end ");
     }
 
     public void initView() {
@@ -158,7 +157,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
     private LPageView[] itemPager;
 
     private void initItem() {
-        Log.e(TAG, "initItem");
+        LogEx.e(this, "initItem");
         //计算排序
         List<ItemModel> items = new ArrayList<>();
         for (ItemEnum item : CommonData.LAUNCHER_ITEMS) {
@@ -217,7 +216,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
     private LAppsView[] appsPager;
 
     private void initApps() {
-        Log.e(TAG, "initApps");
+        LogEx.e(this, "initApps");
         //获取每页的item数量
         int psize = getPageItemNum();
         int appsize = AppInfoManage.self().getShowAppInfos().size();
@@ -315,7 +314,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
         } else {
             ll_base.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_desk_bg));
         }
-        Log.e(TAG + getClass().getSimpleName(), "onThemeChanged ");
+        LogEx.e(this, "onThemeChanged ");
     }
 
     @Override
@@ -474,7 +473,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
                     break;
                 }
                 case LEFT_BOTTOM_LONG_CLICK: {
-                    Log.e(TAG, "这里唤醒语音比较好");
+                    LogEx.e(this, "这里唤醒语音比较好");
                     break;
                 }
                 case RIGHT_BOTTOM_CLICK:

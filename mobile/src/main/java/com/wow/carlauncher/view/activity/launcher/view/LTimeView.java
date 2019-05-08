@@ -4,13 +4,13 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.util.DateUtil;
 import com.wow.carlauncher.common.util.LunarUtil;
 import com.wow.carlauncher.ex.manage.ThemeManage;
@@ -27,7 +27,6 @@ import java.util.Date;
 
 import static com.wow.carlauncher.common.CommonData.DAY_MILL;
 import static com.wow.carlauncher.common.CommonData.MINUTE_MILL;
-import static com.wow.carlauncher.common.CommonData.TAG;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.BLACK;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.WHITE;
 
@@ -70,7 +69,7 @@ public class LTimeView extends BaseEXView {
         } else {
             tv_title.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
         }
-        Log.e(TAG + getClass().getSimpleName(), "changedTheme: ");
+        LogEx.d(this, "changedTheme: ");
     }
 
     @Event(value = {R.id.fl_base})
@@ -82,7 +81,7 @@ public class LTimeView extends BaseEXView {
     protected void initView() {
         onEvent(null);
 
-        Log.e(TAG + getClass().getSimpleName(), "initView: ");
+        LogEx.d(this, "initView: ");
     }
 
     @ViewInject(R.id.fl_time)

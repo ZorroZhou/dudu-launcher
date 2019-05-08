@@ -2,9 +2,8 @@ package com.wow.carlauncher.common.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
-import static com.wow.carlauncher.common.CommonData.TAG;
+import com.wow.carlauncher.common.LogEx;
 
 public class SharedPreUtil {
     // SharedPreference文件的文件名
@@ -15,7 +14,7 @@ public class SharedPreUtil {
 
     public static void init(Context context) {
         SharedPreUtil.context = context;
-        Log.e(TAG + SharedPreUtil.class.getSimpleName(), "init ");
+        LogEx.e(SharedPreUtil.class, "init ");
     }
 
     /**

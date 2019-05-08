@@ -5,10 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
-import android.util.Log;
 
 import com.google.gson.Gson;
 import com.wow.carlauncher.common.CommonData;
+import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.LrcAnalyze;
 import com.wow.carlauncher.common.util.GsonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
@@ -24,8 +24,6 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import static com.wow.carlauncher.common.CommonData.TAG;
 
 /**
  * Created by 10124 on 2017/10/26.
@@ -134,7 +132,7 @@ public class QQMusicCarController extends MusicController {
                 //&& waitMsg
                 if ("com.tencent.qqmusiccar.action.PLAY_COMMAND_SEND_FOR_THIRD".equals(intent.getAction()) && intent.getStringExtra("com.tencent.qqmusiccar.EXTRA_COMMAND_DATA") != null) {
                     String value = intent.getStringExtra("com.tencent.qqmusiccar.EXTRA_COMMAND_DATA");
-                    Log.e(TAG, "onReceive: " + value);
+                    LogEx.d(this, "onReceive: " + value);
                     Map map = gson.fromJson(value, Map.class);
                     //更新状态的命令
                     String cmd = ((Map) map.get("command")).get("method") + "";

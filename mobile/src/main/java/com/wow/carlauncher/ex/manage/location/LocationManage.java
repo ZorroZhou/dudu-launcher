@@ -2,12 +2,12 @@ package com.wow.carlauncher.ex.manage.location;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.ex.ContextEx;
 import com.wow.carlauncher.ex.manage.location.event.MNewLocationEvent;
@@ -51,7 +51,7 @@ public class LocationManage extends ContextEx implements AMapLocationListener {
         mLocationClient.setLocationOption(mLocationOption);
         mLocationClient.startLocation();
 
-        Log.e(TAG + getClass().getSimpleName(), "init ");
+        LogEx.e(this, "init ");
     }
 
     /**

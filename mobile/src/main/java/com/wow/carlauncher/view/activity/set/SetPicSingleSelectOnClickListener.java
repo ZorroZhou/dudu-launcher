@@ -2,17 +2,15 @@ package com.wow.carlauncher.view.activity.set;
 
 import android.content.Context;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.View;
 
+import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.util.ThreadObj;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfo;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.wow.carlauncher.common.CommonData.TAG;
 
 public abstract class SetPicSingleSelectOnClickListener implements View.OnClickListener {
     private Context context;
@@ -38,7 +36,7 @@ public abstract class SetPicSingleSelectOnClickListener implements View.OnClickL
                 select = i;
             }
         }
-        Log.e(TAG, "onClick: " + items.length + " " + select);
+        LogEx.e(this, "onClick: " + items.length + " " + select);
         final ThreadObj<Integer> obj = new ThreadObj<>(select);
         new AlertDialog.Builder(context).setTitle("请选择APP")
                 .setNegativeButton("取消", null)

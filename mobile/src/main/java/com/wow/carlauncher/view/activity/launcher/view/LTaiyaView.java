@@ -5,13 +5,13 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
 import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
@@ -25,7 +25,6 @@ import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
-import static com.wow.carlauncher.common.CommonData.TAG;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.BLACK;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.WHITE;
 
@@ -76,7 +75,7 @@ public class LTaiyaView extends BaseEXView {
             tv_title.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
         }
 
-        Log.e(TAG + getClass().getSimpleName(), "changedTheme: ");
+        LogEx.d(this, "changedTheme: ");
     }
 
     @Event(value = {R.id.rl_base})
@@ -133,7 +132,7 @@ public class LTaiyaView extends BaseEXView {
 
     @Override
     protected void initView() {
-        Log.e(TAG + getClass().getSimpleName(), "initView: ");
+        LogEx.d(this, "initView: ");
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

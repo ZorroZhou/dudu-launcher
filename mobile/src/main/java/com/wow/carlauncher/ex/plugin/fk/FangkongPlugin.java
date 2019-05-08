@@ -2,9 +2,9 @@ package com.wow.carlauncher.ex.plugin.fk;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 
 import com.wow.carlauncher.common.CommonData;
+import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.ContextEx;
@@ -26,7 +26,6 @@ import org.xutils.x;
 import static com.inuker.bluetooth.library.Constants.STATUS_DEVICE_CONNECTED;
 import static com.inuker.bluetooth.library.Constants.STATUS_DEVICE_CONNECTING;
 import static com.wow.carlauncher.common.CommonData.SDATA_FANGKONG_CONTROLLER;
-import static com.wow.carlauncher.common.CommonData.TAG;
 
 /**
  * Created by 10124 on 2017/11/4.
@@ -54,7 +53,7 @@ public class FangkongPlugin extends ContextEx {
         BleManage.self().addListener(bleListener);
         myBleConnectStatusListener = new MyBleConnectStatusListener(BLE_MARK);
         EventBus.getDefault().register(this);
-        Log.e(TAG + getClass().getSimpleName(), "init ");
+        LogEx.e(this, "init ");
     }
 
     private MyBleConnectStatusListener myBleConnectStatusListener;

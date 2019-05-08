@@ -2,8 +2,8 @@ package com.wow.carlauncher.ex.plugin.console;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 
+import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.ContextEx;
 import com.wow.carlauncher.ex.plugin.console.event.PConsoleEventCallState;
@@ -12,7 +12,6 @@ import com.wow.carlauncher.ex.plugin.console.impl.NwdConsoleImpl;
 import com.wow.carlauncher.ex.plugin.console.impl.SysConsoleImpl;
 
 import static com.wow.carlauncher.common.CommonData.SDATA_CONSOLE_MARK;
-import static com.wow.carlauncher.common.CommonData.TAG;
 
 /**
  * Created by 10124 on 2017/11/9.
@@ -34,7 +33,7 @@ public class ConsolePlugin extends ContextEx {
     public void init(Context context) {
         setContext(context);
         loadConsole();
-        Log.e(TAG + getClass().getSimpleName(), "init ");
+        LogEx.e(this, "init ");
     }
 
     private ConsoleProtoclListener consoleListener = new ConsoleProtoclListener() {

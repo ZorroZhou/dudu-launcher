@@ -1,8 +1,5 @@
 package com.wow.carlauncher.view.activity.launcher.view;
 
-import android.app.Activity;
-import android.appwidget.AppWidgetHost;
-import android.appwidget.AppWidgetManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -10,7 +7,6 @@ import android.content.IntentFilter;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,21 +17,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
-import com.wow.carlauncher.common.util.SharedPreUtil;
-import com.wow.carlauncher.ex.manage.AppWidgetManage;
+import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.ex.manage.ThemeManage;
-import com.wow.carlauncher.view.activity.launcher.event.LEventRefreshFmPluginTest;
 import com.wow.carlauncher.view.base.BaseEXView;
 
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
-import static com.wow.carlauncher.common.CommonData.APP_WIDGET_FM_PLUGIN;
-import static com.wow.carlauncher.common.CommonData.APP_WIDGET_HOST_ID;
-import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_FM_PLUGIN;
-import static com.wow.carlauncher.common.CommonData.TAG;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.BLACK;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.WHITE;
 
@@ -191,7 +179,7 @@ public class LFmView extends BaseEXView {
                 localObject.setClassName("com.ximalaya.ting.android.car", "com.ximalaya.ting.android.opensdk.player.e.a");
                 //localObject.putExtra(Intent.EXTRA_KEY_EVENT, new KeyEvent(System.currentTimeMillis(), System.currentTimeMillis() + 1, 1, KeyEvent.KEYCODE_MEDIA_NEXT, 0));
                 getContext().sendOrderedBroadcast(localObject, null);
-                Log.e(TAG, "clickEvent: !!");
+                LogEx.e(this, "clickEvent: !!");
                 break;
             }
         }
@@ -291,14 +279,14 @@ public class LFmView extends BaseEXView {
         BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                Log.e(TAG, "onReceive: " + intent.getAction());
+                LogEx.e(this, "onReceive: " + intent.getAction());
                 if (intent.getExtras() != null) {
                     for (String key : intent.getExtras().keySet()) {
-                        Log.e(TAG, key + ":" + intent.getExtras().get(key));
+                        LogEx.e(this, key + ":" + intent.getExtras().get(key));
                     }
                 }
 
-                Log.e(TAG, "onReceive: ------------");
+                LogEx.e(this, "onReceive: ------------");
             }
         };
 

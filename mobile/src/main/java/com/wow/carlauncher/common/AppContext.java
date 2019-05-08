@@ -3,7 +3,6 @@ package com.wow.carlauncher.common;
 import android.app.Application;
 import android.content.Intent;
 import android.os.Environment;
-import android.util.Log;
 
 import com.wow.carlauncher.CarLauncherApplication;
 import com.wow.carlauncher.common.util.CommonUtil;
@@ -39,8 +38,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import static com.wow.carlauncher.common.CommonData.TAG;
-
 
 /**
  * Created by liuyixian on 2017/9/20.
@@ -72,9 +69,13 @@ public class AppContext {
         this.application = app;
         this.startTime = System.currentTimeMillis();
         x.Ext.init(app);
-        TaskExecutor.self().init();
 
         SharedPreUtil.init(app);
+
+        LogEx.init(app);
+        LogEx.setSaveFile(SharedPreUtil.getBoolean(CommonData.SDATA_LOG_OPEN, false));
+
+        TaskExecutor.self().init();
 
         AppWidgetManage.self().init(app);
 
@@ -125,36 +126,36 @@ public class AppContext {
 
         x.task().run(() -> {
             if (SharedPreUtil.getBoolean(CommonData.SDATA_APP_AUTO_OPEN_USE, false)) {
-                Log.e(TAG, "开始唤醒其他APP");
+                LogEx.e(this, "开始唤醒其他APP");
                 if (CommonUtil.isNotNull(SharedPreUtil.getString(CommonData.SDATA_APP_AUTO_OPEN1))) {
-                    Log.e(TAG, "SDATA_APP_AUTO_OPEN1 " + SharedPreUtil.getString(CommonData.SDATA_APP_AUTO_OPEN1));
+                    LogEx.e(this, "SDATA_APP_AUTO_OPEN1 " + SharedPreUtil.getString(CommonData.SDATA_APP_AUTO_OPEN1));
                     AppInfoManage.self().openApp(SharedPreUtil.getString(CommonData.SDATA_APP_AUTO_OPEN1));
                 }
                 if (CommonUtil.isNotNull(SharedPreUtil.getString(CommonData.SDATA_APP_AUTO_OPEN2))) {
-                    Log.e(TAG, "SDATA_APP_AUTO_OPEN2 " + SharedPreUtil.getString(CommonData.SDATA_APP_AUTO_OPEN2));
+                    LogEx.e(this, "SDATA_APP_AUTO_OPEN2 " + SharedPreUtil.getString(CommonData.SDATA_APP_AUTO_OPEN2));
                     AppInfoManage.self().openApp(SharedPreUtil.getString(CommonData.SDATA_APP_AUTO_OPEN2));
                 }
                 if (CommonUtil.isNotNull(SharedPreUtil.getString(CommonData.SDATA_APP_AUTO_OPEN3))) {
-                    Log.e(TAG, "SDATA_APP_AUTO_OPEN3 " + SharedPreUtil.getString(CommonData.SDATA_APP_AUTO_OPEN3));
+                    LogEx.e(this, "SDATA_APP_AUTO_OPEN3 " + SharedPreUtil.getString(CommonData.SDATA_APP_AUTO_OPEN3));
                     AppInfoManage.self().openApp(SharedPreUtil.getString(CommonData.SDATA_APP_AUTO_OPEN3));
                 }
                 if (CommonUtil.isNotNull(SharedPreUtil.getString(CommonData.SDATA_APP_AUTO_OPEN4))) {
-                    Log.e(TAG, "SDATA_APP_AUTO_OPEN4 " + SharedPreUtil.getString(CommonData.SDATA_APP_AUTO_OPEN4));
+                    LogEx.e(this, "SDATA_APP_AUTO_OPEN4 " + SharedPreUtil.getString(CommonData.SDATA_APP_AUTO_OPEN4));
                     AppInfoManage.self().openApp(SharedPreUtil.getString(CommonData.SDATA_APP_AUTO_OPEN4));
                 }
-                Log.e(TAG, "延迟返回:" + SharedPreUtil.getInteger(CommonData.SDATA_APP_AUTO_OPEN_BACK, 5) + "秒");
+                LogEx.e(this, "延迟返回:" + SharedPreUtil.getInteger(CommonData.SDATA_APP_AUTO_OPEN_BACK, 5) + "秒");
                 x.task().postDelayed(() -> {
-                    Log.e(TAG, "back to desktop");
+                    LogEx.e(this, "back to desktop");
                     Intent home = new Intent(Intent.ACTION_MAIN);
                     home.addCategory(Intent.CATEGORY_HOME);
                     home.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     application.startActivity(home);
                 }, SharedPreUtil.getInteger(CommonData.SDATA_APP_AUTO_OPEN_BACK, CommonData.SDATA_APP_AUTO_OPEN_BACK_DF) * 1000);
             } else {
-                Log.e(TAG, "不唤醒其他APP");
+                LogEx.e(this, "不唤醒其他APP");
             }
         });
-        Log.e(TAG, "APP初始化完毕 ");
+        LogEx.e(this, "APP初始化完毕 ");
 
 //        BroadcastReceiver br = new BroadcastReceiver() {
 //            @Override
@@ -192,7 +193,7 @@ public class AppContext {
                             .getAbsolutePath() + File.separator + "carLauncherError";
                 } else {// 如果SD卡不存在，就保存到本应用的目录下
                     path = getApplication().getFilesDir().getAbsolutePath()
-                            + File.separator + "error";
+                            + File.separator + "carLauncherError";
                 }
 
                 File pathFile = new File(path);
@@ -205,7 +206,7 @@ public class AppContext {
                 File file = new File(path, "log_"
                         + date + ".log");
                 if (!file.exists() && file.createNewFile()) {
-                    Log.e(TAG, "创建文件");
+                    LogEx.e(this, "创建文件");
                 } else {
                     return;
                 }

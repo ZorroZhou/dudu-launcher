@@ -2,9 +2,9 @@ package com.wow.carlauncher.ex.plugin.music;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 
 import com.wow.carlauncher.common.CommonData;
+import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.ContextEx;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventCoverRefresh;
@@ -19,7 +19,6 @@ import com.wow.carlauncher.ex.plugin.music.plugin.SystemMusicController;
 import com.wow.carlauncher.ex.plugin.music.plugin.ZXMusicController;
 
 import static com.wow.carlauncher.common.CommonData.SDATA_MUSIC_CONTROLLER;
-import static com.wow.carlauncher.common.CommonData.TAG;
 
 public class MusicPlugin extends ContextEx {
     private static class SingletonHolder {
@@ -41,7 +40,7 @@ public class MusicPlugin extends ContextEx {
     public void init(Context context) {
         setContext(context);
         setController(MusicControllerEnum.getById(SharedPreUtil.getInteger(SDATA_MUSIC_CONTROLLER, MusicControllerEnum.SYSMUSIC.getId())));
-        Log.e(TAG + getClass().getSimpleName(), "init ");
+        LogEx.d(this, "init ");
     }
 
     public void setController(MusicControllerEnum controller) {

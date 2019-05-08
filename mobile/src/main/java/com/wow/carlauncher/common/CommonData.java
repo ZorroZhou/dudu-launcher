@@ -205,4 +205,6 @@ public class CommonData {
 
     public static final String SDATA_USE_VA = "SDATA_USE_VA";
 
+
+    public static final String SDATA_LOG_OPEN = "SDATA_LOG_OPEN";
 }

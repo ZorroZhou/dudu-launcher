@@ -8,12 +8,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.util.DateUtil;
 import com.wow.carlauncher.common.util.NetWorkUtil;
 import com.wow.carlauncher.ex.manage.ThemeManage;
@@ -42,7 +42,6 @@ import org.xutils.x;
 import java.util.Date;
 
 import static com.wow.carlauncher.common.CommonData.MINUTE_MILL;
-import static com.wow.carlauncher.common.CommonData.TAG;
 
 /**
  * Created by 10124 on 2018/4/22.
@@ -80,12 +79,12 @@ public class LPromptView extends BaseEXView {
         iv_fk.setImageResource(manage.getCurrentThemeRes(R.mipmap.ic_l_fk));
         iv_wifi.setImageResource(manage.getCurrentThemeRes(R.mipmap.ic_l_wifi));
         iv_set.setImageResource(manage.getCurrentThemeRes(R.mipmap.ic_l_set));
-        Log.e(TAG + getClass().getSimpleName(), "changedTheme: ");
+        LogEx.d(this, "changedTheme: ");
     }
 
     @Override
     protected void initView() {
-        Log.e(TAG + getClass().getSimpleName(), "initView: ");
+        LogEx.d(this, "initView: ");
     }
 
     @ViewInject(R.id.fl_base)

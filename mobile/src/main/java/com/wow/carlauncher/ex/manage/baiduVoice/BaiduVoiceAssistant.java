@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.baidu.speech.EventListener;
@@ -15,6 +14,7 @@ import com.baidu.speech.asr.SpeechConstant;
 import com.baidu.tts.client.SpeechSynthesizer;
 import com.baidu.tts.client.SpeechSynthesizerListener;
 import com.baidu.tts.client.TtsMode;
+import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.AppUtil;
 import com.wow.carlauncher.common.util.CommonUtil;
@@ -35,7 +35,6 @@ import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 
 import java.util.Arrays;
 
-import static com.wow.carlauncher.common.CommonData.TAG;
 import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.AMAP_PACKAGE;
 
 public class BaiduVoiceAssistant extends ContextEx {
@@ -160,8 +159,8 @@ public class BaiduVoiceAssistant extends ContextEx {
     };
 
     private EventListener eventListener = (name, params, data, offset, length) -> {
-        Log.e(TAG, "eventListener.name: " + name);
-        Log.e(TAG, "eventListener.params: " + params);
+        LogEx.e(this, "eventListener.name: " + name);
+        LogEx.e(this, "eventListener.params: " + params);
         switch (name) {
             case SpeechConstant.CALLBACK_EVENT_WAKEUP_ERROR:
                 ToastManage.self().show("无法启动唤醒功能,可能是权限不足!");
@@ -189,12 +188,12 @@ public class BaiduVoiceAssistant extends ContextEx {
             if ("final_result".equals(asrEventPartial.getResult_type())) {
                 TaskExecutor.self().run(() -> {
                     String word = asrEventPartial.getBest_result();
-                    Log.e(TAG, "handleAsrPartial: " + word);
+                    LogEx.e(this, "handleAsrPartial: " + word);
                     if (word.endsWith("。") || word.endsWith("？")) {
                         word = word.substring(0, word.length() - 1);
                     }
                     KeyWord keyWord = getAction(word);
-                    Log.e(TAG, "handleAsrPartial: " + keyWord);
+                    LogEx.e(this, "handleAsrPartial: " + keyWord);
                     if (keyWord != null) {
                         switch (keyWord.action) {
                             case ACTION_HI: {

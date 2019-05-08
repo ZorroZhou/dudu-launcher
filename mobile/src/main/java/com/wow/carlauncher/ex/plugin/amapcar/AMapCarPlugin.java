@@ -4,9 +4,9 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.util.Log;
 import android.widget.Toast;
 
+import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.util.AppUtil;
 import com.wow.carlauncher.ex.ContextEx;
 import com.wow.carlauncher.ex.manage.time.event.MTime3SecondEvent;
@@ -67,7 +67,7 @@ public class AMapCarPlugin extends ContextEx {
 
         EventBus.getDefault().register(this);
 
-        Log.e(TAG + getClass().getSimpleName(), "init ");
+        LogEx.e(this, "init ");
         // final View launcherWidgetView = AppWidgetManage.self().getWidgetById(launcher);
     }
 
@@ -194,7 +194,7 @@ public class AMapCarPlugin extends ContextEx {
     }
 
     private void sendReceiver(int key, Map<String, Object> param) {
-        Log.e(TAG, "sendReceiver: " + key + " " + param);
+        LogEx.e(this, "sendReceiver: " + key + " " + param);
         Intent intent = new Intent();
         intent.setAction(SEND_ACTION);
         intent.putExtra(KEY_TYPE, key);

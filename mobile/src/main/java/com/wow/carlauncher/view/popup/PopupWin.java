@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.wow.carlauncher.CarLauncherApplication;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
+import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.util.AppUtil;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.DateUtil;
@@ -132,13 +133,13 @@ public class PopupWin {
         popupWindow.findViewById(R.id.ll_yidong).setOnTouchListener(moveTouchListener);
         popupWindow.findViewById(R.id.ll_xunhuan).setOnClickListener(onClickListener);
 
-        Log.e(TAG + getClass().getSimpleName(), "init ");
+        LogEx.d(this, "init ");
     }
 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(PEventFSRefresh event) {
-        Log.e(TAG, "onEventMainThread: " + event);
+        LogEx.e(this, "onEventMainThread: " + event);
         if (SharedPreUtil.getBoolean(CommonData.SDATA_POPUP_FULL_SCREEN, true)) {
             winparams.flags = WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_FULLSCREEN;
         } else {

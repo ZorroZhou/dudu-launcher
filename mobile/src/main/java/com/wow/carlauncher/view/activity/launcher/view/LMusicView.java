@@ -5,7 +5,6 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.view.CustomRoundAngleImageView;
 import com.wow.carlauncher.ex.manage.ImageManage;
@@ -35,7 +35,6 @@ import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
-import static com.wow.carlauncher.common.CommonData.TAG;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.BLACK;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.WHITE;
 
@@ -63,7 +62,7 @@ public class LMusicView extends BaseEXView {
     protected void initView() {
         x.task().postDelayed(() -> MusicPlugin.self().requestLast(), 500);
 
-        Log.e(TAG + getClass().getSimpleName(), "initView: ");
+        LogEx.e(this, "initView: ");
     }
 
     private ViewTreeObserver.OnPreDrawListener oldPlayOnPreDrawListener;
@@ -155,7 +154,7 @@ public class LMusicView extends BaseEXView {
             tv_title.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
             music_iv_cover.setCircular(true);
         }
-        Log.e(TAG + getClass().getSimpleName(), "changedTheme: ");
+        LogEx.e(this, "changedTheme: ");
     }
 
     private boolean run;

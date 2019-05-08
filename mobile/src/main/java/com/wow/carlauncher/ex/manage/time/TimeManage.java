@@ -2,8 +2,8 @@ package com.wow.carlauncher.ex.manage.time;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 
+import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.ex.ContextEx;
 import com.wow.carlauncher.ex.manage.time.event.MTime30MinuteEvent;
@@ -15,8 +15,6 @@ import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.concurrent.ScheduledFuture;
-
-import static com.wow.carlauncher.common.CommonData.TAG;
 
 /**
  * Created by 10124 on 2018/4/25.
@@ -39,7 +37,7 @@ public class TimeManage extends ContextEx {
     public void init(Context context) {
         setContext(context);
         startTimer();
-        Log.e(TAG + getClass().getSimpleName(), "init ");
+      LogEx.e(this, "init ");
     }
 
     private final static int ZHOUQI = 500;

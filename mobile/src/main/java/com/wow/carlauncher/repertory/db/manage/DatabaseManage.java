@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.bean.BeanInfo;
 import com.wow.carlauncher.common.bean.BeanManage;
 import com.wow.carlauncher.common.bean.PropertyInfo;
@@ -33,7 +34,7 @@ public class DatabaseManage {
             DatabaseManage.dbHelper = new DatabaseHelper(DatabaseManage.context, info);
         }
 
-        Log.e(TAG + DatabaseManage.class.getSimpleName(), "init ");
+        LogEx.e(DatabaseManage.class, "init ");
     }
 
     private static boolean inited = false;
@@ -60,7 +61,7 @@ public class DatabaseManage {
      * @return 数据库管理器
      */
     private synchronized static SQLiteDatabase openDatabase() {
-        Log.e(TAG, "获取一个数据库管理器");
+        LogEx.e(DatabaseManage.class, "获取一个数据库管理器");
         if (!inited) {
             throw new IllegalStateException("请先初始化工具！！");
         }
@@ -114,12 +115,12 @@ public class DatabaseManage {
                 e.printStackTrace();
             }
         }
-        Log.e(TAG, "数据库表插入：TableName:" + t.name() + " values:" + cv);
+       LogEx.e(DatabaseManage.class, "数据库表插入：TableName:" + t.name() + " values:" + cv);
         openDatabase();
         long r = -1;
         try {
             long rowid = sqLiteDatabase.insert(t.name(), null, cv);
-            Log.e(TAG, "数据库表插入：TableName:" + t.name() + " rowid:" + rowid);
+           LogEx.e(DatabaseManage.class, "数据库表插入：TableName:" + t.name() + " rowid:" + rowid);
             if (rowid > 0) {
                 Cursor cursor = sqLiteDatabase.rawQuery("select id from " + t.name() + " where rowid = " + rowid, null);
                 cursor.moveToFirst();
@@ -187,7 +188,7 @@ public class DatabaseManage {
             }
         }
         openDatabase();
-        Log.e(TAG, "数据库表更新：TableName:" + t.name() + " values:" + cv + " where " + where);
+       LogEx.e(DatabaseManage.class, "数据库表更新：TableName:" + t.name() + " values:" + cv + " where " + where);
         boolean r = false;
         try {
             r = sqLiteDatabase.update(t.name(), cv, where, null) > 0;
@@ -222,12 +223,12 @@ public class DatabaseManage {
             return false;
         }
 
-        Log.e(TAG, "数据库表删除：TableName:" + t.name() + " where " + where);
+       LogEx.e(DatabaseManage.class, "数据库表删除：TableName:" + t.name() + " where " + where);
         openDatabase();
         boolean re = false;
         try {
             int r = sqLiteDatabase.delete(t.name(), where, null);
-            Log.e(TAG, "数据库表删除：TableName:" + t.name() + " 删除数量: " + r);
+           LogEx.e(DatabaseManage.class, "数据库表删除：TableName:" + t.name() + " 删除数量: " + r);
             re = r > 0;
         } catch (Exception e) {
             e.printStackTrace();
@@ -249,7 +250,7 @@ public class DatabaseManage {
         }
         Table t = clazz.getAnnotation(Table.class);
         if (t == null) {
-            Log.e(TAG, "Table: 导包错误");
+           LogEx.e(DatabaseManage.class, "Table: 导包错误");
             return null;
         }
 
@@ -261,7 +262,7 @@ public class DatabaseManage {
         List<T> list = new ArrayList<>();
         openDatabase();
         try {
-            Log.e(TAG, "sql:" + sql);
+           LogEx.e(DatabaseManage.class, "sql:" + sql);
             Cursor cur = sqLiteDatabase.rawQuery(sql, null);
             while (cur.moveToNext()) {
                 Map<String, Object> map = new HashMap<>();
@@ -285,7 +286,7 @@ public class DatabaseManage {
             e.printStackTrace();
         }
         closeDataBase();
-        Log.e(TAG, "数据库表查询列表：getList:" + list);
+       LogEx.e(DatabaseManage.class, "数据库表查询列表：getList:" + list);
         return list;
     }
 
@@ -330,7 +331,7 @@ public class DatabaseManage {
             if (cur.moveToFirst()) {
                 int r = cur.getInt(0);
                 cur.close();
-                Log.e(TAG, "数据库查询条数： " + r);
+               LogEx.e(DatabaseManage.class, "数据库查询条数： " + r);
                 return r;
             }
         } catch (Exception e) {
@@ -359,7 +360,7 @@ public class DatabaseManage {
             where = " where " + where;
         }
         String sql = "select * from " + t.name() + where;
-        Log.e(TAG, sql);
+       LogEx.e(DatabaseManage.class, sql);
         Map<String, Object> map = getMap(sql);
         if (map == null)
             return null;
@@ -472,7 +473,7 @@ public class DatabaseManage {
                     }
                 } else {
                     StringBuilder sqlString = new StringBuilder().append("CREATE TABLE IF NOT EXISTS ").append(t.name()).append(" (");
-                    Log.e(TAG, sqlString.toString());
+                   LogEx.e(DatabaseManage.class, sqlString.toString());
                     for (int i = 0; i < pis.length; i++) {
                         PropertyInfo pi = pis[i];
                         if (DatabaseManage.KEY_NAME.equals(pi.getName())) {

@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.util.Log;
 import android.view.KeyEvent;
 
+import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.util.AppUtil;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.console.ConsoleProtocl;
@@ -30,19 +31,19 @@ public class SysConsoleImpl extends ConsoleProtocl {
 
     @Override
     public void decVolume() {
-        Log.e(TAG, "system console decVolume");
+      LogEx.e(this, "system console decVolume");
         AppUtil.sendKeyCode(KeyEvent.KEYCODE_VOLUME_DOWN);
     }
 
     @Override
     public void incVolume() {
-        Log.e(TAG, "system console incVolume");
+      LogEx.e(this, "system console incVolume");
         AppUtil.sendKeyCode(KeyEvent.KEYCODE_VOLUME_UP);
     }
 
     @Override
     public void mute() {
-        Log.e(TAG, "system console mute");
+      LogEx.e(this, "system console mute");
         AppUtil.sendKeyCode(KeyEvent.KEYCODE_VOLUME_MUTE);
     }
 
@@ -78,13 +79,13 @@ public class SysConsoleImpl extends ConsoleProtocl {
 
     @Override
     public void callAnswer() {
-        Log.e(TAG, "system console callAnswer");
+      LogEx.e(this, "system console callAnswer");
         ToastManage.self().show("不支持的指令");
     }
 
     @Override
     public void callHangup() {
-        Log.e(TAG, "system console callHangup");
+      LogEx.e(this, "system console callHangup");
         ToastManage.self().show("不支持的指令");
     }
 

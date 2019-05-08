@@ -1,7 +1,6 @@
 package com.wow.carlauncher.repertory.web.amap;
 
-import android.util.Log;
-
+import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.util.GsonUtil;
 import com.wow.carlauncher.common.util.HttpUtil;
 import com.wow.carlauncher.repertory.web.amap.res.BaseRes;
@@ -22,11 +21,11 @@ public class AMapWebService {
 
     public static void getWeatherInfo(String adcode, final CommonCallback commonCallback) {
         RequestParams params = new RequestParams("http://restapi.amap.com/v3/weather/weatherInfo?key=" + KEY + "&city=" + HttpUtil.getURLEncoderString(adcode));
-        Log.e(TAG, "这里请求了" + params);
+        LogEx.e(AMapWebService.class, "这里请求了" + params);
         x.http().request(HttpMethod.GET, params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.e(TAG, "onSuccess: " + result);
+                LogEx.e(this, "onSuccess: " + result);
                 if (commonCallback != null) {
                     commonCallback.callback(GsonUtil.getGson().fromJson(result, WeatherRes.class));
                 }
@@ -34,18 +33,18 @@ public class AMapWebService {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                Log.e(TAG, "onError: ");
+                LogEx.e(this, "onError: ");
                 ex.printStackTrace();
             }
 
             @Override
             public void onCancelled(CancelledException cex) {
-                Log.e(TAG, "onCancelled");
+                LogEx.e(this, "onCancelled");
             }
 
             @Override
             public void onFinished() {
-                Log.e(TAG, "onFinished");
+                LogEx.e(this, "onFinished");
             }
         });
     }

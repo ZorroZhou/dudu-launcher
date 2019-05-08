@@ -5,7 +5,6 @@ import android.content.Context;
 import android.graphics.PixelFormat;
 import android.os.Build;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +16,7 @@ import android.widget.LinearLayout;
 import com.wow.carlauncher.CarLauncherApplication;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
+import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.manage.AppWidgetManage;
 import com.wow.carlauncher.ex.manage.time.event.MTimeHalfSecondEvent;
@@ -32,7 +32,6 @@ import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
 import static com.wow.carlauncher.common.CommonData.APP_WIDGET_AMAP_PLUGIN;
-import static com.wow.carlauncher.common.CommonData.TAG;
 import static com.wow.carlauncher.common.util.ViewUtils.getViewByIds;
 
 public class NaviWin {
@@ -94,7 +93,7 @@ public class NaviWin {
 
         loadPlugin();
 
-        Log.e(TAG + getClass().getSimpleName(), "init ");
+        LogEx.d(this, "init ");
     }
 
     public void show() {

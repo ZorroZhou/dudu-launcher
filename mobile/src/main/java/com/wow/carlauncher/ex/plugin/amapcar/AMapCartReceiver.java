@@ -34,7 +34,6 @@ import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.RECEIVE_NAVI
 import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.RESPONSE_DISTRICT_CITY_NAME;
 import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.RESPONSE_DISTRICT_PRVINCE_NAME;
 import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.StateInfoConstant;
-import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.StateInfoConstant.NAV_DAODA;
 
 public class AMapCartReceiver extends BroadcastReceiver {
     public static final String TAG = "WOW_CAR_AMAP";

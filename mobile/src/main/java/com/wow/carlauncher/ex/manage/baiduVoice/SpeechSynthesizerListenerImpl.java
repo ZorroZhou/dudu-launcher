@@ -1,11 +1,8 @@
 package com.wow.carlauncher.ex.manage.baiduVoice;
 
-import android.util.Log;
-
 import com.baidu.tts.client.SpeechError;
 import com.baidu.tts.client.SpeechSynthesizerListener;
-
-import static com.wow.carlauncher.common.CommonData.TAG;
+import com.wow.carlauncher.common.LogEx;
 
 public class SpeechSynthesizerListenerImpl implements SpeechSynthesizerListener {
     @Override
@@ -40,7 +37,7 @@ public class SpeechSynthesizerListenerImpl implements SpeechSynthesizerListener 
 
     @Override
     public void onError(String s, SpeechError speechError) {
-        Log.e(TAG, "SpeechSynthesizerListener.onError: " + s);
-        Log.e(TAG, "onError: " + speechError.code + "  " + speechError.description);
+      LogEx.e(this, "SpeechSynthesizerListener.onError: " + s);
+      LogEx.e(this, "onError: " + speechError.code + "  " + speechError.description);
     }
 }

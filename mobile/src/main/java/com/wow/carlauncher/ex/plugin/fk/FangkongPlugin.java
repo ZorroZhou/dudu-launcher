@@ -53,7 +53,7 @@ public class FangkongPlugin extends ContextEx {
         BleManage.self().addListener(bleListener);
         myBleConnectStatusListener = new MyBleConnectStatusListener(BLE_MARK);
         EventBus.getDefault().register(this);
-        LogEx.e(this, "init ");
+        LogEx.d(this, "init ");
     }
 
     private MyBleConnectStatusListener myBleConnectStatusListener;

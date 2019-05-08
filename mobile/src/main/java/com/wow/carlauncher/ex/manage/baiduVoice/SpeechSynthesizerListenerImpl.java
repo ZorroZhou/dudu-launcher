@@ -37,7 +37,7 @@ public class SpeechSynthesizerListenerImpl implements SpeechSynthesizerListener 
 
     @Override
     public void onError(String s, SpeechError speechError) {
-      LogEx.e(this, "SpeechSynthesizerListener.onError: " + s);
-      LogEx.e(this, "onError: " + speechError.code + "  " + speechError.description);
+      LogEx.d(this, "SpeechSynthesizerListener.onError: " + s);
+      LogEx.d(this, "onError: " + speechError.code + "  " + speechError.description);
     }
 }

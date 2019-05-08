@@ -103,7 +103,7 @@ public class AppInfoManage extends ContextEx {
         internalAppsInfoMap.put(INTERNAL_APP_SETTING, new InternalAppInfo("桌面设置", INTERNAL_APP_SETTING, MARK_INTERNAL_APP, SetActivity.class));
         refreshAppInfo();
 
-        LogEx.e(this, "init ");
+        LogEx.d(this, "init ");
     }
 
     private AppInfo getAppInfo(String app) {

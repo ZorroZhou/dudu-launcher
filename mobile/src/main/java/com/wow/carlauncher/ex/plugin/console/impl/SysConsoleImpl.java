@@ -31,19 +31,19 @@ public class SysConsoleImpl extends ConsoleProtocl {
 
     @Override
     public void decVolume() {
-      LogEx.e(this, "system console decVolume");
+      LogEx.d(this, "system console decVolume");
         AppUtil.sendKeyCode(KeyEvent.KEYCODE_VOLUME_DOWN);
     }
 
     @Override
     public void incVolume() {
-      LogEx.e(this, "system console incVolume");
+      LogEx.d(this, "system console incVolume");
         AppUtil.sendKeyCode(KeyEvent.KEYCODE_VOLUME_UP);
     }
 
     @Override
     public void mute() {
-      LogEx.e(this, "system console mute");
+      LogEx.d(this, "system console mute");
         AppUtil.sendKeyCode(KeyEvent.KEYCODE_VOLUME_MUTE);
     }
 
@@ -79,13 +79,13 @@ public class SysConsoleImpl extends ConsoleProtocl {
 
     @Override
     public void callAnswer() {
-      LogEx.e(this, "system console callAnswer");
+      LogEx.d(this, "system console callAnswer");
         ToastManage.self().show("不支持的指令");
     }
 
     @Override
     public void callHangup() {
-      LogEx.e(this, "system console callHangup");
+      LogEx.d(this, "system console callHangup");
         ToastManage.self().show("不支持的指令");
     }
 

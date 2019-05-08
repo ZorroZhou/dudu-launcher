@@ -124,12 +124,12 @@ public class LAMapView extends BaseEXView {
 
         }
 
-        LogEx.e(this, "changedTheme: ");
+        LogEx.d(this, "changedTheme: ");
     }
 
     @Override
     protected void initView() {
-        LogEx.e(this, "initView: ");
+        LogEx.d(this, "initView: ");
     }
 
     private boolean mute = false;

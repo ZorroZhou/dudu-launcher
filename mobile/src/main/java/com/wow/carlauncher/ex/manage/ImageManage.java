@@ -61,7 +61,7 @@ public class ImageManage {
                 .build();
         ImageLoader.getInstance().init(config);// 初始化
 
-        LogEx.e(this, "init ");
+        LogEx.d(this, "init ");
     }
 
     public DisplayImageOptions buildDisplayOption(int resId) {

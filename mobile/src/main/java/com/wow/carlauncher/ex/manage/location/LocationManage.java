@@ -51,7 +51,7 @@ public class LocationManage extends ContextEx implements AMapLocationListener {
         mLocationClient.setLocationOption(mLocationOption);
         mLocationClient.startLocation();
 
-        LogEx.e(this, "init ");
+        LogEx.d(this, "init ");
     }
 
     /**

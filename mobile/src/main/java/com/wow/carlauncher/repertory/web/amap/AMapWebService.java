@@ -21,11 +21,11 @@ public class AMapWebService {
 
     public static void getWeatherInfo(String adcode, final CommonCallback commonCallback) {
         RequestParams params = new RequestParams("http://restapi.amap.com/v3/weather/weatherInfo?key=" + KEY + "&city=" + HttpUtil.getURLEncoderString(adcode));
-        LogEx.e(AMapWebService.class, "这里请求了" + params);
+        LogEx.d(AMapWebService.class, "这里请求了" + params);
         x.http().request(HttpMethod.GET, params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                LogEx.e(this, "onSuccess: " + result);
+                LogEx.d(this, "onSuccess: " + result);
                 if (commonCallback != null) {
                     commonCallback.callback(GsonUtil.getGson().fromJson(result, WeatherRes.class));
                 }
@@ -39,12 +39,12 @@ public class AMapWebService {
 
             @Override
             public void onCancelled(CancelledException cex) {
-                LogEx.e(this, "onCancelled");
+                LogEx.d(this, "onCancelled");
             }
 
             @Override
             public void onFinished() {
-                LogEx.e(this, "onFinished");
+                LogEx.d(this, "onFinished");
             }
         });
     }

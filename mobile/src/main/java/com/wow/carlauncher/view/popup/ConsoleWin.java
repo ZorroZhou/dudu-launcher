@@ -115,7 +115,7 @@ public class ConsoleWin implements ThemeManage.OnThemeChangeListener {
         onThemeChanged(ThemeManage.self());
         ThemeManage.self().registerThemeChangeListener(this);
 
-        LogEx.e(this, "init ");
+        LogEx.d(this, "init ");
     }
 
 

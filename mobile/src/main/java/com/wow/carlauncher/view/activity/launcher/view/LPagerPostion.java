@@ -64,7 +64,7 @@ public class LPagerPostion extends BaseEXView implements ViewPagerOnPageChangeLi
             postion.addView(postionViews[i], params);
         }
 
-        LogEx.e(this, "loadPostion: ");
+        LogEx.d(this, "loadPostion: ");
     }
 
     private View[] postionViews;

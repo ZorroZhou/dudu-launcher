@@ -79,7 +79,7 @@ public class LObdView extends BaseEXView {
         } else {
             tv_title.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
         }
-        LogEx.e(this, "changedTheme: ");
+        LogEx.d(this, "changedTheme: ");
     }
 
     @Override
@@ -92,7 +92,7 @@ public class LObdView extends BaseEXView {
 
     @Override
     protected void initView() {
-        LogEx.e(this, "initView: ");
+        LogEx.d(this, "initView: ");
     }
 
     @Event(value = {R.id.fl_base})

@@ -14,7 +14,7 @@ public class SharedPreUtil {
 
     public static void init(Context context) {
         SharedPreUtil.context = context;
-        LogEx.e(SharedPreUtil.class, "init ");
+        LogEx.d(SharedPreUtil.class, "init ");
     }
 
     /**

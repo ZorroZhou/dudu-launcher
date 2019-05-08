@@ -62,7 +62,7 @@ public class LMusicView extends BaseEXView {
     protected void initView() {
         x.task().postDelayed(() -> MusicPlugin.self().requestLast(), 500);
 
-        LogEx.e(this, "initView: ");
+        LogEx.d(this, "initView: ");
     }
 
     private ViewTreeObserver.OnPreDrawListener oldPlayOnPreDrawListener;
@@ -154,7 +154,7 @@ public class LMusicView extends BaseEXView {
             tv_title.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
             music_iv_cover.setCircular(true);
         }
-        LogEx.e(this, "changedTheme: ");
+        LogEx.d(this, "changedTheme: ");
     }
 
     private boolean run;

@@ -107,7 +107,7 @@ public class LAppsView extends BaseEXView implements View.OnClickListener, View.
         }
         addRefreshItemHandle();
 
-        LogEx.e(this, "initView: ");
+        LogEx.d(this, "initView: ");
     }
 
     private LayoutEnum layoutEnum = LayoutEnum.LAYOUT1;
@@ -140,7 +140,7 @@ public class LAppsView extends BaseEXView implements View.OnClickListener, View.
             }
         }
 
-        LogEx.e(this, "changedTheme: ");
+        LogEx.d(this, "changedTheme: ");
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

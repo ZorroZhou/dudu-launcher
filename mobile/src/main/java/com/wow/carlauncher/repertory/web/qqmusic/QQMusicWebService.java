@@ -54,7 +54,7 @@ public class QQMusicWebService {
 
             @Override
             public void onFinished() {
-                LogEx.e(QQMusicWebService.class, "onFinished");
+                LogEx.d(QQMusicWebService.class, "onFinished");
             }
         });
     }

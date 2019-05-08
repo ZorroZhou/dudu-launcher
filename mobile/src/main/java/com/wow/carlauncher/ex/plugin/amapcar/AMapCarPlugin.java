@@ -67,7 +67,7 @@ public class AMapCarPlugin extends ContextEx {
 
         EventBus.getDefault().register(this);
 
-        LogEx.e(this, "init ");
+        LogEx.d(this, "init ");
         // final View launcherWidgetView = AppWidgetManage.self().getWidgetById(launcher);
     }
 
@@ -194,7 +194,7 @@ public class AMapCarPlugin extends ContextEx {
     }
 
     private void sendReceiver(int key, Map<String, Object> param) {
-        LogEx.e(this, "sendReceiver: " + key + " " + param);
+        LogEx.d(this, "sendReceiver: " + key + " " + param);
         Intent intent = new Intent();
         intent.setAction(SEND_ACTION);
         intent.putExtra(KEY_TYPE, key);

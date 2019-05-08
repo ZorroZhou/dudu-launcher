@@ -139,7 +139,7 @@ public class PopupWin {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(PEventFSRefresh event) {
-        LogEx.e(this, "onEventMainThread: " + event);
+        LogEx.d(this, "onEventMainThread: " + event);
         if (SharedPreUtil.getBoolean(CommonData.SDATA_POPUP_FULL_SCREEN, true)) {
             winparams.flags = WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN | WindowManager.LayoutParams.FLAG_FULLSCREEN;
         } else {

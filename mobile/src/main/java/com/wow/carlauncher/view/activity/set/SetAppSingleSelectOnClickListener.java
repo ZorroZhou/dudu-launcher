@@ -36,7 +36,7 @@ public abstract class SetAppSingleSelectOnClickListener implements View.OnClickL
                 select = i;
             }
         }
-        LogEx.e(this, "onClick: " + items.length + " " + select);
+        LogEx.d(this, "onClick: " + items.length + " " + select);
         final ThreadObj<Integer> obj = new ThreadObj<>(select);
         new AlertDialog.Builder(context).setTitle("请选择APP")
                 .setNegativeButton("取消", null)

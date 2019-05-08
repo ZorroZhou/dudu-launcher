@@ -108,7 +108,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        LogEx.e(this, "onCreate:start ");
+        LogEx.d(this, "onCreate:start ");
         //防止初始化两次
         if (old != null) {
             old.finish();
@@ -131,7 +131,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
         ThemeManage.self().refreshTheme();
         x.task().postDelayed(this::requestRuntime, 1000);
 
-        LogEx.e(this, "onCreate:end ");
+        LogEx.d(this, "onCreate:end ");
     }
 
     public void initView() {
@@ -157,7 +157,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
     private LPageView[] itemPager;
 
     private void initItem() {
-        LogEx.e(this, "initItem");
+        LogEx.d(this, "initItem");
         //计算排序
         List<ItemModel> items = new ArrayList<>();
         for (ItemEnum item : CommonData.LAUNCHER_ITEMS) {
@@ -216,7 +216,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
     private LAppsView[] appsPager;
 
     private void initApps() {
-        LogEx.e(this, "initApps");
+        LogEx.d(this, "initApps");
         //获取每页的item数量
         int psize = getPageItemNum();
         int appsize = AppInfoManage.self().getShowAppInfos().size();
@@ -314,7 +314,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
         } else {
             ll_base.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_desk_bg));
         }
-        LogEx.e(this, "onThemeChanged ");
+        LogEx.d(this, "onThemeChanged ");
     }
 
     @Override
@@ -473,7 +473,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
                     break;
                 }
                 case LEFT_BOTTOM_LONG_CLICK: {
-                    LogEx.e(this, "这里唤醒语音比较好");
+                    LogEx.d(this, "这里唤醒语音比较好");
                     break;
                 }
                 case RIGHT_BOTTOM_CLICK:

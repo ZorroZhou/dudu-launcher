@@ -30,7 +30,7 @@ public class TaskExecutor {
     public void init() {
         scheduled = new ScheduledThreadPoolExecutor(5);
         task = new ThreadPoolExecutor(5, 5, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
-      LogEx.e(this, "init ");
+      LogEx.d(this, "init ");
     }
 
 

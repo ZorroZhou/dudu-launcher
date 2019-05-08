@@ -33,7 +33,7 @@ public class ConsolePlugin extends ContextEx {
     public void init(Context context) {
         setContext(context);
         loadConsole();
-        LogEx.e(this, "init ");
+        LogEx.d(this, "init ");
     }
 
     private ConsoleProtoclListener consoleListener = new ConsoleProtoclListener() {

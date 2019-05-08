@@ -91,7 +91,7 @@ public class VoiceWin implements ThemeManage.OnThemeChangeListener {
         onThemeChanged(ThemeManage.self());
         ThemeManage.self().registerThemeChangeListener(this);
 
-        LogEx.e(this, "init ");
+        LogEx.d(this, "init ");
     }
 
     public void show() {

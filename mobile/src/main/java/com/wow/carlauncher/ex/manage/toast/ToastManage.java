@@ -29,7 +29,7 @@ public class ToastManage extends ContextEx {
 
     public void init(Context context) {
         setContext(context);
-      LogEx.e(this, "init ");
+      LogEx.d(this, "init ");
     }
 
     private static Toast toast;

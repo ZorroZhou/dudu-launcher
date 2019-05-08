@@ -159,8 +159,8 @@ public class BaiduVoiceAssistant extends ContextEx {
     };
 
     private EventListener eventListener = (name, params, data, offset, length) -> {
-        LogEx.e(this, "eventListener.name: " + name);
-        LogEx.e(this, "eventListener.params: " + params);
+        LogEx.d(this, "eventListener.name: " + name);
+        LogEx.d(this, "eventListener.params: " + params);
         switch (name) {
             case SpeechConstant.CALLBACK_EVENT_WAKEUP_ERROR:
                 ToastManage.self().show("无法启动唤醒功能,可能是权限不足!");
@@ -188,12 +188,12 @@ public class BaiduVoiceAssistant extends ContextEx {
             if ("final_result".equals(asrEventPartial.getResult_type())) {
                 TaskExecutor.self().run(() -> {
                     String word = asrEventPartial.getBest_result();
-                    LogEx.e(this, "handleAsrPartial: " + word);
+                    LogEx.d(this, "handleAsrPartial: " + word);
                     if (word.endsWith("。") || word.endsWith("？")) {
                         word = word.substring(0, word.length() - 1);
                     }
                     KeyWord keyWord = getAction(word);
-                    LogEx.e(this, "handleAsrPartial: " + keyWord);
+                    LogEx.d(this, "handleAsrPartial: " + keyWord);
                     if (keyWord != null) {
                         switch (keyWord.action) {
                             case ACTION_HI: {

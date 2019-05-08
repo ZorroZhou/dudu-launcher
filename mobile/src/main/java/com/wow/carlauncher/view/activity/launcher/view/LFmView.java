@@ -179,7 +179,7 @@ public class LFmView extends BaseEXView {
                 localObject.setClassName("com.ximalaya.ting.android.car", "com.ximalaya.ting.android.opensdk.player.e.a");
                 //localObject.putExtra(Intent.EXTRA_KEY_EVENT, new KeyEvent(System.currentTimeMillis(), System.currentTimeMillis() + 1, 1, KeyEvent.KEYCODE_MEDIA_NEXT, 0));
                 getContext().sendOrderedBroadcast(localObject, null);
-                LogEx.e(this, "clickEvent: !!");
+                LogEx.d(this, "clickEvent: !!");
                 break;
             }
         }
@@ -279,14 +279,14 @@ public class LFmView extends BaseEXView {
         BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                LogEx.e(this, "onReceive: " + intent.getAction());
+                LogEx.d(this, "onReceive: " + intent.getAction());
                 if (intent.getExtras() != null) {
                     for (String key : intent.getExtras().keySet()) {
-                        LogEx.e(this, key + ":" + intent.getExtras().get(key));
+                        LogEx.d(this, key + ":" + intent.getExtras().get(key));
                     }
                 }
 
-                LogEx.e(this, "onReceive: ------------");
+                LogEx.d(this, "onReceive: ------------");
             }
         };
 

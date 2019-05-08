@@ -37,7 +37,7 @@ public class TimeManage extends ContextEx {
     public void init(Context context) {
         setContext(context);
         startTimer();
-      LogEx.e(this, "init ");
+      LogEx.d(this, "init ");
     }
 
     private final static int ZHOUQI = 500;

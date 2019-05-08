@@ -182,7 +182,7 @@ public class LDockView extends BaseEXView {
         }, R.color.l_text1);
 
         loadDock(false);
-        LogEx.e(this, "changedTheme: ");
+        LogEx.d(this, "changedTheme: ");
     }
 
     @Override
@@ -197,7 +197,7 @@ public class LDockView extends BaseEXView {
 
     private void loadDock(boolean removeIfError) {
         String packname1 = SharedPreUtil.getString(SDATA_DOCK1_CLASS);
-        LogEx.e(this, "loadDock: " + packname1);
+        LogEx.d(this, "loadDock: " + packname1);
         if (CommonUtil.isNotNull(packname1) && AppInfoManage.self().checkApp(packname1)) {
             iv_dock1.setImageDrawable(AppInfoManage.self().getIcon(packname1));
             tv_dock1.setText(AppInfoManage.self().getName(packname1));
@@ -245,7 +245,7 @@ public class LDockView extends BaseEXView {
             SharedPreUtil.saveString(SDATA_DOCK5_CLASS, "");
         }
         dockLabelShow(SharedPreUtil.getBoolean(CommonData.SDATA_LAUNCHER_DOCK_LABEL_SHOW, true));
-        LogEx.e(this, "loadDock: ");
+        LogEx.d(this, "loadDock: ");
     }
 
     @Event(value = {R.id.ll_dock1, R.id.ll_dock2, R.id.ll_dock3, R.id.ll_dock4, R.id.ll_dock5})
@@ -255,7 +255,7 @@ public class LDockView extends BaseEXView {
             case R.id.ll_dock1: {
                 String packname = SharedPreUtil.getString(SDATA_DOCK1_CLASS);
                 if (CommonUtil.isNull(packname)) {
-                    LogEx.e(this, "clickEvent: " + getActivity());
+                    LogEx.d(this, "clickEvent: " + getActivity());
                     showSelectDialog(SDATA_DOCK1_CLASS);
                 } else {
                     openDock(packname);
@@ -361,13 +361,13 @@ public class LDockView extends BaseEXView {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(LDockLabelShowChangeEvent event) {
-        LogEx.e(this, "onEvent:LDockLabelShowChangeEvent ");
+        LogEx.d(this, "onEvent:LDockLabelShowChangeEvent ");
         dockLabelShow(event.show);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final MAppInfoRefreshShowEvent event) {
-        LogEx.e(this, "onEvent:MAppInfoRefreshShowEvent ");
+        LogEx.d(this, "onEvent:MAppInfoRefreshShowEvent ");
         loadDock(true);
     }
 

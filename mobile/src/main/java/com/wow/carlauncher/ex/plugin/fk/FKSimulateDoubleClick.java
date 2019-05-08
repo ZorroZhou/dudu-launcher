@@ -1,6 +1,6 @@
 package com.wow.carlauncher.ex.plugin.fk;
 
-import org.xutils.x;
+import com.wow.carlauncher.common.TaskExecutor;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -24,7 +24,7 @@ public class FKSimulateDoubleClick<KEY> {
         cache.put(key, System.currentTimeMillis());
         if (tt == null || System.currentTimeMillis() - tt > 500) {
             runner.put(key, singleClick);
-            x.task().postDelayed(new Runnable() {
+            TaskExecutor.self().run(new Runnable() {
                 @Override
                 public void run() {
                     runner.get(key).run();

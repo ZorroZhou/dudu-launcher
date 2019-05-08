@@ -12,8 +12,8 @@ import com.wow.carlauncher.common.util.ViewUtils;
 import com.wow.carlauncher.view.activity.launcher.LayoutEnum;
 import com.wow.carlauncher.view.base.BaseEXView;
 
-import org.xutils.view.annotation.Event;
-import org.xutils.view.annotation.ViewInject;
+import butterknife.BindView;
+import butterknife.OnClick;
 
 public class LPageView extends BaseEXView {
 
@@ -84,12 +84,11 @@ public class LPageView extends BaseEXView {
         }
     }
 
-    @ViewInject(R.id.ll_base)
-    private LinearLayout ll_base;
+    @BindView(R.id.ll_base)
+    LinearLayout ll_base;
 
-
-    @Event(value = {R.id.ll_base})
-    private void clickEvent(View view) {
+    @OnClick(value = {R.id.ll_base})
+    public void clickEvent(View view) {
         //空的监听器,防止出现页面点击错乱的情况
     }
 }

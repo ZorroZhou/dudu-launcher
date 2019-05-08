@@ -19,11 +19,12 @@ import com.wow.carlauncher.view.base.BaseEXView;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.xutils.view.annotation.Event;
-import org.xutils.view.annotation.ViewInject;
 
 import java.util.Calendar;
 import java.util.Date;
+
+import butterknife.BindView;
+import butterknife.OnClick;
 
 import static com.wow.carlauncher.common.CommonData.DAY_MILL;
 import static com.wow.carlauncher.common.CommonData.MINUTE_MILL;
@@ -72,8 +73,8 @@ public class LTimeView extends BaseEXView {
         LogEx.d(this, "changedTheme: ");
     }
 
-    @Event(value = {R.id.fl_base})
-    private void clickEvent(View view) {
+    @OnClick(value = {R.id.rl_base})
+    public void clickEvent(View view) {
 
     }
 
@@ -84,27 +85,27 @@ public class LTimeView extends BaseEXView {
         LogEx.d(this, "initView: ");
     }
 
-    @ViewInject(R.id.fl_time)
-    private FrameLayout fl_time;
+    @BindView(R.id.fl_time)
+    FrameLayout fl_time;
 
-    @ViewInject(R.id.rl_base)
-    private View rl_base;
+    @BindView(R.id.rl_base)
+    View rl_base;
 
-    @ViewInject(R.id.tv_title)
-    private TextView tv_title;
+    @BindView(R.id.tv_title)
+    TextView tv_title;
 
 
-    @ViewInject(R.id.tv_shijian)
-    private TextView tv_shijian;
+    @BindView(R.id.tv_shijian)
+    TextView tv_shijian;
 
-    @ViewInject(R.id.tv_week)
-    private TextView tv_week;
+    @BindView(R.id.tv_week)
+    TextView tv_week;
 
-    @ViewInject(R.id.tv_day)
-    private TextView tv_day;
+    @BindView(R.id.tv_day)
+    TextView tv_day;
 
-    @ViewInject(R.id.tv_lunar)
-    private TextView tv_lunar;
+    @BindView(R.id.tv_lunar)
+    TextView tv_lunar;
 
     private long cur_min = 0L;
     private long cur_day = 0L;

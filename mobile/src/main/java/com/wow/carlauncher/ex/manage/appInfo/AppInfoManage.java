@@ -15,6 +15,7 @@ import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.AppIconTemp;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.LogEx;
+import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.ContextEx;
@@ -23,8 +24,6 @@ import com.wow.carlauncher.ex.manage.appInfo.event.MAppInfoRefreshShowEvent;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.view.activity.driving.DrivingActivity;
 import com.wow.carlauncher.view.activity.set.SetActivity;
-
-import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -214,7 +213,7 @@ public class AppInfoManage extends ContextEx {
     private static final byte[] LOCK1 = new byte[0];
 
     public void refreshAppInfo() {
-        x.task().run(() -> {
+        TaskExecutor.self().run(() -> {
             synchronized (LOCK1) {
                 Log.e(CommonData.TAG, "refreshAppInfo: ");
                 Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
@@ -251,7 +250,7 @@ public class AppInfoManage extends ContextEx {
     private static final byte[] LOCK2 = new byte[0];
 
     public void refreshShowApp() {
-        x.task().run(() -> {
+        TaskExecutor.self().run(() -> {
             synchronized (LOCK2) {
                 showAppInfosList.clear();
                 showAppInfosList.addAll(allAppInfosList);

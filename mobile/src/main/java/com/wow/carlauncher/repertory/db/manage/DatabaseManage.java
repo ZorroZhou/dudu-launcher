@@ -10,12 +10,11 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.wow.carlauncher.common.LogEx;
+import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.bean.BeanInfo;
 import com.wow.carlauncher.common.bean.BeanManage;
 import com.wow.carlauncher.common.bean.PropertyInfo;
 import com.wow.carlauncher.common.util.DateUtil;
-
-import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -139,7 +138,7 @@ public class DatabaseManage {
     }
 
     public static <T extends BaseEntity> void insertSyn(@NonNull final BaseEntity entity) {
-        x.task().run(new Runnable() {
+        TaskExecutor.self().run(new Runnable() {
             @Override
             public void run() {
                 synchronized (entity) {
@@ -201,7 +200,7 @@ public class DatabaseManage {
     }
 
     public static <T extends BaseEntity> void updateSyn(@NonNull final BaseEntity entity, @NonNull final String where) {
-        x.task().run(new Runnable() {
+        TaskExecutor.self().run(new Runnable() {
             @Override
             public void run() {
                 synchronized (entity) {
@@ -416,7 +415,7 @@ public class DatabaseManage {
     }
 
     public static <T extends BaseEntity> void saveSyn(final @NonNull T entity) {
-        x.task().run(new Runnable() {
+        TaskExecutor.self().run(new Runnable() {
             @Override
             public void run() {
                 synchronized (entity) {

@@ -16,7 +16,8 @@ import com.wow.carlauncher.view.base.BaseView;
 import com.wow.carlauncher.view.popup.PopupWin;
 
 import org.greenrobot.eventbus.EventBus;
-import org.xutils.view.annotation.ViewInject;
+
+import butterknife.BindView;
 
 import static com.wow.carlauncher.common.CommonData.POPUP_SIZE;
 
@@ -39,20 +40,20 @@ public class SPopupView extends BaseView {
         return R.layout.content_set_popup;
     }
 
-    @ViewInject(R.id.sv_allow_popup_window)
-    private SetView sv_allow_popup_window;
+    @BindView(R.id.sv_allow_popup_window)
+    SetView sv_allow_popup_window;
 
-    @ViewInject(R.id.sv_popup_window_showapps)
-    private SetView sv_popup_window_showapps;
+    @BindView(R.id.sv_popup_window_showapps)
+    SetView sv_popup_window_showapps;
 
-    @ViewInject(R.id.sv_popup_window_showtype)
-    private SetView sv_popup_window_showtype;
+    @BindView(R.id.sv_popup_window_showtype)
+    SetView sv_popup_window_showtype;
 
-    @ViewInject(R.id.sv_popup_full_screen)
-    private SetView sv_popup_full_screen;
+    @BindView(R.id.sv_popup_full_screen)
+    SetView sv_popup_full_screen;
 
-    @ViewInject(R.id.sv_popup_window_size)
-    private SetView sv_popup_window_size;
+    @BindView(R.id.sv_popup_window_size)
+    SetView sv_popup_window_size;
 
     @Override
     protected void initView() {

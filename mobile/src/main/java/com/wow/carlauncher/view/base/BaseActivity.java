@@ -16,8 +16,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.common.TaskExecutor;
 
-import org.xutils.x;
+import butterknife.ButterKnife;
 
 /**
  * Created by 10124 on 2017/10/26.
@@ -50,15 +51,10 @@ public abstract class BaseActivity extends Activity {
 
         base = findViewById(R.id.base);
         toolbar = findViewById(R.id.toolbar);
-        title = (TextView) findViewById(R.id.tv_title);
-        content = (RelativeLayout) findViewById(R.id.b_content);
+        title = findViewById(R.id.tv_title);
+        content = findViewById(R.id.b_content);
         //设置actionbar
-        findViewById(R.id.iv_back).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        findViewById(R.id.iv_back).setOnClickListener(v -> onBackPressed());
 
 
         View view = LayoutInflater.from(this).inflate(conRes, null);
@@ -75,7 +71,7 @@ public abstract class BaseActivity extends Activity {
         };
         progressDialog.setCanceledOnTouchOutside(false);
 
-        x.view().inject(this);
+        ButterKnife.bind(this);
         loadViewed = true;
         initView();
         loadData();
@@ -126,7 +122,7 @@ public abstract class BaseActivity extends Activity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                x.task().postDelayed(new Runnable() {
+                TaskExecutor.self().run(new Runnable() {
                     @Override
                     public void run() {
                         if (showLoading) {
@@ -147,7 +143,7 @@ public abstract class BaseActivity extends Activity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                x.task().postDelayed(new Runnable() {
+                TaskExecutor.self().run(new Runnable() {
                     @Override
                     public void run() {
                         if (!showLoading) {

@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.LogEx;
+import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.util.SunRiseSetUtil;
 import com.wow.carlauncher.ex.manage.location.event.MNewLocationEvent;
@@ -21,7 +22,6 @@ import com.wow.carlauncher.view.adapter.PicSelectAdapter;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -103,7 +103,7 @@ public class ThemeManage {
         if (this.theme != theme) {
             this.theme = theme;
             if (listeners.size() > 0) {
-                x.task().autoPost(() -> {
+                TaskExecutor.self().autoPost(() -> {
                     List<OnThemeChangeListener> temp = new ArrayList<>(listeners.size());
                     temp.addAll(listeners);
                     for (OnThemeChangeListener listener : temp) {

@@ -14,7 +14,7 @@ import com.wow.carlauncher.common.util.ViewUtils;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.view.base.BaseEXView;
 
-import org.xutils.view.annotation.ViewInject;
+import butterknife.BindView;
 
 public class LPagerPostion extends BaseEXView implements ViewPagerOnPageChangeListener {
     public LPagerPostion(@NonNull Context context) {
@@ -30,8 +30,8 @@ public class LPagerPostion extends BaseEXView implements ViewPagerOnPageChangeLi
         return R.layout.content_l_postion;
     }
 
-    @ViewInject(R.id.postion)
-    private LinearLayout postion;
+    @BindView(R.id.postion)
+    LinearLayout postion;
 
     @Override
     public void changedTheme(ThemeManage manage) {

@@ -2,13 +2,12 @@ package com.wow.carlauncher.ex.plugin.music;
 
 import android.graphics.Bitmap;
 
+import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.ex.manage.ImageManage;
 import com.wow.carlauncher.repertory.db.entiy.CoverTemp;
 import com.wow.carlauncher.repertory.db.manage.DatabaseManage;
 import com.wow.carlauncher.repertory.web.qqmusic.QQMusicWebService;
 import com.wow.carlauncher.repertory.web.qqmusic.res.SearchRes;
-
-import org.xutils.x;
 
 public class MusciCoverUtil {
     public static boolean run = false;
@@ -18,7 +17,7 @@ public class MusciCoverUtil {
             return;
         }
         run = true;
-        x.task().run(() -> {
+        TaskExecutor.self().run(() -> {
             String key = title;
             if (artist != null) {
                 key = key + artist;

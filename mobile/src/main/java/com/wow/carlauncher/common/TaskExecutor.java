@@ -1,36 +1,67 @@
 package com.wow.carlauncher.common;
 
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+
+import static com.wow.carlauncher.common.CommonData.TAG;
 
 /**
  * 统一任务调度
  */
-public class ScheduledTaskExecutor {
+public class TaskExecutor {
     /**
      * 单例模式的控制中心
      */
     private static class SingletonHolder {
-        private final static ScheduledTaskExecutor instance = new ScheduledTaskExecutor();
+        private final static TaskExecutor instance = new TaskExecutor();
     }
 
-    public static ScheduledTaskExecutor self() {
-        return ScheduledTaskExecutor.SingletonHolder.instance;
+    public static TaskExecutor self() {
+        return TaskExecutor.SingletonHolder.instance;
     }
 
-    private ScheduledTaskExecutor() {
+    private TaskExecutor() {
 
     }
 
     public void init() {
+        handler = new Handler();
         scheduled = new ScheduledThreadPoolExecutor(2);
-        LogEx.d(this, "init ");
+        task = new ThreadPoolExecutor(2, 2, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
+        Log.e(TAG + getClass().getSimpleName(), "init ");
     }
 
 
     private ScheduledExecutorService scheduled;
+    private ExecutorService task;
+    private Handler handler;
+
+    public void autoPost(Runnable runnable) {
+        if (runnable == null) return;
+        if (Thread.currentThread() == Looper.getMainLooper().getThread()) {
+            runnable.run();
+        } else {
+            handler.post(runnable);
+        }
+    }
+
+    /**
+     * 子线程执行
+     *
+     * @param runnable
+     */
+    public void run(Runnable runnable) {
+        task.execute(runnable);
+    }
 
     /**
      * 计划调度

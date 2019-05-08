@@ -5,15 +5,15 @@ import android.widget.TextView;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.view.base.BaseActivity;
 
-import org.xutils.view.annotation.ViewInject;
+import butterknife.BindView;
 
 /**
  * Created by 10124 on 2017/10/26.
  */
 
 public class AboutActivity extends BaseActivity {
-    @ViewInject(R.id.about)
-    private TextView about;
+    @BindView(R.id.about)
+     TextView about;
 
     @Override
     public void init() {

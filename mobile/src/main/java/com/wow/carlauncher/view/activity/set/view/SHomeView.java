@@ -10,6 +10,7 @@ import android.view.WindowManager;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
+import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.util.ThreadObj;
 import com.wow.carlauncher.common.util.ViewUtils;
@@ -32,10 +33,10 @@ import com.wow.carlauncher.view.base.BaseEXView;
 import com.wow.carlauncher.view.clickListener.PicSelectOnClickListener;
 
 import org.greenrobot.eventbus.EventBus;
-import org.xutils.view.annotation.ViewInject;
-import org.xutils.x;
 
 import java.util.List;
+
+import butterknife.BindView;
 
 import static com.wow.carlauncher.common.CommonData.LAUNCHER_LAYOUTS;
 import static com.wow.carlauncher.common.CommonData.SDATA_LAUNCHER_ITEM_TRAN;
@@ -60,29 +61,29 @@ public class SHomeView extends BaseEXView {
         return R.layout.content_set_home;
     }
 
-    @ViewInject(R.id.sv_launcher_item_sort)
-    private SetView sv_launcher_item_sort;
+    @BindView(R.id.sv_launcher_item_sort)
+    SetView sv_launcher_item_sort;
 
-    @ViewInject(R.id.sv_launcher_item_sort_re)
-    private SetView sv_launcher_item_sort_re;
+    @BindView(R.id.sv_launcher_item_sort_re)
+    SetView sv_launcher_item_sort_re;
 
-    @ViewInject(R.id.sv_launcher_item_num)
-    private SetView sv_launcher_item_num;
+    @BindView(R.id.sv_launcher_item_num)
+    SetView sv_launcher_item_num;
 
-    @ViewInject(R.id.sv_item_tran)
-    private SetView sv_item_tran;
+    @BindView(R.id.sv_item_tran)
+    SetView sv_item_tran;
 
-    @ViewInject(R.id.sv_home_full)
-    private SetView sv_home_full;
+    @BindView(R.id.sv_home_full)
+    SetView sv_home_full;
 
-    @ViewInject(R.id.sv_use_va)
-    private SetView sv_use_va;
+    @BindView(R.id.sv_use_va)
+    SetView sv_use_va;
 
-    @ViewInject(R.id.sv_home_layout)
-    private SetView sv_home_layout;
+    @BindView(R.id.sv_home_layout)
+    SetView sv_home_layout;
 
-    @ViewInject(R.id.sv_prompt_show)
-    private SetView sv_prompt_show;
+    @BindView(R.id.sv_prompt_show)
+    SetView sv_prompt_show;
 
 
     protected void initView() {
@@ -123,7 +124,7 @@ public class SHomeView extends BaseEXView {
                     ToastManage.self().show("语音助手将在下次启动时关闭");
                 } else {
                     BaiduVoiceAssistant.self().init(getContext());
-                    x.task().postDelayed(() -> {
+                    TaskExecutor.self().run(() -> {
                         ToastManage.self().show("正在开启语音助手,如果没有异常提示,则开启成功!");
                         BaiduVoiceAssistant.self().startWakeUp();
                     }, 1000);

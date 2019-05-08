@@ -18,6 +18,7 @@ import com.wow.carlauncher.CarLauncherApplication;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.LogEx;
+import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.DateUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
@@ -36,11 +37,12 @@ import com.wow.carlauncher.ex.plugin.music.event.PMusicEventState;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.xutils.view.annotation.Event;
-import org.xutils.view.annotation.ViewInject;
-import org.xutils.x;
 
 import java.util.Date;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 import static com.wow.carlauncher.common.CommonData.MINUTE_MILL;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK1_CLASS;
@@ -108,7 +110,7 @@ public class ConsoleWin implements ThemeManage.OnThemeChangeListener {
 
         consoleWin = (RelativeLayout) View.inflate(context, R.layout.popup_console, null);
 
-        x.view().inject(this, consoleWin);
+        ButterKnife.bind(this, consoleWin);
 
         EventBus.getDefault().register(this);
 
@@ -156,7 +158,7 @@ public class ConsoleWin implements ThemeManage.OnThemeChangeListener {
 
     private void selectApp(int selectApp) {
         this.selectApp = selectApp;
-        x.task().autoPost(() -> {
+        TaskExecutor.self().autoPost(() -> {
             ll_dock1.setBackgroundResource(android.R.color.transparent);
             ll_dock2.setBackgroundResource(android.R.color.transparent);
             ll_dock3.setBackgroundResource(android.R.color.transparent);
@@ -182,65 +184,65 @@ public class ConsoleWin implements ThemeManage.OnThemeChangeListener {
         });
     }
 
-    @ViewInject(R.id.music_ll_prew)
-    private LinearLayout music_ll_prew;
+    @BindView(R.id.music_ll_prew)
+    LinearLayout music_ll_prew;
 
-    @ViewInject(R.id.music_ll_play)
-    private LinearLayout music_ll_play;
+    @BindView(R.id.music_ll_play)
+    LinearLayout music_ll_play;
 
-    @ViewInject(R.id.music_ll_next)
-    private LinearLayout music_ll_next;
+    @BindView(R.id.music_ll_next)
+    LinearLayout music_ll_next;
 
-    @ViewInject(R.id.ll_dock1)
-    private LinearLayout ll_dock1;
+    @BindView(R.id.ll_dock1)
+    LinearLayout ll_dock1;
 
-    @ViewInject(R.id.ll_dock2)
-    private LinearLayout ll_dock2;
+    @BindView(R.id.ll_dock2)
+    LinearLayout ll_dock2;
 
-    @ViewInject(R.id.ll_dock3)
-    private LinearLayout ll_dock3;
+    @BindView(R.id.ll_dock3)
+    LinearLayout ll_dock3;
 
-    @ViewInject(R.id.ll_dock4)
-    private LinearLayout ll_dock4;
+    @BindView(R.id.ll_dock4)
+    LinearLayout ll_dock4;
 
+    @BindView(R.id.ll_item1)
+    LinearLayout ll_item1;
 
-    @ViewInject(R.id.ll_item1)
-    private LinearLayout ll_item1;
-    @ViewInject(R.id.ll_item2)
-    private LinearLayout ll_item2;
-    @ViewInject(R.id.ll_item3)
-    private LinearLayout ll_item3;
+    @BindView(R.id.ll_item2)
+    LinearLayout ll_item2;
 
+    @BindView(R.id.ll_item3)
+    LinearLayout ll_item3;
 
-    @ViewInject(R.id.iv_dock1)
-    private ImageView iv_dock1;
+    @BindView(R.id.iv_dock1)
+    ImageView iv_dock1;
 
-    @ViewInject(R.id.iv_dock2)
-    private ImageView iv_dock2;
+    @BindView(R.id.iv_dock2)
+    ImageView iv_dock2;
 
-    @ViewInject(R.id.iv_dock3)
-    private ImageView iv_dock3;
+    @BindView(R.id.iv_dock3)
+    ImageView iv_dock3;
 
-    @ViewInject(R.id.iv_dock4)
-    private ImageView iv_dock4;
+    @BindView(R.id.iv_dock4)
+    ImageView iv_dock4;
 
-    @ViewInject(R.id.music_tv_title)
-    private TextView music_tv_title;
+    @BindView(R.id.music_tv_title)
+    TextView music_tv_title;
 
-    @ViewInject(R.id.music_iv_play)
-    private ImageView music_iv_play;
+    @BindView(R.id.music_iv_play)
+    ImageView music_iv_play;
 
-    @ViewInject(R.id.music_iv_cover)
-    private ImageView music_iv_cover;
+    @BindView(R.id.music_iv_cover)
+    ImageView music_iv_cover;
 
-    @ViewInject(R.id.music_iv_prew)
-    private ImageView music_iv_prew;
+    @BindView(R.id.music_iv_prew)
+    ImageView music_iv_prew;
 
-    @ViewInject(R.id.music_iv_next)
-    private ImageView music_iv_next;
+    @BindView(R.id.music_iv_next)
+    ImageView music_iv_next;
 
-    @ViewInject(R.id.tv_time)
-    private TextView tv_time;
+    @BindView(R.id.tv_time)
+    TextView tv_time;
 
     private boolean musicRun = false;
 
@@ -264,8 +266,8 @@ public class ConsoleWin implements ThemeManage.OnThemeChangeListener {
         }
     }
 
-    @Event(value = {R.id.ll_dock1, R.id.ll_dock2, R.id.ll_dock3, R.id.ll_dock4, R.id.music_ll_play, R.id.music_ll_prew, R.id.music_ll_next, R.id.base})
-    private void clickEvent(View v) {
+    @OnClick(value = {R.id.ll_dock1, R.id.ll_dock2, R.id.ll_dock3, R.id.ll_dock4, R.id.music_ll_play, R.id.music_ll_prew, R.id.music_ll_next, R.id.base})
+    public void clickEvent(View v) {
         Log.d(TAG, "clickEvent: " + v);
         switch (v.getId()) {
             case R.id.base: {

@@ -7,7 +7,7 @@ import android.view.WindowManager;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.view.base.BaseActivity;
 
-import org.xutils.view.annotation.Event;
+import butterknife.OnLongClick;
 
 public class BluetoothMusicActivity extends BaseActivity {
     @Override
@@ -19,8 +19,8 @@ public class BluetoothMusicActivity extends BaseActivity {
 
     private boolean run = false;
 
-    @Event(value = {R.id.btn_prev, R.id.btn_next, R.id.btn_play})
-    private boolean longClickEvent(View view) {
+    @OnLongClick(value = {R.id.btn_prev, R.id.btn_next, R.id.btn_play})
+    public boolean longClickEvent(View view) {
         switch (view.getId()) {
             case R.id.btn_play: {
                 if (!run) {

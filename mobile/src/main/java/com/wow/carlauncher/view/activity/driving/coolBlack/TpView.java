@@ -18,7 +18,8 @@ import com.wow.carlauncher.view.base.BaseEXView;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.xutils.view.annotation.ViewInject;
+
+import butterknife.BindView;
 
 /**
  * Created by 10124 on 2018/5/11.
@@ -44,26 +45,26 @@ public class TpView extends BaseEXView {
         onEvent(ObdPlugin.self().getCurrentPObdEventCarTp());
     }
 
-    @ViewInject(R.id.tv_lf)
-    private TextView tv_lf;
+    @BindView(R.id.tv_lf)
+    TextView tv_lf;
 
-    @ViewInject(R.id.tv_lb)
-    private TextView tv_lb;
+    @BindView(R.id.tv_lb)
+    TextView tv_lb;
 
-    @ViewInject(R.id.tv_rf)
-    private TextView tv_rf;
+    @BindView(R.id.tv_rf)
+    TextView tv_rf;
 
-    @ViewInject(R.id.tv_rb)
-    private TextView tv_rb;
+    @BindView(R.id.tv_rb)
+    TextView tv_rb;
 
-    @ViewInject(R.id.music_iv_cover)
-    private ImageView music_iv_cover;
+    @BindView(R.id.music_iv_cover)
+    ImageView music_iv_cover;
 
-    @ViewInject(R.id.ll_cover)
-    private View ll_cover;
+    @BindView(R.id.ll_cover)
+    View ll_cover;
 
-    @ViewInject(R.id.ll_tp)
-    private View ll_tp;
+    @BindView(R.id.ll_tp)
+    View ll_tp;
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final PObdEventCarTp event) {

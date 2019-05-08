@@ -26,9 +26,10 @@ import com.wow.carlauncher.ex.manage.time.event.MTime3SecondEvent;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.xutils.view.annotation.Event;
-import org.xutils.view.annotation.ViewInject;
-import org.xutils.x;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class VoiceWin implements ThemeManage.OnThemeChangeListener {
     private static class SingletonHolder {
@@ -85,7 +86,7 @@ public class VoiceWin implements ThemeManage.OnThemeChangeListener {
 
         consoleWin = (LinearLayout) View.inflate(context, R.layout.popup_voice, null);
 
-        x.view().inject(this, consoleWin);
+        ButterKnife.bind(this, consoleWin);
         EventBus.getDefault().register(this);
 
         onThemeChanged(ThemeManage.self());
@@ -117,17 +118,17 @@ public class VoiceWin implements ThemeManage.OnThemeChangeListener {
         tv_message.setTextColor(manage.getCurrentThemeColor(R.color.l_text1));
     }
 
-    @ViewInject(R.id.iv_icon)
-    private ImageView iv_icon;
+    @BindView(R.id.iv_icon)
+    ImageView iv_icon;
 
-    @ViewInject(R.id.ll_win)
-    private LinearLayout ll_win;
+    @BindView(R.id.ll_win)
+    LinearLayout ll_win;
 
-    @ViewInject(R.id.tv_message)
-    private TextView tv_message;
+    @BindView(R.id.tv_message)
+    TextView tv_message;
 
-    @Event(value = {R.id.base})
-    private void clickEvent(View view) {
+    @OnClick(value = {R.id.base})
+    public void clickEvent(View view) {
         switch (view.getId()) {
             case R.id.base: {
                 BaiduVoiceAssistant.self().stopAsr();

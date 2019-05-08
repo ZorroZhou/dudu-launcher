@@ -12,7 +12,8 @@ import com.wow.carlauncher.view.base.BaseEXView;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.xutils.view.annotation.ViewInject;
+
+import butterknife.BindView;
 
 /**
  * Created by 10124 on 2018/4/26.
@@ -22,17 +23,17 @@ public class RevAndWaterTempView extends BaseEXView {
     private final static int MAX_REV = 11000;
     private final static int MAX_WATER_TEMP = 130;
 
-    @ViewInject(R.id.iv_cursor)
-    private ImageView iv_cursor;
+    @BindView(R.id.iv_cursor)
+    ImageView iv_cursor;
 
-    @ViewInject(R.id.iv_water_temp)
-    private ImageView iv_water_temp;
+    @BindView(R.id.iv_water_temp)
+    ImageView iv_water_temp;
 
-    @ViewInject(R.id.tv_rev)
-    private TextView tv_rev;
+    @BindView(R.id.tv_rev)
+    TextView tv_rev;
 
-    @ViewInject(R.id.tv_wt)
-    private TextView tv_wt;
+    @BindView(R.id.tv_wt)
+    TextView tv_wt;
 
 
     private boolean show = false;

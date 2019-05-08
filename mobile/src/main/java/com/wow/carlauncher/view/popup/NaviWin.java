@@ -27,9 +27,10 @@ import com.wow.carlauncher.view.activity.set.event.SEventRefreshAmapPlugin;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.xutils.view.annotation.Event;
-import org.xutils.view.annotation.ViewInject;
-import org.xutils.x;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 import static com.wow.carlauncher.common.CommonData.APP_WIDGET_AMAP_PLUGIN;
 import static com.wow.carlauncher.common.util.ViewUtils.getViewByIds;
@@ -87,7 +88,7 @@ public class NaviWin {
 
         consoleWin = (LinearLayout) View.inflate(context, R.layout.popup_navi, null);
 
-        x.view().inject(this, consoleWin);
+        ButterKnife.bind(this, consoleWin);
 
         EventBus.getDefault().register(this);
 
@@ -133,8 +134,8 @@ public class NaviWin {
 
     private ImageView iv_gaode;
 
-    @Event(value = {R.id.base})
-    private void clickEvent(View view) {
+    @OnClick(value = {R.id.base})
+    public void clickEvent(View view) {
         switch (view.getId()) {
             case R.id.base: {
                 hide();
@@ -142,11 +143,11 @@ public class NaviWin {
         }
     }
 
-    @ViewInject(R.id.iv_info)
-    private ImageView iv_info;
+    @BindView(R.id.iv_info)
+    ImageView iv_info;
 
-    @ViewInject(R.id.fl_plugin)
-    private FrameLayout fl_plugin;
+    @BindView(R.id.fl_plugin)
+    FrameLayout fl_plugin;
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final SEventRefreshAmapPlugin event) {

@@ -23,6 +23,7 @@ import android.widget.LinearLayout;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.LogEx;
+import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.ViewPagerOnPageChangeListener;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.manage.ThemeManage;
@@ -51,13 +52,13 @@ import com.wow.carlauncher.view.popup.ConsoleWin;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.xutils.view.annotation.ViewInject;
-import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import per.goweii.anypermission.AnyPermission;
 import per.goweii.anypermission.RequestListener;
 import per.goweii.anypermission.RuntimeRequester;
@@ -85,23 +86,23 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
     @SuppressLint("StaticFieldLeak")
     private static LauncherActivity old;
 
-    @ViewInject(R.id.viewPager)
-    private ViewPager viewPager;
+    @BindView(R.id.viewPager)
+    ViewPager viewPager;
 
-    @ViewInject(R.id.ll_base)
-    private LinearLayout ll_base;
+    @BindView(R.id.ll_base)
+    LinearLayout ll_base;
 
-    @ViewInject(R.id.ll_center)
-    private LinearLayout ll_center;
+    @BindView(R.id.ll_center)
+    LinearLayout ll_center;
 
-    @ViewInject(R.id.ll_top)
-    private LPromptView ll_top;
+    @BindView(R.id.ll_top)
+    LPromptView ll_top;
 
-    @ViewInject(R.id.ll_dock)
-    private LDockView ll_dock;
+    @BindView(R.id.ll_dock)
+    LDockView ll_dock;
 
-    @ViewInject(R.id.postion)
-    private LPagerPostion postion;
+    @BindView(R.id.postion)
+    LPagerPostion postion;
 
     private int lastPagerNum = 0;
 
@@ -129,14 +130,14 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
         onThemeChanged(ThemeManage.self());
         ThemeManage.self().registerThemeChangeListener(this);
         ThemeManage.self().refreshTheme();
-        x.task().postDelayed(this::requestRuntime, 1000);
+        TaskExecutor.self().run(this::requestRuntime, 1000);
 
         LogEx.d(this, "onCreate:end ");
     }
 
     public void initView() {
         setContentView(R.layout.activity_lanncher);
-        x.view().inject(this);
+        ButterKnife.bind(this);
         viewPager.addOnPageChangeListener(postion);
         viewPager.addOnPageChangeListener(new ViewPagerOnPageChangeListener() {
             @Override
@@ -444,11 +445,11 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
                     if (show && viewPager != null && viewPager.getCurrentItem() == 0) {
                         showConsoleWin();
                     } else if (show && viewPager != null) {
-                        x.task().autoPost(() -> {
+                        TaskExecutor.self().autoPost(() -> {
                             viewPager.setCurrentItem(0, true);
                         });
                     } else {
-                        x.task().autoPost(() -> {
+                        TaskExecutor.self().autoPost(() -> {
                             Intent home = new Intent(Intent.ACTION_MAIN);
                             home.addCategory(Intent.CATEGORY_HOME);
                             home.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
@@ -480,7 +481,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
                     if (isCalling) {
                         ConsolePlugin.self().callHangup();
                     } else {
-                        x.task().autoPost(() -> {
+                        TaskExecutor.self().autoPost(() -> {
                             //切换页面?
                             if (viewPager != null && viewPager.getAdapter() != null && itemPager.length > 0) {
                                 if (viewPager.getCurrentItem() >= itemPager.length - 1) {
@@ -493,7 +494,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
                     }
                     break;
                 case RIGHT_BOTTOM_LONG_CLICK:
-                    x.task().autoPost(() -> {
+                    TaskExecutor.self().autoPost(() -> {
                         if (viewPager != null && appsPager.length > 0) {
                             viewPager.setCurrentItem(itemPager.length, true);
                         }
@@ -513,7 +514,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
     }
 
     private void showConsoleWin() {
-        x.task().autoPost(() -> AnyPermission.with(getApplicationContext()).overlay()
+        TaskExecutor.self().autoPost(() -> AnyPermission.with(getApplicationContext()).overlay()
                 .onWithoutPermission((data, executor) -> {
                     new AlertDialog.Builder(getApplicationContext()).setTitle("警告!")
                             .setNegativeButton("取消", (dialog, which) -> executor.cancel())

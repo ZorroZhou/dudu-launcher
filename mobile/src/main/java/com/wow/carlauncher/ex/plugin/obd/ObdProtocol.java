@@ -2,13 +2,13 @@ package com.wow.carlauncher.ex.plugin.obd;
 
 import android.content.Context;
 
+import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.ex.manage.time.event.MTime3SecondEvent;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.xutils.x;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -81,7 +81,7 @@ public abstract class ObdProtocol {
             e.printStackTrace();
         }
         taskArrayDeque.add(obdTask);
-        x.task().run(this::runTask);
+        TaskExecutor.self().run(this::runTask);
     }
 
     private void runTask() {

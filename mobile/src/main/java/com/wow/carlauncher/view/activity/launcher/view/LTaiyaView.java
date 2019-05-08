@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.LogEx;
+import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
 import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
@@ -21,9 +22,9 @@ import com.wow.carlauncher.view.base.BaseEXView;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.xutils.view.annotation.Event;
-import org.xutils.view.annotation.ViewInject;
-import org.xutils.x;
+
+import butterknife.BindView;
+import butterknife.OnClick;
 
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.BLACK;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.WHITE;
@@ -78,8 +79,8 @@ public class LTaiyaView extends BaseEXView {
         LogEx.d(this, "changedTheme: ");
     }
 
-    @Event(value = {R.id.rl_base})
-    private void clickEvent(View view) {
+    @OnClick(value = {R.id.rl_base})
+    public void clickEvent(View view) {
         switch (view.getId()) {
             case R.id.rl_base: {
                 if (!ObdPlugin.self().isConnect()) {
@@ -87,7 +88,7 @@ public class LTaiyaView extends BaseEXView {
                             .setNegativeButton("取消", null)
                             .setPositiveButton("确定", (dialog2, which2) -> {
                                 BleManage.self().getClient().closeBluetooth();
-                                x.task().postDelayed(() -> BleManage.self().getClient().openBluetooth(), 1000);
+                                TaskExecutor.self().run(() -> BleManage.self().getClient().openBluetooth(), 1000);
                             })
                             .setMessage("是否确认重启蓝牙").show();
                 }
@@ -96,38 +97,38 @@ public class LTaiyaView extends BaseEXView {
         }
     }
 
-    @ViewInject(R.id.tv_title)
-    private TextView tv_title;
+    @BindView(R.id.tv_title)
+    TextView tv_title;
 
-    @ViewInject(R.id.tv_lt)
-    private TextView tv_lt;
+    @BindView(R.id.tv_lt)
+    TextView tv_lt;
 
-    @ViewInject(R.id.tv_rt)
-    private TextView tv_rt;
+    @BindView(R.id.tv_rt)
+    TextView tv_rt;
 
-    @ViewInject(R.id.tv_lb)
-    private TextView tv_lb;
+    @BindView(R.id.tv_lb)
+    TextView tv_lb;
 
-    @ViewInject(R.id.tv_rb)
-    private TextView tv_rb;
+    @BindView(R.id.tv_rb)
+    TextView tv_rb;
 
-    @ViewInject(R.id.rl_base)
-    private View rl_base;
+    @BindView(R.id.rl_base)
+    View rl_base;
 
-    @ViewInject(R.id.iv_img)
-    private ImageView iv_img;
+    @BindView(R.id.iv_img)
+    ImageView iv_img;
 
-    @ViewInject(R.id.iv_error)
-    private ImageView iv_error;
+    @BindView(R.id.iv_error)
+    ImageView iv_error;
 
-    @ViewInject(R.id.tv_msg)
-    private TextView tv_msg;
+    @BindView(R.id.tv_msg)
+    TextView tv_msg;
 
-    @ViewInject(R.id.ll_ty)
-    private View ll_ty;
+    @BindView(R.id.ll_ty)
+    View ll_ty;
 
-    @ViewInject(R.id.ll_msg)
-    private View ll_msg;
+    @BindView(R.id.ll_msg)
+    View ll_msg;
     private boolean connect = false;
 
     @Override

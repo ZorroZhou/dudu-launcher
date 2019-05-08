@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.AppContext;
+import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.DateUtil;
 import com.wow.carlauncher.ex.manage.time.event.MTime3SecondEvent;
@@ -25,11 +26,11 @@ import com.wow.carlauncher.view.activity.driving.DrivingView;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.xutils.view.annotation.ViewInject;
-import org.xutils.x;
 
 import java.math.BigDecimal;
 import java.util.Date;
+
+import butterknife.BindView;
 
 import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.ICONS;
 import static com.wow.carlauncher.ex.plugin.fk.FangkongProtocolEnum.YLFK;
@@ -53,32 +54,32 @@ public class CoolBlackView extends DrivingView {
         return R.layout.content_driving_cool_black;
     }
 
-    @ViewInject(R.id.tv_time)
-    private TextView tv_time;
+    @BindView(R.id.tv_time)
+    TextView tv_time;
 
-    @ViewInject(R.id.tv_date)
-    private TextView tv_date;
+    @BindView(R.id.tv_date)
+    TextView tv_date;
 
-    @ViewInject(R.id.tv_trip_time)
-    private TextView tv_trip_time;
+    @BindView(R.id.tv_trip_time)
+    TextView tv_trip_time;
 
-    @ViewInject(R.id.iv_navicon)
-    private ImageView iv_navicon;
+    @BindView(R.id.iv_navicon)
+    ImageView iv_navicon;
 
-    @ViewInject(R.id.ll_navinfo)
-    private LinearLayout ll_navinfo;
+    @BindView(R.id.ll_navinfo)
+    LinearLayout ll_navinfo;
 
-    @ViewInject(R.id.ll_tp)
-    private FrameLayout ll_tp;
+    @BindView(R.id.ll_tp)
+    FrameLayout ll_tp;
 
-    @ViewInject(R.id.ll_music)
-    private FrameLayout ll_music;
+    @BindView(R.id.ll_music)
+    FrameLayout ll_music;
 
-    @ViewInject(R.id.tv_amaproad)
-    private TextView tv_amaproad;
+    @BindView(R.id.tv_amaproad)
+    TextView tv_amaproad;
 
-    @ViewInject(R.id.tv_amapmsg)
-    private TextView tv_amapmsg;
+    @BindView(R.id.tv_amapmsg)
+    TextView tv_amapmsg;
 
     private boolean isFront = true;
 
@@ -106,7 +107,7 @@ public class CoolBlackView extends DrivingView {
             switch (event.getAction()) {
                 case RIGHT_BOTTOM_CLICK:
                     if (inNav) {
-                        x.task().autoPost(() -> showNav(!showNav));
+                        TaskExecutor.self().autoPost(() -> showNav(!showNav));
                     } else {
                         ToastManage.self().show("没有开启导航!");
                     }

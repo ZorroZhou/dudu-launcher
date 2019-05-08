@@ -24,10 +24,11 @@ import com.wow.carlauncher.view.base.BaseEXView;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
 
 
 public class LAppsView extends BaseEXView implements View.OnClickListener, View.OnLongClickListener {
@@ -49,8 +50,8 @@ public class LAppsView extends BaseEXView implements View.OnClickListener, View.
         return R.layout.content_app_grid;
     }
 
-    @ViewInject(R.id.ll_base)
-    private LinearLayout ll_base;
+    @BindView(R.id.ll_base)
+    LinearLayout ll_base;
 
     private int columnNum;
     private int page;

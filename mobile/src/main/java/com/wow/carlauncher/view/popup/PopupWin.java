@@ -24,6 +24,7 @@ import com.wow.carlauncher.CarLauncherApplication;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.LogEx;
+import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.AppUtil;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.DateUtil;
@@ -39,7 +40,6 @@ import com.wow.carlauncher.ex.plugin.music.event.PMusicEventState;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.xutils.x;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -156,7 +156,7 @@ public class PopupWin {
         //如果APP是空的,则说明用户没有打开权限,则直接不显示了
         if (!SharedPreUtil.getBoolean(CommonData.SDATA_POPUP_SHOW_TYPE, true)) {
             if (CommonUtil.isNull(app)) {
-                x.task().autoPost(new Runnable() {
+                TaskExecutor.self().autoPost(new Runnable() {
                     @Override
                     public void run() {
                         popupWindow.setVisibility(View.GONE);
@@ -177,7 +177,7 @@ public class PopupWin {
         if (this.nowApp == null) {
             this.nowApp = PACKAGE_NAME;
         }
-        x.task().autoPost(new Runnable() {
+        TaskExecutor.self().autoPost(new Runnable() {
             @Override
             public void run() {
                 if (!SharedPreUtil.getBoolean(CommonData.SDATA_POPUP_SHOW_TYPE, true)) {
@@ -381,7 +381,7 @@ public class PopupWin {
     };
 
     private void setTime() {
-        x.task().autoPost(new Runnable() {
+        TaskExecutor.self().autoPost(new Runnable() {
             @Override
             public void run() {
                 Date d = new Date();

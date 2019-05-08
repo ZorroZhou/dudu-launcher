@@ -1,15 +1,19 @@
 package com.wow.carlauncher.repertory.web.qqmusic;
 
+import android.support.annotation.NonNull;
+
 import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.util.GsonUtil;
 import com.wow.carlauncher.common.util.HttpUtil;
+import com.wow.carlauncher.ex.manage.OkHttpManage;
 import com.wow.carlauncher.repertory.web.qqmusic.res.BaseRes;
 import com.wow.carlauncher.repertory.web.qqmusic.res.SearchRes;
 
-import org.xutils.common.Callback;
-import org.xutils.http.HttpMethod;
-import org.xutils.http.RequestParams;
-import org.xutils.x;
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 /**
  * Created by 10124 on 2017/10/29.
@@ -18,43 +22,35 @@ import org.xutils.x;
 public class QQMusicWebService {
     private static final String TAG = "QQMusicWebService";
 
-    public static void searchMusic(String name, int num, final CommonCallback commonCallback) {
-
-        RequestParams params = new RequestParams("https://c.y.qq.com/soso/fcgi-bin/client_search_cp?aggr=1&cr=1&flag_qc=0&p=1&n=" + num + "&w=" + HttpUtil.getURLEncoderString(name));
-        LogEx.d(QQMusicWebService.class, "这里请求了" + params);
-        x.http().request(HttpMethod.GET, params, new Callback.CommonCallback<String>() {
+    public static void searchMusic(String name, int num, final CommonCallback<SearchRes> commonCallback) {
+        OkHttpManage.self().get("https://c.y.qq.com/soso/fcgi-bin/client_search_cp?aggr=1&cr=1&flag_qc=0&p=1&n=" + num + "&w=" + HttpUtil.getURLEncoderString(name), new Callback() {
             @Override
-            public void onSuccess(String result) {
-                LogEx.d(QQMusicWebService.class, "onSuccess: " + result);
-                if (result.length() > 10) {
-                    result = result.substring(9);
-                    result = result.substring(0, result.length() - 1);
-                    LogEx.d(QQMusicWebService.class, "onSuccess: " + result);
-                    if (commonCallback != null) {
-                        commonCallback.callback(GsonUtil.getGson().fromJson(result, SearchRes.class));
-                    }
-                } else {
-                    throw new RuntimeException("数据错误");
-                }
-            }
-
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 LogEx.e(QQMusicWebService.class, "onError: ");
-                ex.printStackTrace();
+                e.printStackTrace();
                 if (commonCallback != null) {
                     commonCallback.callback(null);
                 }
             }
 
             @Override
-            public void onCancelled(CancelledException cex) {
-                LogEx.d(QQMusicWebService.class, "onCancelled");
-            }
-
-            @Override
-            public void onFinished() {
-                LogEx.d(QQMusicWebService.class, "onFinished");
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.body() != null) {
+                    String result = response.body().string();
+                    LogEx.d(QQMusicWebService.class, "onSuccess: " + result);
+                    if (result.length() > 10) {
+                        result = result.substring(9);
+                        result = result.substring(0, result.length() - 1);
+                        LogEx.d(QQMusicWebService.class, "onSuccess: " + result);
+                        if (commonCallback != null) {
+                            commonCallback.callback(GsonUtil.getGson().fromJson(result, SearchRes.class));
+                            return;
+                        }
+                    }
+                }
+                if (commonCallback != null) {
+                    commonCallback.callback(null);
+                }
             }
         });
     }

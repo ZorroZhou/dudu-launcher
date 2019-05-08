@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.LogEx;
+import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
 import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
@@ -22,9 +23,9 @@ import com.wow.carlauncher.view.base.BaseEXView;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.xutils.view.annotation.Event;
-import org.xutils.view.annotation.ViewInject;
-import org.xutils.x;
+
+import butterknife.BindView;
+import butterknife.OnClick;
 
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.BLACK;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.WHITE;
@@ -95,8 +96,8 @@ public class LObdView extends BaseEXView {
         LogEx.d(this, "initView: ");
     }
 
-    @Event(value = {R.id.fl_base})
-    private void clickEvent(View view) {
+    @OnClick(value = {R.id.fl_base})
+    void clickEvent(View view) {
         switch (view.getId()) {
             case R.id.fl_base: {
                 if (!ObdPlugin.self().isConnect()) {
@@ -104,7 +105,7 @@ public class LObdView extends BaseEXView {
                             .setNegativeButton("取消", null)
                             .setPositiveButton("确定", (dialog2, which2) -> {
                                 BleManage.self().getClient().closeBluetooth();
-                                x.task().postDelayed(() -> BleManage.self().getClient().openBluetooth(), 1000);
+                                TaskExecutor.self().run(() -> BleManage.self().getClient().openBluetooth(), 1000);
                             })
                             .setMessage("是否确认重启蓝牙").show();
                 }
@@ -113,47 +114,47 @@ public class LObdView extends BaseEXView {
         }
     }
 
-    @ViewInject(R.id.fl_base)
-    private View fl_base;
+    @BindView(R.id.fl_base)
+    View fl_base;
 
-    @ViewInject(R.id.tv_title)
-    private TextView tv_title;
+    @BindView(R.id.tv_title)
+    TextView tv_title;
 
-    @ViewInject(R.id.tv_sd)
-    private TextView tv_sd;
+    @BindView(R.id.tv_sd)
+    TextView tv_sd;
 
-    @ViewInject(R.id.tv_zs)
-    private TextView tv_zs;
+    @BindView(R.id.tv_zs)
+    TextView tv_zs;
 
-    @ViewInject(R.id.tv_sw)
-    private TextView tv_sw;
+    @BindView(R.id.tv_sw)
+    TextView tv_sw;
 
-    @ViewInject(R.id.tv_yl)
-    private TextView tv_yl;
+    @BindView(R.id.tv_yl)
+    TextView tv_yl;
 
-    @ViewInject(R.id.p_sd)
-    private ProgressBar p_sd;
+    @BindView(R.id.p_sd)
+    ProgressBar p_sd;
 
-    @ViewInject(R.id.p_zs)
-    private ProgressBar p_zs;
+    @BindView(R.id.p_zs)
+    ProgressBar p_zs;
 
-    @ViewInject(R.id.p_sw)
-    private ProgressBar p_sw;
+    @BindView(R.id.p_sw)
+    ProgressBar p_sw;
 
-    @ViewInject(R.id.p_yl)
-    private ProgressBar p_yl;
+    @BindView(R.id.p_yl)
+    ProgressBar p_yl;
 
-    @ViewInject(R.id.tv_msg)
-    private TextView tv_msg;
+    @BindView(R.id.tv_msg)
+    TextView tv_msg;
 
-    @ViewInject(R.id.ll_msg)
-    private View ll_msg;
+    @BindView(R.id.ll_msg)
+    View ll_msg;
 
-    @ViewInject(R.id.ll_obd)
-    private View ll_obd;
+    @BindView(R.id.ll_obd)
+    View ll_obd;
 
-    @ViewInject(R.id.iv_error)
-    private ImageView iv_error;
+    @BindView(R.id.iv_error)
+    ImageView iv_error;
 
     private boolean connect = false;
 

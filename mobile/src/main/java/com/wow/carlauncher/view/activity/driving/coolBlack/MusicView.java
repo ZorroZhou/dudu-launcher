@@ -18,8 +18,9 @@ import com.wow.carlauncher.view.base.BaseEXView;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.xutils.view.annotation.Event;
-import org.xutils.view.annotation.ViewInject;
+
+import butterknife.BindView;
+import butterknife.OnClick;
 
 import static com.wow.carlauncher.common.CommonData.TAG;
 
@@ -41,17 +42,17 @@ public class MusicView extends BaseEXView {
         return R.layout.content_driving_cool_black_music;
     }
 
-    @ViewInject(R.id.iv_play)
-    private ImageView iv_play;
+    @BindView(R.id.iv_play)
+    ImageView iv_play;
 
-    @ViewInject(R.id.tv_title)
-    private TextView tv_title;
+    @BindView(R.id.tv_title)
+    TextView tv_title;
 
-    @ViewInject(R.id.tv_zuojia)
-    private TextView tv_zuojia;
+    @BindView(R.id.tv_zuojia)
+    TextView tv_zuojia;
 
-    @Event(value = {R.id.iv_play, R.id.ll_prew, R.id.ll_next})
-    private void clickEvent(View view) {
+    @OnClick(value = {R.id.iv_play, R.id.ll_prew, R.id.ll_next})
+    public void clickEvent(View view) {
         Log.d(TAG, "clickEvent: " + view);
         switch (view.getId()) {
             case R.id.ll_prew: {

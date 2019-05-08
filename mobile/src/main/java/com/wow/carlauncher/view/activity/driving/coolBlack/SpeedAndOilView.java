@@ -12,7 +12,8 @@ import com.wow.carlauncher.view.base.BaseEXView;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.xutils.view.annotation.ViewInject;
+
+import butterknife.BindView;
 
 /**
  * Created by 10124 on 2018/4/26.
@@ -23,17 +24,17 @@ public class SpeedAndOilView extends BaseEXView {
     private final static int MAX_SPEED = 200 * RATE;
 
     private final static int MAX_OIL = 100;
-    @ViewInject(R.id.iv_cursor)
-    private ImageView iv_cursor;
+    @BindView(R.id.iv_cursor)
+    ImageView iv_cursor;
 
-    @ViewInject(R.id.iv_oil)
-    private ImageView iv_oil;
+    @BindView(R.id.iv_oil)
+    ImageView iv_oil;
 
-    @ViewInject(R.id.tv_speed)
-    private TextView tv_speed;
+    @BindView(R.id.tv_speed)
+    TextView tv_speed;
 
-    @ViewInject(R.id.tv_oil)
-    private TextView tv_oil;
+    @BindView(R.id.tv_oil)
+    TextView tv_oil;
 
     private boolean show = false;
 

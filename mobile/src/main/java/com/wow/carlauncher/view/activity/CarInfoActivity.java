@@ -15,41 +15,42 @@ import com.wow.carlauncher.view.base.BaseActivity;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.xutils.view.annotation.ViewInject;
 
 import java.util.Locale;
+
+import butterknife.BindView;
 
 /**
  * Created by 10124 on 2018/4/25.
  */
 
 public class CarInfoActivity extends BaseActivity {
-    @ViewInject(R.id.tv_info_speed)
-    private TextView tv_info_speed;
+    @BindView(R.id.tv_info_speed)
+    TextView tv_info_speed;
 
-    @ViewInject(R.id.tv_info_rev)
-    private TextView tv_info_rev;
+    @BindView(R.id.tv_info_rev)
+    TextView tv_info_rev;
 
-    @ViewInject(R.id.tv_info_wtemp)
-    private TextView tv_info_wtemp;
+    @BindView(R.id.tv_info_wtemp)
+    TextView tv_info_wtemp;
 
-    @ViewInject(R.id.tv_info_oil)
-    private TextView tv_info_oil;
+    @BindView(R.id.tv_info_oil)
+    TextView tv_info_oil;
 
-    @ViewInject(R.id.tv_tp_lf)
-    private TextView tv_tp_lf;
+    @BindView(R.id.tv_tp_lf)
+    TextView tv_tp_lf;
 
-    @ViewInject(R.id.tv_tp_rf)
-    private TextView tv_tp_rf;
+    @BindView(R.id.tv_tp_rf)
+    TextView tv_tp_rf;
 
-    @ViewInject(R.id.tv_tp_lb)
-    private TextView tv_tp_lb;
+    @BindView(R.id.tv_tp_lb)
+    TextView tv_tp_lb;
 
-    @ViewInject(R.id.tv_tp_rb)
-    private TextView tv_tp_rb;
+    @BindView(R.id.tv_tp_rb)
+    TextView tv_tp_rb;
 
-    @ViewInject(R.id.tv_tp_title)
-    private TextView tv_tp_title;
+    @BindView(R.id.tv_tp_title)
+    TextView tv_tp_title;
 
     @Override
     public void init() {

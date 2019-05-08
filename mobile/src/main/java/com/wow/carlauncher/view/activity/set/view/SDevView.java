@@ -9,7 +9,7 @@ import android.view.View;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.view.base.BaseEXView;
 
-import org.xutils.view.annotation.Event;
+import butterknife.OnClick;
 
 /**
  * Created by 10124 on 2018/4/22.
@@ -30,8 +30,8 @@ public class SDevView extends BaseEXView {
         return R.layout.content_set_dev;
     }
 
-    @Event(value = {R.id.sv_bind})
-    private void clickEvent(View view) {
+    @OnClick(value = {R.id.sv_bind})
+    public void clickEvent(View view) {
         switch (view.getId()) {
             case R.id.sv_bind:
                 break;

@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import com.inuker.bluetooth.library.search.SearchResult;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
+import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.util.ThreadObj;
@@ -23,11 +24,10 @@ import com.wow.carlauncher.ex.plugin.fk.FangkongProtocolEnum;
 import com.wow.carlauncher.view.base.BaseView;
 import com.wow.carlauncher.view.dialog.ListDialog;
 
-import org.xutils.view.annotation.ViewInject;
-import org.xutils.x;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
 
 import static com.wow.carlauncher.common.CommonData.SDATA_FANGKONG_CONTROLLER;
 
@@ -51,14 +51,11 @@ public class SFkView extends BaseView {
         return R.layout.content_set_fk;
     }
 
-    @ViewInject(R.id.sv_fangkong_select)
-    private SetView sv_fangkong_select;
+    @BindView(R.id.sv_fangkong_select)SetView sv_fangkong_select;
 
-    @ViewInject(R.id.sv_fangkong_impl_select)
-    private SetView sv_fangkong_impl_select;
+    @BindView(R.id.sv_fangkong_impl_select)SetView sv_fangkong_impl_select;
 
-    @ViewInject(R.id.sv_fangkong_remove)
-    private SetView sv_fangkong_remove;
+    @BindView(R.id.sv_fangkong_remove)SetView sv_fangkong_remove;
 
     @Override
     protected void initView() {
@@ -124,7 +121,7 @@ public class SFkView extends BaseView {
                         SearchResult bluetoothDevice = devices.get(i);
                         items[i] = bluetoothDevice.getName() + ":" + bluetoothDevice.getAddress();
                     }
-                    x.task().autoPost(() -> listTemp.getObj().getListView().setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, items)));
+                    TaskExecutor.self().autoPost(() -> listTemp.getObj().getListView().setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, items)));
                 }
             });
             final ListDialog dialog = new ListDialog(getContext());

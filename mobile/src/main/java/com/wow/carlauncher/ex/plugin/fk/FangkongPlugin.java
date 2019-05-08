@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.LogEx;
+import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.ContextEx;
@@ -21,7 +22,6 @@ import com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.xutils.x;
 
 import static com.inuker.bluetooth.library.Constants.STATUS_DEVICE_CONNECTED;
 import static com.inuker.bluetooth.library.Constants.STATUS_DEVICE_CONNECTING;
@@ -99,7 +99,7 @@ public class FangkongPlugin extends ContextEx {
 
         @Override
         public void onAction(final int action) {
-            x.task().run(() -> postEvent(new PFkEventAction()
+            TaskExecutor.self().run(() -> postEvent(new PFkEventAction()
                     .setAction(action)
                     .setFangkongProtocol(FangkongProtocolEnum.getById(SharedPreUtil.getInteger(SDATA_FANGKONG_CONTROLLER, FangkongProtocolEnum.YLFK.getId())))
             ));

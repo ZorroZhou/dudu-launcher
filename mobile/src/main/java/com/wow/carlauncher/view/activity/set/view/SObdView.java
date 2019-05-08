@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import com.inuker.bluetooth.library.search.SearchResult;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
+import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.util.ThreadObj;
@@ -23,11 +24,10 @@ import com.wow.carlauncher.view.activity.set.SetEnumOnClickListener;
 import com.wow.carlauncher.view.base.BaseView;
 import com.wow.carlauncher.view.dialog.ListDialog;
 
-import org.xutils.view.annotation.ViewInject;
-import org.xutils.x;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
 
 import static com.wow.carlauncher.common.CommonData.OBD_CONTROLLER;
 import static com.wow.carlauncher.common.CommonData.SDATA_OBD_CONTROLLER;
@@ -54,17 +54,13 @@ public class SObdView extends BaseView {
         return R.layout.content_set_obd;
     }
 
-    @ViewInject(R.id.sv_obd_select)
-    private SetView sv_obd_select;
+    @BindView(R.id.sv_obd_select)SetView sv_obd_select;
 
-    @ViewInject(R.id.sv_obd_impl_select)
-    private SetView sv_obd_impl_select;
+    @BindView(R.id.sv_obd_impl_select)SetView sv_obd_impl_select;
 
-    @ViewInject(R.id.sv_obd_disconnect)
-    private SetView sv_obd_disconnect;
+    @BindView(R.id.sv_obd_disconnect)SetView sv_obd_disconnect;
 
-    @ViewInject(R.id.sv_auto_open_driving)
-    private SetView sv_auto_open_driving;
+    @BindView(R.id.sv_auto_open_driving)SetView sv_auto_open_driving;
 
     @Override
     protected void initView() {
@@ -125,7 +121,7 @@ public class SObdView extends BaseView {
                         SearchResult bluetoothDevice = devices.get(i);
                         items[i] = bluetoothDevice.getName() + ":" + bluetoothDevice.getAddress();
                     }
-                    x.task().autoPost(() -> listTemp.getObj().getListView().setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, items)));
+                    TaskExecutor.self().autoPost(() -> listTemp.getObj().getListView().setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_1, items)));
                 }
             });
 

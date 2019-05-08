@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.LogEx;
+import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.view.CustomRoundAngleImageView;
 import com.wow.carlauncher.ex.manage.ImageManage;
@@ -31,9 +32,9 @@ import com.wow.carlauncher.view.base.BaseEXView;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.xutils.view.annotation.Event;
-import org.xutils.view.annotation.ViewInject;
-import org.xutils.x;
+
+import butterknife.BindView;
+import butterknife.OnClick;
 
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.BLACK;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.WHITE;
@@ -60,7 +61,7 @@ public class LMusicView extends BaseEXView {
 
     @Override
     protected void initView() {
-        x.task().postDelayed(() -> MusicPlugin.self().requestLast(), 500);
+        TaskExecutor.self().run(() -> MusicPlugin.self().requestLast(), 500);
 
         LogEx.d(this, "initView: ");
     }
@@ -159,41 +160,41 @@ public class LMusicView extends BaseEXView {
 
     private boolean run;
 
-    @ViewInject(R.id.rl_base)
-    private View rl_base;
+    @BindView(R.id.rl_base)
+    View rl_base;
 
-    @ViewInject(R.id.ll_prew)
-    private LinearLayout ll_prew;
+    @BindView(R.id.ll_prew)
+    LinearLayout ll_prew;
 
-    @ViewInject(R.id.ll_next)
-    private LinearLayout ll_next;
+    @BindView(R.id.ll_next)
+    LinearLayout ll_next;
 
-    @ViewInject(R.id.ll_play)
-    private LinearLayout ll_play;
+    @BindView(R.id.ll_play)
+    LinearLayout ll_play;
 
-    @ViewInject(R.id.tv_title)
-    private TextView tv_title;
+    @BindView(R.id.tv_title)
+    TextView tv_title;
 
-    @ViewInject(R.id.iv_play)
-    private ImageView iv_play;
+    @BindView(R.id.iv_play)
+    ImageView iv_play;
 
-    @ViewInject(R.id.iv_prew)
-    private ImageView iv_prew;
+    @BindView(R.id.iv_prew)
+    ImageView iv_prew;
 
-    @ViewInject(R.id.iv_next)
-    private ImageView iv_next;
+    @BindView(R.id.iv_next)
+    ImageView iv_next;
 
-    @ViewInject(R.id.tv_music_title)
-    private TextView tv_music_title;
+    @BindView(R.id.tv_music_title)
+    TextView tv_music_title;
 
-    @ViewInject(R.id.tv_zuozhe)
-    private TextView tv_zuozhe;
+    @BindView(R.id.tv_zuozhe)
+    TextView tv_zuozhe;
 
-    @ViewInject(R.id.progressBar)
-    private ProgressBar progressBar;
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
 
-    @ViewInject(R.id.music_iv_cover)
-    private CustomRoundAngleImageView music_iv_cover;
+    @BindView(R.id.music_iv_cover)
+    CustomRoundAngleImageView music_iv_cover;
 
     private void refreshPlay() {
         if (run) {
@@ -216,8 +217,8 @@ public class LMusicView extends BaseEXView {
     }
 
 
-    @Event(value = {R.id.ll_play, R.id.ll_prew, R.id.ll_next, R.id.rl_base})
-    private void clickEvent(View view) {
+    @OnClick(value = {R.id.ll_play, R.id.ll_prew, R.id.ll_next, R.id.rl_base})
+    public void clickEvent(View view) {
         switch (view.getId()) {
             case R.id.ll_prew: {
                 MusicPlugin.self().pre();

@@ -9,6 +9,7 @@ import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.manage.AppWidgetManage;
 import com.wow.carlauncher.ex.manage.ImageManage;
+import com.wow.carlauncher.ex.manage.OkHttpManage;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.baiduVoice.BaiduVoiceAssistant;
@@ -30,7 +31,6 @@ import com.wow.carlauncher.view.popup.PopupWin;
 import com.wow.carlauncher.view.popup.VoiceWin;
 
 import org.greenrobot.eventbus.EventBus;
-import org.xutils.x;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -69,7 +69,6 @@ public class AppContext {
     public void init(CarLauncherApplication app) {
         this.application = app;
         this.startTime = System.currentTimeMillis();
-        x.Ext.init(app);
 
         EventBus.builder().addIndex(new MyEventBusIndex()).installDefaultEventBus();
 
@@ -78,7 +77,9 @@ public class AppContext {
         LogEx.init(app);
         LogEx.setSaveFile(SharedPreUtil.getBoolean(CommonData.SDATA_LOG_OPEN, false));
 
-        ScheduledTaskExecutor.self().init();
+        OkHttpManage.self().init(app);
+
+        TaskExecutor.self().init();
 
         AppWidgetManage.self().init(app);
 
@@ -120,14 +121,14 @@ public class AppContext {
 
         if (SharedPreUtil.getBoolean(CommonData.SDATA_USE_VA, false)) {
             BaiduVoiceAssistant.self().init(app);
-            x.task().postDelayed(() -> BaiduVoiceAssistant.self().startWakeUp(), 1000);
+            TaskExecutor.self().run(() -> BaiduVoiceAssistant.self().startWakeUp(), 1000);
         }
 
         int size = SharedPreUtil.getInteger(CommonData.SDATA_POPUP_SIZE, 1);
         PopupWin.self().setRank(size + 1);
         handerException();
 
-        x.task().run(() -> {
+        TaskExecutor.self().run(() -> {
             if (SharedPreUtil.getBoolean(CommonData.SDATA_APP_AUTO_OPEN_USE, false)) {
                 LogEx.d(this, "开始唤醒其他APP");
                 if (CommonUtil.isNotNull(SharedPreUtil.getString(CommonData.SDATA_APP_AUTO_OPEN1))) {
@@ -147,7 +148,7 @@ public class AppContext {
                     AppInfoManage.self().openApp(SharedPreUtil.getString(CommonData.SDATA_APP_AUTO_OPEN4));
                 }
                 LogEx.d(this, "延迟返回:" + SharedPreUtil.getInteger(CommonData.SDATA_APP_AUTO_OPEN_BACK, 5) + "秒");
-                x.task().postDelayed(() -> {
+                TaskExecutor.self().run(() -> {
                     LogEx.d(this, "back to desktop");
                     Intent home = new Intent(Intent.ACTION_MAIN);
                     home.addCategory(Intent.CATEGORY_HOME);

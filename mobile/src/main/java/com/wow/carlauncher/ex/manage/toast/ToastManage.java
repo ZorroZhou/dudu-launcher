@@ -5,9 +5,8 @@ import android.content.Context;
 import android.widget.Toast;
 
 import com.wow.carlauncher.common.LogEx;
+import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.ex.ContextEx;
-
-import org.xutils.x;
 
 /**
  * Created by 10124 on 2018/4/21.
@@ -35,7 +34,7 @@ public class ToastManage extends ContextEx {
     private static Toast toast;
 
     public synchronized void show(final String msg) {
-        x.task().autoPost(() -> {
+        TaskExecutor.self().autoPost(() -> {
             if (toast != null) {
                 toast.cancel();
             }

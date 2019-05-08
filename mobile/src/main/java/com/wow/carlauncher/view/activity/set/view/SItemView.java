@@ -31,7 +31,8 @@ import com.wow.carlauncher.view.dialog.CityDialog;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.xutils.view.annotation.ViewInject;
+
+import butterknife.BindView;
 
 import static com.wow.carlauncher.common.CommonData.APP_WIDGET_AMAP_PLUGIN;
 import static com.wow.carlauncher.common.CommonData.APP_WIDGET_HOST_ID;
@@ -59,29 +60,29 @@ public class SItemView extends BaseEXView {
         return R.layout.content_set_item;
     }
 
-    @ViewInject(R.id.sv_plugin_select)
-    private SetView sv_plugin_select;
+    @BindView(R.id.sv_plugin_select)
+    SetView sv_plugin_select;
 
-    @ViewInject(R.id.sv_music_inside_cover)
-    private SetView sv_music_inside_cover;
+    @BindView(R.id.sv_music_inside_cover)
+    SetView sv_music_inside_cover;
 
-    @ViewInject(R.id.tianqi_city)
-    private SetView tianqi_city;
+    @BindView(R.id.tianqi_city)
+    SetView tianqi_city;
 
-    @ViewInject(R.id.sv_gaode_chajian)
-    private SetView sv_gaode_chajian;
+    @BindView(R.id.sv_gaode_chajian)
+    SetView sv_gaode_chajian;
 
-    @ViewInject(R.id.sv_use_navc_popup)
-    private SetView sv_use_navc_popup;
+    @BindView(R.id.sv_use_navc_popup)
+    SetView sv_use_navc_popup;
 
-    @ViewInject(R.id.sv_console)
-    private SetView sv_console;
+    @BindView(R.id.sv_console)
+    SetView sv_console;
 
-    @ViewInject(R.id.sv_music_lrc)
-    private SetView sv_music_lrc;
+    @BindView(R.id.sv_music_lrc)
+    SetView sv_music_lrc;
 
-    @ViewInject(R.id.sv_amap_xunhang)
-    private SetView sv_amap_xunhang;
+    @BindView(R.id.sv_amap_xunhang)
+    SetView sv_amap_xunhang;
 
     private AppWidgetHost appWidgetHost;
 

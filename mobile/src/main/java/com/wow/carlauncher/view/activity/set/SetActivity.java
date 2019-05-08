@@ -25,8 +25,9 @@ import com.wow.carlauncher.view.activity.set.view.SThemeView;
 import com.wow.carlauncher.view.base.BaseActivity;
 
 import org.greenrobot.eventbus.EventBus;
-import org.xutils.view.annotation.Event;
-import org.xutils.view.annotation.ViewInject;
+
+import butterknife.BindView;
+import butterknife.OnClick;
 
 import static com.wow.carlauncher.common.CommonData.APP_WIDGET_AMAP_PLUGIN;
 import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_AMAP_PLUGIN;
@@ -38,14 +39,14 @@ public class SetActivity extends BaseActivity {
         setContent(R.layout.activity_set);
     }
 
-    @ViewInject(R.id.sg_theme)
-    private SetView sg_theme;
+    @BindView(R.id.sg_theme)
+    SetView sg_theme;
 
-    @ViewInject(R.id.ll_set)
-    private FrameLayout ll_set;
+    @BindView(R.id.ll_set)
+    FrameLayout ll_set;
 
-//    @ViewInject(R.id.ll_user)
-//    private LinearLayout ll_user;
+//    @BindView(R.id.ll_user)
+//     LinearLayout ll_user;
 //
 
     @Override
@@ -55,8 +56,8 @@ public class SetActivity extends BaseActivity {
         //ll_user.setOnClickListener(v -> ToastManage.self().show("还没开发呢"));
     }
 
-    @Event(value = {R.id.sg_dev, R.id.sg_item, R.id.sg_theme, R.id.sg_home, R.id.sg_obd, R.id.sg_fk, R.id.sg_load_app, R.id.sg_popup, R.id.sg_system_set})
-    private void clickEvent(View view) {
+    @OnClick(value = {R.id.sg_dev, R.id.sg_item, R.id.sg_theme, R.id.sg_home, R.id.sg_obd, R.id.sg_fk, R.id.sg_load_app, R.id.sg_popup, R.id.sg_system_set})
+    public void clickEvent(View view) {
         ViewGroup setView = null;
         switch (view.getId()) {
             case R.id.sg_theme: {

@@ -18,7 +18,7 @@ import com.wow.carlauncher.view.activity.set.SetAppSingleSelectOnClickListener;
 import com.wow.carlauncher.view.activity.set.SetSwitchOnClickListener;
 import com.wow.carlauncher.view.base.BaseView;
 
-import org.xutils.view.annotation.ViewInject;
+import butterknife.BindView;
 
 import static com.wow.carlauncher.common.CommonData.SDATA_APP_AUTO_OPEN1;
 import static com.wow.carlauncher.common.CommonData.SDATA_APP_AUTO_OPEN2;
@@ -43,24 +43,23 @@ public class SLoadAppView extends BaseView {
         return R.layout.content_set_load_app;
     }
 
-    @ViewInject(R.id.sv_load_use)
-    private SetView sv_load_use;
+    @BindView(R.id.sv_load_use)
+    SetView sv_load_use;
 
-    @ViewInject(R.id.sv_open1)
-    private SetView sv_open1;
-    @ViewInject(R.id.sv_open2)
-    private SetView sv_open2;
-    @ViewInject(R.id.sv_open3)
-    private SetView sv_open3;
-    @ViewInject(R.id.sv_open4)
-    private SetView sv_open4;
+    @BindView(R.id.sv_open1)
+    SetView sv_open1;
+    @BindView(R.id.sv_open2)
+    SetView sv_open2;
+    @BindView(R.id.sv_open3)
+    SetView sv_open3;
+    @BindView(R.id.sv_open4)
+    SetView sv_open4;
 
-    @ViewInject(R.id.sv_clear)
-    private SetView sv_clear;
+    @BindView(R.id.sv_clear)
+    SetView sv_clear;
 
-
-    @ViewInject(R.id.sv_back_yanchi)
-    private SetView sv_back_yanchi;
+    @BindView(R.id.sv_back_yanchi)
+    SetView sv_back_yanchi;
 
     @Override
     protected void initView() {

@@ -20,7 +20,6 @@ import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.List;

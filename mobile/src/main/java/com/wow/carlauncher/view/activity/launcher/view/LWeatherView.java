@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.LogEx;
+import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.WeatherIconTemp;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
@@ -29,9 +30,11 @@ import com.wow.carlauncher.view.event.EventNetStateChange;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.xutils.view.annotation.Event;
-import org.xutils.view.annotation.ViewInject;
-import org.xutils.x;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Optional;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.BLACK;
@@ -60,16 +63,25 @@ public class LWeatherView extends BaseEXView {
 
     @Override
     public void changedTheme(ThemeManage manage) {
+        if (fl_base == null) {
+            return;
+        }
         if (manage.getTheme() == BLACK || manage.getTheme() == WHITE) {
             if (layoutId != R.layout.content_l_weather_b) {
                 layoutId = R.layout.content_l_weather_b;
                 fl_base.removeAllViews();
                 View view = View.inflate(getContext(), layoutId, null);
                 fl_base.addView(view, MATCH_PARENT, MATCH_PARENT);
-                x.view().inject(this, view);
+                ButterKnife.bind(this, view);
                 refreshShow();
             }
-
+            if (rl_base == null ||
+                    tv_tianqi == null ||
+                    tv_wendu1 == null ||
+                    tv_title == null ||
+                    line1 == null) {
+                return;
+            }
             rl_base.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_l_item1_bg));
 
             tv_tianqi.setTextColor(manage.getCurrentThemeColor(R.color.l_text3));
@@ -95,7 +107,11 @@ public class LWeatherView extends BaseEXView {
                 fl_base.removeAllViews();
                 View view = View.inflate(getContext(), layoutId, null);
                 fl_base.addView(view, MATCH_PARENT, MATCH_PARENT);
-                x.view().inject(this, view);
+                ButterKnife.bind(this, view);
+            }
+
+            if (rl_base == null) {
+                return;
             }
             rl_base.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_l_item1_bg));
             refreshShow();
@@ -110,7 +126,17 @@ public class LWeatherView extends BaseEXView {
     }
 
     private void refreshShow() {
-        x.task().autoPost(() -> {
+        TaskExecutor.self().autoPost(() -> {
+            if (iv_tianqi == null ||
+                    tv_kqsd == null ||
+                    tv_tianqi == null ||
+                    tv_wendu1 == null ||
+                    tv_title == null ||
+                    tv_fl == null ||
+                    tv_fx == null) {
+                return;
+            }
+
             if (cityWeather != null) {
                 iv_tianqi.setImageResource(WeatherIconTemp.getWeatherResId(cityWeather.getWeather()));
                 tv_tianqi.setText(cityWeather.getWeather());
@@ -136,40 +162,50 @@ public class LWeatherView extends BaseEXView {
         });
     }
 
-    @ViewInject(R.id.fl_base)
-    private FrameLayout fl_base;
+    @BindView(R.id.fl_base)
+    @Nullable
+    FrameLayout fl_base;
 
-    @ViewInject(R.id.rl_base)
-    private View rl_base;
+    @BindView(R.id.rl_base)
+    @Nullable
+    View rl_base;
 
-    @ViewInject(R.id.line1)
-    private View line1;
+    @BindView(R.id.line1)
+    @Nullable
+    View line1;
 
-    @ViewInject(R.id.tv_tianqi)
-    private TextView tv_tianqi;
+    @BindView(R.id.tv_tianqi)
+    @Nullable
+    TextView tv_tianqi;
 
-    @ViewInject(R.id.tv_wendu1)
-    private TextView tv_wendu1;
+    @BindView(R.id.tv_wendu1)
+    @Nullable
+    TextView tv_wendu1;
+
+    @BindView(R.id.tv_kqsd)
+    @Nullable
+    TextView tv_kqsd;
+
+    @BindView(R.id.tv_title)
+    @Nullable
+    TextView tv_title;
+
+    @BindView(R.id.iv_tianqi)
+    @Nullable
+    ImageView iv_tianqi;
+
+    @BindView(R.id.tv_fl)
+    @Nullable
+    TextView tv_fl;
+
+    @BindView(R.id.tv_fx)
+    @Nullable
+    TextView tv_fx;
 
 
-    @ViewInject(R.id.tv_kqsd)
-    private TextView tv_kqsd;
-
-    @ViewInject(R.id.tv_title)
-    private TextView tv_title;
-
-    @ViewInject(R.id.iv_tianqi)
-    private ImageView iv_tianqi;
-
-    @ViewInject(R.id.tv_fl)
-    private TextView tv_fl;
-
-    @ViewInject(R.id.tv_fx)
-    private TextView tv_fx;
-
-
-    @Event(value = {R.id.tv_title, R.id.fl_base})
-    private void clickEvent(View view) {
+    @OnClick(value = {R.id.tv_title, R.id.fl_base})
+    @Optional
+    public void clickEvent(View view) {
         switch (view.getId()) {
             case R.id.tv_title: {
                 if (CommonUtil.isNull(SharedPreUtil.getString(CommonData.SDATA_WEATHER_DISTRICT))) {
@@ -207,7 +243,7 @@ public class LWeatherView extends BaseEXView {
             return;
         }
         runninng = true;
-        x.task().autoPost(() -> {
+        TaskExecutor.self().autoPost(() -> {
             String chengshi = "";
             if (lastLocation == null || CommonUtil.isNull(lastLocation.getAdCode())) {
                 if (!CommonUtil.isNull(SharedPreUtil.getString(CommonData.SDATA_WEATHER_DISTRICT))) {

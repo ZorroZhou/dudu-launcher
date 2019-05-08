@@ -34,12 +34,13 @@ import com.wow.carlauncher.view.base.BaseEXView;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.xutils.view.annotation.Event;
-import org.xutils.view.annotation.ViewInject;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.OnClick;
 
 import static com.wow.carlauncher.common.CommonData.TAG;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.BLACK;
@@ -136,89 +137,89 @@ public class LAMapView extends BaseEXView {
 
     private int roadType = 10;
 
-    @ViewInject(R.id.tv_title)
-    private TextView tv_title;
+    @BindView(R.id.tv_title)
+    TextView tv_title;
 
-    @ViewInject(R.id.rl_base)
-    private View rl_base;
+    @BindView(R.id.rl_base)
+    View rl_base;
 
-    @ViewInject(R.id.line7)
-    private View line7;
+    @BindView(R.id.line7)
+    View line7;
 
-    @ViewInject(R.id.line11)
-    private View line11;
+    @BindView(R.id.line11)
+    View line11;
 
-    @ViewInject(R.id.rl_navinfo)
-    private View rl_navinfo;
+    @BindView(R.id.rl_navinfo)
+    View rl_navinfo;
 
-    @ViewInject(R.id.rl_xunhang)
-    private View rl_xunhang;
+    @BindView(R.id.rl_xunhang)
+    View rl_xunhang;
 
-    @ViewInject(R.id.rl_che)
-    private View rl_che;
+    @BindView(R.id.rl_che)
+    View rl_che;
 
-    @ViewInject(R.id.fl_xunhang_root)
-    private View fl_xunhang_root;
+    @BindView(R.id.fl_xunhang_root)
+    View fl_xunhang_root;
 
-    @ViewInject(R.id.iv_dh)
-    private ImageView iv_dh;
+    @BindView(R.id.iv_dh)
+    ImageView iv_dh;
 
-    @ViewInject(R.id.iv_dh_gs)
-    private ImageView iv_dh_gs;
+    @BindView(R.id.iv_dh_gs)
+    ImageView iv_dh_gs;
 
-    @ViewInject(R.id.iv_close)
-    private ImageView iv_close;
+    @BindView(R.id.iv_close)
+    ImageView iv_close;
 
-    @ViewInject(R.id.iv_dh_j)
-    private ImageView iv_dh_j;
+    @BindView(R.id.iv_dh_j)
+    ImageView iv_dh_j;
 
-    @ViewInject(R.id.iv_moren)
-    private ImageView iv_moren;
+    @BindView(R.id.iv_moren)
+    ImageView iv_moren;
 
-    @ViewInject(R.id.iv_car)
-    private ImageView iv_car;
+    @BindView(R.id.iv_car)
+    ImageView iv_car;
 
-    @ViewInject(R.id.iv_car2)
-    private ImageView iv_car2;
+    @BindView(R.id.iv_car2)
+    ImageView iv_car2;
 
-    @ViewInject(R.id.iv_icon)
-    private ImageView amapIcon;
+    @BindView(R.id.iv_icon)
+    ImageView amapIcon;
 
-    @ViewInject(R.id.iv_road)
-    private ImageView iv_road;
+    @BindView(R.id.iv_road)
+    ImageView iv_road;
 
-    @ViewInject(R.id.iv_road2)
-    private ImageView iv_road2;
+    @BindView(R.id.iv_road2)
+    ImageView iv_road2;
 
-    @ViewInject(R.id.tv_next_dis)
-    private TextView tv_next_dis;
+    @BindView(R.id.tv_next_dis)
+    TextView tv_next_dis;
 
-    @ViewInject(R.id.tv_next_road)
-    private TextView tv_next_road;
+    @BindView(R.id.tv_next_road)
+    TextView tv_next_road;
 
-    @ViewInject(R.id.tv_xiansu)
-    private TextView tv_xiansu;
+    @BindView(R.id.tv_xiansu)
+    TextView tv_xiansu;
 
-    @ViewInject(R.id.ll_xiansu)
-    private LinearLayout ll_xiansu;
+    @BindView(R.id.ll_xiansu)
+    LinearLayout ll_xiansu;
 
-    @ViewInject(R.id.tv_msg)
-    private TextView tv_msg;
+    @BindView(R.id.tv_msg)
+    TextView tv_msg;
 
-    @ViewInject(R.id.tv_speed)
-    private TextView tv_speed;
+    @BindView(R.id.tv_speed)
+    TextView tv_speed;
 
-    @ViewInject(R.id.iv_mute)
-    private ImageView iv_mute;
+    @BindView(R.id.iv_mute)
+    ImageView iv_mute;
 
-    @ViewInject(R.id.lukuang)
-    private LukuangView lukuangView;
+    @BindView(R.id.lukuang)
+    LukuangView lukuangView;
 
-    @ViewInject(R.id.base_daohang)
-    private View base_daohang;
+    @BindView(R.id.base_daohang)
+    View base_daohang;
 
-    @ViewInject(R.id.base_moren)
-    private View base_moren;
+    @BindView(R.id.base_moren)
+    View base_moren;
 
     private boolean loactionOk = false;
 
@@ -267,8 +268,8 @@ public class LAMapView extends BaseEXView {
         }
     }
 
-    @Event(value = {R.id.rl_base, R.id.btn_go_home, R.id.btn_close, R.id.btn_mute, R.id.btn_nav_gs, R.id.btn_nav_j, R.id.btn_gd})
-    private void clickEvent(View view) {
+    @OnClick(value = {R.id.rl_base, R.id.btn_go_home, R.id.btn_close, R.id.btn_mute, R.id.btn_nav_gs, R.id.btn_nav_j, R.id.btn_gd})
+    public void clickEvent(View view) {
         Log.d(TAG, "clickEvent: " + view);
         switch (view.getId()) {
             case R.id.rl_base: {

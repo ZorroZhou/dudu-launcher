@@ -7,7 +7,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import org.xutils.x;
+import butterknife.ButterKnife;
 
 /**
  * Created by 10124 on 2018/4/22.
@@ -27,7 +27,7 @@ public abstract class BaseView extends FrameLayout {
     private void startInit() {
         View view = View.inflate(getContext(), getContent(), null);
         this.addView(view, LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-        x.view().inject(this, view);
+        ButterKnife.bind(this, view);
         initView();
     }
 

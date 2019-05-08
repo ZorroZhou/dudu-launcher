@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.LogEx;
+import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.DateUtil;
 import com.wow.carlauncher.common.util.NetWorkUtil;
 import com.wow.carlauncher.ex.manage.ThemeManage;
@@ -35,11 +36,12 @@ import com.wow.carlauncher.view.event.EventWifiState;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.xutils.view.annotation.Event;
-import org.xutils.view.annotation.ViewInject;
-import org.xutils.x;
 
 import java.util.Date;
+
+import butterknife.BindView;
+import butterknife.OnClick;
+import butterknife.OnLongClick;
 
 import static com.wow.carlauncher.common.CommonData.MINUTE_MILL;
 
@@ -87,32 +89,32 @@ public class LPromptView extends BaseEXView {
         LogEx.d(this, "initView: ");
     }
 
-    @ViewInject(R.id.fl_base)
-    private View fl_base;
+    @BindView(R.id.fl_base)
+    View fl_base;
 
-    @ViewInject(R.id.tv_time)
-    private TextView tv_time;
+    @BindView(R.id.tv_time)
+    TextView tv_time;
 
-    @ViewInject(R.id.iv_carinfo_tp)
-    private ImageView iv_carinfo_tp;
+    @BindView(R.id.iv_carinfo_tp)
+    ImageView iv_carinfo_tp;
 
-    @ViewInject(R.id.iv_location)
-    private ImageView iv_location;
+    @BindView(R.id.iv_location)
+    ImageView iv_location;
 
-    @ViewInject(R.id.iv_set)
-    private ImageView iv_set;
+    @BindView(R.id.iv_set)
+    ImageView iv_set;
 
-    @ViewInject(R.id.iv_obd)
-    private ImageView iv_obd;
+    @BindView(R.id.iv_obd)
+    ImageView iv_obd;
 
-    @ViewInject(R.id.iv_fk)
-    private ImageView iv_fk;
+    @BindView(R.id.iv_fk)
+    ImageView iv_fk;
 
-    @ViewInject(R.id.iv_wifi)
-    private ImageView iv_wifi;
+    @BindView(R.id.iv_wifi)
+    ImageView iv_wifi;
 
-    @Event(value = {R.id.iv_set, R.id.iv_wifi, R.id.iv_obd, R.id.tv_time, R.id.tv_time, R.id.iv_location, R.id.iv_wifi})
-    private void clickEvent(View view) {
+    @OnClick(value = {R.id.iv_set, R.id.iv_wifi, R.id.iv_obd, R.id.tv_time, R.id.iv_carinfo_tp, R.id.iv_location})
+    public void clickEvent(View view) {
         switch (view.getId()) {
             case R.id.iv_location: {
                 if (locationEvent != null) {
@@ -143,8 +145,8 @@ public class LPromptView extends BaseEXView {
         }
     }
 
-    @Event(value = {R.id.iv_obd, R.id.iv_fk}, type = OnLongClickListener.class)
-    private void clickLongEvent(View view) {
+    @OnLongClick(value = {R.id.iv_obd, R.id.iv_fk})
+    public boolean clickLongEvent(View view) {
         switch (view.getId()) {
             case R.id.iv_obd: {
                 ObdPlugin.self().disconnect();
@@ -155,6 +157,7 @@ public class LPromptView extends BaseEXView {
                 break;
             }
         }
+        return true;
     }
 
     private void refreshWifiState() {
@@ -217,7 +220,7 @@ public class LPromptView extends BaseEXView {
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        x.task().autoPost(() -> {
+        TaskExecutor.self().autoPost(() -> {
             refreshWifiState();
             refreshFKState(new PFkEventConnect().setConnected(FangkongPlugin.self().isConnect()));
             refreshObdState(new PObdEventConnect().setConnected(ObdPlugin.self().isConnect()));

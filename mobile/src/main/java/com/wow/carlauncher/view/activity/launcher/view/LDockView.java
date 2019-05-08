@@ -30,11 +30,13 @@ import com.wow.carlauncher.view.base.BaseEXView;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.xutils.view.annotation.Event;
-import org.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.OnClick;
+import butterknife.OnLongClick;
 
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK1_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK2_CLASS;
@@ -56,44 +58,44 @@ public class LDockView extends BaseEXView {
         super(context, attrs);
     }
 
-    @ViewInject(R.id.iv_dock1)
-    private ImageView iv_dock1;
-    @ViewInject(R.id.tv_dock1)
-    private TextView tv_dock1;
+    @BindView(R.id.iv_dock1)
+    ImageView iv_dock1;
+    @BindView(R.id.tv_dock1)
+    TextView tv_dock1;
 
-    @ViewInject(R.id.iv_dock2)
-    private ImageView iv_dock2;
-    @ViewInject(R.id.tv_dock2)
-    private TextView tv_dock2;
+    @BindView(R.id.iv_dock2)
+    ImageView iv_dock2;
+    @BindView(R.id.tv_dock2)
+    TextView tv_dock2;
 
-    @ViewInject(R.id.iv_dock3)
-    private ImageView iv_dock3;
-    @ViewInject(R.id.tv_dock3)
-    private TextView tv_dock3;
+    @BindView(R.id.iv_dock3)
+    ImageView iv_dock3;
+    @BindView(R.id.tv_dock3)
+    TextView tv_dock3;
 
-    @ViewInject(R.id.iv_dock4)
-    private ImageView iv_dock4;
-    @ViewInject(R.id.tv_dock4)
-    private TextView tv_dock4;
+    @BindView(R.id.iv_dock4)
+    ImageView iv_dock4;
+    @BindView(R.id.tv_dock4)
+    TextView tv_dock4;
 
-    @ViewInject(R.id.iv_dock5)
-    private ImageView iv_dock5;
-    @ViewInject(R.id.tv_dock5)
-    private TextView tv_dock5;
+    @BindView(R.id.iv_dock5)
+    ImageView iv_dock5;
+    @BindView(R.id.tv_dock5)
+    TextView tv_dock5;
 
-    @ViewInject(R.id.ll_dock1)
-    private LinearLayout ll_dock1;
-    @ViewInject(R.id.ll_dock2)
-    private LinearLayout ll_dock2;
-    @ViewInject(R.id.ll_dock3)
-    private LinearLayout ll_dock3;
-    @ViewInject(R.id.ll_dock4)
-    private LinearLayout ll_dock4;
-    @ViewInject(R.id.ll_dock5)
-    private LinearLayout ll_dock5;
+    @BindView(R.id.ll_dock1)
+    LinearLayout ll_dock1;
+    @BindView(R.id.ll_dock2)
+    LinearLayout ll_dock2;
+    @BindView(R.id.ll_dock3)
+    LinearLayout ll_dock3;
+    @BindView(R.id.ll_dock4)
+    LinearLayout ll_dock4;
+    @BindView(R.id.ll_dock5)
+    LinearLayout ll_dock5;
 
-    @ViewInject(R.id.ll_base)
-    private LinearLayout ll_base;
+    @BindView(R.id.ll_base)
+    LinearLayout ll_base;
 
     private LayoutEnum layoutEnum;
 
@@ -248,8 +250,8 @@ public class LDockView extends BaseEXView {
         LogEx.d(this, "loadDock: ");
     }
 
-    @Event(value = {R.id.ll_dock1, R.id.ll_dock2, R.id.ll_dock3, R.id.ll_dock4, R.id.ll_dock5})
-    private void clickEvent(View v) {
+    @OnClick(value = {R.id.ll_dock1, R.id.ll_dock2, R.id.ll_dock3, R.id.ll_dock4, R.id.ll_dock5})
+    public void clickEvent(View v) {
         Log.d(TAG, "clickEvent: " + v);
         switch (v.getId()) {
             case R.id.ll_dock1: {
@@ -301,8 +303,8 @@ public class LDockView extends BaseEXView {
         }
     }
 
-    @Event(value = {R.id.ll_dock1, R.id.ll_dock2, R.id.ll_dock3, R.id.ll_dock4, R.id.ll_dock5}, type = View.OnLongClickListener.class)
-    private boolean longClickEvent(View view) {
+    @OnLongClick(value = {R.id.ll_dock1, R.id.ll_dock2, R.id.ll_dock3, R.id.ll_dock4, R.id.ll_dock5})
+    public boolean longClickEvent(View view) {
         switch (view.getId()) {
             case R.id.ll_dock1: {
                 showSelectDialog(SDATA_DOCK1_CLASS);

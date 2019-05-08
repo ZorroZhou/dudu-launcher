@@ -8,11 +8,10 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.wow.carlauncher.common.LogEx;
+import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.ex.ContextEx;
 import com.wow.carlauncher.ex.manage.location.event.MNewLocationEvent;
-
-import org.xutils.x;
 
 /**
  * Created by 10124 on 2018/5/12.
@@ -36,7 +35,7 @@ public class LocationManage extends ContextEx implements AMapLocationListener {
 
     public void init(Context context) {
         setContext(context);
-        x.task().run(new Runnable() {
+        TaskExecutor.self().run(new Runnable() {
             @Override
             public void run() {
                 //初始化定位

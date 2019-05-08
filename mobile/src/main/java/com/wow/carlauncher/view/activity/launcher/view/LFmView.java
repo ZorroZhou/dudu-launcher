@@ -21,8 +21,8 @@ import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.view.base.BaseEXView;
 
-import org.xutils.view.annotation.Event;
-import org.xutils.view.annotation.ViewInject;
+import butterknife.BindView;
+import butterknife.OnClick;
 
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.BLACK;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.WHITE;
@@ -115,35 +115,35 @@ public class LFmView extends BaseEXView {
         iv_next.setImageResource(manage.getCurrentThemeRes(R.mipmap.ic_next));
     }
 
-    @ViewInject(R.id.ll_prew)
-    private LinearLayout ll_prew;
+    @BindView(R.id.ll_prew)
+    LinearLayout ll_prew;
 
-    @ViewInject(R.id.ll_next)
-    private LinearLayout ll_next;
+    @BindView(R.id.ll_next)
+    LinearLayout ll_next;
 
-    @ViewInject(R.id.ll_play)
-    private LinearLayout ll_play;
+    @BindView(R.id.ll_play)
+    LinearLayout ll_play;
 
-    @ViewInject(R.id.tv_title)
-    private TextView tv_title;
+    @BindView(R.id.tv_title)
+    TextView tv_title;
 
-    @ViewInject(R.id.iv_play)
-    private ImageView iv_play;
+    @BindView(R.id.iv_play)
+    ImageView iv_play;
 
-    @ViewInject(R.id.iv_prew)
-    private ImageView iv_prew;
+    @BindView(R.id.iv_prew)
+    ImageView iv_prew;
 
-    @ViewInject(R.id.iv_next)
-    private ImageView iv_next;
+    @BindView(R.id.iv_next)
+    ImageView iv_next;
 
-    @ViewInject(R.id.fl_www)
-    private FrameLayout fl_www;
+    @BindView(R.id.fl_www)
+    FrameLayout fl_www;
 
-    @ViewInject(R.id.rl_base)
-    private View rl_base;
+    @BindView(R.id.rl_base)
+    View rl_base;
 
-    @Event(value = {R.id.rl_base, R.id.ll_prew, R.id.ll_next, R.id.ll_play})
-    private void clickEvent(View view) {
+    @OnClick(value = {R.id.rl_base, R.id.ll_prew, R.id.ll_next, R.id.ll_play})
+    public void clickEvent(View view) {
         switch (view.getId()) {
             case R.id.rl_base: {
                 break;

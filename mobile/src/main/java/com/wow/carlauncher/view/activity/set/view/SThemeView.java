@@ -15,7 +15,7 @@ import com.wow.carlauncher.ex.plugin.console.ConsoleProtoclEnum;
 import com.wow.carlauncher.view.base.BaseEXView;
 import com.wow.carlauncher.view.clickListener.PicSelectOnClickListener;
 
-import org.xutils.view.annotation.ViewInject;
+import butterknife.BindView;
 
 import static com.wow.carlauncher.common.CommonData.SDATA_APP_THEME;
 import static com.wow.carlauncher.common.CommonData.SDATA_APP_THEME_DAY;
@@ -44,14 +44,14 @@ public class SThemeView extends BaseEXView {
         return R.layout.content_set_theme;
     }
 
-    @ViewInject(R.id.sv_plugin_theme)
-    private SetView sv_plugin_theme;
+    @BindView(R.id.sv_plugin_theme)
+    SetView sv_plugin_theme;
 
-    @ViewInject(R.id.sv_theme_day)
-    private SetView sv_theme_day;
+    @BindView(R.id.sv_theme_day)
+    SetView sv_theme_day;
 
-    @ViewInject(R.id.sv_theme_night)
-    private SetView sv_theme_night;
+    @BindView(R.id.sv_theme_night)
+    SetView sv_theme_night;
 
     @Override
     protected void initView() {

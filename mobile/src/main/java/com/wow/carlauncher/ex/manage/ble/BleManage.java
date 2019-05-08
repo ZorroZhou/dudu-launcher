@@ -11,9 +11,8 @@ import com.inuker.bluetooth.library.connect.response.BleNotifyResponse;
 import com.inuker.bluetooth.library.search.SearchRequest;
 import com.inuker.bluetooth.library.search.SearchResult;
 import com.inuker.bluetooth.library.search.response.SearchResponse;
+import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.ex.ContextEx;
-
-import org.xutils.x;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -146,7 +145,7 @@ public class BleManage extends ContextEx {
         markMacMap.put(mark, mac);
 
         final BleListener bleListener = listeners.get(mark);
-        x.task().run(() -> bluetoothClient.connect(mac, options, (code, data) -> {
+        TaskExecutor.self().run(() -> bluetoothClient.connect(mac, options, (code, data) -> {
             if (code == REQUEST_SUCCESS) {
                 Log.d(TAG, mac + "onResponse: 连接成功!!!");
                 bluetoothClient.notify(mac,

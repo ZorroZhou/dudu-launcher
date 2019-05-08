@@ -18,6 +18,7 @@ import android.view.KeyEvent;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.LogEx;
+import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
@@ -27,12 +28,11 @@ import com.wow.carlauncher.view.activity.launcher.event.LDockLabelShowChangeEven
 import com.wow.carlauncher.view.activity.set.SetAppMultipleSelectOnClickListener;
 import com.wow.carlauncher.view.activity.set.SetAppSingleSelectOnClickListener;
 import com.wow.carlauncher.view.activity.set.SetSwitchOnClickListener;
-import com.wow.carlauncher.view.activity.set.event.SEventPromptShowRefresh;
 import com.wow.carlauncher.view.base.BaseView;
 
 import org.greenrobot.eventbus.EventBus;
-import org.xutils.view.annotation.ViewInject;
-import org.xutils.x;
+
+import butterknife.BindView;
 
 /**
  * Created by 10124 on 2018/4/22.
@@ -53,36 +53,28 @@ public class SSystemView extends BaseView {
         return R.layout.content_set_system;
     }
 
-    @ViewInject(R.id.sv_sys_anquan)
-    private SetView sv_sys_anquan;
+    @BindView(R.id.sv_sys_anquan)SetView sv_sys_anquan;
 
-    @ViewInject(R.id.sv_sys_overlay)
-    private SetView sv_sys_overlay;
+    @BindView(R.id.sv_sys_overlay)SetView sv_sys_overlay;
 
-    @ViewInject(R.id.sv_sys_sdk)
-    private SetView sv_sys_sdk;
+    @BindView(R.id.sv_sys_sdk)SetView sv_sys_sdk;
 
-    @ViewInject(R.id.sv_about)
-    private SetView sv_about;
+    @BindView(R.id.sv_about)SetView sv_about;
 
-    @ViewInject(R.id.sv_apps_hides)
-    private SetView sv_apps_hides;
+    @BindView(R.id.sv_apps_hides)SetView sv_apps_hides;
 
-    @ViewInject(R.id.sv_launcher_show_dock_label)
-    private SetView sv_launcher_show_dock_label;
+    @BindView(R.id.sv_launcher_show_dock_label)SetView sv_launcher_show_dock_label;
 
-    @ViewInject(R.id.sv_key_listener)
-    private SetView sv_key_listener;
+    @BindView(R.id.sv_key_listener)SetView sv_key_listener;
 
-    @ViewInject(R.id.sv_open_log)
-    private SetView sv_open_log;
+    @BindView(R.id.sv_open_log)SetView sv_open_log;
 
     private boolean showKey;
     private BroadcastReceiver nwdKeyTestReceiver = new BroadcastReceiver() {
         public void onReceive(Context paramContext, Intent paramIntent) {
             if ("com.nwd.action.ACTION_KEY_VALUE".equals(paramIntent.getAction())) {
                 int key = paramIntent.getByteExtra("extra_key_value", (byte) 0);
-                x.task().autoPost(new Runnable() {
+                TaskExecutor.self().autoPost(new Runnable() {
                     @Override
                     public void run() {
                         ToastManage.self().show("NWD按键测试触发:" + key);

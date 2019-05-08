@@ -53,21 +53,29 @@ public class SSystemView extends BaseView {
         return R.layout.content_set_system;
     }
 
-    @BindView(R.id.sv_sys_anquan)SetView sv_sys_anquan;
+    @BindView(R.id.sv_sys_anquan)
+    SetView sv_sys_anquan;
 
-    @BindView(R.id.sv_sys_overlay)SetView sv_sys_overlay;
+    @BindView(R.id.sv_sys_overlay)
+    SetView sv_sys_overlay;
 
-    @BindView(R.id.sv_sys_sdk)SetView sv_sys_sdk;
+    @BindView(R.id.sv_sys_sdk)
+    SetView sv_sys_sdk;
 
-    @BindView(R.id.sv_about)SetView sv_about;
+    @BindView(R.id.sv_about)
+    SetView sv_about;
 
-    @BindView(R.id.sv_apps_hides)SetView sv_apps_hides;
+    @BindView(R.id.sv_apps_hides)
+    SetView sv_apps_hides;
 
-    @BindView(R.id.sv_launcher_show_dock_label)SetView sv_launcher_show_dock_label;
+    @BindView(R.id.sv_launcher_show_dock_label)
+    SetView sv_launcher_show_dock_label;
 
-    @BindView(R.id.sv_key_listener)SetView sv_key_listener;
+    @BindView(R.id.sv_key_listener)
+    SetView sv_key_listener;
 
-    @BindView(R.id.sv_open_log)SetView sv_open_log;
+    @BindView(R.id.sv_open_log)
+    SetView sv_open_log;
 
     private boolean showKey;
     private BroadcastReceiver nwdKeyTestReceiver = new BroadcastReceiver() {
@@ -87,14 +95,14 @@ public class SSystemView extends BaseView {
     @Override
     protected void initView() {
 
-        sv_open_log.setOnValueChangeListener(new SetSwitchOnClickListener(CommonData.SDATA_LAUNCHER_PROMPT_SHOW) {
+        sv_open_log.setOnValueChangeListener(new SetSwitchOnClickListener(CommonData.SDATA_LOG_OPEN) {
             @Override
             public void newValue(boolean value) {
                 SharedPreUtil.saveBoolean(CommonData.SDATA_LOG_OPEN, value);
                 LogEx.setSaveFile(value);
             }
         });
-        sv_open_log.setChecked(SharedPreUtil.getBoolean(CommonData.SDATA_LAUNCHER_PROMPT_SHOW, true));
+        sv_open_log.setChecked(SharedPreUtil.getBoolean(CommonData.SDATA_LOG_OPEN, true));
 
         sv_key_listener.setOnClickListener(v -> {
             showKey = true;

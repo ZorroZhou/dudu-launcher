@@ -29,6 +29,7 @@ import com.wow.carlauncher.view.popup.NaviWin;
 import com.wow.carlauncher.view.popup.PopupWin;
 import com.wow.carlauncher.view.popup.VoiceWin;
 
+import org.greenrobot.eventbus.EventBus;
 import org.xutils.x;
 
 import java.io.File;
@@ -69,6 +70,8 @@ public class AppContext {
         this.application = app;
         this.startTime = System.currentTimeMillis();
         x.Ext.init(app);
+
+        EventBus.builder().addIndex(new MyEventBusIndex()).installDefaultEventBus();
 
         SharedPreUtil.init(app);
 

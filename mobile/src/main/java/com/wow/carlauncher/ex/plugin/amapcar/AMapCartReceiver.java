@@ -124,12 +124,14 @@ public class AMapCartReceiver extends BroadcastReceiver {
                             .setRouteAllTime(intent.getIntExtra(NaviInfoConstant.ROUTE_ALL_TIME, -1))
                             .setCurSpeed(intent.getIntExtra(NaviInfoConstant.CUR_SPEED, -1))
                             .setCameraSpeed(intent.getIntExtra(NaviInfoConstant.CAMERA_SPEED, -1));
+
                     if (icon != -1
                             && info.getSegRemainDis() != 0
                             && info.getRouteAllDis() != 0
                             && CommonUtil.isNotNull(info.getNextRoadName())
                             && CommonUtil.isNotNull(info.getCurRoadName())) {
                         LogEx.d(this, "onReceive PAmapEventNavInfo:" + info);
+                        EventBus.getDefault().post(new PAmapEventState().setRunning(true));
                         EventBus.getDefault().post(info);
                     } else {
                         LogEx.d(this, "onReceive no nav info");

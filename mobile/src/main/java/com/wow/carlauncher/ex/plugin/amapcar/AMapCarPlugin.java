@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.widget.Toast;
 
 import com.wow.carlauncher.common.LogEx;
+import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.AppUtil;
 import com.wow.carlauncher.ex.ContextEx;
 import com.wow.carlauncher.ex.manage.time.event.MTime3SecondEvent;
@@ -59,7 +60,7 @@ public class AMapCarPlugin extends ContextEx {
 
     public void init(Context context) {
         setContext(context);
-        amapReceiver = new AMapCartReceiver(this);
+        AMapCartReceiver amapReceiver = new AMapCartReceiver(this);
 
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(RECEIVE_ACTION);
@@ -70,8 +71,6 @@ public class AMapCarPlugin extends ContextEx {
         LogEx.d(this, "init ");
         // final View launcherWidgetView = AppWidgetManage.self().getWidgetById(launcher);
     }
-
-    private AMapCartReceiver amapReceiver;
 
     public void testNavi() {
         Intent intent = new Intent();
@@ -97,10 +96,12 @@ public class AMapCarPlugin extends ContextEx {
         intent.putExtra("KEY_RECYLE_SIMUNAVI", true);
         getContext().sendBroadcast(intent);
 
-        Intent intent2 = new Intent();
-        intent2.setAction("AUTONAVI_STANDARD_BROADCAST_RECV");
-        intent2.putExtra("KEY_TYPE", 10031);
-        getContext().sendBroadcast(intent2);
+        TaskExecutor.self().run(() -> {
+            Intent intent2 = new Intent();
+            intent2.setAction("AUTONAVI_STANDARD_BROADCAST_RECV");
+            intent2.putExtra("KEY_TYPE", 10031);
+            getContext().sendBroadcast(intent2);
+        }, 1000);
     }
 
     public void naviToHome() {

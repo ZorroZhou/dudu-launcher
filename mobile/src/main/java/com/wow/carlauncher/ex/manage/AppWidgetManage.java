@@ -32,8 +32,6 @@ public class AppWidgetManage {
         appWidgetHost = new AppWidgetHost(context, APP_WIDGET_HOST_ID);
         appWidgetManager = AppWidgetManager.getInstance(context);
         appWidgetHost.startListening();
-
-
         LogEx.d(this, "init");
     }
 

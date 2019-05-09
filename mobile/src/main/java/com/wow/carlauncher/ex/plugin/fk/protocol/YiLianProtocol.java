@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.wow.carlauncher.base.Shorts;
+import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.ex.plugin.fk.FKSimulateDoubleClick;
 import com.wow.carlauncher.ex.plugin.fk.FangkongProtocol;
 import com.wow.carlauncher.ex.plugin.fk.FangkongProtocolListener;
@@ -50,6 +51,7 @@ public class YiLianProtocol extends FangkongProtocol {
     public void receiveMessage(byte[] message) {
         if (message != null && message.length == 2) {
             short cmd = Shorts.fromByteArray(message);
+            LogEx.d(this, "cmd:" + cmd);
             switch (cmd) {
                 case LEFT_TOP_CLICK:
                     if (simulatedDClick) {

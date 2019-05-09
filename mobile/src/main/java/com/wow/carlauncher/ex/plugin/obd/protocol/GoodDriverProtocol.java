@@ -1,8 +1,8 @@
 package com.wow.carlauncher.ex.plugin.obd.protocol;
 
 import android.content.Context;
-import android.util.Log;
 
+import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.ex.plugin.obd.ObdProtocol;
 import com.wow.carlauncher.ex.plugin.obd.ObdProtocolListener;
 import com.wow.carlauncher.ex.plugin.obd.ObdTask;
@@ -17,8 +17,6 @@ import com.wow.carlauncher.ex.plugin.obd.protocol.gd.GetWaterTempTask;
 import com.wow.carlauncher.ex.plugin.obd.protocol.gd.ProtocolAutoTask;
 
 import java.util.UUID;
-
-import static com.wow.carlauncher.common.CommonData.TAG;
 
 /**
  * Created by 10124 on 2018/4/19.
@@ -114,7 +112,7 @@ public class GoodDriverProtocol extends ObdProtocol {
     public void receiveMessage(byte[] message) {
         synchronized (resMessageTemp) {
             resMessageTemp.append(new String(message));
-            Log.d(TAG, "receiveMessage: " + resMessageTemp);
+            LogEx.d(this, "receiveMessage: " + resMessageTemp);
             if (resMessageTemp.indexOf(">") > -1) {
                 //拿出来消息进行回掉
                 setTaskRes(resMessageTemp.substring(0, resMessageTemp.indexOf(">")));
@@ -127,7 +125,7 @@ public class GoodDriverProtocol extends ObdProtocol {
     @Override
     public void taskOver(ObdTask task) {
         if (task.isSuccess()) {
-            Log.d(TAG, "taskOver: " + task);
+            LogEx.d(this, "taskOver: " + task);
             if (task instanceof CloseSpaceTask) {
                 cmdCloseSpace = true;
             } else if (task instanceof CloseLineFeedTask) {

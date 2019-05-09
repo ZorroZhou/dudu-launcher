@@ -1,8 +1,8 @@
 package com.wow.carlauncher.ex.plugin.obd.protocol;
 
 import android.content.Context;
-import android.util.Log;
 
+import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.ex.plugin.obd.ObdProtocol;
 import com.wow.carlauncher.ex.plugin.obd.ObdProtocolListener;
 import com.wow.carlauncher.ex.plugin.obd.ObdTask;
@@ -131,6 +131,7 @@ public class GoodDriverTPProtocol extends ObdProtocol {
     public void receiveMessage(byte[] message) {
         synchronized (resMessageTemp) {
             resMessageTemp.append(new String(message));
+            LogEx.d(TAG, "receiveMessage: " + resMessageTemp);
             if (resMessageTemp.indexOf(">") > -1) {
                 //拿出来消息进行回掉
                 setTaskRes(resMessageTemp.substring(0, resMessageTemp.indexOf(">")));
@@ -143,6 +144,7 @@ public class GoodDriverTPProtocol extends ObdProtocol {
     @Override
     public void taskOver(ObdTask task) {
         if (task.isSuccess()) {
+            LogEx.d(TAG, "taskOver: " + task);
             if (task instanceof CloseSpaceTask) {
                 cmdCloseSpace = true;
             } else if (task instanceof CloseLineFeedTask) {
@@ -173,7 +175,6 @@ public class GoodDriverTPProtocol extends ObdProtocol {
                     listener.carRunningInfo(null, null, null, t.getOil());
                 } else if (task instanceof GetTpTask) {
                     GetTpTask t = (GetTpTask) task;
-                    Log.d(TAG, "taskOver  tp task: " + t);
                     if (t.getMark() == LF) {
                         listener.carTirePressureInfo(t.getTp(), t.getTemp(), null, null, null, null, null, null);
                     } else if (t.getMark() == RF) {

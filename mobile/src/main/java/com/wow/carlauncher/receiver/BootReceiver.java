@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.service.MainService;
 
@@ -17,6 +18,7 @@ public class BootReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(final Context context, Intent intent) {
         if (!bootSuccess) {
+            LogEx.d(this, "bootSuccess");
             bootSuccess = true;
             Intent startIntent = new Intent(context, MainService.class);
             context.startService(startIntent);

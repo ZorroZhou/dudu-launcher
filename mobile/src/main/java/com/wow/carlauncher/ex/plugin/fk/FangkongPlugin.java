@@ -53,7 +53,7 @@ public class FangkongPlugin extends ContextEx {
         BleManage.self().addListener(bleListener);
         myBleConnectStatusListener = new MyBleConnectStatusListener(BLE_MARK);
         EventBus.getDefault().register(this);
-        LogEx.d(this, "init ");
+        LogEx.d(this, "init");
     }
 
     private MyBleConnectStatusListener myBleConnectStatusListener;
@@ -116,6 +116,7 @@ public class FangkongPlugin extends ContextEx {
                 BleManage.self().getConnectStatus(fkaddress) == STATUS_DEVICE_CONNECTING) {
             return;
         }
+        LogEx.d(this, "connecting");
         connecting = true;
 
         disconnect();
@@ -131,6 +132,7 @@ public class FangkongPlugin extends ContextEx {
                 break;
         }
         BleManage.self().connect(BLE_MARK, fangkongProtocol.getAddress(), fangkongProtocol.getService(), fangkongProtocol.getCharacter(), myBleConnectStatusListener);
+        LogEx.d(this, "connect over:" + fangkongProtocol);
     }
 
     public void disconnect() {

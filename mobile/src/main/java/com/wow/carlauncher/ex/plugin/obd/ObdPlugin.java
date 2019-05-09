@@ -159,7 +159,7 @@ public class ObdPlugin extends ContextEx {
         BleManage.self().addListener(bleListener);
         myBleConnectStatusListener = new MyBleConnectStatusListener(BLE_MARK);
         EventBus.getDefault().register(this);
-        LogEx.d(this, "init ");
+        LogEx.d(this, "init");
     }
 
     private boolean connecting = false;
@@ -172,7 +172,7 @@ public class ObdPlugin extends ContextEx {
                 BleManage.self().getConnectStatus(address) == STATUS_DEVICE_CONNECTING) {
             return;
         }
-
+        LogEx.d(this, "connecting");
         connecting = true;
 
         disconnect();
@@ -192,6 +192,7 @@ public class ObdPlugin extends ContextEx {
                 break;
         }
         BleManage.self().connect(BLE_MARK, obdProtocol.getAddress(), obdProtocol.getNotifyService(), obdProtocol.getNotifyCharacter(), myBleConnectStatusListener);
+        LogEx.d(this, "connect over:" + obdProtocol);
     }
 
     public synchronized void disconnect() {

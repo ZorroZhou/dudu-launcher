@@ -40,7 +40,7 @@ public class MusicPlugin extends ContextEx {
     public void init(Context context) {
         setContext(context);
         setController(MusicControllerEnum.getById(SharedPreUtil.getInteger(SDATA_MUSIC_CONTROLLER, MusicControllerEnum.SYSMUSIC.getId())));
-        LogEx.d(this, "init ");
+        LogEx.d(this, "init");
     }
 
     public void setController(MusicControllerEnum controller) {
@@ -68,6 +68,7 @@ public class MusicPlugin extends ContextEx {
                 break;
         }
         musicController.init(getContext(), this);
+        LogEx.d(this, "musicController:" + musicController);
     }
 
     public String clazz() {
@@ -120,6 +121,7 @@ public class MusicPlugin extends ContextEx {
     }
 
     public void requestLast() {
+        LogEx.d(this, "requestLast");
         if (pMusicRefresLrc != null) {
             postEvent(pMusicRefresLrc);
         }
@@ -138,6 +140,7 @@ public class MusicPlugin extends ContextEx {
     }
 
     public void playOrPause() {
+        LogEx.d(this, "playOrPause:" + playing);
         if (musicController != null) {
             if (playing) {
                 musicController.pause();
@@ -148,12 +151,14 @@ public class MusicPlugin extends ContextEx {
     }
 
     public void next() {
+        LogEx.d(this, "next");
         if (musicController != null) {
             musicController.next();
         }
     }
 
     public void pre() {
+        LogEx.d(this, "pre");
         if (musicController != null) {
             musicController.pre();
         }

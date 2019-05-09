@@ -3,7 +3,6 @@ package com.wow.carlauncher.ex.plugin.console.impl;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.util.Log;
 import android.view.KeyEvent;
 
 import com.wow.carlauncher.common.LogEx;
@@ -25,25 +24,24 @@ public class SysConsoleImpl extends ConsoleProtocl {
 
     public SysConsoleImpl(Context context, ConsoleProtoclListener listener) {
         super(context, listener);
-
-        Log.d(TAG, "system console init");
+        LogEx.d(TAG, "system console init");
     }
 
     @Override
     public void decVolume() {
-      LogEx.d(this, "system console decVolume");
+        LogEx.d(this, "system console decVolume");
         AppUtil.sendKeyCode(KeyEvent.KEYCODE_VOLUME_DOWN);
     }
 
     @Override
     public void incVolume() {
-      LogEx.d(this, "system console incVolume");
+        LogEx.d(this, "system console incVolume");
         AppUtil.sendKeyCode(KeyEvent.KEYCODE_VOLUME_UP);
     }
 
     @Override
     public void mute() {
-      LogEx.d(this, "system console mute");
+        LogEx.d(this, "system console mute");
         AppUtil.sendKeyCode(KeyEvent.KEYCODE_VOLUME_MUTE);
     }
 
@@ -71,26 +69,26 @@ public class SysConsoleImpl extends ConsoleProtocl {
                     count++;//杀死进程的计数+1
                     nameList += "  " + pkName;
                 }
-                Log.i(TAG, nameList + "---------------------");
+                LogEx.d(TAG, nameList + "---------------------");
             }
-            Log.i(TAG, "清理进程数量为 : " + count + 1);
+            LogEx.d(TAG, "清理进程数量为 : " + count + 1);
         }
     }
 
     @Override
     public void callAnswer() {
-      LogEx.d(this, "system console callAnswer");
+        LogEx.d(this, "system console callAnswer");
         ToastManage.self().show("不支持的指令");
     }
 
     @Override
     public void callHangup() {
-      LogEx.d(this, "system console callHangup");
+        LogEx.d(this, "system console callHangup");
         ToastManage.self().show("不支持的指令");
     }
 
     @Override
     public void destroy() {
-        Log.d(TAG, "system console destroy");
+        LogEx.d(TAG, "system console destroy");
     }
 }

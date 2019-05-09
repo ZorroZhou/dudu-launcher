@@ -64,7 +64,6 @@ public class TimeManage extends ContextEx {
             try {
                 if (EventBus.getDefault().hasSubscriberForEvent(MTimeHalfSecondEvent.class)) {
                     postEvent(new MTimeHalfSecondEvent());
-                    LogEx.d(this, "timerun:MTimeHalfSecondEvent");
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -73,7 +72,6 @@ public class TimeManage extends ContextEx {
                 if (timeMark % SECOND == 0) {
                     if (EventBus.getDefault().hasSubscriberForEvent(MTimeSecondEvent.class)) {
                         postEvent(new MTimeSecondEvent());
-                        LogEx.d(this, "timerun:MTimeSecondEvent");
                     }
                 }
             } catch (Exception e) {
@@ -84,7 +82,6 @@ public class TimeManage extends ContextEx {
                 if (timeMark % SECOND3 == 0) {
                     if (EventBus.getDefault().hasSubscriberForEvent(MTime3SecondEvent.class)) {
                         postEvent(new MTime3SecondEvent());
-                        LogEx.d(this, "timerun:MTime3SecondEvent");
                     }
                 }
             } catch (Exception e) {
@@ -95,7 +92,6 @@ public class TimeManage extends ContextEx {
                 if (timeMark % MINUTE30 == 0) {
                     if (EventBus.getDefault().hasSubscriberForEvent(MTime30MinuteEvent.class)) {
                         postEvent(new MTime30MinuteEvent());
-                        LogEx.d(this, "timerun:MTime30MinuteEvent");
                     }
                 }
             } catch (Exception e) {
@@ -106,7 +102,6 @@ public class TimeManage extends ContextEx {
                 if (timeMark % MINUTE == 0) {
                     if (EventBus.getDefault().hasSubscriberForEvent(MTimeMinuteEvent.class)) {
                         postEvent(new MTimeMinuteEvent());
-                        LogEx.d(this, "timerun:MTimeMinuteEvent");
                     }
                 }
             } catch (Exception e) {

@@ -63,7 +63,7 @@ public class AMapCartReceiver extends BroadcastReceiver {
         if (RECEIVE_ACTION.equals(action)) {
             aMapCarPlugin.noticeHeartbeatTime();
             int key = intent.getIntExtra(KEY_TYPE, -1);
-            LogEx.d(this, "getIcon:" + key);
+            LogEx.d(this, "onReceive key:" + key);
             switch (key) {
                 case RECEIVER_RESPONSE_DISTRICT: {
                     intent.getStringExtra(RESPONSE_DISTRICT_PRVINCE_NAME);
@@ -129,8 +129,10 @@ public class AMapCartReceiver extends BroadcastReceiver {
                             && info.getRouteAllDis() != 0
                             && CommonUtil.isNotNull(info.getNextRoadName())
                             && CommonUtil.isNotNull(info.getCurRoadName())) {
+                        LogEx.d(this, "onReceive PAmapEventNavInfo:" + info);
                         EventBus.getDefault().post(info);
                     } else {
+                        LogEx.d(this, "onReceive no nav info");
                         EventBus.getDefault().post(new PAmapEventState().setRunning(false));
                     }
                     break;
@@ -138,6 +140,7 @@ public class AMapCartReceiver extends BroadcastReceiver {
 
                 case RECEIVER_STATE_INFO: {
                     int state = intent.getIntExtra(EXTRA_STATE, -1);
+                    LogEx.d(this, "onReceive state:" + state);
                     if (state == StateInfoConstant.NAV_START
                             || state == StateInfoConstant.MNAV_START) {
                         EventBus.getDefault().post(new PAmapEventState().setRunning(true));
@@ -156,6 +159,7 @@ public class AMapCartReceiver extends BroadcastReceiver {
                 }
                 case RECEIVER_LUKUANG_INFO: {
                     String info = intent.getStringExtra(RECEIVER_LUKUANG_INFO_EXTAR);
+                    LogEx.d(this, "onReceive Lukuang:" + info);
                     Lukuang lukuang = GsonUtil.getGson().fromJson(info, Lukuang.class);
                     if (lukuang != null) {
                         EventBus.getDefault().post(new PAmapLukuangInfo().setLukuang(lukuang));
@@ -167,6 +171,7 @@ public class AMapCartReceiver extends BroadcastReceiver {
                     int state1 = intent.getIntExtra(RECEIVE_NAVI_MUTE_STATE_MUTE, 0);
                     int state2 = intent.getIntExtra(RECEIVE_NAVI_MUTE_STATE_CASUAL_MUTE, 0);
                     EventBus.getDefault().post(new PAmapMuteStateInfo().setMute(state1 == 1 || state2 == 1));
+                    LogEx.d(this, "onReceive mute:" + (state1 == 1 || state2 == 1));
                     break;
                 }
             }

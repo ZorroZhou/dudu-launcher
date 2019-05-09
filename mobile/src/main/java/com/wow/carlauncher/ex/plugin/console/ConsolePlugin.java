@@ -33,7 +33,7 @@ public class ConsolePlugin extends ContextEx {
     public void init(Context context) {
         setContext(context);
         loadConsole();
-        LogEx.d(this, "init ");
+        LogEx.d(this, "init");
     }
 
     private ConsoleProtoclListener consoleListener = new ConsoleProtoclListener() {
@@ -67,29 +67,37 @@ public class ConsolePlugin extends ContextEx {
                 break;
             }
         }
+
+        LogEx.d(this, "loadConsole:" + console);
     }
 
     public void decVolume() {
+        LogEx.d(this, "decVolume");
         console.decVolume();
     }
 
     public void incVolume() {
+        LogEx.d(this, "incVolume");
         console.incVolume();
     }
 
     public void mute() {
+        LogEx.d(this, "mute");
         console.mute();
     }
 
     public void clearTask() {
+        LogEx.d(this, "clearTask");
         console.clearTask();
     }
 
     public void callAnswer() {
+        LogEx.d(this, "callAnswer");
         console.callAnswer();
     }
 
     public void callHangup() {
+        LogEx.d(this, "callHangup");
         console.callHangup();
     }
 }

@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.provider.Settings;
 import android.util.Log;
 
+import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.console.ConsoleProtocl;
 import com.wow.carlauncher.ex.plugin.console.ConsoleProtoclListener;
@@ -52,6 +53,7 @@ public class NwdConsoleImpl extends ConsoleProtocl {
     private BroadcastReceiver callBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
+            LogEx.d(NwdConsoleImpl.this, "callBroadcastReceiver:" + intent.getAction());
             if (ACTION_BT_BEGIN_CALL_ONLINE.equals(intent.getAction())) {
                 listener.callState(true);
             } else if (ACTION_BT_INCOMING_CALL.equals(intent.getAction())) {
@@ -70,8 +72,10 @@ public class NwdConsoleImpl extends ConsoleProtocl {
         public void onReceive(final Context context, final Intent intent) {
             if ("com.nwd.action.ACTION_NO_SOURCE_DEVICE_CHANGE".equals(intent.getAction())) {
                 if ((0x2 & getIntValue(context.getContentResolver(), NO_SOURCE_DEVICE_STATE)) == 2) {
+                    LogEx.d(NwdConsoleImpl.this, "lightState:true");
                     listener.lightState(true);
                 } else {
+                    LogEx.d(NwdConsoleImpl.this, "lightState:false");
                     listener.lightState(false);
                 }
             }

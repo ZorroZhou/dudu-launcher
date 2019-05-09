@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 
+import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.util.NetWorkUtil;
 import com.wow.carlauncher.view.event.EventNetStateChange;
 import com.wow.carlauncher.view.event.EventWifiState;
@@ -19,6 +20,7 @@ public class NetChangeReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(final Context context, Intent intent) {
         if (ConnectivityManager.CONNECTIVITY_ACTION.equals(intent.getAction())) {
+            LogEx.d(this, "BootReceiver bootSuccess");
             // 接口回调传过去状态的类型
             if (NetWorkUtil.isWifiConnected(context)) {
                 EventBus.getDefault().post(new EventWifiState().setUsable(true));

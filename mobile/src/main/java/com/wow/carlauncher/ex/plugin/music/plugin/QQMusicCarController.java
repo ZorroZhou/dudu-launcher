@@ -12,7 +12,7 @@ import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.LrcAnalyze;
 import com.wow.carlauncher.common.util.GsonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
-import com.wow.carlauncher.ex.manage.time.event.MTime3SecondEvent;
+import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 import com.wow.carlauncher.ex.plugin.music.MusciCoverUtil;
 import com.wow.carlauncher.ex.plugin.music.MusicController;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
@@ -94,7 +94,7 @@ public class QQMusicCarController extends MusicController {
     private boolean run = false;
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
-    public void onEvent(final MTime3SecondEvent event) {
+    public void onEvent(final MTimeSecondEvent event) {
         //每隔一秒钟上报一下进度信息
         int ccc = (int) (totalTime + System.currentTimeMillis() - overTime);
         if (ccc < totalTime && run) {

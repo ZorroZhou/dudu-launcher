@@ -122,6 +122,7 @@ public class LWeatherView extends BaseEXView {
 
     @Override
     protected void initView() {
+        fl_base = findViewById(R.id.fl_base);
         LogEx.d(this, "initView: ");
     }
 
@@ -162,8 +163,6 @@ public class LWeatherView extends BaseEXView {
         });
     }
 
-    @BindView(R.id.fl_base)
-    @Nullable
     FrameLayout fl_base;
 
     @BindView(R.id.rl_base)

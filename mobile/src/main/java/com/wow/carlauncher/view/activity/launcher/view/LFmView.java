@@ -7,7 +7,6 @@ import android.content.IntentFilter;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -144,44 +143,33 @@ public class LFmView extends BaseEXView {
 
     @OnClick(value = {R.id.rl_base, R.id.ll_prew, R.id.ll_next, R.id.ll_play})
     public void clickEvent(View view) {
-        switch (view.getId()) {
-            case R.id.rl_base: {
-                break;
-            }
-            case R.id.ll_play: {
-                Intent intent2 = new Intent("com.nwd.action.SL_WIDGET_COMMAND");
-                intent2.putExtra("extra_SL_WIDGET_COMMAND", "switch_band");
-                getContext().sendBroadcast(intent2);
-                break;
-            }
-            case R.id.ll_next: {
-                Intent intent2 = new Intent("com.nwd.action.SL_WIDGET_COMMAND");
-                intent2.putExtra("extra_SL_WIDGET_COMMAND", "decrease");
-                getContext().sendBroadcast(intent2);
-                break;
-            }
-            case R.id.ll_prew: {
+        try {
+            switch (view.getId()) {
+                case R.id.rl_base: {
+                    break;
+                }
+                case R.id.ll_play: {
+//                Intent intent2 = new Intent("com.nwd.action.SL_WIDGET_COMMAND");
+//                intent2.putExtra("extra_SL_WIDGET_COMMAND", "switch_band");
+//                getContext().sendBroadcast(intent2);
+                    break;
+                }
+                case R.id.ll_next: {
+//                Intent intent2 = new Intent("com.nwd.action.SL_WIDGET_COMMAND");
+//                intent2.putExtra("extra_SL_WIDGET_COMMAND", "decrease");
+//                getContext().sendBroadcast(intent2);
+
+                    break;
+                }
+                case R.id.ll_prew: {
 //                Intent intent2 = new Intent("com.nwd.action.SL_WIDGET_COMMAND");
 //                intent2.putExtra("extra_SL_WIDGET_COMMAND", "increase");
 //                getContext().sendBroadcast(intent2);
-
-                Intent localObject = new Intent(Intent.ACTION_MEDIA_BUTTON);
-                //localObject.setClassName("com.ximalaya.ting.android.car", "com.ximalaya.ting.android.opensdk.player.e.a");
-                localObject.putExtra(Intent.EXTRA_KEY_EVENT,
-                        new KeyEvent(System.currentTimeMillis(),
-                                System.currentTimeMillis() + 1,
-                                0,
-                                KeyEvent.KEYCODE_MEDIA_NEXT,
-                                0));
-                getContext().sendOrderedBroadcast(localObject, null);
-
-                localObject = new Intent(Intent.ACTION_MEDIA_BUTTON);
-                localObject.setClassName("com.ximalaya.ting.android.car", "com.ximalaya.ting.android.opensdk.player.e.a");
-                //localObject.putExtra(Intent.EXTRA_KEY_EVENT, new KeyEvent(System.currentTimeMillis(), System.currentTimeMillis() + 1, 1, KeyEvent.KEYCODE_MEDIA_NEXT, 0));
-                getContext().sendOrderedBroadcast(localObject, null);
-                LogEx.d(this, "clickEvent: !!");
-                break;
+                    break;
+                }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -233,7 +221,7 @@ public class LFmView extends BaseEXView {
 //        }
 //    }
 
-//    String str = paramIntent.getAction();
+    //    String str = paramIntent.getAction();
 //    if (this.mIUpdateMusicWidget != null)
 //    {
 //        if (!str.equals("com.nwd.action.ACTION_SEND_RADIO_FREQUENCE")) {
@@ -273,7 +261,6 @@ public class LFmView extends BaseEXView {
 //    {
 //        for (;;) {}
 //    }
-
     @Override
     protected void initView() {
         BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {

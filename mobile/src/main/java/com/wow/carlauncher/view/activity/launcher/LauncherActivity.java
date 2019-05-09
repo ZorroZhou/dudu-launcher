@@ -133,9 +133,8 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
 
         onThemeChanged(ThemeManage.self());
         ThemeManage.self().registerThemeChangeListener(this);
-//        ThemeManage.self().refreshTheme();
-        TaskExecutor.self().run(this::requestRuntime, 1000);
 
+        TaskExecutor.self().run(this::requestRuntime, 1000);
         LogEx.d(this, "onCreate:end");
     }
 
@@ -144,6 +143,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
         setContentView(R.layout.activity_lanncher);
         ButterKnife.bind(this);
         viewPager.addOnPageChangeListener(postion);
+        viewPager.setOffscreenPageLimit(5);
         viewPager.addOnPageChangeListener(new ViewPagerOnPageChangeListener() {
             @Override
             public void onPageSelected(int i) {
@@ -642,6 +642,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
         @NonNull
         @Override
         public Object instantiateItem(@NonNull ViewGroup container, int position) {
+            LogEx.e(LauncherActivity.this, "instantiateItem");
             View view = datas[position];
             if (view.getParent() instanceof ViewGroup) {
                 ((ViewGroup) view.getParent()).removeView(view);
@@ -653,6 +654,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
         @Override
         public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
             container.removeView(datas[position]);
+            LogEx.e(LauncherActivity.this, "destroyItem");
         }
     }
 

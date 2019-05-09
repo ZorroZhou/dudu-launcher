@@ -10,7 +10,6 @@ import com.wow.carlauncher.ex.manage.time.event.MTime30MinuteEvent;
 import com.wow.carlauncher.ex.manage.time.event.MTime3SecondEvent;
 import com.wow.carlauncher.ex.manage.time.event.MTimeHalfSecondEvent;
 import com.wow.carlauncher.ex.manage.time.event.MTimeMinuteEvent;
-import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -68,16 +67,6 @@ public class TimeManage extends ContextEx {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            try {
-                if (timeMark % SECOND == 0) {
-                    if (EventBus.getDefault().hasSubscriberForEvent(MTimeSecondEvent.class)) {
-                        postEvent(new MTimeSecondEvent());
-                    }
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
             try {
                 if (timeMark % SECOND3 == 0) {
                     if (EventBus.getDefault().hasSubscriberForEvent(MTime3SecondEvent.class)) {

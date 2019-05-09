@@ -1,5 +1,6 @@
 package com.wow.carlauncher.ex.manage;
 
+import android.annotation.SuppressLint;
 import android.appwidget.AppWidgetHost;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProviderInfo;
@@ -11,6 +12,7 @@ import com.wow.carlauncher.common.LogEx;
 import static com.wow.carlauncher.common.CommonData.APP_WIDGET_HOST_ID;
 
 public class AppWidgetManage {
+    @SuppressLint("StaticFieldLeak")
     private static AppWidgetManage self;
 
     public static AppWidgetManage self() {

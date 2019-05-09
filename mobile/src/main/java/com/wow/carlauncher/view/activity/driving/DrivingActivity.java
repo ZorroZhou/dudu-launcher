@@ -14,8 +14,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by 10124 on 2018/4/25.
@@ -45,17 +43,12 @@ public class DrivingActivity extends BaseActivity {
     private void loadView() {
         nowContent = new CoolBlackView(this);
         content.addView(nowContent, FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
-        ButterKnife.bind(this, nowContent);
-    }
-
-    @OnClick(value = {R.id.btn_back})
-    void clickEvent(View view) {
-        switch (view.getId()) {
-            case R.id.btn_back: {
+        nowContent.findViewById(R.id.btn_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 moveTaskToBack(isTaskRoot());
-                break;
             }
-        }
+        });
     }
 
     @Override

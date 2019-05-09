@@ -257,7 +257,7 @@ public class LWeatherView extends BaseEXView {
                     @Override
                     public void callback(WeatherRes res) {
                         runninng = false;
-                        if (Integer.valueOf(1).equals(res.getStatus()) && res.getLives().size() > 0) {
+                        if (res != null && Integer.valueOf(1).equals(res.getStatus()) && res.getLives().size() > 0) {
                             lastUpdate = System.currentTimeMillis();
                             WeatherRes.CityWeather cityWeather = res.getLives().get(0);
                             if (cityWeather != null) {

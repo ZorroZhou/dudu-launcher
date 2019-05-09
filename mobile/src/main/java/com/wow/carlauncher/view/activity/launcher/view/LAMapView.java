@@ -426,21 +426,23 @@ public class LAMapView extends BaseEXView {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final MNewLocationEvent event) {
-        if (!loactionOk && event.getLocationType() == AMapLocation.LOCATION_TYPE_GPS && SharedPreUtil.getBoolean(CommonData.SDATA_USE_NAVI_XUNHYANG, false)) {
-            loactionOk = true;
-            iv_moren.setVisibility(GONE);
-            rl_che.setVisibility(VISIBLE);
-            if (currentTheme == WHITE || currentTheme == BLACK) {
-                line11.setVisibility(GONE);
-            } else {
-                line11.setVisibility(VISIBLE);
+        if (event.getLocationType() == AMapLocation.LOCATION_TYPE_GPS && SharedPreUtil.getBoolean(CommonData.SDATA_USE_NAVI_XUNHYANG, false)) {
+            if (!loactionOk) {
+                loactionOk = true;
+                iv_moren.setVisibility(GONE);
+                rl_che.setVisibility(VISIBLE);
+                if (currentTheme == WHITE || currentTheme == BLACK) {
+                    line11.setVisibility(GONE);
+                } else {
+                    line11.setVisibility(VISIBLE);
+                }
+                fl_xunhang_root.setVisibility(VISIBLE);
             }
-            fl_xunhang_root.setVisibility(VISIBLE);
-        }
-        //方向取值范围：【0，360】，其中0度表示正北方向，90度表示正东，180度表示正南，270度表示正西
-        if (tv_speed != null) {
-            String msg = (int) (event.getSpeed() * 60 * 60 / 1000) + "";
-            tv_speed.setText(msg);
+            //方向取值范围：【0，360】，其中0度表示正北方向，90度表示正东，180度表示正南，270度表示正西
+            if (tv_speed != null) {
+                String msg = (int) (event.getSpeed() * 60 * 60 / 1000) + "";
+                tv_speed.setText(msg);
+            }
         }
     }
 

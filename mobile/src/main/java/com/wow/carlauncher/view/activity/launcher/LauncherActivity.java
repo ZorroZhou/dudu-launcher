@@ -134,7 +134,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
         onThemeChanged(ThemeManage.self());
         ThemeManage.self().registerThemeChangeListener(this);
 
-        TaskExecutor.self().run(this::requestRuntime, 1000);
+        TaskExecutor.self().run(() -> TaskExecutor.self().autoPost(this::requestRuntime), 1000);
         LogEx.d(this, "onCreate:end");
     }
 
@@ -465,9 +465,6 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
                             home.addCategory(Intent.CATEGORY_HOME);
                             home.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
                             startActivity(home);
-
-//                            Intent home = new Intent(this, LauncherActivity.class);
-//                            startActivity(home);
                         });
                     }
                     break;
@@ -547,11 +544,12 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
     }
 
     private RuntimeRequester mRuntimeRequester;
+    private AnyPermission anyPermission;
 
     private void requestRuntime() {
-        LogEx.d(this, "reggister home receiver");
-        final AnyPermission anyPermission = AnyPermission.with(this);
-        mRuntimeRequester = AnyPermission.with(this).runtime(1)
+        LogEx.d(this, "requestRuntime request permission");
+        anyPermission = AnyPermission.with(this);
+        mRuntimeRequester = anyPermission.runtime(1)
                 .permissions(
                         Manifest.permission.ACCESS_NETWORK_STATE,
                         Manifest.permission.ACCESS_WIFI_STATE,
@@ -612,7 +610,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
                 .request(new RequestListener() {
                     @Override
                     public void onSuccess() {
-                        ToastManage.self().show("权限检查成功");
+
                     }
 
                     @Override

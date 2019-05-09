@@ -8,6 +8,8 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.view.KeyEvent;
 
+import com.wow.carlauncher.common.LogEx;
+import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.ex.plugin.music.MusicController;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 
@@ -101,6 +103,10 @@ public class SystemMusicController extends MusicController {
         intentFilter.addAction("soundbar.music.metachanged");
         intentFilter.addAction("com.dogsbark.noozy.metadatachanged");
         intentFilter.addAction("com.dogsbark.noozy.playstatechanged");
+        intentFilter.addAction("com.kugou.android.auto.music.playstatechanged");
+        intentFilter.addAction("com.kugou.android.auto.music.metachanged");
+        intentFilter.addAction("com.kugou.android.music.metachanged");
+        intentFilter.addAction("com.kugou.android.music.playstatechanged");
         this.context.registerReceiver(mReceiver, intentFilter);
 
         clazzs = new HashMap<>();
@@ -108,6 +114,7 @@ public class SystemMusicController extends MusicController {
         PackageManager pm = context.getPackageManager();
         List<ResolveInfo> list = pm.queryBroadcastReceivers(intent, 0);
         for (ResolveInfo resolveInfo : list) {
+            LogEx.e(this, resolveInfo.activityInfo.name);
             if ((!resolveInfo.activityInfo.name.equals("com.spotify.music.internal.receiver.VideoMediaButtonReceiver")) &&
                     (!resolveInfo.activityInfo.name.equals("com.sec.factory.app.factorytest.MediaButtonIntentReceiver")) &&
                     (!resolveInfo.activityInfo.name.equals("flipboard.service.audio.MediaPlayerService$MusicIntentReceiver")) &&
@@ -156,16 +163,10 @@ public class SystemMusicController extends MusicController {
 
     private void sendEvent(int event) {
         Intent localObject = new Intent(Intent.ACTION_MEDIA_BUTTON);
-        if (PACKAGE_NAME != null) {
-            localObject.setClassName(PACKAGE_NAME, clazzs.get(PACKAGE_NAME));
-        }
         localObject.putExtra(Intent.EXTRA_KEY_EVENT, new KeyEvent(System.currentTimeMillis(), System.currentTimeMillis() + 1, 0, event, 0));
         context.sendOrderedBroadcast(localObject, null);
 
         localObject = new Intent(Intent.ACTION_MEDIA_BUTTON);
-        if (PACKAGE_NAME != null) {
-            localObject.setClassName(PACKAGE_NAME, clazzs.get(PACKAGE_NAME));
-        }
         localObject.putExtra(Intent.EXTRA_KEY_EVENT, new KeyEvent(System.currentTimeMillis(), System.currentTimeMillis() + 1, 1, event, 0));
         context.sendOrderedBroadcast(localObject, null);
     }
@@ -189,8 +190,15 @@ public class SystemMusicController extends MusicController {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+            LogEx.e(SystemMusicController.this, "onReceive: " + intent.getAction());
+            if (intent.getExtras() != null) {
+                for (String key : intent.getExtras().keySet()) {
+                    LogEx.e(SystemMusicController.this, key + ": " + intent.getExtras().get(key));
+                }
+            }
 
-            if ("com.android.music.playstatechanged".equals(intent.getAction())) {
+
+            if (CommonUtil.isNotNull(intent.getAction()) && intent.getAction().contains("playstatechanged")) {
                 try {
                     Boolean playstate = intent.getBooleanExtra("playstate", false);
                     musicPlugin.refreshState(playstate, false);
@@ -210,7 +218,7 @@ public class SystemMusicController extends MusicController {
 
                 try {
                     if (intent.getStringExtra("artist") != null && intent.getStringExtra("track") != null) {
-                        musicPlugin.refreshInfo(intent.getStringExtra("track"), intent.getStringExtra("artist"),false);
+                        musicPlugin.refreshInfo(intent.getStringExtra("track"), intent.getStringExtra("artist"), false);
                     }
                 } catch (Exception e) {
                 }

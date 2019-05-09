@@ -269,8 +269,10 @@ public class LPromptView extends BaseEXView {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(MNewLocationEvent event) {
-        this.locationEvent = event;
-        iv_location.setVisibility(VISIBLE);
+        if (!event.getAdCode().equals(locationEvent.getAdCode())) {
+            this.locationEvent = event;
+            iv_location.setVisibility(VISIBLE);
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

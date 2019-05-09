@@ -301,8 +301,10 @@ public class LWeatherView extends BaseEXView {
                 frist = true;
             }
         }
-        lastLocation = event;
-        refreshShow();
+        if (frist) {
+            lastLocation = event;
+            refreshShow();
+        }
         refreshWeather(frist);
     }
 }

@@ -104,6 +104,7 @@ public class ThemeManage {
      */
     public void setTheme(Theme theme) {
         if (this.theme != theme) {
+            LogEx.d(this, "setTheme : " + theme);
             this.theme = theme;
             if (listeners.size() > 0) {
                 TaskExecutor.self().autoPost(() -> {

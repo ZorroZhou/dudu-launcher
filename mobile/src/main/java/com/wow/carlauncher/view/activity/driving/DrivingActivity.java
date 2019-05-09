@@ -1,6 +1,5 @@
 package com.wow.carlauncher.view.activity.driving;
 
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
@@ -43,12 +42,7 @@ public class DrivingActivity extends BaseActivity {
     private void loadView() {
         nowContent = new CoolBlackView(this);
         content.addView(nowContent, FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
-        nowContent.findViewById(R.id.btn_back).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                moveTaskToBack(isTaskRoot());
-            }
-        });
+        nowContent.findViewById(R.id.btn_back).setOnClickListener(v -> moveTaskToBack(isTaskRoot()));
     }
 
     @Override

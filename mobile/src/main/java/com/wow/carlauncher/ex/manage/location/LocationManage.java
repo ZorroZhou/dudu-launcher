@@ -71,6 +71,7 @@ public class LocationManage extends ContextEx implements AMapLocationListener {
     @Override
     public void onLocationChanged(AMapLocation aMapLocation) {
         if (aMapLocation != null && aMapLocation.getErrorCode() == 0 && CommonUtil.isNotNull(aMapLocation.getCity())) {
+            LogEx.d(this, "location success");
             postEvent(new MNewLocationEvent()
                     .setLocationType(aMapLocation.getLocationType())
                     .setBearing(aMapLocation.getBearing())
@@ -80,6 +81,8 @@ public class LocationManage extends ContextEx implements AMapLocationListener {
                     .setAdCode(aMapLocation.getAdCode())
                     .setLatitude(aMapLocation.getLatitude())
                     .setLongitude(aMapLocation.getLongitude()));
+        } else {
+            LogEx.d(this, "location fail");
         }
     }
 }

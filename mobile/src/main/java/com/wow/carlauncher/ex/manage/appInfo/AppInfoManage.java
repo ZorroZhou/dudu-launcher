@@ -9,7 +9,6 @@ import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.AppIconTemp;
@@ -102,10 +101,11 @@ public class AppInfoManage extends ContextEx {
         internalAppsInfoMap.put(INTERNAL_APP_SETTING, new InternalAppInfo("桌面设置", INTERNAL_APP_SETTING, MARK_INTERNAL_APP, SetActivity.class));
         refreshAppInfo();
 
-        LogEx.d(this, "init ");
+        LogEx.d(this, "init");
     }
 
     private AppInfo getAppInfo(String app) {
+        LogEx.d(this, "getAppInfo:" + app);
         if (CommonUtil.isNull(app)) {
             return null;
         }
@@ -126,6 +126,7 @@ public class AppInfoManage extends ContextEx {
     }
 
     public Drawable getIcon(String app, boolean withTheme) {
+        LogEx.d(this, "getIcon:" + app);
         Resources resources = getContext().getResources();
         AppInfo info = getAppInfo(app);
         if (info != null) {
@@ -171,6 +172,7 @@ public class AppInfoManage extends ContextEx {
     }
 
     public CharSequence getName(String app) {
+        LogEx.d(this, "getName:" + app);
         AppInfo info = getAppInfo(app);
         if (info != null) {
             return info.name;
@@ -179,15 +181,14 @@ public class AppInfoManage extends ContextEx {
     }
 
     public boolean checkApp(String app) {
+        LogEx.d(this, "checkApp:" + app);
         //这里应该是没加载完
         AppInfo info = getAppInfo(app);
-        if (info != null) {
-            return true;
-        }
-        return false;
+        return info != null;
     }
 
     public boolean openApp(String app) {
+        LogEx.d(this, "openApp:" + app);
         AppInfo info = getAppInfo(app);
         if (info != null) {
             if (info.appMark == MARK_OTHER_APP) {
@@ -213,9 +214,9 @@ public class AppInfoManage extends ContextEx {
     private static final byte[] LOCK1 = new byte[0];
 
     public void refreshAppInfo() {
+        LogEx.d(this, "refreshAppInfo");
         TaskExecutor.self().run(() -> {
             synchronized (LOCK1) {
-                Log.e(CommonData.TAG, "refreshAppInfo: ");
                 Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
                 mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
                 final List<ResolveInfo> apps = packageManager.queryIntentActivities(
@@ -250,6 +251,7 @@ public class AppInfoManage extends ContextEx {
     private static final byte[] LOCK2 = new byte[0];
 
     public void refreshShowApp() {
+        LogEx.d(this, "refreshShowApp");
         TaskExecutor.self().run(() -> {
             synchronized (LOCK2) {
                 showAppInfosList.clear();

@@ -49,7 +49,7 @@ public class ImageManage {
                 .threadPriority(Thread.NORM_PRIORITY - 2)
                 .tasksProcessingOrder(QueueProcessingType.FIFO)
                 .denyCacheImageMultipleSizesInMemory()
-                .memoryCache(new LruMemoryCache(024))//你可以通过自己的内存缓存实现
+                .memoryCache(new LruMemoryCache(1024))//你可以通过自己的内存缓存实现
                 .memoryCacheSize(1024)// 缓存到内存的最大数据
                 .memoryCacheSizePercentage(13)
                 .diskCacheSize(50 * 1024 * 1024)// //缓存到文件的最大数据
@@ -61,7 +61,7 @@ public class ImageManage {
                 .build();
         ImageLoader.getInstance().init(config);// 初始化
 
-        LogEx.d(this, "init ");
+        LogEx.d(this, "init");
     }
 
     public DisplayImageOptions buildDisplayOption(int resId) {
@@ -72,14 +72,17 @@ public class ImageManage {
     }
 
     public void loadImage(String url, ImageView imageView) {
+        LogEx.d(this, "loadImage:" + url);
         ImageLoader.getInstance().displayImage(url, imageView, DEFAULT_DISPLAY_OPTION);
     }
 
     public void loadImage(String url, ImageView imageView, int def) {
+        LogEx.d(this, "loadImage:" + url);
         ImageLoader.getInstance().displayImage(url, imageView, buildDisplayOption(def));
     }
 
     public Bitmap loadImageSync(String url) {
+        LogEx.d(this, "loadImageSync:" + url);
         return ImageLoader.getInstance().loadImageSync(url, DEFAULT_DISPLAY_OPTION);
     }
 }

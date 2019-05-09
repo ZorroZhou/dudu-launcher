@@ -2,7 +2,6 @@ package com.wow.carlauncher.ex.manage.ble;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 
 import com.inuker.bluetooth.library.BluetoothClient;
 import com.inuker.bluetooth.library.connect.listener.BleConnectStatusListener;
@@ -11,6 +10,7 @@ import com.inuker.bluetooth.library.connect.response.BleNotifyResponse;
 import com.inuker.bluetooth.library.search.SearchRequest;
 import com.inuker.bluetooth.library.search.SearchResult;
 import com.inuker.bluetooth.library.search.response.SearchResponse;
+import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.ex.ContextEx;
 
@@ -19,7 +19,6 @@ import java.util.Map;
 import java.util.UUID;
 
 import static com.inuker.bluetooth.library.Constants.REQUEST_SUCCESS;
-import static com.wow.carlauncher.common.CommonData.TAG;
 
 /**
  * Created by 10124 on 2018/4/22.
@@ -109,6 +108,7 @@ public class BleManage extends ContextEx {
     }
 
     public void disconnect(String mark) {
+        LogEx.d(this, "disconnect:" + mark);
         statusListener.remove(mark);
         if (markMacMap.containsKey(mark)) {
             bluetoothClient.disconnect(markMacMap.get(mark));
@@ -126,12 +126,14 @@ public class BleManage extends ContextEx {
 
     public void connect(String mark, String mac, UUID notifyService, UUID notifyCharacter, BleConnectStatusListener myBleConnectStatusListener) {
         if (!bluetoothClient.isBleSupported() || !bluetoothClient.isBluetoothOpened()) {
+            LogEx.d(this, "ble not supported or not open");
             BleListener bleListener = listeners.get(mark);
             if (bleListener != null) {
                 bleListener.connect(false);
             }
             return;
         }
+        LogEx.d(this, "connect:" + mark);
         bluetoothClient.clearRequest(mac, 0);
         bluetoothClient.refreshCache(mac);
         BleConnectStatusListener listener = statusListener.get(mark);
@@ -147,7 +149,7 @@ public class BleManage extends ContextEx {
         final BleListener bleListener = listeners.get(mark);
         TaskExecutor.self().run(() -> bluetoothClient.connect(mac, options, (code, data) -> {
             if (code == REQUEST_SUCCESS) {
-                Log.d(TAG, mac + "onResponse: 连接成功!!!");
+                LogEx.d(BleManage.this, mac + " connect success");
                 bluetoothClient.notify(mac,
                         notifyService,
                         notifyCharacter,
@@ -165,11 +167,12 @@ public class BleManage extends ContextEx {
 
                             @Override
                             public void onResponse(int code) {
-                                Log.d(TAG, "onResponse: " + code);
                                 if (bleListener != null) {
                                     if (code == REQUEST_SUCCESS) {
+                                        LogEx.d(BleManage.this, mac + " find service success");
                                         bleListener.connect(true);
                                     } else {
+                                        LogEx.d(BleManage.this, mac + " find service fail");
                                         bleListener.connect(false);
                                     }
                                 }
@@ -180,12 +183,12 @@ public class BleManage extends ContextEx {
                             }
                         });
             } else {
+                LogEx.d(BleManage.this, mac + "connect fail");
                 if (bleListener != null) {
                     bleListener.connect(false);
                 }
                 disconnect(mark);
                 bluetoothClient.disconnect(mac);
-                Log.d(TAG, mac + "onResponse: 连接失败!!!");
             }
         }));
     }

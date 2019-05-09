@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
+import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.GsonUtil;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventNavInfo;
@@ -62,6 +63,7 @@ public class AMapCartReceiver extends BroadcastReceiver {
         if (RECEIVE_ACTION.equals(action)) {
             aMapCarPlugin.noticeHeartbeatTime();
             int key = intent.getIntExtra(KEY_TYPE, -1);
+            LogEx.d(this, "getIcon:" + key);
             switch (key) {
                 case RECEIVER_RESPONSE_DISTRICT: {
                     intent.getStringExtra(RESPONSE_DISTRICT_PRVINCE_NAME);

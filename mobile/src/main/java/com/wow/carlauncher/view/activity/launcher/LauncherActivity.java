@@ -4,13 +4,13 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.WallpaperManager;
-import android.appwidget.AppWidgetManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
@@ -25,6 +25,7 @@ import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.ViewPagerOnPageChangeListener;
+import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
@@ -35,7 +36,6 @@ import com.wow.carlauncher.ex.plugin.console.ConsolePlugin;
 import com.wow.carlauncher.ex.plugin.console.event.PConsoleEventCallState;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventAction;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
-import com.wow.carlauncher.view.activity.launcher.event.LEventRefreshFmPluginTest;
 import com.wow.carlauncher.view.activity.launcher.event.LItemRefreshEvent;
 import com.wow.carlauncher.view.activity.launcher.event.LItemToFristEvent;
 import com.wow.carlauncher.view.activity.launcher.event.LLayoutRefreshEvent;
@@ -63,8 +63,6 @@ import per.goweii.anypermission.AnyPermission;
 import per.goweii.anypermission.RequestListener;
 import per.goweii.anypermission.RuntimeRequester;
 
-import static com.wow.carlauncher.common.CommonData.APP_WIDGET_FM_PLUGIN;
-import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_FM_PLUGIN;
 import static com.wow.carlauncher.common.CommonData.SDATA_HOME_FULL;
 import static com.wow.carlauncher.common.CommonData.SDATA_LAUNCHER_ITEM_TRAN;
 import static com.wow.carlauncher.common.CommonData.SDATA_LAUNCHER_LAYOUT;
@@ -109,33 +107,40 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        LogEx.d(this, "onCreate:start ");
+        LogEx.d(this, "onCreate:start");
         //防止初始化两次
         if (old != null) {
+            LogEx.d(this, "exist old activity");
             old.finish();
         }
         old = this;
 
         if (SharedPreUtil.getBoolean(SDATA_HOME_FULL, true)) {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            LogEx.d(this, "home full : true");
+        } else {
+            LogEx.d(this, "home full : false");
         }
+
 
         //超级大坑,必去全局设置才能用
         ThemeManage.self().refreshTheme();
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
         registerReceiver(homeReceiver, intentFilter);
+        LogEx.d(this, "register home receiver");
         initView();
 
         onThemeChanged(ThemeManage.self());
         ThemeManage.self().registerThemeChangeListener(this);
-        ThemeManage.self().refreshTheme();
+//        ThemeManage.self().refreshTheme();
         TaskExecutor.self().run(this::requestRuntime, 1000);
 
-        LogEx.d(this, "onCreate:end ");
+        LogEx.d(this, "onCreate:end");
     }
 
     public void initView() {
+        LogEx.d(this, "initView:start");
         setContentView(R.layout.activity_lanncher);
         ButterKnife.bind(this);
         viewPager.addOnPageChangeListener(postion);
@@ -153,12 +158,13 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
         initApps();
         refreshViewPager();
         loadLayout();
+        LogEx.d(this, "initView:end");
     }
 
     private LPageView[] itemPager;
 
     private void initItem() {
-        LogEx.d(this, "initItem");
+        LogEx.d(this, "initItem:start");
         //计算排序
         List<ItemModel> items = new ArrayList<>();
         for (ItemEnum item : CommonData.LAUNCHER_ITEMS) {
@@ -212,12 +218,13 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
             }
         }
         //初始化完毕
+        LogEx.d(this, "initItem:end");
     }
 
     private LAppsView[] appsPager;
 
     private void initApps() {
-        LogEx.d(this, "initApps");
+        LogEx.d(this, "initApps:start");
         //获取每页的item数量
         int psize = getPageItemNum();
         int appsize = AppInfoManage.self().getShowAppInfos().size();
@@ -231,9 +238,11 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
         for (int i = 0; i < appPageNum; i++) {
             appsPager[i] = new LAppsView(this, psize, i);
         }
+        LogEx.d(this, "initApps:end");
     }
 
     private void loadLayout() {
+        LogEx.d(this, "loadLayout:start");
         if (ll_top.getParent() != null) {
             ((ViewGroup) ll_top.getParent()).removeView(ll_top);
         }
@@ -280,9 +289,11 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
         for (LAppsView lAppsView : appsPager) {
             lAppsView.setLayoutEnum(layoutEnum);
         }
+        LogEx.d(this, "loadLayout:end");
     }
 
     private void refreshViewPager() {
+        LogEx.d(this, "refreshViewPager:start");
         //最后合并一下两个数组,展示出来
         View[] showViews = new View[itemPager.length + appsPager.length];
         for (int i = 0; i < showViews.length; i++) {
@@ -301,11 +312,13 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
             lastPagerNum = viewAdapter.getCount() - 1;
         }
         viewPager.setCurrentItem(lastPagerNum);
+        LogEx.d(this, "refreshViewPager:end");
     }
 
 
     @Override
     public void onThemeChanged(ThemeManage manage) {
+        LogEx.d(this, "onThemeChanged:start");
         if (manage.getTheme().equals(ThemeManage.Theme.KBLACK)) {
             WallpaperManager wallpaperManager = WallpaperManager
                     .getInstance(getApplicationContext());
@@ -315,7 +328,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
         } else {
             ll_base.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_desk_bg));
         }
-        LogEx.d(this, "onThemeChanged ");
+        LogEx.d(this, "onThemeChanged:end");
     }
 
     @Override
@@ -323,18 +336,6 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
         super.onActivityResult(requestCode, resultCode, data);
         if (mRuntimeRequester != null) {
             mRuntimeRequester.onActivityResult(requestCode);
-        }
-        if (resultCode == RESULT_OK) {
-            switch (requestCode) {
-                case REQUEST_SELECT_FM_PLUGIN: {
-                    int id = data.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1);
-                    SharedPreUtil.saveInteger(APP_WIDGET_FM_PLUGIN, id);
-                    EventBus.getDefault().post(new LEventRefreshFmPluginTest());
-                    break;
-                }
-                default:
-                    break;
-            }
         }
     }
 
@@ -362,22 +363,26 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final LLayoutRefreshEvent event) {
+        LogEx.d(this, "LLayoutRefreshEvent");
         loadLayout();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final SEventSetHomeFull event) {
+        LogEx.d(this, "SEventSetHomeFull");
         this.recreate();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final MAppInfoRefreshShowEvent event) {
+        LogEx.d(this, "MAppInfoRefreshShowEvent");
         initApps();
         refreshViewPager();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(LItemRefreshEvent event) {
+        LogEx.d(this, "LItemRefreshEvent");
         initItem();
         initApps();
         refreshViewPager();
@@ -385,11 +390,13 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(LItemToFristEvent event) {
+        LogEx.d(this, "LItemToFristEvent");
         viewPager.setCurrentItem(0, true);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(SEventPromptShowRefresh event) {
+        LogEx.d(this, "SEventPromptShowRefresh");
         ll_top.setVisibility(SharedPreUtil.getBoolean(SDATA_LAUNCHER_PROMPT_SHOW, true) ? View.VISIBLE : View.GONE);
     }
 
@@ -403,6 +410,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void onEvent(MNewLocationEvent event) {
         if (!event.getAdCode().equals(lastadCode)) {
+            LogEx.d(this, "MNewLocationEvent");
             lastadCode = event.getAdCode();
             ToastManage.self().show("定位成功:" + event.getCity());
         }
@@ -410,6 +418,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void onEvent(LPageTransformerChangeEvent event) {
+        LogEx.d(this, "LPageTransformerChangeEvent");
         viewPager.setPageTransformer(true, ItemTransformer.getById(SharedPreUtil.getInteger(SDATA_LAUNCHER_ITEM_TRAN, ItemTransformer.None.getId())).getTransformer());
     }
 
@@ -418,12 +427,14 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void onEvent(final PConsoleEventCallState event) {
+        LogEx.d(this, "PConsoleEventCallState");
         isCalling = event.isCalling();
     }
 
     @Subscribe
     public void onEvent(PFkEventAction event) {
         if (YLFK.equals(event.getFangkongProtocol())) {
+            LogEx.d(this, "PFkEventAction : " + event.getAction());
             switch (event.getAction()) {
                 case LEFT_TOP_CLICK: {
                     ConsolePlugin.self().decVolume();
@@ -514,6 +525,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
     }
 
     private void showConsoleWin() {
+        LogEx.d(this, "showConsoleWin");
         TaskExecutor.self().autoPost(() -> AnyPermission.with(getApplicationContext()).overlay()
                 .onWithoutPermission((data, executor) -> {
                     new AlertDialog.Builder(getApplicationContext()).setTitle("警告!")
@@ -537,6 +549,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
     private RuntimeRequester mRuntimeRequester;
 
     private void requestRuntime() {
+        LogEx.d(this, "reggister home receiver");
         final AnyPermission anyPermission = AnyPermission.with(this);
         mRuntimeRequester = AnyPermission.with(this).runtime(1)
                 .permissions(
@@ -622,12 +635,13 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
         }
 
         @Override
-        public boolean isViewFromObject(View view, Object object) {
+        public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
             return view == object;
         }
 
+        @NonNull
         @Override
-        public Object instantiateItem(ViewGroup container, int position) {
+        public Object instantiateItem(@NonNull ViewGroup container, int position) {
             View view = datas[position];
             if (view.getParent() instanceof ViewGroup) {
                 ((ViewGroup) view.getParent()).removeView(view);
@@ -637,7 +651,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
         }
 
         @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
+        public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
             container.removeView(datas[position]);
         }
     }
@@ -649,10 +663,12 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            if (action.equals(Intent.ACTION_CLOSE_SYSTEM_DIALOGS)) {
+            if (CommonUtil.isNotNull(action) && action.equals(Intent.ACTION_CLOSE_SYSTEM_DIALOGS)) {
+                LogEx.d(LauncherActivity.this, action);
                 String reason = intent.getStringExtra(SYSTEM_REASON);
                 if (TextUtils.equals(reason, SYSTEM_HOME_KEY)) {
                     //表示按了home键,程序到了后台
+                    LogEx.d(LauncherActivity.this, "show:" + show);
                     if (show) {
                         if (viewPager != null) {
                             viewPager.setCurrentItem(0, true);

@@ -70,6 +70,7 @@ public class ThemeManage {
 
     public void refreshTheme() {
         ThemeMode model = ThemeMode.getById(SharedPreUtil.getInteger(SDATA_APP_THEME, ThemeMode.SHIJIAN.getId()));
+        LogEx.d(this, "refreshTheme : " + model);
         switch (model) {
             case BAISE:
                 setTheme(WHITE);
@@ -87,8 +88,10 @@ public class ThemeManage {
                 if (System.currentTimeMillis() - shijianUpdate > HOUR_MILL) {
                     shijianUpdate = System.currentTimeMillis();
                     if (SunRiseSetUtil.isNight(lon, lat, new Date())) {
+                        LogEx.d(this, "refreshTheme : night");
                         setTheme(Theme.getById(SharedPreUtil.getInteger(SDATA_APP_THEME_NIGHT, Theme.BLACK.getId())));
                     } else {
+                        LogEx.d(this, "refreshTheme : day");
                         setTheme(Theme.getById(SharedPreUtil.getInteger(SDATA_APP_THEME_DAY, Theme.WHITE.getId())));
                     }
                 }
@@ -197,6 +200,7 @@ public class ThemeManage {
      */
     public void registerThemeChangeListener(OnThemeChangeListener listener) {
         if (!listeners.contains(listener)) {
+            LogEx.d(this, "registerThemeChangeListener:" + listener);
             listeners.add(listener);
         }
     }
@@ -207,6 +211,7 @@ public class ThemeManage {
      * @param listener
      */
     public void unregisterThemeChangeListener(OnThemeChangeListener listener) {
+        LogEx.d(this, "unregisterThemeChangeListener:" + listener);
         listeners.remove(listener);
     }
 

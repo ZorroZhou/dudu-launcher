@@ -3,9 +3,8 @@ package com.wow.carlauncher.receiver;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
-import com.wow.carlauncher.common.CommonData;
+import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 
 /**
@@ -18,7 +17,7 @@ public class AppInstallReceiver extends BroadcastReceiver {
         if (intent.getAction() != null && (intent.getAction().equals(Intent.ACTION_PACKAGE_ADDED) ||
                 intent.getAction().equals(Intent.ACTION_PACKAGE_REMOVED) ||
                 intent.getAction().equals(Intent.ACTION_PACKAGE_REPLACED))) {
-            Log.e(CommonData.TAG, "onReceive:???????? ");
+            LogEx.d(this, "AppInstallReceiver");
             AppInfoManage.self().refreshAppInfo();
         }
     }

@@ -84,7 +84,6 @@ public class CommonData {
     public static final int APP_WIDGET_HOST_ID = 0x200;
 
     public static final String APP_WIDGET_AMAP_PLUGIN = "APP_WIDGET_AMAP_PLUGIN";
-    public static final String APP_WIDGET_FM_PLUGIN = "APP_WIDGET_FM_PLUGIN";
 
     public static final String[] POPUP_SIZE = {"小", "中", "大"};
 
@@ -97,15 +96,9 @@ public class CommonData {
 
     //
     public static final int REQUEST_SELECT_AMAP_PLUGIN = 10004;
-    public static final int REQUEST_SELECT_FM_PLUGIN = 10005;
 
     //-------------------------------Intent传输数据时使用的mark-startWakeUp-----------------------------------
-    //应用包名
-    public static final String IDATA_APP_PACKAGE_NAME = "IDATA_APP_PACKAGE_NAME";
-    //应用标记
-    public static final String IDATA_APP_MARK = "IDATA_APP_MARK";
     //-------------------------------Intent传输数据时使用的mark-end-----------------------------------
-
 
     //-------------------------------本地缓存使用的mark-startWakeUp-----------------------------------
     //音乐播放器的控制器

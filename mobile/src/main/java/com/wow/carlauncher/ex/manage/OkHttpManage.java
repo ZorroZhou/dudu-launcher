@@ -3,6 +3,8 @@ package com.wow.carlauncher.ex.manage;
 import android.annotation.SuppressLint;
 import android.content.Context;
 
+import com.wow.carlauncher.common.LogEx;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -31,6 +33,7 @@ public class OkHttpManage {
     }
 
     public void get(String url, Callback callback) {
+        LogEx.d(this, "get:" + url);
         Request request = new Request.Builder().get().url(url).build();
         Call call = okHttpClient.newCall(request);
         call.enqueue(callback);

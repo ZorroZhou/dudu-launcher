@@ -28,12 +28,13 @@ public class ToastManage extends ContextEx {
 
     public void init(Context context) {
         setContext(context);
-      LogEx.d(this, "init ");
+        LogEx.d(this, "init");
     }
 
     private static Toast toast;
 
     public synchronized void show(final String msg) {
+        LogEx.d(this, "show:" + msg);
         TaskExecutor.self().autoPost(() -> {
             if (toast != null) {
                 toast.cancel();

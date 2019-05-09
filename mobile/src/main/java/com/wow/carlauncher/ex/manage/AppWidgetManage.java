@@ -34,10 +34,11 @@ public class AppWidgetManage {
         appWidgetHost.startListening();
 
 
-        LogEx.d(this, "init ");
+        LogEx.d(this, "init");
     }
 
     public View getWidgetById(int id) {
+        LogEx.d(this, "getWidgetById:" + id);
         AppWidgetProviderInfo popupWidgetInfo = appWidgetManager.getAppWidgetInfo(id);
         return appWidgetHost.createView(context, id, popupWidgetInfo);
     }

@@ -18,6 +18,7 @@ import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
+import com.wow.carlauncher.common.util.ViewUtils;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfo;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
@@ -124,10 +125,13 @@ public class LDockView extends BaseEXView {
                         oldHeight = ll_base.getHeight();
 
                         ll_base.getViewTreeObserver().removeOnPreDrawListener(this);
-                        int mm = (int) (ll_base.getHeight() * 0.03);
                         LinearLayout.LayoutParams itemLp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0);
                         itemLp.weight = 1;
-                        itemLp.setMargins(0, mm, 0, mm);
+                        itemLp.setMargins(0,
+                                ViewUtils.dip2px(getContext(), 15),
+                                0,
+                                ViewUtils.dip2px(getContext(), 10))
+                        ;
                         ll_dock1.setLayoutParams(itemLp);
                         ll_dock2.setLayoutParams(itemLp);
                         ll_dock3.setLayoutParams(itemLp);

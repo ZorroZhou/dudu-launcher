@@ -8,12 +8,14 @@
     <com.zhy.android.percent.support.PercentLinearLayout
         android:id="@+id/ll_base"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/n_l_item1_bg_cb"
         android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_heightPercent="80%h"
-        app:layout_marginPercent="10%h">
+        android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/icon"

@@ -8,6 +8,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.LogEx;
+import com.wow.carlauncher.common.util.ViewUtils;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfo;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
@@ -194,11 +196,33 @@ public class LAppsView extends BaseEXView implements View.OnClickListener, View.
                 if (oldHeight != ll_base.getHeight() && ll_base.getHeight() > 0) {
                     oldHeight = ll_base.getHeight();
                     ll_base.getViewTreeObserver().removeOnPreDrawListener(this);
-                    int h = ll_base.getHeight() / 4;
+                    int jianju = ViewUtils.dip2px(getContext(), 4);
+                    int h = (ll_base.getHeight() - jianju * 3) / 4;
+                    int rowIndex = 0;
                     for (View row : rows) {
-                        ViewGroup.LayoutParams lp = row.getLayoutParams();
+                        LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) row.getLayoutParams();
                         lp.height = h;
+                        if (rowIndex > 0) {
+                            lp.topMargin = jianju;
+                        }
                         row.setLayoutParams(lp);
+                        rowIndex++;
+                    }
+
+                    FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                    int margin4 = ViewUtils.dip2px(getContext(), 4);
+                    params.setMargins(margin4, 0, margin4, margin4);
+                    if (layoutEnum.equals(LayoutEnum.LAYOUT1)) {
+                        int margin10 = ViewUtils.dip2px(getContext(), 10);
+                        int margin15 = ViewUtils.dip2px(getContext(), 15);
+                        int margin8 = ViewUtils.dip2px(getContext(), 8);
+                        params.setMargins(margin10, margin15, margin10, margin8);
+                    }
+                    for (View cell : cellViews) {
+                        View base = cell.findViewById(R.id.ll_base);
+                        if (base != null) {
+                            base.setLayoutParams(params);
+                        }
                     }
                 }
                 return true;

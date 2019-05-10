@@ -87,7 +87,7 @@ public class LAppsView extends BaseEXView implements View.OnClickListener, View.
             if (i % columnNum == 0) {
                 row = new LinearLayout(getContext());
                 row.setOrientation(LinearLayout.HORIZONTAL);
-                LinearLayout.LayoutParams rowLp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+                LinearLayout.LayoutParams rowLp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 0);
                 rowLp.weight = 1;
                 if (rows.size() != 0) {
                     rowLp.topMargin = ViewUtils.dip2px(getContext(), 10);

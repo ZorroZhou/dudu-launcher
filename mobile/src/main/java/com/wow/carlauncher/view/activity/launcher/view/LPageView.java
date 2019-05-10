@@ -49,6 +49,9 @@ public class LPageView extends BaseEXView {
         int itemIndex = 0;
         int leftMargin = ViewUtils.dip2px(getContext(), 10);
         for (View i : item) {
+            if (i == null) {
+                i = new View(getContext());
+            }
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT);
             params.weight = 1;
             if (itemIndex == 0) {

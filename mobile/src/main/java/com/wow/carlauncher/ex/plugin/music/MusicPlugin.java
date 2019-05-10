@@ -13,6 +13,7 @@ import com.wow.carlauncher.ex.plugin.music.event.PMusicEventProgress;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventState;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicRefresLrc;
 import com.wow.carlauncher.ex.plugin.music.plugin.JidouMusicController;
+import com.wow.carlauncher.ex.plugin.music.plugin.KuwoMusicController;
 import com.wow.carlauncher.ex.plugin.music.plugin.NwdMusicController;
 import com.wow.carlauncher.ex.plugin.music.plugin.QQMusicCarController;
 import com.wow.carlauncher.ex.plugin.music.plugin.SystemMusicController;
@@ -62,6 +63,9 @@ public class MusicPlugin extends ContextEx {
                 break;
             case ZXMUSIC:
                 musicController = new ZXMusicController();
+                break;
+            case KUWOMUSIC:
+                musicController = new KuwoMusicController();
                 break;
             default:
                 musicController = new SystemMusicController();

@@ -75,7 +75,8 @@ public class CommonData {
             MusicControllerEnum.QQCARMUSIC,
             MusicControllerEnum.JIDOUMUSIC,
             MusicControllerEnum.NWDMUSIC,
-            MusicControllerEnum.ZXMUSIC};
+            MusicControllerEnum.ZXMUSIC,
+            MusicControllerEnum.KUWOMUSIC};
 
     public final static long MINUTE_MILL = 60 * 1000;
     public final static long HOUR_MILL = 60 * MINUTE_MILL;

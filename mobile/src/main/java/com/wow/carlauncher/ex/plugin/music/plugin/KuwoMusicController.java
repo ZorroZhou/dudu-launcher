@@ -1,9 +1,11 @@
 package com.wow.carlauncher.ex.plugin.music.plugin;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.LrcAnalyze;
+import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
@@ -57,10 +59,14 @@ public class KuwoMusicController extends MusicController {
                 }
             } else {
                 setRun(false);
+
+                if (!mKwapi.isKuwoRunning()) {
+                    mKwapi.startAPP(context, true);
+                    toHome();
+                }
             }
         });
         mKwapi.registerPlayerStatusListener((playerStatus, music) -> {
-            System.out.println("!!!!");
             nowMusic = music;
             setRun(CommonUtil.equals(PLAYING, playerStatus));
             lrcDatas = null;
@@ -91,19 +97,39 @@ public class KuwoMusicController extends MusicController {
     }
 
     public void play() {
-        mKwapi.setPlayState(PlayState.STATE_PLAY);
+        if (!mKwapi.isKuwoRunning()) {
+            mKwapi.startAPP(context, true);
+            toHome();
+        } else {
+            mKwapi.setPlayState(PlayState.STATE_PLAY);
+        }
     }
 
     public void pause() {
-        mKwapi.setPlayState(PlayState.STATE_PAUSE);
+        if (!mKwapi.isKuwoRunning()) {
+            mKwapi.startAPP(context, true);
+            toHome();
+        } else {
+            mKwapi.setPlayState(PlayState.STATE_PAUSE);
+        }
     }
 
     public void next() {
-        mKwapi.setPlayState(PlayState.STATE_NEXT);
+        if (!mKwapi.isKuwoRunning()) {
+            mKwapi.startAPP(context, true);
+            toHome();
+        } else {
+            mKwapi.setPlayState(PlayState.STATE_NEXT);
+        }
     }
 
     public void pre() {
-        mKwapi.setPlayState(PlayState.STATE_PRE);
+        if (!mKwapi.isKuwoRunning()) {
+            mKwapi.startAPP(context, true);
+            toHome();
+        } else {
+            mKwapi.setPlayState(PlayState.STATE_PRE);
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
@@ -142,14 +168,14 @@ public class KuwoMusicController extends MusicController {
         }
     }
 
-//    private LrcAnalyze.LrcData getLrcData(long time) {
-//        List<LrcAnalyze.LrcData> tempLrc = new ArrayList<>(lrcDatas);
-//        for (LrcAnalyze.LrcData lrc : tempLrc) {
-//            if (lrc.getTimeMs() < time) {
-//                return lrc;
-//            }
-//        }
-//    }
+    private void toHome() {
+        TaskExecutor.self().post(() -> {
+            Intent home = new Intent(Intent.ACTION_MAIN);
+            home.addCategory(Intent.CATEGORY_HOME);
+            home.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+            context.startActivity(home);
+        }, 2000);
+    }
 
     @Override
     public void destroy() {

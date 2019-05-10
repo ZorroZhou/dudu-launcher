@@ -54,6 +54,14 @@ public class TaskExecutor {
         }
     }
 
+    public void post(Runnable runnable) {
+        handler.post(runnable);
+    }
+
+    public void post(Runnable runnable, long initialDelay) {
+        run(() -> handler.post(runnable), initialDelay);
+    }
+
     /**
      * 子线程执行
      *

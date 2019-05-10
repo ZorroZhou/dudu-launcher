@@ -2,6 +2,7 @@ package com.wow.carlauncher.ex.plugin.music.plugin;
 
 import android.content.Context;
 
+import com.wow.carlauncher.common.LrcAnalyze;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 import com.wow.carlauncher.ex.plugin.music.MusicController;
@@ -10,6 +11,9 @@ import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import cn.kuwo.autosdk.api.KWAPI;
 import cn.kuwo.autosdk.api.OnGetLyricsListener;
@@ -27,6 +31,8 @@ public class KuwoMusicController extends MusicController {
 
     private KWAPI mKwapi;
     private boolean run;
+    private Music nowMusic;
+    private List<LrcAnalyze.LrcData> lrcDatas;
 
     public void init(Context context, MusicPlugin musicView) {
         super.init(context, musicView);
@@ -35,47 +41,25 @@ public class KuwoMusicController extends MusicController {
         mKwapi.registerConnectedListener(b -> {
             if (b) {
                 setRun(CommonUtil.equals(PLAYING, mKwapi.getPlayerStatus()));
-                Music music = mKwapi.getNowPlayingMusic();
-                if (music != null) {
-                    musicPlugin.refreshInfo(music.name, music.artist, false);
-                    mKwapi.getSongPicUrl(music, onGetSongImgUrlListener);
-                    mKwapi.getLyrics(music, new OnGetLyricsListener() {
-
-                        @Override
-                        public void sendSyncNotice_LyricsStart(Music music) {
-
-                        }
-
-                        @Override
-                        public void sendSyncNotice_LyricsFinished(Music music, String s) {
-                            System.out.println("ll:" + s);
-                        }
-
-                        @Override
-                        public void sendSyncNotice_LyricsFailed(Music music) {
-
-                        }
-
-                        @Override
-                        public void sendSyncNotice_LyricsNone(Music music) {
-
-                        }
-                    });
-
-                    totalTime = mKwapi.getCurrentMusicDuration();
-                    overTime = System.currentTimeMillis() + totalTime - mKwapi.getCurrentPos();
+                nowMusic = mKwapi.getNowPlayingMusic();
+                if (nowMusic != null) {
+                    lrcDatas = null;
+                    musicPlugin.refreshInfo(nowMusic.name, nowMusic.artist, false);
+                    mKwapi.getSongPicUrl(nowMusic, onGetSongImgUrlListener);
+                    mKwapi.getLyrics(nowMusic, onGetLyricsListener);
                 }
             } else {
                 setRun(false);
             }
         });
         mKwapi.registerPlayerStatusListener((playerStatus, music) -> {
+            System.out.println("!!!!");
+            nowMusic = music;
             setRun(CommonUtil.equals(PLAYING, playerStatus));
-            musicPlugin.refreshInfo(music.name, music.artist, false);
-            mKwapi.getSongPicUrl(music, onGetSongImgUrlListener);
-
-            totalTime = mKwapi.getCurrentMusicDuration();
-            overTime = System.currentTimeMillis() + totalTime - mKwapi.getCurrentPos();
+            lrcDatas = null;
+            musicPlugin.refreshInfo(nowMusic.name, nowMusic.artist, false);
+            mKwapi.getSongPicUrl(nowMusic, onGetSongImgUrlListener);
+            mKwapi.getLyrics(nowMusic, onGetLyricsListener);
         });
         mKwapi.registerExitListener(() -> {
             setRun(false);
@@ -92,7 +76,7 @@ public class KuwoMusicController extends MusicController {
 
     @Override
     public String clazz() {
-        return "com.acloud.stub.localmusic";
+        return "cn.kuwo.kwmusiccar";
     }
 
     public void play() {
@@ -111,17 +95,50 @@ public class KuwoMusicController extends MusicController {
         mKwapi.setPlayState(PlayState.STATE_PRE);
     }
 
-    private long overTime;
-    private int totalTime;
-
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void onEvent(final MTimeSecondEvent event) {
+        int totalTime = mKwapi.getCurrentMusicDuration();
+        long overTime = System.currentTimeMillis() + totalTime - mKwapi.getCurrentPos();
+
         //每隔一秒钟上报一下进度信息
         int ccc = (int) (totalTime + System.currentTimeMillis() - overTime);
         if (ccc < totalTime && run) {
             musicPlugin.refreshProgress((int) (totalTime + System.currentTimeMillis() - overTime), totalTime);
         }
+
+        if (lrcDatas != null) {
+            long xxx = (int) (totalTime + System.currentTimeMillis() - overTime);
+            try {
+                LrcAnalyze.LrcData lll = null;
+                List<LrcAnalyze.LrcData> remove = new ArrayList<>();
+                List<LrcAnalyze.LrcData> tempLrc = new ArrayList<>(lrcDatas);
+                for (LrcAnalyze.LrcData lrc : tempLrc) {
+                    if (lrc.getTimeMs() < xxx) {
+                        lll = lrc;
+                        remove.add(lrc);
+                    } else {
+                        break;
+                    }
+                }
+
+                lrcDatas.removeAll(remove);
+                if (lll != null) {
+                    musicPlugin.refreshLrc(lll.getLrcLine());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
+
+//    private LrcAnalyze.LrcData getLrcData(long time) {
+//        List<LrcAnalyze.LrcData> tempLrc = new ArrayList<>(lrcDatas);
+//        for (LrcAnalyze.LrcData lrc : tempLrc) {
+//            if (lrc.getTimeMs() < time) {
+//                return lrc;
+//            }
+//        }
+//    }
 
     @Override
     public void destroy() {
@@ -140,6 +157,29 @@ public class KuwoMusicController extends MusicController {
         @Override
         public void onGetSongImgUrlFailed(Music music, int i) {
             musicPlugin.refreshCover(null);
+        }
+    };
+
+    private OnGetLyricsListener onGetLyricsListener = new OnGetLyricsListener() {
+        @Override
+        public void sendSyncNotice_LyricsStart(Music music) {
+        }
+
+        @Override
+        public void sendSyncNotice_LyricsFinished(Music music, String s) {
+            if (CommonUtil.equals(nowMusic, music)) {
+                LrcAnalyze lrcAnalyze = new LrcAnalyze(s);
+                lrcDatas = lrcAnalyze.lrcList();
+                musicPlugin.refreshInfo(nowMusic.name, nowMusic.artist, lrcDatas != null);
+            }
+        }
+
+        @Override
+        public void sendSyncNotice_LyricsFailed(Music music) {
+        }
+
+        @Override
+        public void sendSyncNotice_LyricsNone(Music music) {
         }
     };
 }

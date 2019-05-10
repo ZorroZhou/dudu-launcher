@@ -104,14 +104,18 @@ public class QQMusicCarController extends MusicController {
             long xxx = (int) (totalTime + System.currentTimeMillis() - overTime);
             try {
                 LrcAnalyze.LrcData lll = null;
+                List<LrcAnalyze.LrcData> remove = new ArrayList<>();
                 List<LrcAnalyze.LrcData> tempLrc = new ArrayList<>(lrcDatas);
                 for (LrcAnalyze.LrcData lrc : tempLrc) {
                     if (lrc.getTimeMs() < xxx) {
                         lll = lrc;
+                        remove.add(lrc);
+                    } else {
                         break;
                     }
                 }
-                lrcDatas.remove(lll);
+
+                lrcDatas.removeAll(remove);
                 if (lll != null) {
                     musicPlugin.refreshLrc(lll.getLrcLine());
                 }

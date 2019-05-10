@@ -4,7 +4,9 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.TaskExecutor;
@@ -13,6 +15,8 @@ import com.wow.carlauncher.view.activity.driving.DrivingView;
 import butterknife.BindView;
 
 public class BlueView extends DrivingView {
+    private final static int MAX_REV = 8000;
+    private final static int MAX_SPEED = 200;
 
     public BlueView(@NonNull Context context) {
         super(context);
@@ -50,12 +54,19 @@ public class BlueView extends DrivingView {
     @BindView(R.id.iv_rpm_cursor)
     ImageView iv_rpm_cursor;
 
-    private int max = 49;
-    private int start = 1;
+    @BindView(R.id.tv_speed)
+    TextView tv_speed;
+
+    @BindView(R.id.iv_temp_cursor)
+    View iv_temp_cursor;
+
+    private boolean show = true;
 
     @Override
     protected void initView() {
         super.initView();
+        int max = 49;
+        int start = 1;
         TaskExecutor.self().run(() -> {
             for (int i = start; i <= max; i++) {
                 try {
@@ -64,7 +75,7 @@ public class BlueView extends DrivingView {
                     e.printStackTrace();
                 }
                 final int index = i;
-                TaskExecutor.self().autoPost(() -> {
+                post(() -> {
                     iv_center.setImageResource(getContext().getResources().getIdentifier("driving_blue_center_gif_" + index, "mipmap", getContext().getPackageName()));
                     if (index == max) {
                         iv_vss_cursor.setVisibility(VISIBLE);
@@ -72,9 +83,93 @@ public class BlueView extends DrivingView {
                         iv_fuel_mask.setVisibility(VISIBLE);
                         iv_rpm_mask.setVisibility(VISIBLE);
                         iv_rpm_cursor.setVisibility(VISIBLE);
+                        tv_speed.setVisibility(VISIBLE);
+
+                        iv_rpm_mask.setRotation((((float) 0 / (float) MAX_REV) * 87 - 65));
                     }
                 });
             }
         }, 1000);
+    }
+
+
+    public void setRev(int rev) {
+        if (show) {
+            //tv_rev.setText(rev + "");
+            if (rev > MAX_REV) {
+                rev = MAX_REV;
+            } else if (rev < 0) {
+                rev = 0;
+            }
+            tagerRev = rev;
+            postRev();
+        }
+    }
+
+    private int currentRev = 0;
+    private int tagerRev = 0;
+
+    private void postRev() {
+        //转速变化的区间
+        int revChange = 20;
+        if (revChange + currentRev < tagerRev) {
+            currentRev = currentRev + revChange;
+            if (currentRev > tagerRev) {
+                currentRev = tagerRev;
+            }
+            postDelayed(() -> {
+                iv_rpm_mask.setRotation((((float) currentRev / (float) MAX_REV) * 87 - 65));
+                postRev();
+            }, 1);
+        } else if (revChange + currentRev > tagerRev) {
+            currentRev = currentRev - revChange;
+            if (currentRev < tagerRev) {
+                currentRev = tagerRev;
+            }
+            postDelayed(() -> {
+                iv_rpm_mask.setRotation((((float) currentRev / (float) MAX_REV) * 87 - 65));
+                postRev();
+            }, 1);
+        }
+    }
+
+    public void setSpeed(int speed) {
+        if (show) {
+            tv_speed.setText(speed + "");
+            if (speed > MAX_SPEED) {
+                speed = MAX_SPEED;
+            } else if (speed < 0) {
+                speed = 0;
+            }
+            tagertSpeed = speed;
+            postSpeed();
+        }
+    }
+
+    private int currentSpeed = 0;
+    private int tagertSpeed = 0;
+
+    private void postSpeed() {
+        //转速变化的区间
+        int speedChange = 1;
+        if (speedChange + currentSpeed < tagertSpeed) {
+            currentSpeed = currentSpeed + speedChange;
+            if (currentSpeed > tagertSpeed) {
+                currentSpeed = tagertSpeed;
+            }
+            postDelayed(() -> {
+                iv_vss_cursor.setRotation((float) (currentSpeed * 180) / (float) MAX_SPEED);
+                postSpeed();
+            }, 1);
+        } else if (speedChange + currentSpeed > tagertSpeed) {
+            currentSpeed = currentSpeed - speedChange;
+            if (currentSpeed < tagertSpeed) {
+                currentSpeed = tagertSpeed;
+            }
+            postDelayed(() -> {
+                iv_vss_cursor.setRotation((float) (currentSpeed * 180) / (float) MAX_SPEED);
+                postSpeed();
+            }, 1);
+        }
     }
 }

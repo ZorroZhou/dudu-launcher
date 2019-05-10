@@ -118,36 +118,27 @@ public class RevAndWaterTempView extends BaseEXView {
     private void postValue() {
         if (revChange + currentRev < tagerRev) {
             currentRev = currentRev + revChange;
-            postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    iv_cursor.setRotation((float) (currentRev * 270) / (float) MAX_REV);
-                    postValue();
-                }
+            postDelayed(() -> {
+                iv_cursor.setRotation((float) (currentRev * 270) / (float) MAX_REV);
+                postValue();
             }, 1);
         } else if (revChange + currentRev > tagerRev) {
             currentRev = currentRev - revChange;
-            postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    iv_cursor.setRotation((float) (currentRev * 270) / (float) MAX_REV);
-                    postValue();
-                }
+            postDelayed(() -> {
+                iv_cursor.setRotation((float) (currentRev * 270) / (float) MAX_REV);
+                postValue();
             }, 1);
         }
     }
 
     @Subscribe(threadMode = ThreadMode.ASYNC)
     public void onEventMainThread(final PObdEventCarInfo event) {
-        post(new Runnable() {
-            @Override
-            public void run() {
-                if (event.getRev() != null) {
-                    setRev(event.getRev());
-                }
-                if (event.getWaterTemp() != null) {
-                    setWaterTemp(event.getWaterTemp());
-                }
+        post(() -> {
+            if (event.getRev() != null) {
+                setRev(event.getRev());
+            }
+            if (event.getWaterTemp() != null) {
+                setWaterTemp(event.getWaterTemp());
             }
         });
     }

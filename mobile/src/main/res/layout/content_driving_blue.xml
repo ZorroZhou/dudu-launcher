@@ -1,80 +1,225 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1" encoding="utf-8"?>
 <com.zhy.android.percent.support.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/black"
+    android:background="@mipmap/driving_blue_bg"
     android:fitsSystemWindows="true"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:ignore="RtlHardcoded,RtlSymmetry">
 
-    <com.zhy.android.percent.support.PercentRelativeLayout
-        android:id="@+id/ll_center"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_centerInParent="true"
-        android:layout_weight="7"
-        android:background="@mipmap/driving_blue_bg"
-        android:orientation="horizontal"
-        app:layout_heightPercent="48%w">
 
-        <FrameLayout
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_heightPercent="100%h"
-            app:layout_widthPercent="100%h">
-
-            <ImageView
-                android:id="@+id/iv_center"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-            <ImageView
-                android:id="@+id/iv_vss_cursor"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@mipmap/driving_blue_center_vss_cursor"
-                android:visibility="gone" />
-
-            <ImageView
-                android:id="@+id/iv_fuel_cursor"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@mipmap/driving_blue_center_fuel_cursor"
-                android:visibility="gone" />
-
-            <ImageView
-                android:id="@+id/iv_fuel_mask"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@mipmap/driving_blue_center_fuel_mask"
-                android:visibility="gone" />
-
-            <ImageView
-                android:id="@+id/iv_rpm_mask"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@mipmap/driving_blue_center_rpm_mask"
-                android:visibility="gone" />
-
-            <ImageView
-                android:id="@+id/iv_rpm_cursor"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@mipmap/driving_blue_center_rpm_cursor"
-                android:visibility="gone" />
-        </FrameLayout>
-
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        app:layout_widthPercent="100%h">
 
         <ImageView
-            android:id="@+id/btn_back"
-            android:layout_width="0dp"
+            android:id="@+id/iv_center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:id="@+id/iv_vss_cursor"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@mipmap/driving_blue_center_vss_cursor"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/iv_fuel_cursor"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@mipmap/driving_blue_center_fuel_cursor"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/iv_fuel_mask"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@mipmap/driving_blue_center_fuel_mask"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/iv_rpm_mask"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@mipmap/driving_blue_center_rpm_mask"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/iv_rpm_cursor"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@mipmap/driving_blue_center_rpm_cursor"
+            android:visibility="gone" />
+
+        <com.zhy.android.percent.support.PercentLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/tv_speed"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:text="0"
+                android:textColor="#fff"
+                android:visibility="gone"
+                app:layout_heightPercent="22%h"
+                app:layout_textSizePercent="11%h"
+                app:layout_widthPercent="22%h" />
+        </com.zhy.android.percent.support.PercentLinearLayout>
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:orientation="vertical"
+        android:weightSum="1080"
+        app:layout_widthPercent="75%h">
+
+        <View
+            android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:clickable="true"
-            android:contentDescription="@string/app_name"
-            android:focusable="true"
-            android:padding="10dp"
-            android:src="@mipmap/ic_back"
-            app:layout_heightPercent="10%h"
-            app:layout_widthPercent="10%h" />
-    </com.zhy.android.percent.support.PercentRelativeLayout>
+            android:layout_weight="25" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="110">
+
+            <TextView
+                android:id="@+id/driving_index_v2_fli_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@mipmap/driving_blue_bg_top_right" />
+        </FrameLayout>
+
+        <com.zhy.android.percent.support.PercentRelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="340"
+            android:gravity="right"
+            android:orientation="vertical">
+
+            <com.zhy.android.percent.support.PercentRelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_marginRightPercent="20%w">
+
+                <com.zhy.android.percent.support.PercentLinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="right"
+                    android:orientation="vertical">
+
+                    <com.zhy.android.percent.support.PercentFrameLayout
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_alignParentRight="true"
+                        android:background="@mipmap/driving_blue_temp_bg"
+                        app:layout_heightPercent="60%h"
+                        app:layout_marginTopPercent="20%h"
+                        app:layout_widthPercent="60%h">
+
+                        <com.zhy.android.percent.support.PercentFrameLayout
+                            android:id="@+id/iv_temp_cursor"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            app:layout_heightPercent="200%h"
+                            app:layout_widthPercent="200%h">
+
+                            <ImageView
+                                android:layout_width="0dp"
+                                android:layout_height="0dp"
+                                android:src="@mipmap/driving_blue_temp_cursor"
+                                app:layout_heightPercent="50%h"
+                                app:layout_widthPercent="50%h" />
+                        </com.zhy.android.percent.support.PercentFrameLayout>
+                    </com.zhy.android.percent.support.PercentFrameLayout>
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:text="C"
+                        android:textColor="#fff"
+                        app:layout_heightPercent="20%h"
+                        app:layout_textSizePercent="15%h"
+                        app:layout_widthPercent="50%h" />
+
+                </com.zhy.android.percent.support.PercentLinearLayout>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center_vertical|right"
+                    android:text="100"
+                    android:textColor="#fff"
+                    app:layout_heightPercent="20%h"
+                    app:layout_marginRightPercent="50%h"
+                    app:layout_marginTopPercent="20%h"
+                    app:layout_textSizePercent="15%h"
+                    app:layout_widthPercent="50%h" />
+            </com.zhy.android.percent.support.PercentRelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_hh"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="H"
+                android:textColor="#fff"
+                app:layout_heightPercent="20%h"
+                app:layout_marginLeftPercent="80%w"
+                app:layout_marginTopPercent="20%h"
+                app:layout_textSizePercent="15%h"
+                app:layout_widthPercent="20%w" />
+        </com.zhy.android.percent.support.PercentRelativeLayout>
+
+        <View
+            android:id="@+id/driving_index_v2_tire_layout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="193" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="76"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <!--<View-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="0dp"-->
+            <!--android:layout_weight="2" />-->
+
+            <!--<View-->
+            <!--android:id="@+id/driving_index_v2_dtc_view"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="0dp"-->
+            <!--android:layout_weight="6" />-->
+
+            <!--<View-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="0dp"-->
+            <!--android:layout_weight="2" />-->
+        </LinearLayout>
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/btn_back"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clickable="true"
+        android:contentDescription="@string/app_name"
+        android:focusable="true"
+        android:padding="10dp"
+        android:src="@mipmap/ic_back"
+        app:layout_heightPercent="10%h"
+        app:layout_widthPercent="10%h" />
 </com.zhy.android.percent.support.PercentRelativeLayout>

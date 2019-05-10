@@ -412,7 +412,6 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
         if (!event.getAdCode().equals(lastadCode)) {
             LogEx.d(this, "MNewLocationEvent");
             lastadCode = event.getAdCode();
-            ToastManage.self().show("定位成功:" + event.getCity());
         }
     }
 

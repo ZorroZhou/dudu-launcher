@@ -12,6 +12,8 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import cn.kuwo.autosdk.api.KWAPI;
+import cn.kuwo.autosdk.api.OnGetLyricsListener;
+import cn.kuwo.autosdk.api.OnGetSongImgUrlListener;
 import cn.kuwo.autosdk.api.PlayState;
 import cn.kuwo.base.bean.Music;
 
@@ -36,7 +38,29 @@ public class KuwoMusicController extends MusicController {
                 Music music = mKwapi.getNowPlayingMusic();
                 if (music != null) {
                     musicPlugin.refreshInfo(music.name, music.artist, false);
-                    musicPlugin.refreshCover(music.imageURL);
+                    mKwapi.getSongPicUrl(music, onGetSongImgUrlListener);
+                    mKwapi.getLyrics(music, new OnGetLyricsListener() {
+
+                        @Override
+                        public void sendSyncNotice_LyricsStart(Music music) {
+                            
+                        }
+
+                        @Override
+                        public void sendSyncNotice_LyricsFinished(Music music, String s) {
+
+                        }
+
+                        @Override
+                        public void sendSyncNotice_LyricsFailed(Music music) {
+
+                        }
+
+                        @Override
+                        public void sendSyncNotice_LyricsNone(Music music) {
+
+                        }
+                    });
 
                     totalTime = mKwapi.getCurrentMusicDuration();
                     overTime = System.currentTimeMillis() + totalTime - mKwapi.getCurrentPos();
@@ -48,7 +72,7 @@ public class KuwoMusicController extends MusicController {
         mKwapi.registerPlayerStatusListener((playerStatus, music) -> {
             setRun(CommonUtil.equals(PLAYING, playerStatus));
             musicPlugin.refreshInfo(music.name, music.artist, false);
-            musicPlugin.refreshCover(music.imageURL);
+            mKwapi.getSongPicUrl(music, onGetSongImgUrlListener);
 
             totalTime = mKwapi.getCurrentMusicDuration();
             overTime = System.currentTimeMillis() + totalTime - mKwapi.getCurrentPos();
@@ -106,4 +130,16 @@ public class KuwoMusicController extends MusicController {
         mKwapi.unBindKuWoApp();
         EventBus.getDefault().unregister(this);
     }
+
+    private OnGetSongImgUrlListener onGetSongImgUrlListener = new OnGetSongImgUrlListener() {
+        @Override
+        public void onGetSongImgUrlSucessed(Music music, String s) {
+            musicPlugin.refreshCover(s);
+        }
+
+        @Override
+        public void onGetSongImgUrlFailed(Music music, int i) {
+            musicPlugin.refreshCover(null);
+        }
+    };
 }

@@ -12,7 +12,7 @@ public enum MusicControllerEnum implements SetEnum {
     JIDOUMUSIC("极豆音乐(封面,歌名,歌手)", 7),
     NWDMUSIC("NWD音乐(封面,歌名,歌手)", 9),
     ZXMUSIC("掌讯音乐(封面,歌名,进度)", 10),
-    KUWOMUSIC("酷我音乐", 11);
+    KUWOMUSIC("酷我音乐(封面,歌名,歌手,进度,歌词,语音控制(待添加))", 11);
     private String name;
     private Integer id;
 

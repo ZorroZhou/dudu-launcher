@@ -2,9 +2,12 @@ package com.wow.carlauncher.ex.plugin.music.plugin;
 
 import android.content.Context;
 
+import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.LrcAnalyze;
 import com.wow.carlauncher.common.util.CommonUtil;
+import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
+import com.wow.carlauncher.ex.plugin.music.MusciCoverUtil;
 import com.wow.carlauncher.ex.plugin.music.MusicController;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 
@@ -45,7 +48,11 @@ public class KuwoMusicController extends MusicController {
                 if (nowMusic != null) {
                     lrcDatas = null;
                     musicPlugin.refreshInfo(nowMusic.name, nowMusic.artist, false);
-                    mKwapi.getSongPicUrl(nowMusic, onGetSongImgUrlListener);
+                    if (!SharedPreUtil.getBoolean(CommonData.SDATA_MUSIC_INSIDE_COVER, true)) {
+                        MusciCoverUtil.loadCover(nowMusic.name, nowMusic.artist, musicPlugin);
+                    } else {
+                        mKwapi.getSongPicUrl(nowMusic, onGetSongImgUrlListener);
+                    }
                     mKwapi.getLyrics(nowMusic, onGetLyricsListener);
                 }
             } else {
@@ -58,7 +65,11 @@ public class KuwoMusicController extends MusicController {
             setRun(CommonUtil.equals(PLAYING, playerStatus));
             lrcDatas = null;
             musicPlugin.refreshInfo(nowMusic.name, nowMusic.artist, false);
-            mKwapi.getSongPicUrl(nowMusic, onGetSongImgUrlListener);
+            if (!SharedPreUtil.getBoolean(CommonData.SDATA_MUSIC_INSIDE_COVER, true)) {
+                MusciCoverUtil.loadCover(nowMusic.name, nowMusic.artist, musicPlugin);
+            } else {
+                mKwapi.getSongPicUrl(nowMusic, onGetSongImgUrlListener);
+            }
             mKwapi.getLyrics(nowMusic, onGetLyricsListener);
         });
         mKwapi.registerExitListener(() -> {

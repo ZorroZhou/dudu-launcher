@@ -23,14 +23,12 @@ public class AutoMarqueeTextView extends android.support.v7.widget.AppCompatText
     @Override
     protected void onFocusChanged(boolean focused, int direction,
                                   Rect previouslyFocusedRect) {
-        // TODO Auto-generated method stub
-        super.onFocusChanged(focused, direction, previouslyFocusedRect);
+        super.onFocusChanged(true, direction, previouslyFocusedRect);
     }
 
     @Override
     public void onWindowFocusChanged(boolean hasWindowFocus) {
-        // TODO Auto-generated method stub
-        if (hasWindowFocus) super.onWindowFocusChanged(hasWindowFocus);
+        super.onWindowFocusChanged(true);
     }
 
     @Override

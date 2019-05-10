@@ -23,7 +23,7 @@ public class AMapWebService {
     private static final String KEY = "b8a80f002ec3fe70454a4c013eaabbb7";
 
     public static void getWeatherInfo(String adcode, final CommonCallback<WeatherRes> commonCallback) {
-        LogEx.e(AMapWebService.class, "这里请求了天气信息:" + adcode);
+        LogEx.d(AMapWebService.class, "这里请求了天气信息:" + adcode);
         OkHttpManage.self().get("http://restapi.amap.com/v3/weather/weatherInfo?key=" + KEY + "&city=" + HttpUtil.getURLEncoderString(adcode), new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {

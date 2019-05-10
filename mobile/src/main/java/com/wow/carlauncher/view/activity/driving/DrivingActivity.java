@@ -36,7 +36,6 @@ public class DrivingActivity extends BaseActivity {
     public void initView() {
         hideTitle();
         loadView();
-
     }
 
     private void loadView() {

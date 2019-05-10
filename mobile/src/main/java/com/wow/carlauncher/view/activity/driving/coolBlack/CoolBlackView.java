@@ -205,7 +205,6 @@ public class CoolBlackView extends DrivingView {
                 msg = msg + fangxiang + "进入" + event.getNextRoadName();
                 tv_amaproad.setText(msg);
             }
-            msg = msg + event.getNextRoadName();
         }
         if (tv_amapmsg != null && event.getRouteRemainTime() > -1 && event.getRouteRemainDis() > -1) {
             if (event.getRouteRemainTime() == 0 || event.getRouteRemainDis() == 0) {

@@ -5,7 +5,8 @@ package com.wow.carlauncher.view.activity.driving;
  */
 
 public enum DrivingViewEnum {
-    COOL_BLACK("酷黑仪表盘1", 1);
+    BLACK("酷黑仪表盘1", 1),
+    BLUE("魅力蓝调", 2);
 
     private String name;
     private Integer id;
@@ -34,8 +35,10 @@ public enum DrivingViewEnum {
     public static DrivingViewEnum getById(Integer id) {
         switch (id) {
             case 1:
-                return COOL_BLACK;
+                return BLACK;
+            case 2:
+                return BLUE;
         }
-        return COOL_BLACK;
+        return BLACK;
     }
 }

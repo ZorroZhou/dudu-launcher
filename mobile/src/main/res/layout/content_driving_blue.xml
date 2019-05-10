@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.android.percent.support.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <com.zhy.android.percent.support.PercentRelativeLayout
+        android:id="@+id/ll_center"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_centerInParent="true"
+        android:layout_weight="7"
+        android:background="@mipmap/driving_blue_bg"
+        android:orientation="horizontal"
+        app:layout_heightPercent="48%w">
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_heightPercent="100%h"
+            app:layout_widthPercent="100%h">
+
+            <ImageView
+                android:id="@+id/iv_center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <ImageView
+                android:id="@+id/iv_vss_cursor"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@mipmap/driving_blue_center_vss_cursor"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/iv_fuel_cursor"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@mipmap/driving_blue_center_fuel_cursor"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/iv_fuel_mask"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@mipmap/driving_blue_center_fuel_mask"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/iv_rpm_mask"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@mipmap/driving_blue_center_rpm_mask"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/iv_rpm_cursor"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@mipmap/driving_blue_center_rpm_cursor"
+                android:visibility="gone" />
+        </FrameLayout>
+
+
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:clickable="true"
+            android:contentDescription="@string/app_name"
+            android:focusable="true"
+            android:padding="10dp"
+            android:src="@mipmap/ic_back"
+            app:layout_heightPercent="10%h"
+            app:layout_widthPercent="10%h" />
+    </com.zhy.android.percent.support.PercentRelativeLayout>
+</com.zhy.android.percent.support.PercentRelativeLayout>

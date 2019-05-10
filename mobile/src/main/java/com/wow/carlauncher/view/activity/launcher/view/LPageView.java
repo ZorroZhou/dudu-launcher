@@ -4,10 +4,11 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.wow.carlauncher.R;
-import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.util.ViewUtils;
 import com.wow.carlauncher.view.activity.launcher.LayoutEnum;
 import com.wow.carlauncher.view.base.BaseEXView;
@@ -35,21 +36,7 @@ public class LPageView extends BaseEXView {
         }
         if (!layoutEnum.equals(this.layoutEnum)) {
             this.layoutEnum = layoutEnum;
-            if (item != null && item.length > 0) {
-                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT);
-                params.weight = 1;
-                int margin4 = ViewUtils.dip2px(getContext(), 4);
-                params.setMargins(margin4, 0, margin4, margin4);
-                if (layoutEnum.equals(LayoutEnum.LAYOUT1)) {
-                    int margin10 = ViewUtils.dip2px(getContext(), 10);
-                    int margin15 = ViewUtils.dip2px(getContext(), 15);
-                    int margin8 = ViewUtils.dip2px(getContext(), 8);
-                    params.setMargins(margin10, margin15, margin10, margin8);
-                }
-                for (View i : item) {
-                    i.setLayoutParams(params);
-                }
-            }
+            addRefreshItemHandle();
         }
     }
 
@@ -59,29 +46,51 @@ public class LPageView extends BaseEXView {
         }
         this.item = item;
         ll_base.removeAllViews();
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT);
-        params.weight = 1;
-
-        if (layoutEnum == null) {
-            layoutEnum = LayoutEnum.LAYOUT1;
-        }
-
-        for (View view : item) {
-            if (view == null) {
-                ll_base.addView(new View(getContext()), params);
+        int itemIndex = 0;
+        int leftMargin = ViewUtils.dip2px(getContext(), 10);
+        for (View i : item) {
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT);
+            params.weight = 1;
+            if (itemIndex == 0) {
+                params.leftMargin = 0;
             } else {
-                int margin4 = ViewUtils.dip2px(getContext(), 4);
-                params.setMargins(margin4, 0, margin4, margin4);
-                if (layoutEnum.equals(LayoutEnum.LAYOUT1)) {
-                    int margin10 = ViewUtils.dip2px(getContext(), 10);
-                    int margin15 = ViewUtils.dip2px(getContext(), 15);
-                    int margin8 = ViewUtils.dip2px(getContext(), 8);
-                    params.setMargins(margin10, margin15, margin10, margin8);
-                }
-                ll_base.addView(view, params);
+                params.leftMargin = leftMargin;
             }
-            LogEx.d(this, "setItem: ");
+            i.setLayoutParams(params);
+            ll_base.addView(i, params);
+            itemIndex++;
         }
+        addRefreshItemHandle();
+    }
+
+    private ViewTreeObserver.OnPreDrawListener oldOnPreDrawListener;
+    private int oldHeight = 0;//用来比对布局发生改变的
+
+    private void addRefreshItemHandle() {
+        ll_base.getViewTreeObserver().removeOnPreDrawListener(oldOnPreDrawListener);
+        oldOnPreDrawListener = new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                int hh = ll_base.getHeight();
+                if (oldHeight != hh && hh > 0) {
+                    oldHeight = hh;
+                    ll_base.getViewTreeObserver().removeOnPreDrawListener(this);
+
+                    FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+                    int margin4 = ViewUtils.dip2px(getContext(), 4);
+                    params.setMargins(margin4, 0, margin4, margin4);
+                    if (layoutEnum.equals(LayoutEnum.LAYOUT1)) {
+                        int margin10 = ViewUtils.dip2px(getContext(), 10);
+                        int margin15 = ViewUtils.dip2px(getContext(), 15);
+                        int margin8 = ViewUtils.dip2px(getContext(), 8);
+                        params.setMargins(margin10, margin15, margin10, margin8);
+                    }
+                    ll_base.setLayoutParams(params);
+                }
+                return true;
+            }
+        };
+        ll_base.getViewTreeObserver().addOnPreDrawListener(oldOnPreDrawListener);
     }
 
     @BindView(R.id.ll_base)

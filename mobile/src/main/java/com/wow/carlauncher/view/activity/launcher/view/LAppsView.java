@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.LogEx;
+import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.util.ViewUtils;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfo;
@@ -79,15 +80,20 @@ public class LAppsView extends BaseEXView implements View.OnClickListener, View.
             end = num * (page + 1);
         }
         appInfos = list.subList(num * page, end);
+        int psize = getPageItemNum();
+        int leftMargin = ViewUtils.dip2px(getContext(), 10);
         LinearLayout row = null;
-        LinearLayout.LayoutParams cellLp = new LinearLayout.LayoutParams(0, LayoutParams.MATCH_PARENT);
-        cellLp.weight = 1;
         for (int i = 0; i < num; i++) {
             if (i % columnNum == 0) {
                 row = new LinearLayout(getContext());
                 row.setOrientation(LinearLayout.HORIZONTAL);
+                LinearLayout.LayoutParams rowLp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+                rowLp.weight = 1;
+                if (rows.size() != 0) {
+                    rowLp.topMargin = ViewUtils.dip2px(getContext(), 10);
+                }
                 rows.add(row);
-                ll_base.addView(row, LayoutParams.MATCH_PARENT, 100);
+                ll_base.addView(row, rowLp);
             }
 
             AppInfo model = null;
@@ -104,6 +110,13 @@ public class LAppsView extends BaseEXView implements View.OnClickListener, View.
             } else {
                 cellView = new View(getContext());
                 cellView.setTag(-1);
+            }
+            LinearLayout.LayoutParams cellLp = new LinearLayout.LayoutParams(0, LayoutParams.MATCH_PARENT);
+            cellLp.weight = 1;
+            if (i % psize == 0) {
+                cellLp.leftMargin = 0;
+            } else {
+                cellLp.leftMargin = leftMargin;
             }
             row.addView(cellView, cellLp);
             cellViews.add(cellView);
@@ -193,21 +206,10 @@ public class LAppsView extends BaseEXView implements View.OnClickListener, View.
         oldOnPreDrawListener = new ViewTreeObserver.OnPreDrawListener() {
             @Override
             public boolean onPreDraw() {
-                if (oldHeight != ll_base.getHeight() && ll_base.getHeight() > 0) {
-                    oldHeight = ll_base.getHeight();
+                int hh = ll_base.getHeight();
+                if (oldHeight != hh && hh > 0) {
+                    oldHeight = hh;
                     ll_base.getViewTreeObserver().removeOnPreDrawListener(this);
-                    int jianju = ViewUtils.dip2px(getContext(), 4);
-                    int h = (ll_base.getHeight() - jianju * 3) / 4;
-                    int rowIndex = 0;
-                    for (View row : rows) {
-                        LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) row.getLayoutParams();
-                        lp.height = h;
-                        if (rowIndex > 0) {
-                            lp.topMargin = jianju;
-                        }
-                        row.setLayoutParams(lp);
-                        rowIndex++;
-                    }
 
                     FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
                     int margin4 = ViewUtils.dip2px(getContext(), 4);
@@ -218,16 +220,21 @@ public class LAppsView extends BaseEXView implements View.OnClickListener, View.
                         int margin8 = ViewUtils.dip2px(getContext(), 8);
                         params.setMargins(margin10, margin15, margin10, margin8);
                     }
-                    for (View cell : cellViews) {
-                        View base = cell.findViewById(R.id.ll_base);
-                        if (base != null) {
-                            base.setLayoutParams(params);
-                        }
-                    }
+                    ll_base.setLayoutParams(params);
                 }
                 return true;
             }
         };
         ll_base.getViewTreeObserver().addOnPreDrawListener(oldOnPreDrawListener);
     }
+
+
+    private int getPageItemNum() {
+        int psize = SharedPreUtil.getInteger(CommonData.SDATA_LAUNCHER_ITEM_NUM, 3);
+        if (psize != 4 && psize != 2 && psize != 5) {
+            psize = 3;
+        }
+        return psize;
+    }
+
 }

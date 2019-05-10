@@ -48,9 +48,6 @@ public class MusicView extends BaseEXView {
     @BindView(R.id.tv_title)
     TextView tv_title;
 
-    @BindView(R.id.tv_zuojia)
-    TextView tv_zuojia;
-
     @OnClick(value = {R.id.iv_play, R.id.ll_prew, R.id.ll_next})
     public void clickEvent(View view) {
         Log.d(TAG, "clickEvent: " + view);
@@ -74,11 +71,13 @@ public class MusicView extends BaseEXView {
     public void onEvent(final PMusicEventInfo event) {
         if (tv_title != null) {
             if (CommonUtil.isNotNull(event.getTitle())) {
-                tv_title.setText(event.getTitle());
-                tv_zuojia.setText(event.getArtist());
+                String msg = event.getTitle();
+                if (CommonUtil.isNotNull(event.getArtist())) {
+                    msg = msg + "-" + event.getArtist();
+                }
+                tv_title.setText(msg);
             } else {
                 tv_title.setText("音乐名称");
-                tv_zuojia.setText("");
             }
         }
     }

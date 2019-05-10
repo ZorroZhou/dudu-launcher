@@ -5,32 +5,17 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.wow.carlauncher.common.view.AutoMarqueeTextView
+    <TextView
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:ellipsize="marquee"
+        android:layout_weight="2"
         android:gravity="center"
-        android:marqueeRepeatLimit="marquee_forever"
-        android:singleLine="true"
+        android:lines="2"
         android:text="@string/music_name"
         android:textColor="#ccc"
-        app:layout_textSizePercent="18%h" />
-
-    <com.wow.carlauncher.common.view.AutoMarqueeTextView
-        android:id="@+id/tv_zuojia"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:ellipsize="marquee"
-        android:gravity="center"
-        android:marqueeRepeatLimit="marquee_forever"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
-        android:singleLine="true"
-        android:text="作者"
-        android:textColor="@color/plugin_music_name"
+        app:layout_marginLeftPercent="15%w"
+        app:layout_marginRightPercent="15%w"
         app:layout_textSizePercent="18%h" />
 
     <LinearLayout

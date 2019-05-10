@@ -30,7 +30,7 @@
     <string name="obd_not_connect">OBD没有连接</string>
     <string name="obd_not_tp">OBD设备不支持胎压</string>
 
-    <string name="driving_cool_black_tp">%1$.1f\n%2$d°</string>
+    <string name="driving_cool_black_tp">%1$.1f/%2$d°</string>
     <string name="driving_cool_black_tp_nodata">0.0</string>
     <string name="trip_merge_time_message">OBD两次读取转速不为0的时间间隔 %1$d 分钟,默认为同一行程</string>
 

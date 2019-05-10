@@ -21,13 +21,21 @@ public class AutoMarqueeTextView extends android.support.v7.widget.AppCompatText
     }
 
     @Override
-    public boolean isFocused() {//这个方法必须返回true，制造假象，当系统调用该方法的时候，会一直以为TextView已经获取了焦点
-        return true;
+    protected void onFocusChanged(boolean focused, int direction,
+                                  Rect previouslyFocusedRect) {
+        // TODO Auto-generated method stub
+        super.onFocusChanged(focused, direction, previouslyFocusedRect);
     }
 
     @Override
-    protected void onFocusChanged(boolean focused, int direction,
-                                  Rect previouslyFocusedRect) {//这个方法必须删除其方法体内的实现，也就是让他空实现，也就是说，TextView的焦点获取状态永远都不会改变
+    public void onWindowFocusChanged(boolean hasWindowFocus) {
+        // TODO Auto-generated method stub
+        if (hasWindowFocus) super.onWindowFocusChanged(hasWindowFocus);
+    }
+
+    @Override
+    public boolean isFocused() {
+        return true;
     }
 
 }

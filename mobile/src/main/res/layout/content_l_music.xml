@@ -64,6 +64,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:ellipsize="marquee"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:gravity="center"
                 android:includeFontPadding="false"
                 android:marqueeRepeatLimit="marquee_forever"
@@ -74,11 +76,12 @@
                 app:layout_marginTopPercent="6%h"
                 app:layout_textSizePercent="10%h" />
 
-            <com.wow.carlauncher.common.view.AutoMarqueeTextView
+            <TextView
                 android:id="@+id/tv_zuozhe"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:ellipsize="marquee"
+                android:focusable="false"
                 android:gravity="center"
                 android:includeFontPadding="false"
                 android:marqueeRepeatLimit="marquee_forever"

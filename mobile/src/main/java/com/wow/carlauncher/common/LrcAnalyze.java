@@ -112,10 +112,15 @@ public class LrcAnalyze {
     }
 
     private long lrcAnalyzeTimeStringToValue(String time) {
-        long minute = Integer.parseInt(time.substring(0, time.lastIndexOf(":")));
-        long second = Integer.parseInt(time.substring(time.indexOf(":") + 1, time.lastIndexOf(".")));
-        long millisecond = Integer.parseInt(time.substring(time.indexOf(".") + 1));
-        return (minute * 60 * 1000 + second * 1000 + millisecond);
+        try {
+            long minute = Integer.parseInt(time.substring(0, time.lastIndexOf(":")));
+            long second = Integer.parseInt(time.substring(time.indexOf(":") + 1, time.lastIndexOf(".")));
+            long millisecond = Integer.parseInt(time.substring(time.indexOf(".") + 1));
+            return (minute * 60 * 1000 + second * 1000 + millisecond);
+        } catch (Exception e) {
+            return -1;
+        }
+
     }
 
     private void lrcAnalyzeLine(String ContentLine) {
@@ -159,7 +164,10 @@ public class LrcAnalyze {
                             .substring(ContentLine.indexOf('[') + 1);
                     lrcdata.TimeMs = lrcAnalyzeTimeStringToValue(lrcdata.Time);
                     lrcdata.LrcLine = cut[cut.length - 1];
-                    lrcList.add(lrcdata);
+                    if (lrcdata.TimeMs > 0) {
+                        lrcList.add(lrcdata);
+                    }
+
                 }
             }
         }

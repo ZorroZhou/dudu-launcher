@@ -43,12 +43,12 @@ public class KuwoMusicController extends MusicController {
 
                         @Override
                         public void sendSyncNotice_LyricsStart(Music music) {
-                            
+
                         }
 
                         @Override
                         public void sendSyncNotice_LyricsFinished(Music music, String s) {
-
+                            System.out.println("ll:" + s);
                         }
 
                         @Override

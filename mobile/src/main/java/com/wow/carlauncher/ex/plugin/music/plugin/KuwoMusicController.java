@@ -26,6 +26,7 @@ import cn.kuwo.autosdk.api.OnGetSongImgUrlListener;
 import cn.kuwo.autosdk.api.PlayState;
 import cn.kuwo.base.bean.Music;
 
+import static cn.kuwo.autosdk.api.PlayerStatus.BUFFERING;
 import static cn.kuwo.autosdk.api.PlayerStatus.PLAYING;
 
 /**
@@ -45,7 +46,7 @@ public class KuwoMusicController extends MusicController {
         mKwapi.bindAutoSdkService();
         mKwapi.registerConnectedListener(b -> {
             if (b) {
-                setRun(CommonUtil.equals(PLAYING, mKwapi.getPlayerStatus()));
+                setRun(CommonUtil.equals(PLAYING, mKwapi.getPlayerStatus()) || CommonUtil.equals(BUFFERING, mKwapi.getPlayerStatus()));
                 nowMusic = mKwapi.getNowPlayingMusic();
                 refreshMusicInfo();
             } else {
@@ -59,7 +60,8 @@ public class KuwoMusicController extends MusicController {
         });
         mKwapi.registerPlayerStatusListener((playerStatus, music) -> {
             nowMusic = music;
-            setRun(CommonUtil.equals(PLAYING, playerStatus));
+            System.out.println("!!!!" + playerStatus);
+            setRun(CommonUtil.equals(PLAYING, playerStatus) || CommonUtil.equals(BUFFERING, playerStatus));
             refreshMusicInfo();
         });
         mKwapi.registerExitListener(() -> {

@@ -96,6 +96,7 @@
             android:orientation="horizontal">
 
             <com.zhy.android.percent.support.PercentLinearLayout
+                android:id="@+id/ll_obd_info1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
@@ -110,6 +111,7 @@
                     app:layout_textSizePercent="50%h" />
 
                 <TextView
+                    android:id="@+id/tv_shui_temp"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -128,6 +130,7 @@
                     app:layout_textSizePercent="50%h" />
 
                 <TextView
+                    android:id="@+id/tv_shengyu_oil"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -154,7 +157,7 @@
                 tools:ignore="RtlHardcoded">
 
                 <TextView
-                    android:id="@+id/tv_lf"
+                    android:id="@+id/tv_tp_lf"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
@@ -167,7 +170,7 @@
                     app:layout_textSizePercent="15%h" />
 
                 <TextView
-                    android:id="@+id/tv_lb"
+                    android:id="@+id/tv_tp_lb"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
@@ -189,7 +192,7 @@
                 tools:ignore="RtlHardcoded">
 
                 <TextView
-                    android:id="@+id/tv_rf"
+                    android:id="@+id/tv_tp_rf"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
@@ -202,7 +205,7 @@
                     app:layout_textSizePercent="15%h" />
 
                 <TextView
-                    android:id="@+id/tv_rb"
+                    android:id="@+id/tv_tp_rb"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
@@ -249,11 +252,18 @@
                 app:layout_heightPercent="90%h"
                 app:layout_widthPercent="75%w">
 
-                <TextView
+                <com.wow.carlauncher.common.view.AutoMarqueeTextView
+                    android:id="@+id/tv_music_title"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
+                    android:ellipsize="marquee"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
                     android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:singleLine="true"
                     android:text="音乐名称"
                     android:textColor="#fff"
                     app:layout_textSizePercent="25%h" />
@@ -331,6 +341,7 @@
                 app:layout_widthPercent="75%w">
 
                 <TextView
+                    android:id="@+id/tv_date_time"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
@@ -340,6 +351,7 @@
                     app:layout_textSizePercent="30%h" />
 
                 <TextView
+                    android:id="@+id/tv_date_day"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"

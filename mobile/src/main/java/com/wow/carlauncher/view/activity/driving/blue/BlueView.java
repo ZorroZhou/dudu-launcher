@@ -4,19 +4,32 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.TaskExecutor;
+import com.wow.carlauncher.common.util.CommonUtil;
+import com.wow.carlauncher.common.util.DateUtil;
+import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
+import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
+import com.wow.carlauncher.ex.plugin.music.event.PMusicEventInfo;
+import com.wow.carlauncher.ex.plugin.music.event.PMusicEventState;
+import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarInfo;
+import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarTp;
+import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventConnect;
 import com.wow.carlauncher.view.activity.driving.DrivingView;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.Date;
+
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class BlueView extends DrivingView {
     private final static int MAX_REV = 8000;
@@ -65,6 +78,36 @@ public class BlueView extends DrivingView {
     LinearLayout ll_right;
 
 
+    @BindView(R.id.tv_tp_lf)
+    TextView tv_tp_lf;
+
+    @BindView(R.id.tv_tp_lb)
+    TextView tv_tp_lb;
+
+    @BindView(R.id.tv_tp_rf)
+    TextView tv_tp_rf;
+
+    @BindView(R.id.tv_tp_rb)
+    TextView tv_tp_rb;
+
+    @BindView(R.id.music_iv_play)
+    ImageView music_iv_play;
+
+    @BindView(R.id.tv_music_title)
+    TextView tv_music_title;
+
+    @BindView(R.id.tv_shui_temp)
+    TextView tv_shui_temp;
+
+    @BindView(R.id.tv_shengyu_oil)
+    TextView tv_shengyu_oil;
+
+    @BindView(R.id.tv_date_time)
+    TextView tv_date_time;
+
+    @BindView(R.id.tv_date_day)
+    TextView tv_date_day;
+
     private boolean show = true;
 
     private boolean loaded = false;
@@ -85,19 +128,109 @@ public class BlueView extends DrivingView {
                 post(() -> {
                     iv_center.setImageResource(getContext().getResources().getIdentifier("driving_blue_center_gif_" + index, "mipmap", getContext().getPackageName()));
                     if (index == max) {
-                        iv_vss_cursor.setVisibility(VISIBLE);
-                        iv_fuel_cursor.setVisibility(VISIBLE);
-                        iv_fuel_mask.setVisibility(VISIBLE);
-                        iv_rpm_mask.setVisibility(VISIBLE);
-                        iv_rpm_cursor.setVisibility(VISIBLE);
-                        tv_speed.setVisibility(VISIBLE);
-
-                        iv_rpm_mask.setRotation((((float) 0 / (float) MAX_REV) * 87 - 65));
-                        ll_right.setVisibility(VISIBLE);
+                        loadOk();
                     }
                 });
             }
         }, 1000);
+    }
+
+    @OnClick(value = {R.id.music_ll_prew, R.id.music_ll_next, R.id.music_ll_play})
+    public void clickEvent(View view) {
+        switch (view.getId()) {
+            case R.id.music_ll_prew: {
+                MusicPlugin.self().pre();
+                break;
+            }
+            case R.id.music_ll_play: {
+                MusicPlugin.self().playOrPause();
+                break;
+            }
+            case R.id.music_ll_next: {
+                MusicPlugin.self().next();
+                break;
+            }
+        }
+    }
+
+    private void loadOk() {
+        loaded = true;
+        iv_vss_cursor.setVisibility(VISIBLE);
+        iv_fuel_cursor.setVisibility(VISIBLE);
+        iv_fuel_mask.setVisibility(VISIBLE);
+        iv_rpm_mask.setVisibility(VISIBLE);
+        iv_rpm_cursor.setVisibility(VISIBLE);
+        tv_speed.setVisibility(VISIBLE);
+
+        iv_rpm_mask.setRotation((((float) 0 / (float) MAX_REV) * 87 - 65));
+        iv_fuel_mask.setRotation((((float) 0 / (float) MAX_REV) * 87 + 65));
+        ll_right.setVisibility(VISIBLE);
+
+        //同步一下信息
+        onEvent(new PObdEventConnect().setConnected(ObdPlugin.self().isConnect()));
+        onEvent(ObdPlugin.self().getCurrentPObdEventCarInfo());
+        onEvent(ObdPlugin.self().getCurrentPObdEventCarTp());
+        MusicPlugin.self().requestLast();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(final MTimeSecondEvent event) {
+        Date d = new Date();
+        String date = DateUtil.dateToString(d, "MM月 dd日 " + DateUtil.getWeekOfDate(d));
+        String time = DateUtil.dateToString(d, "HH:mm:ss");
+        if (time.startsWith("0")) {
+            time = time.substring(1);
+        }
+        if (date.startsWith("0")) {
+            date = date.substring(1);
+        }
+        this.tv_date_day.setText(date);
+        this.tv_date_time.setText(time);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(final PMusicEventInfo event) {
+        if (!loaded) {
+            return;
+        }
+        if (tv_music_title != null) {
+            if (CommonUtil.isNotNull(event.getTitle())) {
+                String msg = event.getTitle();
+                if (CommonUtil.isNotNull(event.getArtist())) {
+                    msg = msg + "-" + event.getArtist();
+                }
+                tv_music_title.setText(msg);
+            } else {
+                tv_music_title.setText("音乐名称");
+            }
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(final PMusicEventState event) {
+        if (!loaded) {
+            return;
+        }
+        if (music_iv_play != null) {
+            if (event.isRun()) {
+                music_iv_play.setImageResource(R.mipmap.ic_pause2_b);
+            } else {
+                music_iv_play.setImageResource(R.mipmap.ic_play2_b);
+            }
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(final PObdEventConnect event) {
+        if (!loaded) {
+            return;
+        }
+        if (event.isConnected()) {
+            if (ObdPlugin.self().supportTp()) {
+            }
+        }
+//        ll_tp.setVisibility(show ? VISIBLE : GONE);
+//        ll_cover.setVisibility(show ? GONE : VISIBLE);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -110,6 +243,37 @@ public class BlueView extends DrivingView {
         }
         if (event.getSpeed() != null) {
             setSpeed(event.getSpeed());
+        }
+        if (event.getWaterTemp() != null) {
+            String msg = event.getWaterTemp() + "°";
+            tv_shui_temp.setText(msg);
+        }
+
+        if (event.getOilConsumption() != null) {
+            String msg = event.getOilConsumption() + "%";
+            tv_shengyu_oil.setText(msg);
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(final PObdEventCarTp event) {
+        if (!loaded) {
+            return;
+        }
+        if (tv_tp_lf != null && event.getlFTirePressure() != null) {
+            tv_tp_lf.setText(getContext().getString(R.string.driving_cool_black_tp, event.getlFTirePressure(), event.getlFTemp()));
+        }
+
+        if (tv_tp_lb != null && event.getlBTirePressure() != null) {
+            tv_tp_lb.setText(getContext().getString(R.string.driving_cool_black_tp, event.getlBTirePressure(), event.getlBTemp()));
+        }
+
+        if (tv_tp_rf != null && event.getrFTirePressure() != null) {
+            tv_tp_rf.setText(getContext().getString(R.string.driving_cool_black_tp, event.getrFTirePressure(), event.getrFTemp()));
+        }
+
+        if (tv_tp_rb != null && event.getrBTirePressure() != null) {
+            tv_tp_rb.setText(getContext().getString(R.string.driving_cool_black_tp, event.getrBTirePressure(), event.getrBTemp()));
         }
     }
 

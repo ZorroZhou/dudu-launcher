@@ -258,9 +258,6 @@ public class LPromptView extends BaseEXView {
             cur_min = time1;
             Date d = new Date();
             String date = DateUtil.dateToString(d, "yyyy年 MM月 dd日 " + DateUtil.getWeekOfDate(d) + " HH:mm");
-            if (date.startsWith("0")) {
-                date = date.substring(1);
-            }
             this.tv_time.setText(date);
         }
     }

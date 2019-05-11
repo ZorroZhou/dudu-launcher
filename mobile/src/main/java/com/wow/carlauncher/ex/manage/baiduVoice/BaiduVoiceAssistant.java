@@ -117,12 +117,12 @@ public class BaiduVoiceAssistant extends ContextEx {
 
     public void startWakeUp() {
         if (init) {
-            WakeUpStart wakeUpStart = new WakeUpStart().setKwsFile("assets://WakeUpBaidu.bin").setAppid(APP_ID);
+            WakeUpStart wakeUpStart = new WakeUpStart().setKwsFile("assets://WakeUp.bin").setAppid(APP_ID);
             wakeup.send(SpeechConstant.WAKEUP_START, GsonUtil.getGson().toJson(wakeUpStart), null, 0, 0);
         }
     }
 
-    private void startAsr() {
+    public void startAsr() {
         synchronized (asrRunLock) {
             asrRun = true;
             wakeup.send(SpeechConstant.WAKEUP_STOP, null, null, 0, 0); //

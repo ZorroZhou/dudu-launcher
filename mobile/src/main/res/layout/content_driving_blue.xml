@@ -7,7 +7,7 @@
     android:background="@mipmap/driving_blue_bg"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    tools:ignore="RtlHardcoded,RtlSymmetry">
+    tools:ignore="RtlHardcoded,RtlSymmetry,HardcodedText">
 
 
     <FrameLayout
@@ -79,7 +79,6 @@
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
         android:orientation="vertical"
-        android:weightSum="1080"
         app:layout_widthPercent="75%h">
 
         <View
@@ -90,125 +89,191 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="110">
+            android:layout_weight="110"
+            android:background="@mipmap/driving_blue_bg_top_right"
+            android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/driving_index_v2_fli_view"
+            <com.zhy.android.percent.support.PercentLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@mipmap/driving_blue_bg_top_right" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="end|center_vertical"
+                    android:text="水温:"
+                    android:textColor="#fff"
+                    app:layout_textSizePercent="50%h" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="start|center_vertical"
+                    android:text="100°"
+                    android:textColor="#fff"
+                    app:layout_textSizePercent="50%h" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="end|center_vertical"
+                    android:text="油量:"
+                    android:textColor="#fff"
+                    app:layout_textSizePercent="50%h" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="start|center_vertical"
+                    android:text="100%"
+                    android:textColor="#fff"
+                    app:layout_textSizePercent="50%h" />
+            </com.zhy.android.percent.support.PercentLinearLayout>
         </FrameLayout>
 
         <com.zhy.android.percent.support.PercentRelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="340"
-            android:gravity="right"
-            android:orientation="vertical">
+            android:layout_weight="340">
 
-            <com.zhy.android.percent.support.PercentRelativeLayout
+            <com.zhy.android.percent.support.PercentLinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_marginRightPercent="20%w">
+                android:layout_height="0dp"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_heightPercent="90%h">
 
-                <com.zhy.android.percent.support.PercentLinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="right"
-                    android:orientation="vertical">
-
-                    <com.zhy.android.percent.support.PercentFrameLayout
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_alignParentRight="true"
-                        android:background="@mipmap/driving_blue_temp_bg"
-                        app:layout_heightPercent="60%h"
-                        app:layout_marginTopPercent="20%h"
-                        app:layout_widthPercent="60%h">
-
-                        <com.zhy.android.percent.support.PercentFrameLayout
-                            android:id="@+id/iv_temp_cursor"
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            app:layout_heightPercent="200%h"
-                            app:layout_widthPercent="200%h">
-
-                            <ImageView
-                                android:layout_width="0dp"
-                                android:layout_height="0dp"
-                                android:src="@mipmap/driving_blue_temp_cursor"
-                                app:layout_heightPercent="50%h"
-                                app:layout_widthPercent="50%h" />
-                        </com.zhy.android.percent.support.PercentFrameLayout>
-                    </com.zhy.android.percent.support.PercentFrameLayout>
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:text="C"
-                        android:textColor="#fff"
-                        app:layout_heightPercent="20%h"
-                        app:layout_textSizePercent="15%h"
-                        app:layout_widthPercent="50%h" />
-
-                </com.zhy.android.percent.support.PercentLinearLayout>
-
-                <TextView
+                <com.wow.carlauncher.common.view.CustomRoundAngleImageView
+                    android:id="@+id/music_iv_cover"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:layout_alignParentRight="true"
-                    android:gravity="center_vertical|right"
-                    android:text="100"
-                    android:textColor="#fff"
-                    app:layout_heightPercent="20%h"
-                    app:layout_marginRightPercent="50%h"
-                    app:layout_marginTopPercent="20%h"
-                    app:layout_textSizePercent="15%h"
-                    app:layout_widthPercent="50%h" />
-            </com.zhy.android.percent.support.PercentRelativeLayout>
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/music_dlogo"
+                    app:layout_heightPercent="75%h"
+                    app:layout_widthPercent="75%h"
+                    app:radius="6dp" />
 
-            <TextView
-                android:id="@+id/tv_hh"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:text="H"
-                android:textColor="#fff"
-                app:layout_heightPercent="20%h"
-                app:layout_marginLeftPercent="80%w"
-                app:layout_marginTopPercent="20%h"
-                app:layout_textSizePercent="15%h"
-                app:layout_widthPercent="20%w" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:gravity="center"
+                    android:text="音乐名称"
+                    android:textColor="#fff"
+                    app:layout_heightPercent="25%h"
+                    app:layout_textSizePercent="18%h" />
+            </com.zhy.android.percent.support.PercentLinearLayout>
+
         </com.zhy.android.percent.support.PercentRelativeLayout>
 
-        <View
-            android:id="@+id/driving_index_v2_tire_layout"
+        <com.zhy.android.percent.support.PercentRelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="193" />
+            android:layout_weight="340"
+            android:gravity="right">
+
+            <com.zhy.android.percent.support.PercentLinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:orientation="vertical"
+                app:layout_widthPercent="40%w"
+                tools:ignore="RtlHardcoded">
+
+                <TextView
+                    android:id="@+id/tv_lf"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|right"
+                    android:lineSpacingExtra="2dp"
+                    android:lines="1"
+                    android:text="2.1/16°"
+                    android:textColor="#fff"
+                    app:layout_marginTopPercent="10%h"
+                    app:layout_textSizePercent="15%h" />
+
+                <TextView
+                    android:id="@+id/tv_lb"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|right"
+                    android:lineSpacingExtra="2dp"
+                    android:lines="1"
+                    android:text="2.1/16°"
+                    android:textColor="#fff"
+                    app:layout_marginBottomPercent="10%h"
+                    app:layout_textSizePercent="15%h" />
+            </com.zhy.android.percent.support.PercentLinearLayout>
+
+            <com.zhy.android.percent.support.PercentLinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:orientation="vertical"
+                app:layout_widthPercent="40%w"
+                tools:ignore="RtlHardcoded">
+
+                <TextView
+                    android:id="@+id/tv_rf"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|left"
+                    android:lineSpacingExtra="2dp"
+                    android:lines="1"
+                    android:text="2.1/16°"
+                    android:textColor="#fff"
+                    app:layout_marginTopPercent="10%h"
+                    app:layout_textSizePercent="15%h" />
+
+                <TextView
+                    android:id="@+id/tv_rb"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|left"
+                    android:lineSpacingExtra="2dp"
+                    android:lines="1"
+                    android:text="2.1/16°"
+                    android:textColor="#fff"
+                    app:layout_marginBottomPercent="10%h"
+                    app:layout_textSizePercent="15%h" />
+            </com.zhy.android.percent.support.PercentLinearLayout>
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                app:layout_heightPercent="34%w"
+                app:layout_widthPercent="20%w">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@mipmap/driving_blue_tp_vehicle" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@mipmap/driving_blue_tp_normal" />
+
+            </FrameLayout>
+        </com.zhy.android.percent.support.PercentRelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="76"
+            android:layout_weight="265"
             android:gravity="center"
-            android:orientation="vertical">
-
-            <!--<View-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="0dp"-->
-            <!--android:layout_weight="2" />-->
-
-            <!--<View-->
-            <!--android:id="@+id/driving_index_v2_dtc_view"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="0dp"-->
-            <!--android:layout_weight="6" />-->
-
-            <!--<View-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="0dp"-->
-            <!--android:layout_weight="2" />-->
-        </LinearLayout>
+            android:orientation="vertical" />
     </LinearLayout>
 
     <ImageView

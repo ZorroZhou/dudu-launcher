@@ -22,6 +22,7 @@ import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.view.LukuangView;
 import com.wow.carlauncher.ex.manage.ThemeManage;
+import com.wow.carlauncher.ex.manage.baiduVoice.BaiduVoiceAssistant;
 import com.wow.carlauncher.ex.manage.location.event.MNewLocationEvent;
 import com.wow.carlauncher.ex.plugin.amapcar.AMapCarPlugin;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventNavInfo;
@@ -299,7 +300,8 @@ public class LAMapView extends BaseEXView {
                 break;
             }
             case R.id.btn_gd: {
-                AMapCarPlugin.self().testNavi();
+                //AMapCarPlugin.self().testNavi();
+                BaiduVoiceAssistant.self().startAsr();
                 break;
             }
         }

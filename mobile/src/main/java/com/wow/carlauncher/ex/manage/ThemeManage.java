@@ -66,7 +66,8 @@ public class ThemeManage {
     private Theme theme = WHITE;
     private List<OnThemeChangeListener> listeners = new LinkedList<>();
     private SparseArray<Map<String, Map<String, Integer>>> cachedResrouces = new SparseArray<>();
-    private long shijianUpdate = 0;
+    private long lastChangeShijian = 0;
+    private boolean currentDay = true;//0是未初始化,1是白天,2是黑天
 
     public void refreshTheme() {
         ThemeMode model = ThemeMode.getById(SharedPreUtil.getInteger(SDATA_APP_THEME, ThemeMode.SHIJIAN.getId()));
@@ -85,15 +86,26 @@ public class ThemeManage {
                 setTheme(KBLACK);
                 break;
             case SHIJIAN:
-                if (System.currentTimeMillis() - shijianUpdate > HOUR_MILL) {
-                    shijianUpdate = System.currentTimeMillis();
-                    if (SunRiseSetUtil.isNight(lon, lat, new Date())) {
-                        LogEx.d(this, "refreshTheme : night");
-                        setTheme(Theme.getById(SharedPreUtil.getInteger(SDATA_APP_THEME_NIGHT, Theme.BLACK.getId())));
-                    } else {
-                        LogEx.d(this, "refreshTheme : day");
-                        setTheme(Theme.getById(SharedPreUtil.getInteger(SDATA_APP_THEME_DAY, Theme.WHITE.getId())));
+                if (SunRiseSetUtil.isNight(lon, lat, new Date())) {
+                    if (!currentDay) {
+                        if (System.currentTimeMillis() - lastChangeShijian < HOUR_MILL) {
+                            break;
+                        }
+                        lastChangeShijian = System.currentTimeMillis();
+                        currentDay = true;
                     }
+                    LogEx.d(this, "refreshTheme : night");
+                    setTheme(Theme.getById(SharedPreUtil.getInteger(SDATA_APP_THEME_NIGHT, Theme.BLACK.getId())));
+                } else {
+                    if (currentDay) {
+                        if (System.currentTimeMillis() - lastChangeShijian < HOUR_MILL) {
+                            break;
+                        }
+                        lastChangeShijian = System.currentTimeMillis();
+                        currentDay = false;
+                    }
+                    LogEx.d(this, "refreshTheme : day");
+                    setTheme(Theme.getById(SharedPreUtil.getInteger(SDATA_APP_THEME_DAY, Theme.WHITE.getId())));
                 }
                 break;
         }

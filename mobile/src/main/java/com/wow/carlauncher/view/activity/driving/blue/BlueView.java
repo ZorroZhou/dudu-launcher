@@ -4,13 +4,16 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.TaskExecutor;
+import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarInfo;
 import com.wow.carlauncher.view.activity.driving.DrivingView;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 
@@ -57,10 +60,9 @@ public class BlueView extends DrivingView {
     @BindView(R.id.tv_speed)
     TextView tv_speed;
 
-    @BindView(R.id.iv_temp_cursor)
-    View iv_temp_cursor;
-
     private boolean show = true;
+
+    private boolean loaded = false;
 
     @Override
     protected void initView() {
@@ -90,6 +92,19 @@ public class BlueView extends DrivingView {
                 });
             }
         }, 1000);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(final PObdEventCarInfo event) {
+        if (!loaded) {
+            return;
+        }
+        if (event.getRev() != null) {
+            setRev(event.getRev());
+        }
+        if (event.getSpeed() != null) {
+            setSpeed(event.getSpeed());
+        }
     }
 
 

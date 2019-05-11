@@ -58,7 +58,7 @@ public class RevAndWaterTempView extends BaseEXView {
 
     @Override
     protected void initView() {
-        onEventMainThread(ObdPlugin.self().getCurrentPObdEventCarInfo());
+        onEvent(ObdPlugin.self().getCurrentPObdEventCarInfo());
     }
 
     @Override
@@ -132,7 +132,7 @@ public class RevAndWaterTempView extends BaseEXView {
     }
 
     @Subscribe(threadMode = ThreadMode.ASYNC)
-    public void onEventMainThread(final PObdEventCarInfo event) {
+    public void onEvent(final PObdEventCarInfo event) {
         post(() -> {
             if (event.getRev() != null) {
                 setRev(event.getRev());

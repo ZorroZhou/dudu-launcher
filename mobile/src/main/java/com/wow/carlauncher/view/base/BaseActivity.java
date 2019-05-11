@@ -33,10 +33,15 @@ public abstract class BaseActivity extends Activity {
     private View toolbar;
     private TextView title;
     private View base;
+    private Bundle savedInstanceState;
+    public Bundle getSavedInstanceState() {
+        return savedInstanceState;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.savedInstanceState = savedInstanceState;
         mContext = this;
         init();
         //处理状态栏
@@ -75,6 +80,7 @@ public abstract class BaseActivity extends Activity {
         loadViewed = true;
         initView();
         loadData();
+        this.savedInstanceState = null;
     }
 
     @Override

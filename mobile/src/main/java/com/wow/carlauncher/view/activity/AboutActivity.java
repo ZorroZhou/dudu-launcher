@@ -13,7 +13,7 @@ import butterknife.BindView;
 
 public class AboutActivity extends BaseActivity {
     @BindView(R.id.about)
-     TextView about;
+    TextView about;
 
     @Override
     public void init() {

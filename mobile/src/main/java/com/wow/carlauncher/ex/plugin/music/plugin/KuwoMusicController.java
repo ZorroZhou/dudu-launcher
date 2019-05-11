@@ -47,16 +47,7 @@ public class KuwoMusicController extends MusicController {
             if (b) {
                 setRun(CommonUtil.equals(PLAYING, mKwapi.getPlayerStatus()));
                 nowMusic = mKwapi.getNowPlayingMusic();
-                if (nowMusic != null) {
-                    lrcDatas = null;
-                    musicPlugin.refreshInfo(nowMusic.name, nowMusic.artist, false);
-                    if (!SharedPreUtil.getBoolean(CommonData.SDATA_MUSIC_INSIDE_COVER, true)) {
-                        MusciCoverUtil.loadCover(nowMusic.name, nowMusic.artist, musicPlugin);
-                    } else {
-                        mKwapi.getSongPicUrl(nowMusic, onGetSongImgUrlListener);
-                    }
-                    mKwapi.getLyrics(nowMusic, onGetLyricsListener);
-                }
+                refreshMusicInfo();
             } else {
                 setRun(false);
 
@@ -69,14 +60,7 @@ public class KuwoMusicController extends MusicController {
         mKwapi.registerPlayerStatusListener((playerStatus, music) -> {
             nowMusic = music;
             setRun(CommonUtil.equals(PLAYING, playerStatus));
-            lrcDatas = null;
-            musicPlugin.refreshInfo(nowMusic.name, nowMusic.artist, false);
-            if (!SharedPreUtil.getBoolean(CommonData.SDATA_MUSIC_INSIDE_COVER, true)) {
-                MusciCoverUtil.loadCover(nowMusic.name, nowMusic.artist, musicPlugin);
-            } else {
-                mKwapi.getSongPicUrl(nowMusic, onGetSongImgUrlListener);
-            }
-            mKwapi.getLyrics(nowMusic, onGetLyricsListener);
+            refreshMusicInfo();
         });
         mKwapi.registerExitListener(() -> {
             setRun(false);
@@ -129,6 +113,19 @@ public class KuwoMusicController extends MusicController {
             toHome();
         } else {
             mKwapi.setPlayState(PlayState.STATE_PRE);
+        }
+    }
+
+    private void refreshMusicInfo() {
+        if (nowMusic != null) {
+            lrcDatas = null;
+            musicPlugin.refreshInfo(nowMusic.name, nowMusic.artist, false);
+            if (!SharedPreUtil.getBoolean(CommonData.SDATA_MUSIC_INSIDE_COVER, true)) {
+                MusciCoverUtil.loadCover(nowMusic.name, nowMusic.artist, musicPlugin);
+            } else {
+                mKwapi.getSongPicUrl(nowMusic, onGetSongImgUrlListener);
+            }
+            mKwapi.getLyrics(nowMusic, onGetLyricsListener);
         }
     }
 

@@ -13,8 +13,11 @@ import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.DateUtil;
+import com.wow.carlauncher.ex.manage.ImageManage;
+import com.wow.carlauncher.ex.manage.location.event.MNewLocationEvent;
 import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
+import com.wow.carlauncher.ex.plugin.music.event.PMusicEventCoverRefresh;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventInfo;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventState;
 import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
@@ -108,7 +111,24 @@ public class BlueView extends DrivingView {
     @BindView(R.id.tv_date_day)
     TextView tv_date_day;
 
+    @BindView(R.id.rl_item1_not_nav_tp)
+    View rl_item1_not_nav_tp;
+
+    @BindView(R.id.rl_item1_not_nav_music)
+    View rl_item1_not_nav_music;
+
+    @BindView(R.id.music_iv_cover)
+    ImageView music_iv_cover;
+
+    @BindView(R.id.ll_obd_not_connect)
+    View ll_obd_not_connect;
+
+    @BindView(R.id.ll_obd_connect)
+    View ll_obd_connect;
+
     private boolean show = true;
+
+    private boolean obdConnect = false;
 
     private boolean loaded = false;
 
@@ -175,6 +195,9 @@ public class BlueView extends DrivingView {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final MTimeSecondEvent event) {
+        if (!loaded) {
+            return;
+        }
         Date d = new Date();
         String date = DateUtil.dateToString(d, "MM月 dd日 " + DateUtil.getWeekOfDate(d));
         String time = DateUtil.dateToString(d, "HH:mm:ss");
@@ -225,12 +248,34 @@ public class BlueView extends DrivingView {
         if (!loaded) {
             return;
         }
+        boolean showTp = false;
+        obdConnect = event.isConnected();
         if (event.isConnected()) {
             if (ObdPlugin.self().supportTp()) {
+                rl_item1_not_nav_tp.setVisibility(VISIBLE);
+                rl_item1_not_nav_music.setVisibility(GONE);
+                showTp = true;
             }
+            ll_obd_connect.setVisibility(VISIBLE);
+            ll_obd_not_connect.setVisibility(GONE);
+        } else {
+            ll_obd_connect.setVisibility(GONE);
+            ll_obd_not_connect.setVisibility(VISIBLE);
         }
-//        ll_tp.setVisibility(show ? VISIBLE : GONE);
-//        ll_cover.setVisibility(show ? GONE : VISIBLE);
+        if (!showTp) {
+            rl_item1_not_nav_tp.setVisibility(GONE);
+            rl_item1_not_nav_music.setVisibility(VISIBLE);
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void onEvent(MNewLocationEvent event) {
+        if (!loaded) {
+            return;
+        }
+        if (!obdConnect) {
+            setSpeed((int) (event.getSpeed() * 60 * 60 / 1000));
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -252,6 +297,16 @@ public class BlueView extends DrivingView {
         if (event.getOilConsumption() != null) {
             String msg = event.getOilConsumption() + "%";
             tv_shengyu_oil.setText(msg);
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(final PMusicEventCoverRefresh event) {
+        if (!loaded) {
+            return;
+        }
+        if (music_iv_cover != null) {
+            ImageManage.self().loadImage(event.getUrl(), music_iv_cover, R.mipmap.music_dlogo);
         }
     }
 

@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
@@ -14,8 +13,8 @@
         android:ellipsize="end"
         android:gravity="center_vertical"
         android:lines="1"
-        android:paddingEnd="20dp"
         android:paddingStart="20dp"
+        android:paddingEnd="20dp"
         android:text="@string/music_name"
         android:textColor="@color/plugin_music_name"
         app:layout_textSizePercent="20%h" />
@@ -28,8 +27,8 @@
         android:layout_above="@id/rl_bottom"
         android:indeterminateDrawable="@android:drawable/progress_indeterminate_horizontal"
         android:max="100"
-        android:paddingEnd="10dp"
         android:paddingStart="10dp"
+        android:paddingEnd="10dp"
         android:progressDrawable="@drawable/l_music_progress" />
 
     <com.zhy.android.percent.support.PercentLinearLayout

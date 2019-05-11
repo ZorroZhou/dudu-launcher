@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
@@ -60,6 +61,10 @@ public class BlueView extends DrivingView {
     @BindView(R.id.tv_speed)
     TextView tv_speed;
 
+    @BindView(R.id.ll_right)
+    LinearLayout ll_right;
+
+
     private boolean show = true;
 
     private boolean loaded = false;
@@ -88,6 +93,7 @@ public class BlueView extends DrivingView {
                         tv_speed.setVisibility(VISIBLE);
 
                         iv_rpm_mask.setRotation((((float) 0 / (float) MAX_REV) * 87 - 65));
+                        ll_right.setVisibility(VISIBLE);
                     }
                 });
             }

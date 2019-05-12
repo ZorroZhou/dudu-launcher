@@ -445,11 +445,7 @@ public class LAMapView extends BaseThemeView {
             loactionOk = false;
             iv_moren.setVisibility(VISIBLE);
             rl_che.setVisibility(GONE);
-            if (currentTheme == WHITE || currentTheme == BLACK) {
-                line11.setVisibility(VISIBLE);
-            } else {
-                line11.setVisibility(GONE);
-            }
+            line11.setVisibility(GONE);
             fl_xunhang_root.setVisibility(GONE);
         }
     }

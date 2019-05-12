@@ -2,11 +2,11 @@ package com.wow.carlauncher.repertory.server;
 
 import android.support.annotation.NonNull;
 
-import com.google.gson.reflect.TypeToken;
 import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.GsonUtil;
 import com.wow.carlauncher.ex.manage.OkHttpManage;
+import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.repertory.server.response.BaseResult;
 
 import java.io.IOException;
@@ -16,7 +16,7 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 public class ServerRequestUtil {
-    public static <T> void get(String url, final CommonCallback<T> commonCallback) {
+    public static <D, T extends BaseResult<D>> void get(String url, Class<T> clazz, final CommonCallback<D> commonCallback) {
         OkHttpManage.self().get(url, new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -34,11 +34,11 @@ public class ServerRequestUtil {
                     LogEx.d(ServerRequestUtil.class, "onSuccess: " + result);
                     if (result.length() > 2) {
                         if (commonCallback != null) {
-                            BaseResult<T> res = GsonUtil.getGson().fromJson(result, new TypeToken<BaseResult<T>>() {
-                            }.getType());
+                            BaseResult<D> res = GsonUtil.getGson().fromJson(result, clazz);
                             if (CommonUtil.equals(res.getCode(), 0)) {
                                 commonCallback.callback(true, "", res.getData());
                             } else {
+                                ToastManage.self().show(res.getMsg());
                                 commonCallback.callback(false, res.getMsg(), null);
                             }
                             return;

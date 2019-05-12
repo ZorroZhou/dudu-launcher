@@ -11,8 +11,8 @@ import com.wow.carlauncher.view.activity.set.SetEnum;
  */
 
 public enum DrivingViewEnum implements SetEnum {
-    BLACK("酷黑仪表盘", 1),
-    BLUE("魅力蓝调", 2);
+    BLACK("酷黑仪表盘(需要OBD支持,音乐,胎压,导航,车况)", 1),
+    BLUE("魅力蓝调(OBD支持更佳,音乐,胎压,导航,车况)", 2);
 
     private String name;
     private Integer id;

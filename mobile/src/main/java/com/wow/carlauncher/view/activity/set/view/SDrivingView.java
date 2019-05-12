@@ -1,18 +1,16 @@
 package com.wow.carlauncher.view.activity.set.view;
 
-import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.util.AttributeSet;
+import android.annotation.SuppressLint;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.view.activity.driving.DrivingViewEnum;
-import com.wow.carlauncher.view.activity.set.SetEnumOnClickListener;
+import com.wow.carlauncher.view.activity.set.SetActivity;
+import com.wow.carlauncher.view.activity.set.SetBaseView;
 import com.wow.carlauncher.view.activity.set.event.SAEventRefreshDriving;
-import com.wow.carlauncher.view.base.BaseView;
+import com.wow.carlauncher.view.activity.set.listener.SetEnumOnClickListener;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -23,15 +21,10 @@ import static com.wow.carlauncher.common.CommonData.SDATA_DRIVING_VIEW;
 /**
  * Created by 10124 on 2018/4/22.
  */
-
-public class SDrivingView extends BaseView {
-
-    public SDrivingView(@NonNull Context context) {
-        super(context);
-    }
-
-    public SDrivingView(@NonNull Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
+@SuppressLint("ViewConstructor")
+public class SDrivingView extends SetBaseView {
+    public SDrivingView(SetActivity activity) {
+        super(activity);
     }
 
     @Override

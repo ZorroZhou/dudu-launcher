@@ -1,10 +1,11 @@
-package com.wow.carlauncher.view.activity.set;
+package com.wow.carlauncher.view.activity.set.listener;
 
 import android.content.Context;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 
 import com.wow.carlauncher.common.util.ThreadObj;
+import com.wow.carlauncher.view.activity.set.SetEnum;
 
 public abstract class SetEnumOnClickListener<T extends SetEnum> implements View.OnClickListener {
     private Context context;

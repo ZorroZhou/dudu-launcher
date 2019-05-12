@@ -2,6 +2,8 @@ package com.wow.carlauncher.common;
 
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.ThemeManage.Theme;
+import com.wow.carlauncher.ex.plugin.console.ConsoleProtoclEnum;
+import com.wow.carlauncher.ex.plugin.fk.FangkongProtocolEnum;
 import com.wow.carlauncher.ex.plugin.music.MusicControllerEnum;
 import com.wow.carlauncher.ex.plugin.obd.ObdProtocolEnum;
 import com.wow.carlauncher.view.activity.driving.DrivingViewEnum;
@@ -83,6 +85,9 @@ public class CommonData {
             DrivingViewEnum.BLACK,
             DrivingViewEnum.BLUE};
 
+    public static final FangkongProtocolEnum[] FANGKONG_CONTROLLER = {FangkongProtocolEnum.YLFK};
+
+    public static final ConsoleProtoclEnum[] CONSOLES_PROTOCL = {ConsoleProtoclEnum.SYSTEM, ConsoleProtoclEnum.NWD};
 
     public final static long MINUTE_MILL = 60 * 1000;
     public final static long HOUR_MILL = 60 * MINUTE_MILL;

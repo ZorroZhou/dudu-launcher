@@ -1,11 +1,8 @@
 package com.wow.carlauncher.view.activity.set.view;
 
-import android.content.Context;
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
-import android.util.AttributeSet;
 import android.view.WindowManager;
 
 import com.wow.carlauncher.R;
@@ -25,11 +22,12 @@ import com.wow.carlauncher.view.activity.launcher.event.LItemRefreshEvent;
 import com.wow.carlauncher.view.activity.launcher.event.LLayoutRefreshEvent;
 import com.wow.carlauncher.view.activity.launcher.event.LPageTransformerChangeEvent;
 import com.wow.carlauncher.view.activity.set.LauncherItemAdapter;
-import com.wow.carlauncher.view.activity.set.SetEnumOnClickListener;
-import com.wow.carlauncher.view.activity.set.SetSwitchOnClickListener;
+import com.wow.carlauncher.view.activity.set.SetActivity;
+import com.wow.carlauncher.view.activity.set.SetBaseView;
 import com.wow.carlauncher.view.activity.set.event.SEventPromptShowRefresh;
 import com.wow.carlauncher.view.activity.set.event.SEventSetHomeFull;
-import com.wow.carlauncher.view.base.BaseView;
+import com.wow.carlauncher.view.activity.set.listener.SetEnumOnClickListener;
+import com.wow.carlauncher.view.activity.set.listener.SetSwitchOnClickListener;
 import com.wow.carlauncher.view.clickListener.PicSelectOnClickListener;
 
 import org.greenrobot.eventbus.EventBus;
@@ -45,17 +43,12 @@ import static com.wow.carlauncher.common.CommonData.SDATA_LAUNCHER_LAYOUT;
 /**
  * Created by 10124 on 2018/4/22.
  */
+@SuppressLint("ViewConstructor")
+public class SHomeView extends SetBaseView {
 
-public class SHomeView extends BaseView {
-
-    public SHomeView(@NonNull Context context) {
-        super(context);
+    public SHomeView(SetActivity activity) {
+        super(activity);
     }
-
-    public SHomeView(@NonNull Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-    }
-
     @Override
     protected int getContent() {
         return R.layout.content_set_home;

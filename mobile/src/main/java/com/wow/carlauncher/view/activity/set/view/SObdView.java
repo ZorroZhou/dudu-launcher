@@ -1,9 +1,6 @@
 package com.wow.carlauncher.view.activity.set.view;
 
-import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.util.AttributeSet;
+import android.annotation.SuppressLint;
 import android.widget.ArrayAdapter;
 
 import com.inuker.bluetooth.library.search.SearchResult;
@@ -17,11 +14,11 @@ import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
 import com.wow.carlauncher.ex.manage.ble.BleSearchResponse;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
-import com.wow.carlauncher.ex.plugin.fk.FangkongProtocolEnum;
 import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.ex.plugin.obd.ObdProtocolEnum;
-import com.wow.carlauncher.view.activity.set.SetEnumOnClickListener;
-import com.wow.carlauncher.view.base.BaseView;
+import com.wow.carlauncher.view.activity.set.SetActivity;
+import com.wow.carlauncher.view.activity.set.SetBaseView;
+import com.wow.carlauncher.view.activity.set.listener.SetEnumOnClickListener;
 import com.wow.carlauncher.view.dialog.ListDialog;
 
 import java.util.ArrayList;
@@ -38,17 +35,11 @@ import static com.wow.carlauncher.common.CommonData.SDATA_TRIP_AUTO_OPEN_DRIVING
  * Created by 10124 on 2018/4/22.
  */
 
-public class SObdView extends BaseView {
-    public static final FangkongProtocolEnum[] ALL_FANGKONG_CONTROLLER = {FangkongProtocolEnum.YLFK};
-
-    public SObdView(@NonNull Context context) {
-        super(context);
+@SuppressLint("ViewConstructor")
+public class SObdView extends SetBaseView {
+    public SObdView(SetActivity activity) {
+        super(activity);
     }
-
-    public SObdView(@NonNull Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-    }
-
     @Override
     protected int getContent() {
         return R.layout.content_set_obd;

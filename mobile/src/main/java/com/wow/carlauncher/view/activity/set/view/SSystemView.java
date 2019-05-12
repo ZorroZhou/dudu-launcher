@@ -1,6 +1,6 @@
 package com.wow.carlauncher.view.activity.set.view;
 
-import android.app.Activity;
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -9,10 +9,7 @@ import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
-import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.View;
 
@@ -24,12 +21,17 @@ import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
+import com.wow.carlauncher.repertory.server.CommonCallback;
+import com.wow.carlauncher.repertory.server.CommonService;
+import com.wow.carlauncher.repertory.server.response.AppUpdate;
+import com.wow.carlauncher.repertory.server.response.BaseResult;
 import com.wow.carlauncher.view.activity.AboutActivity;
 import com.wow.carlauncher.view.activity.launcher.event.LDockLabelShowChangeEvent;
-import com.wow.carlauncher.view.activity.set.SetAppMultipleSelectOnClickListener;
-import com.wow.carlauncher.view.activity.set.SetAppSingleSelectOnClickListener;
-import com.wow.carlauncher.view.activity.set.SetSwitchOnClickListener;
-import com.wow.carlauncher.view.base.BaseView;
+import com.wow.carlauncher.view.activity.set.SetActivity;
+import com.wow.carlauncher.view.activity.set.SetBaseView;
+import com.wow.carlauncher.view.activity.set.listener.SetAppMultipleSelectOnClickListener;
+import com.wow.carlauncher.view.activity.set.listener.SetAppSingleSelectOnClickListener;
+import com.wow.carlauncher.view.activity.set.listener.SetSwitchOnClickListener;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -39,14 +41,10 @@ import butterknife.BindView;
  * Created by 10124 on 2018/4/22.
  */
 
-public class SSystemView extends BaseView {
-
-    public SSystemView(@NonNull Context context) {
-        super(context);
-    }
-
-    public SSystemView(@NonNull Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
+@SuppressLint("ViewConstructor")
+public class SSystemView extends SetBaseView {
+    public SSystemView(SetActivity activity) {
+        super(activity);
     }
 
     @Override
@@ -101,7 +99,14 @@ public class SSystemView extends BaseView {
         sv_update.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+                getActivity().showLoading("请求中");
+                CommonService.getUpdate(2, new CommonCallback<AppUpdate>() {
+                    @Override
+                    public void callback(BaseResult<AppUpdate> res) {
+                        getActivity().hideLoading();
+                        System.out.println(res.getData());
+                    }
+                });
             }
         });
 
@@ -177,11 +182,6 @@ public class SSystemView extends BaseView {
 
         sv_about.setOnClickListener(v -> getActivity().startActivity(new Intent(getContext(), AboutActivity.class)));
     }
-
-    private Activity getActivity() {
-        return (Activity) getContext();
-    }
-
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {

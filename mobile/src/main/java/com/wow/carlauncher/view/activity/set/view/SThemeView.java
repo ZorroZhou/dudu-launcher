@@ -1,9 +1,6 @@
 package com.wow.carlauncher.view.activity.set.view;
 
-import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.util.AttributeSet;
+import android.annotation.SuppressLint;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.util.SharedPreUtil;
@@ -11,7 +8,8 @@ import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.ThemeManage.Theme;
 import com.wow.carlauncher.ex.manage.ThemeManage.ThemeMode;
-import com.wow.carlauncher.view.base.BaseView;
+import com.wow.carlauncher.view.activity.set.SetActivity;
+import com.wow.carlauncher.view.activity.set.SetBaseView;
 import com.wow.carlauncher.view.clickListener.PicSelectOnClickListener;
 
 import butterknife.BindView;
@@ -26,14 +24,11 @@ import static com.wow.carlauncher.common.CommonData.THEME_MODEL;
  * Created by 10124 on 2018/4/22.
  */
 
-public class SThemeView extends BaseView {
+@SuppressLint("ViewConstructor")
+public class SThemeView extends SetBaseView {
 
-    public SThemeView(@NonNull Context context) {
-        super(context);
-    }
-
-    public SThemeView(@NonNull Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
+    public SThemeView(SetActivity activity) {
+        super(activity);
     }
 
     @Override

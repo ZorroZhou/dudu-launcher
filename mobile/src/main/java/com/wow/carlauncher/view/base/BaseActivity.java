@@ -7,7 +7,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +33,7 @@ public abstract class BaseActivity extends Activity {
     private TextView title;
     private View base;
     private Bundle savedInstanceState;
+
     public Bundle getSavedInstanceState() {
         return savedInstanceState;
     }
@@ -122,47 +122,31 @@ public abstract class BaseActivity extends Activity {
         this.title.setText(title);
     }
 
-    private Boolean showLoading = false;
+    private boolean showLoading = false;
 
-    public void showLoading(final String msg, @Nullable final ProgressInterruptListener progressInterruptListener) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                TaskExecutor.self().run(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (showLoading) {
-                            return;
-                        }
-                        if (progressDialog != null && !isFinishing() && !showLoading) {
-                            progressDialog.setMessage(msg);
-                            progressDialog.show();
-                            showLoading = true;
-                        }
-                    }
-                }, 100);
+    public void showLoading(final String msg) {
+        TaskExecutor.self().post(() -> {
+            if (showLoading) {
+                return;
+            }
+            if (progressDialog != null && !isFinishing() && !showLoading) {
+                progressDialog.setMessage(msg);
+                progressDialog.show();
+                showLoading = true;
             }
         });
     }
 
     public synchronized void hideLoading() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                TaskExecutor.self().run(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (!showLoading) {
-                            return;
-                        }
-                        if (progressDialog != null && showLoading) {
-                            progressDialog.hide();
-                            showLoading = false;
-                        }
-                    }
-                }, 100);
+        TaskExecutor.self().post(() -> {
+            if (!showLoading) {
+                return;
             }
-        });
+            if (progressDialog != null && showLoading) {
+                progressDialog.hide();
+                showLoading = false;
+            }
+        }, 100);
     }
 
     public void init() {

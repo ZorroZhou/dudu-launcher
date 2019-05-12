@@ -1,13 +1,10 @@
 package com.wow.carlauncher.view.activity.set.view;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.appwidget.AppWidgetHost;
 import android.appwidget.AppWidgetManager;
-import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.util.AttributeSet;
 import android.view.View;
 
 import com.wow.carlauncher.R;
@@ -22,10 +19,11 @@ import com.wow.carlauncher.ex.plugin.music.MusicControllerEnum;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import com.wow.carlauncher.view.activity.launcher.event.LAMapCloseXunhang;
 import com.wow.carlauncher.view.activity.launcher.event.LCityRefreshEvent;
-import com.wow.carlauncher.view.activity.set.SetEnumOnClickListener;
-import com.wow.carlauncher.view.activity.set.SetSwitchOnClickListener;
+import com.wow.carlauncher.view.activity.set.SetActivity;
+import com.wow.carlauncher.view.activity.set.SetBaseView;
 import com.wow.carlauncher.view.activity.set.event.SEventRefreshAmapPlugin;
-import com.wow.carlauncher.view.base.BaseView;
+import com.wow.carlauncher.view.activity.set.listener.SetEnumOnClickListener;
+import com.wow.carlauncher.view.activity.set.listener.SetSwitchOnClickListener;
 import com.wow.carlauncher.view.dialog.CityDialog;
 
 import org.greenrobot.eventbus.EventBus;
@@ -36,6 +34,7 @@ import butterknife.BindView;
 
 import static com.wow.carlauncher.common.CommonData.APP_WIDGET_AMAP_PLUGIN;
 import static com.wow.carlauncher.common.CommonData.APP_WIDGET_HOST_ID;
+import static com.wow.carlauncher.common.CommonData.CONSOLES_PROTOCL;
 import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_AMAP_PLUGIN;
 import static com.wow.carlauncher.common.CommonData.SDATA_CONSOLE_MARK;
 import static com.wow.carlauncher.common.CommonData.SDATA_MUSIC_CONTROLLER;
@@ -44,15 +43,11 @@ import static com.wow.carlauncher.common.CommonData.SDATA_MUSIC_CONTROLLER;
  * Created by 10124 on 2018/4/22.
  */
 
-public class SItemView extends BaseView {
-    private static final ConsoleProtoclEnum[] ALL_CONSOLES = {ConsoleProtoclEnum.SYSTEM, ConsoleProtoclEnum.NWD};
+@SuppressLint("ViewConstructor")
+public class SItemView extends SetBaseView {
 
-    public SItemView(@NonNull Context context) {
-        super(context);
-    }
-
-    public SItemView(@NonNull Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
+    public SItemView(SetActivity activity) {
+        super(activity);
     }
 
     @Override
@@ -170,7 +165,7 @@ public class SItemView extends BaseView {
 
 
         sv_console.setSummary("控制协议：" + ConsoleProtoclEnum.getById(SharedPreUtil.getInteger(SDATA_CONSOLE_MARK, ConsoleProtoclEnum.SYSTEM.getId())).getName());
-        sv_console.setOnClickListener(new SetEnumOnClickListener<ConsoleProtoclEnum>(getContext(), ALL_CONSOLES) {
+        sv_console.setOnClickListener(new SetEnumOnClickListener<ConsoleProtoclEnum>(getContext(), CONSOLES_PROTOCL) {
             @Override
             public String title() {
                 return "请选择系统控制协议";

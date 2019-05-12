@@ -1,18 +1,16 @@
 package com.wow.carlauncher.view.activity.set.view;
 
-import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import android.annotation.SuppressLint;
 import android.support.v7.app.AlertDialog;
-import android.util.AttributeSet;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.view.SetView;
-import com.wow.carlauncher.view.activity.set.SetAppMultipleSelectOnClickListener;
-import com.wow.carlauncher.view.activity.set.SetSwitchOnClickListener;
-import com.wow.carlauncher.view.base.BaseView;
+import com.wow.carlauncher.view.activity.set.SetActivity;
+import com.wow.carlauncher.view.activity.set.SetBaseView;
+import com.wow.carlauncher.view.activity.set.listener.SetAppMultipleSelectOnClickListener;
+import com.wow.carlauncher.view.activity.set.listener.SetSwitchOnClickListener;
 import com.wow.carlauncher.view.popup.PopupWin;
 
 import org.greenrobot.eventbus.EventBus;
@@ -25,16 +23,12 @@ import static com.wow.carlauncher.common.CommonData.POPUP_SIZE;
  * Created by 10124 on 2018/4/22.
  */
 
-public class SPopupView extends BaseView {
+@SuppressLint("ViewConstructor")
+public class SPopupView extends SetBaseView {
 
-    public SPopupView(@NonNull Context context) {
-        super(context);
+    public SPopupView(SetActivity activity) {
+        super(activity);
     }
-
-    public SPopupView(@NonNull Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
-    }
-
     @Override
     protected int getContent() {
         return R.layout.content_set_popup;

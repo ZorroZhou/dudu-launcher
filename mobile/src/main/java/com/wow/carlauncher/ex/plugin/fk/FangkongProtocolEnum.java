@@ -1,10 +1,12 @@
 package com.wow.carlauncher.ex.plugin.fk;
 
+import com.wow.carlauncher.view.activity.set.SetEnum;
+
 /**
  * Created by 10124 on 2018/3/29.
  */
 
-public enum FangkongProtocolEnum {
+public enum FangkongProtocolEnum implements SetEnum {
     YLFK("亿连方控", 1);
 
     private String name;

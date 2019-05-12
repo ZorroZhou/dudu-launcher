@@ -1,11 +1,9 @@
 package com.wow.carlauncher.view.activity.set.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
-import android.util.AttributeSet;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
@@ -14,9 +12,10 @@ import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.util.ThreadObj;
 import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
-import com.wow.carlauncher.view.activity.set.SetAppSingleSelectOnClickListener;
-import com.wow.carlauncher.view.activity.set.SetSwitchOnClickListener;
-import com.wow.carlauncher.view.base.BaseView;
+import com.wow.carlauncher.view.activity.set.SetActivity;
+import com.wow.carlauncher.view.activity.set.SetBaseView;
+import com.wow.carlauncher.view.activity.set.listener.SetAppSingleSelectOnClickListener;
+import com.wow.carlauncher.view.activity.set.listener.SetSwitchOnClickListener;
 
 import butterknife.BindView;
 
@@ -29,13 +28,11 @@ import static com.wow.carlauncher.common.CommonData.SDATA_APP_AUTO_OPEN4;
  * Created by 10124 on 2018/4/22.
  */
 
-public class SLoadAppView extends BaseView {
-    public SLoadAppView(@NonNull Context context) {
-        super(context);
-    }
 
-    public SLoadAppView(@NonNull Context context, @Nullable AttributeSet attrs) {
-        super(context, attrs);
+@SuppressLint("ViewConstructor")
+public class SLoadAppView extends SetBaseView {
+    public SLoadAppView(SetActivity activity) {
+        super(activity);
     }
 
     @Override

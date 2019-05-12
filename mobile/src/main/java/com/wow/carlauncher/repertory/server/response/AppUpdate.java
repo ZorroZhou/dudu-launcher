@@ -31,4 +31,13 @@ public class AppUpdate {
         this.url = url;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "AppUpdate{" +
+                "version=" + version +
+                ", about='" + about + '\'' +
+                ", url='" + url + '\'' +
+                '}';
+    }
 }

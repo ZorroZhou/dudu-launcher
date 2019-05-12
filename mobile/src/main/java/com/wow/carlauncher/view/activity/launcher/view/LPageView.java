@@ -47,7 +47,7 @@ public class LPageView extends BaseEXView {
         this.item = item;
         ll_base.removeAllViews();
         int itemIndex = 0;
-        int leftMargin = ViewUtils.dip2px(getContext(), 10);
+        int leftMargin = ViewUtils.dip2px(getContext(), 15);
         for (View i : item) {
             if (i == null) {
                 i = new View(getContext());

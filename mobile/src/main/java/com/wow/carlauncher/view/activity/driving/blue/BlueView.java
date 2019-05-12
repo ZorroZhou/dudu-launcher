@@ -40,6 +40,7 @@ import java.util.Date;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+import static com.wow.carlauncher.common.CommonData.MINUTE_MILL;
 import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.ICONS;
 import static com.wow.carlauncher.ex.plugin.fk.FangkongProtocolEnum.YLFK;
 import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.RIGHT_BOTTOM_CLICK;
@@ -116,11 +117,8 @@ public class BlueView extends DrivingView {
     @BindView(R.id.tv_shengyu_oil)
     TextView tv_shengyu_oil;
 
-    @BindView(R.id.tv_date_time)
-    TextView tv_date_time;
-
-    @BindView(R.id.tv_date_day)
-    TextView tv_date_day;
+    @BindView(R.id.tv_date)
+    TextView tv_date;
 
     @BindView(R.id.rl_item1_not_nav_tp)
     View rl_item1_not_nav_tp;
@@ -152,6 +150,8 @@ public class BlueView extends DrivingView {
     @BindView(R.id.tv_nav_msg)
     TextView tv_nav_msg;
 
+    @BindView(R.id.rl_main_info)
+    View rl_main_info;
 
     private boolean show = true;
 
@@ -215,7 +215,7 @@ public class BlueView extends DrivingView {
         iv_fuel_mask.setVisibility(VISIBLE);
         iv_rpm_mask.setVisibility(VISIBLE);
         iv_rpm_cursor.setVisibility(VISIBLE);
-        tv_speed.setVisibility(VISIBLE);
+        rl_main_info.setVisibility(VISIBLE);
 
         iv_rpm_mask.setRotation((((float) 0 / (float) MAX_REV) * 87 - 65));
         iv_fuel_mask.setRotation((((float) 0 / (float) MAX_REV) * 87 + 65));
@@ -238,22 +238,28 @@ public class BlueView extends DrivingView {
         }
     }
 
+    private long cur_min = 0L;
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final TMEventSecond event) {
         if (!loaded) {
             return;
         }
-        Date d = new Date();
-        String date = DateUtil.dateToString(d, "MM月 dd日 " + DateUtil.getWeekOfDate(d));
-        String time = DateUtil.dateToString(d, "HH:mm:ss");
-        if (time.startsWith("0")) {
-            time = time.substring(1);
+        long time1 = System.currentTimeMillis() / MINUTE_MILL;
+        if (time1 != cur_min) {
+            cur_min = time1;
+            Date d = new Date();
+            String date = DateUtil.dateToString(d, "MM月 dd日 ");
+            String time = DateUtil.dateToString(d, "HH:mm");
+            if (time.startsWith("0")) {
+                time = time.substring(1);
+            }
+            if (date.startsWith("0")) {
+                date = date.substring(1);
+            }
+            date = date + time;
+            this.tv_date.setText(date);
         }
-        if (date.startsWith("0")) {
-            date = date.substring(1);
-        }
-        this.tv_date_day.setText(date);
-        this.tv_date_time.setText(time);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

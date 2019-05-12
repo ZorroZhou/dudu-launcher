@@ -81,7 +81,7 @@ public class LAppsView extends BaseEXView implements View.OnClickListener, View.
         }
         appInfos = list.subList(num * page, end);
         int psize = getPageItemNum();
-        int leftMargin = ViewUtils.dip2px(getContext(), 10);
+        int leftMargin = ViewUtils.dip2px(getContext(), 15);
         LinearLayout row = null;
         for (int i = 0; i < num; i++) {
             if (i % columnNum == 0) {
@@ -90,7 +90,7 @@ public class LAppsView extends BaseEXView implements View.OnClickListener, View.
                 LinearLayout.LayoutParams rowLp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 0);
                 rowLp.weight = 1;
                 if (rows.size() != 0) {
-                    rowLp.topMargin = ViewUtils.dip2px(getContext(), 10);
+                    rowLp.topMargin = ViewUtils.dip2px(getContext(), 15);
                 }
                 rows.add(row);
                 ll_base.addView(row, rowLp);

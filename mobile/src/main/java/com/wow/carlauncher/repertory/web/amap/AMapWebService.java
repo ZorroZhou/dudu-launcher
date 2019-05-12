@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.util.GsonUtil;
 import com.wow.carlauncher.common.util.HttpUtil;
-import com.wow.carlauncher.ex.manage.OkHttpManage;
+import com.wow.carlauncher.ex.manage.okHttp.OkHttpManage;
 import com.wow.carlauncher.repertory.web.amap.res.BaseRes;
 import com.wow.carlauncher.repertory.web.amap.res.WeatherRes;
 

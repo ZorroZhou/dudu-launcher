@@ -1,13 +1,19 @@
 package com.wow.carlauncher.view.activity.set.view;
 
 import android.annotation.SuppressLint;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
 import android.provider.Settings;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.view.KeyEvent;
 
@@ -19,6 +25,7 @@ import com.wow.carlauncher.common.util.AppUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
+import com.wow.carlauncher.ex.manage.okHttp.ProgressResponseListener;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.repertory.server.CommonService;
 import com.wow.carlauncher.view.activity.AboutActivity;
@@ -31,7 +38,14 @@ import com.wow.carlauncher.view.activity.set.listener.SetSwitchOnClickListener;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.io.File;
+import java.io.IOException;
+
 import butterknife.BindView;
+import okhttp3.Call;
+import okhttp3.Response;
+
+import static android.content.Context.NOTIFICATION_SERVICE;
 
 /**
  * Created by 10124 on 2018/4/22.
@@ -101,6 +115,7 @@ public class SSystemView extends SetBaseView {
                         TaskExecutor.self().autoPost(() -> new AlertDialog.Builder(getContext()).setTitle("发现新版本")
                                 .setNegativeButton("忽略", null)
                                 .setPositiveButton("下载新版本", (dialog12, which) -> {
+                                    loadDownloadApk(appUpdate.getUrl(), appUpdate.getVersion());
                                 }).setMessage(appUpdate.getAbout()).show());
                     } else {
                         ToastManage.self().show("没有新版本");
@@ -185,5 +200,94 @@ public class SSystemView extends SetBaseView {
             ToastManage.self().show("系统按键触发 KEY_CODE:" + keyCode);
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    public void loadDownloadApk(String url, int version) {
+        String[] fileName = url.split("/");
+        final String filePath = Environment.getExternalStorageDirectory() + "/ddlauncher-V" + version + ".apk";
+        initNotification();
+        CommonService.downFile(url, new ProgressResponseListener() {
+            @Override
+            public void onResponseProgress(long bytesRead, long contentLength, boolean done) {
+                System.out.println(bytesRead + "  " + contentLength + "  " + done);
+                if (done) {
+                    downloadResult(1, filePath);
+                } else {
+                    downloadResult(bytesRead / contentLength, filePath);
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                System.out.println("!!onFailure!");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                System.out.println("!!onResponse!" + response.body().string());
+            }
+        });
+    }
+
+    private Notification notification;
+    private NotificationManager notificationManager;
+    private NotificationCompat.Builder builder;
+
+    private void initNotification() {
+        String id = "my_channel_01";
+        String name = "我是渠道名字";
+        notificationManager = (NotificationManager) getActivity().getSystemService(NOTIFICATION_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel mChannel = new NotificationChannel(id, name, NotificationManager.IMPORTANCE_LOW);
+            notificationManager.createNotificationChannel(mChannel);
+            builder = new NotificationCompat.Builder(getActivity());
+            builder.setContentText("下载进度:0%");
+            builder.setContentTitle("正在更新...");
+            //创建通知时指定channelID
+            builder.setChannelId(id);
+            builder.setSmallIcon(R.mipmap.ic_launcher);
+            builder.setProgress(100, 0, false);
+            notification = builder.build();
+
+        } else {
+            builder = new NotificationCompat.Builder(getActivity())
+                    .setContentTitle("正在更新...")
+                    .setContentText("下载进度:0%")
+                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setProgress(100, 0, false)
+                    .setOngoing(true);
+            notification = builder.build();
+        }
+
+    }
+
+    public void downloadResult(float progress, String path) {
+        if (progress == -1) {
+            return;
+        }
+
+        if (0 < progress && progress < 1) {
+            builder.setProgress(100, (int) (progress * 100), false);
+            builder.setContentText("下载进度:" + (int) (progress * 100) + "%");
+            notification = builder.build();
+            notificationManager.notify(1, notification);
+        }
+
+        if (progress == 1) {
+            notificationManager.cancel(1);
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Uri value = FileProvider.getUriForFile(getActivity(), "com.satsoftec.risense.fileprovider", new File(path));
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                intent.setDataAndType(value,
+                        "application/vnd.android.package-archive");
+            } else {
+                intent.setDataAndType(Uri.fromFile(new File(path)),
+                        "application/vnd.android.package-archive");
+            }
+            getActivity().startActivity(intent);
+            android.os.Process.killProcess(android.os.Process.myPid());
+        }
     }
 }

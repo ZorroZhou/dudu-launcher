@@ -11,8 +11,7 @@ import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.ThemeManage.Theme;
 import com.wow.carlauncher.ex.manage.ThemeManage.ThemeMode;
-import com.wow.carlauncher.ex.plugin.console.ConsoleProtoclEnum;
-import com.wow.carlauncher.view.base.BaseEXView;
+import com.wow.carlauncher.view.base.BaseView;
 import com.wow.carlauncher.view.clickListener.PicSelectOnClickListener;
 
 import butterknife.BindView;
@@ -27,9 +26,7 @@ import static com.wow.carlauncher.common.CommonData.THEME_MODEL;
  * Created by 10124 on 2018/4/22.
  */
 
-public class SThemeView extends BaseEXView {
-
-    private static final ConsoleProtoclEnum[] ALL_CONSOLES = {ConsoleProtoclEnum.SYSTEM, ConsoleProtoclEnum.NWD};
+public class SThemeView extends BaseView {
 
     public SThemeView(@NonNull Context context) {
         super(context);

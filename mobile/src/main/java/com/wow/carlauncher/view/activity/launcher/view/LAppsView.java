@@ -23,7 +23,7 @@ import com.wow.carlauncher.ex.manage.appInfo.AppInfo;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.view.activity.launcher.LayoutEnum;
 import com.wow.carlauncher.view.activity.set.event.SEventPromptShowRefresh;
-import com.wow.carlauncher.view.base.BaseEXView;
+import com.wow.carlauncher.view.base.BaseThemeView;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -34,7 +34,7 @@ import java.util.List;
 import butterknife.BindView;
 
 
-public class LAppsView extends BaseEXView implements View.OnClickListener, View.OnLongClickListener {
+public class LAppsView extends BaseThemeView implements View.OnClickListener, View.OnLongClickListener {
 
     public LAppsView(@NonNull Context context, int columnNum, int page) {
         super(context);

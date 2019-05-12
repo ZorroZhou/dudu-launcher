@@ -14,6 +14,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
+import android.view.View;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
@@ -77,6 +78,9 @@ public class SSystemView extends BaseView {
     @BindView(R.id.sv_open_log)
     SetView sv_open_log;
 
+    @BindView(R.id.sv_update)
+    SetView sv_update;
+
     private boolean showKey;
     private BroadcastReceiver nwdKeyTestReceiver = new BroadcastReceiver() {
         public void onReceive(Context paramContext, Intent paramIntent) {
@@ -94,6 +98,12 @@ public class SSystemView extends BaseView {
 
     @Override
     protected void initView() {
+        sv_update.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                
+            }
+        });
 
         sv_open_log.setOnValueChangeListener(new SetSwitchOnClickListener(CommonData.SDATA_LOG_OPEN) {
             @Override

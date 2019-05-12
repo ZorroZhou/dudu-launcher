@@ -12,7 +12,7 @@ import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.view.activity.driving.DrivingViewEnum;
 import com.wow.carlauncher.view.activity.set.SetEnumOnClickListener;
 import com.wow.carlauncher.view.activity.set.event.SAEventRefreshDriving;
-import com.wow.carlauncher.view.base.BaseEXView;
+import com.wow.carlauncher.view.base.BaseView;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -24,7 +24,7 @@ import static com.wow.carlauncher.common.CommonData.SDATA_DRIVING_VIEW;
  * Created by 10124 on 2018/4/22.
  */
 
-public class SDrivingView extends BaseEXView {
+public class SDrivingView extends BaseView {
 
     public SDrivingView(@NonNull Context context) {
         super(context);

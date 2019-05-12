@@ -29,7 +29,7 @@ import com.wow.carlauncher.view.activity.set.SetEnumOnClickListener;
 import com.wow.carlauncher.view.activity.set.SetSwitchOnClickListener;
 import com.wow.carlauncher.view.activity.set.event.SEventPromptShowRefresh;
 import com.wow.carlauncher.view.activity.set.event.SEventSetHomeFull;
-import com.wow.carlauncher.view.base.BaseEXView;
+import com.wow.carlauncher.view.base.BaseView;
 import com.wow.carlauncher.view.clickListener.PicSelectOnClickListener;
 
 import org.greenrobot.eventbus.EventBus;
@@ -46,7 +46,7 @@ import static com.wow.carlauncher.common.CommonData.SDATA_LAUNCHER_LAYOUT;
  * Created by 10124 on 2018/4/22.
  */
 
-public class SHomeView extends BaseEXView {
+public class SHomeView extends BaseView {
 
     public SHomeView(@NonNull Context context) {
         super(context);

@@ -18,7 +18,7 @@ import android.widget.TextView;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.ex.manage.ThemeManage;
-import com.wow.carlauncher.view.base.BaseEXView;
+import com.wow.carlauncher.view.base.BaseThemeView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -30,7 +30,7 @@ import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.WHITE;
  * Created by 10124 on 2018/4/20.
  */
 
-public class LFmView extends BaseEXView {
+public class LFmView extends BaseThemeView {
 
     public LFmView(@NonNull Context context) {
         super(context);

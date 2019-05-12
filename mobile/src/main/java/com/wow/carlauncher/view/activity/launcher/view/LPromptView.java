@@ -30,7 +30,7 @@ import com.wow.carlauncher.view.activity.CarInfoActivity;
 import com.wow.carlauncher.view.activity.launcher.LayoutEnum;
 import com.wow.carlauncher.view.activity.launcher.event.LItemToFristEvent;
 import com.wow.carlauncher.view.activity.set.SetActivity;
-import com.wow.carlauncher.view.base.BaseEXView;
+import com.wow.carlauncher.view.base.BaseThemeView;
 import com.wow.carlauncher.view.event.EventWifiState;
 
 import org.greenrobot.eventbus.EventBus;
@@ -49,7 +49,7 @@ import static com.wow.carlauncher.common.CommonData.MINUTE_MILL;
  * Created by 10124 on 2018/4/22.
  */
 
-public class LPromptView extends BaseEXView {
+public class LPromptView extends BaseThemeView {
 
 
     public LPromptView(@NonNull Context context) {

@@ -28,7 +28,7 @@ import com.wow.carlauncher.ex.plugin.music.event.PMusicEventInfo;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventProgress;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventState;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicRefresLrc;
-import com.wow.carlauncher.view.base.BaseEXView;
+import com.wow.carlauncher.view.base.BaseThemeView;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -44,7 +44,7 @@ import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.WHITE;
  * Created by 10124 on 2018/4/20.
  */
 @SuppressLint("RtlHardcoded")
-public class LMusicView extends BaseEXView {
+public class LMusicView extends BaseThemeView {
 
     public LMusicView(@NonNull Context context) {
         super(context);

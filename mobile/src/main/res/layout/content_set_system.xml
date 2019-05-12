@@ -72,6 +72,33 @@
         android:layout_height="wrap_content"
         android:paddingLeft="16dp"
         android:paddingTop="16dp"
+        android:text="关于"
+        android:textColor="@color/colorPrimary"
+        android:textSize="14sp" />
+
+    <com.wow.carlauncher.common.view.SetView
+        android:id="@+id/sv_update"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        st:titleEx="版本更新"
+        st:type="buttonB" />
+
+    <View style="@style/Interval" />
+
+    <com.wow.carlauncher.common.view.SetView
+        android:id="@+id/sv_about"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        st:titleEx="嘟嘟桌面"
+        st:type="buttonB" />
+
+    <View style="@style/Interval" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="16dp"
+        android:paddingTop="16dp"
         android:text="高大上的系统设置（通常被车机厂商隐藏的功能）"
         android:textColor="@color/colorPrimary"
         android:textSize="14sp" />
@@ -105,12 +132,4 @@
 
     <View style="@style/Interval" />
 
-    <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_about"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        st:titleEx="关于"
-        st:type="buttonB" />
-
-    <View style="@style/Interval" />
 </LinearLayout>

@@ -7,7 +7,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.wow.carlauncher.R;
-import com.wow.carlauncher.view.base.BaseEXView;
+import com.wow.carlauncher.view.base.BaseView;
 
 import butterknife.OnClick;
 
@@ -15,7 +15,7 @@ import butterknife.OnClick;
  * Created by 10124 on 2018/4/22.
  */
 
-public class SDevView extends BaseEXView {
+public class SDevView extends BaseView {
 
     public SDevView(@NonNull Context context) {
         super(context);

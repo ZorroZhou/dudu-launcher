@@ -23,7 +23,7 @@ import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.repertory.web.amap.AMapWebService;
 import com.wow.carlauncher.repertory.web.amap.res.WeatherRes;
 import com.wow.carlauncher.view.activity.launcher.event.LCityRefreshEvent;
-import com.wow.carlauncher.view.base.BaseEXView;
+import com.wow.carlauncher.view.base.BaseThemeView;
 import com.wow.carlauncher.view.dialog.CityDialog;
 import com.wow.carlauncher.view.event.EventNetStateChange;
 
@@ -44,7 +44,7 @@ import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.WHITE;
  * Created by 10124 on 2018/4/20.
  */
 
-public class LWeatherView extends BaseEXView {
+public class LWeatherView extends BaseThemeView {
 
     public LWeatherView(@NonNull Context context) {
         super(context);

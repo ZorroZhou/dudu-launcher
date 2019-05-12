@@ -18,7 +18,7 @@ import com.wow.carlauncher.ex.manage.ble.BleManage;
 import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarTp;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventConnect;
-import com.wow.carlauncher.view.base.BaseEXView;
+import com.wow.carlauncher.view.base.BaseThemeView;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -33,7 +33,7 @@ import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.WHITE;
  * Created by 10124 on 2018/4/20.
  */
 
-public class LTaiyaView extends BaseEXView {
+public class LTaiyaView extends BaseThemeView {
 
     public LTaiyaView(@NonNull Context context) {
         super(context);

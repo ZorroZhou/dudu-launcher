@@ -15,7 +15,7 @@ import com.wow.carlauncher.common.util.DateUtil;
 import com.wow.carlauncher.common.util.LunarUtil;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.time.event.TMEvent3Second;
-import com.wow.carlauncher.view.base.BaseEXView;
+import com.wow.carlauncher.view.base.BaseThemeView;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -35,7 +35,7 @@ import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.WHITE;
  * Created by 10124 on 2018/4/20.
  */
 
-public class LTimeView extends BaseEXView {
+public class LTimeView extends BaseThemeView {
 
 
     public LTimeView(@NonNull Context context) {

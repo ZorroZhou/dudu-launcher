@@ -12,11 +12,11 @@ import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.ViewPagerOnPageChangeListener;
 import com.wow.carlauncher.common.util.ViewUtils;
 import com.wow.carlauncher.ex.manage.ThemeManage;
-import com.wow.carlauncher.view.base.BaseEXView;
+import com.wow.carlauncher.view.base.BaseThemeView;
 
 import butterknife.BindView;
 
-public class LPagerPostion extends BaseEXView implements ViewPagerOnPageChangeListener {
+public class LPagerPostion extends BaseThemeView implements ViewPagerOnPageChangeListener {
     public LPagerPostion(@NonNull Context context) {
         super(context);
     }

@@ -25,7 +25,7 @@ import com.wow.carlauncher.view.activity.launcher.event.LCityRefreshEvent;
 import com.wow.carlauncher.view.activity.set.SetEnumOnClickListener;
 import com.wow.carlauncher.view.activity.set.SetSwitchOnClickListener;
 import com.wow.carlauncher.view.activity.set.event.SEventRefreshAmapPlugin;
-import com.wow.carlauncher.view.base.BaseEXView;
+import com.wow.carlauncher.view.base.BaseView;
 import com.wow.carlauncher.view.dialog.CityDialog;
 
 import org.greenrobot.eventbus.EventBus;
@@ -44,7 +44,7 @@ import static com.wow.carlauncher.common.CommonData.SDATA_MUSIC_CONTROLLER;
  * Created by 10124 on 2018/4/22.
  */
 
-public class SItemView extends BaseEXView {
+public class SItemView extends BaseView {
     private static final ConsoleProtoclEnum[] ALL_CONSOLES = {ConsoleProtoclEnum.SYSTEM, ConsoleProtoclEnum.NWD};
 
     public SItemView(@NonNull Context context) {

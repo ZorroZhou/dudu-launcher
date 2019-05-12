@@ -15,6 +15,7 @@ import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.TaskExecutor;
+import com.wow.carlauncher.common.util.AppUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
@@ -95,9 +96,16 @@ public class SSystemView extends SetBaseView {
             getActivity().showLoading("请求中");
             CommonService.getUpdate(2, (success, msg, appUpdate) -> {
                 getActivity().hideLoading();
-                System.out.println("success:" + success);
-                System.out.println("msg:" + msg);
-                System.out.println("appUpdate:" + appUpdate);
+                if (success) {
+                    if (AppUtil.getLocalVersion(getContext()) < appUpdate.getVersion()) {
+                        TaskExecutor.self().autoPost(() -> new AlertDialog.Builder(getContext()).setTitle("发现新版本")
+                                .setNegativeButton("忽略", null)
+                                .setPositiveButton("下载新版本", (dialog12, which) -> {
+                                }).setMessage(appUpdate.getAbout()).show());
+                    } else {
+                        ToastManage.self().show("没有新版本");
+                    }
+                }
             });
         });
 

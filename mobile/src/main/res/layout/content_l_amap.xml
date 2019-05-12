@@ -220,7 +220,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:layout_heightPercent="100%h"
-                app:layout_widthPercent="100%h">
+                app:layout_widthPercent="90%h">
 
                 <ImageView
                     android:id="@+id/iv_icon"
@@ -240,14 +240,13 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentRight="true"
                 android:layout_toRightOf="@id/rl_icon"
-                android:ellipsize="marquee"
+                android:ellipsize="end"
                 android:gravity="right|bottom"
-                android:marqueeRepeatLimit="marquee_forever"
-                android:paddingRight="10dp"
                 android:singleLine="true"
                 android:text="现在"
                 android:textColor="#fff"
                 app:layout_heightPercent="50%h"
+                app:layout_marginRightPercent="10%h"
                 app:layout_textSizePercent="30%h" />
 
             <TextView
@@ -257,15 +256,14 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentBottom="true"
                 android:layout_toRightOf="@id/rl_icon"
-                android:ellipsize="marquee"
+                android:ellipsize="end"
                 android:gravity="right|top"
-                android:marqueeRepeatLimit="marquee_forever"
-                android:paddingRight="10dp"
-                android:singleLine="true"
+                android:maxLines="2"
                 android:text="relax放松一下"
                 android:textColor="#ddd"
-                app:layout_heightPercent="45%h"
-                app:layout_textSizePercent="20%h" />
+                app:layout_heightPercent="50%h"
+                app:layout_marginRightPercent="10%h"
+                app:layout_textSizePercent="18%h" />
         </com.zhy.android.percent.support.PercentRelativeLayout>
 
         <View

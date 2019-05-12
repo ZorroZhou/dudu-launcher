@@ -32,7 +32,7 @@ public abstract class SetAppMultipleSelectOnClickListener implements View.OnClic
             checks[i] = selectapp.contains("[" + appInfos.get(i).clazz + "]");
         }
 
-        AlertDialog dialog = new AlertDialog.Builder(context).setTitle("请选择APP").setNegativeButton("取消", null).setPositiveButton("确定", (dialog12, which) -> {
+        new AlertDialog.Builder(context).setTitle("请选择APP").setNegativeButton("取消", null).setPositiveButton("确定", (dialog12, which) -> {
             String selectapp1 = "";
             for (int i = 0; i < appInfos.size(); i++) {
                 if (checks[i]) {

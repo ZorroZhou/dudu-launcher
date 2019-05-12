@@ -30,7 +30,7 @@ import com.wow.carlauncher.view.activity.CarInfoActivity;
 import com.wow.carlauncher.view.activity.launcher.LayoutEnum;
 import com.wow.carlauncher.view.activity.launcher.event.LItemToFristEvent;
 import com.wow.carlauncher.view.activity.set.SetActivity;
-import com.wow.carlauncher.view.base.BaseThemeView;
+import com.wow.carlauncher.view.activity.launcher.BaseThemeView;
 import com.wow.carlauncher.view.event.EventWifiState;
 
 import org.greenrobot.eventbus.EventBus;

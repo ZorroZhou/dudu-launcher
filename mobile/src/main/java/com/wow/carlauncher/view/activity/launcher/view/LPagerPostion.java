@@ -12,7 +12,7 @@ import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.ViewPagerOnPageChangeListener;
 import com.wow.carlauncher.common.util.ViewUtils;
 import com.wow.carlauncher.ex.manage.ThemeManage;
-import com.wow.carlauncher.view.base.BaseThemeView;
+import com.wow.carlauncher.view.activity.launcher.BaseThemeView;
 
 import butterknife.BindView;
 

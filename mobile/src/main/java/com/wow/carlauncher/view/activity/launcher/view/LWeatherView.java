@@ -23,7 +23,7 @@ import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.repertory.web.amap.AMapWebService;
 import com.wow.carlauncher.repertory.web.amap.res.WeatherRes;
 import com.wow.carlauncher.view.activity.launcher.event.LCityRefreshEvent;
-import com.wow.carlauncher.view.base.BaseThemeView;
+import com.wow.carlauncher.view.activity.launcher.BaseThemeView;
 import com.wow.carlauncher.view.dialog.CityDialog;
 import com.wow.carlauncher.view.event.EventNetStateChange;
 

@@ -23,7 +23,7 @@ import com.wow.carlauncher.ex.manage.appInfo.AppInfo;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.view.activity.launcher.LayoutEnum;
 import com.wow.carlauncher.view.activity.set.event.SEventPromptShowRefresh;
-import com.wow.carlauncher.view.base.BaseThemeView;
+import com.wow.carlauncher.view.activity.launcher.BaseThemeView;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;

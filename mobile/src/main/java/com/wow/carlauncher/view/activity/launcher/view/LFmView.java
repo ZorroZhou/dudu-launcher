@@ -18,7 +18,7 @@ import android.widget.TextView;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.ex.manage.ThemeManage;
-import com.wow.carlauncher.view.base.BaseThemeView;
+import com.wow.carlauncher.view.activity.launcher.BaseThemeView;
 
 import butterknife.BindView;
 import butterknife.OnClick;

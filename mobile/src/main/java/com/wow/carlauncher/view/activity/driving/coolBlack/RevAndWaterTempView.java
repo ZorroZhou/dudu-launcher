@@ -8,7 +8,7 @@ import android.widget.TextView;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarInfo;
-import com.wow.carlauncher.view.base.BaseThemeView;
+import com.wow.carlauncher.view.base.BaseView;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -19,7 +19,7 @@ import butterknife.BindView;
  * Created by 10124 on 2018/4/26.
  */
 
-public class RevAndWaterTempView extends BaseThemeView {
+public class RevAndWaterTempView extends BaseView {
     private final static int MAX_REV = 11000;
     private final static int MAX_WATER_TEMP = 130;
 

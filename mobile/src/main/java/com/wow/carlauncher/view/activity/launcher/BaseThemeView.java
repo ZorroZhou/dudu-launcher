@@ -1,4 +1,4 @@
-package com.wow.carlauncher.view.base;
+package com.wow.carlauncher.view.activity.launcher;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 
 import com.wow.carlauncher.ex.manage.ThemeManage;
+import com.wow.carlauncher.view.base.BaseView;
 
 /**
  * Created by 10124 on 2018/4/22.

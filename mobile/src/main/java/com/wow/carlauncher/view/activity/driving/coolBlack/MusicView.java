@@ -14,7 +14,7 @@ import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventInfo;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventState;
-import com.wow.carlauncher.view.base.BaseThemeView;
+import com.wow.carlauncher.view.base.BaseView;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -28,7 +28,7 @@ import static com.wow.carlauncher.common.CommonData.TAG;
  * Created by 10124 on 2018/5/11.
  */
 
-public class MusicView extends BaseThemeView {
+public class MusicView extends BaseView {
     public MusicView(@NonNull Context context) {
         super(context);
     }

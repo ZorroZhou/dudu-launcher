@@ -28,7 +28,7 @@ import com.wow.carlauncher.ex.plugin.music.event.PMusicEventInfo;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventProgress;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventState;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicRefresLrc;
-import com.wow.carlauncher.view.base.BaseThemeView;
+import com.wow.carlauncher.view.activity.launcher.BaseThemeView;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;

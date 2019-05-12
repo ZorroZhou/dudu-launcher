@@ -27,7 +27,7 @@ import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.view.activity.launcher.LayoutEnum;
 import com.wow.carlauncher.view.activity.launcher.event.LDockLabelShowChangeEvent;
 import com.wow.carlauncher.view.adapter.SelectAppAdapter;
-import com.wow.carlauncher.view.base.BaseThemeView;
+import com.wow.carlauncher.view.activity.launcher.BaseThemeView;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;

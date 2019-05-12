@@ -19,7 +19,7 @@ import com.wow.carlauncher.ex.manage.ble.BleManage;
 import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarInfo;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventConnect;
-import com.wow.carlauncher.view.base.BaseThemeView;
+import com.wow.carlauncher.view.activity.launcher.BaseThemeView;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;

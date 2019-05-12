@@ -14,7 +14,7 @@ import com.wow.carlauncher.ex.plugin.music.event.PMusicEventCoverRefresh;
 import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarTp;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventConnect;
-import com.wow.carlauncher.view.base.BaseThemeView;
+import com.wow.carlauncher.view.base.BaseView;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -25,7 +25,7 @@ import butterknife.BindView;
  * Created by 10124 on 2018/5/11.
  */
 
-public class TpView extends BaseThemeView {
+public class TpView extends BaseView {
     public TpView(@NonNull Context context) {
         super(context);
     }

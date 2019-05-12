@@ -5,9 +5,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 
-import com.wow.carlauncher.view.base.BaseThemeView;
+import com.wow.carlauncher.view.base.BaseView;
 
-public abstract class DrivingView extends BaseThemeView {
+public abstract class DrivingView extends BaseView {
     public DrivingView(@NonNull Context context) {
         super(context);
     }

@@ -18,11 +18,11 @@
         android:textSize="14sp" />
 
     <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_bind"
+        android:id="@+id/sv_driving_type"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         st:summary="测试绑定"
-        st:titleEx="OBD绑定"
+        st:titleEx="驾驶界面"
         st:type="buttonB" />
 
     <View style="@style/Interval" />

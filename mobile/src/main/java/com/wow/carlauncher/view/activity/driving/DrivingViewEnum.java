@@ -11,7 +11,7 @@ import com.wow.carlauncher.view.activity.set.SetEnum;
  */
 
 public enum DrivingViewEnum implements SetEnum {
-    BLACK("酷黑仪表盘1", 1),
+    BLACK("酷黑仪表盘", 1),
     BLUE("魅力蓝调", 2);
 
     private String name;

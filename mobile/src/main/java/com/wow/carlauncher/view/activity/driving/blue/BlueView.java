@@ -16,8 +16,10 @@ import com.wow.carlauncher.common.util.DateUtil;
 import com.wow.carlauncher.ex.manage.ImageManage;
 import com.wow.carlauncher.ex.manage.speed.SMEventSendSpeed;
 import com.wow.carlauncher.ex.manage.time.event.TMEventSecond;
+import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventNavInfo;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventState;
+import com.wow.carlauncher.ex.plugin.fk.event.PFkEventAction;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventCoverRefresh;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventInfo;
@@ -28,6 +30,7 @@ import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarTp;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventConnect;
 import com.wow.carlauncher.view.activity.driving.DrivingView;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -38,6 +41,8 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.ICONS;
+import static com.wow.carlauncher.ex.plugin.fk.FangkongProtocolEnum.YLFK;
+import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.RIGHT_BOTTOM_CLICK;
 
 public class BlueView extends DrivingView {
     private final static int MAX_REV = 8000;
@@ -51,9 +56,10 @@ public class BlueView extends DrivingView {
         super(context, attrs);
     }
 
-    @Override
-    public void setFront(boolean front) {
+    private boolean isFront = true;
 
+    public void setFront(boolean front) {
+        isFront = front;
     }
 
     @Override
@@ -378,6 +384,30 @@ public class BlueView extends DrivingView {
                 String msg = "剩余" + new BigDecimal(event.getRouteRemainDis() / 1000f).setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue() + "公里  " +
                         event.getRouteRemainTime() / 60 + "分钟";
                 tv_nav_msg.setText(msg);
+            }
+        }
+    }
+
+    @Subscribe(priority = 90)
+    public void onEvent(PFkEventAction event) {
+        if (!isFront) {
+            return;
+        }
+        if (YLFK.equals(event.getFangkongProtocol())) {
+            boolean needCancelEvent = false;
+            switch (event.getAction()) {
+                case RIGHT_BOTTOM_CLICK:
+                    if (naving) {
+                        showNav = !showNav;
+                        TaskExecutor.self().autoPost(this::refreshNavState);
+                    } else {
+                        ToastManage.self().show("没有开启导航!");
+                    }
+                    needCancelEvent = true;
+                    break;
+            }
+            if (needCancelEvent) {
+                EventBus.getDefault().cancelEventDelivery(event);
             }
         }
     }

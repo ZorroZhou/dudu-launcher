@@ -11,12 +11,12 @@ import android.widget.LinearLayout;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.util.ViewUtils;
 import com.wow.carlauncher.view.activity.launcher.LayoutEnum;
-import com.wow.carlauncher.view.activity.launcher.BaseThemeView;
+import com.wow.carlauncher.view.base.BaseView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class LPageView extends BaseThemeView {
+public class LPageView extends BaseView {
 
     public LPageView(@NonNull Context context) {
         super(context);

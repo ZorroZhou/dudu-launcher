@@ -128,6 +128,7 @@ public class AMapCartReceiver extends BroadcastReceiver {
                     if (info.getCurSpeed() >= 0) {
                         EventBus.getDefault().post(new SMEventReceiveSpeed().setSpeed(info.getCurSpeed()).setFrom(SMEventReceiveSpeed.SMReceiveSpeedFrom.AMAP));
                     }
+                    System.out.println("!!" + System.currentTimeMillis());
                     if (icon != -1
                             && info.getSegRemainDis() != 0
                             && info.getRouteAllDis() != 0

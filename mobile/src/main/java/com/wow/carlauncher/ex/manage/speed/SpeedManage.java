@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 
 import com.wow.carlauncher.common.LogEx;
+import com.wow.carlauncher.ex.manage.time.event.TMEvent3Second;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -34,8 +35,30 @@ public class SpeedManage {
         LogEx.d(this, "init ");
     }
 
+    private long amaptime = 0;
+
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void onEvent(SMEventReceiveSpeed event) {
+        time = 0;
+        if (event.getFrom().equals(SMEventReceiveSpeed.SMReceiveSpeedFrom.AMAP)) {
+            amaptime = System.currentTimeMillis();
+        }
+        if (System.currentTimeMillis() - amaptime > 5000) {
+            EventBus.getDefault().post(new SMEventSendSpeed().setUse(true).setSpeed(event.getSpeed()));
+        } else {
+            if (event.getFrom().equals(SMEventReceiveSpeed.SMReceiveSpeedFrom.AMAP)) {
+                EventBus.getDefault().post(new SMEventSendSpeed().setUse(true).setSpeed(event.getSpeed()));
+            }
+        }
+    }
 
+    private int time = 0;
+
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void onEvent(TMEvent3Second event) {
+        time++;
+        if (time == 2) {
+            EventBus.getDefault().post(new SMEventSendSpeed().setUse(false));
+        }
     }
 }

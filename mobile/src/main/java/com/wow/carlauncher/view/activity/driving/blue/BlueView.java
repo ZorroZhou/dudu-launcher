@@ -14,7 +14,7 @@ import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.DateUtil;
 import com.wow.carlauncher.ex.manage.ImageManage;
-import com.wow.carlauncher.ex.manage.location.LMEventNewLocation;
+import com.wow.carlauncher.ex.manage.speed.SMEventSendSpeed;
 import com.wow.carlauncher.ex.manage.time.event.TMEventSecond;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventNavInfo;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventState;
@@ -290,12 +290,12 @@ public class BlueView extends DrivingView {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(LMEventNewLocation event) {
+    public void onEvent(SMEventSendSpeed event) {
         if (!loaded) {
             return;
         }
         if (!obdConnect) {
-            setSpeed((int) (event.getSpeed() * 60 * 60 / 1000));
+            setSpeed(event.getSpeed());
         }
     }
 
@@ -323,6 +323,9 @@ public class BlueView extends DrivingView {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final PAmapEventState event) {
+        if (!loaded) {
+            return;
+        }
         if (event.isRunning()) {
             fl_item1_nav.setVisibility(View.VISIBLE);
             fl_item1_not_nav.setVisibility(View.GONE);
@@ -334,6 +337,9 @@ public class BlueView extends DrivingView {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final PAmapEventNavInfo event) {
+        if (!loaded) {
+            return;
+        }
         if (event.getIcon() - 1 >= 0 && event.getIcon() - 1 < ICONS.length) {
             iv_nav_icon.setImageResource(ICONS[event.getIcon() - 1]);
         }

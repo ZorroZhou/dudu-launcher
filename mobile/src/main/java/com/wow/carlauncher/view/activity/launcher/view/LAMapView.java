@@ -14,7 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.amap.api.location.AMapLocation;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.LogEx;
@@ -22,7 +21,7 @@ import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.view.LukuangView;
 import com.wow.carlauncher.ex.manage.ThemeManage;
-import com.wow.carlauncher.ex.manage.location.LMEventNewLocation;
+import com.wow.carlauncher.ex.manage.speed.SMEventSendSpeed;
 import com.wow.carlauncher.ex.plugin.amapcar.AMapCarPlugin;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventNavInfo;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventState;
@@ -425,8 +424,8 @@ public class LAMapView extends BaseEXView {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(final LMEventNewLocation event) {
-        if (event.getLocationType() == AMapLocation.LOCATION_TYPE_GPS && SharedPreUtil.getBoolean(CommonData.SDATA_USE_NAVI_XUNHYANG, false)) {
+    public void onEvent(final SMEventSendSpeed event) {
+        if (event.isUse() && SharedPreUtil.getBoolean(CommonData.SDATA_USE_NAVI_XUNHYANG, false)) {
             if (!loactionOk) {
                 loactionOk = true;
                 iv_moren.setVisibility(GONE);
@@ -438,11 +437,22 @@ public class LAMapView extends BaseEXView {
                 }
                 fl_xunhang_root.setVisibility(VISIBLE);
             }
+            System.out.println("!!!!" + event.getSpeed());
             //方向取值范围：【0，360】，其中0度表示正北方向，90度表示正东，180度表示正南，270度表示正西
             if (tv_speed != null) {
-                String msg = (int) (event.getSpeed() * 60 * 60 / 1000) + "";
+                String msg = event.getSpeed() + "";
                 tv_speed.setText(msg);
             }
+        } else if (loactionOk) {
+            loactionOk = false;
+            iv_moren.setVisibility(VISIBLE);
+            rl_che.setVisibility(GONE);
+            if (currentTheme == WHITE || currentTheme == BLACK) {
+                line11.setVisibility(VISIBLE);
+            } else {
+                line11.setVisibility(GONE);
+            }
+            fl_xunhang_root.setVisibility(GONE);
         }
     }
 

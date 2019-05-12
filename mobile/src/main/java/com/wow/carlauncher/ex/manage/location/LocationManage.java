@@ -42,7 +42,7 @@ public class LocationManage extends ContextEx implements AMapLocationListener {
             //设置定位回调监听
             mLocationClient.setLocationListener(LocationManage.this);
             mLocationOption = new AMapLocationClientOption();
-            mLocationOption.setInterval(2000);
+            mLocationOption.setInterval(1500);
             //设置定位模式为AMapLocationMode.Hight_Accuracy，高精度模式。
             mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
             //获取一次定位结果：

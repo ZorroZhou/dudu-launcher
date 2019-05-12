@@ -15,6 +15,7 @@ import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.baiduVoice.BaiduVoiceAssistant;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
 import com.wow.carlauncher.ex.manage.location.LocationManage;
+import com.wow.carlauncher.ex.manage.speed.SpeedManage;
 import com.wow.carlauncher.ex.manage.time.TimeManage;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.amapcar.AMapCarPlugin;
@@ -118,6 +119,8 @@ public class AppContext {
         NaviWin.self().init(app);
         //语音窗口
         VoiceWin.self().init(app);
+        //单独的速度插件
+        SpeedManage.self().init(app);
 
         if (SharedPreUtil.getBoolean(CommonData.SDATA_USE_VA, false)) {
             BaiduVoiceAssistant.self().init(app);

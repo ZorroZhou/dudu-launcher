@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
@@ -39,7 +40,9 @@ import com.wow.carlauncher.view.activity.set.listener.SetSwitchOnClickListener;
 import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import butterknife.BindView;
 import okhttp3.Call;
@@ -210,11 +213,7 @@ public class SSystemView extends SetBaseView {
             @Override
             public void onResponseProgress(long bytesRead, long contentLength, boolean done) {
                 System.out.println(bytesRead + "  " + contentLength + "  " + done);
-                if (done) {
-                    downloadResult(1, filePath);
-                } else {
-                    downloadResult(bytesRead / contentLength, filePath);
-                }
+                downloadResult(bytesRead / contentLength, filePath);
             }
 
             @Override
@@ -223,8 +222,37 @@ public class SSystemView extends SetBaseView {
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                System.out.println("!!onResponse!" + response.body().string());
+            public void onResponse(Call call, @NonNull Response response) throws IOException {
+//                response.body().byteStream()
+
+                int len;
+                byte[] buf = new byte[2048];
+                InputStream inputStream = response.body().byteStream();
+                /**
+                 * 写入本地文件
+                 */
+                File file = new File(filePath);
+                FileOutputStream fileOutputStream = new FileOutputStream(file);
+                while ((len = inputStream.read(buf)) != -1) {
+                    fileOutputStream.write(buf, 0, len);
+                }
+                fileOutputStream.flush();
+                fileOutputStream.close();
+                inputStream.close();
+
+                notificationManager.cancel(1);
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    Uri value = FileProvider.getUriForFile(getActivity(), "com.satsoftec.risense.fileprovider", new File(filePath));
+                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    intent.setDataAndType(value,
+                            "application/vnd.android.package-archive");
+                } else {
+                    intent.setDataAndType(Uri.fromFile(new File(filePath)),
+                            "application/vnd.android.package-archive");
+                }
+                getActivity().startActivity(intent);
             }
         });
     }
@@ -271,23 +299,6 @@ public class SSystemView extends SetBaseView {
             builder.setContentText("下载进度:" + (int) (progress * 100) + "%");
             notification = builder.build();
             notificationManager.notify(1, notification);
-        }
-
-        if (progress == 1) {
-            notificationManager.cancel(1);
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                Uri value = FileProvider.getUriForFile(getActivity(), "com.satsoftec.risense.fileprovider", new File(path));
-                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                intent.setDataAndType(value,
-                        "application/vnd.android.package-archive");
-            } else {
-                intent.setDataAndType(Uri.fromFile(new File(path)),
-                        "application/vnd.android.package-archive");
-            }
-            getActivity().startActivity(intent);
-            android.os.Process.killProcess(android.os.Process.myPid());
         }
     }
 }

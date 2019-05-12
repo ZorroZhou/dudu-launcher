@@ -5,8 +5,8 @@ import com.google.gson.annotations.SerializedName;
 
 public class AsrStart {
 
-//    @SerializedName(SpeechConstant.DECODER)
-//    private int decoder = 2;
+    @SerializedName(SpeechConstant.PID)
+    private int pid = 15363;
 
     @SerializedName(SpeechConstant.ACCEPT_AUDIO_VOLUME)
     private boolean acceptAudioVolume = false;
@@ -54,6 +54,15 @@ public class AsrStart {
 
     public AsrStart setVad(String vad) {
         this.vad = vad;
+        return this;
+    }
+
+    public int getPid() {
+        return pid;
+    }
+
+    public AsrStart setPid(int pid) {
+        this.pid = pid;
         return this;
     }
 }

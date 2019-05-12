@@ -185,7 +185,8 @@
                 android:id="@+id/fl_item1_nav"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center">
+                android:gravity="center"
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/iv_nav_icon"

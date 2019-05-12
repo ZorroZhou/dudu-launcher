@@ -1,0 +1,34 @@
+package com.wow.carlauncher.repertory.server.response;
+
+public class AppUpdate {
+    private Integer version;
+    private String about;
+    private String url;
+
+    public Integer getVersion() {
+        return version;
+    }
+
+    public AppUpdate setVersion(Integer version) {
+        this.version = version;
+        return this;
+    }
+
+    public String getAbout() {
+        return about;
+    }
+
+    public AppUpdate setAbout(String about) {
+        this.about = about;
+        return this;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public AppUpdate setUrl(String url) {
+        this.url = url;
+        return this;
+    }
+}

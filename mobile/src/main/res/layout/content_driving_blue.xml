@@ -80,7 +80,6 @@
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
         android:orientation="vertical"
-        android:visibility="gone"
         app:layout_widthPercent="75%h">
 
         <View
@@ -180,15 +179,57 @@
             android:layout_height="0dp"
             android:layout_weight="340">
 
-            <FrameLayout
+            <com.zhy.android.percent.support.PercentLinearLayout
                 android:id="@+id/fl_item1_nav"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/iv_nav_icon"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_alignParentLeft="true"
+                    android:padding="10dp"
+                    android:src="@mipmap/hud_sou9"
+                    app:layout_heightPercent="70%h"
+                    app:layout_marginPercent="10%h"
+                    app:layout_widthPercent="70%h" />
+
+                <com.zhy.android.percent.support.PercentLinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    app:layout_marginRightPercent="10%h">
+
+                    <TextView
+                        android:id="@+id/tv_nav_dis"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="500米后"
+                        android:textColor="#fff"
+                        app:layout_textSizePercent="18%h" />
+
+                    <TextView
+                        android:id="@+id/tv_nav_msg"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="剩余20公里"
+                        android:textColor="#fff"
+                        app:layout_textSizePercent="18%h" />
+                </com.zhy.android.percent.support.PercentLinearLayout>
+            </com.zhy.android.percent.support.PercentLinearLayout>
 
             <FrameLayout
                 android:id="@+id/fl_item1_not_nav"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:visibility="gone">
 
                 <com.zhy.android.percent.support.PercentRelativeLayout
                     android:id="@+id/rl_item1_not_nav_music"

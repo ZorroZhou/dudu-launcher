@@ -14,6 +14,7 @@ import com.wow.carlauncher.ex.manage.AppWidgetManage;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.view.activity.set.event.SEventRefreshAmapPlugin;
 import com.wow.carlauncher.view.activity.set.view.SDevView;
+import com.wow.carlauncher.view.activity.set.view.SDrivingView;
 import com.wow.carlauncher.view.activity.set.view.SFkView;
 import com.wow.carlauncher.view.activity.set.view.SHomeView;
 import com.wow.carlauncher.view.activity.set.view.SItemView;
@@ -56,7 +57,7 @@ public class SetActivity extends BaseActivity {
         //ll_user.setOnClickListener(v -> ToastManage.self().show("还没开发呢"));
     }
 
-    @OnClick(value = {R.id.sg_dev, R.id.sg_item, R.id.sg_theme, R.id.sg_home, R.id.sg_obd, R.id.sg_fk, R.id.sg_load_app, R.id.sg_popup, R.id.sg_system_set})
+    @OnClick(value = {R.id.sg_dev, R.id.sg_item, R.id.sg_driving, R.id.sg_theme, R.id.sg_home, R.id.sg_obd, R.id.sg_fk, R.id.sg_load_app, R.id.sg_popup, R.id.sg_system_set})
     public void clickEvent(View view) {
         ViewGroup setView = null;
         switch (view.getId()) {
@@ -94,6 +95,10 @@ public class SetActivity extends BaseActivity {
             }
             case R.id.sg_dev: {
                 setView = new SDevView(this);
+                break;
+            }
+            case R.id.sg_driving: {
+                setView = new SDrivingView(this);
                 break;
             }
         }

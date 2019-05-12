@@ -8,6 +8,7 @@ import android.widget.Toast;
 import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.GsonUtil;
+import com.wow.carlauncher.ex.manage.speed.SMEventReceiveSpeed;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventNavInfo;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventState;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapLukuangInfo;
@@ -124,7 +125,9 @@ public class AMapCartReceiver extends BroadcastReceiver {
                             .setRouteAllTime(intent.getIntExtra(NaviInfoConstant.ROUTE_ALL_TIME, -1))
                             .setCurSpeed(intent.getIntExtra(NaviInfoConstant.CUR_SPEED, -1))
                             .setCameraSpeed(intent.getIntExtra(NaviInfoConstant.CAMERA_SPEED, -1));
-
+                    if (info.getCurSpeed() >= 0) {
+                        EventBus.getDefault().post(new SMEventReceiveSpeed().setSpeed(info.getCurSpeed()).setFrom(SMEventReceiveSpeed.SMReceiveSpeedFrom.AMAP));
+                    }
                     if (icon != -1
                             && info.getSegRemainDis() != 0
                             && info.getRouteAllDis() != 0

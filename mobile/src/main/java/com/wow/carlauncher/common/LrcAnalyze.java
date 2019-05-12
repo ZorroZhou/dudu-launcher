@@ -113,11 +113,18 @@ public class LrcAnalyze {
 
     private long lrcAnalyzeTimeStringToValue(String time) {
         try {
-            long minute = Integer.parseInt(time.substring(0, time.lastIndexOf(":")));
-            long second = Integer.parseInt(time.substring(time.indexOf(":") + 1, time.lastIndexOf(".")));
+            long hour = 0;
+            long minute = 0;
+            if (time.indexOf(":") != time.lastIndexOf(":")) {
+                hour = Integer.parseInt(time.substring(0, time.indexOf(":")));
+                minute = Integer.parseInt(time.substring(time.indexOf(":") + 1, time.lastIndexOf(":")));
+            } else {
+                minute = Integer.parseInt(time.substring(0, time.lastIndexOf(":")));
+            }
+            long second = Integer.parseInt(time.substring(time.lastIndexOf(":") + 1, time.lastIndexOf(".")));
             long millisecond = Integer.parseInt(time.substring(time.indexOf(".") + 1));
-            return (minute * 60 * 1000 + second * 1000 + millisecond);
-        } catch (Exception e) {
+            return ((hour * 60 + minute) * 60 * 1000 + second * 1000 + millisecond);
+        } catch (Throwable e) {
             return -1;
         }
 

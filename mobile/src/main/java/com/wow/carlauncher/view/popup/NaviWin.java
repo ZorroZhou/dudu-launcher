@@ -19,7 +19,7 @@ import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.manage.AppWidgetManage;
-import com.wow.carlauncher.ex.manage.time.event.MTimeHalfSecondEvent;
+import com.wow.carlauncher.ex.manage.time.event.TMEventHalfSecond;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventNavInfo;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventState;
 import com.wow.carlauncher.view.activity.set.event.SEventRefreshAmapPlugin;
@@ -155,7 +155,7 @@ public class NaviWin {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(final MTimeHalfSecondEvent event) {
+    public void onEvent(final TMEventHalfSecond event) {
         if (iv_gaode != null && iv_info != null && isShow) {
             iv_info.setImageDrawable(iv_gaode.getDrawable());
         }

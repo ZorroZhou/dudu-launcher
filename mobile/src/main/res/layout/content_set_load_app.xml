@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@android:color/white"
     android:orientation="vertical"
-    tools:ignore="HardcodedText,RtlHardcoded">
+    tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry">
 
     <TextView
         android:layout_width="match_parent"

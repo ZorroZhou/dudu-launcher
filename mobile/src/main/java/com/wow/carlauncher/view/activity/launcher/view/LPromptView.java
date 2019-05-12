@@ -18,8 +18,8 @@ import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.DateUtil;
 import com.wow.carlauncher.common.util.NetWorkUtil;
 import com.wow.carlauncher.ex.manage.ThemeManage;
-import com.wow.carlauncher.ex.manage.location.event.MNewLocationEvent;
-import com.wow.carlauncher.ex.manage.time.event.MTime3SecondEvent;
+import com.wow.carlauncher.ex.manage.location.LMEventNewLocation;
+import com.wow.carlauncher.ex.manage.time.event.TMEvent3Second;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.fk.FangkongPlugin;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventConnect;
@@ -251,7 +251,7 @@ public class LPromptView extends BaseEXView {
     private long cur_min = 0L;
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(final MTime3SecondEvent event) {
+    public void onEvent(final TMEvent3Second event) {
         long time = System.currentTimeMillis();
         long time1 = time / MINUTE_MILL;
         if (time1 != cur_min) {
@@ -262,10 +262,10 @@ public class LPromptView extends BaseEXView {
         }
     }
 
-    private MNewLocationEvent locationEvent;
+    private LMEventNewLocation locationEvent;
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(MNewLocationEvent event) {
+    public void onEvent(LMEventNewLocation event) {
         if (locationEvent == null || !event.getAdCode().equals(locationEvent.getAdCode())) {
             this.locationEvent = event;
             iv_location.setVisibility(VISIBLE);

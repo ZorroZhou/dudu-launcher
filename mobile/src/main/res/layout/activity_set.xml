@@ -94,6 +94,15 @@
 
                 <View style="@style/Interval" />
 
+                <com.wow.carlauncher.common.view.SetView
+                    android:id="@+id/sg_driving"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:titleEx="驾驶界面"
+                    app:type="buttonB" />
+
+                <View style="@style/Interval" />
+
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

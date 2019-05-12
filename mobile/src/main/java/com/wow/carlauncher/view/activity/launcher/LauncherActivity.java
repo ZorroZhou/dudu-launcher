@@ -30,7 +30,7 @@ import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.appInfo.event.MAppInfoRefreshShowEvent;
-import com.wow.carlauncher.ex.manage.location.event.MNewLocationEvent;
+import com.wow.carlauncher.ex.manage.location.LMEventNewLocation;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.console.ConsolePlugin;
 import com.wow.carlauncher.ex.plugin.console.event.PConsoleEventCallState;
@@ -320,11 +320,15 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
     public void onThemeChanged(ThemeManage manage) {
         LogEx.d(this, "onThemeChanged:start");
         if (manage.getTheme().equals(ThemeManage.Theme.KBLACK)) {
-            WallpaperManager wallpaperManager = WallpaperManager
-                    .getInstance(getApplicationContext());
-            // 获取当前壁纸
-            Drawable wallpaperDrawable = wallpaperManager.getDrawable();
-            ll_base.setBackground(wallpaperDrawable);
+            try {
+                WallpaperManager wallpaperManager = WallpaperManager
+                        .getInstance(getApplicationContext());
+                // 获取当前壁纸
+                Drawable wallpaperDrawable = wallpaperManager.getDrawable();
+                ll_base.setBackground(wallpaperDrawable);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         } else {
             ll_base.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_desk_bg));
         }
@@ -408,9 +412,9 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
     private String lastadCode;
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
-    public void onEvent(MNewLocationEvent event) {
+    public void onEvent(LMEventNewLocation event) {
         if (!event.getAdCode().equals(lastadCode)) {
-            LogEx.d(this, "MNewLocationEvent");
+            LogEx.d(this, "LMEventNewLocation");
             lastadCode = event.getAdCode();
         }
     }

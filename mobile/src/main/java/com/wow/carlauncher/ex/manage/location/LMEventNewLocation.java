@@ -1,10 +1,10 @@
-package com.wow.carlauncher.ex.manage.location.event;
+package com.wow.carlauncher.ex.manage.location;
 
 /**
  * Created by 10124 on 2018/5/12.
  */
 
-public class MNewLocationEvent {
+public class LMEventNewLocation {
     private double latitude;
     private double longitude;
     private String adCode;
@@ -18,7 +18,7 @@ public class MNewLocationEvent {
         return locationType;
     }
 
-    public MNewLocationEvent setLocationType(int locationType) {
+    public LMEventNewLocation setLocationType(int locationType) {
         this.locationType = locationType;
         return this;
     }
@@ -27,7 +27,7 @@ public class MNewLocationEvent {
         return bearing;
     }
 
-    public MNewLocationEvent setBearing(float bearing) {
+    public LMEventNewLocation setBearing(float bearing) {
         this.bearing = bearing;
         return this;
     }
@@ -36,7 +36,7 @@ public class MNewLocationEvent {
         return speed;
     }
 
-    public MNewLocationEvent setSpeed(float speed) {
+    public LMEventNewLocation setSpeed(float speed) {
         this.speed = speed;
         return this;
     }
@@ -45,7 +45,7 @@ public class MNewLocationEvent {
         return latitude;
     }
 
-    public MNewLocationEvent setLatitude(double latitude) {
+    public LMEventNewLocation setLatitude(double latitude) {
         this.latitude = latitude;
         return this;
     }
@@ -54,7 +54,7 @@ public class MNewLocationEvent {
         return longitude;
     }
 
-    public MNewLocationEvent setLongitude(double longitude) {
+    public LMEventNewLocation setLongitude(double longitude) {
         this.longitude = longitude;
         return this;
     }
@@ -63,7 +63,7 @@ public class MNewLocationEvent {
         return adCode;
     }
 
-    public MNewLocationEvent setAdCode(String adCode) {
+    public LMEventNewLocation setAdCode(String adCode) {
         this.adCode = adCode;
         return this;
     }
@@ -72,7 +72,7 @@ public class MNewLocationEvent {
         return city;
     }
 
-    public MNewLocationEvent setCity(String city) {
+    public LMEventNewLocation setCity(String city) {
         this.city = city;
         return this;
     }
@@ -81,7 +81,7 @@ public class MNewLocationEvent {
         return district;
     }
 
-    public MNewLocationEvent setDistrict(String district) {
+    public LMEventNewLocation setDistrict(String district) {
         this.district = district;
         return this;
     }

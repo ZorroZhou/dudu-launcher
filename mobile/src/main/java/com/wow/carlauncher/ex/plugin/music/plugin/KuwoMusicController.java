@@ -8,7 +8,7 @@ import com.wow.carlauncher.common.LrcAnalyze;
 import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
-import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
+import com.wow.carlauncher.ex.manage.time.event.TMEventSecond;
 import com.wow.carlauncher.ex.plugin.music.MusciCoverUtil;
 import com.wow.carlauncher.ex.plugin.music.MusicController;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
@@ -132,7 +132,7 @@ public class KuwoMusicController extends MusicController {
     }
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
-    public void onEvent(final MTimeSecondEvent event) {
+    public void onEvent(final TMEventSecond event) {
         int totalTime = mKwapi.getCurrentMusicDuration();
         long overTime = System.currentTimeMillis() + totalTime - mKwapi.getCurrentPos();
 

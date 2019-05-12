@@ -17,8 +17,8 @@ import com.wow.carlauncher.common.WeatherIconTemp;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.manage.ThemeManage;
-import com.wow.carlauncher.ex.manage.location.event.MNewLocationEvent;
-import com.wow.carlauncher.ex.manage.time.event.MTimeMinuteEvent;
+import com.wow.carlauncher.ex.manage.location.LMEventNewLocation;
+import com.wow.carlauncher.ex.manage.time.event.TMEventMinute;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.repertory.web.amap.AMapWebService;
 import com.wow.carlauncher.repertory.web.amap.res.WeatherRes;
@@ -285,14 +285,14 @@ public class LWeatherView extends BaseEXView {
     }
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
-    public void onEvent(MTimeMinuteEvent event) {
+    public void onEvent(TMEventMinute event) {
         refreshWeather(false);
     }
 
-    private MNewLocationEvent lastLocation;
+    private LMEventNewLocation lastLocation;
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
-    public void onEvent(MNewLocationEvent event) {
+    public void onEvent(LMEventNewLocation event) {
         boolean frist = false;
         if (this.lastLocation == null) {
             frist = true;

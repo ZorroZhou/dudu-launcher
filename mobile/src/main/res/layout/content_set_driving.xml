@@ -13,25 +13,18 @@
         android:layout_height="wrap_content"
         android:paddingLeft="16dp"
         android:paddingTop="16dp"
-        android:text="时间设置"
+        android:text="驾驶界面"
         android:textColor="@color/colorPrimary"
         android:textSize="14sp" />
 
     <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/time_plugin_open_app_select"
+        android:id="@+id/sv_bind"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        st:titleEx="时间位置点击打开的APP"
+        st:summary="测试绑定"
+        st:titleEx="OBD绑定"
         st:type="buttonB" />
 
     <View style="@style/Interval" />
 
-    <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/tianqi_city"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        st:titleEx="天气定位"
-        st:type="buttonB" />
-
-    <View style="@style/Interval" />
 </LinearLayout>

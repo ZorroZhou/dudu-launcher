@@ -4,6 +4,7 @@ import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.ThemeManage.Theme;
 import com.wow.carlauncher.ex.plugin.music.MusicControllerEnum;
 import com.wow.carlauncher.ex.plugin.obd.ObdProtocolEnum;
+import com.wow.carlauncher.view.activity.driving.DrivingViewEnum;
 import com.wow.carlauncher.view.activity.launcher.ItemEnum;
 import com.wow.carlauncher.view.activity.launcher.ItemTransformer;
 import com.wow.carlauncher.view.activity.launcher.LayoutEnum;
@@ -77,6 +78,11 @@ public class CommonData {
             MusicControllerEnum.NWDMUSIC,
             MusicControllerEnum.ZXMUSIC,
             MusicControllerEnum.KUWOMUSIC};
+
+    public static final DrivingViewEnum[] DRIVING_VIEW = {
+            DrivingViewEnum.BLACK,
+            DrivingViewEnum.BLUE};
+
 
     public final static long MINUTE_MILL = 60 * 1000;
     public final static long HOUR_MILL = 60 * MINUTE_MILL;
@@ -199,6 +205,7 @@ public class CommonData {
 
     public static final String SDATA_USE_VA = "SDATA_USE_VA";
 
-
     public static final String SDATA_LOG_OPEN = "SDATA_LOG_OPEN";
+
+    public static final String SDATA_DRIVING_VIEW = "SDATA_DRIVING_VIEW";
 }

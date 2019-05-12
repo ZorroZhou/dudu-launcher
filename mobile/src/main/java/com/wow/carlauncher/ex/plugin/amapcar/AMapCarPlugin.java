@@ -10,7 +10,7 @@ import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.AppUtil;
 import com.wow.carlauncher.ex.ContextEx;
-import com.wow.carlauncher.ex.manage.time.event.MTime3SecondEvent;
+import com.wow.carlauncher.ex.manage.time.event.TMEvent3Second;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventState;
 
 import org.greenrobot.eventbus.EventBus;
@@ -220,7 +220,7 @@ public class AMapCarPlugin extends ContextEx {
     }
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
-    public void onEvent(final MTime3SecondEvent event) {
+    public void onEvent(final TMEvent3Second event) {
         //3分钟没有收到心跳，则结束导航
         if (System.currentTimeMillis() - lastHeartbeatTime > 1000 * 60 * 3) {
             postEvent(new PAmapEventState().setRunning(false));

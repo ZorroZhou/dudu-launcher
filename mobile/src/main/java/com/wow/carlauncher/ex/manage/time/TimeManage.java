@@ -6,11 +6,11 @@ import android.content.Context;
 import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.ex.ContextEx;
-import com.wow.carlauncher.ex.manage.time.event.MTime30MinuteEvent;
-import com.wow.carlauncher.ex.manage.time.event.MTime3SecondEvent;
-import com.wow.carlauncher.ex.manage.time.event.MTimeHalfSecondEvent;
-import com.wow.carlauncher.ex.manage.time.event.MTimeMinuteEvent;
-import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
+import com.wow.carlauncher.ex.manage.time.event.TMEvent30Minute;
+import com.wow.carlauncher.ex.manage.time.event.TMEvent3Second;
+import com.wow.carlauncher.ex.manage.time.event.TMEventHalfSecond;
+import com.wow.carlauncher.ex.manage.time.event.TMEventMinute;
+import com.wow.carlauncher.ex.manage.time.event.TMEventSecond;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -62,16 +62,16 @@ public class TimeManage extends ContextEx {
         LogEx.d(this, "startTimer");
         timer = TaskExecutor.self().repeatRun(() -> {
             try {
-                if (EventBus.getDefault().hasSubscriberForEvent(MTimeHalfSecondEvent.class)) {
-                    postEvent(new MTimeHalfSecondEvent());
+                if (EventBus.getDefault().hasSubscriberForEvent(TMEventHalfSecond.class)) {
+                    postEvent(new TMEventHalfSecond());
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
             try {
                 if (timeMark % SECOND == 0) {
-                    if (EventBus.getDefault().hasSubscriberForEvent(MTimeSecondEvent.class)) {
-                        postEvent(new MTimeSecondEvent());
+                    if (EventBus.getDefault().hasSubscriberForEvent(TMEventSecond.class)) {
+                        postEvent(new TMEventSecond());
                     }
                 }
             } catch (Exception e) {
@@ -80,8 +80,8 @@ public class TimeManage extends ContextEx {
 
             try {
                 if (timeMark % SECOND3 == 0) {
-                    if (EventBus.getDefault().hasSubscriberForEvent(MTime3SecondEvent.class)) {
-                        postEvent(new MTime3SecondEvent());
+                    if (EventBus.getDefault().hasSubscriberForEvent(TMEvent3Second.class)) {
+                        postEvent(new TMEvent3Second());
                     }
                 }
             } catch (Exception e) {
@@ -90,8 +90,8 @@ public class TimeManage extends ContextEx {
 
             try {
                 if (timeMark % MINUTE30 == 0) {
-                    if (EventBus.getDefault().hasSubscriberForEvent(MTime30MinuteEvent.class)) {
-                        postEvent(new MTime30MinuteEvent());
+                    if (EventBus.getDefault().hasSubscriberForEvent(TMEvent30Minute.class)) {
+                        postEvent(new TMEvent30Minute());
                     }
                 }
             } catch (Exception e) {
@@ -100,8 +100,8 @@ public class TimeManage extends ContextEx {
 
             try {
                 if (timeMark % MINUTE == 0) {
-                    if (EventBus.getDefault().hasSubscriberForEvent(MTimeMinuteEvent.class)) {
-                        postEvent(new MTimeMinuteEvent());
+                    if (EventBus.getDefault().hasSubscriberForEvent(TMEventMinute.class)) {
+                        postEvent(new TMEventMinute());
                     }
                 }
             } catch (Exception e) {

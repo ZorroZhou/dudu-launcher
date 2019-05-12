@@ -26,7 +26,7 @@ import com.wow.carlauncher.ex.manage.ImageManage;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.appInfo.event.MAppInfoRefreshShowEvent;
-import com.wow.carlauncher.ex.manage.time.event.MTime3SecondEvent;
+import com.wow.carlauncher.ex.manage.time.event.TMEvent3Second;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventAction;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
@@ -456,7 +456,7 @@ public class ConsoleWin implements ThemeManage.OnThemeChangeListener {
     private long cur_min = 0;
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(MTime3SecondEvent event) {
+    public void onEvent(TMEvent3Second event) {
         long time = System.currentTimeMillis();
         long time1 = time / MINUTE_MILL;
         if (time1 != cur_min) {

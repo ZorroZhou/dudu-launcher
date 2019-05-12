@@ -14,8 +14,8 @@ import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.util.SunRiseSetUtil;
-import com.wow.carlauncher.ex.manage.location.event.MNewLocationEvent;
-import com.wow.carlauncher.ex.manage.time.event.MTimeMinuteEvent;
+import com.wow.carlauncher.ex.manage.location.LMEventNewLocation;
+import com.wow.carlauncher.ex.manage.time.event.TMEventMinute;
 import com.wow.carlauncher.ex.plugin.console.event.PConsoleEventLightState;
 import com.wow.carlauncher.view.adapter.PicSelectAdapter;
 
@@ -229,13 +229,13 @@ public class ThemeManage {
     }
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
-    public void onEvent(MNewLocationEvent event) {
+    public void onEvent(LMEventNewLocation event) {
         this.lat = event.getLatitude();
         this.lon = event.getLongitude();
     }
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
-    public void onEvent(MTimeMinuteEvent event) {
+    public void onEvent(TMEventMinute event) {
         refreshTheme();
     }
 

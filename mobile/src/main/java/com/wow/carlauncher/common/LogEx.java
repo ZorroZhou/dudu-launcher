@@ -5,7 +5,7 @@ import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
 
-import com.wow.carlauncher.ex.manage.time.event.MTimeMinuteEvent;
+import com.wow.carlauncher.ex.manage.time.event.TMEventMinute;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -112,7 +112,7 @@ public class LogEx {
 
 
         @Subscribe(threadMode = ThreadMode.BACKGROUND)
-        public void onEvent(MTimeMinuteEvent event) {
+        public void onEvent(TMEventMinute event) {
             List<String> logs = getLogList.getLogs();
             if (logFile == null || logFile.length() > 10 * 1024 * 1024) {
                 logFile = getNewLogFile();

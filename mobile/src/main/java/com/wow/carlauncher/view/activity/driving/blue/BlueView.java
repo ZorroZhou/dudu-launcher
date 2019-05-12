@@ -14,8 +14,10 @@ import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.DateUtil;
 import com.wow.carlauncher.ex.manage.ImageManage;
-import com.wow.carlauncher.ex.manage.location.event.MNewLocationEvent;
-import com.wow.carlauncher.ex.manage.time.event.MTimeSecondEvent;
+import com.wow.carlauncher.ex.manage.location.LMEventNewLocation;
+import com.wow.carlauncher.ex.manage.time.event.TMEventSecond;
+import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventNavInfo;
+import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventState;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventCoverRefresh;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventInfo;
@@ -29,10 +31,13 @@ import com.wow.carlauncher.view.activity.driving.DrivingView;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.ICONS;
 
 public class BlueView extends DrivingView {
     private final static int MAX_REV = 8000;
@@ -126,6 +131,22 @@ public class BlueView extends DrivingView {
     @BindView(R.id.ll_obd_connect)
     View ll_obd_connect;
 
+    @BindView(R.id.fl_item1_nav)
+    View fl_item1_nav;
+
+    @BindView(R.id.fl_item1_not_nav)
+    View fl_item1_not_nav;
+
+    @BindView(R.id.iv_nav_icon)
+    ImageView iv_nav_icon;
+
+    @BindView(R.id.tv_nav_dis)
+    TextView tv_nav_dis;
+
+    @BindView(R.id.tv_nav_msg)
+    TextView tv_nav_msg;
+
+
     private boolean show = true;
 
     private boolean obdConnect = false;
@@ -194,7 +215,7 @@ public class BlueView extends DrivingView {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(final MTimeSecondEvent event) {
+    public void onEvent(final TMEventSecond event) {
         if (!loaded) {
             return;
         }
@@ -268,8 +289,8 @@ public class BlueView extends DrivingView {
         }
     }
 
-    @Subscribe(threadMode = ThreadMode.BACKGROUND)
-    public void onEvent(MNewLocationEvent event) {
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(LMEventNewLocation event) {
         if (!loaded) {
             return;
         }
@@ -297,6 +318,48 @@ public class BlueView extends DrivingView {
         if (event.getOilConsumption() != null) {
             String msg = event.getOilConsumption() + "%";
             tv_shengyu_oil.setText(msg);
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(final PAmapEventState event) {
+        if (event.isRunning()) {
+            fl_item1_nav.setVisibility(View.VISIBLE);
+            fl_item1_not_nav.setVisibility(View.GONE);
+        } else {
+            fl_item1_nav.setVisibility(View.GONE);
+            fl_item1_not_nav.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(final PAmapEventNavInfo event) {
+        if (event.getIcon() - 1 >= 0 && event.getIcon() - 1 < ICONS.length) {
+            iv_nav_icon.setImageResource(ICONS[event.getIcon() - 1]);
+        }
+        if (event.getSegRemainDis() > -1) {
+            String msg = "";
+            if (event.getSegRemainDis() < 10) {
+                msg = "现在";
+            } else {
+                if (event.getSegRemainDis() > 1000) {
+                    msg = event.getSegRemainDis() / 1000 + "公里后";
+                } else {
+                    msg = event.getSegRemainDis() + "米后";
+                }
+            }
+            msg = msg + event.getNextRoadName();
+            tv_nav_dis.setText(msg);
+        }
+
+        if (event.getRouteRemainTime() > -1 && event.getRouteRemainDis() > -1) {
+            if (event.getRouteRemainTime() == 0 || event.getRouteRemainDis() == 0) {
+                tv_nav_msg.setText("到达");
+            } else {
+                String msg = "剩余" + new BigDecimal(event.getRouteRemainDis() / 1000f).setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue() + "公里  " +
+                        event.getRouteRemainTime() / 60 + "分钟";
+                tv_nav_msg.setText(msg);
+            }
         }
     }
 

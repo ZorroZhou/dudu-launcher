@@ -11,7 +11,9 @@ import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.ex.ContextEx;
-import com.wow.carlauncher.ex.manage.location.event.MNewLocationEvent;
+import com.wow.carlauncher.ex.manage.speed.SMEventReceiveSpeed;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * Created by 10124 on 2018/5/12.
@@ -68,7 +70,7 @@ public class LocationManage extends ContextEx implements AMapLocationListener {
     public void onLocationChanged(AMapLocation aMapLocation) {
         if (aMapLocation != null && aMapLocation.getErrorCode() == 0 && CommonUtil.isNotNull(aMapLocation.getCity())) {
             LogEx.d(this, "location success");
-            postEvent(new MNewLocationEvent()
+            postEvent(new LMEventNewLocation()
                     .setLocationType(aMapLocation.getLocationType())
                     .setBearing(aMapLocation.getBearing())
                     .setSpeed(aMapLocation.getSpeed())
@@ -77,6 +79,10 @@ public class LocationManage extends ContextEx implements AMapLocationListener {
                     .setAdCode(aMapLocation.getAdCode())
                     .setLatitude(aMapLocation.getLatitude())
                     .setLongitude(aMapLocation.getLongitude()));
+
+            if (aMapLocation.getLocationType() == AMapLocation.LOCATION_TYPE_GPS) {
+                EventBus.getDefault().post(new SMEventReceiveSpeed().setSpeed((int) (aMapLocation.getSpeed() * 60 * 60 / 1000)).setFrom(SMEventReceiveSpeed.SMReceiveSpeedFrom.GPS));
+            }
         } else {
             LogEx.d(this, "location fail");
         }

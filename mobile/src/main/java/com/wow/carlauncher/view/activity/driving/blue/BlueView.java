@@ -153,6 +153,9 @@ public class BlueView extends DrivingView {
 
     private boolean loaded = false;
 
+    private boolean showNav = true;
+    private boolean naving = false;
+
     @Override
     protected void initView() {
         super.initView();
@@ -176,7 +179,7 @@ public class BlueView extends DrivingView {
         }, 1000);
     }
 
-    @OnClick(value = {R.id.music_ll_prew, R.id.music_ll_next, R.id.music_ll_play})
+    @OnClick(value = {R.id.music_ll_prew, R.id.music_ll_next, R.id.music_ll_play, R.id.fl_item1})
     public void clickEvent(View view) {
         switch (view.getId()) {
             case R.id.music_ll_prew: {
@@ -189,6 +192,11 @@ public class BlueView extends DrivingView {
             }
             case R.id.music_ll_next: {
                 MusicPlugin.self().next();
+                break;
+            }
+            case R.id.fl_item1: {
+                showNav = !showNav;
+                refreshNavState();
                 break;
             }
         }
@@ -212,6 +220,16 @@ public class BlueView extends DrivingView {
         onEvent(ObdPlugin.self().getCurrentPObdEventCarInfo());
         onEvent(ObdPlugin.self().getCurrentPObdEventCarTp());
         MusicPlugin.self().requestLast();
+    }
+
+    private void refreshNavState() {
+        if (naving && showNav) {
+            fl_item1_nav.setVisibility(View.VISIBLE);
+            fl_item1_not_nav.setVisibility(View.GONE);
+        } else {
+            fl_item1_nav.setVisibility(View.GONE);
+            fl_item1_not_nav.setVisibility(View.VISIBLE);
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -326,13 +344,8 @@ public class BlueView extends DrivingView {
         if (!loaded) {
             return;
         }
-        if (event.isRunning()) {
-            fl_item1_nav.setVisibility(View.VISIBLE);
-            fl_item1_not_nav.setVisibility(View.GONE);
-        } else {
-            fl_item1_nav.setVisibility(View.GONE);
-            fl_item1_not_nav.setVisibility(View.VISIBLE);
-        }
+        naving = event.isRunning();
+        refreshNavState();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -402,7 +415,7 @@ public class BlueView extends DrivingView {
     }
 
 
-    public void setRev(int rev) {
+    private void setRev(int rev) {
         if (show) {
             //tv_rev.setText(rev + "");
             if (rev > MAX_REV) {
@@ -442,9 +455,9 @@ public class BlueView extends DrivingView {
         }
     }
 
-    public void setSpeed(int speed) {
+    private void setSpeed(int speed) {
         if (show) {
-            tv_speed.setText(speed + "");
+            tv_speed.setText(String.valueOf(speed));
             if (speed > MAX_SPEED) {
                 speed = MAX_SPEED;
             } else if (speed < 0) {

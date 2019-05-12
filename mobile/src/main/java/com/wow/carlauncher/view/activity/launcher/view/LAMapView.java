@@ -437,11 +437,9 @@ public class LAMapView extends BaseEXView {
                 }
                 fl_xunhang_root.setVisibility(VISIBLE);
             }
-            System.out.println("!!!!" + event.getSpeed());
             //方向取值范围：【0，360】，其中0度表示正北方向，90度表示正东，180度表示正南，270度表示正西
             if (tv_speed != null) {
-                String msg = event.getSpeed() + "";
-                tv_speed.setText(msg);
+                tv_speed.setText(String.valueOf(event.getSpeed()));
             }
         } else if (loactionOk) {
             loactionOk = false;

@@ -80,6 +80,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
         android:orientation="vertical"
+        android:visibility="gone"
         app:layout_widthPercent="75%h">
 
         <View
@@ -175,6 +176,7 @@
         </FrameLayout>
 
         <FrameLayout
+            android:id="@+id/fl_item1"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="340">

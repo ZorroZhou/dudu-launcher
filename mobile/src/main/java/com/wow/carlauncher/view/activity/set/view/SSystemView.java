@@ -3,7 +3,6 @@ package com.wow.carlauncher.view.activity.set.view;
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
@@ -11,7 +10,6 @@ import android.os.Build;
 import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
 import android.view.KeyEvent;
-import android.view.View;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
@@ -21,10 +19,7 @@ import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
-import com.wow.carlauncher.repertory.server.CommonCallback;
 import com.wow.carlauncher.repertory.server.CommonService;
-import com.wow.carlauncher.repertory.server.response.AppUpdate;
-import com.wow.carlauncher.repertory.server.response.BaseResult;
 import com.wow.carlauncher.view.activity.AboutActivity;
 import com.wow.carlauncher.view.activity.launcher.event.LDockLabelShowChangeEvent;
 import com.wow.carlauncher.view.activity.set.SetActivity;
@@ -96,18 +91,14 @@ public class SSystemView extends SetBaseView {
 
     @Override
     protected void initView() {
-        sv_update.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().showLoading("请求中");
-                CommonService.getUpdate(2, new CommonCallback<AppUpdate>() {
-                    @Override
-                    public void callback(BaseResult<AppUpdate> res) {
-                        getActivity().hideLoading();
-                        System.out.println(res.getData());
-                    }
-                });
-            }
+        sv_update.setOnClickListener(v -> {
+            getActivity().showLoading("请求中");
+            CommonService.getUpdate(2, (success, msg, appUpdate) -> {
+                getActivity().hideLoading();
+                System.out.println("success:" + success);
+                System.out.println("msg:" + msg);
+                System.out.println("appUpdate:" + appUpdate);
+            });
         });
 
         sv_open_log.setOnValueChangeListener(new SetSwitchOnClickListener(CommonData.SDATA_LOG_OPEN) {
@@ -125,12 +116,9 @@ public class SSystemView extends SetBaseView {
             intentFilter2.addAction("com.nwd.action.ACTION_KEY_VALUE");
             getContext().registerReceiver(nwdKeyTestReceiver, intentFilter2);
 
-            new AlertDialog.Builder(getContext()).setTitle("开启").setOnDismissListener(new DialogInterface.OnDismissListener() {
-                @Override
-                public void onDismiss(DialogInterface dialog) {
-                    showKey = false;
-                    getContext().unregisterReceiver(nwdKeyTestReceiver);
-                }
+            new AlertDialog.Builder(getContext()).setTitle("开启").setOnDismissListener(dialog -> {
+                showKey = false;
+                getContext().unregisterReceiver(nwdKeyTestReceiver);
             }).setPositiveButton("关闭", null).show();
         });
 

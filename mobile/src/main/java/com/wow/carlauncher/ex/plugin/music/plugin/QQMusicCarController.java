@@ -58,7 +58,7 @@ public class QQMusicCarController extends MusicController {
 
     @Override
     public String name() {
-        return "QQ音乐车机版";
+        return "QQ音乐";
     }
 
     public void play() {

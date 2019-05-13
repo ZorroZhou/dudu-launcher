@@ -68,7 +68,7 @@ public class KuwoMusicController extends MusicController {
 
     @Override
     public String name() {
-        return "酷我音乐车机版";
+        return "酷我音乐";
     }
 
     private void setRun(boolean run) {

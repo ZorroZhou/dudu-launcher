@@ -27,10 +27,11 @@ import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarTp;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventConnect;
 import com.wow.carlauncher.view.activity.CarInfoActivity;
+import com.wow.carlauncher.view.activity.launcher.BaseThemeView;
 import com.wow.carlauncher.view.activity.launcher.LayoutEnum;
 import com.wow.carlauncher.view.activity.launcher.event.LItemToFristEvent;
 import com.wow.carlauncher.view.activity.set.SetActivity;
-import com.wow.carlauncher.view.activity.launcher.BaseThemeView;
+import com.wow.carlauncher.view.event.EventUsbMount;
 import com.wow.carlauncher.view.event.EventWifiState;
 
 import org.greenrobot.eventbus.EventBus;
@@ -81,6 +82,7 @@ public class LPromptView extends BaseThemeView {
         iv_fk.setImageResource(manage.getCurrentThemeRes(R.mipmap.ic_l_fk));
         iv_wifi.setImageResource(manage.getCurrentThemeRes(R.mipmap.ic_l_wifi));
         iv_set.setImageResource(manage.getCurrentThemeRes(R.mipmap.ic_l_set));
+        iv_mount.setImageResource(manage.getCurrentThemeRes(R.mipmap.ic_l_mount));
         LogEx.d(this, "changedTheme: ");
     }
 
@@ -88,6 +90,9 @@ public class LPromptView extends BaseThemeView {
     protected void initView() {
         LogEx.d(this, "initView: ");
     }
+
+    @BindView(R.id.iv_mount)
+    ImageView iv_mount;
 
     @BindView(R.id.fl_base)
     View fl_base;
@@ -113,7 +118,7 @@ public class LPromptView extends BaseThemeView {
     @BindView(R.id.iv_wifi)
     ImageView iv_wifi;
 
-    @OnClick(value = {R.id.iv_set, R.id.iv_wifi, R.id.iv_obd, R.id.tv_time, R.id.iv_carinfo_tp, R.id.iv_location})
+    @OnClick(value = {R.id.iv_set, R.id.iv_wifi, R.id.iv_obd, R.id.tv_time, R.id.iv_carinfo_tp, R.id.iv_location, R.id.iv_mount})
     public void clickEvent(View view) {
         switch (view.getId()) {
             case R.id.iv_location: {
@@ -140,6 +145,11 @@ public class LPromptView extends BaseThemeView {
             }
             case R.id.tv_time: {
                 EventBus.getDefault().post(new LItemToFristEvent());
+                break;
+            }
+            case R.id.iv_mount: {
+                Intent intent = new Intent(Settings.ACTION_MEMORY_CARD_SETTINGS);
+                getActivity().startActivity(intent);
                 break;
             }
         }
@@ -298,5 +308,14 @@ public class LPromptView extends BaseThemeView {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final PObdEventCarTp event) {
         refreshTpState(event);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(final EventUsbMount event) {
+        if (event.isMount()) {
+            iv_mount.setVisibility(VISIBLE);
+        } else {
+            //iv_mount.setVisibility(GONE);
+        }
     }
 }

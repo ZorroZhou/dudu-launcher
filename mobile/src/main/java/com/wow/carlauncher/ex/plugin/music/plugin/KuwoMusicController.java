@@ -51,11 +51,6 @@ public class KuwoMusicController extends MusicController {
                 refreshMusicInfo();
             } else {
                 setRun(false);
-
-                if (!mKwapi.isKuwoRunning()) {
-                    mKwapi.startAPP(context, true);
-                    toHome();
-                }
             }
         });
         mKwapi.registerPlayerStatusListener((playerStatus, music) -> {
@@ -84,7 +79,6 @@ public class KuwoMusicController extends MusicController {
 
     public void play() {
         if (!mKwapi.isKuwoRunning()) {
-            mKwapi.startAPP(context, true);
             toHome();
         } else {
             mKwapi.setPlayState(PlayState.STATE_PLAY);
@@ -93,7 +87,6 @@ public class KuwoMusicController extends MusicController {
 
     public void pause() {
         if (!mKwapi.isKuwoRunning()) {
-            mKwapi.startAPP(context, true);
             toHome();
         } else {
             mKwapi.setPlayState(PlayState.STATE_PAUSE);
@@ -102,7 +95,6 @@ public class KuwoMusicController extends MusicController {
 
     public void next() {
         if (!mKwapi.isKuwoRunning()) {
-            mKwapi.startAPP(context, true);
             toHome();
         } else {
             mKwapi.setPlayState(PlayState.STATE_NEXT);
@@ -111,7 +103,6 @@ public class KuwoMusicController extends MusicController {
 
     public void pre() {
         if (!mKwapi.isKuwoRunning()) {
-            mKwapi.startAPP(context, true);
             toHome();
         } else {
             mKwapi.setPlayState(PlayState.STATE_PRE);
@@ -168,6 +159,7 @@ public class KuwoMusicController extends MusicController {
     }
 
     private void toHome() {
+        mKwapi.startAPP(context, true);
         TaskExecutor.self().post(() -> {
             Intent home = new Intent(Intent.ACTION_MAIN);
             home.addCategory(Intent.CATEGORY_HOME);

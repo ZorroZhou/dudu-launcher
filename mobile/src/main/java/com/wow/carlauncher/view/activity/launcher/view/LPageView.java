@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.wow.carlauncher.R;
@@ -78,17 +77,15 @@ public class LPageView extends BaseView {
                 if (oldHeight != hh && hh > 0) {
                     oldHeight = hh;
                     ll_base.getViewTreeObserver().removeOnPreDrawListener(this);
-
-                    FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-                    int margin4 = ViewUtils.dip2px(getContext(), 4);
-                    params.setMargins(margin4, 0, margin4, margin4);
                     if (layoutEnum.equals(LayoutEnum.LAYOUT1)) {
                         int margin10 = ViewUtils.dip2px(getContext(), 10);
                         int margin15 = ViewUtils.dip2px(getContext(), 15);
                         int margin8 = ViewUtils.dip2px(getContext(), 8);
-                        params.setMargins(margin10, margin15, margin10, margin8);
+                        ll_base.setPadding(margin10, margin15, margin10, margin8);
+                    } else {
+                        int margin4 = ViewUtils.dip2px(getContext(), 4);
+                        ll_base.setPadding(margin4, 0, margin4, margin4);
                     }
-                    ll_base.setLayoutParams(params);
                 }
                 return true;
             }

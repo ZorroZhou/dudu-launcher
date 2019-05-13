@@ -17,6 +17,7 @@ import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.DateUtil;
 import com.wow.carlauncher.common.util.NetWorkUtil;
+import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.location.LMEventNewLocation;
 import com.wow.carlauncher.ex.manage.time.event.TMEvent3Second;
@@ -31,7 +32,7 @@ import com.wow.carlauncher.view.activity.launcher.BaseThemeView;
 import com.wow.carlauncher.view.activity.launcher.LayoutEnum;
 import com.wow.carlauncher.view.activity.launcher.event.LItemToFristEvent;
 import com.wow.carlauncher.view.activity.set.SetActivity;
-import com.wow.carlauncher.view.event.EventUsbMount;
+import com.wow.carlauncher.view.event.CEventShowUsbMount;
 import com.wow.carlauncher.view.event.EventWifiState;
 
 import org.greenrobot.eventbus.EventBus;
@@ -45,6 +46,7 @@ import butterknife.OnClick;
 import butterknife.OnLongClick;
 
 import static com.wow.carlauncher.common.CommonData.MINUTE_MILL;
+import static com.wow.carlauncher.common.CommonData.SDATA_SHOW_USB_MOUNT;
 
 /**
  * Created by 10124 on 2018/4/22.
@@ -235,6 +237,8 @@ public class LPromptView extends BaseThemeView {
             refreshFKState(new PFkEventConnect().setConnected(FangkongPlugin.self().isConnect()));
             refreshObdState(new PObdEventConnect().setConnected(ObdPlugin.self().isConnect()));
             refreshTpState(ObdPlugin.self().getCurrentPObdEventCarTp());
+            onEvent(ObdPlugin.self().getCurrentPObdEventCarTp());
+            onEvent(new CEventShowUsbMount());
         });
     }
 
@@ -311,11 +315,11 @@ public class LPromptView extends BaseThemeView {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(final EventUsbMount event) {
-        if (event.isMount()) {
+    public void onEvent(final CEventShowUsbMount event) {
+        if (SharedPreUtil.getBoolean(SDATA_SHOW_USB_MOUNT, false)) {
             iv_mount.setVisibility(VISIBLE);
         } else {
-            //iv_mount.setVisibility(GONE);
+            iv_mount.setVisibility(GONE);
         }
     }
 }

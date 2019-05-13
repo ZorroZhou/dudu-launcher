@@ -33,6 +33,7 @@ import com.wow.carlauncher.view.activity.set.listener.SetAppMultipleSelectOnClic
 import com.wow.carlauncher.view.activity.set.listener.SetAppSingleSelectOnClickListener;
 import com.wow.carlauncher.view.activity.set.listener.SetSwitchOnClickListener;
 import com.wow.carlauncher.view.dialog.ProgressDialog;
+import com.wow.carlauncher.view.event.CEventShowUsbMount;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -88,23 +89,31 @@ public class SSystemView extends SetBaseView {
     @BindView(R.id.sv_update)
     SetView sv_update;
 
+    @BindView(R.id.sv_show_mount)
+    SetView sv_show_mount;
+
+
     private boolean showKey;
     private BroadcastReceiver nwdKeyTestReceiver = new BroadcastReceiver() {
         public void onReceive(Context paramContext, Intent paramIntent) {
             if ("com.nwd.action.ACTION_KEY_VALUE".equals(paramIntent.getAction())) {
                 int key = paramIntent.getByteExtra("extra_key_value", (byte) 0);
-                TaskExecutor.self().autoPost(new Runnable() {
-                    @Override
-                    public void run() {
-                        ToastManage.self().show("NWD按键测试触发:" + key);
-                    }
-                });
+                ToastManage.self().show("NWD按键测试触发:" + key);
             }
         }
     };
 
     @Override
     protected void initView() {
+        sv_show_mount.setOnValueChangeListener(new SetSwitchOnClickListener(CommonData.SDATA_SHOW_USB_MOUNT) {
+            @Override
+            public void newValue(boolean value) {
+                SharedPreUtil.saveBoolean(CommonData.SDATA_SHOW_USB_MOUNT, value);
+                EventBus.getDefault().post(new CEventShowUsbMount());
+            }
+        });
+        sv_show_mount.setChecked(SharedPreUtil.getBoolean(CommonData.SDATA_SHOW_USB_MOUNT, false));
+
         sv_update.setOnClickListener(v -> {
             getActivity().showLoading("请求中");
             CommonService.getUpdate(2, (success, msg, appUpdate) -> {

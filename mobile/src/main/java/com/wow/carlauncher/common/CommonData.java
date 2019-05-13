@@ -213,4 +213,6 @@ public class CommonData {
     public static final String SDATA_LOG_OPEN = "SDATA_LOG_OPEN";
 
     public static final String SDATA_DRIVING_VIEW = "SDATA_DRIVING_VIEW";
+
+    public static final String SDATA_SHOW_USB_MOUNT = "SDATA_SHOW_USB_MOUNT";
 }

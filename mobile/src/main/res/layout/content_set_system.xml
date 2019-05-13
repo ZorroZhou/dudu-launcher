@@ -18,6 +18,17 @@
         android:textSize="14sp" />
 
     <com.wow.carlauncher.common.view.SetView
+        android:id="@+id/sv_show_mount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        st:summary="@string/set_yes"
+        st:summary2="@string/set_no"
+        st:titleEx="显示首页挂载入口"
+        st:type="switchB" />
+
+    <View style="@style/Interval" />
+
+    <com.wow.carlauncher.common.view.SetView
         android:id="@+id/sv_apps_hides"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -26,4 +26,6 @@ public abstract class MusicController {
     public abstract void pre();
 
     public abstract String clazz();
+
+    public abstract String name();
 }

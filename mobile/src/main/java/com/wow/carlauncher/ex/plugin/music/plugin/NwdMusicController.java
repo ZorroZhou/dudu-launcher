@@ -32,6 +32,11 @@ public class NwdMusicController extends MusicController {
     }
 
     @Override
+    public String name() {
+        return "诺威达音乐";
+    }
+
+    @Override
     public String clazz() {
         return "com.nwd.android.music.ui";
     }

@@ -30,6 +30,11 @@ public class ZXMusicController extends MusicController {
     }
 
     @Override
+    public String name() {
+        return "掌讯音乐";
+    }
+
+    @Override
     public String clazz() {
         return "com.acloud.stub.localmusic";
     }

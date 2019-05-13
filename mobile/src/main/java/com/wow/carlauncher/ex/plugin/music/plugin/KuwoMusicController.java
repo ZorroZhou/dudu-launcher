@@ -66,6 +66,11 @@ public class KuwoMusicController extends MusicController {
         EventBus.getDefault().register(this);
     }
 
+    @Override
+    public String name() {
+        return "酷我音乐车机版";
+    }
+
     private void setRun(boolean run) {
         this.run = run;
         musicPlugin.refreshState(run, true);

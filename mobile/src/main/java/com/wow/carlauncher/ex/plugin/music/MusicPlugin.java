@@ -7,6 +7,7 @@ import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.ContextEx;
+import com.wow.carlauncher.ex.plugin.music.event.MMEventControllerRefresh;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventCoverRefresh;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventInfo;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventProgress;
@@ -73,11 +74,19 @@ public class MusicPlugin extends ContextEx {
         }
         musicController.init(getContext(), this);
         LogEx.d(this, "musicController:" + musicController);
+        postEvent(new MMEventControllerRefresh());
     }
 
     public String clazz() {
         if (musicController != null) {
             return musicController.clazz();
+        }
+        return null;
+    }
+
+    public String name() {
+        if (musicController != null) {
+            return musicController.name();
         }
         return null;
     }
@@ -167,4 +176,6 @@ public class MusicPlugin extends ContextEx {
             musicController.pre();
         }
     }
+
+
 }

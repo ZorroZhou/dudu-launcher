@@ -145,6 +145,11 @@ public class SystemMusicController extends MusicController {
         }
     }
 
+    @Override
+    public String name() {
+        return "音乐";
+    }
+
     public void play() {
         sendEvent(KeyEvent.KEYCODE_MEDIA_PLAY);
     }

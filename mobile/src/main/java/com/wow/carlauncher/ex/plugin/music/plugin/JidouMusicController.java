@@ -20,6 +20,11 @@ public class JidouMusicController extends MusicController {
 
     }
 
+    @Override
+    public String name() {
+        return "极豆音乐";
+    }
+
     public void play() {
         sendEvent(KeyEvent.KEYCODE_MEDIA_PLAY);
     }
@@ -65,11 +70,11 @@ public class JidouMusicController extends MusicController {
         public void onReceive(Context paramAnonymousContext, Intent intent) {
             if (intent.getAction().equals("com.ijidou.card.music")) {
                 boolean music_status = intent.getBooleanExtra("music_status", false);
-                musicPlugin.refreshState(music_status,false);
+                musicPlugin.refreshState(music_status, false);
                 music_artist = intent.getStringExtra("music_artist");
                 music_title = intent.getStringExtra("music_title");
                 if (music_title != null && music_artist != null) {
-                    musicPlugin.refreshInfo(music_title, music_artist,false);
+                    musicPlugin.refreshInfo(music_title, music_artist, false);
                 }
             }
             if (intent.getAction().equals("com.ijidou.action.UPDATE_PROGRESS")) {

@@ -56,6 +56,10 @@ public class QQMusicCarController extends MusicController {
         context.sendBroadcast(intent2);
     }
 
+    @Override
+    public String name() {
+        return "QQ音乐车机版";
+    }
 
     public void play() {
         sendEvent(WE_DRIVE_RESUME);

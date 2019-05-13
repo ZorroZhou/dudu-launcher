@@ -23,6 +23,7 @@ import com.wow.carlauncher.ex.manage.ImageManage;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
+import com.wow.carlauncher.ex.plugin.music.event.MMEventControllerRefresh;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventCoverRefresh;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventInfo;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventProgress;
@@ -61,8 +62,10 @@ public class LMusicView extends BaseThemeView {
 
     @Override
     protected void initView() {
-        TaskExecutor.self().run(() -> MusicPlugin.self().requestLast(), 500);
-
+        TaskExecutor.self().run(() -> {
+            MusicPlugin.self().requestLast();
+            TaskExecutor.self().autoPost(() -> tv_title.setText(MusicPlugin.self().name()));
+        }, 500);
         LogEx.d(this, "initView: ");
     }
 
@@ -306,5 +309,13 @@ public class LMusicView extends BaseThemeView {
             ImageManage.self().loadImage(event.getUrl(), music_iv_cover, R.mipmap.music_dlogo);
         }
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(final MMEventControllerRefresh event) {
+        if (tv_title != null) {
+            tv_title.setText(MusicPlugin.self().name());
+        }
+    }
+
 
 }

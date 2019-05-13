@@ -9,15 +9,17 @@ import com.wow.carlauncher.view.base.BaseDialog;
 public class ProgressDialog extends BaseDialog {
     private ProgressBar progressBar;
 
-    public ProgressBar getProgressBar() {
-        return progressBar;
-    }
-
     public ProgressDialog(Context context) {
         super(context);
+        hideTitle();
         setGravityCenter();
         setContent(R.layout.dialog_progress);
 
         progressBar = findViewById(R.id.progressBar);
+    }
+
+    public void setProgress(float p) {
+        progressBar.setProgress((int) (p * 100));
+        progressBar.setMax(100);
     }
 }

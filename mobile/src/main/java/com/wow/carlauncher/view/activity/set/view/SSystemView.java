@@ -203,11 +203,11 @@ public class SSystemView extends SetBaseView {
     public void loadDownloadApk(String url, int version) {
         final String filePath = Environment.getExternalStorageDirectory() + "/ddlauncher-V" + version + ".apk";
         ProgressDialog progressDialog = new ProgressDialog(getContext());
+        progressDialog.setTitle("正在下载嘟嘟桌面新版本");
         Call call = CommonService.downFile(url, new ProgressResponseListener() {
             @Override
             public void onResponseProgress(long bytesRead, long contentLength, boolean done) {
-                progressDialog.getProgressBar().setProgress((int) (((double) bytesRead / (double) contentLength) * 100));
-                progressDialog.getProgressBar().setMax(100);
+                progressDialog.setProgress((float) ((double) bytesRead / (double) contentLength));
             }
 
             @Override

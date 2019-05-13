@@ -55,7 +55,6 @@ public class KuwoMusicController extends MusicController {
         });
         mKwapi.registerPlayerStatusListener((playerStatus, music) -> {
             nowMusic = music;
-            System.out.println("!!!!" + playerStatus);
             setRun(CommonUtil.equals(PLAYING, playerStatus) || CommonUtil.equals(BUFFERING, playerStatus));
             refreshMusicInfo();
         });
@@ -79,7 +78,7 @@ public class KuwoMusicController extends MusicController {
 
     public void play() {
         if (!mKwapi.isKuwoRunning()) {
-            toHome();
+            opKuwo();
         } else {
             mKwapi.setPlayState(PlayState.STATE_PLAY);
         }
@@ -87,7 +86,7 @@ public class KuwoMusicController extends MusicController {
 
     public void pause() {
         if (!mKwapi.isKuwoRunning()) {
-            toHome();
+            opKuwo();
         } else {
             mKwapi.setPlayState(PlayState.STATE_PAUSE);
         }
@@ -95,7 +94,7 @@ public class KuwoMusicController extends MusicController {
 
     public void next() {
         if (!mKwapi.isKuwoRunning()) {
-            toHome();
+            opKuwo();
         } else {
             mKwapi.setPlayState(PlayState.STATE_NEXT);
         }
@@ -103,7 +102,7 @@ public class KuwoMusicController extends MusicController {
 
     public void pre() {
         if (!mKwapi.isKuwoRunning()) {
-            toHome();
+            opKuwo();
         } else {
             mKwapi.setPlayState(PlayState.STATE_PRE);
         }
@@ -124,41 +123,43 @@ public class KuwoMusicController extends MusicController {
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void onEvent(final TMEventSecond event) {
-        int totalTime = mKwapi.getCurrentMusicDuration();
-        long overTime = System.currentTimeMillis() + totalTime - mKwapi.getCurrentPos();
+        if (run) {
+            int totalTime = mKwapi.getCurrentMusicDuration();
+            long overTime = System.currentTimeMillis() + totalTime - mKwapi.getCurrentPos();
 
-        //每隔一秒钟上报一下进度信息
-        int ccc = (int) (totalTime + System.currentTimeMillis() - overTime);
-        if (ccc < totalTime && run) {
-            musicPlugin.refreshProgress((int) (totalTime + System.currentTimeMillis() - overTime), totalTime);
-        }
+            //每隔一秒钟上报一下进度信息
+            int ccc = (int) (totalTime + System.currentTimeMillis() - overTime);
+            if (ccc < totalTime) {
+                musicPlugin.refreshProgress((int) (totalTime + System.currentTimeMillis() - overTime), totalTime);
+            }
 
-        if (lrcDatas != null) {
-            long xxx = (int) (totalTime + System.currentTimeMillis() - overTime);
-            try {
-                LrcAnalyze.LrcData lll = null;
-                List<LrcAnalyze.LrcData> remove = new ArrayList<>();
-                List<LrcAnalyze.LrcData> tempLrc = new ArrayList<>(lrcDatas);
-                for (LrcAnalyze.LrcData lrc : tempLrc) {
-                    if (lrc.getTimeMs() < xxx) {
-                        lll = lrc;
-                        remove.add(lrc);
-                    } else {
-                        break;
+            if (lrcDatas != null) {
+                long xxx = (int) (totalTime + System.currentTimeMillis() - overTime);
+                try {
+                    LrcAnalyze.LrcData lll = null;
+                    List<LrcAnalyze.LrcData> remove = new ArrayList<>();
+                    List<LrcAnalyze.LrcData> tempLrc = new ArrayList<>(lrcDatas);
+                    for (LrcAnalyze.LrcData lrc : tempLrc) {
+                        if (lrc.getTimeMs() < xxx) {
+                            lll = lrc;
+                            remove.add(lrc);
+                        } else {
+                            break;
+                        }
                     }
-                }
 
-                lrcDatas.removeAll(remove);
-                if (lll != null) {
-                    musicPlugin.refreshLrc(lll.getLrcLine());
+                    lrcDatas.removeAll(remove);
+                    if (lll != null) {
+                        musicPlugin.refreshLrc(lll.getLrcLine());
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
             }
         }
     }
 
-    private void toHome() {
+    private void opKuwo() {
         mKwapi.startAPP(context, true);
         TaskExecutor.self().post(() -> {
             Intent home = new Intent(Intent.ACTION_MAIN);

@@ -65,11 +65,15 @@ public class LocationManage extends ContextEx implements AMapLocationListener {
      * 声明定位回调监听器
      */
     private AMapLocationClientOption mLocationOption = null;
+    private boolean fristSuccess = false;
 
     @Override
     public void onLocationChanged(AMapLocation aMapLocation) {
         if (aMapLocation != null && aMapLocation.getErrorCode() == 0 && CommonUtil.isNotNull(aMapLocation.getCity())) {
-            LogEx.d(this, "location success");
+            if (!fristSuccess) {
+                LogEx.d(this, "location success");
+                fristSuccess = true;
+            }
             postEvent(new LMEventNewLocation()
                     .setLocationType(aMapLocation.getLocationType())
                     .setBearing(aMapLocation.getBearing())

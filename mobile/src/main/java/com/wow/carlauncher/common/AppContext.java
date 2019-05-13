@@ -163,7 +163,6 @@ public class AppContext {
             }
         });
         LogEx.d(this, "APP初始化完毕 ");
-
 //        BroadcastReceiver br = new BroadcastReceiver() {
 //            @Override
 //            public void onReceive(Context context, Intent intent) {

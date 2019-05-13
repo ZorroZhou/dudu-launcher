@@ -16,8 +16,8 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 public class ServerRequestUtil {
-    public static <D, T extends BaseResult<D>> void get(String url, Class<T> clazz, final CommonCallback<D> commonCallback) {
-        OkHttpManage.self().get(url, new Callback() {
+    public static <D, T extends BaseResult<D>> Call get(String url, Class<T> clazz, final CommonCallback<D> commonCallback) {
+        return OkHttpManage.self().get(url, new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 LogEx.e(ServerRequestUtil.class, "onError: ");

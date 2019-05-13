@@ -36,7 +36,7 @@ public class OkHttpManage {
         okHttpClient = new OkHttpClient();
     }
 
-    public void get(String url, Callback callback) {
+    public Call get(String url, Callback callback) {
         LogEx.d(this, "get:" + url);
         Request request = new Request.Builder().get().url(url).build();
         OkHttpClient clientTemp;
@@ -47,6 +47,7 @@ public class OkHttpManage {
         }
         Call call = clientTemp.newCall(request);
         call.enqueue(callback);
+        return call;
     }
 
 

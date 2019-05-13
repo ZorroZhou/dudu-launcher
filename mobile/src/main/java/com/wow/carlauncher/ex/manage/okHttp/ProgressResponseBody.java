@@ -86,7 +86,6 @@ public class ProgressResponseBody extends ResponseBody {
 
             @Override
             public long read(Buffer sink, long byteCount) throws IOException {
-                System.out.println("1!!!!");
                 long bytesRead = super.read(sink, byteCount);
                 //增加当前读取的字节数，如果读取完成了bytesRead会返回-1
                 totalBytesRead += bytesRead != -1 ? bytesRead : 0;

@@ -1,9 +1,6 @@
 package com.wow.carlauncher.view.activity.set.view;
 
 import android.annotation.SuppressLint;
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -13,7 +10,6 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
-import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.view.KeyEvent;
@@ -36,6 +32,7 @@ import com.wow.carlauncher.view.activity.set.SetBaseView;
 import com.wow.carlauncher.view.activity.set.listener.SetAppMultipleSelectOnClickListener;
 import com.wow.carlauncher.view.activity.set.listener.SetAppSingleSelectOnClickListener;
 import com.wow.carlauncher.view.activity.set.listener.SetSwitchOnClickListener;
+import com.wow.carlauncher.view.dialog.ProgressDialog;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -47,8 +44,6 @@ import java.io.InputStream;
 import butterknife.BindView;
 import okhttp3.Call;
 import okhttp3.Response;
-
-import static android.content.Context.NOTIFICATION_SERVICE;
 
 /**
  * Created by 10124 on 2018/4/22.
@@ -206,24 +201,22 @@ public class SSystemView extends SetBaseView {
     }
 
     public void loadDownloadApk(String url, int version) {
-        String[] fileName = url.split("/");
         final String filePath = Environment.getExternalStorageDirectory() + "/ddlauncher-V" + version + ".apk";
-        initNotification();
-        CommonService.downFile(url, new ProgressResponseListener() {
+        ProgressDialog progressDialog = new ProgressDialog(getContext());
+        Call call = CommonService.downFile(url, new ProgressResponseListener() {
             @Override
             public void onResponseProgress(long bytesRead, long contentLength, boolean done) {
-                System.out.println(bytesRead + "  " + contentLength + "  " + done);
-                downloadResult(bytesRead / contentLength, filePath);
+                progressDialog.getProgressBar().setProgress((int) (((double) bytesRead / (double) contentLength) * 100));
+                progressDialog.getProgressBar().setMax(100);
             }
 
             @Override
             public void onFailure(Call call, IOException e) {
-                System.out.println("!!onFailure!");
+                ToastManage.self().show("更新下载失败!");
             }
 
             @Override
             public void onResponse(Call call, @NonNull Response response) throws IOException {
-//                response.body().byteStream()
 
                 int len;
                 byte[] buf = new byte[2048];
@@ -240,7 +233,6 @@ public class SSystemView extends SetBaseView {
                 fileOutputStream.close();
                 inputStream.close();
 
-                notificationManager.cancel(1);
                 Intent intent = new Intent(Intent.ACTION_VIEW);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -253,52 +245,15 @@ public class SSystemView extends SetBaseView {
                             "application/vnd.android.package-archive");
                 }
                 getActivity().startActivity(intent);
+
+                progressDialog.dismiss();
             }
         });
-    }
-
-    private Notification notification;
-    private NotificationManager notificationManager;
-    private NotificationCompat.Builder builder;
-
-    private void initNotification() {
-        String id = "my_channel_01";
-        String name = "我是渠道名字";
-        notificationManager = (NotificationManager) getActivity().getSystemService(NOTIFICATION_SERVICE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel mChannel = new NotificationChannel(id, name, NotificationManager.IMPORTANCE_LOW);
-            notificationManager.createNotificationChannel(mChannel);
-            builder = new NotificationCompat.Builder(getActivity());
-            builder.setContentText("下载进度:0%");
-            builder.setContentTitle("正在更新...");
-            //创建通知时指定channelID
-            builder.setChannelId(id);
-            builder.setSmallIcon(R.mipmap.ic_launcher);
-            builder.setProgress(100, 0, false);
-            notification = builder.build();
-
-        } else {
-            builder = new NotificationCompat.Builder(getActivity())
-                    .setContentTitle("正在更新...")
-                    .setContentText("下载进度:0%")
-                    .setSmallIcon(R.mipmap.ic_launcher)
-                    .setProgress(100, 0, false)
-                    .setOngoing(true);
-            notification = builder.build();
-        }
-
-    }
-
-    public void downloadResult(float progress, String path) {
-        if (progress == -1) {
-            return;
-        }
-
-        if (0 < progress && progress < 1) {
-            builder.setProgress(100, (int) (progress * 100), false);
-            builder.setContentText("下载进度:" + (int) (progress * 100) + "%");
-            notification = builder.build();
-            notificationManager.notify(1, notification);
-        }
+        progressDialog.setOnDismissListener(dialog -> {
+            if (!call.isCanceled()) {
+                call.cancel();
+            }
+        });
+        progressDialog.show();
     }
 }

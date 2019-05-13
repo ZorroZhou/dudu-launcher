@@ -6,6 +6,7 @@ import com.wow.carlauncher.ex.plugin.console.ConsoleProtoclEnum;
 import com.wow.carlauncher.ex.plugin.fk.FangkongProtocolEnum;
 import com.wow.carlauncher.ex.plugin.music.MusicControllerEnum;
 import com.wow.carlauncher.ex.plugin.obd.ObdProtocolEnum;
+import com.wow.carlauncher.view.activity.driving.AutoDrivingEnum;
 import com.wow.carlauncher.view.activity.driving.DrivingViewEnum;
 import com.wow.carlauncher.view.activity.launcher.ItemEnum;
 import com.wow.carlauncher.view.activity.launcher.ItemTransformer;
@@ -13,7 +14,11 @@ import com.wow.carlauncher.view.activity.launcher.LayoutEnum;
 
 public class CommonData {
     public static final String TAG = "WOW_CAR";
-
+    //所有的桌面插件
+    public static final AutoDrivingEnum[] AUTO_DRIVING_TYPES = {
+            AutoDrivingEnum.TIME,
+            AutoDrivingEnum.REV
+    };
     //所有的桌面插件
     public static final LayoutEnum[] LAUNCHER_LAYOUTS = {
             LayoutEnum.LAYOUT1,
@@ -177,7 +182,6 @@ public class CommonData {
     //以上默认值
     public static final boolean SDATA_TRIP_AUTO_OPEN_DRIVING_DF = true;
 
-    //-------------------------------本地缓存使用的mark-end-----------------------------------
     //APP启动后自动任务相关
     public static final String SDATA_APP_AUTO_OPEN_USE = "SDATA_APP_AUTO_OPEN_USE";
     public static final String SDATA_APP_AUTO_OPEN_BACK = "SDATA_APP_AUTO_OPEN_BACK";
@@ -196,23 +200,16 @@ public class CommonData {
     public static final String SDATA_LAUNCHER_LAYOUT = "SDATA_LAUNCHER_LAYOUT";
     public static final String SDATA_LAUNCHER_PROMPT_SHOW = "SDATA_LAUNCHER_PROMPT_SHOW";
 
-    //是否允许悬浮框展示
-    public static final String SDATA_MUSIC_INSIDE_COVER = "SDATA_MUSIC_INSIDE_COVER";
-    public static final String SDATA_MUSIC_USE_LRC = "SDATA_MUSIC_USE_LRC";
-
-    public static final String SDATA_USE_NAVI_POP = "SDATA_USE_NAVI_POP";
-    public static final String SDATA_USE_NAVI_XUNHYANG = "SDATA_USE_NAVI_XUNHYANG";
-
-    //-------------------------------本地缓存使用的mark-end-----------------------------------
-
-
-    public static final String SDATA_HOME_FULL = "SDATA_HOME_FULL";
-
-    public static final String SDATA_USE_VA = "SDATA_USE_VA";
-
-    public static final String SDATA_LOG_OPEN = "SDATA_LOG_OPEN";
-
-    public static final String SDATA_DRIVING_VIEW = "SDATA_DRIVING_VIEW";
-
-    public static final String SDATA_SHOW_USB_MOUNT = "SDATA_SHOW_USB_MOUNT";
+    public static final String SDATA_MUSIC_INSIDE_COVER = "SDATA_MUSIC_INSIDE_COVER";//是否使用控件自己的封面
+    public static final String SDATA_MUSIC_USE_LRC = "SDATA_MUSIC_USE_LRC";//是否使用歌词
+    public static final String SDATA_USE_NAVI_POP = "SDATA_USE_NAVI_POP"; //是否使用导航弹窗
+    public static final String SDATA_USE_NAVI_XUNHYANG = "SDATA_USE_NAVI_XUNHYANG";//是否使用巡航
+    public static final String SDATA_HOME_FULL = "SDATA_HOME_FULL";//首页是否全屏
+    public static final String SDATA_USE_VA = "SDATA_USE_VA";//是否使用语音助手
+    public static final String SDATA_LOG_OPEN = "SDATA_LOG_OPEN";//是否打开日志
+    public static final String SDATA_DRIVING_VIEW = "SDATA_DRIVING_VIEW";//驾驶界面风格
+    public static final String SDATA_SHOW_USB_MOUNT = "SDATA_SHOW_USB_MOUNT";//是否显示挂载
+    public static final String SDATA_AUTO_TO_DRIVING = "SDATA_AUTO_TO_DRIVING";//是否自动跳入驾驶界面
+    public static final String SDATA_AUTO_TO_DRIVING_TYPE = "SDATA_AUTO_TO_DRIVING_TYPE";//是否自动跳入驾驶界面
+    public static final String SDATA_AUTO_TO_DRIVING_TIME = "SDATA_AUTO_TO_DRIVING_TIME";//自动跳入驾驶界面时间
 }

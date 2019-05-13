@@ -15,6 +15,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -31,11 +32,15 @@ import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.appInfo.event.MAppInfoRefreshShowEvent;
 import com.wow.carlauncher.ex.manage.location.LMEventNewLocation;
+import com.wow.carlauncher.ex.manage.time.event.TMEvent3Second;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.console.ConsolePlugin;
 import com.wow.carlauncher.ex.plugin.console.event.PConsoleEventCallState;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventAction;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
+import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarInfo;
+import com.wow.carlauncher.view.activity.driving.AutoDrivingEnum;
+import com.wow.carlauncher.view.activity.driving.DrivingActivity;
 import com.wow.carlauncher.view.activity.launcher.event.LItemRefreshEvent;
 import com.wow.carlauncher.view.activity.launcher.event.LItemToFristEvent;
 import com.wow.carlauncher.view.activity.launcher.event.LLayoutRefreshEvent;
@@ -63,6 +68,7 @@ import per.goweii.anypermission.AnyPermission;
 import per.goweii.anypermission.RequestListener;
 import per.goweii.anypermission.RuntimeRequester;
 
+import static com.wow.carlauncher.common.CommonData.SDATA_AUTO_TO_DRIVING_TIME;
 import static com.wow.carlauncher.common.CommonData.SDATA_HOME_FULL;
 import static com.wow.carlauncher.common.CommonData.SDATA_LAUNCHER_ITEM_TRAN;
 import static com.wow.carlauncher.common.CommonData.SDATA_LAUNCHER_LAYOUT;
@@ -343,6 +349,13 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
         }
     }
 
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        //发现有触摸事件,重新计时
+        lastTouchTime = System.currentTimeMillis();
+        return super.dispatchTouchEvent(ev);
+    }
+
     private boolean show = false;
 
     @Override
@@ -417,6 +430,43 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
             LogEx.d(this, "LMEventNewLocation");
             lastadCode = event.getAdCode();
         }
+    }
+
+    private long lastTouchTime = 0;
+
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void onEvent(TMEvent3Second event) {
+        //处理自动跳转驾驶页面
+        if (show &&
+                SharedPreUtil.getBoolean(CommonData.SDATA_AUTO_TO_DRIVING, false) &&
+                CommonUtil.equals(SharedPreUtil.getInteger(CommonData.SDATA_AUTO_TO_DRIVING_TYPE, AutoDrivingEnum.TIME.getId()), AutoDrivingEnum.TIME.getId())) {
+            //如果是根据时间,就直接根据时间处理
+            if (System.currentTimeMillis() - lastTouchTime > SharedPreUtil.getInteger(SDATA_AUTO_TO_DRIVING_TIME, 60) * 1000) {
+                System.out.println("跳转到驾驶界面");
+                lastTouchTime = System.currentTimeMillis();
+                TaskExecutor.self().autoPost(() -> LauncherActivity.this.startActivity(new Intent(LauncherActivity.this, DrivingActivity.class)));
+            }
+        } else if (show &&
+                SharedPreUtil.getBoolean(CommonData.SDATA_AUTO_TO_DRIVING, false) &&
+                CommonUtil.equals(SharedPreUtil.getInteger(CommonData.SDATA_AUTO_TO_DRIVING_TYPE, AutoDrivingEnum.REV.getId()), AutoDrivingEnum.REV.getId())
+                ) {
+            //如果是根据转速,直接根据转速>600同时距离最后一次操作大于20秒,暂时这样使用看看
+            if (System.currentTimeMillis() - lastTouchTime > 20000 && rev > 600) {
+                System.out.println("跳转到驾驶界面");
+                lastTouchTime = System.currentTimeMillis();
+                TaskExecutor.self().autoPost(() -> LauncherActivity.this.startActivity(new Intent(LauncherActivity.this, DrivingActivity.class)));
+            }
+        } else {
+            lastTouchTime = System.currentTimeMillis();
+        }
+    }
+
+    private int rev = 0;
+
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void onEvent(PObdEventCarInfo event) {
+        //处理自动跳转驾驶页面
+        rev = event.getRev();
     }
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)

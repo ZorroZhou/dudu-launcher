@@ -21,10 +21,38 @@
         android:id="@+id/sv_driving_type"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        st:summary="测试绑定"
+        st:summary="驾驶界面"
         st:titleEx="驾驶界面"
         st:type="buttonB" />
 
     <View style="@style/Interval" />
 
+    <com.wow.carlauncher.common.view.SetView
+        android:id="@+id/sv_auto_to_driving"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        st:summary="@string/set_allow"
+        st:summary2="@string/set_ban"
+        st:titleEx="自动跳转到驾驶界面"
+        st:type="switchB" />
+
+    <View style="@style/Interval" />
+
+    <com.wow.carlauncher.common.view.SetView
+        android:id="@+id/sv_auto_to_driving_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        st:titleEx="驾驶界面跳转方式"
+        st:type="buttonB" />
+
+    <View style="@style/Interval" />
+
+    <com.wow.carlauncher.common.view.SetView
+        android:id="@+id/sv_auto_to_driving_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        st:titleEx="跳转驾驶界面时间(秒)"
+        st:type="buttonB" />
+
+    <View style="@style/Interval" />
 </LinearLayout>

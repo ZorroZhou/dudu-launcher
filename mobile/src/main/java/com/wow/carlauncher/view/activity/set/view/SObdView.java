@@ -28,8 +28,6 @@ import butterknife.BindView;
 
 import static com.wow.carlauncher.common.CommonData.OBD_CONTROLLER;
 import static com.wow.carlauncher.common.CommonData.SDATA_OBD_CONTROLLER;
-import static com.wow.carlauncher.common.CommonData.SDATA_TRIP_AUTO_OPEN_DRIVING;
-import static com.wow.carlauncher.common.CommonData.SDATA_TRIP_AUTO_OPEN_DRIVING_DF;
 
 /**
  * Created by 10124 on 2018/4/22.
@@ -40,6 +38,7 @@ public class SObdView extends SetBaseView {
     public SObdView(SetActivity activity) {
         super(activity);
     }
+
     @Override
     protected int getContent() {
         return R.layout.content_set_obd;
@@ -53,9 +52,6 @@ public class SObdView extends SetBaseView {
 
     @BindView(R.id.sv_obd_disconnect)
     SetView sv_obd_disconnect;
-
-    @BindView(R.id.sv_auto_open_driving)
-    SetView sv_auto_open_driving;
 
     @Override
     protected void initView() {
@@ -136,14 +132,5 @@ public class SObdView extends SetBaseView {
                 ObdPlugin.self().disconnect();
             });
         });
-
-        sv_auto_open_driving.setOnValueChangeListener((newValue, oldValue) -> {
-            if ("1".equals(newValue)) {
-                SharedPreUtil.saveBoolean(SDATA_TRIP_AUTO_OPEN_DRIVING, true);
-            } else {
-                SharedPreUtil.saveBoolean(SDATA_TRIP_AUTO_OPEN_DRIVING, false);
-            }
-        });
-        sv_auto_open_driving.setChecked(SharedPreUtil.getBoolean(SDATA_TRIP_AUTO_OPEN_DRIVING, SDATA_TRIP_AUTO_OPEN_DRIVING_DF));
     }
 }

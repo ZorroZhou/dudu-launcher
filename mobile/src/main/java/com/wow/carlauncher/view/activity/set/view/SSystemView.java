@@ -44,6 +44,7 @@ import java.io.InputStream;
 import butterknife.BindView;
 import okhttp3.Call;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 /**
  * Created by 10124 on 2018/4/22.
@@ -211,42 +212,45 @@ public class SSystemView extends SetBaseView {
             }
 
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 ToastManage.self().show("更新下载失败!");
             }
 
             @Override
-            public void onResponse(Call call, @NonNull Response response) throws IOException {
-
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 int len;
                 byte[] buf = new byte[2048];
-                InputStream inputStream = response.body().byteStream();
-                /**
-                 * 写入本地文件
-                 */
-                File file = new File(filePath);
-                FileOutputStream fileOutputStream = new FileOutputStream(file);
-                while ((len = inputStream.read(buf)) != -1) {
-                    fileOutputStream.write(buf, 0, len);
-                }
-                fileOutputStream.flush();
-                fileOutputStream.close();
-                inputStream.close();
+                ResponseBody responseBody = response.body();
+                if (responseBody != null) {
+                    InputStream inputStream = responseBody.byteStream();
+                    /**
+                     * 写入本地文件
+                     */
+                    File file = new File(filePath);
+                    FileOutputStream fileOutputStream = new FileOutputStream(file);
+                    while ((len = inputStream.read(buf)) != -1) {
+                        fileOutputStream.write(buf, 0, len);
+                    }
+                    fileOutputStream.flush();
+                    fileOutputStream.close();
+                    inputStream.close();
 
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    Uri value = FileProvider.getUriForFile(getActivity(), "com.satsoftec.risense.fileprovider", new File(filePath));
-                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                    intent.setDataAndType(value,
-                            "application/vnd.android.package-archive");
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        Uri value = FileProvider.getUriForFile(getActivity(), "com.satsoftec.risense.fileprovider", new File(filePath));
+                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                        intent.setDataAndType(value,
+                                "application/vnd.android.package-archive");
+                    } else {
+                        intent.setDataAndType(Uri.fromFile(new File(filePath)),
+                                "application/vnd.android.package-archive");
+                    }
+                    getActivity().startActivity(intent);
                 } else {
-                    intent.setDataAndType(Uri.fromFile(new File(filePath)),
-                            "application/vnd.android.package-archive");
+                    ToastManage.self().show("更新下载失败!");
                 }
-                getActivity().startActivity(intent);
-
-                progressDialog.dismiss();
+                TaskExecutor.self().autoPost(progressDialog::dismiss);
             }
         });
         progressDialog.setOnDismissListener(dialog -> {
@@ -254,6 +258,6 @@ public class SSystemView extends SetBaseView {
                 call.cancel();
             }
         });
-        progressDialog.show();
+        TaskExecutor.self().autoPost(progressDialog::show);
     }
 }

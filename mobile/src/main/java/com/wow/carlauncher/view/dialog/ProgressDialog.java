@@ -4,6 +4,7 @@ import android.content.Context;
 import android.widget.ProgressBar;
 
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.view.base.BaseDialog;
 
 public class ProgressDialog extends BaseDialog {
@@ -11,7 +12,6 @@ public class ProgressDialog extends BaseDialog {
 
     public ProgressDialog(Context context) {
         super(context);
-        hideTitle();
         setGravityCenter();
         setContent(R.layout.dialog_progress);
 
@@ -19,7 +19,10 @@ public class ProgressDialog extends BaseDialog {
     }
 
     public void setProgress(float p) {
-        progressBar.setProgress((int) (p * 100));
-        progressBar.setMax(100);
+        TaskExecutor.self().autoPost(() -> {
+            progressBar.setProgress((int) (p * 100));
+            progressBar.setMax(100);
+        });
+
     }
 }

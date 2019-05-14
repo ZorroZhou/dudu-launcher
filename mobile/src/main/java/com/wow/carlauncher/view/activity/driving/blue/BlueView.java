@@ -424,9 +424,10 @@ public class BlueView extends DrivingView {
             return;
         }
         if (music_iv_cover != null) {
-            music_iv_cover.setImageResource(R.mipmap.music_dlogo);
-            if (CommonUtil.isNotNull(event.getUrl())) {
+            if (event.isHave()) {
                 ImageManage.self().loadImage(event.getUrl(), music_iv_cover, R.mipmap.music_dlogo);
+            } else {
+                music_iv_cover.setImageResource(R.mipmap.music_dlogo);
             }
         }
     }

@@ -6,6 +6,7 @@ package com.wow.carlauncher.ex.plugin.music.event;
 
 public class PMusicEventCoverRefresh {
     private String url;
+    private boolean have;
 
     public String getUrl() {
         return url;
@@ -13,6 +14,15 @@ public class PMusicEventCoverRefresh {
 
     public PMusicEventCoverRefresh setUrl(String url) {
         this.url = url;
+        return this;
+    }
+
+    public boolean isHave() {
+        return have;
+    }
+
+    public PMusicEventCoverRefresh setHave(boolean have) {
+        this.have = have;
         return this;
     }
 }

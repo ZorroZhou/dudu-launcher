@@ -440,8 +440,10 @@ public class ConsoleWin implements ThemeManage.OnThemeChangeListener {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final PMusicEventCoverRefresh event) {
-        if (music_iv_cover != null) {
+        if (event.isHave()) {
             ImageManage.self().loadImage(event.getUrl(), music_iv_cover, R.mipmap.music_dlogo);
+        } else {
+            music_iv_cover.setImageResource(R.mipmap.music_dlogo);
         }
     }
 

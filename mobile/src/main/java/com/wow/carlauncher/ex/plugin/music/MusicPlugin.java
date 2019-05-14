@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.LogEx;
+import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.ContextEx;
 import com.wow.carlauncher.ex.plugin.music.event.MMEventControllerRefresh;
@@ -117,10 +118,14 @@ public class MusicPlugin extends ContextEx {
     }
 
     private PMusicEventCoverRefresh lastMusicCover;
+    private String lastCover = "";
 
     public void refreshCover(final String url) {
-        lastMusicCover = new PMusicEventCoverRefresh().setUrl(url);
-        postEvent(lastMusicCover);
+        if (CommonUtil.isNull(url) || CommonUtil.equals(lastCover, url)) {
+            lastCover = url;
+            lastMusicCover = new PMusicEventCoverRefresh().setUrl(url).setHave(CommonUtil.isNotNull(url));
+            postEvent(lastMusicCover);
+        }
     }
 
 

@@ -260,8 +260,7 @@
             <FrameLayout
                 android:id="@+id/fl_item1_not_nav"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="gone">
+                android:layout_height="match_parent">
 
                 <com.zhy.android.percent.support.PercentRelativeLayout
                     android:id="@+id/rl_item1_not_nav_music"

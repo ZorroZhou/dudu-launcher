@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.tencent.tauth.Tencent;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.view.SetView;
@@ -38,6 +39,7 @@ public class SetActivity extends BaseActivity {
     @Override
     public void init() {
         setContent(R.layout.activity_set);
+        //mTencent = Tencent.createInstance("1232456", this);
     }
 
     @BindView(R.id.sg_theme)
@@ -46,9 +48,10 @@ public class SetActivity extends BaseActivity {
     @BindView(R.id.ll_set)
     FrameLayout ll_set;
 
-//    @BindView(R.id.ll_user)
+    //    @BindView(R.id.ll_user)
 //     LinearLayout ll_user;
 //
+    private Tencent mTencent;
 
     @Override
     public void initView() {

@@ -121,7 +121,7 @@ public class MusicPlugin extends ContextEx {
     private String lastCover = "";
 
     public void refreshCover(final String url) {
-        if (CommonUtil.isNull(url) || CommonUtil.equals(lastCover, url)) {
+        if (CommonUtil.isNull(url) || !CommonUtil.equals(lastCover, url)) {
             lastCover = url;
             lastMusicCover = new PMusicEventCoverRefresh().setUrl(url).setHave(CommonUtil.isNotNull(url));
             postEvent(lastMusicCover);

@@ -28,7 +28,6 @@ import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.ViewPagerOnPageChangeListener;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
-import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.appInfo.event.MAppInfoRefreshShowEvent;
 import com.wow.carlauncher.ex.manage.location.LMEventNewLocation;
@@ -69,7 +68,6 @@ import butterknife.ButterKnife;
 import per.goweii.anypermission.AnyPermission;
 import per.goweii.anypermission.RequestListener;
 import per.goweii.anypermission.RuntimeRequester;
-import skin.support.SkinCompatManager;
 
 import static com.wow.carlauncher.common.CommonData.SDATA_AUTO_TO_DRIVING_TIME;
 import static com.wow.carlauncher.common.CommonData.SDATA_HOME_FULL;
@@ -139,7 +137,6 @@ public class LauncherActivity extends Activity implements SkinManage.OnSkinChang
         }
 
         //超级大坑,必去全局设置才能用
-        ThemeManage.self().refreshTheme();
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
         registerReceiver(homeReceiver, intentFilter);
@@ -151,28 +148,7 @@ public class LauncherActivity extends Activity implements SkinManage.OnSkinChang
 
         TaskExecutor.self().run(() -> TaskExecutor.self().autoPost(this::requestRuntime), 1000);
         LogEx.d(this, "onCreate:end");
-        SkinCompatManager.getInstance().restoreDefaultTheme();
-        TaskExecutor.self().post(new Runnable() {
-            @Override
-            public void run() {
-                SkinManage.self().loadSkin("chunhei-debug.apk", new SkinCompatManager.SkinLoaderListener() {
-                    @Override
-                    public void onStart() {
-                        LogEx.d(SkinCompatManager.class, "onStart");
-                    }
-
-                    @Override
-                    public void onSuccess() {
-                        LogEx.d(SkinCompatManager.class, "onSuccess");
-                    }
-
-                    @Override
-                    public void onFailed(String errMsg) {
-                        LogEx.d(SkinCompatManager.class, "onFailed:" + errMsg);
-                    }
-                }, SkinCompatManager.SKIN_LOADER_STRATEGY_ASSETS);
-            }
-        }, 5000);
+        //SkinManage.self().restoreDefaultTheme();
     }
 
     public void initView() {

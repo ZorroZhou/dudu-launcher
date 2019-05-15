@@ -105,7 +105,6 @@ public class AppInfoManage extends ContextEx {
     }
 
     private AppInfo getAppInfo(String app) {
-        LogEx.d(this, "getAppInfo:" + app);
         if (CommonUtil.isNull(app)) {
             return null;
         }
@@ -126,13 +125,11 @@ public class AppInfoManage extends ContextEx {
     }
 
     public Drawable getIcon(String app, boolean withTheme) {
-        LogEx.d(this, "getIcon:" + app);
         Resources resources = getContext().getResources();
         AppInfo info = getAppInfo(app);
         if (info != null) {
             if (MARK_OTHER_APP == info.appMark) {
                 //先根据主题获取图标
-                System.out.println("!!!!!!" + info.clazz);
                 int r = AppIconTemp.getIcon(info.clazz);
                 if (withTheme && r > 0) {
                     return SkinManage.self().getDrawable(r);
@@ -172,7 +169,6 @@ public class AppInfoManage extends ContextEx {
     }
 
     public CharSequence getName(String app) {
-        LogEx.d(this, "getName:" + app);
         AppInfo info = getAppInfo(app);
         if (info != null) {
             return info.name;
@@ -181,7 +177,6 @@ public class AppInfoManage extends ContextEx {
     }
 
     public boolean checkApp(String app) {
-        LogEx.d(this, "checkApp:" + app);
         //这里应该是没加载完
         AppInfo info = getAppInfo(app);
         return info != null;

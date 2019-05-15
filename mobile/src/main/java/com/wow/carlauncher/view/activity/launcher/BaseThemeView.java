@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 
 import com.wow.carlauncher.ex.manage.skin.SkinManage;
-import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.view.base.BaseView;
 
 /**
@@ -21,8 +20,6 @@ public abstract class BaseThemeView extends BaseView implements SkinManage.OnSki
     public BaseThemeView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
-
-    protected ThemeManage.Theme currentTheme;
 
     protected String skinName;
 

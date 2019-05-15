@@ -1,7 +1,5 @@
 package com.wow.carlauncher.common;
 
-import com.wow.carlauncher.ex.manage.ThemeManage;
-import com.wow.carlauncher.ex.manage.ThemeManage.Theme;
 import com.wow.carlauncher.ex.plugin.console.ConsoleProtoclEnum;
 import com.wow.carlauncher.ex.plugin.fk.FangkongProtocolEnum;
 import com.wow.carlauncher.ex.plugin.music.MusicControllerEnum;
@@ -45,23 +43,6 @@ public class CommonData {
             ItemTransformer.ZoomIn,
             ItemTransformer.ZoomOutSlide,
             ItemTransformer.ZoomOut,
-    };
-
-    //所有主题
-    public static final Theme[] THEMES = {
-            Theme.WHITE,
-            Theme.BLACK,
-            Theme.CBLACK,
-            Theme.KBLACK};
-
-    //主题切换模式
-    public static final ThemeManage.ThemeMode[] THEME_MODEL = {
-            ThemeManage.ThemeMode.SHIJIAN,
-            ThemeManage.ThemeMode.DENGGUANG,
-            ThemeManage.ThemeMode.BAISE,
-            ThemeManage.ThemeMode.HEISE,
-            ThemeManage.ThemeMode.CHUNHEI,
-            ThemeManage.ThemeMode.KUHEI
     };
 
     //所有的桌面插件

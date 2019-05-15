@@ -1,0 +1,9 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.wow.carlauncher.theme.heise">
+
+    <application
+        android:allowBackup="true"
+        android:label="黑色主题"
+        tools:ignore="GoogleAppIndexingWarning" />
+</manifest>

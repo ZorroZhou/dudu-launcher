@@ -147,7 +147,7 @@ public class LAppsView extends BaseThemeView implements View.OnClickListener, Vi
                 ((ImageView) cell.findViewById(R.id.icon)).setImageDrawable(AppInfoManage.self().getIcon(appInfos.get(index).clazz));
             }
         }
-        LogEx.d(this, "changedTheme: ");
+        LogEx.d(this, "changedSkin");
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

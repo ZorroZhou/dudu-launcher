@@ -175,31 +175,6 @@ public class LAMapView extends BaseThemeView {
         } else {
             iv_road.setImageDrawable(SkinManage.self().getDrawable(R.drawable.theme_amap_road2));
         }
-//        if (ThemeManage.self().getTheme() == WHITE) {
-//            if (roadType == 0 || roadType == 6) {
-//                iv_road.setImageResource(R.mipmap.n_road1);
-//            } else if (roadType == 4 || roadType == 5 || roadType == 9 || roadType == 10) {
-//                iv_road.setImageResource(R.mipmap.theme_amap_road3);
-//            } else {
-//                iv_road.setImageResource(R.mipmap.theme_amap_road2);
-//            }
-//        } else if (ThemeManage.self().getTheme() == BLACK) {
-//            if (roadType == 0 || roadType == 6) {
-//                iv_road.setImageResource(R.mipmap.n_road1_b);
-//            } else if (roadType == 4 || roadType == 5 || roadType == 9 || roadType == 10) {
-//                iv_road.setImageResource(R.mipmap.n_road3_b);
-//            } else {
-//                iv_road.setImageResource(R.mipmap.n_road2_b);
-//            }
-//        } else {
-//            if (roadType == 0 || roadType == 6) {
-//                iv_road.setImageResource(R.mipmap.n_road1_cb);
-//            } else if (roadType == 4 || roadType == 5 || roadType == 9 || roadType == 10) {
-//                iv_road.setImageResource(R.mipmap.n_road3_cb);
-//            } else {
-//                iv_road.setImageResource(R.mipmap.n_road2_cb);
-//            }
-//        }
     }
 
     @OnClick(value = {R.id.rl_base, R.id.btn_close, R.id.btn_mute, R.id.btn_nav_gs, R.id.btn_nav_j, R.id.btn_gd})

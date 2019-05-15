@@ -130,4 +130,6 @@
     <color name="theme_console_appname">#333e54</color>
     <color name="theme_console_time">#333e54</color>
     <color name="theme_console_music_title">#333e54</color>
+
+    <color name="theme_voice_message">#333e54</color>
 </resources>

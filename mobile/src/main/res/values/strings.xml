@@ -40,11 +40,11 @@
 
 
     <string name="theme_name">默认</string>
-    <string name="theme_weather_layout">0</string>
     <string name="theme_item_title_align">center</string>
     <string name="theme_item_music_cover_type">rect</string>
 
     <string name="theme_item_amap_daohang_line">hide</string>
     <string name="theme_item_amap_xunhang_line">hide</string>
     <string name="theme_item_weather_layout">layout1</string>
+    <string name="theme_use_wallpaper">yes</string>
 </resources>

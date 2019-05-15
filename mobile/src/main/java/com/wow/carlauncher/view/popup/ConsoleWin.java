@@ -23,7 +23,6 @@ import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.DateUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.manage.ImageManage;
-import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.appInfo.event.MAppInfoRefreshShowEvent;
 import com.wow.carlauncher.ex.manage.skin.SkinManage;
@@ -153,19 +152,19 @@ public class ConsoleWin implements SkinManage.OnSkinChangeListener {
             music_ll_play.setBackgroundResource(android.R.color.transparent);
             music_ll_next.setBackgroundResource(android.R.color.transparent);
             if (selectApp == 0) {
-                ll_dock1.setBackgroundResource(ThemeManage.self().getCurrentThemeRes(R.drawable.n_cell_bg));
+                ll_dock1.setBackgroundResource(R.drawable.theme_console_select);
             } else if (selectApp == 1) {
-                ll_dock2.setBackgroundResource(ThemeManage.self().getCurrentThemeRes(R.drawable.n_cell_bg));
+                ll_dock2.setBackgroundResource(R.drawable.theme_console_select);
             } else if (selectApp == 2) {
-                ll_dock3.setBackgroundResource(ThemeManage.self().getCurrentThemeRes(R.drawable.n_cell_bg));
+                ll_dock3.setBackgroundResource(R.drawable.theme_console_select);
             } else if (selectApp == 3) {
-                ll_dock4.setBackgroundResource(ThemeManage.self().getCurrentThemeRes(R.drawable.n_cell_bg));
+                ll_dock4.setBackgroundResource(R.drawable.theme_console_select);
             } else if (selectApp == 4) {
-                music_ll_prew.setBackgroundResource(ThemeManage.self().getCurrentThemeRes(R.drawable.n_cell_bg));
+                music_ll_prew.setBackgroundResource(R.drawable.theme_console_select);
             } else if (selectApp == 5) {
-                music_ll_play.setBackgroundResource(ThemeManage.self().getCurrentThemeRes(R.drawable.n_cell_bg));
+                music_ll_play.setBackgroundResource(R.drawable.theme_console_select);
             } else if (selectApp == 6) {
-                music_ll_next.setBackgroundResource(ThemeManage.self().getCurrentThemeRes(R.drawable.n_cell_bg));
+                music_ll_next.setBackgroundResource(R.drawable.theme_console_select);
             }
         });
     }

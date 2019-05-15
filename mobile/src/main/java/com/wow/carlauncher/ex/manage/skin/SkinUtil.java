@@ -56,4 +56,17 @@ public class SkinUtil {
             }
         }
     }
+
+    public static boolean analysisUseWallpaper(String type) {
+        switch (type) {
+            case SkinConstant.UseWallpaper
+                    .use: {
+                return true;
+            }
+            default: {
+                return false;
+            }
+        }
+    }
+
 }

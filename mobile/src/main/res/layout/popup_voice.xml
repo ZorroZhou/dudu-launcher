@@ -12,7 +12,7 @@
         android:id="@+id/ll_win"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@drawable/n_l_item1_bg"
+        android:background="@drawable/theme_popup_bg"
         app:layout_heightPercent="20%h"
         app:layout_marginTopPercent="80%h">
 
@@ -20,7 +20,7 @@
             android:id="@+id/iv_icon"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:src="@mipmap/app_voice"
+            android:src="@drawable/app_icon_voice"
             app:layout_heightPercent="80%h"
             app:layout_marginPercent="10%h"
             app:layout_widthPercent="80%h" />
@@ -32,7 +32,7 @@
             android:layout_weight="1"
             android:gravity="center_vertical|left"
             android:text="你好!"
-            android:textColor="@color/l_text1"
+            android:textColor="@color/theme_voice_message"
             app:layout_marginPercent="10%h"
             app:layout_textSizePercent="30%h" />
 

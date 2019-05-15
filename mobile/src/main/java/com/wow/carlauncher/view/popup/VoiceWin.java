@@ -15,9 +15,7 @@ import android.widget.TextView;
 import com.wow.carlauncher.CarLauncherApplication;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
-import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.util.SharedPreUtil;
-import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.baiduVoice.BaiduVoiceAssistant;
 import com.wow.carlauncher.ex.manage.baiduVoice.event.MVaAsrStateChange;
 import com.wow.carlauncher.ex.manage.baiduVoice.event.MVaNewWordFind;
@@ -31,7 +29,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class VoiceWin implements ThemeManage.OnThemeChangeListener {
+public class VoiceWin {
     private static class SingletonHolder {
         @SuppressLint("StaticFieldLeak")
         private static VoiceWin instance = new VoiceWin();
@@ -88,11 +86,6 @@ public class VoiceWin implements ThemeManage.OnThemeChangeListener {
 
         ButterKnife.bind(this, consoleWin);
         EventBus.getDefault().register(this);
-
-        onThemeChanged(ThemeManage.self());
-        ThemeManage.self().registerThemeChangeListener(this);
-
-        LogEx.d(this, "init ");
     }
 
     public void show() {
@@ -109,13 +102,6 @@ public class VoiceWin implements ThemeManage.OnThemeChangeListener {
             wm.removeView(consoleWin);
             isShow = false;
         }
-    }
-
-    @Override
-    public void onThemeChanged(ThemeManage manage) {
-        ll_win.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_l_item1_bg));
-        iv_icon.setImageResource(manage.getCurrentThemeRes(R.mipmap.app_voice));
-        tv_message.setTextColor(manage.getCurrentThemeColor(R.color.l_text1));
     }
 
     @BindView(R.id.iv_icon)

@@ -37,4 +37,6 @@
     <color name="theme_console_appname">#fbfbfb</color>
     <color name="theme_console_time">#fbfbfb</color>
     <color name="theme_console_music_title">#fbfbfb</color>
+
+    <color name="theme_voice_message">#fbfbfb</color>
 </resources>

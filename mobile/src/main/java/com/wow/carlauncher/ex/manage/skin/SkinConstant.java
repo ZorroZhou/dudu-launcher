@@ -21,4 +21,9 @@ public interface SkinConstant {
         String layout1 = "layout1";
         String layout2 = "layout2";
     }
+
+    interface UseWallpaper {
+        String use = "yes";
+        String not_use = "no";
+    }
 }

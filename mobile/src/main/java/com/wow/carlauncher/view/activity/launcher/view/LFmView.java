@@ -15,14 +15,10 @@ import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.LogEx;
-import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.view.activity.launcher.BaseThemeView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-
-import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.BLACK;
-import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.WHITE;
 
 /**
  * Created by 10124 on 2018/4/20.
@@ -290,23 +286,4 @@ public class LFmView extends BaseThemeView {
 
     private boolean run = false;
 
-    private void refreshPlay() {
-        if (run) {
-            if (ThemeManage.self().getTheme() == WHITE) {
-                iv_play.setImageResource(R.mipmap.ic_pause);
-            } else if (ThemeManage.self().getTheme() == BLACK) {
-                iv_play.setImageResource(R.mipmap.ic_pause_b);
-            } else {
-                iv_play.setImageResource(R.mipmap.ic_pause_cb);
-            }
-        } else {
-            if (ThemeManage.self().getTheme() == WHITE) {
-                iv_play.setImageResource(R.mipmap.ic_play);
-            } else if (ThemeManage.self().getTheme() == BLACK) {
-                iv_play.setImageResource(R.mipmap.ic_play_b);
-            } else {
-                iv_play.setImageResource(R.mipmap.ic_play_cb);
-            }
-        }
-    }
 }

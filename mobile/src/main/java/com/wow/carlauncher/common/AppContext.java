@@ -9,13 +9,12 @@ import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.manage.AppWidgetManage;
 import com.wow.carlauncher.ex.manage.ImageManage;
-import com.wow.carlauncher.ex.manage.skin.SkinManage;
-import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.baiduVoice.BaiduVoiceAssistant;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
 import com.wow.carlauncher.ex.manage.location.LocationManage;
 import com.wow.carlauncher.ex.manage.okHttp.OkHttpManage;
+import com.wow.carlauncher.ex.manage.skin.SkinManage;
 import com.wow.carlauncher.ex.manage.speed.SpeedManage;
 import com.wow.carlauncher.ex.manage.time.TimeManage;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
@@ -98,8 +97,6 @@ public class AppContext {
         BleManage.self().init(app);
         //定位管理器
         LocationManage.self().init(app);
-        //主题管理器
-        ThemeManage.self().init(app);
         //app信息管理器
         AppInfoManage.self().init(app);
         //插件相关

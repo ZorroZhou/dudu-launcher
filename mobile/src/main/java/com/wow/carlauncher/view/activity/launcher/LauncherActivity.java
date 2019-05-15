@@ -28,11 +28,12 @@ import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.ViewPagerOnPageChangeListener;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
-import com.wow.carlauncher.ex.manage.skin.SkinManage;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.appInfo.event.MAppInfoRefreshShowEvent;
 import com.wow.carlauncher.ex.manage.location.LMEventNewLocation;
+import com.wow.carlauncher.ex.manage.skin.SkinManage;
+import com.wow.carlauncher.ex.manage.skin.SkinUtil;
 import com.wow.carlauncher.ex.manage.time.event.TMEvent3Second;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.console.ConsolePlugin;
@@ -59,11 +60,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -74,8 +70,6 @@ import per.goweii.anypermission.AnyPermission;
 import per.goweii.anypermission.RequestListener;
 import per.goweii.anypermission.RuntimeRequester;
 import skin.support.SkinCompatManager;
-import skin.support.utils.SkinConstants;
-import skin.support.utils.SkinFileUtils;
 
 import static com.wow.carlauncher.common.CommonData.SDATA_AUTO_TO_DRIVING_TIME;
 import static com.wow.carlauncher.common.CommonData.SDATA_HOME_FULL;
@@ -94,7 +88,7 @@ import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.RIGHT_BOT
 import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.RIGHT_TOP_CLICK;
 import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.RIGHT_TOP_LONG_CLICK;
 
-public class LauncherActivity extends Activity implements ThemeManage.OnThemeChangeListener {
+public class LauncherActivity extends Activity implements SkinManage.OnSkinChangeListener {
 
     @SuppressLint("StaticFieldLeak")
     private static LauncherActivity old;
@@ -146,8 +140,8 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
         LogEx.d(this, "register home receiver");
         initView();
 
-        onThemeChanged(ThemeManage.self());
-        ThemeManage.self().registerThemeChangeListener(this);
+        onSkinChanged(SkinManage.self());
+        SkinManage.self().registerSkinChangeListener(this);
 
         TaskExecutor.self().run(() -> TaskExecutor.self().autoPost(this::requestRuntime), 1000);
         LogEx.d(this, "onCreate:end");
@@ -173,25 +167,6 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
                 }, SkinCompatManager.SKIN_LOADER_STRATEGY_ASSETS);
             }
         }, 5000);
-    }
-
-    private String copySkinFromAssets(Context context, String name) {
-        String skinPath = new File(SkinFileUtils.getSkinDir(context), name).getAbsolutePath();
-        try {
-            InputStream is = context.getAssets().open(
-                    SkinConstants.SKIN_DEPLOY_PATH + File.separator + name);
-            OutputStream os = new FileOutputStream(skinPath);
-            int byteCount;
-            byte[] bytes = new byte[1024];
-            while ((byteCount = is.read(bytes)) != -1) {
-                os.write(bytes, 0, byteCount);
-            }
-            os.close();
-            is.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return skinPath;
     }
 
     public void initView() {
@@ -371,11 +346,10 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
         LogEx.d(this, "refreshViewPager:end");
     }
 
-
     @Override
-    public void onThemeChanged(ThemeManage manage) {
+    public void onSkinChanged(SkinManage manage) {
         LogEx.d(this, "onThemeChanged:start");
-        if (manage.getTheme().equals(ThemeManage.Theme.KBLACK)) {
+        if (SkinUtil.analysisUseWallpaper(manage.getString(R.string.theme_use_wallpaper))) {
             try {
                 WallpaperManager wallpaperManager = WallpaperManager
                         .getInstance(getApplicationContext());
@@ -386,7 +360,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
                 e.printStackTrace();
             }
         } else {
-            ll_base.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_desk_bg));
+            ll_base.setBackgroundResource(R.drawable.theme_launcher_bg);
         }
         LogEx.d(this, "onThemeChanged:end");
     }
@@ -425,7 +399,7 @@ public class LauncherActivity extends Activity implements ThemeManage.OnThemeCha
         super.onDestroy();
         unregisterReceiver(homeReceiver);
         EventBus.getDefault().unregister(this);
-        ThemeManage.self().unregisterThemeChangeListener(this);
+        SkinManage.self().unregisterSkinChangeListener(this);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

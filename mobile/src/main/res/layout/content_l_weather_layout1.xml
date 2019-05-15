@@ -66,6 +66,7 @@
             android:includeFontPadding="false"
             android:lines="1"
             android:text="青岛市-李沧区"
+            android:textColor="@color/theme_weather_1_city"
             app:layout_heightPercent="9%h"
             app:layout_marginTopPercent="4%h"
             app:layout_textSizePercent="8%h" />

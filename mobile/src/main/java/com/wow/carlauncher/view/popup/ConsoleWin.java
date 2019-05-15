@@ -304,7 +304,7 @@ public class ConsoleWin implements SkinManage.OnSkinChangeListener {
         if (CommonUtil.isNotNull(packname1) && AppInfoManage.self().checkApp(packname1)) {
             iv_dock1.setImageDrawable(AppInfoManage.self().getIcon(packname1));
         } else if (removeIfError) {
-            iv_dock1.setImageResource(R.mipmap.ic_add_app);
+            iv_dock1.setImageResource(R.drawable.theme_add_app);
             SharedPreUtil.saveString(SDATA_DOCK1_CLASS, "");
         }
 
@@ -312,7 +312,7 @@ public class ConsoleWin implements SkinManage.OnSkinChangeListener {
         if (CommonUtil.isNotNull(packname2) && AppInfoManage.self().checkApp(packname2)) {
             iv_dock2.setImageDrawable(AppInfoManage.self().getIcon(packname2));
         } else if (removeIfError) {
-            iv_dock2.setImageResource(R.mipmap.ic_add_app);
+            iv_dock2.setImageResource(R.drawable.theme_add_app);
             SharedPreUtil.saveString(SDATA_DOCK2_CLASS, "");
         }
 
@@ -320,7 +320,7 @@ public class ConsoleWin implements SkinManage.OnSkinChangeListener {
         if (CommonUtil.isNotNull(packname3) && AppInfoManage.self().checkApp(packname3)) {
             iv_dock3.setImageDrawable(AppInfoManage.self().getIcon(packname3));
         } else if (removeIfError) {
-            iv_dock3.setImageResource(R.mipmap.ic_add_app);
+            iv_dock3.setImageResource(R.drawable.theme_add_app);
             SharedPreUtil.saveString(SDATA_DOCK3_CLASS, "");
         }
 
@@ -328,7 +328,7 @@ public class ConsoleWin implements SkinManage.OnSkinChangeListener {
         if (CommonUtil.isNotNull(packname4) && AppInfoManage.self().checkApp(packname4)) {
             iv_dock4.setImageDrawable(AppInfoManage.self().getIcon(packname4));
         } else if (removeIfError) {
-            iv_dock4.setImageResource(R.mipmap.ic_add_app);
+            iv_dock4.setImageResource(R.drawable.theme_add_app);
             SharedPreUtil.saveString(SDATA_DOCK4_CLASS, "");
         }
     }

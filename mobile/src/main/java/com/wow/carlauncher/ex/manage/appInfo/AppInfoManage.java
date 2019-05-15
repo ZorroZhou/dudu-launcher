@@ -150,16 +150,16 @@ public class AppInfoManage extends ContextEx {
                 switch (info.clazz) {
                     case INTERNAL_APP_DRIVING: {
                         if (withTheme) {
-                            return SkinManage.self().getDrawable(R.mipmap.app_icon_obd);
+                            return SkinManage.self().getDrawable(R.drawable.app_icon_obd);
                         } else {
-                            return ContextCompat.getDrawable(getContext(), R.mipmap.app_icon_obd);
+                            return ContextCompat.getDrawable(getContext(), R.drawable.app_icon_obd);
                         }
                     }
                     case INTERNAL_APP_SETTING: {
                         if (withTheme) {
-                            return SkinManage.self().getDrawable(R.mipmap.app_icon_set);
+                            return SkinManage.self().getDrawable(R.drawable.app_icon_set);
                         } else {
-                            return ContextCompat.getDrawable(getContext(), R.mipmap.app_icon_set);
+                            return ContextCompat.getDrawable(getContext(), R.drawable.app_icon_set);
                         }
                     }
                 }

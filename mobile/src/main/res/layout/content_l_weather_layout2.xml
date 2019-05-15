@@ -5,7 +5,6 @@
     android:id="@+id/rl_base"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/n_l_item1_bg_cb"
     tools:ignore="HardcodedText,RtlHardcoded">
 
     <com.wow.carlauncher.common.theme.TFrameLayout

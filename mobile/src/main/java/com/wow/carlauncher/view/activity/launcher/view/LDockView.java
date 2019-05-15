@@ -200,7 +200,7 @@ public class LDockView extends BaseThemeView {
             iv_dock1.setImageDrawable(AppInfoManage.self().getIcon(packname1));
             tv_dock1.setText(AppInfoManage.self().getName(packname1));
         } else if (removeIfError) {
-            iv_dock1.setImageResource(R.mipmap.ic_add_app);
+            iv_dock1.setImageResource(R.drawable.theme_add_app);
             tv_dock1.setText("添加");
             SharedPreUtil.saveString(SDATA_DOCK1_CLASS, "");
         }
@@ -209,7 +209,7 @@ public class LDockView extends BaseThemeView {
             iv_dock2.setImageDrawable(AppInfoManage.self().getIcon(packname2));
             tv_dock2.setText(AppInfoManage.self().getName(packname2));
         } else if (removeIfError) {
-            iv_dock2.setImageResource(R.mipmap.ic_add_app);
+            iv_dock2.setImageResource(R.drawable.theme_add_app);
             tv_dock2.setText("添加");
             SharedPreUtil.saveString(SDATA_DOCK2_CLASS, "");
         }
@@ -219,7 +219,7 @@ public class LDockView extends BaseThemeView {
             iv_dock3.setImageDrawable(AppInfoManage.self().getIcon(packname3));
             tv_dock3.setText(AppInfoManage.self().getName(packname3));
         } else if (removeIfError) {
-            iv_dock3.setImageResource(R.mipmap.ic_add_app);
+            iv_dock3.setImageResource(R.drawable.theme_add_app);
             tv_dock3.setText("添加");
             SharedPreUtil.saveString(SDATA_DOCK3_CLASS, "");
         }
@@ -229,7 +229,7 @@ public class LDockView extends BaseThemeView {
             iv_dock4.setImageDrawable(AppInfoManage.self().getIcon(packname4));
             tv_dock4.setText(AppInfoManage.self().getName(packname4));
         } else if (removeIfError) {
-            iv_dock4.setImageResource(R.mipmap.ic_add_app);
+            iv_dock4.setImageResource(R.drawable.theme_add_app);
             tv_dock4.setText("添加");
             SharedPreUtil.saveString(SDATA_DOCK4_CLASS, "");
         }
@@ -238,7 +238,7 @@ public class LDockView extends BaseThemeView {
             iv_dock5.setImageDrawable(AppInfoManage.self().getIcon(packname5));
             tv_dock5.setText(AppInfoManage.self().getName(packname5));
         } else if (removeIfError) {
-            iv_dock5.setImageResource(R.mipmap.ic_add_app);
+            iv_dock5.setImageResource(R.drawable.theme_add_app);
             tv_dock5.setText("添加");
             SharedPreUtil.saveString(SDATA_DOCK5_CLASS, "");
         }

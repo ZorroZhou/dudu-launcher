@@ -40,58 +40,6 @@
     <color name="color_dark_light">#455A64</color>
     <color name="color_light">#ECEFF1</color>
 
-    <color name="l_title">#333e54</color>
-    <color name="l_title_b">#eee</color>
-    <color name="l_title_cb">#fbfbfb</color>
-    <color name="l_title_kb">#fbfbfb</color>
-
-    <color name="l_msg">#666f80</color>
-    <color name="l_msg_b">#fbfbfb</color>
-    <color name="l_msg_cb">#adadad</color>
-    <color name="l_msg_kb">#adadad</color>
-
-    <color name="l_content">#333e54</color>
-    <color name="l_content_b">#eee</color>
-    <color name="l_content_cb">#fbfbfb</color>
-    <color name="l_content_kb">#fbfbfb</color>
-
-    <color name="l_text1">#333e54</color>
-    <color name="l_text1_b">#eee</color>
-    <color name="l_text1_cb">#fbfbfb</color>
-    <color name="l_text1_kb">#fbfbfb</color>
-
-    <color name="l_text2">#697185</color>
-    <color name="l_text2_b">#eee</color>
-    <color name="l_text2_cb">#fbfbfb</color>
-    <color name="l_text2_kb">#fbfbfb</color>
-
-    <color name="l_text3">#9ba1a9</color>
-    <color name="l_text3_b">#848a95</color>
-    <color name="l_text3_cb">#848a95</color>
-    <color name="l_text3_kb">#848a95</color>
-
-    <color name="l_text4">#333e54</color>
-    <color name="l_text4_b">#8390a7</color>
-    <color name="l_text4_cb">#aaa</color>
-    <color name="l_text4_kb">#aaa</color>
-
-    <!--#5e6b81-->
-    <color name="line">#c6d2d9</color>
-    <color name="line_b">#666f80</color>
-    <color name="line_cb">#0c1414</color>
-    <color name="line_kb">#0c1414</color>
-
-    <!--音乐相关-->
-    <color name="l_music_title">#697380</color>
-    <color name="l_music_title_b">#eee</color>
-    <color name="l_music_title_cb">#fbfbfb</color>
-    <color name="l_music_title_kb">#fbfbfb</color>
-
-    <color name="l_music_zuozhe">#7b8391</color>
-    <color name="l_music_zuozhe_b">#818796</color>
-    <color name="l_music_zuozhe_cb">#818796</color>
-    <color name="l_music_zuozhe_kb">#818796</color>
-
     <color name="theme_item_title">#333e54</color>
 
     <color name="theme_music_title">#697380</color>

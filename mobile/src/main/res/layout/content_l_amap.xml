@@ -402,7 +402,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_centerHorizontal="true"
-                android:src="@mipmap/n_road1"
+                android:src="@drawable/theme_amap_road1"
                 app:layout_heightPercent="80%h"
                 app:layout_marginTopPercent="15%h"
                 app:layout_widthPercent="75%h" />

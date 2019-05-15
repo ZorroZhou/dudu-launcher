@@ -11,7 +11,7 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:background="@drawable/n_l_item1_bg_cb"
+        android:background="@drawable/popup_amap_bg"
         android:padding="5dp"
         android:visibility="gone"
         app:layout_heightPercent="60%h"

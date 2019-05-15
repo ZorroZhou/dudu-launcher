@@ -197,10 +197,10 @@ public class AppContext {
                 if (Environment.getExternalStorageState().equals(
                         Environment.MEDIA_MOUNTED)) {// 优先保存到SD卡中
                     path = Environment.getExternalStorageDirectory()
-                            .getAbsolutePath() + File.separator + "carLauncherError";
+                            .getAbsolutePath() + File.separator + "duduLauncher" + File.separator + "error";
                 } else {// 如果SD卡不存在，就保存到本应用的目录下
                     path = getApplication().getFilesDir().getAbsolutePath()
-                            + File.separator + "carLauncherError";
+                            + File.separator + "duduLauncher" + File.separator + "error";
                 }
 
                 File pathFile = new File(path);

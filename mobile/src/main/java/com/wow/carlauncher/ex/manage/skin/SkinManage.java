@@ -12,6 +12,10 @@ import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.CommonUtil;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -19,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import skin.support.SkinCompatManager;
+import skin.support.utils.SkinConstants;
 import skin.support.utils.SkinFileUtils;
 
 import static skin.support.SkinCompatManager.SKIN_LOADER_STRATEGY_NONE;
@@ -106,6 +111,25 @@ public class SkinManage {
         }, strategy);
     }
 
+    private String copySkinFromAssets(Context context, String name) {
+        String skinPath = new File(SkinFileUtils.getSkinDir(context), name).getAbsolutePath();
+        try {
+            InputStream is = context.getAssets().open(
+                    SkinConstants.SKIN_DEPLOY_PATH + File.separator + name);
+            OutputStream os = new FileOutputStream(skinPath);
+            int byteCount;
+            byte[] bytes = new byte[1024];
+            while ((byteCount = is.read(bytes)) != -1) {
+                os.write(bytes, 0, byteCount);
+            }
+            os.close();
+            is.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return skinPath;
+    }
+
     private void loadSkin() {
         cachedIdToName.clear();
         cachedString.clear();
@@ -115,7 +139,6 @@ public class SkinManage {
             skinSkinResources = context.getResources();
         } else {
             skinPath = new File(SkinFileUtils.getSkinDir(context), this.skinName).getAbsolutePath();
-            System.out.println("!!!!skinPath:" + skinPath);
             skinPackageName = SkinCompatManager.getInstance().getSkinPackageName(skinPath);
             skinSkinResources = SkinCompatManager.getInstance().getSkinResources(skinPath);
         }

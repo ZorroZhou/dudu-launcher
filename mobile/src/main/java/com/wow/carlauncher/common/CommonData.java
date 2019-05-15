@@ -1,5 +1,6 @@
 package com.wow.carlauncher.common;
 
+import com.wow.carlauncher.ex.manage.skin.SkinModel;
 import com.wow.carlauncher.ex.plugin.console.ConsoleProtoclEnum;
 import com.wow.carlauncher.ex.plugin.fk.FangkongProtocolEnum;
 import com.wow.carlauncher.ex.plugin.music.MusicControllerEnum;
@@ -12,6 +13,13 @@ import com.wow.carlauncher.view.activity.launcher.LayoutEnum;
 
 public class CommonData {
     public static final String TAG = "WOW_CAR";
+
+    public static final SkinModel[] SKIN_MODEL = {
+            SkinModel.BAISE,
+            SkinModel.DENGGUANG,
+            SkinModel.SHIJIAN
+    };
+
     //所有的桌面插件
     public static final AutoDrivingEnum[] AUTO_DRIVING_TYPES = {
             AutoDrivingEnum.TIME,
@@ -88,10 +96,10 @@ public class CommonData {
 
     public static final String PACKAGE_NAME = "com.wow.carlauncher";
 
-    public static final String SDATA_APP_THEME = "SDATA_APP_THEME";
+    public static final String SDATA_APP_SKIN = "SDATA_APP_SKIN";
 
-    public static final String SDATA_APP_THEME_DAY = "SDATA_APP_THEME_DAY";
-    public static final String SDATA_APP_THEME_NIGHT = "SDATA_APP_THEME_NIGHT";
+    public static final String SDATA_APP_SKIN_DAY = "SDATA_APP_SKIN_DAY";
+    public static final String SDATA_APP_SKIN_NIGHT = "SDATA_APP_SKIN_NIGHT";
 
     //
     public static final int REQUEST_SELECT_AMAP_PLUGIN = 10004;

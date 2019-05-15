@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:paddingLeft="16dp"
         android:paddingTop="16dp"
-        android:text="APP主题"
+        android:text="APP皮肤"
         android:textColor="@color/colorPrimary"
         android:textSize="14sp" />
 
@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         st:summary="未选择"
-        st:titleEx="主题选择,可以选择使用昼夜主题"
+        st:titleEx="皮肤切换模式"
         st:type="buttonB" />
 
     <View style="@style/Interval" />
@@ -32,7 +32,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         st:summary="未选择"
-        st:titleEx="白天主题"
+        st:titleEx="主皮肤"
         st:type="buttonB" />
 
     <View style="@style/Interval" />
@@ -42,6 +42,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         st:summary="未选择"
-        st:titleEx="夜间主题"
+        st:titleEx="夜间皮肤"
         st:type="buttonB" />
 </LinearLayout>

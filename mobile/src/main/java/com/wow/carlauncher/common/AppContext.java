@@ -164,28 +164,29 @@ public class AppContext {
         });
 
         LogEx.d(this, "APP初始化完毕 ");
-//        BroadcastReceiver br = new BroadcastReceiver() {
-//            @Override
-//            public void onReceive(Context context, Intent intent) {
-//                System.out.println(intent.getAction());
-//                if (intent.getExtras() != null) {
-//                    for (String key : intent.getExtras().keySet()) {
-//                        System.out.println(key + " : " + intent.getExtras().get(key));
-//                    }
-//                }
-//            }
-//        };
-//
-//        IntentFilter intentFilter = new IntentFilter();
-//
-//        intentFilter.addAction("com.nwd.action.SL_WIDGET_COMMAND");
-//        intentFilter.addAction("com.nwd.action.ACTION_SEND_RADIO_FREQUENCE");
-//        intentFilter.addAction("com.nwd.radio.service.ACTION_RADIO_SERVICE");
-//        app.registerReceiver(br, intentFilter);
+
+        createFile();
     }
 
     public Application getApplication() {
         return this.application;
+    }
+
+    private void createFile() {
+        String path;
+
+        if (Environment.getExternalStorageState().equals(
+                Environment.MEDIA_MOUNTED)) {// 优先保存到SD卡中
+            path = Environment.getExternalStorageDirectory()
+                    .getAbsolutePath() + File.separator + "duduLauncher";
+        } else {// 如果SD卡不存在，就保存到本应用的目录下
+            path = getApplication().getFilesDir().getAbsolutePath()
+                    + File.separator + "duduLauncher";
+        }
+        File pathFile = new File(path);
+        if (!pathFile.exists()) {
+            pathFile.mkdirs();
+        }
     }
 
     private void handerException() {

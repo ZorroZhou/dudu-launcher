@@ -122,6 +122,7 @@ public class AMapCarPlugin extends ContextEx {
             return;
         }
         sendReceiver(REQUEST_EXIT_NAV, null);
+        postEvent(new PAmapEventState().setRunning(false));
     }
 
     public void mute(boolean mute) {

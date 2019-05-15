@@ -153,7 +153,7 @@ public class LauncherActivity extends Activity implements SkinManage.OnSkinChang
         TaskExecutor.self().post(new Runnable() {
             @Override
             public void run() {
-                SkinManage.self().loadSkin("heise-debug.apk", new SkinCompatManager.SkinLoaderListener() {
+                SkinManage.self().loadSkin("heise.skin", new SkinCompatManager.SkinLoaderListener() {
                     @Override
                     public void onStart() {
                         LogEx.d(SkinCompatManager.class, "onStart");

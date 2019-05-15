@@ -44,4 +44,16 @@
         st:summary="未选择"
         st:titleEx="夜间皮肤"
         st:type="buttonB" />
+
+    <View style="@style/Interval" />
+
+    <com.wow.carlauncher.common.view.SetView
+        android:id="@+id/sv_load_skin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        st:summary="请将皮肤文件放到SD卡duduLauncher文件夹"
+        st:titleEx="加载皮肤"
+        st:type="buttonB" />
+
+    <View style="@style/Interval" />
 </LinearLayout>

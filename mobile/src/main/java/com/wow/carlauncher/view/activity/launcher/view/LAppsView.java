@@ -103,6 +103,7 @@ public class LAppsView extends BaseThemeView implements View.OnClickListener, Vi
             if (model != null) {
                 cellView = View.inflate(getContext(), R.layout.content_app_grid_item, null);
                 ((TextView) cellView.findViewById(R.id.name)).setText(model.name);
+                ((ImageView) cellView.findViewById(R.id.icon)).setImageDrawable(AppInfoManage.self().getIcon(model.clazz));
                 cellView.setOnClickListener(this);
                 cellView.setOnLongClickListener(this);
                 cellView.setTag(i);
@@ -154,7 +155,6 @@ public class LAppsView extends BaseThemeView implements View.OnClickListener, Vi
     public void onEvent(SEventPromptShowRefresh event) {
         addRefreshItemHandle();
     }
-
 
     @Override
     public void onClick(View cell) {

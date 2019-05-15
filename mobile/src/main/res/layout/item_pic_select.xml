@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.zhy.android.percent.support.PercentLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.wow.carlauncher.common.theme.TLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="161dp"
     android:gravity="center"
@@ -32,4 +32,4 @@
         android:layout_height="20dp"
         android:layout_marginTop="5dp"
         android:ellipsize="end" />
-</com.zhy.android.percent.support.PercentLinearLayout>
+</com.wow.carlauncher.common.theme.TLinearLayout>

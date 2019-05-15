@@ -5,10 +5,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -20,8 +17,9 @@ import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.view.CustomRoundAngleImageView;
 import com.wow.carlauncher.ex.manage.ImageManage;
-import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
+import com.wow.carlauncher.ex.manage.skin.SkinManage;
+import com.wow.carlauncher.ex.manage.skin.SkinUtil;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import com.wow.carlauncher.ex.plugin.music.event.MMEventControllerRefresh;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventCoverRefresh;
@@ -36,9 +34,6 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-
-import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.BLACK;
-import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.WHITE;
 
 
 /**
@@ -69,96 +64,11 @@ public class LMusicView extends BaseThemeView {
         LogEx.d(this, "initView: ");
     }
 
-    private ViewTreeObserver.OnPreDrawListener oldPlayOnPreDrawListener;
-    private ViewTreeObserver.OnPreDrawListener oldNextOnPreDrawListener;
-    private ViewTreeObserver.OnPreDrawListener oldPrewOnPreDrawListener;
-
     @Override
-    public void changedTheme(ThemeManage manage) {
-        rl_base.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_l_item1_bg));
-        tv_title.setTextColor(manage.getCurrentThemeColor(R.color.l_text1));
-
-        ll_play.getViewTreeObserver().removeOnPreDrawListener(oldPlayOnPreDrawListener);
-        oldPlayOnPreDrawListener = new ViewTreeObserver.OnPreDrawListener() {
-            @Override
-            public boolean onPreDraw() {
-                if (ll_play.getHeight() > 0) {
-                    ll_play.getViewTreeObserver().removeOnPreDrawListener(this);
-                    ViewGroup.LayoutParams lp = iv_play.getLayoutParams();
-                    if (currentTheme == WHITE || currentTheme == BLACK) {
-                        lp.width = (int) (ll_play.getHeight() * 0.6);
-                        lp.height = (int) (ll_play.getHeight() * 0.6);
-                    } else {
-                        lp.width = (int) (ll_play.getHeight() * 0.35);
-                        lp.height = (int) (ll_play.getHeight() * 0.35);
-                    }
-                    iv_play.setLayoutParams(lp);
-                }
-                return true;
-            }
-        };
-        ll_play.getViewTreeObserver().addOnPreDrawListener(oldPlayOnPreDrawListener);
+    public void changedSkin(SkinManage manage) {
+        tv_title.setGravity(SkinUtil.analysisItemTitleAlign(manage.getString(R.string.theme_item_title_align)));
+        music_iv_cover.setCircular(SkinUtil.analysisMusicCoverType(manage.getString(R.string.theme_item_music_cover_type)));
         refreshPlay();
-
-
-        ll_prew.getViewTreeObserver().removeOnPreDrawListener(oldPrewOnPreDrawListener);
-        oldPrewOnPreDrawListener = new ViewTreeObserver.OnPreDrawListener() {
-            @Override
-            public boolean onPreDraw() {
-                if (ll_prew.getHeight() > 0) {
-                    ll_prew.getViewTreeObserver().removeOnPreDrawListener(this);
-                    ViewGroup.LayoutParams lp = iv_prew.getLayoutParams();
-                    if (currentTheme == WHITE || currentTheme == BLACK) {
-                        lp.width = (int) (ll_prew.getHeight() * 0.5);
-                        lp.height = (int) (ll_prew.getHeight() * 0.5);
-                    } else {
-                        lp.width = (int) (ll_prew.getHeight() * 0.35);
-                        lp.height = (int) (ll_prew.getHeight() * 0.35);
-                    }
-                    iv_prew.setLayoutParams(lp);
-                }
-                return true;
-            }
-        };
-        ll_prew.getViewTreeObserver().addOnPreDrawListener(oldPrewOnPreDrawListener);
-        iv_prew.setImageResource(manage.getCurrentThemeRes(R.mipmap.ic_prev));
-
-
-        iv_next.getViewTreeObserver().removeOnPreDrawListener(oldNextOnPreDrawListener);
-        oldNextOnPreDrawListener = new ViewTreeObserver.OnPreDrawListener() {
-            @Override
-            public boolean onPreDraw() {
-                if (ll_next.getHeight() > 0) {
-                    ll_next.getViewTreeObserver().removeOnPreDrawListener(this);
-                    ViewGroup.LayoutParams lp = iv_next.getLayoutParams();
-                    if (currentTheme == WHITE || currentTheme == BLACK) {
-                        lp.width = (int) (ll_next.getHeight() * 0.5);
-                        lp.height = (int) (ll_next.getHeight() * 0.5);
-                    } else {
-                        lp.width = (int) (ll_next.getHeight() * 0.35);
-                        lp.height = (int) (ll_next.getHeight() * 0.35);
-                    }
-                    iv_next.setLayoutParams(lp);
-                }
-                return true;
-            }
-        };
-        ll_next.getViewTreeObserver().addOnPreDrawListener(oldNextOnPreDrawListener);
-        iv_next.setImageResource(manage.getCurrentThemeRes(R.mipmap.ic_next));
-
-        progressBar.setProgressDrawable(getResources().getDrawable(manage.getCurrentThemeRes(R.drawable.n_music_progress)));
-
-        tv_music_title.setTextColor(manage.getCurrentThemeColor(R.color.l_music_title));
-        tv_zuozhe.setTextColor(manage.getCurrentThemeColor(R.color.l_music_zuozhe));
-
-        if (currentTheme == WHITE || currentTheme == BLACK) {
-            tv_title.setGravity(Gravity.CENTER);
-            music_iv_cover.setCircular(false);
-        } else {
-            tv_title.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
-            music_iv_cover.setCircular(true);
-        }
-        LogEx.d(this, "changedTheme: ");
     }
 
     private boolean run;
@@ -201,21 +111,9 @@ public class LMusicView extends BaseThemeView {
 
     private void refreshPlay() {
         if (run) {
-            if (ThemeManage.self().getTheme() == WHITE) {
-                iv_play.setImageResource(R.mipmap.ic_pause);
-            } else if (ThemeManage.self().getTheme() == BLACK) {
-                iv_play.setImageResource(R.mipmap.ic_pause_b);
-            } else {
-                iv_play.setImageResource(R.mipmap.ic_pause_cb);
-            }
+            iv_play.setImageResource(R.drawable.theme_ic_pause);
         } else {
-            if (ThemeManage.self().getTheme() == WHITE) {
-                iv_play.setImageResource(R.mipmap.ic_play);
-            } else if (ThemeManage.self().getTheme() == BLACK) {
-                iv_play.setImageResource(R.mipmap.ic_play_b);
-            } else {
-                iv_play.setImageResource(R.mipmap.ic_play_cb);
-            }
+            iv_play.setImageResource(R.drawable.theme_ic_play);
         }
     }
 

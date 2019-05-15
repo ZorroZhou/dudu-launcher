@@ -19,15 +19,15 @@ import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.util.ViewUtils;
-import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfo;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.appInfo.event.MAppInfoRefreshShowEvent;
+import com.wow.carlauncher.ex.manage.skin.SkinManage;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
+import com.wow.carlauncher.view.activity.launcher.BaseThemeView;
 import com.wow.carlauncher.view.activity.launcher.LayoutEnum;
 import com.wow.carlauncher.view.activity.launcher.event.LDockLabelShowChangeEvent;
 import com.wow.carlauncher.view.adapter.SelectAppAdapter;
-import com.wow.carlauncher.view.activity.launcher.BaseThemeView;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -180,17 +180,8 @@ public class LDockView extends BaseThemeView {
     }
 
     @Override
-    public void changedTheme(ThemeManage manage) {
-        manage.setTextViewsColor(this, new int[]{
-                R.id.tv_dock1,
-                R.id.tv_dock2,
-                R.id.tv_dock3,
-                R.id.tv_dock4,
-                R.id.tv_dock5
-        }, R.color.l_text1);
-
+    public void changedSkin(SkinManage manage) {
         loadDock(false);
-        LogEx.d(this, "changedTheme: ");
     }
 
     @Override
@@ -205,7 +196,6 @@ public class LDockView extends BaseThemeView {
 
     private void loadDock(boolean removeIfError) {
         String packname1 = SharedPreUtil.getString(SDATA_DOCK1_CLASS);
-        LogEx.d(this, "loadDock: " + packname1);
         if (CommonUtil.isNotNull(packname1) && AppInfoManage.self().checkApp(packname1)) {
             iv_dock1.setImageDrawable(AppInfoManage.self().getIcon(packname1));
             tv_dock1.setText(AppInfoManage.self().getName(packname1));
@@ -253,7 +243,6 @@ public class LDockView extends BaseThemeView {
             SharedPreUtil.saveString(SDATA_DOCK5_CLASS, "");
         }
         dockLabelShow(SharedPreUtil.getBoolean(CommonData.SDATA_LAUNCHER_DOCK_LABEL_SHOW, true));
-        LogEx.d(this, "loadDock: ");
     }
 
     @OnClick(value = {R.id.ll_dock1, R.id.ll_dock2, R.id.ll_dock3, R.id.ll_dock4, R.id.ll_dock5})

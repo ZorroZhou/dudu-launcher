@@ -44,7 +44,6 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 }
-
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.squareup.okhttp3:okhttp:3.12.0'
@@ -69,6 +68,10 @@ dependencies {
     implementation 'com.ToxicBakery.viewpager.transforms:view-pager-transforms:2.0.24'
     //动画
     implementation 'com.jakewharton:butterknife:8.8.1'
+
+    // skin-support 基础控件支持
+    implementation 'skin.support:skin-support:3.1.1'
+
     //视图注入
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     //编译视图注入,效率提高

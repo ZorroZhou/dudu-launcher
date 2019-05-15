@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,8 +12,9 @@ import android.widget.TextView;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.TaskExecutor;
-import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
+import com.wow.carlauncher.ex.manage.skin.SkinManage;
+import com.wow.carlauncher.ex.manage.skin.SkinUtil;
 import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarTp;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventConnect;
@@ -25,9 +25,6 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-
-import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.BLACK;
-import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.WHITE;
 
 /**
  * Created by 10124 on 2018/4/20.
@@ -49,34 +46,8 @@ public class LTaiyaView extends BaseThemeView {
     }
 
     @Override
-    public void changedTheme(ThemeManage manage) {
-        rl_base.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_l_item1_bg));
-        tv_title.setTextColor(manage.getCurrentThemeColor(R.color.l_title));
-        tv_msg.setTextColor(manage.getCurrentThemeColor(R.color.l_msg));
-        iv_error.setImageResource(manage.getCurrentThemeRes(R.mipmap.ic_obderror));
-
-        manage.setViewsBackround(this, new int[]{
-                R.id.tv_lt,
-                R.id.tv_rt,
-                R.id.tv_lb,
-                R.id.tv_rb
-        }, R.drawable.n_cell_bg);
-
-
-        manage.setTextViewsColor(this, new int[]{
-                R.id.tv_lt,
-                R.id.tv_rt,
-                R.id.tv_lb,
-                R.id.tv_rb
-        }, R.color.l_text2);
-
-        if (currentTheme == WHITE || currentTheme == BLACK) {
-            tv_title.setGravity(Gravity.CENTER);
-        } else {
-            tv_title.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
-        }
-
-        LogEx.d(this, "changedTheme: ");
+    public void changedSkin(SkinManage manage) {
+        tv_title.setGravity(SkinUtil.analysisItemTitleAlign(manage.getString(R.string.theme_item_title_align)));
     }
 
     @OnClick(value = {R.id.rl_base})
@@ -112,14 +83,8 @@ public class LTaiyaView extends BaseThemeView {
     @BindView(R.id.tv_rb)
     TextView tv_rb;
 
-    @BindView(R.id.rl_base)
-    View rl_base;
-
     @BindView(R.id.iv_img)
     ImageView iv_img;
-
-    @BindView(R.id.iv_error)
-    ImageView iv_error;
 
     @BindView(R.id.tv_msg)
     TextView tv_msg;
@@ -129,6 +94,7 @@ public class LTaiyaView extends BaseThemeView {
 
     @BindView(R.id.ll_msg)
     View ll_msg;
+
     private boolean connect = false;
 
     @Override

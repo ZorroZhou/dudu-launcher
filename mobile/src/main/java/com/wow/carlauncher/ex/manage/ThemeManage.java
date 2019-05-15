@@ -13,7 +13,6 @@ import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.SharedPreUtil;
-import com.wow.carlauncher.common.util.SunRiseSetUtil;
 import com.wow.carlauncher.ex.manage.location.LMEventNewLocation;
 import com.wow.carlauncher.ex.manage.time.event.TMEventMinute;
 import com.wow.carlauncher.ex.plugin.console.event.PConsoleEventLightState;
@@ -24,19 +23,14 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import static com.wow.carlauncher.common.CommonData.HOUR_MILL;
 import static com.wow.carlauncher.common.CommonData.SDATA_APP_THEME;
 import static com.wow.carlauncher.common.CommonData.SDATA_APP_THEME_DAY;
 import static com.wow.carlauncher.common.CommonData.SDATA_APP_THEME_NIGHT;
-import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.BLACK;
-import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.CBLACK;
-import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.KBLACK;
 import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.WHITE;
 
 public class ThemeManage {
@@ -72,43 +66,44 @@ public class ThemeManage {
     public void refreshTheme() {
         ThemeMode model = ThemeMode.getById(SharedPreUtil.getInteger(SDATA_APP_THEME, ThemeMode.SHIJIAN.getId()));
         LogEx.d(this, "refreshTheme : " + model);
-        switch (model) {
-            case BAISE:
-                setTheme(WHITE);
-                break;
-            case HEISE:
-                setTheme(BLACK);
-                break;
-            case CHUNHEI:
-                setTheme(CBLACK);
-                break;
-            case KUHEI:
-                setTheme(KBLACK);
-                break;
-            case SHIJIAN:
-                if (SunRiseSetUtil.isNight(lon, lat, new Date())) {
-                    if (!currentDay) {
-                        if (System.currentTimeMillis() - lastChangeShijian < HOUR_MILL) {
-                            break;
-                        }
-                        lastChangeShijian = System.currentTimeMillis();
-                        currentDay = true;
-                    }
-                    LogEx.d(this, "refreshTheme : night");
-                    setTheme(Theme.getById(SharedPreUtil.getInteger(SDATA_APP_THEME_NIGHT, Theme.BLACK.getId())));
-                } else {
-                    if (currentDay) {
-                        if (System.currentTimeMillis() - lastChangeShijian < HOUR_MILL) {
-                            break;
-                        }
-                        lastChangeShijian = System.currentTimeMillis();
-                        currentDay = false;
-                    }
-                    LogEx.d(this, "refreshTheme : day");
-                    setTheme(Theme.getById(SharedPreUtil.getInteger(SDATA_APP_THEME_DAY, Theme.WHITE.getId())));
-                }
-                break;
-        }
+        //setTheme(WHITE);
+//        switch (model) {
+//            case BAISE:
+//                setTheme(WHITE);
+//                break;
+//            case HEISE:
+//                setTheme(BLACK);
+//                break;
+//            case CHUNHEI:
+//                setTheme(CBLACK);
+//                break;
+//            case KUHEI:
+//                setTheme(KBLACK);
+//                break;
+//            case SHIJIAN:
+//                if (SunRiseSetUtil.isNight(lon, lat, new Date())) {
+//                    if (!currentDay) {
+//                        if (System.currentTimeMillis() - lastChangeShijian < HOUR_MILL) {
+//                            break;
+//                        }
+//                        lastChangeShijian = System.currentTimeMillis();
+//                        currentDay = true;
+//                    }
+//                    LogEx.d(this, "refreshTheme : night");
+//                    setTheme(Theme.getById(SharedPreUtil.getInteger(SDATA_APP_THEME_NIGHT, Theme.BLACK.getId())));
+//                } else {
+//                    if (currentDay) {
+//                        if (System.currentTimeMillis() - lastChangeShijian < HOUR_MILL) {
+//                            break;
+//                        }
+//                        lastChangeShijian = System.currentTimeMillis();
+//                        currentDay = false;
+//                    }
+//                    LogEx.d(this, "refreshTheme : day");
+//                    setTheme(Theme.getById(SharedPreUtil.getInteger(SDATA_APP_THEME_DAY, Theme.WHITE.getId())));
+//                }
+//                break;
+//        }
     }
 
     /**

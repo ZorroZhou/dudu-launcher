@@ -23,31 +23,31 @@
                 android:background="@android:color/white"
                 android:orientation="vertical">
 
-                <!--<LinearLayout-->
-                <!--android:id="@+id/ll_user"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="140dp"-->
-                <!--android:gravity="center"-->
-                <!--android:orientation="vertical">-->
+                <LinearLayout
+                    android:id="@+id/ll_user"
+                    android:layout_width="match_parent"
+                    android:layout_height="140dp"
+                    android:gravity="center"
+                    android:orientation="vertical">
 
-                <!--<com.wow.carlauncher.common.view.CustomImageView-->
-                <!--android:layout_width="80dp"-->
-                <!--android:layout_height="80dp"-->
-                <!--android:src="@mipmap/music_dlogo"-->
-                <!--app:ccircle="true" />-->
+                    <com.wow.carlauncher.common.view.CustomImageView
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:src="@mipmap/music_dlogo"
+                        app:ccircle="true" />
 
-                <!--<TextView-->
-                <!--android:id="@+id/tv_nickname"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:gravity="center"-->
-                <!--android:paddingTop="5dp"-->
-                <!--android:text="点击登录"-->
-                <!--android:textColor="@color/colorPrimary"-->
-                <!--android:textSize="14sp" />-->
-                <!--</LinearLayout>-->
+                    <TextView
+                        android:id="@+id/tv_nickname"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:paddingTop="5dp"
+                        android:text="点击登录"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="14sp" />
+                </LinearLayout>
 
-                <!--<View style="@style/Interval" />-->
+                <View style="@style/Interval" />
 
                 <TextView
                     android:layout_width="match_parent"

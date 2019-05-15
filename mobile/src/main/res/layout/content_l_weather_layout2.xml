@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.wow.carlauncher.common.theme.TRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_base"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/n_l_item1_bg_cb"
+    tools:ignore="HardcodedText,RtlHardcoded">
+
+    <com.wow.carlauncher.common.theme.TFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_heightPercent="12%h">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical|left"
+            android:includeFontPadding="false"
+            android:lines="1"
+            android:text="天气"
+            android:textColor="@color/theme_item_title"
+            app:layout_marginLeftPercent="25%h"
+            app:layout_marginRightPercent="25%h"
+            app:layout_textSizePercent="50%h" />
+    </com.wow.carlauncher.common.theme.TFrameLayout>
+
+    <com.wow.carlauncher.common.theme.TRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_marginLeftPercent="2%h"
+        app:layout_marginRightPercent="2%h">
+
+        <TextView
+            android:id="@+id/tv_wendu1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:ellipsize="end"
+            android:gravity="left|center_vertical"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:text="15°"
+            android:textColor="@color/theme_weather_2_wendu"
+            app:layout_heightPercent="20%h"
+            app:layout_marginTopPercent="12%h"
+            app:layout_textSizePercent="15%h" />
+
+        <com.wow.carlauncher.common.theme.TRelativeLayout
+            android:id="@+id/rl_center"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_below="@id/tv_wendu1"
+            app:layout_heightPercent="35%h">
+
+            <TextView
+                android:id="@+id/tv_tianqi"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:ellipsize="end"
+                android:gravity="left|center_vertical"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:text="晴"
+                android:textColor="@color/theme_weather_2_tianqi"
+                app:layout_heightPercent="18%h"
+                app:layout_textSizePercent="15%h" />
+
+            <ImageView
+                android:id="@+id/iv_tianqi"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:contentDescription="@string/app_name"
+                android:scaleType="fitCenter"
+                android:src="@drawable/theme_weather_weizhi"
+                app:layout_heightPercent="100%h"
+                app:layout_widthPercent="100%h" />
+
+        </com.wow.carlauncher.common.theme.TRelativeLayout>
+
+        <com.wow.carlauncher.common.theme.TLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_below="@id/rl_center"
+            android:orientation="vertical"
+            app:layout_heightPercent="54%h">
+
+            <com.wow.carlauncher.common.theme.TRelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                app:layout_heightPercent="14%h"
+                app:layout_marginTopPercent="10%h">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:text="空气湿度:"
+                    android:textColor="@color/theme_weather_2_name"
+                    app:layout_textSizePercent="80%h" />
+
+                <TextView
+                    android:id="@+id/tv_kqsd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:text="等待数据"
+                    android:textColor="@color/theme_weather_2_value"
+                    app:layout_textSizePercent="80%h" />
+            </com.wow.carlauncher.common.theme.TRelativeLayout>
+
+            <com.wow.carlauncher.common.theme.TRelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                app:layout_heightPercent="14%h"
+                app:layout_marginTopPercent="14%h">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:text="风向:"
+                    android:textColor="@color/theme_weather_2_name"
+                    app:layout_textSizePercent="80%h" />
+
+                <TextView
+                    android:id="@+id/tv_fx"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:text="等待数据"
+                    android:textColor="@color/theme_weather_2_value"
+                    app:layout_textSizePercent="80%h" />
+            </com.wow.carlauncher.common.theme.TRelativeLayout>
+
+            <com.wow.carlauncher.common.theme.TRelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                app:layout_heightPercent="14%h"
+                app:layout_marginTopPercent="14%h">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:text="风力:"
+                    android:textColor="@color/theme_weather_2_name"
+                    app:layout_textSizePercent="80%h" />
+
+                <TextView
+                    android:id="@+id/tv_fl"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:maxLines="1"
+                    android:text="等待数据"
+                    android:textColor="@color/theme_weather_2_value"
+                    app:layout_textSizePercent="80%h" />
+            </com.wow.carlauncher.common.theme.TRelativeLayout>
+
+
+        </com.wow.carlauncher.common.theme.TLinearLayout>
+    </com.wow.carlauncher.common.theme.TRelativeLayout>
+</com.wow.carlauncher.common.theme.TRelativeLayout>

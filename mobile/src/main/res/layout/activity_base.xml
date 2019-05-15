@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.zhy.android.percent.support.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.wow.carlauncher.common.theme.TRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/base"
     android:layout_width="match_parent"
@@ -7,7 +7,7 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <com.zhy.android.percent.support.PercentRelativeLayout
+    <com.wow.carlauncher.common.theme.TRelativeLayout
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -32,7 +32,7 @@
             android:gravity="center"
             android:textColor="@android:color/white"
             app:layout_textSizePercent="50%h" />
-    </com.zhy.android.percent.support.PercentRelativeLayout>
+    </com.wow.carlauncher.common.theme.TRelativeLayout>
 
     <RelativeLayout
         android:id="@+id/b_content"
@@ -40,4 +40,4 @@
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
         android:layout_below="@+id/toolbar" />
-</com.zhy.android.percent.support.PercentRelativeLayout>
+</com.wow.carlauncher.common.theme.TRelativeLayout>

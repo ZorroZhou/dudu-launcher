@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.zhy.android.percent.support.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.wow.carlauncher.common.theme.TRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fl_base"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/theme_item_obd_bg"
     android:orientation="vertical"
     tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry">
 
-    <com.zhy.android.percent.support.PercentFrameLayout
+    <com.wow.carlauncher.common.theme.TFrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_heightPercent="12%h">
@@ -21,12 +22,13 @@
             android:includeFontPadding="false"
             android:lines="1"
             android:text="OBD车况"
+            android:textColor="@color/theme_item_title"
             app:layout_marginLeftPercent="25%h"
             app:layout_marginRightPercent="25%h"
             app:layout_textSizePercent="50%h" />
-    </com.zhy.android.percent.support.PercentFrameLayout>
+    </com.wow.carlauncher.common.theme.TFrameLayout>
 
-    <com.zhy.android.percent.support.PercentRelativeLayout
+    <com.wow.carlauncher.common.theme.TRelativeLayout
         android:id="@+id/ll_msg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -38,11 +40,11 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_centerInParent="true"
-            android:src="@mipmap/ic_obderror"
+            android:src="@drawable/theme_obd_not_connect"
             app:layout_heightPercent="45%w"
             app:layout_widthPercent="45%w" />
 
-        <com.zhy.android.percent.support.PercentFrameLayout
+        <com.wow.carlauncher.common.theme.TFrameLayout
             android:id="@+id/fl_top"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -60,11 +62,12 @@
                 android:includeFontPadding="false"
                 android:lines="1"
                 android:text="@string/obd_not_connect"
+                android:textColor="@color/theme_obd_msg"
                 app:layout_textSizePercent="50%h" />
-        </com.zhy.android.percent.support.PercentFrameLayout>
-    </com.zhy.android.percent.support.PercentRelativeLayout>
+        </com.wow.carlauncher.common.theme.TFrameLayout>
+    </com.wow.carlauncher.common.theme.TRelativeLayout>
 
-    <com.zhy.android.percent.support.PercentLinearLayout
+    <com.wow.carlauncher.common.theme.TLinearLayout
         android:id="@+id/ll_obd"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -75,7 +78,7 @@
         app:layout_marginRightPercent="2%h">
 
 
-        <com.zhy.android.percent.support.PercentLinearLayout
+        <com.wow.carlauncher.common.theme.TLinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
@@ -84,29 +87,29 @@
 
 
             <LinearLayout
-                android:id="@+id/ll_cell1"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_margin="5dp"
+                android:background="@drawable/theme_obd_cell_bg"
                 android:orientation="vertical"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 app:layout_heightPercent="20%h">
 
-                <com.zhy.android.percent.support.PercentLinearLayout
+                <com.wow.carlauncher.common.theme.TLinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/tv_text21"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical|left"
                         android:lines="1"
                         android:text="转速:"
+                        android:textColor="@color/theme_obd_info"
                         app:layout_textSizePercent="60%h" />
 
                     <TextView
@@ -117,10 +120,11 @@
                         android:gravity="center_vertical|right"
                         android:lines="1"
                         android:text="没有数据"
+                        android:textColor="@color/theme_obd_info"
                         app:layout_textSizePercent="60%h" />
-                </com.zhy.android.percent.support.PercentLinearLayout>
+                </com.wow.carlauncher.common.theme.TLinearLayout>
 
-                <com.zhy.android.percent.support.PercentRelativeLayout
+                <com.wow.carlauncher.common.theme.TRelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1">
@@ -132,35 +136,35 @@
                         android:layout_height="0dp"
                         android:layout_centerInParent="true"
                         android:max="10000"
-                        android:progressDrawable="@drawable/n_obd_progress"
+                        android:progressDrawable="@drawable/theme_obd_progress"
                         app:layout_heightPercent="50%h" />
-                </com.zhy.android.percent.support.PercentRelativeLayout>
+                </com.wow.carlauncher.common.theme.TRelativeLayout>
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_cell2"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_margin="5dp"
+                android:background="@drawable/theme_obd_cell_bg"
                 android:orientation="vertical"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 app:layout_heightPercent="20%h">
 
-                <com.zhy.android.percent.support.PercentLinearLayout
+                <com.wow.carlauncher.common.theme.TLinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/tv_text22"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical|left"
                         android:lines="1"
                         android:text="速度:"
+                        android:textColor="@color/theme_obd_info"
                         app:layout_textSizePercent="60%h" />
 
                     <TextView
@@ -171,10 +175,11 @@
                         android:gravity="center_vertical|right"
                         android:lines="1"
                         android:text="没有数据"
+                        android:textColor="@color/theme_obd_info"
                         app:layout_textSizePercent="60%h" />
-                </com.zhy.android.percent.support.PercentLinearLayout>
+                </com.wow.carlauncher.common.theme.TLinearLayout>
 
-                <com.zhy.android.percent.support.PercentRelativeLayout
+                <com.wow.carlauncher.common.theme.TRelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1">
@@ -186,35 +191,35 @@
                         android:layout_height="0dp"
                         android:layout_centerInParent="true"
                         android:max="200"
-                        android:progressDrawable="@drawable/n_obd_progress"
+                        android:progressDrawable="@drawable/theme_obd_progress"
                         app:layout_heightPercent="50%h" />
-                </com.zhy.android.percent.support.PercentRelativeLayout>
+                </com.wow.carlauncher.common.theme.TRelativeLayout>
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/ll_cell3"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_margin="5dp"
+                android:background="@drawable/theme_obd_cell_bg"
                 android:orientation="vertical"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 app:layout_heightPercent="20%h">
 
-                <com.zhy.android.percent.support.PercentLinearLayout
+                <com.wow.carlauncher.common.theme.TLinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/tv_text23"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical|left"
                         android:lines="1"
                         android:text="水温:"
+                        android:textColor="@color/theme_obd_info"
                         app:layout_textSizePercent="60%h" />
 
                     <TextView
@@ -225,10 +230,11 @@
                         android:gravity="center_vertical|right"
                         android:lines="1"
                         android:text="没有数据"
+                        android:textColor="@color/theme_obd_info"
                         app:layout_textSizePercent="60%h" />
-                </com.zhy.android.percent.support.PercentLinearLayout>
+                </com.wow.carlauncher.common.theme.TLinearLayout>
 
-                <com.zhy.android.percent.support.PercentRelativeLayout
+                <com.wow.carlauncher.common.theme.TRelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1">
@@ -240,36 +246,36 @@
                         android:layout_height="0dp"
                         android:layout_centerInParent="true"
                         android:max="110"
-                        android:progressDrawable="@drawable/n_obd_progress"
+                        android:progressDrawable="@drawable/theme_obd_progress"
                         app:layout_heightPercent="50%h" />
-                </com.zhy.android.percent.support.PercentRelativeLayout>
+                </com.wow.carlauncher.common.theme.TRelativeLayout>
             </LinearLayout>
 
 
             <LinearLayout
-                android:id="@+id/ll_cell4"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_margin="5dp"
+                android:background="@drawable/theme_obd_cell_bg"
                 android:orientation="vertical"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 app:layout_heightPercent="20%h">
 
-                <com.zhy.android.percent.support.PercentLinearLayout
+                <com.wow.carlauncher.common.theme.TLinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/tv_text24"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center_vertical|left"
                         android:lines="1"
                         android:text="剩余油量:"
+                        android:textColor="@color/theme_obd_info"
                         app:layout_textSizePercent="60%h" />
 
                     <TextView
@@ -280,10 +286,11 @@
                         android:gravity="center_vertical|right"
                         android:lines="1"
                         android:text="没有数据"
+                        android:textColor="@color/theme_obd_info"
                         app:layout_textSizePercent="60%h" />
-                </com.zhy.android.percent.support.PercentLinearLayout>
+                </com.wow.carlauncher.common.theme.TLinearLayout>
 
-                <com.zhy.android.percent.support.PercentRelativeLayout
+                <com.wow.carlauncher.common.theme.TRelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1">
@@ -295,10 +302,10 @@
                         android:layout_height="0dp"
                         android:layout_centerInParent="true"
                         android:max="100"
-                        android:progressDrawable="@drawable/n_obd_progress"
+                        android:progressDrawable="@drawable/theme_obd_progress"
                         app:layout_heightPercent="50%h" />
-                </com.zhy.android.percent.support.PercentRelativeLayout>
+                </com.wow.carlauncher.common.theme.TRelativeLayout>
             </LinearLayout>
-        </com.zhy.android.percent.support.PercentLinearLayout>
-    </com.zhy.android.percent.support.PercentLinearLayout>
-</com.zhy.android.percent.support.PercentRelativeLayout>
+        </com.wow.carlauncher.common.theme.TLinearLayout>
+    </com.wow.carlauncher.common.theme.TLinearLayout>
+</com.wow.carlauncher.common.theme.TRelativeLayout>

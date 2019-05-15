@@ -1,0 +1,9 @@
+<resources>
+    <string name="theme_name">纯黑主题</string>
+    <string name="theme_weather_layout">1</string>
+    <string name="theme_item_title_align">left</string>
+    <string name="theme_item_music_cover_type">circ</string>
+    <string name="theme_item_amap_daohang_line">show</string>
+    <string name="theme_item_amap_xunhang_line">show</string>
+    <string name="theme_item_weather_layout">layout2</string>
+</resources>

@@ -26,7 +26,7 @@
         android:scaleType="fitXY"
         android:src="@mipmap/driving_black_speed_cursor" />
 
-    <com.zhy.android.percent.support.PercentRelativeLayout
+    <com.wow.carlauncher.common.theme.TRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -73,5 +73,5 @@
             app:layout_heightPercent="8%h"
             app:layout_marginTopPercent="5%h"
             app:layout_textSizePercent="5%h" />
-    </com.zhy.android.percent.support.PercentRelativeLayout>
+    </com.wow.carlauncher.common.theme.TRelativeLayout>
 </FrameLayout>

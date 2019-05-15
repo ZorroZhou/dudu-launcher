@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
 
-    <com.zhy.android.percent.support.PercentLinearLayout
+    <com.wow.carlauncher.common.theme.TLinearLayout
         android:id="@+id/ll_center"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -21,7 +21,7 @@
             android:layout_weight="7"
             android:gravity="center" />
 
-        <com.zhy.android.percent.support.PercentLinearLayout
+        <com.wow.carlauncher.common.theme.TLinearLayout
             android:id="@+id/ll_items"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -44,9 +44,9 @@
                 android:orientation="horizontal"
                 android:paddingTop="2dp"
                 android:paddingBottom="10dp" />
-        </com.zhy.android.percent.support.PercentLinearLayout>
+        </com.wow.carlauncher.common.theme.TLinearLayout>
 
-    </com.zhy.android.percent.support.PercentLinearLayout>
+    </com.wow.carlauncher.common.theme.TLinearLayout>
 
     <com.wow.carlauncher.view.activity.launcher.view.LPromptView
         android:id="@+id/ll_top"

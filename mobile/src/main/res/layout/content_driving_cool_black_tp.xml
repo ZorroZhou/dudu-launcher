@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.zhy.android.percent.support.PercentLinearLayout
+    <com.wow.carlauncher.common.theme.TLinearLayout
         android:id="@+id/ll_cover"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -21,9 +21,9 @@
             app:layout_heightPercent="85%h"
             app:layout_widthPercent="85%h"
             app:radius="6dp" />
-    </com.zhy.android.percent.support.PercentLinearLayout>
+    </com.wow.carlauncher.common.theme.TLinearLayout>
 
-    <com.zhy.android.percent.support.PercentLinearLayout
+    <com.wow.carlauncher.common.theme.TLinearLayout
         android:id="@+id/ll_tp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -40,13 +40,13 @@
             android:textColor="#ccc"
             app:layout_textSizePercent="18%h" />
 
-        <com.zhy.android.percent.support.PercentRelativeLayout
+        <com.wow.carlauncher.common.theme.TRelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2">
 
 
-            <com.zhy.android.percent.support.PercentLinearLayout
+            <com.wow.carlauncher.common.theme.TLinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
@@ -77,9 +77,9 @@
                     android:text="2.1/16°"
                     android:textColor="#fff"
                     app:layout_textSizePercent="20%h" />
-            </com.zhy.android.percent.support.PercentLinearLayout>
+            </com.wow.carlauncher.common.theme.TLinearLayout>
 
-            <com.zhy.android.percent.support.PercentLinearLayout
+            <com.wow.carlauncher.common.theme.TLinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
@@ -110,7 +110,7 @@
                     android:text="2.1/16°"
                     android:textColor="#fff"
                     app:layout_textSizePercent="20%h" />
-            </com.zhy.android.percent.support.PercentLinearLayout>
-        </com.zhy.android.percent.support.PercentRelativeLayout>
-    </com.zhy.android.percent.support.PercentLinearLayout>
+            </com.wow.carlauncher.common.theme.TLinearLayout>
+        </com.wow.carlauncher.common.theme.TRelativeLayout>
+    </com.wow.carlauncher.common.theme.TLinearLayout>
 </FrameLayout>

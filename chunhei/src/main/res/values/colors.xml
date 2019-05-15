@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="theme_item_title">#fbfbfb</color>
+    <color name="theme_music_title">#fbfbfb</color>
+    <color name="theme_music_singer">#818796</color>
+
+    <color name="theme_amap_xiansu">#fbfbfb</color>
+    <color name="theme_amap_shengyulicheng">#fbfbfb</color>
+
+    <color name="theme_weather_1_tianqi">#9ba1a9</color>
+    <color name="theme_weather_1_wendu">#697185</color>
+    <color name="theme_weather_1_city">#697185</color>
+    <color name="theme_weather_1_name">#9ba1a9</color>
+    <color name="theme_weather_1_value">#333e54</color>
+
+    <color name="theme_weather_2_wendu">#fbfbfb</color>
+    <color name="theme_weather_2_tianqi">#848a95</color>
+    <color name="theme_weather_2_name">#848a95</color>
+    <color name="theme_weather_2_value">#aaa</color>
+
+    <color name="theme_obd_info">#fbfbfb</color>
+    <color name="theme_obd_msg">#adadad</color>
+
+    <color name="theme_taiya_info">#fbfbfb</color>
+    <color name="theme_taiya_msg">#adadad</color>
+
+    <color name="theme_time_shijian">#fbfbfb</color>
+    <color name="theme_time_week">#adadad</color>
+    <color name="theme_time_day">#adadad</color>
+    <color name="theme_time_lunar">#adadad</color>
+
+    <color name="theme_dock_title">#fbfbfb</color>
+    <color name="theme_app_name">#adadad</color>
+
+    <color name="theme_prompt_time">#fbfbfb</color>
+
+    <color name="theme_console_appname">#fbfbfb</color>
+    <color name="theme_console_time">#fbfbfb</color>
+    <color name="theme_console_music_title">#fbfbfb</color>
+</resources>

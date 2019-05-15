@@ -18,8 +18,8 @@ import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.DateUtil;
 import com.wow.carlauncher.common.util.NetWorkUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
-import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.location.LMEventNewLocation;
+import com.wow.carlauncher.ex.manage.skin.SkinManage;
 import com.wow.carlauncher.ex.manage.time.event.TMEvent3Second;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.fk.FangkongPlugin;
@@ -30,12 +30,11 @@ import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventConnect;
 import com.wow.carlauncher.view.activity.CarInfoActivity;
 import com.wow.carlauncher.view.activity.launcher.BaseThemeView;
 import com.wow.carlauncher.view.activity.launcher.LayoutEnum;
-import com.wow.carlauncher.view.activity.launcher.event.LItemToFristEvent;
 import com.wow.carlauncher.view.activity.set.SetActivity;
 import com.wow.carlauncher.view.event.CEventShowUsbMount;
 import com.wow.carlauncher.view.event.EventWifiState;
+import com.wow.carlauncher.view.popup.ConsoleWin;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -69,23 +68,12 @@ public class LPromptView extends BaseThemeView {
     }
 
     @Override
-    public void changedTheme(ThemeManage manage) {
+    public void changedSkin(SkinManage manage) {
         if (this.layoutEnum.equals(LayoutEnum.LAYOUT1)) {
-            fl_base.setBackgroundResource(ThemeManage.self().getCurrentThemeRes(R.drawable.n_prompt_bg));
+            fl_base.setBackgroundResource(R.drawable.theme_prompt_bg);
         } else {
             fl_base.setBackgroundColor(ContextCompat.getColor(getContext(), android.R.color.transparent));
         }
-
-        tv_time.setTextColor(manage.getCurrentThemeColor(R.color.l_text1));
-
-        iv_location.setImageResource(manage.getCurrentThemeRes(R.mipmap.ic_l_location));
-        iv_obd.setImageResource(manage.getCurrentThemeRes(R.mipmap.ic_l_obd));
-        iv_carinfo_tp.setImageResource(manage.getCurrentThemeRes(R.mipmap.ic_l_tp));
-        iv_fk.setImageResource(manage.getCurrentThemeRes(R.mipmap.ic_l_fk));
-        iv_wifi.setImageResource(manage.getCurrentThemeRes(R.mipmap.ic_l_wifi));
-        iv_set.setImageResource(manage.getCurrentThemeRes(R.mipmap.ic_l_set));
-        iv_mount.setImageResource(manage.getCurrentThemeRes(R.mipmap.ic_l_mount));
-        LogEx.d(this, "changedTheme: ");
     }
 
     @Override
@@ -146,7 +134,8 @@ public class LPromptView extends BaseThemeView {
                 break;
             }
             case R.id.tv_time: {
-                EventBus.getDefault().post(new LItemToFristEvent());
+                //EventBus.getDefault().post(new LItemToFristEvent());
+                ConsoleWin.self().show();
                 break;
             }
             case R.id.iv_mount: {
@@ -220,9 +209,9 @@ public class LPromptView extends BaseThemeView {
             }
 
             if (warn) {
-                iv_carinfo_tp.setImageResource(R.mipmap.ic_l_tp_warn);
+                iv_carinfo_tp.setImageDrawable(SkinManage.self().getDrawable(R.drawable.theme_prompt_tp_warn));
             } else {
-                iv_carinfo_tp.setImageResource(ThemeManage.self().getCurrentThemeRes(R.mipmap.ic_l_tp));
+                iv_carinfo_tp.setImageDrawable(SkinManage.self().getDrawable(R.drawable.theme_prompt_tp));
             }
         } else {
             iv_carinfo_tp.setVisibility(GONE);
@@ -251,7 +240,7 @@ public class LPromptView extends BaseThemeView {
         if (!layoutEnum.equals(this.layoutEnum)) {
             this.layoutEnum = layoutEnum;
             if (this.layoutEnum.equals(LayoutEnum.LAYOUT1)) {
-                fl_base.setBackgroundResource(ThemeManage.self().getCurrentThemeRes(R.drawable.n_prompt_bg));
+                fl_base.setBackgroundResource(R.drawable.theme_prompt_bg);
             } else {
                 fl_base.setBackgroundColor(ContextCompat.getColor(getContext(), android.R.color.transparent));
             }

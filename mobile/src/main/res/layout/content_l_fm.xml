@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.zhy.android.percent.support.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.wow.carlauncher.common.theme.TRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rl_base"
@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry">
 
-    <com.zhy.android.percent.support.PercentFrameLayout
+    <com.wow.carlauncher.common.theme.TFrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_heightPercent="12%h">
@@ -20,12 +20,13 @@
             android:includeFontPadding="false"
             android:lines="1"
             android:text="收音机"
+            android:textColor="@color/theme_item_title"
             app:layout_marginLeftPercent="25%h"
             app:layout_marginRightPercent="25%h"
             app:layout_textSizePercent="50%h" />
-    </com.zhy.android.percent.support.PercentFrameLayout>
+    </com.wow.carlauncher.common.theme.TFrameLayout>
 
-    <com.zhy.android.percent.support.PercentLinearLayout
+    <com.wow.carlauncher.common.theme.TLinearLayout
         android:id="@+id/ll_msg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -62,7 +63,7 @@
             app:layout_heightPercent="10%h"
             app:layout_textSizePercent="6%h" />
 
-        <com.zhy.android.percent.support.PercentLinearLayout
+        <com.wow.carlauncher.common.theme.TLinearLayout
             android:id="@+id/ll_controller"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -116,12 +117,12 @@
                     android:contentDescription="@string/app_name"
                     android:scaleType="fitCenter" />
             </LinearLayout>
-        </com.zhy.android.percent.support.PercentLinearLayout>
+        </com.wow.carlauncher.common.theme.TLinearLayout>
 
         <FrameLayout
             android:id="@+id/fl_www"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_heightPercent="60%h" />
-    </com.zhy.android.percent.support.PercentLinearLayout>
-</com.zhy.android.percent.support.PercentRelativeLayout>
+    </com.wow.carlauncher.common.theme.TLinearLayout>
+</com.wow.carlauncher.common.theme.TRelativeLayout>

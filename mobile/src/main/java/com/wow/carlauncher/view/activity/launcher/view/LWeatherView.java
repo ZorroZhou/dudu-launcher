@@ -16,14 +16,15 @@ import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.WeatherIconTemp;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
-import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.location.LMEventNewLocation;
+import com.wow.carlauncher.ex.manage.skin.SkinManage;
+import com.wow.carlauncher.ex.manage.skin.SkinUtil;
 import com.wow.carlauncher.ex.manage.time.event.TMEventMinute;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.repertory.web.amap.AMapWebService;
 import com.wow.carlauncher.repertory.web.amap.res.WeatherRes;
-import com.wow.carlauncher.view.activity.launcher.event.LCityRefreshEvent;
 import com.wow.carlauncher.view.activity.launcher.BaseThemeView;
+import com.wow.carlauncher.view.activity.launcher.event.LCityRefreshEvent;
 import com.wow.carlauncher.view.dialog.CityDialog;
 import com.wow.carlauncher.view.event.EventNetStateChange;
 
@@ -37,8 +38,6 @@ import butterknife.OnClick;
 import butterknife.Optional;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
-import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.BLACK;
-import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.WHITE;
 
 /**
  * Created by 10124 on 2018/4/20.
@@ -56,68 +55,25 @@ public class LWeatherView extends BaseThemeView {
 
     @Override
     protected int getContent() {
-        return R.layout.content_l_empty;
+        return R.layout.content_l_weather;
     }
 
-    private int layoutId;
+    private int layoutId = -1;
 
     @Override
-    public void changedTheme(ThemeManage manage) {
+    public void changedSkin(SkinManage manage) {
         if (fl_base == null) {
             return;
         }
-        if (manage.getTheme() == BLACK || manage.getTheme() == WHITE) {
-            if (layoutId != R.layout.content_l_weather_b) {
-                layoutId = R.layout.content_l_weather_b;
-                fl_base.removeAllViews();
-                View view = View.inflate(getContext(), layoutId, null);
-                fl_base.addView(view, MATCH_PARENT, MATCH_PARENT);
-                ButterKnife.bind(this, view);
-                refreshShow();
-            }
-            if (rl_base == null ||
-                    tv_tianqi == null ||
-                    tv_wendu1 == null ||
-                    tv_title == null ||
-                    line1 == null) {
-                return;
-            }
-            rl_base.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_l_item1_bg));
-
-            tv_tianqi.setTextColor(manage.getCurrentThemeColor(R.color.l_text3));
-            tv_wendu1.setTextColor(manage.getCurrentThemeColor(R.color.l_text2));
-            tv_title.setTextColor(manage.getCurrentThemeColor(R.color.l_text2));
-
-            line1.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_line2));
-
-            manage.setTextViewsColor(this, new int[]{
-                    R.id.tv_text2,
-                    R.id.tv_text3,
-                    R.id.tv_text4
-            }, R.color.l_text3);
-
-            manage.setTextViewsColor(this, new int[]{
-                    R.id.tv_kqsd,
-                    R.id.tv_fl,
-                    R.id.tv_fx
-            }, R.color.l_text4);
-        } else {
-            if (layoutId != R.layout.content_l_weather_cb) {
-                layoutId = R.layout.content_l_weather_cb;
-                fl_base.removeAllViews();
-                View view = View.inflate(getContext(), layoutId, null);
-                fl_base.addView(view, MATCH_PARENT, MATCH_PARENT);
-                ButterKnife.bind(this, view);
-            }
-
-            if (rl_base == null) {
-                return;
-            }
-            rl_base.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_l_item1_bg));
+        int nowLayoutId = SkinUtil.analysisWeatherLayout(manage.getString(R.string.theme_item_weather_layout));
+        if (layoutId != nowLayoutId) {
+            layoutId = nowLayoutId;
+            fl_base.removeAllViews();
+            View view = View.inflate(getContext(), layoutId, null);
+            fl_base.addView(view, MATCH_PARENT, MATCH_PARENT);
+            ButterKnife.bind(this, view);
             refreshShow();
         }
-
-        LogEx.d(this, "changedTheme: ");
     }
 
     @Override
@@ -139,7 +95,7 @@ public class LWeatherView extends BaseThemeView {
             }
 
             if (cityWeather != null) {
-                iv_tianqi.setImageResource(WeatherIconTemp.getWeatherResId(cityWeather.getWeather()));
+                iv_tianqi.setImageDrawable(SkinManage.self().getDrawable(WeatherIconTemp.getWeatherResId(cityWeather.getWeather())));
                 tv_tianqi.setText(cityWeather.getWeather());
                 tv_wendu1.setText(String.valueOf(cityWeather.getTemperature() + "°"));
                 tv_kqsd.setText(String.valueOf(cityWeather.getHumidity()));
@@ -168,10 +124,6 @@ public class LWeatherView extends BaseThemeView {
     @BindView(R.id.rl_base)
     @Nullable
     View rl_base;
-
-    @BindView(R.id.line1)
-    @Nullable
-    View line1;
 
     @BindView(R.id.tv_tianqi)
     @Nullable

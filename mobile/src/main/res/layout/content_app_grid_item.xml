@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.zhy.android.percent.support.PercentFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.wow.carlauncher.common.theme.TFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.zhy.android.percent.support.PercentLinearLayout
+    <com.wow.carlauncher.common.theme.TLinearLayout
         android:id="@+id/ll_base"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/n_l_item1_bg_cb"
+        android:background="@drawable/theme_app_bg"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -23,9 +23,9 @@
             app:layout_widthPercent="60%h" />
 
         <View
-            android:id="@+id/line1"
             android:layout_width="0.5dp"
             android:layout_height="0dp"
+            android:background="@drawable/theme_line3"
             app:layout_heightPercent="80%h"
             app:layout_marginPercent="5%h" />
 
@@ -38,8 +38,9 @@
             android:gravity="center_vertical|left"
             android:lines="1"
             android:text="@string/app_name"
+            android:textColor="@color/theme_app_name"
             app:layout_heightPercent="60%h"
             app:layout_marginPercent="20%h"
             app:layout_textSizePercent="25%h" />
-    </com.zhy.android.percent.support.PercentLinearLayout>
-</com.zhy.android.percent.support.PercentFrameLayout>
+    </com.wow.carlauncher.common.theme.TLinearLayout>
+</com.wow.carlauncher.common.theme.TFrameLayout>

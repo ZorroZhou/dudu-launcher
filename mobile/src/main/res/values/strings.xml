@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <string name="app_name">嘟嘟桌面</string>
     <string name="bg_main_btn_add">添加</string>
@@ -37,4 +37,14 @@
     <string name="launcher_tp">%1$s\n%2$.1f\n%3$d℃</string>
 
     <string name="tag_key_launcher_all_all_item_theme">tag_key_launcher_all_all_item_theme</string>
+
+
+    <string name="theme_name">默认</string>
+    <string name="theme_weather_layout">0</string>
+    <string name="theme_item_title_align">center</string>
+    <string name="theme_item_music_cover_type">rect</string>
+
+    <string name="theme_item_amap_daohang_line">hide</string>
+    <string name="theme_item_amap_xunhang_line">hide</string>
+    <string name="theme_item_weather_layout">layout1</string>
 </resources>

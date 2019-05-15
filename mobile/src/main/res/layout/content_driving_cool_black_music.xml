@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.zhy.android.percent.support.PercentLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.wow.carlauncher.common.theme.TLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -24,7 +24,7 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <com.zhy.android.percent.support.PercentLinearLayout
+        <com.wow.carlauncher.common.theme.TLinearLayout
             android:id="@+id/ll_prew"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -38,9 +38,9 @@
                 android:src="@mipmap/ic_prev2_b"
                 app:layout_heightPercent="50%h"
                 app:layout_widthPercent="50%h" />
-        </com.zhy.android.percent.support.PercentLinearLayout>
+        </com.wow.carlauncher.common.theme.TLinearLayout>
 
-        <com.zhy.android.percent.support.PercentLinearLayout
+        <com.wow.carlauncher.common.theme.TLinearLayout
             android:id="@+id/ll_play"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -54,9 +54,9 @@
                 android:src="@mipmap/ic_play2_b"
                 app:layout_heightPercent="55%h"
                 app:layout_widthPercent="55%h" />
-        </com.zhy.android.percent.support.PercentLinearLayout>
+        </com.wow.carlauncher.common.theme.TLinearLayout>
 
-        <com.zhy.android.percent.support.PercentLinearLayout
+        <com.wow.carlauncher.common.theme.TLinearLayout
             android:id="@+id/ll_next"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -70,6 +70,6 @@
                 android:src="@mipmap/ic_next2_b"
                 app:layout_heightPercent="50%h"
                 app:layout_widthPercent="50%h" />
-        </com.zhy.android.percent.support.PercentLinearLayout>
+        </com.wow.carlauncher.common.theme.TLinearLayout>
     </LinearLayout>
-</com.zhy.android.percent.support.PercentLinearLayout>
+</com.wow.carlauncher.common.theme.TLinearLayout>

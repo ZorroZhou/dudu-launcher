@@ -18,12 +18,12 @@ import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.util.ViewUtils;
-import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfo;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
+import com.wow.carlauncher.ex.manage.skin.SkinManage;
+import com.wow.carlauncher.view.activity.launcher.BaseThemeView;
 import com.wow.carlauncher.view.activity.launcher.LayoutEnum;
 import com.wow.carlauncher.view.activity.set.event.SEventPromptShowRefresh;
-import com.wow.carlauncher.view.activity.launcher.BaseThemeView;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -45,7 +45,6 @@ public class LAppsView extends BaseThemeView implements View.OnClickListener, Vi
         cellViews = new ArrayList<>();
         rows = new ArrayList<>();
         loadView();
-        changedTheme(ThemeManage.self());
     }
 
     @Override
@@ -141,18 +140,11 @@ public class LAppsView extends BaseThemeView implements View.OnClickListener, Vi
     }
 
     @Override
-    public void changedTheme(ThemeManage manage) {
+    public void changedSkin(SkinManage manage) {
         for (View cell : cellViews) {
             Integer index = (Integer) cell.getTag();
-            if (index != null && index >= 0) {
-                cell.findViewById(R.id.ll_base).setBackgroundResource(ThemeManage.self().getCurrentThemeRes(R.drawable.n_app_bg));
-                cell.findViewById(R.id.line1).setBackgroundResource(ThemeManage.self().getCurrentThemeRes(R.drawable.n_line3));
-                ((TextView) cell.findViewById(R.id.name)).setTextColor(ThemeManage.self().getCurrentThemeColor(R.color.l_msg));
-
-                if (index < appInfos.size()) {
-                    AppInfo model = appInfos.get(index);
-                    ((ImageView) cell.findViewById(R.id.icon)).setImageDrawable(AppInfoManage.self().getIcon(model.clazz));
-                }
+            if (index != null && index >= 0 && index < appInfos.size()) {
+                ((ImageView) cell.findViewById(R.id.icon)).setImageDrawable(AppInfoManage.self().getIcon(appInfos.get(index).clazz));
             }
         }
 

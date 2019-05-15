@@ -26,6 +26,7 @@ import com.wow.carlauncher.ex.manage.ImageManage;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.appInfo.event.MAppInfoRefreshShowEvent;
+import com.wow.carlauncher.ex.manage.skin.SkinManage;
 import com.wow.carlauncher.ex.manage.time.event.TMEvent3Second;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventAction;
@@ -50,14 +51,12 @@ import static com.wow.carlauncher.common.CommonData.SDATA_DOCK2_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK3_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK4_CLASS;
 import static com.wow.carlauncher.common.CommonData.TAG;
-import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.BLACK;
-import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.WHITE;
 import static com.wow.carlauncher.ex.plugin.fk.FangkongProtocolEnum.YLFK;
 import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.CENTER_CLICK;
 import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.LEFT_TOP_CLICK;
 import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.RIGHT_TOP_CLICK;
 
-public class ConsoleWin implements ThemeManage.OnThemeChangeListener {
+public class ConsoleWin implements SkinManage.OnSkinChangeListener {
     private static class SingletonHolder {
         @SuppressLint("StaticFieldLeak")
         private static ConsoleWin instance = new ConsoleWin();
@@ -114,9 +113,8 @@ public class ConsoleWin implements ThemeManage.OnThemeChangeListener {
 
         EventBus.getDefault().register(this);
 
-        onThemeChanged(ThemeManage.self());
-        ThemeManage.self().registerThemeChangeListener(this);
-
+        onSkinChanged(SkinManage.self());
+        SkinManage.self().registerSkinChangeListener(this);
         LogEx.d(this, "init ");
     }
 
@@ -137,20 +135,8 @@ public class ConsoleWin implements ThemeManage.OnThemeChangeListener {
     }
 
     @Override
-    public void onThemeChanged(ThemeManage manage) {
-        ll_item1.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_l_item1_bg));
-        ll_item2.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_l_item1_bg));
-        ll_item3.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_l_item1_bg));
+    public void onSkinChanged(SkinManage manage) {
         refreshPlay();
-        music_iv_prew.setImageResource(manage.getCurrentThemeRes(R.mipmap.ic_prev2));
-        music_iv_next.setImageResource(manage.getCurrentThemeRes(R.mipmap.ic_next2));
-
-        manage.setTextViewsColor(consoleWin, new int[]{
-                R.id.tv_app_name,
-                R.id.tv_time,
-                R.id.music_tv_title
-        }, R.color.l_text1);
-
         loadDock(false);
     }
 
@@ -205,15 +191,6 @@ public class ConsoleWin implements ThemeManage.OnThemeChangeListener {
     @BindView(R.id.ll_dock4)
     LinearLayout ll_dock4;
 
-    @BindView(R.id.ll_item1)
-    LinearLayout ll_item1;
-
-    @BindView(R.id.ll_item2)
-    LinearLayout ll_item2;
-
-    @BindView(R.id.ll_item3)
-    LinearLayout ll_item3;
-
     @BindView(R.id.iv_dock1)
     ImageView iv_dock1;
 
@@ -248,21 +225,9 @@ public class ConsoleWin implements ThemeManage.OnThemeChangeListener {
 
     private void refreshPlay() {
         if (musicRun) {
-            if (ThemeManage.self().getTheme() == WHITE) {
-                music_iv_play.setImageResource(R.mipmap.ic_pause2);
-            } else if (ThemeManage.self().getTheme() == BLACK) {
-                music_iv_play.setImageResource(R.mipmap.ic_pause2_b);
-            } else {
-                music_iv_play.setImageResource(R.mipmap.ic_pause2_cb);
-            }
+            music_iv_play.setImageResource(R.drawable.theme_ic_pause2);
         } else {
-            if (ThemeManage.self().getTheme() == WHITE) {
-                music_iv_play.setImageResource(R.mipmap.ic_play2);
-            } else if (ThemeManage.self().getTheme() == BLACK) {
-                music_iv_play.setImageResource(R.mipmap.ic_play2_b);
-            } else {
-                music_iv_play.setImageResource(R.mipmap.ic_play2_cb);
-            }
+            music_iv_play.setImageResource(R.drawable.theme_ic_play2);
         }
     }
 
@@ -343,6 +308,7 @@ public class ConsoleWin implements ThemeManage.OnThemeChangeListener {
             iv_dock1.setImageResource(R.mipmap.ic_add_app);
             SharedPreUtil.saveString(SDATA_DOCK1_CLASS, "");
         }
+
         String packname2 = SharedPreUtil.getString(SDATA_DOCK2_CLASS);
         if (CommonUtil.isNotNull(packname2) && AppInfoManage.self().checkApp(packname2)) {
             iv_dock2.setImageDrawable(AppInfoManage.self().getIcon(packname2));

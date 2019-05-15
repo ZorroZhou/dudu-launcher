@@ -18,8 +18,8 @@ import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.ContextEx;
-import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.appInfo.event.MAppInfoRefreshShowEvent;
+import com.wow.carlauncher.ex.manage.skin.SkinManage;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.view.activity.driving.DrivingActivity;
 import com.wow.carlauncher.view.activity.set.SetActivity;
@@ -132,17 +132,17 @@ public class AppInfoManage extends ContextEx {
         if (info != null) {
             if (MARK_OTHER_APP == info.appMark) {
                 //先根据主题获取图标
+                System.out.println("!!!!!!" + info.clazz);
                 int r = AppIconTemp.getIcon(info.clazz);
-                if (withTheme) {
-                    r = ThemeManage.self().getCurrentThemeRes(r);
-                }
-
-                if (r != 0) {
+                if (withTheme && r > 0) {
+                    return SkinManage.self().getDrawable(r);
+                } else if (r > 0) {
                     Drawable drawable = resources.getDrawable(r);
                     if (drawable != null) {
                         return drawable;
                     }
                 }
+
                 try {
                     PackageInfo packageInfo = packageManager.getPackageInfo(info.clazz, 0);
                     return packageInfo.applicationInfo.loadIcon(packageManager);
@@ -153,14 +153,14 @@ public class AppInfoManage extends ContextEx {
                 switch (info.clazz) {
                     case INTERNAL_APP_DRIVING: {
                         if (withTheme) {
-                            return ContextCompat.getDrawable(getContext(), ThemeManage.self().getCurrentThemeRes(R.mipmap.app_icon_obd));
+                            return SkinManage.self().getDrawable(R.mipmap.app_icon_obd);
                         } else {
                             return ContextCompat.getDrawable(getContext(), R.mipmap.app_icon_obd);
                         }
                     }
                     case INTERNAL_APP_SETTING: {
                         if (withTheme) {
-                            return ContextCompat.getDrawable(getContext(), ThemeManage.self().getCurrentThemeRes(R.mipmap.app_icon_set));
+                            return SkinManage.self().getDrawable(R.mipmap.app_icon_set);
                         } else {
                             return ContextCompat.getDrawable(getContext(), R.mipmap.app_icon_set);
                         }

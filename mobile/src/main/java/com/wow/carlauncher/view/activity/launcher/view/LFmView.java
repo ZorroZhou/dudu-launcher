@@ -8,8 +8,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -45,74 +43,74 @@ public class LFmView extends BaseThemeView {
         return R.layout.content_l_fm;
     }
 
-    @Override
-    public void changedTheme(ThemeManage manage) {
-        rl_base.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_l_item1_bg));
-        tv_title.setTextColor(manage.getCurrentThemeColor(R.color.l_title));
-
-        ll_play.getViewTreeObserver().addOnPreDrawListener(
-                new ViewTreeObserver.OnPreDrawListener() {
-                    @Override
-                    public boolean onPreDraw() {
-                        if (ll_play.getHeight() > 0) {
-                            ll_play.getViewTreeObserver().removeOnPreDrawListener(this);
-                            ViewGroup.LayoutParams lp = iv_play.getLayoutParams();
-                            if (currentTheme == WHITE || currentTheme == BLACK) {
-                                lp.width = ll_play.getHeight();
-                                lp.height = ll_play.getHeight();
-                            } else {
-                                lp.width = (int) (ll_play.getHeight() * 0.55);
-                                lp.height = (int) (ll_play.getHeight() * 0.55);
-                            }
-                            iv_play.setLayoutParams(lp);
-                        }
-                        return true;
-                    }
-                });
-        refreshPlay();
-        ll_prew.getViewTreeObserver().addOnPreDrawListener(
-                new ViewTreeObserver.OnPreDrawListener() {
-                    @Override
-                    public boolean onPreDraw() {
-                        if (ll_prew.getHeight() > 0) {
-                            ll_prew.getViewTreeObserver().removeOnPreDrawListener(this);
-                            ViewGroup.LayoutParams lp = iv_prew.getLayoutParams();
-                            if (currentTheme == WHITE || currentTheme == BLACK) {
-                                lp.width = (int) (ll_prew.getHeight() * 0.7);
-                                lp.height = (int) (ll_prew.getHeight() * 0.7);
-                            } else {
-                                lp.width = (int) (ll_prew.getHeight() * 0.5);
-                                lp.height = (int) (ll_prew.getHeight() * 0.5);
-                            }
-                            iv_prew.setLayoutParams(lp);
-                        }
-                        return true;
-                    }
-                });
-        iv_prew.setImageResource(manage.getCurrentThemeRes(R.mipmap.ic_prev));
-
-
-        ll_next.getViewTreeObserver().addOnPreDrawListener(
-                new ViewTreeObserver.OnPreDrawListener() {
-                    @Override
-                    public boolean onPreDraw() {
-                        if (ll_next.getHeight() > 0) {
-                            ll_next.getViewTreeObserver().removeOnPreDrawListener(this);
-                            ViewGroup.LayoutParams lp = iv_next.getLayoutParams();
-                            if (currentTheme == WHITE || currentTheme == BLACK) {
-                                lp.width = (int) (ll_next.getHeight() * 0.7);
-                                lp.height = (int) (ll_next.getHeight() * 0.7);
-                            } else {
-                                lp.width = (int) (ll_next.getHeight() * 0.5);
-                                lp.height = (int) (ll_next.getHeight() * 0.5);
-                            }
-                            iv_next.setLayoutParams(lp);
-                        }
-                        return true;
-                    }
-                });
-        iv_next.setImageResource(manage.getCurrentThemeRes(R.mipmap.ic_next));
-    }
+//    @Override
+//    public void changedTheme(ThemeManage manage) {
+//        rl_base.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_l_item1_bg));
+//        tv_title.setTextColor(manage.getCurrentThemeColor(R.color.l_title));
+//
+//        ll_play.getViewTreeObserver().addOnPreDrawListener(
+//                new ViewTreeObserver.OnPreDrawListener() {
+//                    @Override
+//                    public boolean onPreDraw() {
+//                        if (ll_play.getHeight() > 0) {
+//                            ll_play.getViewTreeObserver().removeOnPreDrawListener(this);
+//                            ViewGroup.LayoutParams lp = iv_play.getLayoutParams();
+//                            if (currentTheme == WHITE || currentTheme == BLACK) {
+//                                lp.width = ll_play.getHeight();
+//                                lp.height = ll_play.getHeight();
+//                            } else {
+//                                lp.width = (int) (ll_play.getHeight() * 0.55);
+//                                lp.height = (int) (ll_play.getHeight() * 0.55);
+//                            }
+//                            iv_play.setLayoutParams(lp);
+//                        }
+//                        return true;
+//                    }
+//                });
+//        refreshPlay();
+//        ll_prew.getViewTreeObserver().addOnPreDrawListener(
+//                new ViewTreeObserver.OnPreDrawListener() {
+//                    @Override
+//                    public boolean onPreDraw() {
+//                        if (ll_prew.getHeight() > 0) {
+//                            ll_prew.getViewTreeObserver().removeOnPreDrawListener(this);
+//                            ViewGroup.LayoutParams lp = iv_prew.getLayoutParams();
+//                            if (currentTheme == WHITE || currentTheme == BLACK) {
+//                                lp.width = (int) (ll_prew.getHeight() * 0.7);
+//                                lp.height = (int) (ll_prew.getHeight() * 0.7);
+//                            } else {
+//                                lp.width = (int) (ll_prew.getHeight() * 0.5);
+//                                lp.height = (int) (ll_prew.getHeight() * 0.5);
+//                            }
+//                            iv_prew.setLayoutParams(lp);
+//                        }
+//                        return true;
+//                    }
+//                });
+//        iv_prew.setImageResource(manage.getCurrentThemeRes(R.mipmap.ic_prev));
+//
+//
+//        ll_next.getViewTreeObserver().addOnPreDrawListener(
+//                new ViewTreeObserver.OnPreDrawListener() {
+//                    @Override
+//                    public boolean onPreDraw() {
+//                        if (ll_next.getHeight() > 0) {
+//                            ll_next.getViewTreeObserver().removeOnPreDrawListener(this);
+//                            ViewGroup.LayoutParams lp = iv_next.getLayoutParams();
+//                            if (currentTheme == WHITE || currentTheme == BLACK) {
+//                                lp.width = (int) (ll_next.getHeight() * 0.7);
+//                                lp.height = (int) (ll_next.getHeight() * 0.7);
+//                            } else {
+//                                lp.width = (int) (ll_next.getHeight() * 0.5);
+//                                lp.height = (int) (ll_next.getHeight() * 0.5);
+//                            }
+//                            iv_next.setLayoutParams(lp);
+//                        }
+//                        return true;
+//                    }
+//                });
+//        iv_next.setImageResource(manage.getCurrentThemeRes(R.mipmap.ic_next));
+//    }
 
     @BindView(R.id.ll_prew)
     LinearLayout ll_prew;

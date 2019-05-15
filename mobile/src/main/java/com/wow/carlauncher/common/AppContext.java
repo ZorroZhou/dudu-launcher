@@ -9,6 +9,7 @@ import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.manage.AppWidgetManage;
 import com.wow.carlauncher.ex.manage.ImageManage;
+import com.wow.carlauncher.ex.manage.skin.SkinManage;
 import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.baiduVoice.BaiduVoiceAssistant;
@@ -72,6 +73,8 @@ public class AppContext {
         this.startTime = System.currentTimeMillis();
 
         EventBus.builder().addIndex(new MyEventBusIndex()).installDefaultEventBus();
+
+        SkinManage.self().init(app);
 
         SharedPreUtil.init(app);
 
@@ -162,6 +165,7 @@ public class AppContext {
                 LogEx.d(this, "不唤醒其他APP");
             }
         });
+
         LogEx.d(this, "APP初始化完毕 ");
 //        BroadcastReceiver br = new BroadcastReceiver() {
 //            @Override

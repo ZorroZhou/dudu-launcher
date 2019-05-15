@@ -4,16 +4,15 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.util.DateUtil;
 import com.wow.carlauncher.common.util.LunarUtil;
-import com.wow.carlauncher.ex.manage.ThemeManage;
+import com.wow.carlauncher.ex.manage.skin.SkinManage;
+import com.wow.carlauncher.ex.manage.skin.SkinUtil;
 import com.wow.carlauncher.ex.manage.time.event.TMEvent3Second;
 import com.wow.carlauncher.view.activity.launcher.BaseThemeView;
 
@@ -28,8 +27,6 @@ import butterknife.OnClick;
 
 import static com.wow.carlauncher.common.CommonData.DAY_MILL;
 import static com.wow.carlauncher.common.CommonData.MINUTE_MILL;
-import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.BLACK;
-import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.WHITE;
 
 /**
  * Created by 10124 on 2018/4/20.
@@ -52,25 +49,8 @@ public class LTimeView extends BaseThemeView {
     }
 
     @Override
-    public void changedTheme(ThemeManage manage) {
-
-        rl_base.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_l_item1_bg));
-        tv_title.setTextColor(manage.getCurrentThemeColor(R.color.l_title));
-
-        fl_time.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_cell_bg));
-
-        tv_shijian.setTextColor(manage.getCurrentThemeColor(R.color.l_content));
-        tv_week.setTextColor(manage.getCurrentThemeColor(R.color.l_msg));
-        tv_day.setTextColor(manage.getCurrentThemeColor(R.color.l_msg));
-        tv_lunar.setTextColor(manage.getCurrentThemeColor(R.color.l_msg));
-
-        //时间组件的处理
-        if (currentTheme == WHITE || currentTheme == BLACK) {
-            tv_title.setGravity(Gravity.CENTER);
-        } else {
-            tv_title.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
-        }
-        LogEx.d(this, "changedTheme: ");
+    public void changedSkin(SkinManage manage) {
+        tv_title.setGravity(SkinUtil.analysisItemTitleAlign(manage.getString(R.string.theme_item_title_align)));
     }
 
     @OnClick(value = {R.id.rl_base})
@@ -85,15 +65,9 @@ public class LTimeView extends BaseThemeView {
         LogEx.d(this, "initView: ");
     }
 
-    @BindView(R.id.fl_time)
-    FrameLayout fl_time;
-
-    @BindView(R.id.rl_base)
-    View rl_base;
 
     @BindView(R.id.tv_title)
     TextView tv_title;
-
 
     @BindView(R.id.tv_shijian)
     TextView tv_shijian;

@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.zhy.android.percent.support.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.wow.carlauncher.common.theme.TRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rl_base"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/theme_item_time_bg"
     android:orientation="vertical"
     tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry">
 
-    <com.zhy.android.percent.support.PercentFrameLayout
+    <com.wow.carlauncher.common.theme.TFrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_heightPercent="12%h">
@@ -21,12 +22,13 @@
             android:includeFontPadding="false"
             android:lines="1"
             android:text="时间"
+            android:textColor="@color/theme_item_title"
             app:layout_marginLeftPercent="25%h"
             app:layout_marginRightPercent="25%h"
             app:layout_textSizePercent="50%h" />
-    </com.zhy.android.percent.support.PercentFrameLayout>
+    </com.wow.carlauncher.common.theme.TFrameLayout>
 
-    <com.zhy.android.percent.support.PercentLinearLayout
+    <com.wow.carlauncher.common.theme.TLinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -35,12 +37,13 @@
         app:layout_marginRightPercent="2%h"
         app:layout_marginTopPercent="12%h">
 
-        <com.zhy.android.percent.support.PercentFrameLayout
+        <com.wow.carlauncher.common.theme.TFrameLayout
             android:id="@+id/fl_time"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_margin="5dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:background="@drawable/theme_time_cell_bg">
 
             <com.wow.carlauncher.common.view.PhilTextView
                 android:id="@+id/tv_shijian"
@@ -50,10 +53,11 @@
                 android:gravity="center"
                 android:singleLine="true"
                 android:text="09:99"
+                android:textColor="@color/theme_time_shijian"
                 app:layout_textSizePercent="60%h" />
-        </com.zhy.android.percent.support.PercentFrameLayout>
+        </com.wow.carlauncher.common.theme.TFrameLayout>
 
-        <com.zhy.android.percent.support.PercentLinearLayout
+        <com.wow.carlauncher.common.theme.TLinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2"
@@ -66,6 +70,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="星期一"
+                android:textColor="@color/theme_time_week"
                 app:layout_textSizePercent="10%h" />
 
             <TextView
@@ -75,6 +80,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="2019年1月4日"
+                android:textColor="@color/theme_time_day"
                 app:layout_textSizePercent="12%h" />
 
             <TextView
@@ -84,12 +90,13 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="农历一月初四"
+                android:textColor="@color/theme_time_lunar"
                 app:layout_textSizePercent="8%h" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="2" />
-        </com.zhy.android.percent.support.PercentLinearLayout>
-    </com.zhy.android.percent.support.PercentLinearLayout>
-</com.zhy.android.percent.support.PercentRelativeLayout>
+        </com.wow.carlauncher.common.theme.TLinearLayout>
+    </com.wow.carlauncher.common.theme.TLinearLayout>
+</com.wow.carlauncher.common.theme.TRelativeLayout>

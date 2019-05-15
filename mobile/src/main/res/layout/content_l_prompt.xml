@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.zhy.android.percent.support.PercentFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.wow.carlauncher.common.theme.TFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fl_base"
     android:layout_width="match_parent"
     android:layout_height="40dp"
-    tools:ignore="RtlHardcoded">
+    tools:ignore="RtlHardcoded,HardcodedText">
 
     <TextView
         android:id="@+id/tv_time"
@@ -13,34 +13,22 @@
         android:layout_height="match_parent"
         android:gravity="center_vertical|left"
         android:text="1月1日 星期一 23:59:59"
+        android:textColor="@color/theme_prompt_time"
         app:layout_marginLeftPercent="25%h"
         app:layout_textSizePercent="50%h" />
 
-    <com.zhy.android.percent.support.PercentLinearLayout
+    <com.wow.carlauncher.common.theme.TLinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="right"
         android:orientation="horizontal">
-
-        <!--<com.zhy.android.percent.support.PercentRelativeLayout-->
-        <!--android:id="@+id/rl_home"-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_weight="7">-->
-
-        <!--<ImageView-->
-        <!--android:id="@+id/iv_home"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="0dp"-->
-        <!--android:layout_centerInParent="true"-->
-        <!--app:layout_heightPercent="50%h" />-->
-        <!--</com.zhy.android.percent.support.PercentRelativeLayout>-->
 
         <ImageView
             android:id="@+id/iv_location"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:contentDescription="@string/app_name"
+            android:src="@drawable/theme_prompt_location"
             android:visibility="gone"
             app:layout_widthPercent="100%h" />
 
@@ -49,6 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:contentDescription="@string/app_name"
+            android:src="@drawable/theme_prompt_tp"
             android:visibility="gone"
             app:layout_widthPercent="100%h" />
 
@@ -57,6 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:contentDescription="@string/app_name"
+            android:src="@drawable/theme_prompt_obd"
             android:visibility="gone"
             app:layout_widthPercent="100%h" />
 
@@ -65,6 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:contentDescription="@string/app_name"
+            android:src="@drawable/theme_prompt_fk"
             android:visibility="gone"
             app:layout_widthPercent="100%h" />
 
@@ -73,6 +64,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:contentDescription="@string/app_name"
+            android:src="@drawable/theme_prompt_wifi"
             android:visibility="gone"
             app:layout_widthPercent="100%h" />
 
@@ -81,6 +73,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:contentDescription="@string/app_name"
+            android:src="@drawable/theme_prompt_mount"
             android:visibility="gone"
             app:layout_widthPercent="100%h" />
 
@@ -89,7 +82,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:contentDescription="@string/app_name"
-            android:src="@mipmap/ic_l_set"
+            android:src="@drawable/theme_prompt_set"
             app:layout_widthPercent="100%h" />
-    </com.zhy.android.percent.support.PercentLinearLayout>
-</com.zhy.android.percent.support.PercentFrameLayout>
+    </com.wow.carlauncher.common.theme.TLinearLayout>
+</com.wow.carlauncher.common.theme.TFrameLayout>

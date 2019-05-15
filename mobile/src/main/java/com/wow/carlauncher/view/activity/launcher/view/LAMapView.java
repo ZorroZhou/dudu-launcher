@@ -7,7 +7,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -20,7 +19,8 @@ import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.view.LukuangView;
-import com.wow.carlauncher.ex.manage.ThemeManage;
+import com.wow.carlauncher.ex.manage.skin.SkinManage;
+import com.wow.carlauncher.ex.manage.skin.SkinUtil;
 import com.wow.carlauncher.ex.manage.speed.SMEventSendSpeed;
 import com.wow.carlauncher.ex.plugin.amapcar.AMapCarPlugin;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventNavInfo;
@@ -28,8 +28,8 @@ import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventState;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapLukuangInfo;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapMuteStateInfo;
 import com.wow.carlauncher.ex.plugin.amapcar.model.Lukuang;
-import com.wow.carlauncher.view.activity.launcher.event.LAMapCloseXunhang;
 import com.wow.carlauncher.view.activity.launcher.BaseThemeView;
+import com.wow.carlauncher.view.activity.launcher.event.LAMapCloseXunhang;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -42,8 +42,6 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 import static com.wow.carlauncher.common.CommonData.TAG;
-import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.BLACK;
-import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.WHITE;
 import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.AMAP_PACKAGE;
 import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.ICONS;
 
@@ -67,64 +65,14 @@ public class LAMapView extends BaseThemeView {
     }
 
     @Override
-    public void changedTheme(ThemeManage manage) {
-        rl_base.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_l_item1_bg));
-        ll_xiansu.setBackgroundResource(manage.getCurrentThemeRes(R.mipmap.n_dh_quan));
-        iv_moren.setImageResource(manage.getCurrentThemeRes(R.mipmap.n_dh_moren1));
-
-        tv_title.setTextColor(manage.getCurrentThemeColor(R.color.l_title));
-
-        manage.setTextViewsColor(this, new int[]{
-                R.id.tv_xiansu,
-                R.id.tv_text1,
-                R.id.tv_msg
-        }, R.color.l_text1);
-
-        //横线
-        manage.setViewsBackround(this, new int[]{
-                R.id.line1,
-                R.id.line7,
-                R.id.line11,
-                R.id.line4
-        }, R.drawable.n_line2);
-
-        //竖线
-        manage.setViewsBackround(this, new int[]{
-                R.id.line2,
-                R.id.line3,
-                R.id.line5,
-                R.id.line6
-        }, R.drawable.n_line3);
-
-        iv_dh.setImageResource(manage.getCurrentThemeRes(R.mipmap.n_dh_dh));
-        iv_dh_j.setImageResource(manage.getCurrentThemeRes(R.mipmap.n_dh_j));
-        iv_dh_gs.setImageResource(manage.getCurrentThemeRes(R.mipmap.n_dh_gs));
-        rl_navinfo.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_dh2_bg));
-        rl_xunhang.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_dh2_bg));
-
-        refreshMute();
-        refreshRoad();
-
-        iv_close.setImageResource(manage.getCurrentThemeRes(R.mipmap.n_dh_close));
-        iv_car.setImageResource(manage.getCurrentThemeRes(R.mipmap.n_car));
-        iv_car2.setImageResource(manage.getCurrentThemeRes(R.mipmap.n_car));
-        iv_road2.setImageResource(manage.getCurrentThemeRes(R.mipmap.n_road1));
-
-        if (currentTheme == WHITE || currentTheme == BLACK) {
-            tv_title.setGravity(Gravity.CENTER);
-
-            line7.setVisibility(GONE);
-            line11.setVisibility(GONE);
+    public void changedSkin(SkinManage manage) {
+        tv_title.setGravity(SkinUtil.analysisItemTitleAlign(manage.getString(R.string.theme_item_title_align)));
+        line_daohang.setVisibility(SkinUtil.analysisVisibility(manage.getString(R.string.theme_item_amap_daohang_line)));
+        if (loactionOk) {
+            line_xunhang.setVisibility(SkinUtil.analysisVisibility(manage.getString(R.string.theme_item_amap_xunhang_line)));
         } else {
-            tv_title.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
-            line7.setVisibility(VISIBLE);
-            if (loactionOk) {
-                line11.setVisibility(VISIBLE);
-            }
-
+            line_xunhang.setVisibility(GONE);
         }
-
-        LogEx.d(this, "changedTheme: ");
     }
 
     @Override
@@ -142,11 +90,11 @@ public class LAMapView extends BaseThemeView {
     @BindView(R.id.rl_base)
     View rl_base;
 
-    @BindView(R.id.line7)
-    View line7;
+    @BindView(R.id.line_daohang)
+    View line_daohang;
 
-    @BindView(R.id.line11)
-    View line11;
+    @BindView(R.id.line_xunhang)
+    View line_xunhang;
 
     @BindView(R.id.rl_navinfo)
     View rl_navinfo;
@@ -166,29 +114,17 @@ public class LAMapView extends BaseThemeView {
     @BindView(R.id.iv_dh_gs)
     ImageView iv_dh_gs;
 
-    @BindView(R.id.iv_close)
-    ImageView iv_close;
-
     @BindView(R.id.iv_dh_j)
     ImageView iv_dh_j;
 
     @BindView(R.id.iv_moren)
     ImageView iv_moren;
 
-    @BindView(R.id.iv_car)
-    ImageView iv_car;
-
-    @BindView(R.id.iv_car2)
-    ImageView iv_car2;
-
     @BindView(R.id.iv_icon)
     ImageView amapIcon;
 
     @BindView(R.id.iv_road)
     ImageView iv_road;
-
-    @BindView(R.id.iv_road2)
-    ImageView iv_road2;
 
     @BindView(R.id.tv_next_dis)
     TextView tv_next_dis;
@@ -225,46 +161,45 @@ public class LAMapView extends BaseThemeView {
 
     private void refreshMute() {
         if (mute) {
-            if (ThemeManage.self().getTheme() == WHITE) {
-                iv_mute.setImageResource(R.mipmap.n_dh_jy);
-            } else {
-                iv_mute.setImageResource(R.mipmap.n_dh_jy_b);
-            }
+            iv_mute.setImageDrawable(SkinManage.self().getDrawable(R.drawable.theme_amap_jy));
         } else {
-            if (ThemeManage.self().getTheme() == WHITE) {
-                iv_mute.setImageResource(R.mipmap.n_dh_bjy);
-            } else {
-                iv_mute.setImageResource(R.mipmap.n_dh_bjy_b);
-            }
+            iv_mute.setImageDrawable(SkinManage.self().getDrawable(R.drawable.theme_amap_bjy));
         }
     }
 
     private void refreshRoad() {
-        if (ThemeManage.self().getTheme() == WHITE) {
-            if (roadType == 0 || roadType == 6) {
-                iv_road.setImageResource(R.mipmap.n_road1);
-            } else if (roadType == 4 || roadType == 5 || roadType == 9 || roadType == 10) {
-                iv_road.setImageResource(R.mipmap.n_road3);
-            } else {
-                iv_road.setImageResource(R.mipmap.n_road2);
-            }
-        } else if (ThemeManage.self().getTheme() == BLACK) {
-            if (roadType == 0 || roadType == 6) {
-                iv_road.setImageResource(R.mipmap.n_road1_b);
-            } else if (roadType == 4 || roadType == 5 || roadType == 9 || roadType == 10) {
-                iv_road.setImageResource(R.mipmap.n_road3_b);
-            } else {
-                iv_road.setImageResource(R.mipmap.n_road2_b);
-            }
+        if (roadType == 0 || roadType == 6) {
+            iv_road.setImageDrawable(SkinManage.self().getDrawable(R.drawable.theme_amap_road1));
+        } else if (roadType == 4 || roadType == 5 || roadType == 9 || roadType == 10) {
+            iv_road.setImageDrawable(SkinManage.self().getDrawable(R.drawable.theme_amap_road3));
         } else {
-            if (roadType == 0 || roadType == 6) {
-                iv_road.setImageResource(R.mipmap.n_road1_cb);
-            } else if (roadType == 4 || roadType == 5 || roadType == 9 || roadType == 10) {
-                iv_road.setImageResource(R.mipmap.n_road3_cb);
-            } else {
-                iv_road.setImageResource(R.mipmap.n_road2_cb);
-            }
+            iv_road.setImageDrawable(SkinManage.self().getDrawable(R.drawable.theme_amap_road2));
         }
+//        if (ThemeManage.self().getTheme() == WHITE) {
+//            if (roadType == 0 || roadType == 6) {
+//                iv_road.setImageResource(R.mipmap.n_road1);
+//            } else if (roadType == 4 || roadType == 5 || roadType == 9 || roadType == 10) {
+//                iv_road.setImageResource(R.mipmap.theme_amap_road3);
+//            } else {
+//                iv_road.setImageResource(R.mipmap.theme_amap_road2);
+//            }
+//        } else if (ThemeManage.self().getTheme() == BLACK) {
+//            if (roadType == 0 || roadType == 6) {
+//                iv_road.setImageResource(R.mipmap.n_road1_b);
+//            } else if (roadType == 4 || roadType == 5 || roadType == 9 || roadType == 10) {
+//                iv_road.setImageResource(R.mipmap.n_road3_b);
+//            } else {
+//                iv_road.setImageResource(R.mipmap.n_road2_b);
+//            }
+//        } else {
+//            if (roadType == 0 || roadType == 6) {
+//                iv_road.setImageResource(R.mipmap.n_road1_cb);
+//            } else if (roadType == 4 || roadType == 5 || roadType == 9 || roadType == 10) {
+//                iv_road.setImageResource(R.mipmap.n_road3_cb);
+//            } else {
+//                iv_road.setImageResource(R.mipmap.n_road2_cb);
+//            }
+//        }
     }
 
     @OnClick(value = {R.id.rl_base, R.id.btn_close, R.id.btn_mute, R.id.btn_nav_gs, R.id.btn_nav_j, R.id.btn_gd})
@@ -430,10 +365,10 @@ public class LAMapView extends BaseThemeView {
                 loactionOk = true;
                 iv_moren.setVisibility(GONE);
                 rl_che.setVisibility(VISIBLE);
-                if (currentTheme == WHITE || currentTheme == BLACK) {
-                    line11.setVisibility(GONE);
+                if (loactionOk) {
+                    line_xunhang.setVisibility(SkinUtil.analysisVisibility(SkinManage.self().getString(R.string.theme_item_amap_xunhang_line)));
                 } else {
-                    line11.setVisibility(VISIBLE);
+                    line_xunhang.setVisibility(GONE);
                 }
                 fl_xunhang_root.setVisibility(VISIBLE);
             }
@@ -445,7 +380,7 @@ public class LAMapView extends BaseThemeView {
             loactionOk = false;
             iv_moren.setVisibility(VISIBLE);
             rl_che.setVisibility(GONE);
-            line11.setVisibility(GONE);
+            line_xunhang.setVisibility(GONE);
             fl_xunhang_root.setVisibility(GONE);
         }
     }
@@ -454,7 +389,7 @@ public class LAMapView extends BaseThemeView {
     public void onEvent(final LAMapCloseXunhang event) {
         iv_moren.setVisibility(VISIBLE);
         rl_che.setVisibility(GONE);
-        line11.setVisibility(GONE);
+        line_xunhang.setVisibility(GONE);
         fl_xunhang_root.setVisibility(GONE);
     }
 }

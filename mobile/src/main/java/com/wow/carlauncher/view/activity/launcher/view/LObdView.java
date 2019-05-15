@@ -5,17 +5,16 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.TaskExecutor;
-import com.wow.carlauncher.ex.manage.ThemeManage;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
+import com.wow.carlauncher.ex.manage.skin.SkinManage;
+import com.wow.carlauncher.ex.manage.skin.SkinUtil;
 import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarInfo;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventConnect;
@@ -26,9 +25,6 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-
-import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.BLACK;
-import static com.wow.carlauncher.ex.manage.ThemeManage.Theme.WHITE;
 
 /**
  * Created by 10124 on 2018/4/20.
@@ -50,37 +46,8 @@ public class LObdView extends BaseThemeView {
     }
 
     @Override
-    public void changedTheme(ThemeManage manage) {
-        fl_base.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_l_item1_bg));
-        tv_title.setTextColor(manage.getCurrentThemeColor(R.color.l_text1));
-        tv_msg.setTextColor(manage.getCurrentThemeColor(R.color.l_msg));
-        iv_error.setImageResource(manage.getCurrentThemeRes(R.mipmap.ic_obderror));
-
-        manage.setViewsBackround(this, new int[]{R.id.ll_cell1, R.id.ll_cell2, R.id.ll_cell3, R.id.ll_cell4}, R.drawable.n_cell_bg);
-
-
-        manage.setTextViewsColor(this, new int[]{
-                R.id.tv_text21,
-                R.id.tv_text22,
-                R.id.tv_text23,
-                R.id.tv_text24,
-                R.id.tv_sd,
-                R.id.tv_zs,
-                R.id.tv_sw,
-                R.id.tv_yl
-        }, R.color.l_text2);
-
-        p_sd.setProgressDrawable(getResources().getDrawable(manage.getCurrentThemeRes(R.drawable.n_obd_progress)));
-        p_zs.setProgressDrawable(getResources().getDrawable(manage.getCurrentThemeRes(R.drawable.n_obd_progress)));
-        p_sw.setProgressDrawable(getResources().getDrawable(manage.getCurrentThemeRes(R.drawable.n_obd_progress)));
-        p_yl.setProgressDrawable(getResources().getDrawable(manage.getCurrentThemeRes(R.drawable.n_obd_progress)));
-
-        if (currentTheme == WHITE || currentTheme == BLACK) {
-            tv_title.setGravity(Gravity.CENTER);
-        } else {
-            tv_title.setGravity(Gravity.CENTER_VERTICAL | Gravity.LEFT);
-        }
-        LogEx.d(this, "changedTheme: ");
+    public void changedSkin(SkinManage manage) {
+        tv_title.setGravity(SkinUtil.analysisItemTitleAlign(manage.getString(R.string.theme_item_title_align)));
     }
 
     @Override
@@ -113,9 +80,6 @@ public class LObdView extends BaseThemeView {
             }
         }
     }
-
-    @BindView(R.id.fl_base)
-    View fl_base;
 
     @BindView(R.id.tv_title)
     TextView tv_title;
@@ -152,9 +116,6 @@ public class LObdView extends BaseThemeView {
 
     @BindView(R.id.ll_obd)
     View ll_obd;
-
-    @BindView(R.id.iv_error)
-    ImageView iv_error;
 
     private boolean connect = false;
 

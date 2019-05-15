@@ -1,5 +1,5 @@
 <?xml version="1" encoding="utf-8"?>
-<com.zhy.android.percent.support.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.wow.carlauncher.common.theme.TRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -55,7 +55,7 @@
             android:src="@mipmap/driving_blue_center_rpm_cursor"
             android:visibility="gone" />
 
-        <com.zhy.android.percent.support.PercentRelativeLayout
+        <com.wow.carlauncher.common.theme.TRelativeLayout
             android:id="@+id/rl_main_info"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -73,7 +73,7 @@
                 app:layout_textSizePercent="11%h"
                 app:layout_widthPercent="22%h" />
 
-            <!--<com.zhy.android.percent.support.PercentLinearLayout-->
+            <!--<com.wow.carlauncher.common.theme.TLinearLayout-->
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="0dp"-->
             <!--android:layout_alignParentBottom="true"-->
@@ -97,10 +97,10 @@
             <!--android:text="安全第一条"-->
             <!--android:textColor="#fff"-->
             <!--app:layout_textSizePercent="50%h" />-->
-            <!--</com.zhy.android.percent.support.PercentLinearLayout>-->
+            <!--</com.wow.carlauncher.common.theme.TLinearLayout>-->
 
 
-        </com.zhy.android.percent.support.PercentRelativeLayout>
+        </com.wow.carlauncher.common.theme.TRelativeLayout>
     </FrameLayout>
 
     <LinearLayout
@@ -124,13 +124,13 @@
             android:background="@mipmap/driving_blue_bg_top_right"
             android:orientation="horizontal">
 
-            <com.zhy.android.percent.support.PercentLinearLayout
+            <com.wow.carlauncher.common.theme.TLinearLayout
                 android:id="@+id/ll_obd_not_connect"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center">
 
-                <com.zhy.android.percent.support.PercentLinearLayout
+                <com.wow.carlauncher.common.theme.TLinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:gravity="center"
@@ -154,10 +154,10 @@
                         android:text="安全第一条"
                         android:textColor="#fff"
                         app:layout_textSizePercent="50%h" />
-                </com.zhy.android.percent.support.PercentLinearLayout>
-            </com.zhy.android.percent.support.PercentLinearLayout>
+                </com.wow.carlauncher.common.theme.TLinearLayout>
+            </com.wow.carlauncher.common.theme.TLinearLayout>
 
-            <com.zhy.android.percent.support.PercentLinearLayout
+            <com.wow.carlauncher.common.theme.TLinearLayout
                 android:id="@+id/ll_obd_connect"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -201,7 +201,7 @@
                     android:text="100%"
                     android:textColor="#fff"
                     app:layout_textSizePercent="50%h" />
-            </com.zhy.android.percent.support.PercentLinearLayout>
+            </com.wow.carlauncher.common.theme.TLinearLayout>
         </FrameLayout>
 
         <FrameLayout
@@ -210,7 +210,7 @@
             android:layout_height="0dp"
             android:layout_weight="340">
 
-            <com.zhy.android.percent.support.PercentLinearLayout
+            <com.wow.carlauncher.common.theme.TLinearLayout
                 android:id="@+id/fl_item1_nav"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -228,7 +228,7 @@
                     app:layout_marginPercent="10%h"
                     app:layout_widthPercent="70%h" />
 
-                <com.zhy.android.percent.support.PercentLinearLayout
+                <com.wow.carlauncher.common.theme.TLinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -254,15 +254,15 @@
                         android:text="剩余20公里"
                         android:textColor="#fff"
                         app:layout_textSizePercent="18%h" />
-                </com.zhy.android.percent.support.PercentLinearLayout>
-            </com.zhy.android.percent.support.PercentLinearLayout>
+                </com.wow.carlauncher.common.theme.TLinearLayout>
+            </com.wow.carlauncher.common.theme.TLinearLayout>
 
             <FrameLayout
                 android:id="@+id/fl_item1_not_nav"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <com.zhy.android.percent.support.PercentRelativeLayout
+                <com.wow.carlauncher.common.theme.TRelativeLayout
                     android:id="@+id/rl_item1_not_nav_music"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
@@ -278,15 +278,15 @@
                         app:layout_heightPercent="85%h"
                         app:layout_widthPercent="85%h"
                         app:radius="6dp" />
-                </com.zhy.android.percent.support.PercentRelativeLayout>
+                </com.wow.carlauncher.common.theme.TRelativeLayout>
 
-                <com.zhy.android.percent.support.PercentRelativeLayout
+                <com.wow.carlauncher.common.theme.TRelativeLayout
                     android:id="@+id/rl_item1_not_nav_tp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:visibility="gone">
 
-                    <com.zhy.android.percent.support.PercentLinearLayout
+                    <com.wow.carlauncher.common.theme.TLinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_alignParentLeft="true"
@@ -319,9 +319,9 @@
                             android:textColor="#fff"
                             app:layout_marginBottomPercent="10%h"
                             app:layout_textSizePercent="15%h" />
-                    </com.zhy.android.percent.support.PercentLinearLayout>
+                    </com.wow.carlauncher.common.theme.TLinearLayout>
 
-                    <com.zhy.android.percent.support.PercentLinearLayout
+                    <com.wow.carlauncher.common.theme.TLinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_alignParentRight="true"
@@ -354,7 +354,7 @@
                             android:textColor="#fff"
                             app:layout_marginBottomPercent="10%h"
                             app:layout_textSizePercent="15%h" />
-                    </com.zhy.android.percent.support.PercentLinearLayout>
+                    </com.wow.carlauncher.common.theme.TLinearLayout>
 
                     <FrameLayout
                         android:layout_width="0dp"
@@ -374,18 +374,18 @@
                             android:src="@mipmap/driving_blue_tp_normal" />
 
                     </FrameLayout>
-                </com.zhy.android.percent.support.PercentRelativeLayout>
+                </com.wow.carlauncher.common.theme.TRelativeLayout>
             </FrameLayout>
         </FrameLayout>
 
 
-        <com.zhy.android.percent.support.PercentLinearLayout
+        <com.wow.carlauncher.common.theme.TLinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="340"
             android:gravity="center">
 
-            <com.zhy.android.percent.support.PercentLinearLayout
+            <com.wow.carlauncher.common.theme.TLinearLayout
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:orientation="vertical"
@@ -414,7 +414,7 @@
                     android:layout_weight="1"
                     android:orientation="horizontal">
 
-                    <com.zhy.android.percent.support.PercentLinearLayout
+                    <com.wow.carlauncher.common.theme.TLinearLayout
                         android:id="@+id/music_ll_prew"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -428,9 +428,9 @@
                             android:src="@mipmap/ic_prev2_b"
                             app:layout_heightPercent="50%h"
                             app:layout_widthPercent="50%h" />
-                    </com.zhy.android.percent.support.PercentLinearLayout>
+                    </com.wow.carlauncher.common.theme.TLinearLayout>
 
-                    <com.zhy.android.percent.support.PercentLinearLayout
+                    <com.wow.carlauncher.common.theme.TLinearLayout
                         android:id="@+id/music_ll_play"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -444,9 +444,9 @@
                             android:src="@mipmap/ic_play2_b"
                             app:layout_heightPercent="50%h"
                             app:layout_widthPercent="50%h" />
-                    </com.zhy.android.percent.support.PercentLinearLayout>
+                    </com.wow.carlauncher.common.theme.TLinearLayout>
 
-                    <com.zhy.android.percent.support.PercentLinearLayout
+                    <com.wow.carlauncher.common.theme.TLinearLayout
                         android:id="@+id/music_ll_next"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
@@ -460,12 +460,12 @@
                             android:src="@mipmap/ic_next2_b"
                             app:layout_heightPercent="50%h"
                             app:layout_widthPercent="50%h" />
-                    </com.zhy.android.percent.support.PercentLinearLayout>
+                    </com.wow.carlauncher.common.theme.TLinearLayout>
                 </LinearLayout>
-            </com.zhy.android.percent.support.PercentLinearLayout>
-        </com.zhy.android.percent.support.PercentLinearLayout>
+            </com.wow.carlauncher.common.theme.TLinearLayout>
+        </com.wow.carlauncher.common.theme.TLinearLayout>
 
-        <com.zhy.android.percent.support.PercentRelativeLayout
+        <com.wow.carlauncher.common.theme.TRelativeLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="265">
@@ -481,7 +481,7 @@
                 app:layout_heightPercent="50%h"
                 app:layout_textSizePercent="25%h"
                 app:layout_widthPercent="75%w" />
-        </com.zhy.android.percent.support.PercentRelativeLayout>
+        </com.wow.carlauncher.common.theme.TRelativeLayout>
     </LinearLayout>
 
     <ImageView
@@ -495,4 +495,4 @@
         android:src="@mipmap/ic_back"
         app:layout_heightPercent="10%h"
         app:layout_widthPercent="10%h" />
-</com.zhy.android.percent.support.PercentRelativeLayout>
+</com.wow.carlauncher.common.theme.TRelativeLayout>

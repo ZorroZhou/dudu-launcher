@@ -92,8 +92,42 @@
     <color name="l_music_zuozhe_cb">#818796</color>
     <color name="l_music_zuozhe_kb">#818796</color>
 
-    <!--图标的颜色-->
-    <!--<color name="l_msg">#666f80</color>-->
-    <!--<color name="l_msg_b">#fbfbfb</color>-->
-    <!--<color name="l_msg_cb">#fbfbfb</color>-->
+    <color name="theme_item_title">#333e54</color>
+
+    <color name="theme_music_title">#697380</color>
+    <color name="theme_music_singer">#7b8391</color>
+
+    <color name="theme_amap_xiansu">#fbfbfb</color>
+    <color name="theme_amap_shengyulicheng">#fbfbfb</color>
+
+    <color name="theme_weather_1_tianqi">#9ba1a9</color>
+    <color name="theme_weather_1_wendu">#697185</color>
+    <color name="theme_weather_1_city">#697185</color>
+    <color name="theme_weather_1_name">#9ba1a9</color>
+    <color name="theme_weather_1_value">#333e54</color>
+
+    <color name="theme_weather_2_wendu">#fbfbfb</color>
+    <color name="theme_weather_2_tianqi">#848a95</color>
+    <color name="theme_weather_2_name">#848a95</color>
+    <color name="theme_weather_2_value">#aaa</color>
+
+    <color name="theme_obd_info">#697185</color>
+    <color name="theme_obd_msg">#666f80</color>
+
+    <color name="theme_taiya_info">#697185</color>
+    <color name="theme_taiya_msg">#666f80</color>
+
+    <color name="theme_time_shijian">#333e54</color>
+    <color name="theme_time_week">#666f80</color>
+    <color name="theme_time_day">#666f80</color>
+    <color name="theme_time_lunar">#666f80</color>
+
+    <color name="theme_dock_title">#333e54</color>
+    <color name="theme_app_name">#666f80</color>
+
+    <color name="theme_prompt_time">#333e54</color>
+
+    <color name="theme_console_appname">#333e54</color>
+    <color name="theme_console_time">#333e54</color>
+    <color name="theme_console_music_title">#333e54</color>
 </resources>

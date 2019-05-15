@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.zhy.android.percent.support.PercentLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.wow.carlauncher.common.theme.TLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/base"
@@ -8,7 +8,7 @@
     android:gravity="left"
     tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry,NestedWeights">
 
-    <com.zhy.android.percent.support.PercentLinearLayout
+    <com.wow.carlauncher.common.theme.TLinearLayout
         android:id="@+id/ll_win"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -51,5 +51,5 @@
             android:text="取消"
             android:visibility="gone"
             app:layout_marginPercent="10%h" />
-    </com.zhy.android.percent.support.PercentLinearLayout>
-</com.zhy.android.percent.support.PercentLinearLayout>
+    </com.wow.carlauncher.common.theme.TLinearLayout>
+</com.wow.carlauncher.common.theme.TLinearLayout>

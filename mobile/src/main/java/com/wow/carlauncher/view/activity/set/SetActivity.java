@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.tencent.tauth.Tencent;
 import com.wow.carlauncher.R;
@@ -48,16 +49,16 @@ public class SetActivity extends BaseActivity {
     @BindView(R.id.ll_set)
     FrameLayout ll_set;
 
-    //    @BindView(R.id.ll_user)
-//     LinearLayout ll_user;
-//
+    @BindView(R.id.ll_user)
+    LinearLayout ll_user;
+
     private Tencent mTencent;
 
     @Override
     public void initView() {
         setTitle("设置");
         clickEvent(sg_theme);
-        //ll_user.setOnClickListener(v -> ToastManage.self().show("还没开发呢"));
+        ll_user.setOnClickListener(v -> ToastManage.self().show("还没开发呢"));
     }
 
     @OnClick(value = {R.id.sg_dev, R.id.sg_item, R.id.sg_driving, R.id.sg_theme, R.id.sg_home, R.id.sg_obd, R.id.sg_fk, R.id.sg_load_app, R.id.sg_popup, R.id.sg_system_set})

@@ -45,8 +45,8 @@
     <color name="theme_music_title">#697380</color>
     <color name="theme_music_singer">#7b8391</color>
 
-    <color name="theme_amap_xiansu">#fbfbfb</color>
-    <color name="theme_amap_shengyulicheng">#fbfbfb</color>
+    <color name="theme_amap_xiansu">#333e54</color>
+    <color name="theme_amap_shengyulicheng">#333e54</color>
 
     <color name="theme_weather_1_tianqi">#9ba1a9</color>
     <color name="theme_weather_1_wendu">#697185</color>

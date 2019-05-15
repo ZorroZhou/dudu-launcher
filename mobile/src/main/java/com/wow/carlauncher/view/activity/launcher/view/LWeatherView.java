@@ -95,7 +95,7 @@ public class LWeatherView extends BaseThemeView {
             }
 
             if (cityWeather != null) {
-                iv_tianqi.setImageDrawable(SkinManage.self().getDrawable(WeatherIconTemp.getWeatherResId(cityWeather.getWeather())));
+                iv_tianqi.setImageResource(WeatherIconTemp.getWeatherResId(cityWeather.getWeather()));
                 tv_tianqi.setText(cityWeather.getWeather());
                 tv_wendu1.setText(String.valueOf(cityWeather.getTemperature() + "°"));
                 tv_kqsd.setText(String.valueOf(cityWeather.getHumidity()));

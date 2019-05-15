@@ -8,12 +8,12 @@ import com.wow.carlauncher.R;
 
 public class AMapCarConstant {
     public static final int[] ICONS = {
-            R.mipmap.hud_sou1, R.mipmap.hud_sou2, R.mipmap.hud_sou3,
-            R.mipmap.hud_sou4, R.mipmap.hud_sou5, R.mipmap.hud_sou6,
-            R.mipmap.hud_sou7, R.mipmap.hud_sou8, R.mipmap.hud_sou9,
-            R.mipmap.hud_sou10, R.mipmap.hud_sou11, R.mipmap.hud_sou12,
-            R.mipmap.hud_sou13, R.mipmap.hud_sou14, R.mipmap.hud_sou15,
-            R.mipmap.hud_sou16, R.mipmap.hud_sou17, R.mipmap.hud_sou18, R.mipmap.hud_sou19, R.mipmap.hud_sou20};
+            R.drawable.hud_sou1, R.drawable.hud_sou2, R.drawable.hud_sou3,
+            R.drawable.hud_sou4, R.drawable.hud_sou5, R.drawable.hud_sou6,
+            R.drawable.hud_sou7, R.drawable.hud_sou8, R.drawable.hud_sou9,
+            R.drawable.hud_sou10, R.drawable.hud_sou11, R.drawable.hud_sou12,
+            R.drawable.hud_sou13, R.drawable.hud_sou14, R.drawable.hud_sou15,
+            R.drawable.hud_sou16, R.drawable.hud_sou17, R.drawable.hud_sou18, R.drawable.hud_sou19, R.drawable.hud_sou20};
 
     public static final String AMAP_PACKAGE = "com.autonavi.amapauto";
 

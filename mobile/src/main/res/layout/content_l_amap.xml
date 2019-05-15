@@ -237,7 +237,7 @@
                     android:layout_height="0dp"
                     android:layout_centerInParent="true"
                     android:scaleType="fitCenter"
-                    android:src="@mipmap/hud_sou9"
+                    android:src="@drawable/hud_sou9"
                     app:layout_heightPercent="70%h"
                     app:layout_widthPercent="70%h" />
             </com.wow.carlauncher.common.theme.TRelativeLayout>

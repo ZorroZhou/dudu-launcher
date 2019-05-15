@@ -73,6 +73,8 @@ public class LAMapView extends BaseThemeView {
         } else {
             line_xunhang.setVisibility(GONE);
         }
+        refreshMute();
+        refreshRoad();
     }
 
     @Override
@@ -161,19 +163,19 @@ public class LAMapView extends BaseThemeView {
 
     private void refreshMute() {
         if (mute) {
-            iv_mute.setImageDrawable(SkinManage.self().getDrawable(R.drawable.theme_amap_jy));
+            iv_mute.setImageResource(R.drawable.theme_amap_jy);
         } else {
-            iv_mute.setImageDrawable(SkinManage.self().getDrawable(R.drawable.theme_amap_bjy));
+            iv_mute.setImageResource(R.drawable.theme_amap_bjy);
         }
     }
 
     private void refreshRoad() {
         if (roadType == 0 || roadType == 6) {
-            iv_road.setImageDrawable(SkinManage.self().getDrawable(R.drawable.theme_amap_road1));
+            iv_road.setImageResource(R.drawable.theme_amap_road1);
         } else if (roadType == 4 || roadType == 5 || roadType == 9 || roadType == 10) {
-            iv_road.setImageDrawable(SkinManage.self().getDrawable(R.drawable.theme_amap_road3));
+            iv_road.setImageResource(R.drawable.theme_amap_road3);
         } else {
-            iv_road.setImageDrawable(SkinManage.self().getDrawable(R.drawable.theme_amap_road2));
+            iv_road.setImageResource(R.drawable.theme_amap_road2);
         }
     }
 

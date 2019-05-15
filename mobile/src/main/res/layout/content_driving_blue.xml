@@ -223,7 +223,7 @@
                     android:layout_height="0dp"
                     android:layout_alignParentLeft="true"
                     android:padding="10dp"
-                    android:src="@mipmap/hud_sou9"
+                    android:src="@drawable/hud_sou9"
                     app:layout_heightPercent="70%h"
                     app:layout_marginPercent="10%h"
                     app:layout_widthPercent="70%h" />

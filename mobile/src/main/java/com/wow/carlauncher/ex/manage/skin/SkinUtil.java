@@ -4,6 +4,8 @@ import android.view.Gravity;
 import android.view.View;
 
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.common.util.CommonUtil;
+import com.wow.carlauncher.view.activity.launcher.LayoutEnum;
 
 public class SkinUtil {
     public static int analysisItemTitleAlign(String align) {
@@ -69,4 +71,11 @@ public class SkinUtil {
         }
     }
 
+    public static LayoutEnum analysisLauncherLayout(String layout) {
+        if (CommonUtil.equals(SkinConstant.LauncherLayout.layout2, layout)) {
+            return LayoutEnum.LAYOUT2;
+        } else {
+            return LayoutEnum.LAYOUT1;
+        }
+    }
 }

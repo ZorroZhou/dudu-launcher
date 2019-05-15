@@ -21,6 +21,7 @@ public class CommonData {
     };
     //所有的桌面插件
     public static final LayoutEnum[] LAUNCHER_LAYOUTS = {
+            LayoutEnum.AUTO,
             LayoutEnum.LAYOUT1,
             LayoutEnum.LAYOUT2
     };

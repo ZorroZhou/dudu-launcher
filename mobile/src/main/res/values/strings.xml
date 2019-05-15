@@ -47,4 +47,5 @@
     <string name="theme_item_amap_xunhang_line">hide</string>
     <string name="theme_item_weather_layout">layout1</string>
     <string name="theme_use_wallpaper">yes</string>
+    <string name="theme_launcher_layout">layout1</string>
 </resources>

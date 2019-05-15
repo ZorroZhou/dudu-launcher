@@ -112,6 +112,7 @@ public class LauncherActivity extends Activity implements SkinManage.OnSkinChang
     LPagerPostion postion;
 
     private int lastPagerNum = 0;
+    private LayoutEnum currentLayoutEnum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,7 +131,12 @@ public class LauncherActivity extends Activity implements SkinManage.OnSkinChang
         } else {
             LogEx.d(this, "home full : false");
         }
-
+        LayoutEnum layoutEnum = LayoutEnum.getById(SharedPreUtil.getInteger(SDATA_LAUNCHER_LAYOUT, LayoutEnum.AUTO.getId()));
+        if (layoutEnum.equals(LayoutEnum.AUTO)) {
+            currentLayoutEnum = SkinUtil.analysisLauncherLayout(SkinManage.self().getString(R.string.theme_launcher_layout));
+        } else {
+            currentLayoutEnum = layoutEnum;
+        }
 
         //超级大坑,必去全局设置才能用
         ThemeManage.self().refreshTheme();
@@ -223,10 +229,9 @@ public class LauncherActivity extends Activity implements SkinManage.OnSkinChang
             pageNum++;
         }
         itemPager = new LPageView[pageNum];
-        LayoutEnum layoutEnum = LayoutEnum.getById(SharedPreUtil.getInteger(SDATA_LAUNCHER_LAYOUT, LayoutEnum.LAYOUT1.getId()));
         for (int i = 0; i < itemPager.length; i++) {
             itemPager[i] = new LPageView(this);
-            itemPager[i].setLayoutEnum(layoutEnum);
+            itemPager[i].setLayoutEnum(currentLayoutEnum);
         }
 
         //记录当前第几页,这里应该是-1,因为下面会从0开始,直接+1
@@ -273,6 +278,7 @@ public class LauncherActivity extends Activity implements SkinManage.OnSkinChang
     }
 
     private void loadLayout() {
+
         LogEx.d(this, "loadLayout:start");
         if (ll_top.getParent() != null) {
             ((ViewGroup) ll_top.getParent()).removeView(ll_top);
@@ -281,8 +287,7 @@ public class LauncherActivity extends Activity implements SkinManage.OnSkinChang
             ((ViewGroup) ll_dock.getParent()).removeView(ll_dock);
         }
 
-        LayoutEnum layoutEnum = LayoutEnum.getById(SharedPreUtil.getInteger(SDATA_LAUNCHER_LAYOUT, LayoutEnum.LAYOUT1.getId()));
-        if (layoutEnum.equals(LayoutEnum.LAYOUT1)) {
+        if (currentLayoutEnum.equals(LayoutEnum.LAYOUT1)) {
             LinearLayout.LayoutParams dockLp = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT);
             dockLp.weight = 7;
             ll_center.addView(ll_dock, 0, dockLp);
@@ -294,7 +299,7 @@ public class LauncherActivity extends Activity implements SkinManage.OnSkinChang
             LinearLayout.LayoutParams centerLp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0);
             centerLp.weight = 8;
             ll_center.setLayoutParams(centerLp);
-        } else if (layoutEnum.equals(LayoutEnum.LAYOUT2)) {
+        } else if (currentLayoutEnum.equals(LayoutEnum.LAYOUT2)) {
             LinearLayout.LayoutParams topLp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0);
             topLp.weight = 9;
 
@@ -310,15 +315,15 @@ public class LauncherActivity extends Activity implements SkinManage.OnSkinChang
 
             ll_base.addView(ll_dock, bottomLp);
         }
-        ll_top.setLayoutEnum(layoutEnum);
-        ll_dock.setLayoutEnum(layoutEnum);
+        ll_top.setLayoutEnum(currentLayoutEnum);
+        ll_dock.setLayoutEnum(currentLayoutEnum);
 
         for (LPageView lPageView : itemPager) {
-            lPageView.setLayoutEnum(layoutEnum);
+            lPageView.setLayoutEnum(currentLayoutEnum);
         }
 
         for (LAppsView lAppsView : appsPager) {
-            lAppsView.setLayoutEnum(layoutEnum);
+            lAppsView.setLayoutEnum(currentLayoutEnum);
         }
         LogEx.d(this, "loadLayout:end");
     }
@@ -362,6 +367,14 @@ public class LauncherActivity extends Activity implements SkinManage.OnSkinChang
         } else {
             ll_base.setBackgroundResource(R.drawable.theme_launcher_bg);
         }
+        LayoutEnum layoutEnum = LayoutEnum.getById(SharedPreUtil.getInteger(SDATA_LAUNCHER_LAYOUT, LayoutEnum.AUTO.getId()));
+        if (layoutEnum.equals(LayoutEnum.AUTO)) {
+            currentLayoutEnum = SkinUtil.analysisLauncherLayout(SkinManage.self().getString(R.string.theme_launcher_layout));
+        } else {
+            currentLayoutEnum = layoutEnum;
+        }
+
+        loadLayout();
         LogEx.d(this, "onThemeChanged:end");
     }
 
@@ -405,6 +418,12 @@ public class LauncherActivity extends Activity implements SkinManage.OnSkinChang
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final LLayoutRefreshEvent event) {
         LogEx.d(this, "LLayoutRefreshEvent");
+        LayoutEnum layoutEnum = LayoutEnum.getById(SharedPreUtil.getInteger(SDATA_LAUNCHER_LAYOUT, LayoutEnum.AUTO.getId()));
+        if (layoutEnum.equals(LayoutEnum.AUTO)) {
+            currentLayoutEnum = SkinUtil.analysisLauncherLayout(SkinManage.self().getString(R.string.theme_launcher_layout));
+        } else {
+            currentLayoutEnum = layoutEnum;
+        }
         loadLayout();
     }
 

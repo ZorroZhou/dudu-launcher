@@ -28,7 +28,6 @@ import com.wow.carlauncher.view.activity.set.event.SEventPromptShowRefresh;
 import com.wow.carlauncher.view.activity.set.event.SEventSetHomeFull;
 import com.wow.carlauncher.view.activity.set.listener.SetEnumOnClickListener;
 import com.wow.carlauncher.view.activity.set.listener.SetSwitchOnClickListener;
-import com.wow.carlauncher.view.clickListener.PicSelectOnClickListener;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -49,6 +48,7 @@ public class SHomeView extends SetBaseView {
     public SHomeView(SetActivity activity) {
         super(activity);
     }
+
     @Override
     protected int getContent() {
         return R.layout.content_set_home;
@@ -89,8 +89,8 @@ public class SHomeView extends SetBaseView {
         sv_prompt_show.setChecked(SharedPreUtil.getBoolean(CommonData.SDATA_LAUNCHER_PROMPT_SHOW, true));
 
 
-        sv_home_layout.setSummary(LayoutEnum.getById(SharedPreUtil.getInteger(SDATA_LAUNCHER_LAYOUT, LayoutEnum.LAYOUT1.getId())).getName());
-        sv_home_layout.setOnClickListener(new PicSelectOnClickListener<LayoutEnum>(getContext(), LAUNCHER_LAYOUTS) {
+        sv_home_layout.setSummary(LayoutEnum.getById(SharedPreUtil.getInteger(SDATA_LAUNCHER_LAYOUT, LayoutEnum.AUTO.getId())).getName());
+        sv_home_layout.setOnClickListener(new SetEnumOnClickListener<LayoutEnum>(getContext(), LAUNCHER_LAYOUTS) {
             @Override
             public String title() {
                 return "请选择首页的布局";
@@ -98,7 +98,7 @@ public class SHomeView extends SetBaseView {
 
             @Override
             public LayoutEnum getCurr() {
-                return LayoutEnum.getById(SharedPreUtil.getInteger(SDATA_LAUNCHER_LAYOUT, LayoutEnum.LAYOUT1.getId()));
+                return LayoutEnum.getById(SharedPreUtil.getInteger(SDATA_LAUNCHER_LAYOUT, LayoutEnum.AUTO.getId()));
             }
 
             @Override

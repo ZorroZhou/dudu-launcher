@@ -1,9 +1,11 @@
 package com.wow.carlauncher.view.activity.launcher;
 
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.view.activity.set.SetEnum;
 import com.wow.carlauncher.view.adapter.PicSelectAdapter;
 
-public enum LayoutEnum implements PicSelectAdapter.PicModel {
+public enum LayoutEnum implements PicSelectAdapter.PicModel, SetEnum {
+    AUTO("使用主题布局", 0),
     LAYOUT1("布局1(dock在左侧,托盘在底部)", 1),
     LAYOUT2("布局2(dock在底部,托盘在顶部)", 2);
     private String name;
@@ -43,6 +45,8 @@ public enum LayoutEnum implements PicSelectAdapter.PicModel {
 
     public static LayoutEnum getById(Integer id) {
         switch (id) {
+            case 0:
+                return AUTO;
             case 1:
                 return LAYOUT1;
             case 2:

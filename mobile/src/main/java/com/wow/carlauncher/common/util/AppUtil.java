@@ -106,6 +106,16 @@ public class AppUtil {
         return localVersion;
     }
 
+    public static long getApkVersion(String absPath, Context context) {
+        PackageManager pm = context.getPackageManager();
+        PackageInfo pkgInfo = pm.getPackageArchiveInfo(absPath, PackageManager.GET_ACTIVITIES);
+        if (pkgInfo != null) {
+            return pkgInfo.versionCode;
+        } else {
+            return 0;
+        }
+    }
+
     public static void sendKeyCode(final int keyCode) {
         new Thread(new Runnable() {
             @Override

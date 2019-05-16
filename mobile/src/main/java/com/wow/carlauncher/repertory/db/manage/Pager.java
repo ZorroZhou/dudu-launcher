@@ -3,7 +3,7 @@ package com.wow.carlauncher.repertory.db.manage;
 import java.util.List;
 import java.util.Map;
 
-public class Pager extends BasePager {
+public class Pager extends PagerReq {
     private String selectSql;
     private String[] param;
 

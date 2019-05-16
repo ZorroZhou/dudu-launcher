@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
 
+import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.manage.time.event.TMEventMinute;
 
 import org.greenrobot.eventbus.EventBus;
@@ -37,6 +38,7 @@ public class LogEx {
 
     public static void init(Context context) {
         LogEx.context = context;
+        LogEx.setSaveFile(SharedPreUtil.getBoolean(CommonData.SDATA_LOG_OPEN, false));
     }
 
     public static void setSaveFile(boolean saveFile) {

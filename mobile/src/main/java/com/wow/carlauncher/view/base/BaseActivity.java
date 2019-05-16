@@ -125,7 +125,7 @@ public abstract class BaseActivity extends Activity {
     private boolean showLoading = false;
 
     public void showLoading(final String msg) {
-        TaskExecutor.self().post(() -> {
+        TaskExecutor.self().autoPost(() -> {
             if (showLoading) {
                 return;
             }

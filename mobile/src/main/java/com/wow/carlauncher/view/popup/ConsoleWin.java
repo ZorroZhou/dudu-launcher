@@ -137,6 +137,7 @@ public class ConsoleWin implements SkinManage.OnSkinChangeListener {
     public void onSkinChanged(SkinManage manage) {
         refreshPlay();
         loadDock(false);
+        LogEx.e(this, "onSkinChanged");
     }
 
     private int selectApp = 0;

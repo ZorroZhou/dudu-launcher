@@ -14,6 +14,7 @@ import com.wow.carlauncher.ex.manage.baiduVoice.BaiduVoiceAssistant;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
 import com.wow.carlauncher.ex.manage.location.LocationManage;
 import com.wow.carlauncher.ex.manage.okHttp.OkHttpManage;
+import com.wow.carlauncher.repertory.db.entiy.SkinInfo;
 import com.wow.carlauncher.ex.manage.skin.SkinManage;
 import com.wow.carlauncher.ex.manage.speed.SpeedManage;
 import com.wow.carlauncher.ex.manage.time.TimeManage;
@@ -39,6 +40,9 @@ import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+
+import static com.wow.carlauncher.common.CommonData.SDATA_APP_SKIN_DAY;
+import static com.wow.carlauncher.common.CommonData.SDATA_APP_SKIN_NIGHT;
 
 
 /**
@@ -72,21 +76,28 @@ public class AppContext {
         this.startTime = System.currentTimeMillis();
 
         EventBus.builder().addIndex(new MyEventBusIndex()).installDefaultEventBus();
-
-        SkinManage.self().init(app);
-
+        //共享信息管理器
         SharedPreUtil.init(app);
+        //初始化某些参数
+        if (CommonUtil.isNull(SharedPreUtil.getString(SDATA_APP_SKIN_DAY))) {
+            SharedPreUtil.saveString(SDATA_APP_SKIN_DAY, "com.wow.carlauncher.theme");
+        }
+        if (CommonUtil.isNull(SharedPreUtil.getString(SDATA_APP_SKIN_NIGHT))) {
+            SharedPreUtil.saveString(SDATA_APP_SKIN_NIGHT, "com.wow.carlauncher.theme.heise");
+        }
 
+        //日志管理器
         LogEx.init(app);
-        LogEx.setSaveFile(SharedPreUtil.getBoolean(CommonData.SDATA_LOG_OPEN, false));
-
+        //网络
         OkHttpManage.self().init(app);
-
+        //任务管理器
         TaskExecutor.self().init();
-
-        AppWidgetManage.self().init(app);
-
+        //数据库管理器
         DatabaseManage.init(app, getDatabaseInfo());
+        //皮肤管理器
+        SkinManage.self().init(app);
+        //插件管理器
+        AppWidgetManage.self().init(app);
         //图片加载工具
         ImageManage.self().init(app);
         //通知工具
@@ -239,12 +250,12 @@ public class AppContext {
 
             @Override
             public int getDbVersion() {
-                return 1;
+                return 3;
             }
 
             @Override
             public Class<?>[] getBeanClass() {
-                return new Class[]{CoverTemp.class};
+                return new Class[]{CoverTemp.class, SkinInfo.class};
             }
         };
     }

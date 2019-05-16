@@ -68,7 +68,6 @@ import butterknife.ButterKnife;
 import per.goweii.anypermission.AnyPermission;
 import per.goweii.anypermission.RequestListener;
 import per.goweii.anypermission.RuntimeRequester;
-import skin.support.SkinCompatManager;
 
 import static com.wow.carlauncher.common.CommonData.SDATA_AUTO_TO_DRIVING_TIME;
 import static com.wow.carlauncher.common.CommonData.SDATA_HOME_FULL;
@@ -149,28 +148,28 @@ public class LauncherActivity extends Activity implements SkinManage.OnSkinChang
 
         TaskExecutor.self().run(() -> TaskExecutor.self().autoPost(this::requestRuntime), 1000);
         LogEx.d(this, "onCreate:end");
-        SkinManage.self().restoreDefaultTheme();
-        TaskExecutor.self().post(new Runnable() {
-            @Override
-            public void run() {
-                SkinManage.self().loadSkin("heise.skin", new SkinCompatManager.SkinLoaderListener() {
-                    @Override
-                    public void onStart() {
-                        LogEx.d(SkinCompatManager.class, "onStart");
-                    }
-
-                    @Override
-                    public void onSuccess() {
-                        LogEx.d(SkinCompatManager.class, "onSuccess");
-                    }
-
-                    @Override
-                    public void onFailed(String errMsg) {
-                        LogEx.d(SkinCompatManager.class, "onFailed:" + errMsg);
-                    }
-                }, SkinCompatManager.SKIN_LOADER_STRATEGY_ASSETS);
-            }
-        }, 5000);
+//        SkinManage.self().restoreDefaultTheme();
+//        TaskExecutor.self().post(new Runnable() {
+//            @Override
+//            public void run() {
+//                SkinManage.self().loadSkin("heise.skin", new SkinCompatManager.SkinLoaderListener() {
+//                    @Override
+//                    public void onStart() {
+//                        LogEx.d(SkinCompatManager.class, "onStart");
+//                    }
+//
+//                    @Override
+//                    public void onSuccess() {
+//                        LogEx.d(SkinCompatManager.class, "onSuccess");
+//                    }
+//
+//                    @Override
+//                    public void onFailed(String errMsg) {
+//                        LogEx.d(SkinCompatManager.class, "onFailed:" + errMsg);
+//                    }
+//                }, SkinCompatManager.SKIN_LOADER_STRATEGY_ASSETS);
+//            }
+//        }, 5000);
     }
 
     public void initView() {
@@ -365,13 +364,15 @@ public class LauncherActivity extends Activity implements SkinManage.OnSkinChang
         } else {
             ll_base.setBackgroundResource(R.drawable.theme_launcher_bg);
         }
+
+        //看一下是不是需要切换皮肤的布局
         LayoutEnum layoutEnum = LayoutEnum.getById(SharedPreUtil.getInteger(SDATA_LAUNCHER_LAYOUT, LayoutEnum.AUTO.getId()));
         if (layoutEnum.equals(LayoutEnum.AUTO)) {
             currentLayoutEnum = SkinUtil.analysisLauncherLayout(SkinManage.self().getString(R.string.theme_launcher_layout));
         } else {
             currentLayoutEnum = layoutEnum;
         }
-
+        
         loadLayout();
         LogEx.d(this, "onThemeChanged:end");
     }

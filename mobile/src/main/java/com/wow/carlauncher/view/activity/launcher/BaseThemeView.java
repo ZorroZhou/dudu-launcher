@@ -38,8 +38,8 @@ public abstract class BaseThemeView extends BaseView implements SkinManage.OnSki
 
     @Override
     public void onSkinChanged(SkinManage manage) {
-        if (!manage.getSkinName().equals(skinName)) {
-            skinName = manage.getSkinName();
+        if (!manage.getSkinMark().equals(skinName)) {
+            skinName = manage.getSkinMark();
             changedSkin(manage);
         }
     }

@@ -10,6 +10,10 @@ import android.util.SparseArray;
 import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.CommonUtil;
+import com.wow.carlauncher.common.util.SharedPreUtil;
+import com.wow.carlauncher.repertory.db.entiy.SkinInfo;
+import com.wow.carlauncher.repertory.db.manage.DatabaseManage;
+import com.wow.carlauncher.repertory.db.manage.DatabaseManage.IF;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -26,7 +30,7 @@ import skin.support.SkinCompatManager;
 import skin.support.utils.SkinConstants;
 import skin.support.utils.SkinFileUtils;
 
-import static skin.support.SkinCompatManager.SKIN_LOADER_STRATEGY_NONE;
+import static com.wow.carlauncher.common.CommonData.SDATA_APP_SKIN_DAY;
 
 public class SkinManage {
 
@@ -44,33 +48,92 @@ public class SkinManage {
     }
 
     private Context context;
+    public static final String DEFAULT_MARK = "com.wow.carlauncher.theme";
+    public static final String DEFAULT_MARK_NIGHT = "com.wow.carlauncher.theme.heise";
+    public static final String DEFAULT_MARK_BLACK = "com.wow.carlauncher.theme.chunhei";
 
     public void init(Application context) {
+        long t1 = System.currentTimeMillis();
         this.context = context;
-        SkinCompatManager.withoutActivity(context);
+        //这里不能异步加载!!!
+        SkinCompatManager.withoutActivity(context).addStrategy(new MySkinLoader());
+        copySkinFromAssets(context, "heise.skin");
+        copySkinFromAssets(context, "chunhei.skin");
+        LogEx.d(this, "copy time:" + (System.currentTimeMillis() - t1));
+        //初始化数据库
+        if (DatabaseManage.getCount("select * from SkinInfo where mark='" + DEFAULT_MARK + "'") == 0) {
+            DatabaseManage.insert(new SkinInfo()
+                    .setCanUse(IF.YES)
+                    .setMark(DEFAULT_MARK)
+                    .setName("默认主题")
+                    .setType(SkinInfo.TYPE_APP_IN));
+        }
+        if (DatabaseManage.getCount("select * from SkinInfo where mark='" + DEFAULT_MARK_NIGHT + "'") == 0) {
+            DatabaseManage.insert(new SkinInfo()
+                    .setCanUse(IF.YES)
+                    .setMark(DEFAULT_MARK_NIGHT)
+                    .setPath(SkinFileUtils.getSkinDir(context) + "/heise.skin")
+                    .setName("夜间主题")
+                    .setType(SkinInfo.TYPE_APP_IN));
+        }
+
+        if (DatabaseManage.getCount("select * from SkinInfo where mark='" + DEFAULT_MARK_BLACK + "'") == 0) {
+            DatabaseManage.insert(new SkinInfo()
+                    .setCanUse(IF.YES)
+                    .setMark(DEFAULT_MARK_BLACK)
+                    .setPath(SkinFileUtils.getSkinDir(context) + "/chunhei.skin")
+                    .setName("纯黑主题")
+                    .setType(SkinInfo.TYPE_APP_IN));
+        }
+        loadSkin(null);
+        LogEx.d(this, "init time:" + (System.currentTimeMillis() - t1));
     }
 
-    private String skinName = "";
+    private String skinMark = "";
 
-    public String getSkinName() {
-        return skinName;
+    public String getSkinMark() {
+        return skinMark;
     }
 
     private String skinPackageName = "";
     private Resources skinSkinResources = null;
-    private String skinPath = "";
 
     private List<OnSkinChangeListener> listeners = new LinkedList<>();
     private SparseArray<String> cachedIdToName = new SparseArray<>();//ID和ID名称的缓存
     private Map<String, String> cachedString = new HashMap<>();
     private Map<String, Integer> cachedDrawable = new HashMap<>();
 
-    public void restoreDefaultTheme() {
-        loadSkin("", null, SKIN_LOADER_STRATEGY_NONE);
-    }
+    //这里以主题的mark作为唯一标记,不要用路径
+    public void loadSkin(SkinCompatManager.SkinLoaderListener listener) {
+        SkinInfo skinInfo = DatabaseManage.getBean(SkinInfo.class, " mark='" + SharedPreUtil.getString(SDATA_APP_SKIN_DAY) + "' and canUse=" + IF.YES);
+        //存储的主题丢失了,直接使用默认主题
+        if (skinInfo == null) {
+            skinInfo = new SkinInfo()
+                    .setMark(DEFAULT_MARK)
+                    .setName("默认主题");
+        }
 
-    public void loadSkin(String skinName, SkinCompatManager.SkinLoaderListener listener, int strategy) {
-        SkinCompatManager.getInstance().loadSkin(skinName, new SkinCompatManager.SkinLoaderListener() {
+        this.skinMark = skinInfo.getMark();
+        //清理缓存
+        cachedIdToName.clear();
+        cachedString.clear();
+        //如果是默认主题,则不加载额外信息
+        if (CommonUtil.equals(this.skinMark, DEFAULT_MARK)) {
+            skinPackageName = "";
+            skinSkinResources = context.getResources();
+        } else {
+            //如果不是默认主题,加载额外信息,如果加载失败,则加载默认主题
+            try {
+                skinPackageName = SkinCompatManager.getInstance().getSkinPackageName(skinInfo.getPath());
+                skinSkinResources = SkinCompatManager.getInstance().getSkinResources(skinInfo.getPath());
+            } catch (Exception e) {
+                this.skinMark = DEFAULT_MARK;
+                skinPackageName = "";
+                skinSkinResources = context.getResources();
+            }
+        }
+
+        SkinCompatManager.SkinLoaderListener loaderListener = new SkinCompatManager.SkinLoaderListener() {
             @Override
             public void onStart() {
                 if (listener != null) {
@@ -80,15 +143,14 @@ public class SkinManage {
 
             @Override
             public void onSuccess() {
-                SkinManage.this.skinName = skinName;
-                loadSkin();
+                //主题管理器加载完毕后,自己再处理一遍,为了保证某些主题管理器处理不了的组件自己可以二次处理
                 //这里如果换肤成功,则开始本地换肤操作
                 if (listeners.size() > 0) {
                     TaskExecutor.self().autoPost(() -> {
                         List<OnSkinChangeListener> temp = new ArrayList<>(listeners.size());
                         temp.addAll(listeners);
-                        for (OnSkinChangeListener listener : temp) {
-                            listener.onSkinChanged(SkinManage.self());
+                        for (OnSkinChangeListener listener1 : temp) {
+                            listener1.onSkinChanged(SkinManage.self());
                         }
 
                         if (listener != null) {
@@ -108,9 +170,36 @@ public class SkinManage {
                     listener.onFailed(errMsg);
                 }
             }
-        }, strategy);
+        };
+        //加载主题,使用自己的加载器
+        SkinCompatManager.getInstance().loadSkin(this.skinMark, loaderListener, MySkinLoader.STRATEGY);
     }
 
+    //
+//    private int getSkinTypeByPath(String path) {
+//        LogEx.d(SkinManage.class, "getSkinTypeByPath:Start");
+//        try {
+//            SkinInfo skinInfo = DatabaseManage.getBean(SkinInfo.class, " path='" + path + "'");
+//            if (skinInfo == null) {
+//                LogEx.e(SkinManage.class, "skinInfo not in database!  path:" + path);
+//                return SkinInfo.TYPE_NONE;
+//            }
+//            String skinPackageName = SkinCompatManager.getInstance().getSkinPackageName(skinInfo.getPath());
+//            if (CommonUtil.isNull(skinPackageName)) {
+//                LogEx.e(SkinManage.class, "skinPackageName is null!  path:" + path);
+//                return SkinInfo.TYPE_NONE;
+//            }
+//            Resources skinSkinResources = SkinCompatManager.getInstance().getSkinResources(skinInfo.getPath());
+//            if (skinSkinResources == null) {
+//                LogEx.e(SkinManage.class, "skinSkinResources is null!  path:" + path);
+//                return SkinInfo.TYPE_NONE;
+//            }
+//            LogEx.d(SkinManage.class, "getSkinTypeByPath:end");
+//            return skinInfo.getType();
+//        } catch (Exception e) {
+//            return SkinInfo.TYPE_NONE;
+//        }
+//    }
     private String copySkinFromAssets(Context context, String name) {
         String skinPath = new File(SkinFileUtils.getSkinDir(context), name).getAbsolutePath();
         try {
@@ -130,20 +219,7 @@ public class SkinManage {
         return skinPath;
     }
 
-    private void loadSkin() {
-        cachedIdToName.clear();
-        cachedString.clear();
-        if (CommonUtil.isNull(this.skinName)) {
-            skinPackageName = "";
-            skinPath = "";
-            skinSkinResources = context.getResources();
-        } else {
-            skinPath = new File(SkinFileUtils.getSkinDir(context), this.skinName).getAbsolutePath();
-            skinPackageName = SkinCompatManager.getInstance().getSkinPackageName(skinPath);
-            skinSkinResources = SkinCompatManager.getInstance().getSkinResources(skinPath);
-        }
-    }
-
+    //获取一个资源的名称,这个必须缓存起来,每个皮肤的名称都是一样的
     private String getResName(int resId) {
         String name = cachedIdToName.get(resId);
         //查询缓存,如果
@@ -154,11 +230,12 @@ public class SkinManage {
         return name;
     }
 
+    //获取皮肤内的字符串信息
     public String getString(int resId) {
-        if (CommonUtil.isNull(this.skinName)) {
+        LogEx.d(this, "getString mark:" + skinMark);
+        if (CommonUtil.equals(skinMark, DEFAULT_MARK)) {
             return context.getResources().getString(resId);
         }
-
         String name = getResName(resId);
         String value = cachedString.get(name);
         if (CommonUtil.isNull(value)) {
@@ -173,8 +250,10 @@ public class SkinManage {
         return value;
     }
 
+    //获取皮肤内图的资源
     public Drawable getDrawable(int resId) {
-        if (CommonUtil.isNull(this.skinName)) {
+        LogEx.d(this, "getDrawable mark:" + skinMark);
+        if (CommonUtil.equals(skinMark, DEFAULT_MARK)) {
             return context.getResources().getDrawable(resId);
         }
 

@@ -32,4 +32,8 @@ public interface SkinConstant {
         String layout2 = "layout2";
     }
 
+    interface If {
+        int YES = 1;
+        int NO = 0;
+    }
 }

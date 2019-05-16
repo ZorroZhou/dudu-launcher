@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 
 import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.TaskExecutor;
@@ -60,7 +59,6 @@ public class DatabaseManage {
      * @return 数据库管理器
      */
     private synchronized static SQLiteDatabase openDatabase() {
-        LogEx.d(DatabaseManage.class, "获取一个数据库管理器");
         if (!inited) {
             throw new IllegalStateException("请先初始化工具！！");
         }
@@ -114,12 +112,12 @@ public class DatabaseManage {
                 e.printStackTrace();
             }
         }
-       LogEx.d(DatabaseManage.class, "数据库表插入：TableName:" + t.name() + " values:" + cv);
+        LogEx.d(DatabaseManage.class, "数据库表插入：TableName:" + t.name() + " values:" + cv);
         openDatabase();
         long r = -1;
         try {
             long rowid = sqLiteDatabase.insert(t.name(), null, cv);
-           LogEx.d(DatabaseManage.class, "数据库表插入：TableName:" + t.name() + " rowid:" + rowid);
+            LogEx.d(DatabaseManage.class, "数据库表插入：TableName:" + t.name() + " rowid:" + rowid);
             if (rowid > 0) {
                 Cursor cursor = sqLiteDatabase.rawQuery("select id from " + t.name() + " where rowid = " + rowid, null);
                 cursor.moveToFirst();
@@ -187,7 +185,7 @@ public class DatabaseManage {
             }
         }
         openDatabase();
-       LogEx.d(DatabaseManage.class, "数据库表更新：TableName:" + t.name() + " values:" + cv + " where " + where);
+        LogEx.d(DatabaseManage.class, "数据库表更新：TableName:" + t.name() + " values:" + cv + " where " + where);
         boolean r = false;
         try {
             r = sqLiteDatabase.update(t.name(), cv, where, null) > 0;
@@ -222,12 +220,12 @@ public class DatabaseManage {
             return false;
         }
 
-       LogEx.d(DatabaseManage.class, "数据库表删除：TableName:" + t.name() + " where " + where);
+        LogEx.d(DatabaseManage.class, "数据库表删除：TableName:" + t.name() + " where " + where);
         openDatabase();
         boolean re = false;
         try {
             int r = sqLiteDatabase.delete(t.name(), where, null);
-           LogEx.d(DatabaseManage.class, "数据库表删除：TableName:" + t.name() + " 删除数量: " + r);
+            LogEx.d(DatabaseManage.class, "数据库表删除：TableName:" + t.name() + " 删除数量: " + r);
             re = r > 0;
         } catch (Exception e) {
             e.printStackTrace();
@@ -236,21 +234,27 @@ public class DatabaseManage {
         return re;
     }
 
+    @NonNull
+    public static <T> List<T> getAll(@NonNull Class<T> clazz) {
+        return getList(clazz, "");
+    }
+
     /**
      * 查询所有
      *
      * @return List
      */
+    @NonNull
     public static <T> List<T> getList(@NonNull Class<T> clazz, String where) {
         // 查询
         BeanInfo info = BeanManage.self().getBeanInfo(clazz);
         if (info == null) {
-            return null;
+            return new ArrayList<>();
         }
         Table t = clazz.getAnnotation(Table.class);
         if (t == null) {
-           LogEx.d(DatabaseManage.class, "Table: 导包错误");
-            return null;
+            LogEx.d(DatabaseManage.class, "Table: 导包错误");
+            return new ArrayList<>();
         }
 
         PropertyInfo[] pis = info.getPropertyInfos();
@@ -261,7 +265,7 @@ public class DatabaseManage {
         List<T> list = new ArrayList<>();
         openDatabase();
         try {
-           LogEx.d(DatabaseManage.class, "sql:" + sql);
+            LogEx.d(DatabaseManage.class, "sql:" + sql);
             Cursor cur = sqLiteDatabase.rawQuery(sql, null);
             while (cur.moveToNext()) {
                 Map<String, Object> map = new HashMap<>();
@@ -285,8 +289,24 @@ public class DatabaseManage {
             e.printStackTrace();
         }
         closeDataBase();
-       LogEx.d(DatabaseManage.class, "数据库表查询列表：getList:" + list);
+        LogEx.d(DatabaseManage.class, "数据库表查询列表：getList:" + list);
         return list;
+    }
+
+    @NonNull
+    public static <T extends BaseEntity> PagerRes<T> getPage(@NonNull Class<T> clazz, PagerReq pagerReq, String where) {
+        // 查询
+        Table t = clazz.getAnnotation(Table.class);
+        if (t == null) {
+            LogEx.d(DatabaseManage.class, "Table: 导包错误");
+            return new PagerRes<>();
+        }
+        String sql = "select * from " + t.name();
+        if (!isNullOrEmpty(where)) {
+            sql = sql + " where " + where;
+        }
+        int count = getCount(sql);
+        return new PagerRes<T>().setTotal(count).setItems(getList(clazz, " 1=1 LIMIT " + pagerReq.getRows() + " OFFSET " + ((pagerReq.getPage() - 1) * pagerReq.getRows())));
     }
 
     /**
@@ -330,7 +350,7 @@ public class DatabaseManage {
             if (cur.moveToFirst()) {
                 int r = cur.getInt(0);
                 cur.close();
-               LogEx.d(DatabaseManage.class, "数据库查询条数： " + r);
+                LogEx.d(DatabaseManage.class, "数据库查询条数： " + r);
                 return r;
             }
         } catch (Exception e) {
@@ -351,6 +371,8 @@ public class DatabaseManage {
     }
 
     public static <T> T getBean(@NonNull Class<T> clazz, @NonNull String where) {
+        LogEx.d(DatabaseManage.class, "getBean:" + clazz + " where:" + where);
+
         Table t = clazz.getAnnotation(Table.class);
         if (t == null) {
             return null;
@@ -359,7 +381,7 @@ public class DatabaseManage {
             where = " where " + where;
         }
         String sql = "select * from " + t.name() + where;
-       LogEx.d(DatabaseManage.class, sql);
+        LogEx.d(DatabaseManage.class, sql);
         Map<String, Object> map = getMap(sql);
         if (map == null)
             return null;
@@ -403,13 +425,13 @@ public class DatabaseManage {
         if (entity.getId() != null) {
             T t = (T) getBean(entity.getClass(), "id=" + entity.getId());
             if (t != null) {
-                Log.d(TAG, "save-update:" + entity);
+                LogEx.d(TAG, "save-update:" + entity);
                 update(entity, "id=" + entity.getId());
                 update = true;
             }
         }
         if (!update) {
-            Log.d(TAG, "save-insert:" + entity);
+            LogEx.d(TAG, "save-insert:" + entity);
             insert(entity);
         }
     }
@@ -472,7 +494,7 @@ public class DatabaseManage {
                     }
                 } else {
                     StringBuilder sqlString = new StringBuilder().append("CREATE TABLE IF NOT EXISTS ").append(t.name()).append(" (");
-                   LogEx.d(DatabaseManage.class, sqlString.toString());
+                    LogEx.d(DatabaseManage.class, sqlString.toString());
                     for (int i = 0; i < pis.length; i++) {
                         PropertyInfo pi = pis[i];
                         if (DatabaseManage.KEY_NAME.equals(pi.getName())) {
@@ -522,7 +544,7 @@ public class DatabaseManage {
             return null;
         }
         if (clazz.equals(Boolean.class) || clazz.equals(boolean.class)) {
-            return Integer.parseInt(value + "") == 1;
+            return Integer.parseInt(value + "") == IF.YES;
         } else if (clazz.equals(Integer.class) || clazz.equals(int.class)) {
             return Integer.parseInt(value + "");
         } else if (clazz.equals(Double.class) || clazz.equals(double.class)) {
@@ -542,5 +564,10 @@ public class DatabaseManage {
 
     private static boolean isNullOrEmpty(@Nullable String string) {
         return string == null || string.length() == 0; // string.isEmpty() in Java 6
+    }
+
+    public interface IF {
+        int YES = 1;
+        int NO = 0;
     }
 }

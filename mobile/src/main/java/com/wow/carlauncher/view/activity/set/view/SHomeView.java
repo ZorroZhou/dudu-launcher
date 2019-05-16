@@ -26,16 +26,17 @@ import com.wow.carlauncher.view.activity.set.SetActivity;
 import com.wow.carlauncher.view.activity.set.SetBaseView;
 import com.wow.carlauncher.view.activity.set.event.SEventPromptShowRefresh;
 import com.wow.carlauncher.view.activity.set.event.SEventSetHomeFull;
-import com.wow.carlauncher.view.activity.set.listener.SetEnumOnClickListener;
+import com.wow.carlauncher.view.activity.set.listener.SetSingleSelect;
 import com.wow.carlauncher.view.activity.set.listener.SetSwitchOnClickListener;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import butterknife.BindView;
 
-import static com.wow.carlauncher.common.CommonData.LAUNCHER_LAYOUTS;
 import static com.wow.carlauncher.common.CommonData.SDATA_LAUNCHER_ITEM_TRAN;
 import static com.wow.carlauncher.common.CommonData.SDATA_LAUNCHER_LAYOUT;
 
@@ -90,7 +91,12 @@ public class SHomeView extends SetBaseView {
 
 
         sv_home_layout.setSummary(LayoutEnum.getById(SharedPreUtil.getInteger(SDATA_LAUNCHER_LAYOUT, LayoutEnum.AUTO.getId())).getName());
-        sv_home_layout.setOnClickListener(new SetEnumOnClickListener<LayoutEnum>(getContext(), LAUNCHER_LAYOUTS) {
+        sv_home_layout.setOnClickListener(new SetSingleSelect<LayoutEnum>(getContext()) {
+            @Override
+            public Collection<LayoutEnum> getAll() {
+                return Arrays.asList(CommonData.LAUNCHER_LAYOUTS);
+            }
+
             @Override
             public String title() {
                 return "请选择首页的布局";
@@ -138,7 +144,12 @@ public class SHomeView extends SetBaseView {
         sv_home_full.setChecked(SharedPreUtil.getBoolean(CommonData.SDATA_HOME_FULL, true));
 
         sv_item_tran.setSummary(ItemTransformer.getById(SharedPreUtil.getInteger(SDATA_LAUNCHER_ITEM_TRAN, ItemTransformer.None.getId())).getName());
-        sv_item_tran.setOnClickListener(new SetEnumOnClickListener<ItemTransformer>(getContext(), CommonData.LAUNCHER_ITEMS_TRANS) {
+        sv_item_tran.setOnClickListener(new SetSingleSelect<ItemTransformer>(getContext()) {
+            @Override
+            public Collection<ItemTransformer> getAll() {
+                return Arrays.asList(CommonData.LAUNCHER_ITEMS_TRANS);
+            }
+
             @Override
             public String title() {
                 return "请选择首页切换动画";

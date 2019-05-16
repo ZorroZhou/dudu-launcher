@@ -48,6 +48,16 @@
     <View style="@style/Interval" />
 
     <com.wow.carlauncher.common.view.SetView
+        android:id="@+id/sv_delete_skin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        st:summary="选择某个外置皮肤进行删除"
+        st:titleEx="删除皮肤"
+        st:type="buttonB" />
+
+    <View style="@style/Interval" />
+
+    <com.wow.carlauncher.common.view.SetView
         android:id="@+id/sv_load_skin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -18,15 +18,16 @@ import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.ex.plugin.obd.ObdProtocolEnum;
 import com.wow.carlauncher.view.activity.set.SetActivity;
 import com.wow.carlauncher.view.activity.set.SetBaseView;
-import com.wow.carlauncher.view.activity.set.listener.SetEnumOnClickListener;
+import com.wow.carlauncher.view.activity.set.listener.SetSingleSelect;
 import com.wow.carlauncher.view.dialog.ListDialog;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import butterknife.BindView;
 
-import static com.wow.carlauncher.common.CommonData.OBD_CONTROLLER;
 import static com.wow.carlauncher.common.CommonData.SDATA_OBD_CONTROLLER;
 
 /**
@@ -56,7 +57,12 @@ public class SObdView extends SetBaseView {
     @Override
     protected void initView() {
         sv_obd_impl_select.setSummary("OBD使用的协议：" + ObdProtocolEnum.getById(SharedPreUtil.getInteger(SDATA_OBD_CONTROLLER, ObdProtocolEnum.YJ_TYB.getId())).getName());
-        sv_obd_impl_select.setOnClickListener(new SetEnumOnClickListener<ObdProtocolEnum>(getContext(), OBD_CONTROLLER) {
+        sv_obd_impl_select.setOnClickListener(new SetSingleSelect<ObdProtocolEnum>(getContext()) {
+            @Override
+            public Collection<ObdProtocolEnum> getAll() {
+                return Arrays.asList(CommonData.OBD_CONTROLLER);
+            }
+
             @Override
             public String title() {
                 return "请选择OBD使用的协议";

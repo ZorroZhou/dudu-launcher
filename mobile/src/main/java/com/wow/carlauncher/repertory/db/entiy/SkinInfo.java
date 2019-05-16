@@ -6,7 +6,6 @@ import com.wow.carlauncher.view.activity.set.SetEnum;
 
 @Table(name = "SkinInfo")
 public class SkinInfo extends BaseEntity implements SetEnum {
-    public static final int TYPE_NONE = 0;
     public static final int TYPE_APP_IN = 1;
     public static final int TYPE_OTHER = 2;
 

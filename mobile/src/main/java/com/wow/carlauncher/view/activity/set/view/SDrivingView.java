@@ -15,14 +15,16 @@ import com.wow.carlauncher.view.activity.driving.DrivingViewEnum;
 import com.wow.carlauncher.view.activity.set.SetActivity;
 import com.wow.carlauncher.view.activity.set.SetBaseView;
 import com.wow.carlauncher.view.activity.set.event.SAEventRefreshDriving;
-import com.wow.carlauncher.view.activity.set.listener.SetEnumOnClickListener;
+import com.wow.carlauncher.view.activity.set.listener.SetSingleSelect;
 import com.wow.carlauncher.view.activity.set.listener.SetSwitchOnClickListener;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import butterknife.BindView;
 
-import static com.wow.carlauncher.common.CommonData.AUTO_DRIVING_TYPES;
 import static com.wow.carlauncher.common.CommonData.SDATA_AUTO_TO_DRIVING_TIME;
 import static com.wow.carlauncher.common.CommonData.SDATA_AUTO_TO_DRIVING_TYPE;
 import static com.wow.carlauncher.common.CommonData.SDATA_DRIVING_VIEW;
@@ -56,7 +58,12 @@ public class SDrivingView extends SetBaseView {
     @Override
     protected void initView() {
         sv_driving_type.setSummary(DrivingViewEnum.getById(SharedPreUtil.getInteger(SDATA_DRIVING_VIEW, DrivingViewEnum.BLACK.getId())).getName());
-        sv_driving_type.setOnClickListener(new SetEnumOnClickListener<DrivingViewEnum>(getContext(), CommonData.DRIVING_VIEW) {
+        sv_driving_type.setOnClickListener(new SetSingleSelect<DrivingViewEnum>(getContext()) {
+            @Override
+            public Collection<DrivingViewEnum> getAll() {
+                return Arrays.asList(CommonData.DRIVING_VIEW);
+            }
+
             @Override
             public String title() {
                 return "请选择首页切换动画";
@@ -79,7 +86,12 @@ public class SDrivingView extends SetBaseView {
         sv_auto_to_driving.setChecked(SharedPreUtil.getBoolean(CommonData.SDATA_AUTO_TO_DRIVING, false));
 
         sv_auto_to_driving_type.setSummary(AutoDrivingEnum.getById(SharedPreUtil.getInteger(SDATA_AUTO_TO_DRIVING_TYPE, AutoDrivingEnum.TIME.getId())).getName());
-        sv_auto_to_driving_type.setOnClickListener(new SetEnumOnClickListener<AutoDrivingEnum>(getContext(), AUTO_DRIVING_TYPES) {
+        sv_auto_to_driving_type.setOnClickListener(new SetSingleSelect<AutoDrivingEnum>(getContext()) {
+            @Override
+            public Collection<AutoDrivingEnum> getAll() {
+                return Arrays.asList(CommonData.AUTO_DRIVING_TYPES);
+            }
+
             @Override
             public String title() {
                 return "选择自动跳转方式";

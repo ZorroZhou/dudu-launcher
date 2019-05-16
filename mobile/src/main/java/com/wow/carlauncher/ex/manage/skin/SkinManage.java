@@ -5,12 +5,14 @@ import android.app.Application;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
 import android.util.SparseArray;
 
 import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
+import com.wow.carlauncher.common.util.SunRiseSetUtil;
 import com.wow.carlauncher.repertory.db.entiy.SkinInfo;
 import com.wow.carlauncher.repertory.db.manage.DatabaseManage;
 import com.wow.carlauncher.repertory.db.manage.DatabaseManage.IF;
@@ -21,6 +23,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -30,7 +33,10 @@ import skin.support.SkinCompatManager;
 import skin.support.utils.SkinConstants;
 import skin.support.utils.SkinFileUtils;
 
+import static com.wow.carlauncher.common.CommonData.HOUR_MILL;
+import static com.wow.carlauncher.common.CommonData.SDATA_APP_SKIN;
 import static com.wow.carlauncher.common.CommonData.SDATA_APP_SKIN_DAY;
+import static com.wow.carlauncher.common.CommonData.SDATA_APP_SKIN_NIGHT;
 
 public class SkinManage {
 
@@ -52,6 +58,13 @@ public class SkinManage {
     public static final String DEFAULT_MARK_NIGHT = "com.wow.carlauncher.theme.heise";
     public static final String DEFAULT_MARK_BLACK = "com.wow.carlauncher.theme.chunhei";
 
+    private Map<String, SkinInfo> builtInSkin;
+
+    @NonNull
+    public Map<String, SkinInfo> getBuiltInSkin() {
+        return builtInSkin;
+    }
+
     public void init(Application context) {
         long t1 = System.currentTimeMillis();
         this.context = context;
@@ -61,31 +74,26 @@ public class SkinManage {
         copySkinFromAssets(context, "chunhei.skin");
         LogEx.d(this, "copy time:" + (System.currentTimeMillis() - t1));
         //初始化数据库
-        if (DatabaseManage.getCount("select * from SkinInfo where mark='" + DEFAULT_MARK + "'") == 0) {
-            DatabaseManage.insert(new SkinInfo()
-                    .setCanUse(IF.YES)
-                    .setMark(DEFAULT_MARK)
-                    .setName("默认主题")
-                    .setType(SkinInfo.TYPE_APP_IN));
-        }
-        if (DatabaseManage.getCount("select * from SkinInfo where mark='" + DEFAULT_MARK_NIGHT + "'") == 0) {
-            DatabaseManage.insert(new SkinInfo()
-                    .setCanUse(IF.YES)
-                    .setMark(DEFAULT_MARK_NIGHT)
-                    .setPath(SkinFileUtils.getSkinDir(context) + "/heise.skin")
-                    .setName("夜间主题")
-                    .setType(SkinInfo.TYPE_APP_IN));
-        }
+        builtInSkin = new HashMap<>();
+        builtInSkin.put(DEFAULT_MARK, new SkinInfo()
+                .setCanUse(IF.YES)
+                .setMark(DEFAULT_MARK)
+                .setName("默认主题")
+                .setType(SkinInfo.TYPE_APP_IN));
+        builtInSkin.put(DEFAULT_MARK_NIGHT, new SkinInfo()
+                .setCanUse(IF.YES)
+                .setMark(DEFAULT_MARK_NIGHT)
+                .setPath(SkinFileUtils.getSkinDir(context) + "/heise.skin")
+                .setName("夜间主题")
+                .setType(SkinInfo.TYPE_APP_IN));
 
-        if (DatabaseManage.getCount("select * from SkinInfo where mark='" + DEFAULT_MARK_BLACK + "'") == 0) {
-            DatabaseManage.insert(new SkinInfo()
-                    .setCanUse(IF.YES)
-                    .setMark(DEFAULT_MARK_BLACK)
-                    .setPath(SkinFileUtils.getSkinDir(context) + "/chunhei.skin")
-                    .setName("纯黑主题")
-                    .setType(SkinInfo.TYPE_APP_IN));
-        }
-        loadSkin(null);
+        builtInSkin.put(DEFAULT_MARK_BLACK, new SkinInfo()
+                .setCanUse(IF.YES)
+                .setMark(DEFAULT_MARK_BLACK)
+                .setPath(SkinFileUtils.getSkinDir(context) + "/chunhei.skin")
+                .setName("纯黑主题")
+                .setType(SkinInfo.TYPE_APP_IN));
+        loadSkin();
         LogEx.d(this, "init time:" + (System.currentTimeMillis() - t1));
     }
 
@@ -102,16 +110,63 @@ public class SkinManage {
     private SparseArray<String> cachedIdToName = new SparseArray<>();//ID和ID名称的缓存
     private Map<String, String> cachedString = new HashMap<>();
     private Map<String, Integer> cachedDrawable = new HashMap<>();
+    private double lat = 36.0577034969, lon = 120.3210639954;//这是青岛的某个坐标
+    private long lastChangeShijian = 0;
+    private boolean currentDay = true;//0是未初始化,1是白天,2是黑天
+
+    public void loadSkin() {
+        SkinModel skinModel = SkinModel.getById(SharedPreUtil.getInteger(SDATA_APP_SKIN, SkinModel.BAISE.getId()));
+        switch (skinModel) {
+            case BAISE: {
+                SkinInfo skinInfo = DatabaseManage.getBean(SkinInfo.class, " mark='" + SharedPreUtil.getString(SDATA_APP_SKIN_DAY) + "' and canUse=" + IF.YES);
+                if (skinInfo == null) {
+                    skinInfo = builtInSkin.get(DEFAULT_MARK);
+                }
+                loadSkin(skinInfo);
+                break;
+            }
+            case SHIJIAN:
+                if (SunRiseSetUtil.isNight(lon, lat, new Date())) {
+                    if (!currentDay) {
+                        if (System.currentTimeMillis() - lastChangeShijian < HOUR_MILL) {
+                            return;
+                        }
+                        lastChangeShijian = System.currentTimeMillis();
+                        currentDay = true;
+                    }
+                    LogEx.d(this, "refreshTheme : night");
+                    SkinInfo skinInfo = DatabaseManage.getBean(SkinInfo.class, " mark='" + SharedPreUtil.getString(SDATA_APP_SKIN_DAY) + "' and canUse=" + IF.YES);
+                    if (skinInfo == null) {
+                        skinInfo = builtInSkin.get(DEFAULT_MARK);
+                    }
+                    loadSkin(skinInfo);
+                } else {
+                    if (currentDay) {
+                        if (System.currentTimeMillis() - lastChangeShijian < HOUR_MILL) {
+                            return;
+                        }
+                        lastChangeShijian = System.currentTimeMillis();
+                        currentDay = false;
+                    }
+                    LogEx.d(this, "refreshTheme : day");
+                    SkinInfo skinInfo = DatabaseManage.getBean(SkinInfo.class, " mark='" + SharedPreUtil.getString(SDATA_APP_SKIN_NIGHT) + "' and canUse=" + IF.YES);
+                    if (skinInfo == null) {
+                        skinInfo = builtInSkin.get(DEFAULT_MARK_NIGHT);
+                    }
+                    loadSkin(skinInfo);
+                }
+                break;
+        }
+    }
 
     //这里以主题的mark作为唯一标记,不要用路径
-    public void loadSkin(SkinLoaderListener listener) {
-        SkinInfo skinInfo = DatabaseManage.getBean(SkinInfo.class, " mark='" + SharedPreUtil.getString(SDATA_APP_SKIN_DAY) + "' and canUse=" + IF.YES);
-        //存储的主题丢失了,直接使用默认主题
-        if (skinInfo == null) {
-            skinInfo = new SkinInfo()
-                    .setMark(DEFAULT_MARK)
-                    .setName("默认主题");
-        }
+    public void loadSkin(SkinInfo skinInfo) {
+//        SkinInfo skinInfo = DatabaseManage.getBean(SkinInfo.class, " mark='" + SharedPreUtil.getString(SDATA_APP_SKIN_DAY) + "' and canUse=" + IF.YES);
+//        //存储的主题丢失了,直接使用默认主题
+//        if (skinInfo == null) {
+//            skinInfo = new SkinInfo()
+//                    .setMark(DEFAULT_MARK);
+//        }
         if (CommonUtil.equals(this.skinMark, skinInfo.getMark())) {
             LogEx.e(this, "一样的皮肤,不需要更换");
             return;
@@ -153,15 +208,7 @@ public class SkinManage {
                         for (OnSkinChangeListener listener1 : temp) {
                             listener1.onSkinChanged(SkinManage.self());
                         }
-
-                        if (listener != null) {
-                            listener.loadSuccess();
-                        }
                     });
-                } else {
-                    if (listener != null) {
-                        listener.loadSuccess();
-                    }
                 }
             }
 
@@ -289,14 +336,6 @@ public class SkinManage {
         LogEx.d(this, "unregisterThemeChangeListener:" + listener);
         listeners.remove(listener);
     }
-
-    public interface SkinLoaderListener {
-        /**
-         * 主题切换时回调
-         */
-        void loadSuccess();
-    }
-
 
     public interface OnSkinChangeListener {
         /**

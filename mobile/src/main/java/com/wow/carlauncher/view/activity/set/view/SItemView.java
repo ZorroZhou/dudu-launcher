@@ -22,7 +22,7 @@ import com.wow.carlauncher.view.activity.launcher.event.LCityRefreshEvent;
 import com.wow.carlauncher.view.activity.set.SetActivity;
 import com.wow.carlauncher.view.activity.set.SetBaseView;
 import com.wow.carlauncher.view.activity.set.event.SEventRefreshAmapPlugin;
-import com.wow.carlauncher.view.activity.set.listener.SetEnumOnClickListener;
+import com.wow.carlauncher.view.activity.set.listener.SetSingleSelect;
 import com.wow.carlauncher.view.activity.set.listener.SetSwitchOnClickListener;
 import com.wow.carlauncher.view.dialog.CityDialog;
 
@@ -30,11 +30,13 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 import butterknife.BindView;
 
 import static com.wow.carlauncher.common.CommonData.APP_WIDGET_AMAP_PLUGIN;
 import static com.wow.carlauncher.common.CommonData.APP_WIDGET_HOST_ID;
-import static com.wow.carlauncher.common.CommonData.CONSOLES_PROTOCL;
 import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_AMAP_PLUGIN;
 import static com.wow.carlauncher.common.CommonData.SDATA_CONSOLE_MARK;
 import static com.wow.carlauncher.common.CommonData.SDATA_MUSIC_CONTROLLER;
@@ -118,7 +120,11 @@ public class SItemView extends SetBaseView {
         });
 
         sv_plugin_select.setSummary(MusicControllerEnum.getById(SharedPreUtil.getInteger(SDATA_MUSIC_CONTROLLER, MusicControllerEnum.SYSMUSIC.getId())).getName());
-        sv_plugin_select.setOnClickListener(new SetEnumOnClickListener<MusicControllerEnum>(getContext(), CommonData.MUSIC_CONTROLLER) {
+        sv_plugin_select.setOnClickListener(new SetSingleSelect<MusicControllerEnum>(getContext()) {
+            @Override
+            public Collection<MusicControllerEnum> getAll() {
+                return Arrays.asList(CommonData.MUSIC_CONTROLLER);
+            }
 
             @Override
             public String title() {
@@ -165,7 +171,13 @@ public class SItemView extends SetBaseView {
 
 
         sv_console.setSummary("控制协议：" + ConsoleProtoclEnum.getById(SharedPreUtil.getInteger(SDATA_CONSOLE_MARK, ConsoleProtoclEnum.SYSTEM.getId())).getName());
-        sv_console.setOnClickListener(new SetEnumOnClickListener<ConsoleProtoclEnum>(getContext(), CONSOLES_PROTOCL) {
+        sv_console.setOnClickListener(new SetSingleSelect<ConsoleProtoclEnum>(getContext()) {
+
+            @Override
+            public Collection<ConsoleProtoclEnum> getAll() {
+                return Arrays.asList(CommonData.CONSOLES_PROTOCL);
+            }
+
             @Override
             public String title() {
                 return "请选择系统控制协议";

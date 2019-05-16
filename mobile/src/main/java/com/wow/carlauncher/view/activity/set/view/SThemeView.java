@@ -6,6 +6,7 @@ import android.os.Environment;
 import android.support.v7.app.AlertDialog;
 
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
@@ -18,7 +19,8 @@ import com.wow.carlauncher.repertory.db.manage.DatabaseManage;
 import com.wow.carlauncher.repertory.db.manage.DatabaseManage.IF;
 import com.wow.carlauncher.view.activity.set.SetActivity;
 import com.wow.carlauncher.view.activity.set.SetBaseView;
-import com.wow.carlauncher.view.activity.set.listener.SetEnumOnClickListener;
+import com.wow.carlauncher.view.activity.set.listener.SetMultipleSelect;
+import com.wow.carlauncher.view.activity.set.listener.SetSingleSelect;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -27,7 +29,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import skin.support.SkinCompatManager;
@@ -66,25 +71,60 @@ public class SThemeView extends SetBaseView {
     @BindView(R.id.sv_load_skin)
     SetView sv_load_skin;
 
-    private List<SkinInfo> skinInfos;
+    @BindView(R.id.sv_delete_skin)
+    SetView sv_delete_skin;
+
+
+    private Map<String, SkinInfo> allSkinInfos;
+    private Map<String, SkinInfo> allOtherSkinInfos;
 
     @Override
     protected void initView() {
-        skinInfos = new ArrayList<>();
-        TaskExecutor.self().post(() -> skinInfos.addAll(DatabaseManage.getAll(SkinInfo.class)));
+        allSkinInfos = new HashMap<>();
+        allOtherSkinInfos = new HashMap<>();
+        sv_delete_skin.setOnClickListener(new SetMultipleSelect<SkinInfo>(getContext()) {
+            @Override
+            public Collection<SkinInfo> getAll() {
+                return allOtherSkinInfos.values();
+            }
 
-        final String dayMark = SharedPreUtil.getString(SDATA_APP_SKIN_DAY);
-        SkinInfo moren = DatabaseManage.getBean(SkinInfo.class, " mark='" + dayMark + "'");
-        if (moren == null) {
-            moren = new SkinInfo()
-                    .setCanUse(IF.YES)
-                    .setMark(SkinManage.DEFAULT_MARK)
-                    .setName("默认皮肤")
-                    .setType(SkinInfo.TYPE_APP_IN);
-            DatabaseManage.insert(moren);
-        }
-        sv_theme_day.setSummary(moren.getName());
-        sv_theme_day.setOnClickListener(new SetEnumOnClickListener<SkinInfo>(getContext(), skinInfos) {
+            @Override
+            public SkinInfo[] getCurr() {
+                return new SkinInfo[0];
+            }
+
+            @Override
+            public boolean equals(SkinInfo t1, SkinInfo t2) {
+                return t1 != null && t2 != null && CommonUtil.equals(t1.getMark(), t2.getMark());
+            }
+
+            @Override
+            public void onSelect(List<SkinInfo> temp) {
+                getActivity().showLoading("处理中");
+                TaskExecutor.self().run(() -> {
+                    for (SkinInfo skinInfo : temp) {
+                        DatabaseManage.delete(SkinInfo.class, " mark='" + skinInfo.getMark() + "'");
+                        if (!new File(skinInfo.getPath()).delete()) {
+                            LogEx.e(SThemeView.this, "主题文件删除失败!");
+                        }
+                    }
+                    loadData();
+                    TaskExecutor.self().autoPost(() -> getActivity().hideLoading());
+                });
+            }
+
+            @Override
+            public String title() {
+                return "请选择要删除的皮肤";
+            }
+        });
+
+        sv_theme_day.setOnClickListener(new SetSingleSelect<SkinInfo>(getContext()) {
+            @Override
+            public Collection<SkinInfo> getAll() {
+                return allSkinInfos.values();
+            }
+
             @Override
             public String title() {
                 return "请选择默认皮肤";
@@ -92,62 +132,60 @@ public class SThemeView extends SetBaseView {
 
             @Override
             public SkinInfo getCurr() {
-                return DatabaseManage.getBean(SkinInfo.class, " mark='" + dayMark + "'");
+                System.out.println(SharedPreUtil.getString(SDATA_APP_SKIN_DAY));
+                return allSkinInfos.get(SharedPreUtil.getString(SDATA_APP_SKIN_DAY));
             }
 
             @Override
             public boolean equals(SkinInfo t1, SkinInfo t2) {
-                return CommonUtil.equals(t1.getMark(), t2.getMark());
+                return t1 != null && t2 != null && CommonUtil.equals(t1.getMark(), t2.getMark());
             }
 
             @Override
             public void onSelect(SkinInfo select) {
                 SharedPreUtil.saveString(SDATA_APP_SKIN_DAY, select.getMark());
                 sv_theme_day.setSummary(select.getName());
-                SkinManage.self().loadSkin(null);
+                SkinManage.self().loadSkin();
             }
         });
 
-        String heiseMark = SharedPreUtil.getString(SDATA_APP_SKIN_NIGHT);
-        SkinInfo heise = DatabaseManage.getBean(SkinInfo.class, " mark='" + heiseMark + "'");
-        if (heise == null) {
-            heise = new SkinInfo()
-                    .setCanUse(IF.YES)
-                    .setMark(SkinManage.DEFAULT_MARK_NIGHT)
-                    .setPath("heise.skin")
-                    .setName("夜间皮肤")
-                    .setType(SkinInfo.TYPE_APP_IN);
-            DatabaseManage.insert(heise);
-        }
+        sv_theme_night.setOnClickListener(new SetSingleSelect<SkinInfo>(getContext()) {
+            @Override
+            public Collection<SkinInfo> getAll() {
+                return allSkinInfos.values();
+            }
 
-        sv_theme_night.setSummary(heise.getName());
-        sv_theme_night.setOnClickListener(new SetEnumOnClickListener<SkinInfo>(getContext(), skinInfos) {
             @Override
             public String title() {
-                return "请选择默认皮肤";
+                return "请选择夜间皮肤";
             }
 
             @Override
             public SkinInfo getCurr() {
-                return DatabaseManage.getBean(SkinInfo.class, " mark='" + heiseMark + "'");
+                return allSkinInfos.get(SharedPreUtil.getString(SDATA_APP_SKIN_NIGHT));
             }
 
             @Override
             public boolean equals(SkinInfo t1, SkinInfo t2) {
-                return CommonUtil.equals(t1.getMark(), t2.getMark());
+                return t1 != null && t2 != null && CommonUtil.equals(t1.getMark(), t2.getMark());
             }
 
             @Override
             public void onSelect(SkinInfo select) {
                 SharedPreUtil.saveString(SDATA_APP_SKIN_NIGHT, select.getMark());
                 sv_theme_night.setSummary(select.getName());
-                SkinManage.self().loadSkin(null);
+                SkinManage.self().loadSkin();
             }
         });
 
 
         sv_plugin_theme.setSummary(SkinModel.getById(SharedPreUtil.getInteger(SDATA_APP_SKIN, SkinModel.BAISE.getId())).getName());
-        sv_plugin_theme.setOnClickListener(new SetEnumOnClickListener<SkinModel>(getContext(), SKIN_MODEL) {
+        sv_plugin_theme.setOnClickListener(new SetSingleSelect<SkinModel>(getContext()) {
+            @Override
+            public Collection<SkinModel> getAll() {
+                return java.util.Arrays.asList(SKIN_MODEL);
+            }
+
             @Override
             public String title() {
                 return "请选择皮肤模式";
@@ -168,12 +206,61 @@ public class SThemeView extends SetBaseView {
         sv_load_skin.setOnClickListener(v -> {
             searchSkin();
         });
+
+        TaskExecutor.self().run(this::loadData);
     }
+
+    private void loadData() {
+        loadSkinInfos();
+
+        //拿到mark,先查询所有的,如果没有,标记为默认的
+        final String dayMark = SharedPreUtil.getString(SDATA_APP_SKIN_DAY);
+        SkinInfo daySkinInfo = allSkinInfos.get(dayMark);
+        if (daySkinInfo == null) {
+            SharedPreUtil.saveString(SDATA_APP_SKIN_DAY, SkinManage.DEFAULT_MARK);
+            daySkinInfo = SkinManage.self().getBuiltInSkin().get(SkinManage.DEFAULT_MARK);
+        } else {
+            //这里应该加载新的主题了
+            SkinManage.self().loadSkin();
+        }
+
+
+        final String nightMark = SharedPreUtil.getString(SDATA_APP_SKIN_NIGHT);
+        SkinInfo nightSkinInfo = allSkinInfos.get(nightMark);
+        if (nightSkinInfo == null) {
+            SharedPreUtil.saveString(SDATA_APP_SKIN_NIGHT, SkinManage.DEFAULT_MARK_NIGHT);
+            nightSkinInfo = SkinManage.self().getBuiltInSkin().get(SkinManage.DEFAULT_MARK_NIGHT);
+        } else {
+            //这里应该加载新的主题了
+            SkinManage.self().loadSkin();
+        }
+
+        final String daySkinInfoName = daySkinInfo.getName();
+        final String nightSkinInfoName = nightSkinInfo.getName();
+        TaskExecutor.self().autoPost(() -> {
+            sv_theme_day.setSummary(daySkinInfoName);
+            sv_theme_night.setSummary(nightSkinInfoName);
+        });
+    }
+
+    private void loadSkinInfos() {
+        allSkinInfos.clear();
+        allOtherSkinInfos.clear();
+        List<SkinInfo> temp = DatabaseManage.getAll(SkinInfo.class);
+        for (SkinInfo skinInfo : temp) {
+            if (CommonUtil.isNotNull(skinInfo.getMark())) {
+                allOtherSkinInfos.put(skinInfo.getMark(), skinInfo);
+            }
+        }
+        allSkinInfos.putAll(allOtherSkinInfos);
+        allSkinInfos.putAll(SkinManage.self().getBuiltInSkin());
+    }
+
 
     private void searchSkin() {
         getActivity().showLoading("处理中");
         TaskExecutor.self().post(() -> {
-            skinInfos.clear();
+            allSkinInfos.clear();
             String path;
             if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {// 优先保存到SD卡中
                 path = Environment.getExternalStorageDirectory()
@@ -206,30 +293,8 @@ public class SThemeView extends SetBaseView {
                         break;
                     }
                     fileList.add(file);
-
-                    int id = skinSkinResources.getIdentifier(nameRes, "string", skinPackageName);
-
-                    SkinInfo skinInfo = DatabaseManage.getBean(SkinInfo.class, " mark='" + skinPackageName + "'");
-                    if (skinInfo == null) {
-                        DatabaseManage.insert(new SkinInfo()
-                                .setCanUse(IF.YES)
-                                .setPath(filePath)
-                                .setMark(skinPackageName)
-                                .setName(skinSkinResources.getString(id))
-                                .setType(SkinInfo.TYPE_OTHER));
-                    } else {
-                        DatabaseManage.update(new SkinInfo()
-                                .setCanUse(IF.YES)
-                                .setPath(filePath)
-                                .setMark(skinPackageName)
-                                .setName(skinSkinResources.getString(id))
-                                .setType(SkinInfo.TYPE_OTHER), " mark='" + skinPackageName + "'");
-                    }
                     i++;
                 }
-                skinInfos.addAll(DatabaseManage.getAll(SkinInfo.class));
-                System.out.println(skinInfos);
-
                 //这里需要把文件复制到相关目录
                 new AlertDialog.Builder(getActivity()).setTitle("找到" + fileList.size() + "个皮肤,是否继续导入(重复皮肤会被覆盖)").setNegativeButton("取消", null)
                         .setPositiveButton("继续", (dialog, which) -> {
@@ -251,21 +316,21 @@ public class SThemeView extends SetBaseView {
                 int error = 0;
                 for (File file : fileList) {
                     String filePath = file.getAbsolutePath();
-                    System.out.println("filePath:" + filePath);
                     String skinPackageName = SkinCompatManager.getInstance().getSkinPackageName(filePath);
-                    System.out.println("skinPackageName:" + skinPackageName);
                     if (CommonUtil.isNull(skinPackageName)) {
+                        LogEx.e(this, "skinPackageName can not get");
                         error++;
                         break;
                     }
                     String path = copySkinFromToCache(file, skinPackageName);
                     if (CommonUtil.isNull(path)) {
+                        LogEx.e(this, "copySkinFromToCache error");
                         error++;
                         break;
                     }
-                    Resources skinSkinResources = SkinCompatManager.getInstance().getSkinResources(filePath);
-                    System.out.println("skinSkinResources:" + skinSkinResources);
+                    Resources skinSkinResources = SkinCompatManager.getInstance().getSkinResources(path);
                     if (skinSkinResources == null) {
+                        LogEx.e(this, "skinSkinResources is null");
                         error++;
                         break;
                     }
@@ -287,6 +352,7 @@ public class SThemeView extends SetBaseView {
                                 .setType(SkinInfo.TYPE_OTHER), " mark='" + skinPackageName + "'");
                     }
                 }
+                loadSkinInfos();
                 getActivity().hideLoading();
                 if (error == 0) {
                     ToastManage.self().show("导入成功");
@@ -299,22 +365,22 @@ public class SThemeView extends SetBaseView {
 
     private String copySkinFromToCache(File file, String mark) {
         File skinPath = new File(SkinFileUtils.getSkinDir(getActivity()), mark);
-        if (skinPath.exists() && skinPath.delete()) {
-            try {
-                InputStream is = new FileInputStream(file);
-                OutputStream os = new FileOutputStream(skinPath);
-                int byteCount;
-                byte[] bytes = new byte[1024];
-                while ((byteCount = is.read(bytes)) != -1) {
-                    os.write(bytes, 0, byteCount);
-                }
-                os.close();
-                is.close();
-                return skinPath.getAbsolutePath();
-            } catch (IOException e) {
-                e.printStackTrace();
-
+        if (skinPath.exists()) {
+            skinPath.delete();
+        }
+        try {
+            InputStream is = new FileInputStream(file);
+            OutputStream os = new FileOutputStream(skinPath);
+            int byteCount;
+            byte[] bytes = new byte[1024];
+            while ((byteCount = is.read(bytes)) != -1) {
+                os.write(bytes, 0, byteCount);
             }
+            os.close();
+            is.close();
+            return skinPath.getAbsolutePath();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return null;
     }

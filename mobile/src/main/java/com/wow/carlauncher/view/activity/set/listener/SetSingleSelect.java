@@ -9,25 +9,19 @@ import com.wow.carlauncher.common.util.ThreadObj;
 import com.wow.carlauncher.view.activity.set.SetEnum;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
-public abstract class SetEnumOnClickListener<T extends SetEnum> implements View.OnClickListener {
+public abstract class SetSingleSelect<T extends SetEnum> implements View.OnClickListener {
     private Context context;
     private List<T> allItem;
 
-    public SetEnumOnClickListener(Context context, T[] allItem) {
+    public SetSingleSelect(Context context) {
         this.context = context;
-        this.allItem = java.util.Arrays.asList(allItem);
+        this.allItem = new ArrayList<>();
     }
 
-    public SetEnumOnClickListener(Context context, List<T> allItem) {
-        this.context = context;
-        if (allItem == null) {
-            this.allItem = new ArrayList<>();
-        } else {
-            this.allItem = allItem;
-        }
-    }
+    public abstract Collection<T> getAll();
 
     public abstract T getCurr();
 
@@ -41,6 +35,9 @@ public abstract class SetEnumOnClickListener<T extends SetEnum> implements View.
 
     @Override
     public void onClick(View v) {
+        allItem.clear();
+        allItem.addAll(getAll());
+
         String[] items = new String[allItem.size()];
         int select = 0;
         final T curr = getCurr();

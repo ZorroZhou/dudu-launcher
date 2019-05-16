@@ -141,9 +141,11 @@ public class AppInfoManage extends ContextEx {
                 switch (info.clazz) {
                     case INTERNAL_APP_DRIVING: {
                         view.setImageResource(R.drawable.app_icon_obd);
+                        break;
                     }
                     case INTERNAL_APP_SETTING: {
                         view.setImageResource(R.drawable.app_icon_set);
+                        break;
                     }
                 }
             }

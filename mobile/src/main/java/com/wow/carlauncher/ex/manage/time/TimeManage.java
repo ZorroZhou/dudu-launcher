@@ -8,6 +8,7 @@ import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.ex.ContextEx;
 import com.wow.carlauncher.ex.manage.time.event.TMEvent30Minute;
 import com.wow.carlauncher.ex.manage.time.event.TMEvent3Second;
+import com.wow.carlauncher.ex.manage.time.event.TMEvent5Minute;
 import com.wow.carlauncher.ex.manage.time.event.TMEventHalfSecond;
 import com.wow.carlauncher.ex.manage.time.event.TMEventMinute;
 import com.wow.carlauncher.ex.manage.time.event.TMEventSecond;
@@ -54,6 +55,9 @@ public class TimeManage extends ContextEx {
     private final static int MMINUTE30 = 30 * 60 * 1000;
     private final static int MINUTE30 = MMINUTE30 / ZHOUQI;
 
+    private final static int MMINUTE5 = 5 * 60 * 1000;
+    private final static int MINUTE5 = MMINUTE5 / ZHOUQI;
+
     private ScheduledFuture<?> timer;
     private long timeMark = 0L;
 
@@ -92,6 +96,16 @@ public class TimeManage extends ContextEx {
                 if (timeMark % MINUTE30 == 0) {
                     if (EventBus.getDefault().hasSubscriberForEvent(TMEvent30Minute.class)) {
                         postEvent(new TMEvent30Minute());
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if (timeMark % MINUTE5 == 0) {
+                    if (EventBus.getDefault().hasSubscriberForEvent(TMEvent5Minute.class)) {
+                        postEvent(new TMEvent5Minute());
                     }
                 }
             } catch (Exception e) {

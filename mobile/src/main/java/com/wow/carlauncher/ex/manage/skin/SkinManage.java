@@ -13,9 +13,15 @@ import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.util.SunRiseSetUtil;
+import com.wow.carlauncher.ex.manage.time.event.TMEvent5Minute;
+import com.wow.carlauncher.ex.plugin.console.event.PConsoleEventLightState;
 import com.wow.carlauncher.repertory.db.entiy.SkinInfo;
 import com.wow.carlauncher.repertory.db.manage.DatabaseManage;
 import com.wow.carlauncher.repertory.db.manage.DatabaseManage.IF;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -94,6 +100,8 @@ public class SkinManage {
                 .setName("纯黑主题")
                 .setType(SkinInfo.TYPE_APP_IN));
         loadSkin();
+        EventBus.getDefault().register(this);
+
         LogEx.d(this, "init time:" + (System.currentTimeMillis() - t1));
     }
 
@@ -161,12 +169,6 @@ public class SkinManage {
 
     //这里以主题的mark作为唯一标记,不要用路径
     public void loadSkin(SkinInfo skinInfo) {
-//        SkinInfo skinInfo = DatabaseManage.getBean(SkinInfo.class, " mark='" + SharedPreUtil.getString(SDATA_APP_SKIN_DAY) + "' and canUse=" + IF.YES);
-//        //存储的主题丢失了,直接使用默认主题
-//        if (skinInfo == null) {
-//            skinInfo = new SkinInfo()
-//                    .setMark(DEFAULT_MARK);
-//        }
         if (CommonUtil.equals(this.skinMark, skinInfo.getMark())) {
             LogEx.e(this, "一样的皮肤,不需要更换");
             return;
@@ -218,6 +220,28 @@ public class SkinManage {
         };
         //加载主题,使用自己的加载器
         SkinCompatManager.getInstance().loadSkin(this.skinMark, loaderListener, MySkinLoader.STRATEGY);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(PConsoleEventLightState event) {
+        if (event.isOpen()) {
+            SkinInfo skinInfo = DatabaseManage.getBean(SkinInfo.class, " mark='" + SharedPreUtil.getString(SDATA_APP_SKIN_DAY) + "' and canUse=" + IF.YES);
+            if (skinInfo == null) {
+                skinInfo = builtInSkin.get(DEFAULT_MARK);
+            }
+            loadSkin(skinInfo);
+        } else {
+            SkinInfo skinInfo = DatabaseManage.getBean(SkinInfo.class, " mark='" + SharedPreUtil.getString(SDATA_APP_SKIN_NIGHT) + "' and canUse=" + IF.YES);
+            if (skinInfo == null) {
+                skinInfo = builtInSkin.get(DEFAULT_MARK_NIGHT);
+            }
+            loadSkin(skinInfo);
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(TMEvent5Minute event) {
+        loadSkin();
     }
 
     //

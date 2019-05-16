@@ -31,8 +31,10 @@
                     android:orientation="vertical">
 
                     <com.wow.carlauncher.common.view.CustomImageView
+                        android:id="@+id/iv_user_pic"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
+                        android:scaleType="fitXY"
                         android:src="@drawable/theme_music_dcover"
                         app:ccircle="true" />
 

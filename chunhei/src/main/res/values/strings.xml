@@ -1,10 +1,18 @@
 <resources>
+    <!--主题名称,必须添加-->
     <string name="theme_name">纯黑主题</string>
+    <!--插件标题位置,left,center,right-->
     <string name="theme_item_title_align">left</string>
+    <!--音乐封面,圆形circ,矩形rect-->
     <string name="theme_item_music_cover_type">circ</string>
+    <!--导航的某跟线是否展示,hide或者show,参考两个导航主题的差异-->
     <string name="theme_item_amap_daohang_line">show</string>
+    <!--导航的某跟线是否展示,hide或者show-->
     <string name="theme_item_amap_xunhang_line">show</string>
+    <!--天气布局,参量两个主题的布局差异-->
     <string name="theme_item_weather_layout">layout2</string>
+    <!--是否使用壁纸,使用壁纸的话,设置的背景就无效了-->
     <string name="theme_use_wallpaper">no</string>
+    <!--首页推荐布局,参考APP内设置-->
     <string name="theme_launcher_layout">layout1</string>
 </resources>

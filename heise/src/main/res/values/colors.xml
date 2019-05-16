@@ -3,40 +3,30 @@
     <color name="theme_item_title">#eee</color>
     <color name="theme_music_title">#eee</color>
     <color name="theme_music_singer">#818796</color>
-
     <color name="theme_amap_xiansu">#eee</color>
     <color name="theme_amap_shengyulicheng">#eee</color>
-
     <color name="theme_weather_1_tianqi">#848a95</color>
     <color name="theme_weather_1_wendu">#eee</color>
     <color name="theme_weather_1_city">#eee</color>
     <color name="theme_weather_1_name">#848a95</color>
     <color name="theme_weather_1_value">#8390a7</color>
-
     <color name="theme_weather_2_wendu">#eee</color>
     <color name="theme_weather_2_tianqi">#848a95</color>
     <color name="theme_weather_2_name">#848a95</color>
     <color name="theme_weather_2_value">#8390a7</color>
-
     <color name="theme_obd_info">#eee</color>
     <color name="theme_obd_msg">#eee</color>
-
     <color name="theme_taiya_info">#eee</color>
     <color name="theme_taiya_msg">#eee</color>
-
     <color name="theme_time_shijian">#eee</color>
     <color name="theme_time_week">#eee</color>
     <color name="theme_time_day">#eee</color>
     <color name="theme_time_lunar">#eee</color>
-
     <color name="theme_dock_title">#eee</color>
     <color name="theme_app_name">#eee</color>
-
     <color name="theme_prompt_time">#eee</color>
-
     <color name="theme_console_appname">#eee</color>
     <color name="theme_console_time">#eee</color>
     <color name="theme_console_music_title">#eee</color>
-
     <color name="theme_voice_message">#eee</color>
 </resources>

@@ -5,7 +5,10 @@ import android.content.Intent;
 import android.os.Environment;
 
 import com.wow.carlauncher.CarLauncherApplication;
+import com.wow.carlauncher.common.user.LocalUser;
+import com.wow.carlauncher.common.user.event.UEventLoginState;
 import com.wow.carlauncher.common.util.CommonUtil;
+import com.wow.carlauncher.common.util.GsonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.manage.AppWidgetManage;
 import com.wow.carlauncher.ex.manage.ImageManage;
@@ -14,7 +17,6 @@ import com.wow.carlauncher.ex.manage.baiduVoice.BaiduVoiceAssistant;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
 import com.wow.carlauncher.ex.manage.location.LocationManage;
 import com.wow.carlauncher.ex.manage.okHttp.OkHttpManage;
-import com.wow.carlauncher.repertory.db.entiy.SkinInfo;
 import com.wow.carlauncher.ex.manage.skin.SkinManage;
 import com.wow.carlauncher.ex.manage.speed.SpeedManage;
 import com.wow.carlauncher.ex.manage.time.TimeManage;
@@ -25,8 +27,10 @@ import com.wow.carlauncher.ex.plugin.fk.FangkongPlugin;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.repertory.db.entiy.CoverTemp;
+import com.wow.carlauncher.repertory.db.entiy.SkinInfo;
 import com.wow.carlauncher.repertory.db.manage.DatabaseInfo;
 import com.wow.carlauncher.repertory.db.manage.DatabaseManage;
+import com.wow.carlauncher.repertory.server.CommonService;
 import com.wow.carlauncher.view.popup.ConsoleWin;
 import com.wow.carlauncher.view.popup.NaviWin;
 import com.wow.carlauncher.view.popup.PopupWin;
@@ -41,8 +45,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import static com.wow.carlauncher.common.CommonData.LOGIN_USER_ID;
+import static com.wow.carlauncher.common.CommonData.LOGIN_USER_INFO;
 import static com.wow.carlauncher.common.CommonData.SDATA_APP_SKIN_DAY;
 import static com.wow.carlauncher.common.CommonData.SDATA_APP_SKIN_NIGHT;
+import static com.wow.carlauncher.repertory.server.ServerConstant.NET_ERROR;
+import static com.wow.carlauncher.repertory.server.ServerConstant.RES_ERROR;
 
 
 /**
@@ -65,6 +73,26 @@ public class AppContext {
 
     public long getStartTime() {
         return startTime;
+    }
+
+    private LocalUser localUser;
+
+    public LocalUser getLocalUser() {
+        return localUser;
+    }
+
+    public void loginSuccess(LocalUser localUser) {
+        this.localUser = localUser;
+        EventBus.getDefault().post(new UEventLoginState().setLogin(true));
+        SharedPreUtil.saveLong(LOGIN_USER_ID, localUser.getUserId());
+        SharedPreUtil.saveString(LOGIN_USER_INFO, GsonUtil.getGson().toJson(localUser));
+    }
+
+    public void logout() {
+        this.localUser = null;
+        EventBus.getDefault().post(new UEventLoginState().setLogin(false));
+        SharedPreUtil.saveLong(LOGIN_USER_ID, -1L);
+        SharedPreUtil.saveString(LOGIN_USER_INFO, "");
     }
 
     private AppContext() {
@@ -173,10 +201,24 @@ public class AppContext {
                 LogEx.d(this, "不唤醒其他APP");
             }
         });
-
-        LogEx.d(this, "APP初始化完毕 ");
-
         createFile();
+        LogEx.d(this, "APP初始化完毕 开始异步登陆流程");
+
+        TaskExecutor.self().run(() -> {
+            long uid = SharedPreUtil.getLong(LOGIN_USER_ID, -1);
+            if (uid > 0) {
+                LocalUser user = GsonUtil.getGson().fromJson(SharedPreUtil.getString(LOGIN_USER_INFO), LocalUser.class);
+                if (user != null && CommonUtil.isNotNull(user.getToken())) {
+                    loginSuccess(user);
+                    CommonService.loginByToken(user.getToken(), (code, msg, loginInfo) -> {
+                        if (code != NET_ERROR && code != RES_ERROR && code != 0) {
+                            logout();
+                        }
+                    });
+                }
+            }
+        });
+
     }
 
     public Application getApplication() {

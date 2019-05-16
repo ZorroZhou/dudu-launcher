@@ -118,7 +118,7 @@ public class SSystemView extends SetBaseView {
             getActivity().showLoading("请求中");
             CommonService.getUpdate(2, (success, msg, appUpdate) -> {
                 getActivity().hideLoading();
-                if (success) {
+                if (success == 0) {
                     if (AppUtil.getLocalVersion(getContext()) < appUpdate.getVersion()) {
                         TaskExecutor.self().autoPost(() -> new AlertDialog.Builder(getContext()).setTitle("发现新版本")
                                 .setNegativeButton("忽略", null)

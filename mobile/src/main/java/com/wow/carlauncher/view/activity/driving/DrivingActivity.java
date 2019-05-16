@@ -8,7 +8,6 @@ import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.view.activity.set.event.SAEventRefreshDriving;
 import com.wow.carlauncher.view.base.BaseActivity;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -32,7 +31,6 @@ public class DrivingActivity extends BaseActivity {
     public void init() {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContent(R.layout.activity_driving);
-        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -62,12 +60,6 @@ public class DrivingActivity extends BaseActivity {
         if (nowContent != null) {
             nowContent.setFront(false);
         }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
 
     private void refreshView() {

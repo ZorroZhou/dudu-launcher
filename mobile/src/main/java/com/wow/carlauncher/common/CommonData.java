@@ -96,6 +96,9 @@ public class CommonData {
 
     public static final String PACKAGE_NAME = "com.wow.carlauncher";
 
+    public static final String LOGIN_USER_ID = "LOGIN_USER_ID";
+    public static final String LOGIN_USER_INFO = "LOGIN_USER_INFO";
+
     public static final String SDATA_APP_SKIN = "SDATA_APP_SKIN";
 
     public static final String SDATA_APP_SKIN_DAY = "SDATA_APP_SKIN_DAY";

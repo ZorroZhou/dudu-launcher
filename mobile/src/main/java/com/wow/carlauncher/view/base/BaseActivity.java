@@ -17,6 +17,8 @@ import android.widget.TextView;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.TaskExecutor;
 
+import org.greenrobot.eventbus.EventBus;
+
 import butterknife.ButterKnife;
 
 /**
@@ -32,18 +34,13 @@ public abstract class BaseActivity extends Activity {
     private View toolbar;
     private TextView title;
     private View base;
-    private Bundle savedInstanceState;
-
-    public Bundle getSavedInstanceState() {
-        return savedInstanceState;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.savedInstanceState = savedInstanceState;
         mContext = this;
         init();
+        EventBus.getDefault().register(this);
         //处理状态栏
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             getWindow().setStatusBarColor(Color.TRANSPARENT);
@@ -80,12 +77,12 @@ public abstract class BaseActivity extends Activity {
         loadViewed = true;
         initView();
         loadData();
-        this.savedInstanceState = null;
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        EventBus.getDefault().unregister(this);
         if (progressDialog != null) {
             progressDialog.dismiss();
             progressDialog = null;

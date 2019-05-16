@@ -10,6 +10,7 @@ import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.ImageSize;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.wow.carlauncher.common.LogEx;
@@ -40,10 +41,10 @@ public class ImageManage {
 
 
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
-                .memoryCacheExtraOptions(1000, 1000)
-                // 缓存在内存的图片的宽和高度
-                // default = device screen dimensions
-                .diskCacheExtraOptions(1000, 1000, null)
+//                .memoryCacheExtraOptions(1000, 1000)
+//                // 缓存在内存的图片的宽和高度
+//                // default = device screen dimensions
+//                .diskCacheExtraOptions(1000, 1000, null)
                 .threadPoolSize(1)
                 // 线程池内加载的数量
                 .threadPriority(Thread.NORM_PRIORITY - 2)
@@ -64,7 +65,7 @@ public class ImageManage {
         LogEx.d(this, "init");
     }
 
-    public DisplayImageOptions buildDisplayOption(int resId) {
+    private DisplayImageOptions buildDisplayOption(int resId) {
         return new DisplayImageOptions.Builder()
                 .cloneFrom(DEFAULT_DISPLAY_OPTION)
                 .showImageForEmptyUri(resId)
@@ -73,7 +74,12 @@ public class ImageManage {
 
     public void loadImage(String url, ImageView imageView) {
         LogEx.d(this, "loadImage:" + url);
-        ImageLoader.getInstance().displayImage(url, imageView, DEFAULT_DISPLAY_OPTION);
+        ImageLoader.getInstance().displayImage(url, imageView);
+    }
+
+    public void loadImage(String url, ImageView imageView, ImageSize imageSize) {
+        LogEx.d(this, "loadImage:" + url);
+        ImageLoader.getInstance().displayImage(url, imageView, imageSize);
     }
 
     public void loadImage(String url, ImageView imageView, int def) {
@@ -83,6 +89,6 @@ public class ImageManage {
 
     public Bitmap loadImageSync(String url) {
         LogEx.d(this, "loadImageSync:" + url);
-        return ImageLoader.getInstance().loadImageSync(url, DEFAULT_DISPLAY_OPTION);
+        return ImageLoader.getInstance().loadImageSync(url);
     }
 }

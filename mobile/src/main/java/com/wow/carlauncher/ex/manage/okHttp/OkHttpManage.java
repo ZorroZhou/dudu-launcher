@@ -6,9 +6,11 @@ import android.content.Context;
 import com.wow.carlauncher.common.LogEx;
 
 import java.io.IOException;
+import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.FormBody;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -50,6 +52,23 @@ public class OkHttpManage {
         return call;
     }
 
+    public Call post(String url, Map<String, Object> param, Callback callback) {
+        LogEx.d(this, "get:" + url);
+        FormBody.Builder builder = new FormBody.Builder();
+        for (String key : param.keySet()) {
+            builder.add(key, String.valueOf(param.get(key)));
+        }
+        Request request = new Request.Builder().post(builder.build()).url(url).build();
+        OkHttpClient clientTemp;
+        if (callback instanceof ProgressResponseListener) {
+            clientTemp = getProgressClient((ProgressResponseListener) callback);
+        } else {
+            clientTemp = okHttpClient;
+        }
+        Call call = clientTemp.newCall(request);
+        call.enqueue(callback);
+        return call;
+    }
 
     private OkHttpClient getProgressClient(final ProgressResponseListener progressListener) {
         OkHttpClient.Builder client = new OkHttpClient.Builder();

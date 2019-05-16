@@ -44,7 +44,7 @@
         android:layout_height="wrap_content"
         st:summary="@string/set_yes"
         st:summary2="@string/set_no"
-        st:titleEx="显示歌词,显示个此后,音乐作者和标题会放到一行显示"
+        st:titleEx="显示歌词,显示歌词后,音乐作者和标题会放到一行显示"
         st:type="switchB" />
 
     <View style="@style/Interval" />

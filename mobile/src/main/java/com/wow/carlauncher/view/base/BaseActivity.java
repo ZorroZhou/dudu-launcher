@@ -18,6 +18,9 @@ import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.TaskExecutor;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
+import java.lang.reflect.Method;
 
 import butterknife.ButterKnife;
 
@@ -40,7 +43,18 @@ public abstract class BaseActivity extends Activity {
         super.onCreate(savedInstanceState);
         mContext = this;
         init();
-        EventBus.getDefault().register(this);
+        boolean have = false;
+        Method[] methods = getClass().getMethods();
+        for (Method m : methods) {
+            Subscribe meta = m.getAnnotation(Subscribe.class);
+            if (meta != null) {
+                have = true;
+                break;
+            }
+        }
+        if (have) {
+            EventBus.getDefault().register(this);
+        }
         //处理状态栏
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             getWindow().setStatusBarColor(Color.TRANSPARENT);
@@ -82,7 +96,9 @@ public abstract class BaseActivity extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
         if (progressDialog != null) {
             progressDialog.dismiss();
             progressDialog = null;

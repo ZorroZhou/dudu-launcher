@@ -5,6 +5,7 @@ import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 
 import com.wow.carlauncher.common.util.CommonUtil;
+import com.wow.carlauncher.repertory.db.entiy.SkinInfo;
 import com.wow.carlauncher.repertory.db.manage.DatabaseManage;
 
 import java.util.Map;
@@ -24,10 +25,16 @@ public class MySkinLoader extends SkinSDCardLoader {
         } else {
             isbase = false;
         }
+
         Map map = DatabaseManage.getMap("select path from SkinInfo where mark='" + skinMark + "'");
         if (map == null) {
-            isbase = true;
-            return null;
+            SkinInfo skinInfo = SkinManage.self().getBuiltInSkin().get(skinMark);
+            if (skinInfo == null || CommonUtil.equals(skinInfo.getMark(), SkinManage.DEFAULT_MARK)) {
+                isbase = true;
+                return null;
+            } else {
+                return skinInfo.getPath();
+            }
         }
         return map.get("path") + "";
     }

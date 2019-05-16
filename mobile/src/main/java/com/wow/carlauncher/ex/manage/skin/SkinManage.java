@@ -13,7 +13,8 @@ import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.util.SunRiseSetUtil;
-import com.wow.carlauncher.ex.manage.time.event.TMEvent5Minute;
+import com.wow.carlauncher.ex.manage.location.LMEventNewLocation;
+import com.wow.carlauncher.ex.manage.time.event.TMEvent3Second;
 import com.wow.carlauncher.ex.plugin.console.event.PConsoleEventLightState;
 import com.wow.carlauncher.repertory.db.entiy.SkinInfo;
 import com.wow.carlauncher.repertory.db.manage.DatabaseManage;
@@ -99,9 +100,15 @@ public class SkinManage {
                 .setPath(SkinFileUtils.getSkinDir(context) + "/chunhei.skin")
                 .setName("纯黑主题")
                 .setType(SkinInfo.TYPE_APP_IN));
-        loadSkin();
-        EventBus.getDefault().register(this);
 
+        //先加载默认皮肤
+        SkinInfo skinInfo = DatabaseManage.getBean(SkinInfo.class, " mark='" + SharedPreUtil.getString(SDATA_APP_SKIN_DAY) + "' and canUse=" + IF.YES);
+        if (skinInfo == null) {
+            skinInfo = builtInSkin.get(DEFAULT_MARK);
+        }
+        loadSkin(skinInfo);
+
+        EventBus.getDefault().register(this);
         LogEx.d(this, "init time:" + (System.currentTimeMillis() - t1));
     }
 
@@ -126,8 +133,9 @@ public class SkinManage {
         SkinModel skinModel = SkinModel.getById(SharedPreUtil.getInteger(SDATA_APP_SKIN, SkinModel.BAISE.getId()));
         switch (skinModel) {
             case BAISE: {
-                SkinInfo skinInfo = DatabaseManage.getBean(SkinInfo.class, " mark='" + SharedPreUtil.getString(SDATA_APP_SKIN_DAY) + "' and canUse=" + IF.YES);
+                SkinInfo skinInfo = getSkininfoByMark(SharedPreUtil.getString(SDATA_APP_SKIN_DAY));
                 if (skinInfo == null) {
+                    SharedPreUtil.saveString(SDATA_APP_SKIN_DAY, DEFAULT_MARK);
                     skinInfo = builtInSkin.get(DEFAULT_MARK);
                 }
                 loadSkin(skinInfo);
@@ -142,10 +150,10 @@ public class SkinManage {
                         lastChangeShijian = System.currentTimeMillis();
                         currentDay = true;
                     }
-                    LogEx.d(this, "refreshTheme : night");
-                    SkinInfo skinInfo = DatabaseManage.getBean(SkinInfo.class, " mark='" + SharedPreUtil.getString(SDATA_APP_SKIN_DAY) + "' and canUse=" + IF.YES);
+                    SkinInfo skinInfo = getSkininfoByMark(SharedPreUtil.getString(SDATA_APP_SKIN_NIGHT));
                     if (skinInfo == null) {
-                        skinInfo = builtInSkin.get(DEFAULT_MARK);
+                        SharedPreUtil.saveString(SDATA_APP_SKIN_NIGHT, DEFAULT_MARK_NIGHT);
+                        skinInfo = builtInSkin.get(DEFAULT_MARK_NIGHT);
                     }
                     loadSkin(skinInfo);
                 } else {
@@ -156,10 +164,12 @@ public class SkinManage {
                         lastChangeShijian = System.currentTimeMillis();
                         currentDay = false;
                     }
-                    LogEx.d(this, "refreshTheme : day");
-                    SkinInfo skinInfo = DatabaseManage.getBean(SkinInfo.class, " mark='" + SharedPreUtil.getString(SDATA_APP_SKIN_NIGHT) + "' and canUse=" + IF.YES);
+
+                    SkinInfo skinInfo = getSkininfoByMark(SharedPreUtil.getString(SDATA_APP_SKIN_DAY));
+                    LogEx.d(this, "refreshTheme : " + skinInfo);
                     if (skinInfo == null) {
-                        skinInfo = builtInSkin.get(DEFAULT_MARK_NIGHT);
+                        SharedPreUtil.saveString(SDATA_APP_SKIN_DAY, DEFAULT_MARK);
+                        skinInfo = builtInSkin.get(DEFAULT_MARK);
                     }
                     loadSkin(skinInfo);
                 }
@@ -225,14 +235,16 @@ public class SkinManage {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(PConsoleEventLightState event) {
         if (event.isOpen()) {
-            SkinInfo skinInfo = DatabaseManage.getBean(SkinInfo.class, " mark='" + SharedPreUtil.getString(SDATA_APP_SKIN_DAY) + "' and canUse=" + IF.YES);
+            SkinInfo skinInfo = getSkininfoByMark(SharedPreUtil.getString(SDATA_APP_SKIN_DAY));
             if (skinInfo == null) {
+                SharedPreUtil.saveString(SDATA_APP_SKIN_DAY, DEFAULT_MARK);
                 skinInfo = builtInSkin.get(DEFAULT_MARK);
             }
             loadSkin(skinInfo);
         } else {
-            SkinInfo skinInfo = DatabaseManage.getBean(SkinInfo.class, " mark='" + SharedPreUtil.getString(SDATA_APP_SKIN_NIGHT) + "' and canUse=" + IF.YES);
+            SkinInfo skinInfo = getSkininfoByMark(SharedPreUtil.getString(SDATA_APP_SKIN_NIGHT));
             if (skinInfo == null) {
+                SharedPreUtil.saveString(SDATA_APP_SKIN_NIGHT, DEFAULT_MARK_NIGHT);
                 skinInfo = builtInSkin.get(DEFAULT_MARK_NIGHT);
             }
             loadSkin(skinInfo);
@@ -240,35 +252,25 @@ public class SkinManage {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(TMEvent5Minute event) {
+    public void onEvent(TMEvent3Second event) {
         loadSkin();
     }
 
-    //
-//    private int getSkinTypeByPath(String path) {
-//        LogEx.d(SkinManage.class, "getSkinTypeByPath:Start");
-//        try {
-//            SkinInfo skinInfo = DatabaseManage.getBean(SkinInfo.class, " path='" + path + "'");
-//            if (skinInfo == null) {
-//                LogEx.e(SkinManage.class, "skinInfo not in database!  path:" + path);
-//                return SkinInfo.TYPE_NONE;
-//            }
-//            String skinPackageName = SkinCompatManager.getInstance().getSkinPackageName(skinInfo.getPath());
-//            if (CommonUtil.isNull(skinPackageName)) {
-//                LogEx.e(SkinManage.class, "skinPackageName is null!  path:" + path);
-//                return SkinInfo.TYPE_NONE;
-//            }
-//            Resources skinSkinResources = SkinCompatManager.getInstance().getSkinResources(skinInfo.getPath());
-//            if (skinSkinResources == null) {
-//                LogEx.e(SkinManage.class, "skinSkinResources is null!  path:" + path);
-//                return SkinInfo.TYPE_NONE;
-//            }
-//            LogEx.d(SkinManage.class, "getSkinTypeByPath:end");
-//            return skinInfo.getType();
-//        } catch (Exception e) {
-//            return SkinInfo.TYPE_NONE;
-//        }
-//    }
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void onEvent(LMEventNewLocation event) {
+        this.lat = event.getLatitude();
+        this.lon = event.getLongitude();
+    }
+
+    private SkinInfo getSkininfoByMark(String mark) {
+        SkinInfo skinInfo = DatabaseManage.getBean(SkinInfo.class, " mark='" + mark + "' and canUse=" + IF.YES);
+        if (skinInfo == null) {
+            skinInfo = builtInSkin.get(mark);
+        }
+        return skinInfo;
+    }
+
+
     //将asset的文件复制到缓存,以便使用
     private String copySkinFromAssets(Context context, String name) {
         String skinPath = new File(SkinFileUtils.getSkinDir(context), name).getAbsolutePath();

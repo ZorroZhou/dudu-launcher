@@ -17,12 +17,14 @@ import android.util.AttributeSet;
 
 import com.wow.carlauncher.R;
 
+import skin.support.widget.SkinCompatImageView;
+
 /**
  * @author Mr.lynn
  * @version 1.0<br>
  * 图片圆角实现
  */
-public class CustomImageView extends android.support.v7.widget.AppCompatImageView {
+public class CustomImageView extends SkinCompatImageView {
     private Paint paint;
     private Paint paintBorder;
     private Bitmap mSrcBitmap;

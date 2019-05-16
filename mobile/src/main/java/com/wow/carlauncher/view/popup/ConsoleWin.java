@@ -398,9 +398,9 @@ public class ConsoleWin {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final PMusicEventCoverRefresh event) {
         if (event.isHave()) {
-            ImageManage.self().loadImage(event.getUrl(), music_iv_cover, R.mipmap.music_dlogo);
+            ImageManage.self().loadImage(event.getUrl(), music_iv_cover, R. drawable.theme_music_dcover);
         } else {
-            music_iv_cover.setImageResource(R.mipmap.music_dlogo);
+            music_iv_cover.setImageResource(R. drawable.theme_music_dcover);
         }
     }
 

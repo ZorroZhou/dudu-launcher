@@ -14,7 +14,7 @@
     <color name="theme_weather_1_value">#333e54</color>
 
     <color name="theme_weather_2_wendu">#fbfbfb</color>
-    <color name="theme_weather_2_tianqi">#848a95</color>
+    <color name="theme_weather_2_tianqi">#fbfbfb</color>
     <color name="theme_weather_2_name">#848a95</color>
     <color name="theme_weather_2_value">#aaa</color>
 

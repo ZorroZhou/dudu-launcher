@@ -9,13 +9,14 @@ import android.graphics.PaintFlagsDrawFilter;
 import android.graphics.Path;
 import android.graphics.RectF;
 import android.os.Build;
-import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 import android.view.View;
 
 import com.wow.carlauncher.R;
 
-public class CustomRoundAngleImageView extends AppCompatImageView {
+import skin.support.widget.SkinCompatImageView;
+
+public class CustomRoundAngleImageView extends SkinCompatImageView {
     private float width, height;
     private int defaultRadius = 0;
     private int radius;

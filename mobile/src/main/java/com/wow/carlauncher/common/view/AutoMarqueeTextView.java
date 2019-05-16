@@ -4,7 +4,9 @@ import android.content.Context;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 
-public class AutoMarqueeTextView extends android.support.v7.widget.AppCompatTextView {
+import skin.support.widget.SkinCompatTextView;
+
+public class AutoMarqueeTextView extends SkinCompatTextView {
     public AutoMarqueeTextView(Context context) {
         super(context);
         setFocusable(true);//在每个构造方法中，将TextView设置为可获取焦点

@@ -77,6 +77,8 @@ public class LAMapView extends BaseThemeView {
 
     @Override
     protected void initView() {
+        refreshRoad();
+        refreshMute();
         LogEx.d(this, "initView: ");
     }
 

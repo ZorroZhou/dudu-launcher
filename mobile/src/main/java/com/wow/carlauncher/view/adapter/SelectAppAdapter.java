@@ -32,7 +32,7 @@ public class SelectAppAdapter extends BaseAdapterEx<AppInfo> {
         AppInfo model = items.get(position);
         if (!model.equals(convertView.getTag())) {
             ((TextView) convertView.findViewById(R.id.name)).setText(model.name);
-            ((ImageView) convertView.findViewById(R.id.icon)).setImageDrawable(AppInfoManage.self().getIcon(model.clazz, false));
+            ((ImageView) convertView.findViewById(R.id.icon)).setImageDrawable(AppInfoManage.self().getAppIcon(model.clazz, false));
             convertView.setTag(model);
         }
         return convertView;

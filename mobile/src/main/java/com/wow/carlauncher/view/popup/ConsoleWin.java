@@ -294,7 +294,7 @@ public class ConsoleWin {
     private void loadDock() {
         String packname1 = SharedPreUtil.getString(SDATA_DOCK1_CLASS);
         if (CommonUtil.isNotNull(packname1) && AppInfoManage.self().checkApp(packname1)) {
-            AppInfoManage.self().setIcon(iv_dock1, packname1);
+            AppInfoManage.self().setIconWithSkin(iv_dock1, packname1);
         } else {
             iv_dock1.setImageResource(R.drawable.theme_add_app);
             SharedPreUtil.saveString(SDATA_DOCK1_CLASS, "");
@@ -302,7 +302,7 @@ public class ConsoleWin {
 
         String packname2 = SharedPreUtil.getString(SDATA_DOCK2_CLASS);
         if (CommonUtil.isNotNull(packname2) && AppInfoManage.self().checkApp(packname2)) {
-            AppInfoManage.self().setIcon(iv_dock2, packname2);
+            AppInfoManage.self().setIconWithSkin(iv_dock2, packname2);
         } else {
             iv_dock2.setImageResource(R.drawable.theme_add_app);
             SharedPreUtil.saveString(SDATA_DOCK2_CLASS, "");
@@ -310,7 +310,7 @@ public class ConsoleWin {
 
         String packname3 = SharedPreUtil.getString(SDATA_DOCK3_CLASS);
         if (CommonUtil.isNotNull(packname3) && AppInfoManage.self().checkApp(packname3)) {
-            AppInfoManage.self().setIcon(iv_dock3, packname3);
+            AppInfoManage.self().setIconWithSkin(iv_dock3, packname3);
         } else {
             iv_dock3.setImageResource(R.drawable.theme_add_app);
             SharedPreUtil.saveString(SDATA_DOCK3_CLASS, "");
@@ -318,7 +318,7 @@ public class ConsoleWin {
 
         String packname4 = SharedPreUtil.getString(SDATA_DOCK4_CLASS);
         if (CommonUtil.isNotNull(packname4) && AppInfoManage.self().checkApp(packname4)) {
-            AppInfoManage.self().setIcon(iv_dock4, packname4);
+            AppInfoManage.self().setIconWithSkin(iv_dock4, packname4);
         } else {
             iv_dock4.setImageResource(R.drawable.theme_add_app);
             SharedPreUtil.saveString(SDATA_DOCK4_CLASS, "");

@@ -192,7 +192,7 @@ public class LDockView extends BaseThemeView {
     private void loadDock() {
         String packname1 = SharedPreUtil.getString(SDATA_DOCK1_CLASS);
         if (CommonUtil.isNotNull(packname1) && AppInfoManage.self().checkApp(packname1)) {
-            AppInfoManage.self().setIcon(iv_dock1, packname1);
+            AppInfoManage.self().setIconWithSkin(iv_dock1, packname1);
             tv_dock1.setText(AppInfoManage.self().getName(packname1));
         } else {
             iv_dock1.setImageResource(R.drawable.theme_add_app);
@@ -201,7 +201,7 @@ public class LDockView extends BaseThemeView {
         }
         String packname2 = SharedPreUtil.getString(SDATA_DOCK2_CLASS);
         if (CommonUtil.isNotNull(packname2) && AppInfoManage.self().checkApp(packname2)) {
-            AppInfoManage.self().setIcon(iv_dock2, packname2);
+            AppInfoManage.self().setIconWithSkin(iv_dock2, packname2);
             tv_dock2.setText(AppInfoManage.self().getName(packname2));
         } else {
             iv_dock2.setImageResource(R.drawable.theme_add_app);
@@ -211,7 +211,7 @@ public class LDockView extends BaseThemeView {
 
         String packname3 = SharedPreUtil.getString(SDATA_DOCK3_CLASS);
         if (CommonUtil.isNotNull(packname3) && AppInfoManage.self().checkApp(packname3)) {
-            AppInfoManage.self().setIcon(iv_dock3, packname3);
+            AppInfoManage.self().setIconWithSkin(iv_dock3, packname3);
             tv_dock3.setText(AppInfoManage.self().getName(packname3));
         } else {
             iv_dock3.setImageResource(R.drawable.theme_add_app);
@@ -221,7 +221,7 @@ public class LDockView extends BaseThemeView {
 
         String packname4 = SharedPreUtil.getString(SDATA_DOCK4_CLASS);
         if (CommonUtil.isNotNull(packname4) && AppInfoManage.self().checkApp(packname4)) {
-            AppInfoManage.self().setIcon(iv_dock4, packname4);
+            AppInfoManage.self().setIconWithSkin(iv_dock4, packname4);
             tv_dock4.setText(AppInfoManage.self().getName(packname4));
         } else {
             iv_dock4.setImageResource(R.drawable.theme_add_app);
@@ -230,7 +230,7 @@ public class LDockView extends BaseThemeView {
         }
         String packname5 = SharedPreUtil.getString(SDATA_DOCK5_CLASS);
         if (CommonUtil.isNotNull(packname5) && AppInfoManage.self().checkApp(packname5)) {
-            AppInfoManage.self().setIcon(iv_dock5, packname5);
+            AppInfoManage.self().setIconWithSkin(iv_dock5, packname5);
             tv_dock5.setText(AppInfoManage.self().getName(packname5));
         } else {
             iv_dock5.setImageResource(R.drawable.theme_add_app);

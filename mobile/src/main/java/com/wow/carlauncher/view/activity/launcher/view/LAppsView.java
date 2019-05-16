@@ -101,7 +101,7 @@ public class LAppsView extends BaseThemeView implements View.OnClickListener, Vi
             if (model != null) {
                 cellView = View.inflate(getContext(), R.layout.content_app_grid_item, null);
                 ((TextView) cellView.findViewById(R.id.name)).setText(model.name);
-                AppInfoManage.self().setIcon(cellView.findViewById(R.id.icon), model.clazz);
+                AppInfoManage.self().setIconWithSkin(cellView.findViewById(R.id.icon), model.clazz);
                 cellView.setOnClickListener(this);
                 cellView.setOnLongClickListener(this);
                 cellView.setTag(i);

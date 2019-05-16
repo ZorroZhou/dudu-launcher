@@ -121,7 +121,7 @@ public class AppInfoManage extends ContextEx {
         return null;
     }
 
-    public void setIcon(ImageView view, String app) {
+    public void setIconWithSkin(ImageView view, String app) {
         AppInfo info = getAppInfo(app);
         if (info != null) {
             if (MARK_OTHER_APP == info.appMark) {
@@ -152,34 +152,18 @@ public class AppInfoManage extends ContextEx {
         }
     }
 
-    public Drawable getIcon(String app) {
-        return getIcon(app, true);
-    }
-
-    public Drawable getIcon(String app, boolean withTheme) {
+    public Drawable getAppIcon(String app, boolean withTheme) {
         Resources resources = getContext().getResources();
         AppInfo info = getAppInfo(app);
         if (info != null) {
             if (MARK_OTHER_APP == info.appMark) {
-                //先根据主题获取图标
-                int r = AppIconTemp.getIcon(info.clazz);
-                System.out.println("!!!!!!!!:" + r + "   " + app + "   " + info.clazz);
-                if (withTheme && r > 0) {
-                    return SkinManage.self().getDrawable(r);
-                } else if (r > 0) {
-                    Drawable drawable = resources.getDrawable(r);
-                    if (drawable != null) {
-                        return drawable;
-                    }
-                }
-
                 try {
-                    System.out.println("!!!!!!!!:load default   " + app + "   " + withTheme);
                     PackageInfo packageInfo = packageManager.getPackageInfo(info.clazz, 0);
                     return packageInfo.applicationInfo.loadIcon(packageManager);
                 } catch (PackageManager.NameNotFoundException e) {
                     e.printStackTrace();
                 }
+                return resources.getDrawable(R.mipmap.ic_launcher);
             } else {
                 switch (info.clazz) {
                     case INTERNAL_APP_DRIVING: {
@@ -199,7 +183,6 @@ public class AppInfoManage extends ContextEx {
                 }
             }
         }
-        LogEx.e(this, "not find AppInfo");
         return resources.getDrawable(R.mipmap.ic_launcher);
     }
 

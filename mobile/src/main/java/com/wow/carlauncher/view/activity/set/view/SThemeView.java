@@ -212,15 +212,12 @@ public class SThemeView extends SetBaseView {
 
     private void loadData() {
         loadSkinInfos();
-
         //拿到mark,先查询所有的,如果没有,标记为默认的
-        final String dayMark = SharedPreUtil.getString(SDATA_APP_SKIN_DAY);
+        String dayMark = SharedPreUtil.getString(SDATA_APP_SKIN_DAY);
         SkinInfo daySkinInfo = allSkinInfos.get(dayMark);
         if (daySkinInfo == null) {
             SharedPreUtil.saveString(SDATA_APP_SKIN_DAY, SkinManage.DEFAULT_MARK);
             daySkinInfo = SkinManage.self().getBuiltInSkin().get(SkinManage.DEFAULT_MARK);
-        } else {
-            //这里应该加载新的主题了
             SkinManage.self().loadSkin();
         }
 
@@ -230,8 +227,6 @@ public class SThemeView extends SetBaseView {
         if (nightSkinInfo == null) {
             SharedPreUtil.saveString(SDATA_APP_SKIN_NIGHT, SkinManage.DEFAULT_MARK_NIGHT);
             nightSkinInfo = SkinManage.self().getBuiltInSkin().get(SkinManage.DEFAULT_MARK_NIGHT);
-        } else {
-            //这里应该加载新的主题了
             SkinManage.self().loadSkin();
         }
 

@@ -68,7 +68,6 @@ public class LMusicView extends BaseThemeView {
     public void changedSkin(SkinManage manage) {
         tv_title.setGravity(SkinUtil.analysisItemTitleAlign(manage.getString(R.string.theme_item_title_align)));
         music_iv_cover.setCircular(SkinUtil.analysisMusicCoverType(manage.getString(R.string.theme_item_music_cover_type)));
-        refreshPlay();
     }
 
     private boolean run;

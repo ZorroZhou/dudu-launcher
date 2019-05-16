@@ -9,6 +9,7 @@ import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
+import android.widget.ImageView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.AppIconTemp;
@@ -120,6 +121,37 @@ public class AppInfoManage extends ContextEx {
         return null;
     }
 
+    public void setIcon(ImageView view, String app) {
+        AppInfo info = getAppInfo(app);
+        if (info != null) {
+            if (MARK_OTHER_APP == info.appMark) {
+                int r = AppIconTemp.getIcon(info.clazz);
+                if (r > 0) {
+                    view.setImageResource(r);
+                } else {
+                    try {
+                        PackageInfo packageInfo = packageManager.getPackageInfo(info.clazz, 0);
+                        view.setImageDrawable(packageInfo.applicationInfo.loadIcon(packageManager));
+                    } catch (PackageManager.NameNotFoundException e) {
+                        e.printStackTrace();
+                        view.setImageResource(R.mipmap.ic_launcher);
+                    }
+                }
+            } else {
+                switch (info.clazz) {
+                    case INTERNAL_APP_DRIVING: {
+                        view.setImageResource(R.drawable.app_icon_obd);
+                    }
+                    case INTERNAL_APP_SETTING: {
+                        view.setImageResource(R.drawable.app_icon_set);
+                    }
+                }
+            }
+        } else {
+            view.setImageResource(R.mipmap.ic_launcher);
+        }
+    }
+
     public Drawable getIcon(String app) {
         return getIcon(app, true);
     }
@@ -131,6 +163,7 @@ public class AppInfoManage extends ContextEx {
             if (MARK_OTHER_APP == info.appMark) {
                 //先根据主题获取图标
                 int r = AppIconTemp.getIcon(info.clazz);
+                System.out.println("!!!!!!!!:" + r + "   " + app + "   " + info.clazz);
                 if (withTheme && r > 0) {
                     return SkinManage.self().getDrawable(r);
                 } else if (r > 0) {
@@ -141,6 +174,7 @@ public class AppInfoManage extends ContextEx {
                 }
 
                 try {
+                    System.out.println("!!!!!!!!:load default   " + app + "   " + withTheme);
                     PackageInfo packageInfo = packageManager.getPackageInfo(info.clazz, 0);
                     return packageInfo.applicationInfo.loadIcon(packageManager);
                 } catch (PackageManager.NameNotFoundException e) {
@@ -165,6 +199,7 @@ public class AppInfoManage extends ContextEx {
                 }
             }
         }
+        LogEx.e(this, "not find AppInfo");
         return resources.getDrawable(R.mipmap.ic_launcher);
     }
 

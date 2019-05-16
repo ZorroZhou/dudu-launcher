@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -20,7 +19,6 @@ import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.util.ViewUtils;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfo;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
-import com.wow.carlauncher.ex.manage.skin.SkinManage;
 import com.wow.carlauncher.view.activity.launcher.BaseThemeView;
 import com.wow.carlauncher.view.activity.launcher.LayoutEnum;
 import com.wow.carlauncher.view.activity.set.event.SEventPromptShowRefresh;
@@ -103,7 +101,7 @@ public class LAppsView extends BaseThemeView implements View.OnClickListener, Vi
             if (model != null) {
                 cellView = View.inflate(getContext(), R.layout.content_app_grid_item, null);
                 ((TextView) cellView.findViewById(R.id.name)).setText(model.name);
-                ((ImageView) cellView.findViewById(R.id.icon)).setImageDrawable(AppInfoManage.self().getIcon(model.clazz));
+                AppInfoManage.self().setIcon(cellView.findViewById(R.id.icon), model.clazz);
                 cellView.setOnClickListener(this);
                 cellView.setOnLongClickListener(this);
                 cellView.setTag(i);
@@ -138,17 +136,6 @@ public class LAppsView extends BaseThemeView implements View.OnClickListener, Vi
             this.layoutEnum = layoutEnum;
             addRefreshItemHandle();
         }
-    }
-
-    @Override
-    public void changedSkin(SkinManage manage) {
-        for (View cell : cellViews) {
-            Integer index = (Integer) cell.getTag();
-            if (index != null && index >= 0 && index < appInfos.size()) {
-                ((ImageView) cell.findViewById(R.id.icon)).setImageDrawable(AppInfoManage.self().getIcon(appInfos.get(index).clazz));
-            }
-        }
-        LogEx.d(this, "changedSkin");
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

@@ -25,7 +25,6 @@ import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.manage.ImageManage;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.appInfo.event.MAppInfoRefreshShowEvent;
-import com.wow.carlauncher.ex.manage.skin.SkinManage;
 import com.wow.carlauncher.ex.manage.time.event.TMEvent3Second;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventAction;
@@ -55,7 +54,7 @@ import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.CENTER_CL
 import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.LEFT_TOP_CLICK;
 import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.RIGHT_TOP_CLICK;
 
-public class ConsoleWin implements SkinManage.OnSkinChangeListener {
+public class ConsoleWin {
     private static class SingletonHolder {
         @SuppressLint("StaticFieldLeak")
         private static ConsoleWin instance = new ConsoleWin();
@@ -112,8 +111,7 @@ public class ConsoleWin implements SkinManage.OnSkinChangeListener {
 
         EventBus.getDefault().register(this);
 
-        onSkinChanged(SkinManage.self());
-        SkinManage.self().registerSkinChangeListener(this);
+        loadDock();
         LogEx.d(this, "init ");
     }
 
@@ -131,13 +129,6 @@ public class ConsoleWin implements SkinManage.OnSkinChangeListener {
             wm.removeView(consoleWin);
             isShow = false;
         }
-    }
-
-    @Override
-    public void onSkinChanged(SkinManage manage) {
-        refreshPlay();
-        loadDock(false);
-        LogEx.e(this, "onSkinChanged");
     }
 
     private int selectApp = 0;
@@ -300,35 +291,35 @@ public class ConsoleWin implements SkinManage.OnSkinChangeListener {
         }
     }
 
-    private void loadDock(boolean removeIfError) {
+    private void loadDock() {
         String packname1 = SharedPreUtil.getString(SDATA_DOCK1_CLASS);
         if (CommonUtil.isNotNull(packname1) && AppInfoManage.self().checkApp(packname1)) {
-            iv_dock1.setImageDrawable(AppInfoManage.self().getIcon(packname1));
-        } else if (removeIfError) {
+            AppInfoManage.self().setIcon(iv_dock1, packname1);
+        } else {
             iv_dock1.setImageResource(R.drawable.theme_add_app);
             SharedPreUtil.saveString(SDATA_DOCK1_CLASS, "");
         }
 
         String packname2 = SharedPreUtil.getString(SDATA_DOCK2_CLASS);
         if (CommonUtil.isNotNull(packname2) && AppInfoManage.self().checkApp(packname2)) {
-            iv_dock2.setImageDrawable(AppInfoManage.self().getIcon(packname2));
-        } else if (removeIfError) {
+            AppInfoManage.self().setIcon(iv_dock2, packname2);
+        } else {
             iv_dock2.setImageResource(R.drawable.theme_add_app);
             SharedPreUtil.saveString(SDATA_DOCK2_CLASS, "");
         }
 
         String packname3 = SharedPreUtil.getString(SDATA_DOCK3_CLASS);
         if (CommonUtil.isNotNull(packname3) && AppInfoManage.self().checkApp(packname3)) {
-            iv_dock3.setImageDrawable(AppInfoManage.self().getIcon(packname3));
-        } else if (removeIfError) {
+            AppInfoManage.self().setIcon(iv_dock3, packname3);
+        } else {
             iv_dock3.setImageResource(R.drawable.theme_add_app);
             SharedPreUtil.saveString(SDATA_DOCK3_CLASS, "");
         }
 
         String packname4 = SharedPreUtil.getString(SDATA_DOCK4_CLASS);
         if (CommonUtil.isNotNull(packname4) && AppInfoManage.self().checkApp(packname4)) {
-            iv_dock4.setImageDrawable(AppInfoManage.self().getIcon(packname4));
-        } else if (removeIfError) {
+            AppInfoManage.self().setIcon(iv_dock4, packname4);
+        } else {
             iv_dock4.setImageResource(R.drawable.theme_add_app);
             SharedPreUtil.saveString(SDATA_DOCK4_CLASS, "");
         }
@@ -436,6 +427,6 @@ public class ConsoleWin implements SkinManage.OnSkinChangeListener {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final MAppInfoRefreshShowEvent event) {
-        loadDock(true);
+        loadDock();
     }
 }

@@ -22,7 +22,6 @@ import com.wow.carlauncher.common.util.ViewUtils;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfo;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.appInfo.event.MAppInfoRefreshShowEvent;
-import com.wow.carlauncher.ex.manage.skin.SkinManage;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.view.activity.launcher.BaseThemeView;
 import com.wow.carlauncher.view.activity.launcher.LayoutEnum;
@@ -180,12 +179,8 @@ public class LDockView extends BaseThemeView {
     }
 
     @Override
-    public void changedSkin(SkinManage manage) {
-        loadDock(false);
-    }
-
-    @Override
     protected void initView() {
+        loadDock();
     }
 
     private void openDock(String clazz) {
@@ -194,21 +189,21 @@ public class LDockView extends BaseThemeView {
         }
     }
 
-    private void loadDock(boolean removeIfError) {
+    private void loadDock() {
         String packname1 = SharedPreUtil.getString(SDATA_DOCK1_CLASS);
         if (CommonUtil.isNotNull(packname1) && AppInfoManage.self().checkApp(packname1)) {
-            iv_dock1.setImageDrawable(AppInfoManage.self().getIcon(packname1));
+            AppInfoManage.self().setIcon(iv_dock1, packname1);
             tv_dock1.setText(AppInfoManage.self().getName(packname1));
-        } else if (removeIfError) {
+        } else {
             iv_dock1.setImageResource(R.drawable.theme_add_app);
             tv_dock1.setText("添加");
             SharedPreUtil.saveString(SDATA_DOCK1_CLASS, "");
         }
         String packname2 = SharedPreUtil.getString(SDATA_DOCK2_CLASS);
         if (CommonUtil.isNotNull(packname2) && AppInfoManage.self().checkApp(packname2)) {
-            iv_dock2.setImageDrawable(AppInfoManage.self().getIcon(packname2));
+            AppInfoManage.self().setIcon(iv_dock2, packname2);
             tv_dock2.setText(AppInfoManage.self().getName(packname2));
-        } else if (removeIfError) {
+        } else {
             iv_dock2.setImageResource(R.drawable.theme_add_app);
             tv_dock2.setText("添加");
             SharedPreUtil.saveString(SDATA_DOCK2_CLASS, "");
@@ -216,9 +211,9 @@ public class LDockView extends BaseThemeView {
 
         String packname3 = SharedPreUtil.getString(SDATA_DOCK3_CLASS);
         if (CommonUtil.isNotNull(packname3) && AppInfoManage.self().checkApp(packname3)) {
-            iv_dock3.setImageDrawable(AppInfoManage.self().getIcon(packname3));
+            AppInfoManage.self().setIcon(iv_dock3, packname3);
             tv_dock3.setText(AppInfoManage.self().getName(packname3));
-        } else if (removeIfError) {
+        } else {
             iv_dock3.setImageResource(R.drawable.theme_add_app);
             tv_dock3.setText("添加");
             SharedPreUtil.saveString(SDATA_DOCK3_CLASS, "");
@@ -226,18 +221,18 @@ public class LDockView extends BaseThemeView {
 
         String packname4 = SharedPreUtil.getString(SDATA_DOCK4_CLASS);
         if (CommonUtil.isNotNull(packname4) && AppInfoManage.self().checkApp(packname4)) {
-            iv_dock4.setImageDrawable(AppInfoManage.self().getIcon(packname4));
+            AppInfoManage.self().setIcon(iv_dock4, packname4);
             tv_dock4.setText(AppInfoManage.self().getName(packname4));
-        } else if (removeIfError) {
+        } else {
             iv_dock4.setImageResource(R.drawable.theme_add_app);
             tv_dock4.setText("添加");
             SharedPreUtil.saveString(SDATA_DOCK4_CLASS, "");
         }
         String packname5 = SharedPreUtil.getString(SDATA_DOCK5_CLASS);
         if (CommonUtil.isNotNull(packname5) && AppInfoManage.self().checkApp(packname5)) {
-            iv_dock5.setImageDrawable(AppInfoManage.self().getIcon(packname5));
+            AppInfoManage.self().setIcon(iv_dock5, packname5);
             tv_dock5.setText(AppInfoManage.self().getName(packname5));
-        } else if (removeIfError) {
+        } else {
             iv_dock5.setImageResource(R.drawable.theme_add_app);
             tv_dock5.setText("添加");
             SharedPreUtil.saveString(SDATA_DOCK5_CLASS, "");
@@ -252,7 +247,6 @@ public class LDockView extends BaseThemeView {
             case R.id.ll_dock1: {
                 String packname = SharedPreUtil.getString(SDATA_DOCK1_CLASS);
                 if (CommonUtil.isNull(packname)) {
-                    LogEx.d(this, "clickEvent: " + getActivity());
                     showSelectDialog(SDATA_DOCK1_CLASS);
                 } else {
                     openDock(packname);
@@ -365,7 +359,7 @@ public class LDockView extends BaseThemeView {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final MAppInfoRefreshShowEvent event) {
         LogEx.d(this, "onEvent:MAppInfoRefreshShowEvent ");
-        loadDock(true);
+        loadDock();
     }
 
 

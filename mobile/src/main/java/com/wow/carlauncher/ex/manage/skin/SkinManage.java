@@ -200,6 +200,7 @@ public class SkinManage {
 //            return SkinInfo.TYPE_NONE;
 //        }
 //    }
+    //将asset的文件复制到缓存,以便使用
     private String copySkinFromAssets(Context context, String name) {
         String skinPath = new File(SkinFileUtils.getSkinDir(context), name).getAbsolutePath();
         try {

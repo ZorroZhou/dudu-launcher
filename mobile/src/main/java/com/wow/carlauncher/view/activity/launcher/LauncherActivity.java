@@ -372,7 +372,7 @@ public class LauncherActivity extends Activity implements SkinManage.OnSkinChang
         } else {
             currentLayoutEnum = layoutEnum;
         }
-        
+
         loadLayout();
         LogEx.d(this, "onThemeChanged:end");
     }

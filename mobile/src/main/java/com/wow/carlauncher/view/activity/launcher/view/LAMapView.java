@@ -73,8 +73,6 @@ public class LAMapView extends BaseThemeView {
         } else {
             line_xunhang.setVisibility(GONE);
         }
-        refreshMute();
-        refreshRoad();
     }
 
     @Override

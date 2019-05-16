@@ -102,7 +102,7 @@ public class SkinManage {
                 .setType(SkinInfo.TYPE_APP_IN));
 
         //先加载默认皮肤
-        SkinInfo skinInfo = DatabaseManage.getBean(SkinInfo.class, " mark='" + SharedPreUtil.getString(SDATA_APP_SKIN_DAY) + "' and canUse=" + IF.YES);
+        SkinInfo skinInfo = getSkininfoByMark(SharedPreUtil.getString(SDATA_APP_SKIN_DAY));
         if (skinInfo == null) {
             skinInfo = builtInSkin.get(DEFAULT_MARK);
         }
@@ -263,9 +263,9 @@ public class SkinManage {
     }
 
     private SkinInfo getSkininfoByMark(String mark) {
-        SkinInfo skinInfo = DatabaseManage.getBean(SkinInfo.class, " mark='" + mark + "' and canUse=" + IF.YES);
+        SkinInfo skinInfo = builtInSkin.get(mark);
         if (skinInfo == null) {
-            skinInfo = builtInSkin.get(mark);
+            skinInfo = DatabaseManage.getBean(SkinInfo.class, " mark='" + mark + "' and canUse=" + IF.YES);
         }
         return skinInfo;
     }

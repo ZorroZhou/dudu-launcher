@@ -83,23 +83,17 @@ public class SkinManage {
         //初始化数据库
         builtInSkin = new HashMap<>();
         builtInSkin.put(DEFAULT_MARK, new SkinInfo()
-                .setCanUse(IF.YES)
                 .setMark(DEFAULT_MARK)
-                .setName("默认主题")
-                .setType(SkinInfo.TYPE_APP_IN));
+                .setName("默认主题"));
         builtInSkin.put(DEFAULT_MARK_NIGHT, new SkinInfo()
-                .setCanUse(IF.YES)
                 .setMark(DEFAULT_MARK_NIGHT)
                 .setPath(SkinFileUtils.getSkinDir(context) + "/heise.skin")
-                .setName("夜间主题")
-                .setType(SkinInfo.TYPE_APP_IN));
+                .setName("夜间主题"));
 
         builtInSkin.put(DEFAULT_MARK_BLACK, new SkinInfo()
-                .setCanUse(IF.YES)
                 .setMark(DEFAULT_MARK_BLACK)
                 .setPath(SkinFileUtils.getSkinDir(context) + "/chunhei.skin")
-                .setName("纯黑主题")
-                .setType(SkinInfo.TYPE_APP_IN));
+                .setName("纯黑主题"));
 
         //先加载默认皮肤
         SkinInfo skinInfo = getSkininfoByMark(SharedPreUtil.getString(SDATA_APP_SKIN_DAY));
@@ -134,10 +128,12 @@ public class SkinManage {
         switch (skinModel) {
             case BAISE: {
                 SkinInfo skinInfo = getSkininfoByMark(SharedPreUtil.getString(SDATA_APP_SKIN_DAY));
+                System.out.println("aaaaa1!!!" + skinInfo);
                 if (skinInfo == null) {
                     SharedPreUtil.saveString(SDATA_APP_SKIN_DAY, DEFAULT_MARK);
                     skinInfo = builtInSkin.get(DEFAULT_MARK);
                 }
+                System.out.println("aaaaa2!!!" + skinInfo);
                 loadSkin(skinInfo);
                 break;
             }
@@ -195,10 +191,16 @@ public class SkinManage {
         } else {
             //如果不是默认主题,加载额外信息,如果加载失败,则加载默认主题
             try {
-                skinPackageName = SkinCompatManager.getInstance().getSkinPackageName(skinInfo.getPath());
-                skinSkinResources = SkinCompatManager.getInstance().getSkinResources(skinInfo.getPath());
+                if (CommonUtil.isNotNull(skinInfo.getPath())) {
+                    skinPackageName = SkinCompatManager.getInstance().getSkinPackageName(skinInfo.getPath());
+                    skinSkinResources = SkinCompatManager.getInstance().getSkinResources(skinInfo.getPath());
+                } else {
+                    skinPackageName = this.skinMark;
+                    skinSkinResources = context.createPackageContext(skinPackageName, 0).getResources();
+                }
             } catch (Exception e) {
-                this.skinMark = DEFAULT_MARK;
+                e.printStackTrace();
+                //this.skinMark = DEFAULT_MARK;
                 skinPackageName = "";
                 skinSkinResources = context.getResources();
             }

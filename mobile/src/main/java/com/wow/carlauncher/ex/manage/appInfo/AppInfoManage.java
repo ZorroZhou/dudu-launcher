@@ -237,15 +237,13 @@ public class AppInfoManage extends ContextEx {
                 final List<ResolveInfo> apps = packageManager.queryIntentActivities(
                         mainIntent, 0);
                 Collections.sort(apps, new ResolveInfo.DisplayNameComparator(packageManager));
-                final int count = apps.size();
                 //清理所有的存储
                 allAppInfosMap.clear();
                 allAppInfosList.clear();
 
                 allAppInfosMap.putAll(internalAppsInfoMap);
-                for (int i = 0; i < count; i++) {
-                    ResolveInfo info = apps.get(i);
-                    String packageName = apps.get(i).activityInfo.applicationInfo.packageName;
+                for (ResolveInfo info : apps) {
+                    String packageName = info.activityInfo.applicationInfo.packageName;
                     allAppInfosMap.put(packageName, new AppInfo(info.loadLabel(packageManager).toString(), packageName, MARK_OTHER_APP));
                 }
 

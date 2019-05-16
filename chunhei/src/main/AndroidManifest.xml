@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.wow.carlauncher.theme.chunhei">
+    package="com.wow.carlauncher.theme.chunhei2">
 
     <application
         android:allowBackup="true"

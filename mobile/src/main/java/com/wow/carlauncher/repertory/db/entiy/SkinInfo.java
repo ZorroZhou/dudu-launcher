@@ -9,11 +9,9 @@ public class SkinInfo extends BaseEntity implements SetEnum {
     public static final int TYPE_APP_IN = 1;
     public static final int TYPE_OTHER = 2;
 
-    private String name;
-    private String mark;
-    private String path;
-    private Integer type;
-    private Integer canUse;
+    private String name;//主题名称
+    private String mark;//主题的标记
+    private String path;//主题的路径,内置非默认主题才有这东西
 
     public String getMark() {
         return mark;
@@ -42,32 +40,12 @@ public class SkinInfo extends BaseEntity implements SetEnum {
         return this;
     }
 
-    public Integer getType() {
-        return type;
-    }
-
-    public SkinInfo setType(Integer type) {
-        this.type = type;
-        return this;
-    }
-
-    public Integer getCanUse() {
-        return canUse;
-    }
-
-    public SkinInfo setCanUse(Integer canUse) {
-        this.canUse = canUse;
-        return this;
-    }
-
     @Override
     public String toString() {
         return "SkinInfo{" +
                 "name='" + name + '\'' +
                 ", mark='" + mark + '\'' +
                 ", path='" + path + '\'' +
-                ", type=" + type +
-                ", canUse=" + canUse +
                 '}';
     }
 }

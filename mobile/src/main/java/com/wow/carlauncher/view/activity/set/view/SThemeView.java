@@ -1,6 +1,7 @@
 package com.wow.carlauncher.view.activity.set.view;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.res.Resources;
 import android.os.Environment;
 import android.support.v7.app.AlertDialog;
@@ -11,12 +12,13 @@ import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.view.SetView;
+import com.wow.carlauncher.ex.manage.appInfo.AppInfo;
+import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.skin.SkinManage;
 import com.wow.carlauncher.ex.manage.skin.SkinModel;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.repertory.db.entiy.SkinInfo;
 import com.wow.carlauncher.repertory.db.manage.DatabaseManage;
-import com.wow.carlauncher.repertory.db.manage.DatabaseManage.IF;
 import com.wow.carlauncher.view.activity.set.SetActivity;
 import com.wow.carlauncher.view.activity.set.SetBaseView;
 import com.wow.carlauncher.view.activity.set.listener.SetMultipleSelect;
@@ -38,6 +40,7 @@ import butterknife.BindView;
 import skin.support.SkinCompatManager;
 import skin.support.utils.SkinFileUtils;
 
+import static android.content.Context.CONTEXT_IGNORE_SECURITY;
 import static com.wow.carlauncher.common.CommonData.SDATA_APP_SKIN;
 import static com.wow.carlauncher.common.CommonData.SDATA_APP_SKIN_DAY;
 import static com.wow.carlauncher.common.CommonData.SDATA_APP_SKIN_NIGHT;
@@ -204,7 +207,44 @@ public class SThemeView extends SetBaseView {
         });
 
         sv_load_skin.setOnClickListener(v -> {
-            searchSkin();
+            //searchSkin();
+            String nameRes = getContext().getResources().getResourceEntryName(R.string.theme_name);
+            List<AppInfo> appInfos = new ArrayList<>(AppInfoManage.self().getAllAppInfos());
+            // for (AppInfo appInfo : appInfos) {
+            //判断开头,看是不是主题
+            // System.out.println("!!!!" + appInfo.clazz);
+            //if (appInfo.clazz.startsWith("com.wow.carlauncher.theme")) {
+            String clazz = "com.wow.carlauncher.theme.chunhei2";
+            try {
+                Context con = getActivity().createPackageContext(clazz, CONTEXT_IGNORE_SECURITY);
+                Resources res = con.getResources();
+                if (res == null) {
+                    return;
+                }
+                int id = res.getIdentifier(nameRes, "string", clazz);
+                if (id == 0) {
+                    return;
+                }
+                String name = res.getString(id);
+                if (CommonUtil.isNull(name)) {
+                    return;
+                }
+                System.out.println("!!!!" + clazz);
+                SkinInfo skinInfo = DatabaseManage.getBean(SkinInfo.class, " mark='" + clazz + "'");
+                if (skinInfo == null) {
+                    DatabaseManage.insert(new SkinInfo()
+                            .setMark(clazz)
+                            .setName(name));
+                } else {
+                    DatabaseManage.update(new SkinInfo()
+                            .setMark(clazz)
+                            .setName(name), " mark='" + clazz + "'");
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            //}
+            //}
         });
 
         TaskExecutor.self().run(this::loadData);
@@ -333,18 +373,12 @@ public class SThemeView extends SetBaseView {
                     SkinInfo skinInfo = DatabaseManage.getBean(SkinInfo.class, " mark='" + skinPackageName + "'");
                     if (skinInfo == null) {
                         DatabaseManage.insert(new SkinInfo()
-                                .setCanUse(IF.YES)
-                                .setPath(path)
                                 .setMark(skinPackageName)
-                                .setName(skinSkinResources.getString(id))
-                                .setType(SkinInfo.TYPE_OTHER));
+                                .setName(skinSkinResources.getString(id)));
                     } else {
                         DatabaseManage.update(new SkinInfo()
-                                .setCanUse(IF.YES)
-                                .setPath(path)
                                 .setMark(skinPackageName)
-                                .setName(skinSkinResources.getString(id))
-                                .setType(SkinInfo.TYPE_OTHER), " mark='" + skinPackageName + "'");
+                                .setName(skinSkinResources.getString(id)), " mark='" + skinPackageName + "'");
                     }
                 }
                 loadSkinInfos();

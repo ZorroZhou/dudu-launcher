@@ -53,23 +53,23 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support:design:28.0.0'
     implementation 'com.android.support:support-v4:28.0.0'
-    implementation 'com.zhy:percent-support-extends:1.1.1'
     //百分比布局
-    implementation 'com.inuker.bluetooth:library:1.4.0'
+    implementation 'com.zhy:percent-support-extends:1.1.1'
     //蓝牙
-    implementation 'com.amap.api:location:4.4.0'
+    implementation 'com.inuker.bluetooth:library:1.4.0'
     //定位
-    implementation 'org.greenrobot:eventbus:3.1.1'
+    implementation 'com.amap.api:location:4.4.0'
     //事件总线
-    implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+    implementation 'org.greenrobot:eventbus:3.1.1'
     //图片加载
-    implementation 'com.github.goweii:AnyPermission:1.1.0'
+    implementation 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     //权限检查
-    implementation 'com.ToxicBakery.viewpager.transforms:view-pager-transforms:2.0.24'
+    implementation 'com.github.goweii:AnyPermission:1.1.0'
     //动画
+    implementation 'com.ToxicBakery.viewpager.transforms:view-pager-transforms:2.0.24'
+
     //noinspection GradleDependency
     implementation 'com.jakewharton:butterknife:8.8.1'
-
     // skin-support 基础控件支持这里不能用新版本,新版本是给androidX准备的
     //noinspection GradleDependency
     implementation 'skin.support:skin-support:3.1.1'

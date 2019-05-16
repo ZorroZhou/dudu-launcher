@@ -30,6 +30,8 @@ public class AppIconTemp {
         putIcon("com.nwd.bt.music", R.drawable.app_icon_bt_music);
         //autochips蓝牙音乐
         putIcon("com.autochips.bluetooth", R.drawable.app_icon_bt_music);
+        //酷我
+        putIcon("cn.kuwo.kwmusiccar", R.drawable.app_icon_kuwo);
 
         //电话应用
         //NWD的电话应用

@@ -3,8 +3,8 @@ package com.wow.carlauncher.ex.manage.skin;
 import com.wow.carlauncher.view.activity.set.SetEnum;
 
 public enum SkinModel implements SetEnum {
-    SHIJIAN("根据日出日落切换", 0),
-    DENGGUANG("根据灯光切换(部分车型支持)", 1),
+    SHIJIAN("根据日出日落切换(换肤过程可能会卡顿)", 0),
+    DENGGUANG("根据灯光切换(部分车型支持,换肤过程可能会卡顿)", 1),
     BAISE("固定主题", 2);
 
     private String name;

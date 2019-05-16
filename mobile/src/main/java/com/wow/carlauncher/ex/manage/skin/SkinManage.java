@@ -104,13 +104,17 @@ public class SkinManage {
     private Map<String, Integer> cachedDrawable = new HashMap<>();
 
     //这里以主题的mark作为唯一标记,不要用路径
-    public void loadSkin(SkinCompatManager.SkinLoaderListener listener) {
+    public void loadSkin(SkinLoaderListener listener) {
         SkinInfo skinInfo = DatabaseManage.getBean(SkinInfo.class, " mark='" + SharedPreUtil.getString(SDATA_APP_SKIN_DAY) + "' and canUse=" + IF.YES);
         //存储的主题丢失了,直接使用默认主题
         if (skinInfo == null) {
             skinInfo = new SkinInfo()
                     .setMark(DEFAULT_MARK)
                     .setName("默认主题");
+        }
+        if (CommonUtil.equals(this.skinMark, skinInfo.getMark())) {
+            LogEx.e(this, "一样的皮肤,不需要更换");
+            return;
         }
 
         this.skinMark = skinInfo.getMark();
@@ -136,9 +140,6 @@ public class SkinManage {
         SkinCompatManager.SkinLoaderListener loaderListener = new SkinCompatManager.SkinLoaderListener() {
             @Override
             public void onStart() {
-                if (listener != null) {
-                    listener.onStart();
-                }
             }
 
             @Override
@@ -154,21 +155,18 @@ public class SkinManage {
                         }
 
                         if (listener != null) {
-                            listener.onSuccess();
+                            listener.loadSuccess();
                         }
                     });
                 } else {
                     if (listener != null) {
-                        listener.onSuccess();
+                        listener.loadSuccess();
                     }
                 }
             }
 
             @Override
             public void onFailed(String errMsg) {
-                if (listener != null) {
-                    listener.onFailed(errMsg);
-                }
             }
         };
         //加载主题,使用自己的加载器
@@ -290,6 +288,13 @@ public class SkinManage {
     public void unregisterSkinChangeListener(OnSkinChangeListener listener) {
         LogEx.d(this, "unregisterThemeChangeListener:" + listener);
         listeners.remove(listener);
+    }
+
+    public interface SkinLoaderListener {
+        /**
+         * 主题切换时回调
+         */
+        void loadSuccess();
     }
 
 

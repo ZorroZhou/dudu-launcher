@@ -102,7 +102,6 @@ public class SThemeView extends SetBaseView {
 
             @Override
             public void onSelect(SkinInfo select) {
-                System.out.println("!!!!!select:" + select);
                 SharedPreUtil.saveString(SDATA_APP_SKIN_DAY, select.getMark());
                 sv_theme_day.setSummary(select.getName());
                 SkinManage.self().loadSkin(null);
@@ -122,6 +121,29 @@ public class SThemeView extends SetBaseView {
         }
 
         sv_theme_night.setSummary(heise.getName());
+        sv_theme_night.setOnClickListener(new SetEnumOnClickListener<SkinInfo>(getContext(), skinInfos) {
+            @Override
+            public String title() {
+                return "请选择默认皮肤";
+            }
+
+            @Override
+            public SkinInfo getCurr() {
+                return DatabaseManage.getBean(SkinInfo.class, " mark='" + heiseMark + "'");
+            }
+
+            @Override
+            public boolean equals(SkinInfo t1, SkinInfo t2) {
+                return CommonUtil.equals(t1.getMark(), t2.getMark());
+            }
+
+            @Override
+            public void onSelect(SkinInfo select) {
+                SharedPreUtil.saveString(SDATA_APP_SKIN_NIGHT, select.getMark());
+                sv_theme_night.setSummary(select.getName());
+                SkinManage.self().loadSkin(null);
+            }
+        });
 
 
         sv_plugin_theme.setSummary(SkinModel.getById(SharedPreUtil.getInteger(SDATA_APP_SKIN, SkinModel.BAISE.getId())).getName());

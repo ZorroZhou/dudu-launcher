@@ -148,28 +148,6 @@ public class LauncherActivity extends Activity implements SkinManage.OnSkinChang
 
         TaskExecutor.self().run(() -> TaskExecutor.self().autoPost(this::requestRuntime), 1000);
         LogEx.d(this, "onCreate:end");
-//        SkinManage.self().restoreDefaultTheme();
-//        TaskExecutor.self().post(new Runnable() {
-//            @Override
-//            public void run() {
-//                SkinManage.self().loadSkin("heise.skin", new SkinCompatManager.SkinLoaderListener() {
-//                    @Override
-//                    public void onStart() {
-//                        LogEx.d(SkinCompatManager.class, "onStart");
-//                    }
-//
-//                    @Override
-//                    public void onSuccess() {
-//                        LogEx.d(SkinCompatManager.class, "onSuccess");
-//                    }
-//
-//                    @Override
-//                    public void onFailed(String errMsg) {
-//                        LogEx.d(SkinCompatManager.class, "onFailed:" + errMsg);
-//                    }
-//                }, SkinCompatManager.SKIN_LOADER_STRATEGY_ASSETS);
-//            }
-//        }, 5000);
     }
 
     public void initView() {
@@ -735,7 +713,7 @@ public class LauncherActivity extends Activity implements SkinManage.OnSkinChang
         @NonNull
         @Override
         public Object instantiateItem(@NonNull ViewGroup container, int position) {
-            LogEx.e(LauncherActivity.this, "instantiateItem");
+            LogEx.d(LauncherActivity.this, "instantiateItem");
             View view = datas[position];
             if (view.getParent() instanceof ViewGroup) {
                 ((ViewGroup) view.getParent()).removeView(view);
@@ -747,7 +725,7 @@ public class LauncherActivity extends Activity implements SkinManage.OnSkinChang
         @Override
         public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
             container.removeView(datas[position]);
-            LogEx.e(LauncherActivity.this, "destroyItem");
+            LogEx.d(LauncherActivity.this, "destroyItem");
         }
     }
 

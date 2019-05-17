@@ -59,7 +59,7 @@ public class SkinManage {
     public SkinInfo getDefaultSkin() {
         return defaultSkin;
     }
-    
+
     public void init(Application context) {
         long t1 = System.currentTimeMillis();
         this.context = context;
@@ -138,6 +138,16 @@ public class SkinManage {
                     loadSkin(skinInfo);
                 }
                 break;
+            case DENGGUANG:
+                if (CommonUtil.isNull(this.skinMark)) {
+                    SkinInfo skinInfo = getSkininfoByMark(SharedPreUtil.getString(SDATA_APP_SKIN_DAY));
+                    if (skinInfo == null) {
+                        SharedPreUtil.saveString(SDATA_APP_SKIN_DAY, DEFAULT_MARK);
+                        skinInfo = defaultSkin;
+                    }
+                    loadSkin(skinInfo);
+                }
+                break;
         }
     }
 
@@ -161,6 +171,10 @@ public class SkinManage {
             try {
                 skinPackageName = this.skinMark;
                 skinSkinResources = context.createPackageContext(skinPackageName, 0).getResources();
+                if (skinSkinResources == null) {
+                    skinPackageName = "";
+                    skinSkinResources = context.getResources();
+                }
             } catch (Exception e) {
                 e.printStackTrace();
                 skinPackageName = "";
@@ -199,16 +213,16 @@ public class SkinManage {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(PConsoleEventLightState event) {
         if (event.isOpen()) {
-            SkinInfo skinInfo = getSkininfoByMark(SharedPreUtil.getString(SDATA_APP_SKIN_DAY));
+            SkinInfo skinInfo = getSkininfoByMark(SharedPreUtil.getString(SDATA_APP_SKIN_NIGHT));
             if (skinInfo == null) {
-                SharedPreUtil.saveString(SDATA_APP_SKIN_DAY, DEFAULT_MARK);
+                SharedPreUtil.saveString(SDATA_APP_SKIN_NIGHT, DEFAULT_MARK);
                 skinInfo = defaultSkin;
             }
             loadSkin(skinInfo);
         } else {
-            SkinInfo skinInfo = getSkininfoByMark(SharedPreUtil.getString(SDATA_APP_SKIN_NIGHT));
+            SkinInfo skinInfo = getSkininfoByMark(SharedPreUtil.getString(SDATA_APP_SKIN_DAY));
             if (skinInfo == null) {
-                SharedPreUtil.saveString(SDATA_APP_SKIN_NIGHT, DEFAULT_MARK);
+                SharedPreUtil.saveString(SDATA_APP_SKIN_DAY, DEFAULT_MARK);
                 skinInfo = defaultSkin;
             }
             loadSkin(skinInfo);
@@ -252,7 +266,7 @@ public class SkinManage {
     //获取皮肤内的字符串信息
     public String getString(int resId) {
         LogEx.d(this, "getString mark:" + skinMark);
-        if (CommonUtil.equals(skinMark, DEFAULT_MARK)) {
+        if (CommonUtil.equals(skinMark, DEFAULT_MARK) || skinSkinResources == null) {
             return context.getResources().getString(resId);
         }
         String name = getResName(resId);
@@ -272,7 +286,7 @@ public class SkinManage {
     //获取皮肤内图的资源
     public Drawable getDrawable(int resId) {
         LogEx.d(this, "getDrawable mark:" + skinMark);
-        if (CommonUtil.equals(skinMark, DEFAULT_MARK)) {
+        if (CommonUtil.equals(skinMark, DEFAULT_MARK) || skinSkinResources == null) {
             return context.getResources().getDrawable(resId);
         }
 

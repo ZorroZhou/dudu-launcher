@@ -11,7 +11,6 @@ public class SkinInfo extends BaseEntity implements SetEnum {
 
     private String name;//主题名称
     private String mark;//主题的标记
-    private String path;//主题的路径,内置非默认主题才有这东西
 
     public String getMark() {
         return mark;
@@ -31,21 +30,11 @@ public class SkinInfo extends BaseEntity implements SetEnum {
         return this;
     }
 
-    public String getPath() {
-        return path;
-    }
-
-    public SkinInfo setPath(String path) {
-        this.path = path;
-        return this;
-    }
-
     @Override
     public String toString() {
         return "SkinInfo{" +
                 "name='" + name + '\'' +
                 ", mark='" + mark + '\'' +
-                ", path='" + path + '\'' +
                 '}';
     }
 }

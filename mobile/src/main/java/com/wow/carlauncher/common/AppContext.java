@@ -212,6 +212,10 @@ public class AppContext {
                     CommonService.loginByToken(user.getToken(), (code, msg, loginInfo) -> {
                         if (code != NET_ERROR && code != RES_ERROR && code != 0) {
                             logout();
+                        } else {
+                            if (code == 0) {
+                                ToastManage.self().show("欢迎回来:" + localUser.getNickname());
+                            }
                         }
                     });
                 }

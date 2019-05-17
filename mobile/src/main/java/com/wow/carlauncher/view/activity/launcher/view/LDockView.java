@@ -152,12 +152,9 @@ public class LDockView extends BaseThemeView {
                         oldHeight = ll_base.getHeight();
 
                         ll_base.getViewTreeObserver().removeOnPreDrawListener(this);
-                        LinearLayout.LayoutParams itemLp = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT);
+                        LinearLayout.LayoutParams itemLp = new LinearLayout.LayoutParams(0, (int) (oldHeight * 0.9));
                         itemLp.weight = 1;
-                        itemLp.setMargins(0,
-                                ViewUtils.dip2px(getContext(), 10),
-                                0,
-                                ViewUtils.dip2px(getContext(), 10))
+                        itemLp.setMargins(0, 0, 0, 0)
                         ;
                         ll_dock1.setLayoutParams(itemLp);
                         ll_dock2.setLayoutParams(itemLp);

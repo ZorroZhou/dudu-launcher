@@ -48,20 +48,10 @@
     <View style="@style/Interval" />
 
     <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_delete_skin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        st:summary="选择某个外置皮肤进行删除"
-        st:titleEx="删除皮肤"
-        st:type="buttonB" />
-
-    <View style="@style/Interval" />
-
-    <com.wow.carlauncher.common.view.SetView
         android:id="@+id/sv_load_skin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        st:summary="请将皮肤文件放到SD卡duduLauncher/skin文件夹,最多可添加100个皮肤"
+        st:summary="如果安装皮肤后没有显示在APP,请点击进行同步"
         st:titleEx="同步皮肤"
         st:type="buttonB" />
 

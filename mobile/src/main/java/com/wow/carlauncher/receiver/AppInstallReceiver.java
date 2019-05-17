@@ -13,6 +13,9 @@ import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.skin.SkinManage;
 import com.wow.carlauncher.repertory.db.entiy.SkinInfo;
 import com.wow.carlauncher.repertory.db.manage.DatabaseManage;
+import com.wow.carlauncher.view.event.EventSkinInstall;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * Created by 10124 on 2017/11/13.
@@ -60,6 +63,8 @@ public class AppInstallReceiver extends BroadcastReceiver {
                                 DatabaseManage.delete(SkinInfo.class, " mark='" + mark + "'");
                                 SkinManage.self().loadSkin();
                             }
+
+                            EventBus.getDefault().post(new EventSkinInstall());
                         }
                     });
                 } else {

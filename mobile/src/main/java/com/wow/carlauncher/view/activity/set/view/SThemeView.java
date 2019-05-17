@@ -1,6 +1,9 @@
 package com.wow.carlauncher.view.activity.set.view;
 
 import android.annotation.SuppressLint;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.res.Resources;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.TaskExecutor;
@@ -14,6 +17,10 @@ import com.wow.carlauncher.repertory.db.manage.DatabaseManage;
 import com.wow.carlauncher.view.activity.set.SetActivity;
 import com.wow.carlauncher.view.activity.set.SetBaseView;
 import com.wow.carlauncher.view.activity.set.listener.SetSingleSelect;
+import com.wow.carlauncher.view.event.EventSkinInstall;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -54,10 +61,6 @@ public class SThemeView extends SetBaseView {
 
     @BindView(R.id.sv_load_skin)
     SetView sv_load_skin;
-
-    @BindView(R.id.sv_delete_skin)
-    SetView sv_delete_skin;
-
 
     private Map<String, SkinInfo> allSkinInfos;
     private Map<String, SkinInfo> allOtherSkinInfos;
@@ -116,7 +119,6 @@ public class SThemeView extends SetBaseView {
 
             @Override
             public SkinInfo getCurr() {
-                System.out.println(SharedPreUtil.getString(SDATA_APP_SKIN_DAY));
                 return allSkinInfos.get(SharedPreUtil.getString(SDATA_APP_SKIN_DAY));
             }
 
@@ -187,52 +189,54 @@ public class SThemeView extends SetBaseView {
             }
         });
 
-//        sv_load_skin.setOnClickListener(v -> {
-//            //searchSkin();
-//            String nameRes = getContext().getResources().getResourceEntryName(R.string.theme_name);
-//            List<AppInfo> appInfos = new ArrayList<>(AppInfoManage.self().getAllAppInfos());
-//            // for (AppInfo appInfo : appInfos) {
-//            //判断开头,看是不是主题
-//            // System.out.println("!!!!" + appInfo.clazz);
-//            //if (appInfo.clazz.startsWith("com.wow.carlauncher.theme")) {
-//            String clazz = "com.wow.carlauncher.theme.chunhei2";
-//            try {
-//                Context con = getActivity().createPackageContext(clazz, CONTEXT_IGNORE_SECURITY);
-//                Resources res = con.getResources();
-//                if (res == null) {
-//                    return;
-//                }
-//                int id = res.getIdentifier(nameRes, "string", clazz);
-//                if (id == 0) {
-//                    return;
-//                }
-//                String name = res.getString(id);
-//                if (CommonUtil.isNull(name)) {
-//                    return;
-//                }
-//                System.out.println("!!!!" + clazz);
-//                SkinInfo skinInfo = DatabaseManage.getBean(SkinInfo.class, " mark='" + clazz + "'");
-//                if (skinInfo == null) {
-//                    DatabaseManage.insert(new SkinInfo()
-//                            .setMark(clazz)
-//                            .setName(name));
-//                } else {
-//                    DatabaseManage.update(new SkinInfo()
-//                            .setMark(clazz)
-//                            .setName(name), " mark='" + clazz + "'");
-//                }
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-//            //}
-//            //}
-//        });
+        sv_load_skin.setOnClickListener(v -> {
+            PackageManager pManager = getContext().getPackageManager();
+            //获取手机内所有应用
+            List<PackageInfo> paklist = pManager.getInstalledPackages(0);
+            for (PackageInfo packageInfo : paklist) {
+                System.out.println(packageInfo.packageName);
+                if (packageInfo.packageName.startsWith("com.wow.carlauncher.theme")) {
+                    System.out.println("这是我的主题");
+                    try {
+                        String nameRes = getContext().getResources().getResourceEntryName(R.string.theme_name);
+                        Resources resources = getContext().createPackageContext(packageInfo.packageName, 0).getResources();
+                        int id = resources.getIdentifier(nameRes, "string", packageInfo.packageName);
+                        String name = resources.getString(id);
+
+                        SkinInfo skinInfo = DatabaseManage.getBean(SkinInfo.class, " mark='" + packageInfo.packageName + "'");
+
+                        if (skinInfo == null) {
+                            DatabaseManage.insert(new SkinInfo()
+                                    .setMark(packageInfo.packageName)
+                                    .setName(name));
+                        } else {
+                            DatabaseManage.update(new SkinInfo()
+                                    .setMark(packageInfo.packageName)
+                                    .setName(name), " mark='" + packageInfo.packageName + "'");
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
 
         TaskExecutor.self().run(this::loadData);
     }
 
     private void loadData() {
-        loadSkinInfos();
+
+        allSkinInfos.clear();
+        allOtherSkinInfos.clear();
+        List<SkinInfo> temp = DatabaseManage.getAll(SkinInfo.class);
+        for (SkinInfo skinInfo : temp) {
+            if (CommonUtil.isNotNull(skinInfo.getMark())) {
+                allOtherSkinInfos.put(skinInfo.getMark(), skinInfo);
+            }
+        }
+        allSkinInfos.putAll(allOtherSkinInfos);
+        allSkinInfos.putAll(SkinManage.self().getBuiltInSkin());
+
         //拿到mark,先查询所有的,如果没有,标记为默认的
         String dayMark = SharedPreUtil.getString(SDATA_APP_SKIN_DAY);
         SkinInfo daySkinInfo = allSkinInfos.get(dayMark);
@@ -259,17 +263,9 @@ public class SThemeView extends SetBaseView {
         });
     }
 
-    private void loadSkinInfos() {
-        allSkinInfos.clear();
-        allOtherSkinInfos.clear();
-        List<SkinInfo> temp = DatabaseManage.getAll(SkinInfo.class);
-        for (SkinInfo skinInfo : temp) {
-            if (CommonUtil.isNotNull(skinInfo.getMark())) {
-                allOtherSkinInfos.put(skinInfo.getMark(), skinInfo);
-            }
-        }
-        allSkinInfos.putAll(allOtherSkinInfos);
-        allSkinInfos.putAll(SkinManage.self().getBuiltInSkin());
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(EventSkinInstall event) {
+        loadData();
     }
 
 

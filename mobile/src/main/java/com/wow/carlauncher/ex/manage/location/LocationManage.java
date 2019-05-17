@@ -54,9 +54,8 @@ public class LocationManage extends ContextEx implements AMapLocationListener {
             //设置是否返回地址信息（默认返回地址信息）
             mLocationClient.setLocationOption(mLocationOption);
             mLocationClient.startLocation();
-            LogEx.d(LocationManage.this, "init ");
+            LogEx.d(this, "init time:" + (System.currentTimeMillis() - t1));
         });
-        LogEx.d(this, "init time:" + (System.currentTimeMillis() - t1));
     }
 
     /**

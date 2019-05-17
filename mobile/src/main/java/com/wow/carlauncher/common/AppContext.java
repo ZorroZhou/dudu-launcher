@@ -201,8 +201,7 @@ public class AppContext {
                 LogEx.d(this, "不唤醒其他APP");
             }
         });
-        createFile();
-        LogEx.d(this, "APP初始化完毕 开始异步登陆流程");
+        LogEx.d(this, "APP初始化完毕 开始异步登陆流程 time:" + (System.currentTimeMillis() - startTime));
 
         TaskExecutor.self().run(() -> {
             long uid = SharedPreUtil.getLong(LOGIN_USER_ID, -1);
@@ -223,23 +222,6 @@ public class AppContext {
 
     public Application getApplication() {
         return this.application;
-    }
-
-    private void createFile() {
-        String path;
-
-        if (Environment.getExternalStorageState().equals(
-                Environment.MEDIA_MOUNTED)) {// 优先保存到SD卡中
-            path = Environment.getExternalStorageDirectory()
-                    .getAbsolutePath() + File.separator + "duduLauncher";
-        } else {// 如果SD卡不存在，就保存到本应用的目录下
-            path = getApplication().getFilesDir().getAbsolutePath()
-                    + File.separator + "duduLauncher";
-        }
-        File pathFile = new File(path);
-        if (!pathFile.exists()) {
-            pathFile.mkdirs();
-        }
     }
 
     private void handerException() {

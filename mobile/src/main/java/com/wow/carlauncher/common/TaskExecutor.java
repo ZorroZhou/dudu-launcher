@@ -31,10 +31,11 @@ public class TaskExecutor {
     }
 
     public void init() {
+        long t1 = System.currentTimeMillis();
         handler = new Handler();
         scheduled = new ScheduledThreadPoolExecutor(2);
         task = new ThreadPoolExecutor(2, 2, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
-        LogEx.d(this, "init ");
+        LogEx.d(this, "init time:" + (System.currentTimeMillis() - t1));
     }
 
 

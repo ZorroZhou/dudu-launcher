@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.wow.carlauncher.CarLauncherApplication;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
+import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.manage.baiduVoice.BaiduVoiceAssistant;
 import com.wow.carlauncher.ex.manage.baiduVoice.event.MVaAsrStateChange;
@@ -56,7 +57,7 @@ public class VoiceWin {
     private long actionTime = 0;
 
     public void init(CarLauncherApplication context) {
-
+        long t1 = System.currentTimeMillis();
         this.context = context;
         wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics outMetrics = new DisplayMetrics();
@@ -86,6 +87,8 @@ public class VoiceWin {
 
         ButterKnife.bind(this, consoleWin);
         EventBus.getDefault().register(this);
+
+        LogEx.d(this, "init time:" + (System.currentTimeMillis() - t1));
     }
 
     public void show() {

@@ -60,7 +60,7 @@ public class NaviWin {
     private LinearLayout consoleWin;
 
     public void init(CarLauncherApplication context) {
-
+        long t1 = System.currentTimeMillis();
         this.context = context;
         wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics outMetrics = new DisplayMetrics();
@@ -94,7 +94,7 @@ public class NaviWin {
 
         loadPlugin();
 
-        LogEx.d(this, "init ");
+        LogEx.d(this, "init time:" + (System.currentTimeMillis() - t1));
     }
 
     public void show() {

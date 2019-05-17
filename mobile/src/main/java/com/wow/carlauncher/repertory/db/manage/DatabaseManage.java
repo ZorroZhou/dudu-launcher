@@ -14,6 +14,7 @@ import com.wow.carlauncher.common.bean.BeanInfo;
 import com.wow.carlauncher.common.bean.BeanManage;
 import com.wow.carlauncher.common.bean.PropertyInfo;
 import com.wow.carlauncher.common.util.DateUtil;
+import com.wow.carlauncher.common.util.SharedPreUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,13 +27,14 @@ public class DatabaseManage {
     private final static String TAG = "frame.DatabaseManage";
 
     public static synchronized void init(Context context, DatabaseInfo info) {
+        long t1 = System.currentTimeMillis();
         if (!inited) {
             inited = true;
             DatabaseManage.context = context;
             DatabaseManage.dbHelper = new DatabaseHelper(DatabaseManage.context, info);
         }
 
-        LogEx.d(DatabaseManage.class, "init ");
+        LogEx.d(DatabaseManage.class, "init time:" + (System.currentTimeMillis() - t1));
     }
 
     private static boolean inited = false;

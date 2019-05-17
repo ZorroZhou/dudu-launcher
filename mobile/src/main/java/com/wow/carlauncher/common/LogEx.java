@@ -37,8 +37,10 @@ public class LogEx {
     private static Context context;
 
     public static void init(Context context) {
+        long t1 = System.currentTimeMillis();
         LogEx.context = context;
         LogEx.setSaveFile(SharedPreUtil.getBoolean(CommonData.SDATA_LOG_OPEN, false));
+        LogEx.d(SharedPreUtil.class, "init time:" + (System.currentTimeMillis() - t1));
     }
 
     public static void setSaveFile(boolean saveFile) {

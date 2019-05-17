@@ -79,7 +79,7 @@ public class ConsoleWin {
     private RelativeLayout consoleWin;
 
     public void init(CarLauncherApplication context) {
-
+        long t1 = System.currentTimeMillis();
         this.context = context;
         wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics outMetrics = new DisplayMetrics();
@@ -112,7 +112,7 @@ public class ConsoleWin {
         EventBus.getDefault().register(this);
 
         loadDock();
-        LogEx.d(this, "init ");
+        LogEx.d(this, "init time:" + (System.currentTimeMillis() - t1));
     }
 
 
@@ -398,9 +398,9 @@ public class ConsoleWin {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final PMusicEventCoverRefresh event) {
         if (event.isHave()) {
-            ImageManage.self().loadImage(event.getUrl(), music_iv_cover, R. drawable.theme_music_dcover);
+            ImageManage.self().loadImage(event.getUrl(), music_iv_cover, R.drawable.theme_music_dcover);
         } else {
-            music_iv_cover.setImageResource(R. drawable.theme_music_dcover);
+            music_iv_cover.setImageResource(R.drawable.theme_music_dcover);
         }
     }
 

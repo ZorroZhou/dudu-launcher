@@ -92,7 +92,7 @@ public class PopupWin {
     }
 
     public void init(CarLauncherApplication context) {
-
+        long t1 = System.currentTimeMillis();
         this.context = context;
         wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 
@@ -133,7 +133,7 @@ public class PopupWin {
         popupWindow.findViewById(R.id.ll_yidong).setOnTouchListener(moveTouchListener);
         popupWindow.findViewById(R.id.ll_xunhuan).setOnClickListener(onClickListener);
 
-        LogEx.d(this, "init ");
+        LogEx.d(this, "init time:" + (System.currentTimeMillis() - t1));
     }
 
 

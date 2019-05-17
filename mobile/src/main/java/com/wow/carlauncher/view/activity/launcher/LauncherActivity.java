@@ -115,7 +115,8 @@ public class LauncherActivity extends Activity implements SkinManage.OnSkinChang
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        LogEx.d(this, "onCreate:start");
+
+        long t1 = System.currentTimeMillis();
         //防止初始化两次
         if (old != null) {
             LogEx.d(this, "exist old activity");
@@ -140,14 +141,13 @@ public class LauncherActivity extends Activity implements SkinManage.OnSkinChang
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
         registerReceiver(homeReceiver, intentFilter);
-        LogEx.d(this, "register home receiver");
         initView();
 
         onSkinChanged(SkinManage.self());
         SkinManage.self().registerSkinChangeListener(this);
 
         TaskExecutor.self().run(() -> TaskExecutor.self().autoPost(this::requestRuntime), 1000);
-        LogEx.d(this, "onCreate:end");
+        LogEx.d(this, "init time:" + (System.currentTimeMillis() - t1));
     }
 
     public void initView() {

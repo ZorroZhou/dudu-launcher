@@ -13,8 +13,9 @@ public class SharedPreUtil {
     private static Context context;
 
     public static void init(Context context) {
+        long t1 = System.currentTimeMillis();
         SharedPreUtil.context = context;
-        LogEx.d(SharedPreUtil.class, "init ");
+        LogEx.d(SharedPreUtil.class, "init time:" + (System.currentTimeMillis() - t1));
     }
 
     /**

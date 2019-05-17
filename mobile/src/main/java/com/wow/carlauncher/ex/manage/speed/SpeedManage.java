@@ -30,9 +30,10 @@ public class SpeedManage {
     private Context context;
 
     public void init(Context context) {
+        long t1 = System.currentTimeMillis();
         this.context = context;
         EventBus.getDefault().register(this);
-        LogEx.d(this, "init ");
+        LogEx.d(this, "init time:" + (System.currentTimeMillis() - t1));
     }
 
     private long amaptime = 0;

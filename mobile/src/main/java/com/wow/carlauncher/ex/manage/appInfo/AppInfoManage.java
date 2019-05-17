@@ -88,6 +88,7 @@ public class AppInfoManage extends ContextEx {
     }
 
     public void init(Context c) {
+        long t1 = System.currentTimeMillis();
         setContext(c);
         this.packageManager = getContext().getPackageManager();
 
@@ -102,7 +103,7 @@ public class AppInfoManage extends ContextEx {
         internalAppsInfoMap.put(INTERNAL_APP_SETTING, new InternalAppInfo("桌面设置", INTERNAL_APP_SETTING, MARK_INTERNAL_APP, SetActivity.class));
         refreshAppInfo();
 
-        LogEx.d(this, "init");
+        LogEx.d(this, "init time:" + (System.currentTimeMillis() - t1));
     }
 
     private AppInfo getAppInfo(String app) {

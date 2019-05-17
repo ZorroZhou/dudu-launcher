@@ -30,11 +30,12 @@ public class AppWidgetManage {
     private Context context;
 
     public void init(Context context) {
+        long t1 = System.currentTimeMillis();
         this.context = context;
         appWidgetHost = new AppWidgetHost(context, APP_WIDGET_HOST_ID);
         appWidgetManager = AppWidgetManager.getInstance(context);
         appWidgetHost.startListening();
-        LogEx.d(this, "init");
+        LogEx.d(this, "init time:" + (System.currentTimeMillis() - t1));
     }
 
     public View getWidgetById(int id) {

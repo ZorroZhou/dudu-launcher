@@ -73,6 +73,7 @@ public class BaiduVoiceAssistant extends ContextEx {
     private KeyWord[] keyWords;
 
     public void init(Context context) {
+        long t1 = System.currentTimeMillis();
         setContext(context);
         if (init) {
             return;
@@ -91,6 +92,8 @@ public class BaiduVoiceAssistant extends ContextEx {
             wakeup.send(SpeechConstant.WAKEUP_STOP, null, null, 0, 0);
             stopAsr();
         }
+
+        LogEx.d(this, "init time:" + (System.currentTimeMillis() - t1));
     }
 
 

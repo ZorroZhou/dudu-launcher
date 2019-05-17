@@ -49,11 +49,12 @@ public class FangkongPlugin extends ContextEx {
     }
 
     public void init(Context context) {
+        long t1 = System.currentTimeMillis();
         setContext(context);
         BleManage.self().addListener(bleListener);
         myBleConnectStatusListener = new MyBleConnectStatusListener(BLE_MARK);
         EventBus.getDefault().register(this);
-        LogEx.d(this, "init");
+        LogEx.d(this, "init time:" + (System.currentTimeMillis() - t1));
     }
 
     private MyBleConnectStatusListener myBleConnectStatusListener;

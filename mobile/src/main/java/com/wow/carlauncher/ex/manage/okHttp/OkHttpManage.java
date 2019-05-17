@@ -35,7 +35,10 @@ public class OkHttpManage {
 
     public void init(Context context) {
         this.context = context;
+
+        long t1 = System.currentTimeMillis();
         okHttpClient = new OkHttpClient();
+        LogEx.d(this, "init time:" + (System.currentTimeMillis() - t1));
     }
 
     public Call get(String url, Callback callback) {

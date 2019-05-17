@@ -35,6 +35,7 @@ public class LocationManage extends ContextEx implements AMapLocationListener {
     }
 
     public void init(Context context) {
+        long t1 = System.currentTimeMillis();
         setContext(context);
         TaskExecutor.self().run(() -> {
             //初始化定位
@@ -55,6 +56,7 @@ public class LocationManage extends ContextEx implements AMapLocationListener {
             mLocationClient.startLocation();
             LogEx.d(LocationManage.this, "init ");
         });
+        LogEx.d(this, "init time:" + (System.currentTimeMillis() - t1));
     }
 
     /**

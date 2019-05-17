@@ -153,13 +153,14 @@ public class ObdPlugin extends ContextEx {
     };
 
     public void init(Context context) {
+        long t1 = System.currentTimeMillis();
         setContext(context);
         currentPObdEventCarInfo = new PObdEventCarInfo();
         currentPObdEventCarTp = new PObdEventCarTp();
         BleManage.self().addListener(bleListener);
         myBleConnectStatusListener = new MyBleConnectStatusListener(BLE_MARK);
         EventBus.getDefault().register(this);
-        LogEx.d(this, "init");
+        LogEx.d(this, "init time:" + (System.currentTimeMillis() - t1));
     }
 
     private boolean connecting = false;

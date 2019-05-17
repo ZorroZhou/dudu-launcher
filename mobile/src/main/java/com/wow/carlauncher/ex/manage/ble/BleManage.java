@@ -39,6 +39,8 @@ public class BleManage extends ContextEx {
     }
 
     public void init(Context context) {
+        long t1 = System.currentTimeMillis();
+
         setContext(context);
         bluetoothClient = new BluetoothClient(context);
         listeners = new HashMap<>();
@@ -48,6 +50,8 @@ public class BleManage extends ContextEx {
                 .setConnectTimeout(3000)   // 连接超时5s
                 .setServiceDiscoverTimeout(2000)  // 发现服务超时5s
                 .build();
+
+        LogEx.d(this, "init time:" + (System.currentTimeMillis() - t1));
     }
 
 

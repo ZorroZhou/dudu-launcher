@@ -36,9 +36,10 @@ public class TimeManage extends ContextEx {
     }
 
     public void init(Context context) {
+        long t1 = System.currentTimeMillis();
         setContext(context);
         startTimer();
-        LogEx.d(this, "init");
+        LogEx.d(this, "init time:" + (System.currentTimeMillis() - t1));
     }
 
     private final static int ZHOUQI = 500;

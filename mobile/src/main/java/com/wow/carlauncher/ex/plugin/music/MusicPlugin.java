@@ -41,9 +41,10 @@ public class MusicPlugin extends ContextEx {
     private boolean playing = false;
 
     public void init(Context context) {
+        long t1 = System.currentTimeMillis();
         setContext(context);
         setController(MusicControllerEnum.getById(SharedPreUtil.getInteger(SDATA_MUSIC_CONTROLLER, MusicControllerEnum.SYSMUSIC.getId())));
-        LogEx.d(this, "init");
+        LogEx.d(this, "init time:" + (System.currentTimeMillis() - t1));
     }
 
     public void setController(MusicControllerEnum controller) {

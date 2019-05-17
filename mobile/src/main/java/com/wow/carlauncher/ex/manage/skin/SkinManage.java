@@ -59,24 +59,18 @@ public class SkinManage {
     public SkinInfo getDefaultSkin() {
         return defaultSkin;
     }
-
+    
     public void init(Application context) {
         long t1 = System.currentTimeMillis();
         this.context = context;
-        //这里不能异步加载!!!
         SkinCompatManager.withoutActivity(context).addStrategy(new MySkinLoader());
-        LogEx.d(this, "copy time:" + (System.currentTimeMillis() - t1));
-        //初始化数据库
+
         defaultSkin = new SkinInfo()
                 .setMark(DEFAULT_MARK)
                 .setName("默认主题");
 
-        //先加载默认皮肤
-        SkinInfo skinInfo = getSkininfoByMark(SharedPreUtil.getString(SDATA_APP_SKIN_DAY));
-        if (skinInfo == null) {
-            skinInfo = defaultSkin;
-        }
-        loadSkin(skinInfo);
+        //初始化皮肤
+        loadSkin();
 
         EventBus.getDefault().register(this);
         LogEx.d(this, "init time:" + (System.currentTimeMillis() - t1));

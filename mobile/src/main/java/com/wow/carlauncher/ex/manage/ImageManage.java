@@ -33,6 +33,7 @@ public class ImageManage {
     private DisplayImageOptions DEFAULT_DISPLAY_OPTION;
 
     public void init(Context context) {
+        long t1 = System.currentTimeMillis();
         DEFAULT_DISPLAY_OPTION = new DisplayImageOptions.Builder()
                 .cacheInMemory(true)
                 .cacheOnDisc(true)
@@ -62,7 +63,7 @@ public class ImageManage {
                 .build();
         ImageLoader.getInstance().init(config);// 初始化
 
-        LogEx.d(this, "init");
+        LogEx.d(this, "init time:" + (System.currentTimeMillis() - t1));
     }
 
     private DisplayImageOptions buildDisplayOption(int resId) {

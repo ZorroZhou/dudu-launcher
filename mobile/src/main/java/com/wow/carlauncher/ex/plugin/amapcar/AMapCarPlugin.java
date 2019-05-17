@@ -59,6 +59,7 @@ public class AMapCarPlugin extends ContextEx {
     }
 
     public void init(Context context) {
+        long t1 = System.currentTimeMillis();
         setContext(context);
         AMapCartReceiver amapReceiver = new AMapCartReceiver(this);
 
@@ -68,8 +69,7 @@ public class AMapCarPlugin extends ContextEx {
 
         EventBus.getDefault().register(this);
 
-        LogEx.d(this, "init ");
-        // final View launcherWidgetView = AppWidgetManage.self().getWidgetById(launcher);
+        LogEx.d(this, "init time:" + (System.currentTimeMillis() - t1));
     }
 
     public void testNavi() {

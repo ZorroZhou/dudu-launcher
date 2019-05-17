@@ -27,8 +27,9 @@ public class ToastManage extends ContextEx {
     }
 
     public void init(Context context) {
+        long t1 = System.currentTimeMillis();
         setContext(context);
-        LogEx.d(this, "init");
+        LogEx.d(this, "init time:" + (System.currentTimeMillis() - t1));
     }
 
     private static Toast toast;

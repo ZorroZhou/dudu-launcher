@@ -5,7 +5,6 @@ import android.app.Application;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.NonNull;
 import android.util.SparseArray;
 
 import com.wow.carlauncher.common.LogEx;
@@ -55,11 +54,10 @@ public class SkinManage {
     private Context context;
     public static final String DEFAULT_MARK = "com.wow.carlauncher.theme";
 
-    private Map<String, SkinInfo> builtInSkin;
+    private SkinInfo defaultSkin;
 
-    @NonNull
-    public Map<String, SkinInfo> getBuiltInSkin() {
-        return builtInSkin;
+    public SkinInfo getDefaultSkin() {
+        return defaultSkin;
     }
 
     public void init(Application context) {
@@ -69,15 +67,14 @@ public class SkinManage {
         SkinCompatManager.withoutActivity(context).addStrategy(new MySkinLoader());
         LogEx.d(this, "copy time:" + (System.currentTimeMillis() - t1));
         //初始化数据库
-        builtInSkin = new HashMap<>();
-        builtInSkin.put(DEFAULT_MARK, new SkinInfo()
+        defaultSkin = new SkinInfo()
                 .setMark(DEFAULT_MARK)
-                .setName("默认主题"));
+                .setName("默认主题");
 
         //先加载默认皮肤
         SkinInfo skinInfo = getSkininfoByMark(SharedPreUtil.getString(SDATA_APP_SKIN_DAY));
         if (skinInfo == null) {
-            skinInfo = builtInSkin.get(DEFAULT_MARK);
+            skinInfo = defaultSkin;
         }
         loadSkin(skinInfo);
 
@@ -109,7 +106,7 @@ public class SkinManage {
                 SkinInfo skinInfo = getSkininfoByMark(SharedPreUtil.getString(SDATA_APP_SKIN_DAY));
                 if (skinInfo == null) {
                     SharedPreUtil.saveString(SDATA_APP_SKIN_DAY, DEFAULT_MARK);
-                    skinInfo = builtInSkin.get(DEFAULT_MARK);
+                    skinInfo = defaultSkin;
                 }
                 loadSkin(skinInfo);
                 break;
@@ -126,7 +123,7 @@ public class SkinManage {
                     SkinInfo skinInfo = getSkininfoByMark(SharedPreUtil.getString(SDATA_APP_SKIN_NIGHT));
                     if (skinInfo == null) {
                         SharedPreUtil.saveString(SDATA_APP_SKIN_NIGHT, DEFAULT_MARK);
-                        skinInfo = builtInSkin.get(DEFAULT_MARK);
+                        skinInfo = defaultSkin;
                     }
                     loadSkin(skinInfo);
                 } else {
@@ -142,7 +139,7 @@ public class SkinManage {
                     LogEx.d(this, "refreshTheme : " + skinInfo);
                     if (skinInfo == null) {
                         SharedPreUtil.saveString(SDATA_APP_SKIN_DAY, DEFAULT_MARK);
-                        skinInfo = builtInSkin.get(DEFAULT_MARK);
+                        skinInfo = defaultSkin;
                     }
                     loadSkin(skinInfo);
                 }
@@ -151,7 +148,7 @@ public class SkinManage {
     }
 
     //这里以主题的mark作为唯一标记,不要用路径
-    public void loadSkin(SkinInfo skinInfo) {
+    private void loadSkin(SkinInfo skinInfo) {
         if (CommonUtil.equals(this.skinMark, skinInfo.getMark())) {
             LogEx.e(this, "一样的皮肤,不需要更换");
             return;
@@ -211,14 +208,14 @@ public class SkinManage {
             SkinInfo skinInfo = getSkininfoByMark(SharedPreUtil.getString(SDATA_APP_SKIN_DAY));
             if (skinInfo == null) {
                 SharedPreUtil.saveString(SDATA_APP_SKIN_DAY, DEFAULT_MARK);
-                skinInfo = builtInSkin.get(DEFAULT_MARK);
+                skinInfo = defaultSkin;
             }
             loadSkin(skinInfo);
         } else {
             SkinInfo skinInfo = getSkininfoByMark(SharedPreUtil.getString(SDATA_APP_SKIN_NIGHT));
             if (skinInfo == null) {
                 SharedPreUtil.saveString(SDATA_APP_SKIN_NIGHT, DEFAULT_MARK);
-                skinInfo = builtInSkin.get(DEFAULT_MARK);
+                skinInfo = defaultSkin;
             }
             loadSkin(skinInfo);
         }
@@ -235,8 +232,12 @@ public class SkinManage {
         this.lon = event.getLongitude();
     }
 
+    //根据mark获取主题实体bean,这里单独做了一个,为了可以查询
     private SkinInfo getSkininfoByMark(String mark) {
-        SkinInfo skinInfo = builtInSkin.get(mark);
+        SkinInfo skinInfo = null;
+        if (CommonUtil.equals(mark, DEFAULT_MARK)) {
+            skinInfo = defaultSkin;
+        }
         if (skinInfo == null) {
             skinInfo = DatabaseManage.getBean(SkinInfo.class, " mark='" + mark + "'");
         }
@@ -294,9 +295,7 @@ public class SkinManage {
     }
 
     /**
-     * 注册ThemeChangeListener
-     *
-     * @param listener
+     * 注册ChangeListener
      */
     public void registerSkinChangeListener(OnSkinChangeListener listener) {
         if (!listeners.contains(listener)) {
@@ -306,9 +305,7 @@ public class SkinManage {
     }
 
     /**
-     * 反注册ThemeChangeListener
-     *
-     * @param listener
+     * 反注册ChangeListener
      */
     public void unregisterSkinChangeListener(OnSkinChangeListener listener) {
         LogEx.d(this, "unregisterThemeChangeListener:" + listener);

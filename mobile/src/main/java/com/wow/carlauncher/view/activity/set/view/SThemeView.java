@@ -235,14 +235,14 @@ public class SThemeView extends SetBaseView {
             }
         }
         allSkinInfos.putAll(allOtherSkinInfos);
-        allSkinInfos.putAll(SkinManage.self().getBuiltInSkin());
+        allSkinInfos.put(SkinManage.self().getDefaultSkin().getMark(), SkinManage.self().getDefaultSkin());
 
         //拿到mark,先查询所有的,如果没有,标记为默认的
         String dayMark = SharedPreUtil.getString(SDATA_APP_SKIN_DAY);
         SkinInfo daySkinInfo = allSkinInfos.get(dayMark);
         if (daySkinInfo == null) {
             SharedPreUtil.saveString(SDATA_APP_SKIN_DAY, SkinManage.DEFAULT_MARK);
-            daySkinInfo = SkinManage.self().getBuiltInSkin().get(SkinManage.DEFAULT_MARK);
+            daySkinInfo = SkinManage.self().getDefaultSkin();
             SkinManage.self().loadSkin();
         }
 
@@ -251,7 +251,7 @@ public class SThemeView extends SetBaseView {
         SkinInfo nightSkinInfo = allSkinInfos.get(nightMark);
         if (nightSkinInfo == null) {
             SharedPreUtil.saveString(SDATA_APP_SKIN_NIGHT, SkinManage.DEFAULT_MARK);
-            nightSkinInfo = SkinManage.self().getBuiltInSkin().get(SkinManage.DEFAULT_MARK);
+            nightSkinInfo = SkinManage.self().getDefaultSkin();
             SkinManage.self().loadSkin();
         }
 

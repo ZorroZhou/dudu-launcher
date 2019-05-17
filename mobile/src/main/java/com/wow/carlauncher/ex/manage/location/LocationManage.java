@@ -88,8 +88,10 @@ public class LocationManage extends ContextEx implements AMapLocationListener {
             if (aMapLocation.getLocationType() == AMapLocation.LOCATION_TYPE_GPS) {
                 EventBus.getDefault().post(new SMEventReceiveSpeed().setSpeed((int) (aMapLocation.getSpeed() * 60 * 60 / 1000)).setFrom(SMEventReceiveSpeed.SMReceiveSpeedFrom.GPS));
             }
+        } else if (aMapLocation != null) {
+            LogEx.d(this, "location fail error code:" + aMapLocation.getErrorCode() + "   " + aMapLocation.getErrorInfo());
         } else {
-            LogEx.d(this, "location fail");
+            LogEx.d(this, "location fail ");
         }
     }
 }

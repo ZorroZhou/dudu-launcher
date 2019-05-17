@@ -7,6 +7,11 @@ public interface SkinConstant {
         String right = "right";
     }
 
+    interface AMapBtnLayout {
+        String layout1 = "layout1";
+        String layout2 = "layout2";
+    }
+
     interface MusicCoverType {
         String rect = "rect";
         String circ = "circ";

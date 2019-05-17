@@ -99,11 +99,13 @@
                     android:background="@drawable/theme_line2" />
 
                 <com.wow.carlauncher.common.theme.TLinearLayout
+                    android:id="@+id/ll_controller3"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
 
                     <com.wow.carlauncher.common.theme.TLinearLayout
+                        android:id="@+id/btn_gd_root"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -114,7 +116,7 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:gravity="center"
-                            app:layout_widthPercent="100%h">
+                            app:layout_widthPercent="110%h">
 
                             <ImageView
                                 android:id="@+id/iv_dh"

@@ -7,4 +7,5 @@
     <string name="theme_item_weather_layout">layout1</string>
     <string name="theme_use_wallpaper">no</string>
     <string name="theme_launcher_layout">layout1</string>
+    <string name="theme_amap_btn_layout">layout2</string>
 </resources>

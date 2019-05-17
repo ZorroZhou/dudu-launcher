@@ -8,6 +8,8 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -19,6 +21,7 @@ import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.view.LukuangView;
+import com.wow.carlauncher.ex.manage.skin.SkinConstant;
 import com.wow.carlauncher.ex.manage.skin.SkinManage;
 import com.wow.carlauncher.ex.manage.skin.SkinUtil;
 import com.wow.carlauncher.ex.manage.speed.SMEventSendSpeed;
@@ -64,6 +67,8 @@ public class LAMapView extends BaseThemeView {
         return R.layout.content_l_amap;
     }
 
+    private ViewTreeObserver.OnPreDrawListener oldOnPreDrawListener;
+
     @Override
     public void changedSkin(SkinManage manage) {
         tv_title.setGravity(SkinUtil.analysisItemTitleAlign(manage.getString(R.string.theme_item_title_align)));
@@ -72,6 +77,41 @@ public class LAMapView extends BaseThemeView {
             line_xunhang.setVisibility(SkinUtil.analysisVisibility(manage.getString(R.string.theme_item_amap_xunhang_line)));
         } else {
             line_xunhang.setVisibility(GONE);
+        }
+        if (CommonUtil.equals(SkinConstant.AMapBtnLayout.layout2, manage.getString(R.string.theme_amap_btn_layout))) {
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT);
+            lp.weight = 1;
+            btn_nav_j.setLayoutParams(lp);
+            btn_nav_gs.setLayoutParams(lp);
+            btn_gd_root.setLayoutParams(lp);
+        } else {
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.MATCH_PARENT);
+            lp.weight = 1;
+            btn_gd_root.setLayoutParams(lp);
+
+            if (ll_controller3.getHeight() > 0) {
+                int height = ll_controller3.getHeight();
+                LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams((int) (height * 1.2), ViewGroup.LayoutParams.MATCH_PARENT);
+                btn_nav_gs.setLayoutParams(lp2);
+                btn_nav_j.setLayoutParams(lp2);
+            } else {
+                ll_controller3.getViewTreeObserver().removeOnPreDrawListener(oldOnPreDrawListener);
+                oldOnPreDrawListener = new ViewTreeObserver.OnPreDrawListener() {
+                    @Override
+                    public boolean onPreDraw() {
+                        if (ll_controller3.getHeight() > 0) {
+                            ll_controller3.getViewTreeObserver().removeOnPreDrawListener(this);
+                            int height = ll_controller3.getHeight();
+
+                            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams((int) (height * 1.2), ViewGroup.LayoutParams.MATCH_PARENT);
+                            btn_nav_gs.setLayoutParams(lp);
+                            btn_nav_j.setLayoutParams(lp);
+                        }
+                        return true;
+                    }
+                };
+                ll_controller3.getViewTreeObserver().addOnPreDrawListener(oldOnPreDrawListener);
+            }
         }
     }
 
@@ -85,6 +125,10 @@ public class LAMapView extends BaseThemeView {
     private boolean mute = false;
 
     private int roadType = 10;
+
+
+    @BindView(R.id.ll_controller3)
+    View ll_controller3;
 
     @BindView(R.id.tv_title)
     TextView tv_title;
@@ -157,6 +201,16 @@ public class LAMapView extends BaseThemeView {
 
     @BindView(R.id.base_moren)
     View base_moren;
+
+    @BindView(R.id.btn_nav_j)
+    View btn_nav_j;
+
+    @BindView(R.id.btn_nav_gs)
+    View btn_nav_gs;
+
+    @BindView(R.id.btn_gd_root)
+    View btn_gd_root;
+
 
     private boolean loactionOk = false;
 

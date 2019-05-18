@@ -91,7 +91,7 @@ public class LAMapView extends BaseThemeView {
 
             if (ll_controller3.getHeight() > 0) {
                 int height = ll_controller3.getHeight();
-                LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams((int) (height * 1.2), ViewGroup.LayoutParams.MATCH_PARENT);
+                LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams((int) (height * 1.1), ViewGroup.LayoutParams.MATCH_PARENT);
                 btn_nav_gs.setLayoutParams(lp2);
                 btn_nav_j.setLayoutParams(lp2);
             } else {
@@ -100,12 +100,15 @@ public class LAMapView extends BaseThemeView {
                     @Override
                     public boolean onPreDraw() {
                         if (ll_controller3.getHeight() > 0) {
-                            ll_controller3.getViewTreeObserver().removeOnPreDrawListener(this);
-                            int height = ll_controller3.getHeight();
-
-                            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams((int) (height * 1.2), ViewGroup.LayoutParams.MATCH_PARENT);
-                            btn_nav_gs.setLayoutParams(lp);
-                            btn_nav_j.setLayoutParams(lp);
+                            if (oldHeight != ll_controller3.getHeight()) {
+                                oldHeight = ll_controller3.getHeight();
+                            } else {
+                                ll_controller3.getViewTreeObserver().removeOnPreDrawListener(this);
+                                int height = ll_controller3.getHeight();
+                                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams((int) (height * 1.1), ViewGroup.LayoutParams.MATCH_PARENT);
+                                btn_nav_gs.setLayoutParams(lp);
+                                btn_nav_j.setLayoutParams(lp);
+                            }
                         }
                         return true;
                     }
@@ -114,6 +117,8 @@ public class LAMapView extends BaseThemeView {
             }
         }
     }
+
+    private int oldHeight = 0;
 
     @Override
     protected void initView() {

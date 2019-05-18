@@ -17,6 +17,7 @@ import com.wow.carlauncher.repertory.db.manage.DatabaseManage;
 import com.wow.carlauncher.view.activity.set.SetActivity;
 import com.wow.carlauncher.view.activity.set.SetBaseView;
 import com.wow.carlauncher.view.activity.set.listener.SetSingleSelect;
+import com.wow.carlauncher.view.activity.set.listener.SetSingleSelectView;
 import com.wow.carlauncher.view.event.EventSkinInstall;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -69,42 +70,6 @@ public class SThemeView extends SetBaseView {
     protected void initView() {
         allSkinInfos = new HashMap<>();
         allOtherSkinInfos = new HashMap<>();
-//        sv_delete_skin.setOnClickListener(new SetMultipleSelect<SkinInfo>(getContext()) {
-//            @Override
-//            public Collection<SkinInfo> getAll() {
-//                return allOtherSkinInfos.values();
-//            }
-//
-//            @Override
-//            public SkinInfo[] getCurr() {
-//                return new SkinInfo[0];
-//            }
-//
-//            @Override
-//            public boolean equals(SkinInfo t1, SkinInfo t2) {
-//                return t1 != null && t2 != null && CommonUtil.equals(t1.getMark(), t2.getMark());
-//            }
-//
-//            @Override
-//            public void onSelect(List<SkinInfo> temp) {
-//                getActivity().showLoading("处理中");
-//                TaskExecutor.self().run(() -> {
-//                    for (SkinInfo skinInfo : temp) {
-//                        DatabaseManage.delete(SkinInfo.class, " mark='" + skinInfo.getMark() + "'");
-//                        if (!new File(skinInfo.getPath()).delete()) {
-//                            LogEx.e(SThemeView.this, "主题文件删除失败!");
-//                        }
-//                    }
-//                    loadData();
-//                    TaskExecutor.self().autoPost(() -> getActivity().hideLoading());
-//                });
-//            }
-//
-//            @Override
-//            public String title() {
-//                return "请选择要删除的皮肤";
-//            }
-//        });
 
         sv_theme_day.setOnClickListener(new SetSingleSelect<SkinInfo>(getContext()) {
             @Override
@@ -135,7 +100,7 @@ public class SThemeView extends SetBaseView {
             }
         });
 
-        sv_theme_night.setOnClickListener(new SetSingleSelect<SkinInfo>(getContext()) {
+        sv_theme_night.setOnClickListener(new SetSingleSelectView<SkinInfo>(getContext(), this) {
             @Override
             public Collection<SkinInfo> getAll() {
                 return allSkinInfos.values();

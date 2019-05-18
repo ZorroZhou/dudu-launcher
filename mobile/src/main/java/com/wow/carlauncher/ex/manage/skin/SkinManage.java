@@ -130,7 +130,6 @@ public class SkinManage {
                     }
 
                     SkinInfo skinInfo = getSkininfoByMark(SharedPreUtil.getString(SDATA_APP_SKIN_DAY));
-                    LogEx.d(this, "refreshTheme : " + skinInfo);
                     if (skinInfo == null) {
                         SharedPreUtil.saveString(SDATA_APP_SKIN_DAY, DEFAULT_MARK);
                         skinInfo = defaultSkin;
@@ -139,7 +138,14 @@ public class SkinManage {
                 }
                 break;
             case DENGGUANG:
-                if (CommonUtil.isNull(this.skinMark)) {
+                if (lightState) {
+                    SkinInfo skinInfo = getSkininfoByMark(SharedPreUtil.getString(SDATA_APP_SKIN_NIGHT));
+                    if (skinInfo == null) {
+                        SharedPreUtil.saveString(SDATA_APP_SKIN_NIGHT, DEFAULT_MARK);
+                        skinInfo = defaultSkin;
+                    }
+                    loadSkin(skinInfo);
+                } else {
                     SkinInfo skinInfo = getSkininfoByMark(SharedPreUtil.getString(SDATA_APP_SKIN_DAY));
                     if (skinInfo == null) {
                         SharedPreUtil.saveString(SDATA_APP_SKIN_DAY, DEFAULT_MARK);
@@ -210,23 +216,12 @@ public class SkinManage {
         SkinCompatManager.getInstance().loadSkin(this.skinMark, loaderListener, MySkinLoader.STRATEGY);
     }
 
+    private boolean lightState = false;
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(PConsoleEventLightState event) {
-        if (event.isOpen()) {
-            SkinInfo skinInfo = getSkininfoByMark(SharedPreUtil.getString(SDATA_APP_SKIN_NIGHT));
-            if (skinInfo == null) {
-                SharedPreUtil.saveString(SDATA_APP_SKIN_NIGHT, DEFAULT_MARK);
-                skinInfo = defaultSkin;
-            }
-            loadSkin(skinInfo);
-        } else {
-            SkinInfo skinInfo = getSkininfoByMark(SharedPreUtil.getString(SDATA_APP_SKIN_DAY));
-            if (skinInfo == null) {
-                SharedPreUtil.saveString(SDATA_APP_SKIN_DAY, DEFAULT_MARK);
-                skinInfo = defaultSkin;
-            }
-            loadSkin(skinInfo);
-        }
+        lightState = event.isOpen();
+        loadSkin();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

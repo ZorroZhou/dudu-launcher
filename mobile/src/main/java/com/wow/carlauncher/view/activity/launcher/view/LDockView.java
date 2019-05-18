@@ -176,7 +176,8 @@ public class LDockView extends BaseThemeView {
     }
 
     @Override
-    protected void initView() {
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
         loadDock(false);
     }
 

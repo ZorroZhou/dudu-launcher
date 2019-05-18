@@ -286,7 +286,6 @@ public class AppInfoManage extends ContextEx {
                     }
                 }
                 showAppInfosList.removeAll(hides);
-
                 postEvent(new MAppInfoRefreshShowEvent());
             }
         });

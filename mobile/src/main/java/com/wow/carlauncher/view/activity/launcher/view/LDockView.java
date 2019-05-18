@@ -177,7 +177,7 @@ public class LDockView extends BaseThemeView {
 
     @Override
     protected void initView() {
-        loadDock();
+        loadDock(false);
     }
 
     private void openDock(String clazz) {
@@ -186,7 +186,7 @@ public class LDockView extends BaseThemeView {
         }
     }
 
-    private void loadDock() {
+    private void loadDock(boolean remove) {
         String packname1 = SharedPreUtil.getString(SDATA_DOCK1_CLASS);
         if (CommonUtil.isNotNull(packname1) && AppInfoManage.self().checkApp(packname1)) {
             AppInfoManage.self().setIconWithSkin(iv_dock1, packname1);
@@ -194,7 +194,9 @@ public class LDockView extends BaseThemeView {
         } else {
             iv_dock1.setImageResource(R.drawable.theme_add_app);
             tv_dock1.setText("添加");
-            SharedPreUtil.saveString(SDATA_DOCK1_CLASS, "");
+            if (remove) {
+                SharedPreUtil.saveString(SDATA_DOCK1_CLASS, "");
+            }
         }
         String packname2 = SharedPreUtil.getString(SDATA_DOCK2_CLASS);
         if (CommonUtil.isNotNull(packname2) && AppInfoManage.self().checkApp(packname2)) {
@@ -203,7 +205,9 @@ public class LDockView extends BaseThemeView {
         } else {
             iv_dock2.setImageResource(R.drawable.theme_add_app);
             tv_dock2.setText("添加");
-            SharedPreUtil.saveString(SDATA_DOCK2_CLASS, "");
+            if (remove) {
+                SharedPreUtil.saveString(SDATA_DOCK2_CLASS, "");
+            }
         }
 
         String packname3 = SharedPreUtil.getString(SDATA_DOCK3_CLASS);
@@ -213,7 +217,9 @@ public class LDockView extends BaseThemeView {
         } else {
             iv_dock3.setImageResource(R.drawable.theme_add_app);
             tv_dock3.setText("添加");
-            SharedPreUtil.saveString(SDATA_DOCK3_CLASS, "");
+            if (remove) {
+                SharedPreUtil.saveString(SDATA_DOCK3_CLASS, "");
+            }
         }
 
         String packname4 = SharedPreUtil.getString(SDATA_DOCK4_CLASS);
@@ -223,7 +229,9 @@ public class LDockView extends BaseThemeView {
         } else {
             iv_dock4.setImageResource(R.drawable.theme_add_app);
             tv_dock4.setText("添加");
-            SharedPreUtil.saveString(SDATA_DOCK4_CLASS, "");
+            if (remove) {
+                SharedPreUtil.saveString(SDATA_DOCK4_CLASS, "");
+            }
         }
         String packname5 = SharedPreUtil.getString(SDATA_DOCK5_CLASS);
         if (CommonUtil.isNotNull(packname5) && AppInfoManage.self().checkApp(packname5)) {
@@ -232,7 +240,9 @@ public class LDockView extends BaseThemeView {
         } else {
             iv_dock5.setImageResource(R.drawable.theme_add_app);
             tv_dock5.setText("添加");
-            SharedPreUtil.saveString(SDATA_DOCK5_CLASS, "");
+            if (remove) {
+                SharedPreUtil.saveString(SDATA_DOCK5_CLASS, "");
+            }
         }
         dockLabelShow(SharedPreUtil.getBoolean(CommonData.SDATA_LAUNCHER_DOCK_LABEL_SHOW, true));
     }
@@ -356,8 +366,6 @@ public class LDockView extends BaseThemeView {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final MAppInfoRefreshShowEvent event) {
         LogEx.d(this, "onEvent:MAppInfoRefreshShowEvent ");
-        loadDock();
+        loadDock(true);
     }
-
-
 }

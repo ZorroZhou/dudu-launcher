@@ -111,7 +111,7 @@ public class ConsoleWin {
 
         EventBus.getDefault().register(this);
 
-        loadDock();
+        loadDock(false);
         LogEx.d(this, "init time:" + (System.currentTimeMillis() - t1));
     }
 
@@ -291,13 +291,15 @@ public class ConsoleWin {
         }
     }
 
-    private void loadDock() {
+    private void loadDock(boolean remove) {
         String packname1 = SharedPreUtil.getString(SDATA_DOCK1_CLASS);
         if (CommonUtil.isNotNull(packname1) && AppInfoManage.self().checkApp(packname1)) {
             AppInfoManage.self().setIconWithSkin(iv_dock1, packname1);
         } else {
             iv_dock1.setImageResource(R.drawable.theme_add_app);
-            SharedPreUtil.saveString(SDATA_DOCK1_CLASS, "");
+            if (remove) {
+                SharedPreUtil.saveString(SDATA_DOCK1_CLASS, "");
+            }
         }
 
         String packname2 = SharedPreUtil.getString(SDATA_DOCK2_CLASS);
@@ -305,7 +307,9 @@ public class ConsoleWin {
             AppInfoManage.self().setIconWithSkin(iv_dock2, packname2);
         } else {
             iv_dock2.setImageResource(R.drawable.theme_add_app);
-            SharedPreUtil.saveString(SDATA_DOCK2_CLASS, "");
+            if (remove) {
+                SharedPreUtil.saveString(SDATA_DOCK2_CLASS, "");
+            }
         }
 
         String packname3 = SharedPreUtil.getString(SDATA_DOCK3_CLASS);
@@ -313,7 +317,9 @@ public class ConsoleWin {
             AppInfoManage.self().setIconWithSkin(iv_dock3, packname3);
         } else {
             iv_dock3.setImageResource(R.drawable.theme_add_app);
-            SharedPreUtil.saveString(SDATA_DOCK3_CLASS, "");
+            if (remove) {
+                SharedPreUtil.saveString(SDATA_DOCK3_CLASS, "");
+            }
         }
 
         String packname4 = SharedPreUtil.getString(SDATA_DOCK4_CLASS);
@@ -321,7 +327,9 @@ public class ConsoleWin {
             AppInfoManage.self().setIconWithSkin(iv_dock4, packname4);
         } else {
             iv_dock4.setImageResource(R.drawable.theme_add_app);
-            SharedPreUtil.saveString(SDATA_DOCK4_CLASS, "");
+            if (remove) {
+                SharedPreUtil.saveString(SDATA_DOCK4_CLASS, "");
+            }
         }
     }
 
@@ -427,6 +435,6 @@ public class ConsoleWin {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final MAppInfoRefreshShowEvent event) {
-        loadDock();
+        loadDock(true);
     }
 }

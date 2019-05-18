@@ -330,7 +330,7 @@ public class LAMapView extends BaseThemeView {
                 if (event.getSegRemainDis() > 1000) {
                     msg = msg + new BigDecimal(((double) event.getSegRemainDis()) / 1000).setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue() + "kM后";
                 } else {
-                    int mmm = event.getSegRemainDis() - 10;
+                    int mmm = event.getSegRemainDis();
                     msg = msg + mmm + "M后";
                 }
             }

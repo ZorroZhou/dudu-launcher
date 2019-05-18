@@ -80,7 +80,14 @@ public class SetActivity extends BaseActivity {
     public void initView() {
         setTitle("设置");
         clickEvent(sg_theme);
-        ll_user.setOnClickListener(v -> login());
+        ll_user.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (AppContext.self().getLocalUser() == null) {
+                    login();
+                }
+            }
+        });
 
         if (AppContext.self().getLocalUser() != null) {
             tv_nickname.setText(AppContext.self().getLocalUser().getNickname());

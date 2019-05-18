@@ -131,8 +131,8 @@ public class AppInfoManage extends ContextEx {
                     view.setImageResource(r);
                 } else {
                     try {
-                        System.out.println(info.clazz + ":");
                         PackageInfo packageInfo = packageManager.getPackageInfo(info.clazz, 0);
+                        view.setImageResource(0);
                         view.setImageDrawable(packageInfo.applicationInfo.loadIcon(packageManager));
                     } catch (PackageManager.NameNotFoundException e) {
                         e.printStackTrace();

@@ -31,7 +31,6 @@ import java.util.Map;
 
 import skin.support.SkinCompatManager;
 
-import static com.wow.carlauncher.common.CommonData.HOUR_MILL;
 import static com.wow.carlauncher.common.CommonData.SDATA_APP_SKIN;
 import static com.wow.carlauncher.common.CommonData.SDATA_APP_SKIN_DAY;
 import static com.wow.carlauncher.common.CommonData.SDATA_APP_SKIN_NIGHT;
@@ -107,13 +106,13 @@ public class SkinManage {
             }
             case SHIJIAN:
                 if (SunRiseSetUtil.isNight(lon, lat, new Date())) {
-                    if (!currentDay) {
-                        if (System.currentTimeMillis() - lastChangeShijian < HOUR_MILL) {
-                            return;
-                        }
-                        lastChangeShijian = System.currentTimeMillis();
-                        currentDay = true;
-                    }
+//                    if (!currentDay) {
+//                        if (System.currentTimeMillis() - lastChangeShijian < HOUR_MILL) {
+//                            return;
+//                        }
+//                        lastChangeShijian = System.currentTimeMillis();
+//                        currentDay = true;
+//                    }
                     SkinInfo skinInfo = getSkininfoByMark(SharedPreUtil.getString(SDATA_APP_SKIN_NIGHT));
                     if (skinInfo == null) {
                         SharedPreUtil.saveString(SDATA_APP_SKIN_NIGHT, DEFAULT_MARK);
@@ -121,13 +120,13 @@ public class SkinManage {
                     }
                     loadSkin(skinInfo);
                 } else {
-                    if (currentDay) {
-                        if (System.currentTimeMillis() - lastChangeShijian < HOUR_MILL) {
-                            return;
-                        }
-                        lastChangeShijian = System.currentTimeMillis();
-                        currentDay = false;
-                    }
+//                    if (currentDay) {
+//                        if (System.currentTimeMillis() - lastChangeShijian < HOUR_MILL) {
+//                            return;
+//                        }
+//                        lastChangeShijian = System.currentTimeMillis();
+//                        currentDay = false;
+//                    }
 
                     SkinInfo skinInfo = getSkininfoByMark(SharedPreUtil.getString(SDATA_APP_SKIN_DAY));
                     if (skinInfo == null) {

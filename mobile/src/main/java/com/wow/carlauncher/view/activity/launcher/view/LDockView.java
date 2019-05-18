@@ -1,6 +1,5 @@
 package com.wow.carlauncher.view.activity.launcher.view;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -176,8 +175,8 @@ public class LDockView extends BaseThemeView {
     }
 
     @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
+    protected void initView() {
+        super.initView();
         loadDock(false);
     }
 
@@ -245,6 +244,7 @@ public class LDockView extends BaseThemeView {
                 SharedPreUtil.saveString(SDATA_DOCK5_CLASS, "");
             }
         }
+        System.out.println("!!!!!!!!!");
         dockLabelShow(SharedPreUtil.getBoolean(CommonData.SDATA_LAUNCHER_DOCK_LABEL_SHOW, true));
     }
 
@@ -327,10 +327,6 @@ public class LDockView extends BaseThemeView {
         return false;
     }
 
-    private Activity getActivity() {
-        return (Activity) getContext();
-    }
-
     private void showSelectDialog(String key) {
         final List<AppInfo> appInfos = new ArrayList<>(AppInfoManage.self().getAllAppInfos());
         SelectAppAdapter adapter = new SelectAppAdapter(getContext());
@@ -367,6 +363,7 @@ public class LDockView extends BaseThemeView {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final MAppInfoRefreshShowEvent event) {
         LogEx.d(this, "onEvent:MAppInfoRefreshShowEvent ");
+        System.out.println("!!!!!!!!!1");
         loadDock(true);
     }
 }

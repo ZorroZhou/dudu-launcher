@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.util.CommonUtil;
-import com.wow.carlauncher.common.util.ThreadObj;
 import com.wow.carlauncher.view.activity.set.SetEnum;
 
 import java.util.ArrayList;
@@ -22,6 +21,7 @@ public abstract class SetSingleSelectView<T extends SetEnum> extends LinearLayou
     private ViewGroup parent;
     private LinearLayout content;
     private TextView textView;
+    private T curr;
 
     public SetSingleSelectView(Context context, ViewGroup parent) {
         super(context);
@@ -41,6 +41,9 @@ public abstract class SetSingleSelectView<T extends SetEnum> extends LinearLayou
             ViewGroup viewGroup = (ViewGroup) SetSingleSelectView.this.getParent();
             if (viewGroup != null) {
                 viewGroup.removeView(SetSingleSelectView.this);
+            }
+            if (!CommonUtil.equals(curr, getCurr())) {
+                onSelect(curr);
             }
         });
 
@@ -75,14 +78,11 @@ public abstract class SetSingleSelectView<T extends SetEnum> extends LinearLayou
 
         this.textView.setText(title());
 
-        final ThreadObj<T> obj = new ThreadObj<>(getCurr());
-
+        curr = getCurr();
         OnClickListener clickListener = v1 -> {
-            System.out.println(v1.getTag());
             Item<T> sel = allItem.get((int) v1.getTag());
-            if (!CommonUtil.equals(sel.data, obj.getObj())) {
-                obj.setObj(sel.data);
-                onSelect(sel.data);
+            if (!CommonUtil.equals(sel.data, curr)) {
+                curr = sel.data;
                 for (Item<T> item : allItem) {
                     item.view.findViewById(R.id.iv_select).setVisibility(INVISIBLE);
                 }
@@ -94,7 +94,7 @@ public abstract class SetSingleSelectView<T extends SetEnum> extends LinearLayou
             item.view = View.inflate(this.context, R.layout.item_set_single_select, null);
             item.view.setTag(i);
             ((TextView) item.view.findViewById(R.id.name)).setText(item.data.getName());
-            if (equals(item.data, obj.getObj())) {
+            if (equals(item.data, curr)) {
                 item.view.findViewById(R.id.iv_select).setVisibility(VISIBLE);
             }
             item.view.setOnClickListener(clickListener);

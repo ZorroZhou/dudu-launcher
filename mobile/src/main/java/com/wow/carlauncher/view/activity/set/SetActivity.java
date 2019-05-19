@@ -4,6 +4,7 @@ import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -43,6 +44,9 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -50,9 +54,11 @@ import static com.wow.carlauncher.common.CommonData.APP_WIDGET_AMAP_PLUGIN;
 import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_AMAP_PLUGIN;
 import static com.wow.carlauncher.common.util.ViewUtils.getViewByIds;
 
-public class SetActivity extends BaseActivity {
+public class SetActivity extends BaseActivity implements SetFrame {
     @Override
     public void init() {
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContent(R.layout.activity_set);
         if (AppContext.self().getLocalUser() == null) {
             loadQQOpen();
@@ -62,8 +68,8 @@ public class SetActivity extends BaseActivity {
     @BindView(R.id.sg_theme)
     SetView sg_theme;
 
-    @BindView(R.id.ll_set)
-    FrameLayout ll_set;
+    @BindView(R.id.set_content)
+    FrameLayout set_content;
 
     @BindView(R.id.ll_user)
     LinearLayout ll_user;
@@ -74,30 +80,67 @@ public class SetActivity extends BaseActivity {
     @BindView(R.id.iv_user_pic)
     ImageView iv_user_pic;
 
+    @BindView(R.id.set_content_title)
+    TextView set_content_title;
+
+    @BindView(R.id.set_content_save)
+    TextView set_content_save;
+
+    @BindView(R.id.set_content_back)
+    View set_content_back;
+
+    @BindView(R.id.btn_back)
+    View btn_back;
+
+
     private Tencent mTencent;
 
     @Override
     public void initView() {
         setTitle("设置");
+        hideTitle();
+        setBaseViews = new ArrayList<>();
         clickEvent(sg_theme);
-        ll_user.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (AppContext.self().getLocalUser() == null) {
-                    login();
-                }
+
+        View.OnClickListener onClickListener = v -> {
+            switch (v.getId()) {
+                case R.id.ll_user:
+                    if (AppContext.self().getLocalUser() == null) {
+                        login();
+                    }
+                    break;
+                case R.id.set_content_back:
+                    backSetView();
+                    break;
+                case R.id.set_content_save:
+                    if (setBaseViews.size() > 0) {
+                        SetBaseView view = setBaseViews.get(setBaseViews.size() - 1);
+                        if (view.rightAction()) {
+                            backSetView();
+                        }
+                    }
+                    break;
+                case R.id.btn_back:
+                    finish();
+                    break;
             }
-        });
+        };
+
+        ll_user.setOnClickListener(onClickListener);
+        set_content_back.setOnClickListener(onClickListener);
+        set_content_save.setOnClickListener(onClickListener);
+        btn_back.setOnClickListener(onClickListener);
 
         if (AppContext.self().getLocalUser() != null) {
             tv_nickname.setText(AppContext.self().getLocalUser().getNickname());
             ImageManage.self().loadImage(AppContext.self().getLocalUser().getUserPic(), iv_user_pic, new ImageSize(100, 100));
         }
+
     }
 
     @OnClick(value = {R.id.sg_dev, R.id.sg_item, R.id.sg_driving, R.id.sg_theme, R.id.sg_home, R.id.sg_obd, R.id.sg_fk, R.id.sg_load_app, R.id.sg_popup, R.id.sg_system_set})
     public void clickEvent(View view) {
-        ViewGroup setView = null;
+        SetBaseView setView = null;
         switch (view.getId()) {
             case R.id.sg_theme: {
                 setView = new SThemeView(this);
@@ -141,8 +184,7 @@ public class SetActivity extends BaseActivity {
             }
         }
         if (setView != null) {
-            ll_set.removeAllViews();
-            ll_set.addView(setView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            removeAllAndAddSetView(setView);
         }
     }
 
@@ -156,6 +198,56 @@ public class SetActivity extends BaseActivity {
             loadQQOpen();
         }
     }
+
+    private List<SetBaseView> setBaseViews;
+
+    @Override
+    public void removeAllAndAddSetView(SetBaseView view) {
+        set_content.removeAllViews();
+        setBaseViews.clear();
+        addSetView(view);
+    }
+
+    @Override
+    public void addSetView(SetBaseView view) {
+        if (setBaseViews.size() > 0) {
+            for (SetBaseView view1 : setBaseViews) {
+                view1.setVisibility(View.GONE);
+            }
+        }
+        setBaseViews.add(view);
+        set_content.addView(view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+
+        showSetView(view);
+    }
+
+    @Override
+    public void backSetView() {
+        if (setBaseViews.size() > 1) {
+            SetBaseView view = setBaseViews.get(setBaseViews.size() - 1);
+            set_content.removeView(view);
+            setBaseViews.remove(view);
+            view = setBaseViews.get(setBaseViews.size() - 1);
+            view.setVisibility(View.VISIBLE);
+            showSetView(view);
+        }
+    }
+
+    private void showSetView(SetBaseView view) {
+        set_content_title.setText(view.getName());
+        if (view.showRight()) {
+            set_content_save.setVisibility(View.VISIBLE);
+            set_content_save.setText(view.rightTitle());
+        } else {
+            set_content_save.setVisibility(View.INVISIBLE);
+        }
+        if (setBaseViews.size() > 1) {
+            set_content_back.setVisibility(View.VISIBLE);
+        } else {
+            set_content_back.setVisibility(View.INVISIBLE);
+        }
+    }
+
 
     private void loadQQOpen() {
         if (mTencent == null) {

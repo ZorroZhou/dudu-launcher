@@ -1,45 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:st="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@android:color/white"
-    android:orientation="vertical"
+    android:layout_height="match_parent"
     tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingTop="16dp"
-        android:text="方控"
-        android:textColor="@color/colorPrimary"
-        android:textSize="14sp" />
+        android:orientation="vertical">
 
-    <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_fangkong_select"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        st:summary="没有绑定方控"
-        st:titleEx="方控绑定"
-        st:type="buttonB" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="16dp"
+            android:paddingTop="16dp"
+            android:text="方控"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14sp" />
 
-    <View style="@style/Interval" />
+        <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/sv_fangkong_select"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:summary="没有绑定方控"
+            st:titleEx="方控绑定"
+            st:type="buttonB" />
 
-    <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_fangkong_remove"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        st:titleEx="删除方控绑定"
-        st:type="buttonB" />
+        <View style="@style/Interval" />
 
-    <View style="@style/Interval" />
+        <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/sv_fangkong_remove"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:titleEx="删除方控绑定"
+            st:type="buttonB" />
 
-    <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_fangkong_impl_select"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        st:titleEx="方控协议"
-        st:type="buttonB" />
-</LinearLayout>
+        <View style="@style/Interval" />
+
+        <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/sv_fangkong_impl_select"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:titleEx="方控协议"
+            st:type="buttonB" />
+    </LinearLayout>
+</ScrollView>

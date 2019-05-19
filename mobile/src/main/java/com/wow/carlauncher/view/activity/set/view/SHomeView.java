@@ -26,7 +26,7 @@ import com.wow.carlauncher.view.activity.set.SetActivity;
 import com.wow.carlauncher.view.activity.set.SetBaseView;
 import com.wow.carlauncher.view.activity.set.event.SEventPromptShowRefresh;
 import com.wow.carlauncher.view.activity.set.event.SEventSetHomeFull;
-import com.wow.carlauncher.view.activity.set.listener.SetSingleSelect;
+import com.wow.carlauncher.view.activity.set.listener.SetSingleSelectView;
 import com.wow.carlauncher.view.activity.set.listener.SetSwitchOnClickListener;
 
 import org.greenrobot.eventbus.EventBus;
@@ -79,6 +79,10 @@ public class SHomeView extends SetBaseView {
     @BindView(R.id.sv_prompt_show)
     SetView sv_prompt_show;
 
+    @Override
+    public String getName() {
+        return "首页设置";
+    }
 
     protected void initView() {
         sv_prompt_show.setOnValueChangeListener(new SetSwitchOnClickListener(CommonData.SDATA_LAUNCHER_PROMPT_SHOW) {
@@ -91,15 +95,10 @@ public class SHomeView extends SetBaseView {
 
 
         sv_home_layout.setSummary(LayoutEnum.getById(SharedPreUtil.getInteger(SDATA_LAUNCHER_LAYOUT, LayoutEnum.AUTO.getId())).getName());
-        sv_home_layout.setOnClickListener(new SetSingleSelect<LayoutEnum>(getContext()) {
+        sv_home_layout.setOnClickListener(new SetSingleSelectView<LayoutEnum>(getActivity(), "请选择首页的布局") {
             @Override
             public Collection<LayoutEnum> getAll() {
                 return Arrays.asList(CommonData.LAUNCHER_LAYOUTS);
-            }
-
-            @Override
-            public String title() {
-                return "请选择首页的布局";
             }
 
             @Override
@@ -144,15 +143,10 @@ public class SHomeView extends SetBaseView {
         sv_home_full.setChecked(SharedPreUtil.getBoolean(CommonData.SDATA_HOME_FULL, true));
 
         sv_item_tran.setSummary(ItemTransformer.getById(SharedPreUtil.getInteger(SDATA_LAUNCHER_ITEM_TRAN, ItemTransformer.None.getId())).getName());
-        sv_item_tran.setOnClickListener(new SetSingleSelect<ItemTransformer>(getContext()) {
+        sv_item_tran.setOnClickListener(new SetSingleSelectView<ItemTransformer>(getActivity(), "请选择首页切换动画") {
             @Override
             public Collection<ItemTransformer> getAll() {
                 return Arrays.asList(CommonData.LAUNCHER_ITEMS_TRANS);
-            }
-
-            @Override
-            public String title() {
-                return "请选择首页切换动画";
             }
 
             @Override

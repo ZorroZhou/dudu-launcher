@@ -29,9 +29,15 @@ public class SPopupView extends SetBaseView {
     public SPopupView(SetActivity activity) {
         super(activity);
     }
+
     @Override
     protected int getContent() {
         return R.layout.content_set_popup;
+    }
+
+    @Override
+    public String getName() {
+        return "悬浮窗设置";
     }
 
     @BindView(R.id.sv_allow_popup_window)

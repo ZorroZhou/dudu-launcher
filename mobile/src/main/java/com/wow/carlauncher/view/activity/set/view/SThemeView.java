@@ -16,7 +16,6 @@ import com.wow.carlauncher.repertory.db.entiy.SkinInfo;
 import com.wow.carlauncher.repertory.db.manage.DatabaseManage;
 import com.wow.carlauncher.view.activity.set.SetActivity;
 import com.wow.carlauncher.view.activity.set.SetBaseView;
-import com.wow.carlauncher.view.activity.set.listener.SetSingleSelect;
 import com.wow.carlauncher.view.activity.set.listener.SetSingleSelectView;
 import com.wow.carlauncher.view.event.EventSkinInstall;
 
@@ -51,6 +50,11 @@ public class SThemeView extends SetBaseView {
         return R.layout.content_set_theme;
     }
 
+    @Override
+    public String getName() {
+        return "主题设置";
+    }
+
     @BindView(R.id.sv_plugin_theme)
     SetView sv_plugin_theme;
 
@@ -71,15 +75,10 @@ public class SThemeView extends SetBaseView {
         allSkinInfos = new HashMap<>();
         allOtherSkinInfos = new HashMap<>();
 
-        sv_theme_day.setOnClickListener(new SetSingleSelect<SkinInfo>(getContext()) {
+        sv_theme_day.setOnClickListener(new SetSingleSelectView<SkinInfo>(getActivity(), "请选择默认皮肤") {
             @Override
             public Collection<SkinInfo> getAll() {
                 return allSkinInfos.values();
-            }
-
-            @Override
-            public String title() {
-                return "请选择默认皮肤";
             }
 
             @Override
@@ -100,15 +99,11 @@ public class SThemeView extends SetBaseView {
             }
         });
 
-        sv_theme_night.setOnClickListener(new SetSingleSelectView<SkinInfo>(getContext(), this) {
+        sv_theme_night.setOnClickListener(new SetSingleSelectView<SkinInfo>(getActivity(), "请选择夜间皮肤") {
+
             @Override
             public Collection<SkinInfo> getAll() {
                 return allSkinInfos.values();
-            }
-
-            @Override
-            public String title() {
-                return "请选择夜间皮肤";
             }
 
             @Override
@@ -131,15 +126,10 @@ public class SThemeView extends SetBaseView {
 
 
         sv_plugin_theme.setSummary(SkinModel.getById(SharedPreUtil.getInteger(SDATA_APP_SKIN, SkinModel.BAISE.getId())).getName());
-        sv_plugin_theme.setOnClickListener(new SetSingleSelect<SkinModel>(getContext()) {
+        sv_plugin_theme.setOnClickListener(new SetSingleSelectView<SkinModel>(getActivity(), "请选择皮肤模式") {
             @Override
             public Collection<SkinModel> getAll() {
                 return java.util.Arrays.asList(SKIN_MODEL);
-            }
-
-            @Override
-            public String title() {
-                return "请选择皮肤模式";
             }
 
             @Override

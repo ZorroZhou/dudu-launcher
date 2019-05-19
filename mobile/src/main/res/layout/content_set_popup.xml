@@ -1,68 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:st="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@android:color/white"
-    android:orientation="vertical"
+    android:layout_height="match_parent"
     tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingTop="16dp"
-        android:text="悬浮框基本设置"
-        android:textColor="@color/colorPrimary"
-        android:textSize="14sp" />
+        android:orientation="vertical">
 
-    <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_allow_popup_window"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        st:summary="@string/set_allow"
-        st:summary2="@string/set_ban"
-        st:titleEx="允许显示(如无法显示，请检查悬浮窗权限)"
-        st:type="switchB" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="16dp"
+            android:paddingTop="16dp"
+            android:text="悬浮框基本设置"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14sp" />
 
-    <View style="@style/Interval" />
+        <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/sv_allow_popup_window"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:summary="@string/set_allow"
+            st:summary2="@string/set_ban"
+            st:titleEx="允许显示(如无法显示，请检查悬浮窗权限)"
+            st:type="switchB" />
 
-    <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_popup_full_screen"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        st:summary="@string/set_yes"
-        st:summary2="@string/set_no"
-        st:titleEx="悬浮窗是否需要全屏显示"
-        st:type="switchB" />
+        <View style="@style/Interval" />
 
-    <View style="@style/Interval" />
+        <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/sv_popup_full_screen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:summary="@string/set_yes"
+            st:summary2="@string/set_no"
+            st:titleEx="悬浮窗是否需要全屏显示"
+            st:type="switchB" />
 
-    <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_popup_window_size"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        st:titleEx="悬浮窗大小"
-        st:type="buttonB" />
+        <View style="@style/Interval" />
 
-    <View style="@style/Interval" />
+        <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/sv_popup_window_size"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:titleEx="悬浮窗大小"
+            st:type="buttonB" />
 
-    <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_popup_window_showtype"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        st:summary="@string/set_yes"
-        st:summary2="@string/set_no"
-        st:titleEx="悬浮窗是否全局显示"
-        st:type="checkB" />
+        <View style="@style/Interval" />
 
-    <View style="@style/Interval" />
+        <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/sv_popup_window_showtype"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:summary="@string/set_yes"
+            st:summary2="@string/set_no"
+            st:titleEx="悬浮窗是否全局显示"
+            st:type="checkB" />
 
-    <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_popup_window_showapps"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        st:titleEx="要使用悬浮框的APP"
-        st:type="buttonB" />
-</LinearLayout>
+        <View style="@style/Interval" />
+
+        <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/sv_popup_window_showapps"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:titleEx="要使用悬浮框的APP"
+            st:type="buttonB" />
+    </LinearLayout>
+</ScrollView>

@@ -8,7 +8,7 @@
     android:orientation="horizontal"
     tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry">
 
-    <FrameLayout
+    <com.zhy.android.percent.support.PercentFrameLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="3">
@@ -26,7 +26,7 @@
                 <LinearLayout
                     android:id="@+id/ll_user"
                     android:layout_width="match_parent"
-                    android:layout_height="140dp"
+                    android:layout_height="160dp"
                     android:gravity="center"
                     android:orientation="vertical">
 
@@ -169,27 +169,83 @@
             </LinearLayout>
         </ScrollView>
 
-    </FrameLayout>
+        <ImageView
+            android:id="@+id/btn_back"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:clickable="true"
+            android:contentDescription="@string/app_name"
+            android:focusable="true"
+            android:padding="10dp"
+            android:src="@mipmap/ic_back2"
+            app:layout_heightPercent="10%h"
+            app:layout_widthPercent="10%h" />
+    </com.zhy.android.percent.support.PercentFrameLayout>
 
     <View
         android:layout_width="0.1dp"
         android:layout_height="match_parent"
         android:background="@color/main_interval_color" />
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="7">
+        android:layout_weight="7"
+        android:background="@android:color/white"
+        android:orientation="vertical">
 
-        <ScrollView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="45dp"
+            android:background="@drawable/set_view_top_bg"
+            android:orientation="horizontal"
+            android:padding="10dp">
 
-            <FrameLayout
-                android:id="@+id/ll_set"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical" />
-        </ScrollView>
-    </FrameLayout>
+            <LinearLayout
+                android:id="@+id/set_content_back"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:gravity="left|center_vertical">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@mipmap/ic_back2" />
+
+                <TextView
+                    android:layout_width="75dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|left"
+                    android:text="返回"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/set_content_title"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="标题"
+                android:textColor="@color/colorPrimary"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/set_content_save"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical|right"
+                android:paddingRight="10dp"
+                android:text="保存"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/set_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </LinearLayout>
 </LinearLayout>

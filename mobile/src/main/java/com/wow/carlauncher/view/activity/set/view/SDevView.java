@@ -30,5 +30,8 @@ public class SDevView extends SetBaseView {
                 break;
         }
     }
-
+    @Override
+    public String getName() {
+        return "开发设置";
+    }
 }

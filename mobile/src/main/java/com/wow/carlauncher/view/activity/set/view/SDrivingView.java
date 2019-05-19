@@ -15,7 +15,7 @@ import com.wow.carlauncher.view.activity.driving.DrivingViewEnum;
 import com.wow.carlauncher.view.activity.set.SetActivity;
 import com.wow.carlauncher.view.activity.set.SetBaseView;
 import com.wow.carlauncher.view.activity.set.event.SAEventRefreshDriving;
-import com.wow.carlauncher.view.activity.set.listener.SetSingleSelect;
+import com.wow.carlauncher.view.activity.set.listener.SetSingleSelectView;
 import com.wow.carlauncher.view.activity.set.listener.SetSwitchOnClickListener;
 
 import org.greenrobot.eventbus.EventBus;
@@ -43,6 +43,11 @@ public class SDrivingView extends SetBaseView {
         return R.layout.content_set_driving;
     }
 
+    @Override
+    public String getName() {
+        return "驾驶界面设置";
+    }
+
     @BindView(R.id.sv_driving_type)
     SetView sv_driving_type;
 
@@ -58,15 +63,10 @@ public class SDrivingView extends SetBaseView {
     @Override
     protected void initView() {
         sv_driving_type.setSummary(DrivingViewEnum.getById(SharedPreUtil.getInteger(SDATA_DRIVING_VIEW, DrivingViewEnum.BLACK.getId())).getName());
-        sv_driving_type.setOnClickListener(new SetSingleSelect<DrivingViewEnum>(getContext()) {
+        sv_driving_type.setOnClickListener(new SetSingleSelectView<DrivingViewEnum>(getActivity(), "请选择首页切换动画") {
             @Override
             public Collection<DrivingViewEnum> getAll() {
                 return Arrays.asList(CommonData.DRIVING_VIEW);
-            }
-
-            @Override
-            public String title() {
-                return "请选择首页切换动画";
             }
 
             @Override
@@ -86,15 +86,10 @@ public class SDrivingView extends SetBaseView {
         sv_auto_to_driving.setChecked(SharedPreUtil.getBoolean(CommonData.SDATA_AUTO_TO_DRIVING, false));
 
         sv_auto_to_driving_type.setSummary(AutoDrivingEnum.getById(SharedPreUtil.getInteger(SDATA_AUTO_TO_DRIVING_TYPE, AutoDrivingEnum.TIME.getId())).getName());
-        sv_auto_to_driving_type.setOnClickListener(new SetSingleSelect<AutoDrivingEnum>(getContext()) {
+        sv_auto_to_driving_type.setOnClickListener(new SetSingleSelectView<AutoDrivingEnum>(getActivity(), "选择自动跳转方式") {
             @Override
             public Collection<AutoDrivingEnum> getAll() {
                 return Arrays.asList(CommonData.AUTO_DRIVING_TYPES);
-            }
-
-            @Override
-            public String title() {
-                return "选择自动跳转方式";
             }
 
             @Override

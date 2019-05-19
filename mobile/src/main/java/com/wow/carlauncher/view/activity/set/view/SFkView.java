@@ -19,7 +19,7 @@ import com.wow.carlauncher.ex.plugin.fk.FangkongProtocolEnum;
 import com.wow.carlauncher.view.activity.set.SetActivity;
 import com.wow.carlauncher.view.activity.set.SetBaseView;
 import com.wow.carlauncher.view.activity.set.event.SAEventRefreshDriving;
-import com.wow.carlauncher.view.activity.set.listener.SetSingleSelect;
+import com.wow.carlauncher.view.activity.set.listener.SetSingleSelectView;
 import com.wow.carlauncher.view.dialog.ListDialog;
 
 import org.greenrobot.eventbus.EventBus;
@@ -45,6 +45,11 @@ public class SFkView extends SetBaseView {
     @Override
     protected int getContent() {
         return R.layout.content_set_fk;
+    }
+
+    @Override
+    public String getName() {
+        return "方控设置";
     }
 
     @BindView(R.id.sv_fangkong_select)
@@ -85,15 +90,10 @@ public class SFkView extends SetBaseView {
 
 
         sv_fangkong_impl_select.setSummary(FangkongProtocolEnum.getById(SharedPreUtil.getInteger(SDATA_FANGKONG_CONTROLLER, FangkongProtocolEnum.YLFK.getId())).getName());
-        sv_fangkong_impl_select.setOnClickListener(new SetSingleSelect<FangkongProtocolEnum>(getContext()) {
+        sv_fangkong_impl_select.setOnClickListener(new SetSingleSelectView<FangkongProtocolEnum>(getActivity(), "请选择方控协议") {
             @Override
             public Collection<FangkongProtocolEnum> getAll() {
                 return Arrays.asList(CommonData.FANGKONG_CONTROLLER);
-            }
-
-            @Override
-            public String title() {
-                return "请选择协议";
             }
 
             @Override

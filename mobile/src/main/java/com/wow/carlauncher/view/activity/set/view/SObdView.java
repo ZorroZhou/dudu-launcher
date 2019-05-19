@@ -18,7 +18,7 @@ import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.ex.plugin.obd.ObdProtocolEnum;
 import com.wow.carlauncher.view.activity.set.SetActivity;
 import com.wow.carlauncher.view.activity.set.SetBaseView;
-import com.wow.carlauncher.view.activity.set.listener.SetSingleSelect;
+import com.wow.carlauncher.view.activity.set.listener.SetSingleSelectView;
 import com.wow.carlauncher.view.dialog.ListDialog;
 
 import java.util.ArrayList;
@@ -45,6 +45,11 @@ public class SObdView extends SetBaseView {
         return R.layout.content_set_obd;
     }
 
+    @Override
+    public String getName() {
+        return "OBD设置";
+    }
+
     @BindView(R.id.sv_obd_select)
     SetView sv_obd_select;
 
@@ -57,15 +62,10 @@ public class SObdView extends SetBaseView {
     @Override
     protected void initView() {
         sv_obd_impl_select.setSummary("OBD使用的协议：" + ObdProtocolEnum.getById(SharedPreUtil.getInteger(SDATA_OBD_CONTROLLER, ObdProtocolEnum.YJ_TYB.getId())).getName());
-        sv_obd_impl_select.setOnClickListener(new SetSingleSelect<ObdProtocolEnum>(getContext()) {
+        sv_obd_impl_select.setOnClickListener(new SetSingleSelectView<ObdProtocolEnum>(getActivity(), "请选择OBD使用的协议") {
             @Override
             public Collection<ObdProtocolEnum> getAll() {
                 return Arrays.asList(CommonData.OBD_CONTROLLER);
-            }
-
-            @Override
-            public String title() {
-                return "请选择OBD使用的协议";
             }
 
             @Override

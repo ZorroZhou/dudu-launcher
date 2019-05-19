@@ -1,146 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:st="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@android:color/white"
-    android:orientation="vertical"
+    android:layout_height="match_parent"
     tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingTop="16dp"
-        android:text="APP设置"
-        android:textColor="@color/colorPrimary"
-        android:textSize="14sp" />
+        android:orientation="vertical">
 
-    <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_show_mount"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        st:summary="@string/set_yes"
-        st:summary2="@string/set_no"
-        st:titleEx="显示首页挂载入口"
-        st:type="switchB" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="16dp"
+            android:paddingTop="16dp"
+            android:text="APP设置"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14sp" />
 
-    <View style="@style/Interval" />
+        <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/sv_show_mount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:summary="@string/set_yes"
+            st:summary2="@string/set_no"
+            st:titleEx="显示首页挂载入口"
+            st:type="switchB" />
 
-    <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_apps_hides"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        st:summary="全部应用将隐藏选中的项目"
-        st:titleEx="桌面隐藏项目"
-        st:type="buttonB" />
+        <View style="@style/Interval" />
 
-    <View style="@style/Interval" />
+        <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/sv_apps_hides"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:summary="全部应用将隐藏选中的项目"
+            st:titleEx="桌面隐藏项目"
+            st:type="buttonB" />
 
-    <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_open_log"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        st:summary="@string/set_yes"
-        st:summary2="@string/set_no"
-        st:titleEx="开启日志记录"
-        st:type="switchB" />
+        <View style="@style/Interval" />
 
-    <View style="@style/Interval" />
+        <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/sv_open_log"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:summary="@string/set_yes"
+            st:summary2="@string/set_no"
+            st:titleEx="开启日志记录"
+            st:type="switchB" />
 
-    <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_launcher_show_dock_label"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        st:summary="@string/set_show"
-        st:summary2="@string/set_hide"
-        st:titleEx="展示dock标签"
-        st:type="switchB" />
+        <View style="@style/Interval" />
 
-    <View style="@style/Interval" />
+        <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/sv_launcher_show_dock_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:summary="@string/set_show"
+            st:summary2="@string/set_hide"
+            st:titleEx="展示dock标签"
+            st:type="switchB" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingTop="16dp"
-        android:text="开发"
-        android:textColor="@color/colorPrimary"
-        android:textSize="14sp" />
+        <View style="@style/Interval" />
 
-    <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_key_listener"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        st:titleEx="按键测试,可测试方控的按键信息,看看能不能匹配上"
-        st:type="buttonB" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="16dp"
+            android:paddingTop="16dp"
+            android:text="开发"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14sp" />
 
-    <View style="@style/Interval" />
+        <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/sv_key_listener"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:titleEx="按键测试,可测试方控的按键信息,看看能不能匹配上"
+            st:type="buttonB" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingTop="16dp"
-        android:text="关于"
-        android:textColor="@color/colorPrimary"
-        android:textSize="14sp" />
+        <View style="@style/Interval" />
 
-    <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_update"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        st:titleEx="版本更新"
-        st:type="buttonB" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="16dp"
+            android:paddingTop="16dp"
+            android:text="关于"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14sp" />
 
-    <View style="@style/Interval" />
+        <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/sv_update"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:titleEx="版本更新"
+            st:type="buttonB" />
 
-    <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_about"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        st:titleEx="关于嘟嘟桌面"
-        st:type="buttonB" />
+        <View style="@style/Interval" />
 
-    <View style="@style/Interval" />
+        <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/sv_about"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:titleEx="关于嘟嘟桌面"
+            st:type="buttonB" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingTop="16dp"
-        android:text="系统设置快捷入口"
-        android:textColor="@color/colorPrimary"
-        android:textSize="14sp" />
+        <View style="@style/Interval" />
 
-    <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_sys_anquan"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        st:summary="根据APP展示悬浮框需要打开用户统计功能，才能使用"
-        st:titleEx="系统安全设置界面"
-        st:type="buttonB" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="16dp"
+            android:paddingTop="16dp"
+            android:text="系统设置快捷入口"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14sp" />
 
-    <View style="@style/Interval" />
+        <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/sv_sys_anquan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:summary="根据APP展示悬浮框需要打开用户统计功能，才能使用"
+            st:titleEx="系统安全设置界面"
+            st:type="buttonB" />
 
-    <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_sys_overlay"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        st:titleEx="悬浮框权限设置页面"
-        st:type="buttonB" />
+        <View style="@style/Interval" />
 
-    <View style="@style/Interval" />
+        <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/sv_sys_overlay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:titleEx="悬浮框权限设置页面"
+            st:type="buttonB" />
+
+        <View style="@style/Interval" />
 
 
-    <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_sys_sdk"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        st:titleEx="查询sdk版本"
-        st:type="buttonB" />
+        <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/sv_sys_sdk"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:titleEx="查询sdk版本"
+            st:type="buttonB" />
 
-    <View style="@style/Interval" />
+        <View style="@style/Interval" />
 
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>

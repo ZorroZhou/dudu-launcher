@@ -1,128 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:st="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@android:color/white"
-    android:orientation="vertical"
+    android:layout_height="match_parent"
     tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingTop="16dp"
-        android:text="音乐插件"
-        android:textColor="@color/colorPrimary"
-        android:textSize="14sp" />
+        android:orientation="vertical">
 
-    <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_plugin_select"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        st:summary="未选择"
-        st:titleEx="音乐播放器控制器，可使用APP控制第三方音乐播放器"
-        st:type="buttonB" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="16dp"
+            android:paddingTop="16dp"
+            android:text="音乐插件"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14sp" />
 
-    <View style="@style/Interval" />
+        <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/sv_plugin_select"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:summary="未选择"
+            st:titleEx="音乐播放器控制器，可使用APP控制第三方音乐播放器"
+            st:type="buttonB" />
 
-    <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_music_inside_cover"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        st:summary="@string/set_yes"
-        st:summary2="@string/set_no"
-        st:titleEx="音乐播放器内置封面(内置封面比较准确,搜索封面可能不准确)"
-        st:type="switchB" />
+        <View style="@style/Interval" />
 
-    <View style="@style/Interval" />
+        <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/sv_music_inside_cover"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:summary="@string/set_yes"
+            st:summary2="@string/set_no"
+            st:titleEx="音乐播放器内置封面(内置封面比较准确,搜索封面可能不准确)"
+            st:type="switchB" />
 
-    <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_music_lrc"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        st:summary="@string/set_yes"
-        st:summary2="@string/set_no"
-        st:titleEx="显示歌词,显示歌词后,音乐作者和标题会放到一行显示"
-        st:type="switchB" />
+        <View style="@style/Interval" />
 
-    <View style="@style/Interval" />
+        <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/sv_music_lrc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:summary="@string/set_yes"
+            st:summary2="@string/set_no"
+            st:titleEx="显示歌词,显示歌词后,音乐作者和标题会放到一行显示"
+            st:type="switchB" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingTop="16dp"
-        android:text="天气插件"
-        android:textColor="@color/colorPrimary"
-        android:textSize="14sp" />
+        <View style="@style/Interval" />
 
-    <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/tianqi_city"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        st:titleEx="天气定位"
-        st:type="buttonB" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="16dp"
+            android:paddingTop="16dp"
+            android:text="天气插件"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14sp" />
 
-    <View style="@style/Interval" />
+        <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/tianqi_city"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:titleEx="天气定位"
+            st:type="buttonB" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingTop="16dp"
-        android:text="高德插件"
-        android:textColor="@color/colorPrimary"
-        android:textSize="14sp" />
+        <View style="@style/Interval" />
 
-    <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_amap_xunhang"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        st:summary="@string/set_yes"
-        st:summary2="@string/set_no"
-        st:titleEx="不导航时使用巡航"
-        st:type="switchB" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="16dp"
+            android:paddingTop="16dp"
+            android:text="高德插件"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14sp" />
 
-    <View style="@style/Interval" />
+        <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/sv_amap_xunhang"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:summary="@string/set_yes"
+            st:summary2="@string/set_no"
+            st:titleEx="不导航时使用巡航"
+            st:type="switchB" />
 
-    <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_gaode_chajian"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        st:titleEx="高德插件(4*3)"
-        st:type="buttonB" />
+        <View style="@style/Interval" />
 
-    <View style="@style/Interval" />
+        <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/sv_gaode_chajian"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:titleEx="高德插件(4*3)"
+            st:type="buttonB" />
 
-    <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_use_navc_popup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        st:summary="@string/set_yes"
-        st:summary2="@string/set_no"
-        st:titleEx="导航弹出窗"
-        st:type="switchB" />
+        <View style="@style/Interval" />
 
-    <View style="@style/Interval" />
+        <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/sv_use_navc_popup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:summary="@string/set_yes"
+            st:summary2="@string/set_no"
+            st:titleEx="导航弹出窗"
+            st:type="switchB" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingTop="16dp"
-        android:text="底层插件"
-        android:textColor="@color/colorPrimary"
-        android:textSize="14sp" />
+        <View style="@style/Interval" />
 
-    <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_console"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        st:summary="未选择"
-        st:titleEx="控制层实现，如声音控制，一件清理等功能的实现，不同的车机可能处理方式不同。"
-        st:type="buttonB" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="16dp"
+            android:paddingTop="16dp"
+            android:text="底层插件"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14sp" />
 
-    <View style="@style/Interval" />
-</LinearLayout>
+        <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/sv_console"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:summary="未选择"
+            st:titleEx="控制层实现，如声音控制，一件清理等功能的实现，不同的车机可能处理方式不同。"
+            st:type="buttonB" />
+
+        <View style="@style/Interval" />
+    </LinearLayout>
+</ScrollView>

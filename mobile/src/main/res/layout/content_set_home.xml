@@ -1,99 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:st="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@android:color/white"
-    android:orientation="vertical"
+    android:layout_height="match_parent"
     tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingTop="16dp"
-        android:text="首页标签"
-        android:textColor="@color/colorPrimary"
-        android:textSize="14sp" />
+        android:background="@android:color/white"
+        android:orientation="vertical">
 
-    <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_home_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        st:summary="未选择"
-        st:titleEx="首页布局"
-        st:type="buttonB" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="16dp"
+            android:paddingTop="16dp"
+            android:text="首页标签"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14sp" />
 
-    <View style="@style/Interval" />
+        <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/sv_home_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:summary="未选择"
+            st:titleEx="首页布局"
+            st:type="buttonB" />
 
-    <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_item_tran"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        st:summary="未选择"
-        st:titleEx="首页切换动画"
-        st:type="buttonB" />
+        <View style="@style/Interval" />
 
-    <View style="@style/Interval" />
+        <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/sv_item_tran"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:summary="未选择"
+            st:titleEx="首页切换动画"
+            st:type="buttonB" />
 
-    <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_launcher_item_sort"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        st:titleEx="首页插件展示顺序(调整后插件会重新加载)"
-        st:type="buttonB" />
+        <View style="@style/Interval" />
 
-    <View style="@style/Interval" />
+        <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/sv_launcher_item_sort"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:titleEx="首页插件展示顺序(调整后插件会重新加载)"
+            st:type="buttonB" />
 
-    <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_launcher_item_sort_re"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        st:titleEx="首页插件展示顺序重置"
-        st:type="buttonB" />
+        <View style="@style/Interval" />
 
-    <View style="@style/Interval" />
+        <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/sv_launcher_item_sort_re"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:titleEx="首页插件展示顺序重置"
+            st:type="buttonB" />
 
-    <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_launcher_item_num"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        st:titleEx="首页插件数量"
-        st:type="buttonB" />
+        <View style="@style/Interval" />
 
-    <View style="@style/Interval" />
+        <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/sv_launcher_item_num"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:titleEx="首页插件数量"
+            st:type="buttonB" />
 
-    <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_home_full"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        st:summary="@string/set_yes"
-        st:summary2="@string/set_no"
-        st:titleEx="首页全屏"
-        st:type="switchB" />
+        <View style="@style/Interval" />
 
-    <View style="@style/Interval" />
+        <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/sv_home_full"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:summary="@string/set_yes"
+            st:summary2="@string/set_no"
+            st:titleEx="首页全屏"
+            st:type="switchB" />
 
-    <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_use_va"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        st:summary="@string/set_yes"
-        st:summary2="@string/set_no"
-        st:titleEx="开启语音助手"
-        st:type="switchB" />
+        <View style="@style/Interval" />
 
-    <View style="@style/Interval" />
+        <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/sv_use_va"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:summary="@string/set_yes"
+            st:summary2="@string/set_no"
+            st:titleEx="开启语音助手"
+            st:type="switchB" />
 
-    <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_prompt_show"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        st:summary="@string/set_yes"
-        st:summary2="@string/set_no"
-        st:titleEx="是否展示托盘区"
-        st:type="switchB" />
+        <View style="@style/Interval" />
 
-    <View style="@style/Interval" />
-</LinearLayout>
+        <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/sv_prompt_show"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:summary="@string/set_yes"
+            st:summary2="@string/set_no"
+            st:titleEx="是否展示托盘区"
+            st:type="switchB" />
+
+        <View style="@style/Interval" />
+    </LinearLayout>
+</ScrollView>

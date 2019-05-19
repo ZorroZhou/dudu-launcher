@@ -1,6 +1,5 @@
 package com.wow.carlauncher.view.activity.set.listener;
 
-import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -8,47 +7,32 @@ import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.util.CommonUtil;
+import com.wow.carlauncher.view.activity.set.SetActivity;
+import com.wow.carlauncher.view.activity.set.SetBaseView;
 import com.wow.carlauncher.view.activity.set.SetEnum;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-public abstract class SetSingleSelectView<T extends SetEnum> extends LinearLayout implements View.OnClickListener {
-    private Context context;
+public abstract class SetSingleSelectView<T extends SetEnum> extends SetBaseView implements View.OnClickListener {
     private List<Item<T>> allItem;
 
-    private ViewGroup parent;
     private LinearLayout content;
     private TextView textView;
     private T curr;
+    private String title;
 
-    public SetSingleSelectView(Context context, ViewGroup parent) {
+    public SetSingleSelectView(SetActivity context, String title) {
         super(context);
-        this.setOrientation(VERTICAL);
-
-        this.context = context;
-        this.parent = parent;
+        this.title = title;
         this.allItem = new ArrayList<>();
-
-        View v = View.inflate(getContext(), R.layout.content_set_select, null);
-        this.addView(v, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-
-        this.textView = v.findViewById(R.id.title);
-        this.content = v.findViewById(R.id.content);
-        v.findViewById(R.id.ll_top).setOnClickListener(v1 -> {
-            parent.setVisibility(VISIBLE);
-            ViewGroup viewGroup = (ViewGroup) SetSingleSelectView.this.getParent();
-            if (viewGroup != null) {
-                viewGroup.removeView(SetSingleSelectView.this);
-            }
-            if (!CommonUtil.equals(curr, getCurr())) {
-                onSelect(curr);
-            }
-        });
-
     }
 
+    @Override
+    protected void initView() {
+        this.content = findViewById(R.id.content);
+    }
 
     public abstract Collection<T> getAll();
 
@@ -56,17 +40,12 @@ public abstract class SetSingleSelectView<T extends SetEnum> extends LinearLayou
 
     public abstract void onSelect(T t);
 
-    public abstract String title();
-
     public boolean equals(T t1, T t2) {
         return CommonUtil.equals(t1, t2);
     }
 
     @Override
     public void onClick(View v) {
-        if (parent == null) {
-            return;
-        }
         allItem.clear();
         Collection<T> list = getAll();
         for (T item : list) {
@@ -75,8 +54,6 @@ public abstract class SetSingleSelectView<T extends SetEnum> extends LinearLayou
             allItem.add(ii);
         }
         this.content.removeAllViews();
-
-        this.textView.setText(title());
 
         curr = getCurr();
         OnClickListener clickListener = v1 -> {
@@ -91,7 +68,7 @@ public abstract class SetSingleSelectView<T extends SetEnum> extends LinearLayou
         };
         for (int i = 0; i < allItem.size(); i++) {
             Item<T> item = allItem.get(i);
-            item.view = View.inflate(this.context, R.layout.item_set_single_select, null);
+            item.view = View.inflate(getActivity(), R.layout.item_set_single_select, null);
             item.view.setTag(i);
             ((TextView) item.view.findViewById(R.id.name)).setText(item.data.getName());
             if (equals(item.data, curr)) {
@@ -101,13 +78,39 @@ public abstract class SetSingleSelectView<T extends SetEnum> extends LinearLayou
             this.content.addView(item.view, new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         }
 
-        ViewGroup baseView = (ViewGroup) parent.getParent();
-        parent.setVisibility(GONE);
-        baseView.addView(this, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        getActivity().addSetView(this);
     }
 
     private static class Item<T> {
         private T data;
         private View view;
+    }
+
+    @Override
+    public String getName() {
+        return title;
+    }
+
+    @Override
+    protected int getContent() {
+        return R.layout.content_set_select;
+    }
+
+    @Override
+    public boolean showRight() {
+        return true;
+    }
+
+    @Override
+    public String rightTitle() {
+        return "保存";
+    }
+
+    @Override
+    public boolean rightAction() {
+        if (!CommonUtil.equals(curr, getCurr())) {
+            onSelect(curr);
+        }
+        return true;
     }
 }

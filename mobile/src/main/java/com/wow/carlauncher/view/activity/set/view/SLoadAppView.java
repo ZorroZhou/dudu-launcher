@@ -40,6 +40,11 @@ public class SLoadAppView extends SetBaseView {
         return R.layout.content_set_load_app;
     }
 
+    @Override
+    public String getName() {
+        return "启动设置";
+    }
+
     @BindView(R.id.sv_load_use)
     SetView sv_load_use;
 

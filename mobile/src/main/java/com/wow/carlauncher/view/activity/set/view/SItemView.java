@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.appwidget.AppWidgetHost;
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
-import android.view.View;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
@@ -22,7 +21,7 @@ import com.wow.carlauncher.view.activity.launcher.event.LCityRefreshEvent;
 import com.wow.carlauncher.view.activity.set.SetActivity;
 import com.wow.carlauncher.view.activity.set.SetBaseView;
 import com.wow.carlauncher.view.activity.set.event.SEventRefreshAmapPlugin;
-import com.wow.carlauncher.view.activity.set.listener.SetSingleSelect;
+import com.wow.carlauncher.view.activity.set.listener.SetSingleSelectView;
 import com.wow.carlauncher.view.activity.set.listener.SetSwitchOnClickListener;
 import com.wow.carlauncher.view.dialog.CityDialog;
 
@@ -55,6 +54,11 @@ public class SItemView extends SetBaseView {
     @Override
     protected int getContent() {
         return R.layout.content_set_item;
+    }
+
+    @Override
+    public String getName() {
+        return "插件设置";
     }
 
     @BindView(R.id.sv_plugin_select)
@@ -109,26 +113,18 @@ public class SItemView extends SetBaseView {
             sv_gaode_chajian.setSummary("未选择");
         }
 
-        sv_gaode_chajian.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int widgetId = appWidgetHost.allocateAppWidgetId();
-                Intent pickIntent = new Intent(AppWidgetManager.ACTION_APPWIDGET_PICK);
-                pickIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
-                ((Activity) getContext()).startActivityForResult(pickIntent, REQUEST_SELECT_AMAP_PLUGIN);
-            }
+        sv_gaode_chajian.setOnClickListener(v -> {
+            int widgetId = appWidgetHost.allocateAppWidgetId();
+            Intent pickIntent = new Intent(AppWidgetManager.ACTION_APPWIDGET_PICK);
+            pickIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
+            ((Activity) getContext()).startActivityForResult(pickIntent, REQUEST_SELECT_AMAP_PLUGIN);
         });
 
         sv_plugin_select.setSummary(MusicControllerEnum.getById(SharedPreUtil.getInteger(SDATA_MUSIC_CONTROLLER, MusicControllerEnum.SYSMUSIC.getId())).getName());
-        sv_plugin_select.setOnClickListener(new SetSingleSelect<MusicControllerEnum>(getContext()) {
+        sv_plugin_select.setOnClickListener(new SetSingleSelectView<MusicControllerEnum>(getActivity(), "请选择音乐控制协议") {
             @Override
             public Collection<MusicControllerEnum> getAll() {
                 return Arrays.asList(CommonData.MUSIC_CONTROLLER);
-            }
-
-            @Override
-            public String title() {
-                return "请选择音乐控制协议";
             }
 
             @Override
@@ -171,16 +167,11 @@ public class SItemView extends SetBaseView {
 
 
         sv_console.setSummary("控制协议：" + ConsoleProtoclEnum.getById(SharedPreUtil.getInteger(SDATA_CONSOLE_MARK, ConsoleProtoclEnum.SYSTEM.getId())).getName());
-        sv_console.setOnClickListener(new SetSingleSelect<ConsoleProtoclEnum>(getContext()) {
+        sv_console.setOnClickListener(new SetSingleSelectView<ConsoleProtoclEnum>(getActivity(), "请选择系统控制协议") {
 
             @Override
             public Collection<ConsoleProtoclEnum> getAll() {
                 return Arrays.asList(CommonData.CONSOLES_PROTOCL);
-            }
-
-            @Override
-            public String title() {
-                return "请选择系统控制协议";
             }
 
             @Override

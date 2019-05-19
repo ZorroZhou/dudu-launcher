@@ -62,6 +62,11 @@ public class SSystemView extends SetBaseView {
         return R.layout.content_set_system;
     }
 
+    @Override
+    public String getName() {
+        return "系统设置";
+    }
+
     @BindView(R.id.sv_sys_anquan)
     SetView sv_sys_anquan;
 

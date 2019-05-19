@@ -1,59 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:st="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@android:color/white"
-    android:orientation="vertical"
+    android:layout_height="match_parent"
     tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingTop="16dp"
-        android:text="APP皮肤"
-        android:textColor="@color/colorPrimary"
-        android:textSize="14sp" />
+        android:orientation="vertical">
 
-    <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_plugin_theme"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        st:summary="未选择"
-        st:titleEx="皮肤切换模式"
-        st:type="buttonB" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="16dp"
+            android:paddingTop="16dp"
+            android:text="APP皮肤"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14sp" />
 
-    <View style="@style/Interval" />
+        <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/sv_plugin_theme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:summary="未选择"
+            st:titleEx="皮肤切换模式"
+            st:type="buttonB" />
 
-    <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_theme_day"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        st:summary="未选择"
-        st:titleEx="主皮肤"
-        st:type="buttonB" />
+        <View style="@style/Interval" />
 
-    <View style="@style/Interval" />
+        <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/sv_theme_day"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:summary="未选择"
+            st:titleEx="主皮肤"
+            st:type="buttonB" />
 
-    <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_theme_night"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        st:summary="未选择"
-        st:titleEx="夜间皮肤"
-        st:type="buttonB" />
+        <View style="@style/Interval" />
 
-    <View style="@style/Interval" />
+        <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/sv_theme_night"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:summary="未选择"
+            st:titleEx="夜间皮肤"
+            st:type="buttonB" />
 
-    <com.wow.carlauncher.common.view.SetView
-        android:id="@+id/sv_load_skin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        st:summary="如果安装皮肤后没有显示在APP,请点击进行同步"
-        st:titleEx="同步皮肤"
-        st:type="buttonB" />
+        <View style="@style/Interval" />
 
-    <View style="@style/Interval" />
-</LinearLayout>
+        <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/sv_load_skin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:summary="如果安装皮肤后没有显示在APP,请点击进行同步"
+            st:titleEx="同步皮肤"
+            st:type="buttonB" />
+
+        <View style="@style/Interval" />
+    </LinearLayout>
+</ScrollView>

@@ -10,7 +10,7 @@ import com.wow.carlauncher.view.activity.launcher.view.LObdView;
 import com.wow.carlauncher.view.activity.launcher.view.LTaiyaView;
 import com.wow.carlauncher.view.activity.launcher.view.LTimeView;
 import com.wow.carlauncher.view.activity.launcher.view.LWeatherView;
-import com.wow.carlauncher.view.activity.set.SetEnum;
+import com.wow.carlauncher.view.activity.set.setItem.SetEnum;
 
 public enum ItemEnum implements SetEnum {
     AMAP("高德导航", 1),

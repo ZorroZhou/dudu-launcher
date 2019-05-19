@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.wow.carlauncher.view.activity.driving.blue.BlueView;
 import com.wow.carlauncher.view.activity.driving.coolBlack.CoolBlackView;
-import com.wow.carlauncher.view.activity.set.SetEnum;
+import com.wow.carlauncher.view.activity.set.setItem.SetEnum;
 
 /**
  * Created by 10124 on 2018/3/29.

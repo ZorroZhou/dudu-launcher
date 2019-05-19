@@ -29,7 +29,7 @@ import com.wow.carlauncher.repertory.server.CommonService;
 import com.wow.carlauncher.view.activity.AboutActivity;
 import com.wow.carlauncher.view.activity.launcher.event.LDockLabelShowChangeEvent;
 import com.wow.carlauncher.view.activity.set.SetActivity;
-import com.wow.carlauncher.view.activity.set.SetAppInfo;
+import com.wow.carlauncher.view.activity.set.setItem.SetAppInfo;
 import com.wow.carlauncher.view.activity.set.SetBaseView;
 import com.wow.carlauncher.view.activity.set.listener.SetAppMultipleSelectOnClickListener;
 import com.wow.carlauncher.view.activity.set.listener.SetSingleSelectView;

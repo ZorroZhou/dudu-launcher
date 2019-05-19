@@ -1,6 +1,6 @@
 package com.wow.carlauncher.ex.plugin.fk;
 
-import com.wow.carlauncher.view.activity.set.SetEnum;
+import com.wow.carlauncher.view.activity.set.setItem.SetEnum;
 
 /**
  * Created by 10124 on 2018/3/29.

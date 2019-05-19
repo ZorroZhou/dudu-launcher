@@ -1,6 +1,6 @@
 package com.wow.carlauncher.ex.manage.skin;
 
-import com.wow.carlauncher.view.activity.set.SetEnum;
+import com.wow.carlauncher.view.activity.set.setItem.SetEnum;
 
 public enum SkinModel implements SetEnum {
     SHIJIAN("根据日出日落切换(换肤过程可能会卡顿)", 0),

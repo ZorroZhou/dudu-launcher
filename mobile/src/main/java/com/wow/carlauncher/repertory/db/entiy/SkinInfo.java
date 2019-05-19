@@ -2,7 +2,7 @@ package com.wow.carlauncher.repertory.db.entiy;
 
 import com.wow.carlauncher.repertory.db.manage.BaseEntity;
 import com.wow.carlauncher.repertory.db.manage.Table;
-import com.wow.carlauncher.view.activity.set.SetEnum;
+import com.wow.carlauncher.view.activity.set.setItem.SetEnum;
 
 @Table(name = "SkinInfo")
 public class SkinInfo extends BaseEntity implements SetEnum {

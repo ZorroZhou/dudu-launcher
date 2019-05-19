@@ -1,7 +1,6 @@
 package com.wow.carlauncher.view.activity.set.view;
 
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.view.WindowManager;
 
@@ -9,7 +8,6 @@ import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.SharedPreUtil;
-import com.wow.carlauncher.common.util.ThreadObj;
 import com.wow.carlauncher.common.util.ViewUtils;
 import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.ex.manage.baiduVoice.BaiduVoiceAssistant;
@@ -28,12 +26,17 @@ import com.wow.carlauncher.view.activity.set.event.SEventPromptShowRefresh;
 import com.wow.carlauncher.view.activity.set.event.SEventSetHomeFull;
 import com.wow.carlauncher.view.activity.set.listener.SetSingleSelectView;
 import com.wow.carlauncher.view.activity.set.listener.SetSwitchOnClickListener;
+import com.wow.carlauncher.view.activity.set.setItem.SetHomeNum;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 
@@ -162,23 +165,53 @@ public class SHomeView extends SetBaseView {
             }
         });
 
-        final String[] itemsNum = {
-                "2个", "3个", "4个", "5个"
-        };
-        sv_launcher_item_num.setSummary(SharedPreUtil.getInteger(CommonData.SDATA_LAUNCHER_ITEM_NUM, 3) + "个");
-        sv_launcher_item_num.setOnClickListener(v -> {
-            int select = SharedPreUtil.getInteger(CommonData.SDATA_LAUNCHER_ITEM_NUM, 3) - 2;
-            final ThreadObj<Integer> obj = new ThreadObj<>(select);
-            new AlertDialog.Builder(getContext()).setTitle("请选择首页的插件数量").setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    new AlertDialog.Builder(getContext()).setTitle("警告!").setNegativeButton("取消", null).setPositiveButton("确定", (dialog2, which2) -> {
-                        SharedPreUtil.saveInteger(CommonData.SDATA_LAUNCHER_ITEM_NUM, obj.getObj() + 2);
-                        sv_launcher_item_num.setSummary(itemsNum[obj.getObj()]);
-                        EventBus.getDefault().post(new LItemRefreshEvent());
-                    }).setMessage("是否确认更改,会导致桌面插件重新加载").show();
+        @SuppressLint("UseSparseArrays") final Map<Integer, SetHomeNum> setHomeNumMap = new HashMap<>();
+        setHomeNumMap.put(2, new SetHomeNum(2));
+        setHomeNumMap.put(3, new SetHomeNum(3));
+        setHomeNumMap.put(4, new SetHomeNum(4));
+        setHomeNumMap.put(5, new SetHomeNum(5));
+//        v -> {
+//            int select = SharedPreUtil.getInteger(CommonData.SDATA_LAUNCHER_ITEM_NUM, 3) - 2;
+//            final ThreadObj<Integer> obj = new ThreadObj<>(select);
+//            new AlertDialog.Builder(getContext()).setTitle("请选择首页的插件数量").setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    new AlertDialog.Builder(getContext()).setTitle("警告!").setNegativeButton("取消", null).setPositiveButton("确定", (dialog2, which2) -> {
+//                        SharedPreUtil.saveInteger(CommonData.SDATA_LAUNCHER_ITEM_NUM, obj.getObj() + 2);
+//                        sv_launcher_item_num.setSummary(itemsNum[obj.getObj()]);
+//                        EventBus.getDefault().post(new LItemRefreshEvent());
+//                    }).setMessage("是否确认更改,会导致桌面插件重新加载").show();
+//                }
+//            }).setSingleChoiceItems(itemsNum, select, (dialog12, which) -> obj.setObj(which)).show();
+//        }
+        SetHomeNum setHomeNum = setHomeNumMap.get(SharedPreUtil.getInteger(CommonData.SDATA_LAUNCHER_ITEM_NUM, 3));
+        if (setHomeNum == null) {
+            setHomeNum = setHomeNumMap.get(3);
+        }
+        sv_launcher_item_num.setSummary(setHomeNum.getName());
+        sv_launcher_item_num.setOnClickListener(new SetSingleSelectView<SetHomeNum>(getActivity(), "请选择首页的插件数量") {
+            @Override
+            public Collection<SetHomeNum> getAll() {
+                List<SetHomeNum> setHomeNums = new ArrayList<>(setHomeNumMap.values());
+                Collections.sort(setHomeNums, (o1, o2) -> o1.getNum() - o2.getNum());
+                return setHomeNums;
+            }
+
+            @Override
+            public SetHomeNum getCurr() {
+                SetHomeNum setHomeNum = setHomeNumMap.get(SharedPreUtil.getInteger(CommonData.SDATA_LAUNCHER_ITEM_NUM, 3));
+                if (setHomeNum == null) {
+                    setHomeNum = setHomeNumMap.get(3);
                 }
-            }).setSingleChoiceItems(itemsNum, select, (dialog12, which) -> obj.setObj(which)).show();
+                return setHomeNum;
+            }
+
+            @Override
+            public void onSelect(SetHomeNum s) {
+                SharedPreUtil.saveInteger(CommonData.SDATA_LAUNCHER_ITEM_NUM, s.getNum());
+                sv_launcher_item_num.setSummary(s.getName());
+                EventBus.getDefault().post(new LItemRefreshEvent());
+            }
         });
 
         sv_launcher_item_sort_re.setOnClickListener(v -> {

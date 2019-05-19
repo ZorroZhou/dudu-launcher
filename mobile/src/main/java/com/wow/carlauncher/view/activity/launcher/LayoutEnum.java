@@ -1,7 +1,7 @@
 package com.wow.carlauncher.view.activity.launcher;
 
 import com.wow.carlauncher.R;
-import com.wow.carlauncher.view.activity.set.SetEnum;
+import com.wow.carlauncher.view.activity.set.setItem.SetEnum;
 import com.wow.carlauncher.view.adapter.PicSelectAdapter;
 
 public enum LayoutEnum implements PicSelectAdapter.PicModel, SetEnum {

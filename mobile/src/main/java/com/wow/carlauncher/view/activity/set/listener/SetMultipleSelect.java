@@ -5,7 +5,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.View;
 
 import com.wow.carlauncher.common.util.CommonUtil;
-import com.wow.carlauncher.view.activity.set.SetEnum;
+import com.wow.carlauncher.view.activity.set.setItem.SetEnum;
 
 import java.util.ArrayList;
 import java.util.Collection;

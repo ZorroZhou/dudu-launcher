@@ -1,4 +1,4 @@
-package com.wow.carlauncher.view.activity.set;
+package com.wow.carlauncher.view.activity.set.setItem;
 
 import com.wow.carlauncher.ex.manage.appInfo.AppInfo;
 

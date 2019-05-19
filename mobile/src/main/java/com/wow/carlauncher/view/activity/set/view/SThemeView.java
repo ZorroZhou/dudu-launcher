@@ -158,10 +158,12 @@ public class SThemeView extends SetBaseView {
             PackageManager pManager = getContext().getPackageManager();
             //获取手机内所有应用
             List<PackageInfo> paklist = pManager.getInstalledPackages(0);
+            String sqlwhere = "";
             for (PackageInfo packageInfo : paklist) {
                 System.out.println(packageInfo.packageName);
                 if (packageInfo.packageName.startsWith("com.wow.carlauncher.theme")) {
                     System.out.println("这是我的主题");
+                    sqlwhere = sqlwhere + "'" + packageInfo.packageName + "',";
                     try {
                         String nameRes = getContext().getResources().getResourceEntryName(R.string.theme_name);
                         Resources resources = getContext().createPackageContext(packageInfo.packageName, 0).getResources();
@@ -184,6 +186,8 @@ public class SThemeView extends SetBaseView {
                     }
                 }
             }
+            sqlwhere = sqlwhere.substring(0, sqlwhere.length() - 1);
+            DatabaseManage.delete(SkinInfo.class, "mark not in (" + sqlwhere + ")");
         });
 
         TaskExecutor.self().run(this::loadData);
@@ -232,127 +236,4 @@ public class SThemeView extends SetBaseView {
     public void onEvent(EventSkinInstall event) {
         loadData();
     }
-
-
-//    private void searchSkin() {
-//        getActivity().showLoading("处理中");
-//        TaskExecutor.self().post(() -> {
-//            allSkinInfos.clear();
-//            String path;
-//            if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {// 优先保存到SD卡中
-//                path = Environment.getExternalStorageDirectory()
-//                        .getAbsolutePath() + File.separator + "duduLauncher/skin/";
-//            } else {// 如果SD卡不存在，就保存到本应用的目录下
-//                path = getContext().getFilesDir().getAbsolutePath()
-//                        + File.separator + "duduLauncher/skin/";
-//            }
-//            File pathFile = new File(path);
-//            String nameRes = getContext().getResources().getResourceEntryName(R.string.theme_name);
-//
-//            List<File> fileList = new ArrayList<>();
-//            if (pathFile.exists()) {
-//                File[] files = pathFile.listFiles();
-//                int i = 0;
-//                for (File file : files) {
-//                    if (i == 100) {
-//                        continue;
-//                    }
-//                    String filePath = file.getAbsolutePath();
-//                    System.out.println("filePath:" + filePath);
-//                    String skinPackageName = SkinCompatManager.getInstance().getSkinPackageName(filePath);
-//                    System.out.println("skinPackageName:" + skinPackageName);
-//                    if (CommonUtil.isNull(skinPackageName)) {
-//                        break;
-//                    }
-//                    Resources skinSkinResources = SkinCompatManager.getInstance().getSkinResources(filePath);
-//                    System.out.println("skinSkinResources:" + skinSkinResources);
-//                    if (skinSkinResources == null) {
-//                        break;
-//                    }
-//                    fileList.add(file);
-//                    i++;
-//                }
-//                //这里需要把文件复制到相关目录
-//                new AlertDialog.Builder(getActivity()).setTitle("找到" + fileList.size() + "个皮肤,是否继续导入(重复皮肤会被覆盖)").setNegativeButton("取消", null)
-//                        .setPositiveButton("继续", (dialog, which) -> {
-//                            addSkin(fileList);
-//                        }).show();
-//            } else {
-//                System.out.println("文件夹不存在???");
-//            }
-//            getActivity().hideLoading();
-//        });
-//    }
-
-//    private void addSkin(List<File> fileList) {
-//        getActivity().showLoading("导入中...");
-//        TaskExecutor.self().run(new Runnable() {
-//            @Override
-//            public void run() {
-//                String nameRes = getContext().getResources().getResourceEntryName(R.string.theme_name);
-//                int error = 0;
-//                for (File file : fileList) {
-//                    String filePath = file.getAbsolutePath();
-//                    String skinPackageName = SkinCompatManager.getInstance().getSkinPackageName(filePath);
-//                    if (CommonUtil.isNull(skinPackageName)) {
-//                        LogEx.e(this, "skinPackageName can not get");
-//                        error++;
-//                        break;
-//                    }
-//                    String path = copySkinFromToCache(file, skinPackageName);
-//                    if (CommonUtil.isNull(path)) {
-//                        LogEx.e(this, "copySkinFromToCache error");
-//                        error++;
-//                        break;
-//                    }
-//                    Resources skinSkinResources = SkinCompatManager.getInstance().getSkinResources(path);
-//                    if (skinSkinResources == null) {
-//                        LogEx.e(this, "skinSkinResources is null");
-//                        error++;
-//                        break;
-//                    }
-//                    int id = skinSkinResources.getIdentifier(nameRes, "string", skinPackageName);
-//                    SkinInfo skinInfo = DatabaseManage.getBean(SkinInfo.class, " mark='" + skinPackageName + "'");
-//                    if (skinInfo == null) {
-//                        DatabaseManage.insert(new SkinInfo()
-//                                .setMark(skinPackageName)
-//                                .setName(skinSkinResources.getString(id)));
-//                    } else {
-//                        DatabaseManage.update(new SkinInfo()
-//                                .setMark(skinPackageName)
-//                                .setName(skinSkinResources.getString(id)), " mark='" + skinPackageName + "'");
-//                    }
-//                }
-//                loadSkinInfos();
-//                getActivity().hideLoading();
-//                if (error == 0) {
-//                    ToastManage.self().show("导入成功");
-//                } else {
-//                    ToastManage.self().show(error + "个导入失败");
-//                }
-//            }
-//        });
-//    }
-//
-//    private String copySkinFromToCache(File file, String mark) {
-//        File skinPath = new File(SkinFileUtils.getSkinDir(getActivity()), mark);
-//        if (skinPath.exists()) {
-//            skinPath.delete();
-//        }
-//        try {
-//            InputStream is = new FileInputStream(file);
-//            OutputStream os = new FileOutputStream(skinPath);
-//            int byteCount;
-//            byte[] bytes = new byte[1024];
-//            while ((byteCount = is.read(bytes)) != -1) {
-//                os.write(bytes, 0, byteCount);
-//            }
-//            os.close();
-//            is.close();
-//            return skinPath.getAbsolutePath();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return null;
-//    }
 }

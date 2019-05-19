@@ -12,15 +12,20 @@ import com.wow.carlauncher.view.activity.set.SetBaseView;
 public abstract class SetNumSelectView extends SetBaseView implements View.OnClickListener, SeekBar.OnSeekBarChangeListener {
     private String title, suffix;
     private SeekBar seek_bar;
-    private Integer max, min;
+    private Integer max, min, jiange;
     private TextView tv_min, tv_max, tv_cur;
 
     public SetNumSelectView(SetActivity context, String title, String suffix, Integer min, Integer max) {
+        this(context, title, suffix, min, max, 1);
+    }
+
+    public SetNumSelectView(SetActivity context, String title, String suffix, Integer min, Integer max, Integer jiange) {
         super(context);
         this.title = title;
         this.suffix = suffix;
         this.max = max;
         this.min = min;
+        this.jiange = jiange;
     }
 
     @Override
@@ -101,8 +106,14 @@ public abstract class SetNumSelectView extends SetBaseView implements View.OnCli
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         if (fromUser) {
-            String ss = (seekBar.getProgress() + min) + suffix;
-            tv_cur.setText(ss);
+            if (progress % jiange == 0) {
+                String ss = (seekBar.getProgress() + min) + suffix;
+                tv_cur.setText(ss);
+            } else {
+                seekBar.setProgress(progress / jiange * jiange);
+                String ss = (seekBar.getProgress() + min) + suffix;
+                tv_cur.setText(ss);
+            }
         }
     }
 

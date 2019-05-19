@@ -9,15 +9,12 @@ import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfo;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
-import com.wow.carlauncher.view.activity.launcher.event.LItemRefreshEvent;
 import com.wow.carlauncher.view.activity.set.SetActivity;
 import com.wow.carlauncher.view.activity.set.SetBaseView;
 import com.wow.carlauncher.view.activity.set.listener.SetNumSelectView;
 import com.wow.carlauncher.view.activity.set.listener.SetSingleSelectView;
 import com.wow.carlauncher.view.activity.set.listener.SetSwitchOnClickListener;
 import com.wow.carlauncher.view.activity.set.setItem.SetAppInfo;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -106,7 +103,6 @@ public class SLoadAppView extends SetBaseView {
             public void onSelect(Integer t, String ss) {
                 SharedPreUtil.saveInteger(CommonData.SDATA_APP_AUTO_OPEN_BACK, t);
                 sv_back_yanchi.setSummary(ss);
-                EventBus.getDefault().post(new LItemRefreshEvent());
             }
         });
 

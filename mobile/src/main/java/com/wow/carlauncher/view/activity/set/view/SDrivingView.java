@@ -1,20 +1,18 @@
 package com.wow.carlauncher.view.activity.set.view;
 
 import android.annotation.SuppressLint;
-import android.support.v7.app.AlertDialog;
-import android.text.InputType;
-import android.widget.EditText;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.view.SetView;
-import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.view.activity.driving.AutoDrivingEnum;
 import com.wow.carlauncher.view.activity.driving.DrivingViewEnum;
+import com.wow.carlauncher.view.activity.launcher.event.LItemRefreshEvent;
 import com.wow.carlauncher.view.activity.set.SetActivity;
 import com.wow.carlauncher.view.activity.set.SetBaseView;
 import com.wow.carlauncher.view.activity.set.event.SAEventRefreshDriving;
+import com.wow.carlauncher.view.activity.set.listener.SetNumSelectView;
 import com.wow.carlauncher.view.activity.set.listener.SetSingleSelectView;
 import com.wow.carlauncher.view.activity.set.listener.SetSwitchOnClickListener;
 
@@ -25,7 +23,6 @@ import java.util.Collection;
 
 import butterknife.BindView;
 
-import static com.wow.carlauncher.common.CommonData.SDATA_AUTO_TO_DRIVING_TIME;
 import static com.wow.carlauncher.common.CommonData.SDATA_AUTO_TO_DRIVING_TYPE;
 import static com.wow.carlauncher.common.CommonData.SDATA_DRIVING_VIEW;
 
@@ -104,25 +101,19 @@ public class SDrivingView extends SetBaseView {
             }
         });
 
-        sv_auto_to_driving_time.setSummary(SharedPreUtil.getInteger(SDATA_AUTO_TO_DRIVING_TIME, 60) + "");
-        sv_auto_to_driving_time.setOnClickListener(v -> {
-            EditText editText = new EditText(getContext());
-            editText.setInputType(InputType.TYPE_CLASS_NUMBER);
-            new AlertDialog.Builder(getContext()).setTitle("请输入一个时间(单位秒,且大于15)").setNegativeButton("取消", null)
-                    .setPositiveButton("确定", (dialog, which) -> {
-                        try {
-                            int time = Integer.parseInt(editText.getText().toString());
-                            if (time < 15) {
-                                ToastManage.self().show("时间必须大于15秒");
-                                return;
-                            }
-                            SharedPreUtil.saveInteger(SDATA_AUTO_TO_DRIVING_TIME, time);
-                            sv_auto_to_driving_time.setSummary(time + "");
-                        } catch (Exception e) {
-                            SharedPreUtil.saveInteger(SDATA_AUTO_TO_DRIVING_TIME, 60);
-                        }
-                        dialog.dismiss();
-                    }).setView(editText).show();
+        sv_auto_to_driving_time.setSummary(SharedPreUtil.getInteger(CommonData.SDATA_AUTO_TO_DRIVING_TIME, 60) + "秒");
+        sv_auto_to_driving_time.setOnClickListener(new SetNumSelectView(getActivity(), "返回桌面的延迟时间", "秒", 20, 600, 10) {
+            @Override
+            public Integer getCurr() {
+                return SharedPreUtil.getInteger(CommonData.SDATA_AUTO_TO_DRIVING_TIME, 60);
+            }
+
+            @Override
+            public void onSelect(Integer t, String ss) {
+                SharedPreUtil.saveInteger(CommonData.SDATA_AUTO_TO_DRIVING_TIME, t);
+                sv_auto_to_driving_time.setSummary(ss);
+                EventBus.getDefault().post(new LItemRefreshEvent());
+            }
         });
     }
 }

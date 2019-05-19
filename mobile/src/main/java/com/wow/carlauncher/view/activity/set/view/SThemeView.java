@@ -92,10 +92,11 @@ public class SThemeView extends SetBaseView {
             }
 
             @Override
-            public void onSelect(SkinInfo select) {
+            public boolean onSelect(SkinInfo select) {
                 SharedPreUtil.saveString(SDATA_APP_SKIN_DAY, select.getMark());
                 sv_theme_day.setSummary(select.getName());
                 SkinManage.self().loadSkin();
+                return true;
             }
         });
 
@@ -117,10 +118,11 @@ public class SThemeView extends SetBaseView {
             }
 
             @Override
-            public void onSelect(SkinInfo select) {
+            public boolean onSelect(SkinInfo select) {
                 SharedPreUtil.saveString(SDATA_APP_SKIN_NIGHT, select.getMark());
                 sv_theme_night.setSummary(select.getName());
                 SkinManage.self().loadSkin();
+                return true;
             }
         });
 
@@ -138,9 +140,10 @@ public class SThemeView extends SetBaseView {
             }
 
             @Override
-            public void onSelect(SkinModel setEnum) {
+            public boolean onSelect(SkinModel setEnum) {
                 SharedPreUtil.saveInteger(SDATA_APP_SKIN, setEnum.getId());
                 sv_plugin_theme.setSummary(setEnum.getName());
+                return true;
             }
         });
 

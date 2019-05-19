@@ -133,10 +133,10 @@ public class SItemView extends SetBaseView {
             }
 
             @Override
-            public void onSelect(MusicControllerEnum setEnum) {
+            public boolean onSelect(MusicControllerEnum setEnum) {
                 SharedPreUtil.saveInteger(SDATA_MUSIC_CONTROLLER, setEnum.getId());
                 MusicPlugin.self().setController(setEnum);
-                sv_plugin_select.setSummary(setEnum.getName());
+                sv_plugin_select.setSummary(setEnum.getName()); return true;
             }
         });
 
@@ -180,10 +180,10 @@ public class SItemView extends SetBaseView {
             }
 
             @Override
-            public void onSelect(ConsoleProtoclEnum setEnum) {
+            public boolean onSelect(ConsoleProtoclEnum setEnum) {
                 SharedPreUtil.saveInteger(SDATA_CONSOLE_MARK, setEnum.getId());
                 sv_console.setSummary("控制协议：" + setEnum.getName());
-                ConsolePlugin.self().loadConsole();
+                ConsolePlugin.self().loadConsole(); return true;
             }
         });
     }

@@ -106,10 +106,11 @@ public class SHomeView extends SetBaseView {
             }
 
             @Override
-            public void onSelect(LayoutEnum setEnum) {
+            public boolean onSelect(LayoutEnum setEnum) {
                 SharedPreUtil.saveInteger(SDATA_LAUNCHER_LAYOUT, setEnum.getId());
                 sv_home_layout.setSummary(setEnum.getName());
                 EventBus.getDefault().post(new LLayoutRefreshEvent());
+                return true;
             }
         });
 
@@ -154,10 +155,11 @@ public class SHomeView extends SetBaseView {
             }
 
             @Override
-            public void onSelect(ItemTransformer setEnum) {
+            public boolean onSelect(ItemTransformer setEnum) {
                 SharedPreUtil.saveInteger(SDATA_LAUNCHER_ITEM_TRAN, setEnum.getId());
                 sv_item_tran.setSummary(setEnum.getName());
                 EventBus.getDefault().post(new LPageTransformerChangeEvent());
+                return true;
             }
         });
 

@@ -72,10 +72,11 @@ public class SDrivingView extends SetBaseView {
             }
 
             @Override
-            public void onSelect(DrivingViewEnum setEnum) {
+            public boolean onSelect(DrivingViewEnum setEnum) {
                 SharedPreUtil.saveInteger(SDATA_DRIVING_VIEW, setEnum.getId());
                 sv_driving_type.setSummary(setEnum.getName());
                 EventBus.getDefault().post(new SAEventRefreshDriving());
+                return true;
             }
         });
 
@@ -95,9 +96,10 @@ public class SDrivingView extends SetBaseView {
             }
 
             @Override
-            public void onSelect(AutoDrivingEnum setEnum) {
+            public boolean onSelect(AutoDrivingEnum setEnum) {
                 SharedPreUtil.saveInteger(SDATA_AUTO_TO_DRIVING_TYPE, setEnum.getId());
                 sv_auto_to_driving_type.setSummary(setEnum.getName());
+                return true;
             }
         });
 

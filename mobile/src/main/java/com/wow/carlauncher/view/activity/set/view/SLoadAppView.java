@@ -166,7 +166,7 @@ public class SLoadAppView extends SetBaseView {
         }
 
         @Override
-        public void onSelect(SetAppInfo t) {
+        public boolean onSelect(SetAppInfo t) {
             if (key.equals(SDATA_APP_AUTO_OPEN1)) {
                 setSTitle(SDATA_APP_AUTO_OPEN1, sv_open1);
             } else if (key.equals(SDATA_APP_AUTO_OPEN2)) {
@@ -176,6 +176,7 @@ public class SLoadAppView extends SetBaseView {
             } else if (key.equals(SDATA_APP_AUTO_OPEN4)) {
                 setSTitle(SDATA_APP_AUTO_OPEN4, sv_open4);
             }
+            return true;
         }
     }
 

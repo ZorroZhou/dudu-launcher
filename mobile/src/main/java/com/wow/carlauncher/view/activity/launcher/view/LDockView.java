@@ -244,7 +244,6 @@ public class LDockView extends BaseThemeView {
                 SharedPreUtil.saveString(SDATA_DOCK5_CLASS, "");
             }
         }
-        System.out.println("!!!!!!!!!");
         dockLabelShow(SharedPreUtil.getBoolean(CommonData.SDATA_LAUNCHER_DOCK_LABEL_SHOW, true));
     }
 
@@ -363,7 +362,6 @@ public class LDockView extends BaseThemeView {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final MAppInfoRefreshShowEvent event) {
         LogEx.d(this, "onEvent:MAppInfoRefreshShowEvent ");
-        System.out.println("!!!!!!!!!1");
         loadDock(true);
     }
 }

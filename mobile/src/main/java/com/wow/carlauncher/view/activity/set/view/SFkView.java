@@ -102,10 +102,11 @@ public class SFkView extends SetBaseView {
             }
 
             @Override
-            public void onSelect(FangkongProtocolEnum setEnum) {
+            public boolean onSelect(FangkongProtocolEnum setEnum) {
                 SharedPreUtil.saveInteger(SDATA_FANGKONG_CONTROLLER, setEnum.getId());
                 sv_fangkong_impl_select.setSummary(setEnum.getName());
                 EventBus.getDefault().post(new SAEventRefreshDriving());
+                return true;
             }
         });
 

@@ -201,14 +201,25 @@ public class SSystemView extends SetBaseView {
             }
 
             @Override
-            public void onSelect(SetAppInfo t) {
-                if (Build.VERSION.SDK_INT >= 23) {
-                    Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-                            Uri.parse("package:" + t));
-                    getActivity().startActivity(intent);
+            public boolean onSelect(SetAppInfo t) {
+                if (t != null) {
+                    if (Build.VERSION.SDK_INT >= 23) {
+                        Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                                Uri.parse("package:" + t));
+                        getActivity().startActivity(intent);
+                    } else {
+                        ToastManage.self().show("这个功能是安卓6.0以上才有的");
+                    }
+                    return true;
                 } else {
-                    ToastManage.self().show("这个功能是安卓6.0以上才有的");
+                    ToastManage.self().show("请选择一个APP");
+                    return false;
                 }
+            }
+
+            @Override
+            public String rightTitle() {
+                return "前往设置";
             }
         });
 

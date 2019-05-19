@@ -39,7 +39,7 @@ public abstract class SetSingleSelectView<T extends SetEnum> extends SetBaseView
 
     public abstract T getCurr();
 
-    public abstract void onSelect(T t);
+    public abstract boolean onSelect(T t);
 
     public boolean equals(T t1, T t2) {
         if (t1 == null || t2 == null) {
@@ -68,7 +68,7 @@ public abstract class SetSingleSelectView<T extends SetEnum> extends SetBaseView
         curr = getCurr();
         OnClickListener clickListener = v1 -> {
             Item<T> sel = allItem.get((int) v1.getTag());
-            if (!CommonUtil.equals(sel.data, curr)) {
+            if (!equals(sel.data, curr)) {
                 curr = sel.data;
                 for (Item<T> item : allItem) {
                     item.view.findViewById(R.id.iv_select).setVisibility(INVISIBLE);
@@ -118,8 +118,8 @@ public abstract class SetSingleSelectView<T extends SetEnum> extends SetBaseView
 
     @Override
     public boolean rightAction() {
-        if (!CommonUtil.equals(curr, getCurr())) {
-            onSelect(curr);
+        if (!equals(curr, getCurr())) {
+            return onSelect(curr);
         }
         return true;
     }

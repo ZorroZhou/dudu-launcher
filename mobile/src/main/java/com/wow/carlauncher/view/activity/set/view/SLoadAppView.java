@@ -1,22 +1,23 @@
 package com.wow.carlauncher.view.activity.set.view;
 
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
-import android.support.v7.app.AlertDialog;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
-import com.wow.carlauncher.common.util.ThreadObj;
 import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfo;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
+import com.wow.carlauncher.view.activity.launcher.event.LItemRefreshEvent;
 import com.wow.carlauncher.view.activity.set.SetActivity;
-import com.wow.carlauncher.view.activity.set.setItem.SetAppInfo;
 import com.wow.carlauncher.view.activity.set.SetBaseView;
+import com.wow.carlauncher.view.activity.set.listener.SetNumSelectView;
 import com.wow.carlauncher.view.activity.set.listener.SetSingleSelectView;
 import com.wow.carlauncher.view.activity.set.listener.SetSwitchOnClickListener;
+import com.wow.carlauncher.view.activity.set.setItem.SetAppInfo;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -94,21 +95,36 @@ public class SLoadAppView extends SetBaseView {
         sv_load_use.setOnValueChangeListener(new SetSwitchOnClickListener(CommonData.SDATA_APP_AUTO_OPEN_USE));
         sv_load_use.setChecked(SharedPreUtil.getBoolean(CommonData.SDATA_APP_AUTO_OPEN_USE, false));
 
-        sv_back_yanchi.setOnClickListener(v -> {
-            String[] items = {
-                    "1秒", "2秒", "3秒", "4秒", "5秒", "6秒", "7秒", "8秒", "9秒", "10秒"
-            };
-            int select = SharedPreUtil.getInteger(CommonData.SDATA_APP_AUTO_OPEN_BACK, CommonData.SDATA_APP_AUTO_OPEN_BACK_DF) - 1;
-            final ThreadObj<Integer> obj = new ThreadObj<>(select);
-            AlertDialog dialog = new AlertDialog.Builder(getContext()).setTitle("请选择APP").setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    SharedPreUtil.saveInteger(CommonData.SDATA_APP_AUTO_OPEN_BACK, obj.getObj() + 1);
-                    sv_back_yanchi.setSummary(SharedPreUtil.getInteger(CommonData.SDATA_APP_AUTO_OPEN_BACK, CommonData.SDATA_APP_AUTO_OPEN_BACK_DF) + "秒");
-                }
-            }).setSingleChoiceItems(items, select, (dialog1, which) -> obj.setObj(which)).show();
-        });
         sv_back_yanchi.setSummary(SharedPreUtil.getInteger(CommonData.SDATA_APP_AUTO_OPEN_BACK, CommonData.SDATA_APP_AUTO_OPEN_BACK_DF) + "秒");
+        sv_back_yanchi.setOnClickListener(new SetNumSelectView(getActivity(), "返回桌面的延迟时间", "秒", 1, 20) {
+            @Override
+            public Integer getCurr() {
+                return SharedPreUtil.getInteger(CommonData.SDATA_APP_AUTO_OPEN_BACK, CommonData.SDATA_APP_AUTO_OPEN_BACK_DF);
+            }
+
+            @Override
+            public void onSelect(Integer t, String ss) {
+                SharedPreUtil.saveInteger(CommonData.SDATA_APP_AUTO_OPEN_BACK, t);
+                sv_back_yanchi.setSummary(ss);
+                EventBus.getDefault().post(new LItemRefreshEvent());
+            }
+        });
+
+//        sv_back_yanchi.setOnClickListener(v -> {
+//            String[] items = {
+//                    "1秒", "2秒", "3秒", "4秒", "5秒", "6秒", "7秒", "8秒", "9秒", "10秒"
+//            };
+//            int select = SharedPreUtil.getInteger(CommonData.SDATA_APP_AUTO_OPEN_BACK, CommonData.SDATA_APP_AUTO_OPEN_BACK_DF) - 1;
+//            final ThreadObj<Integer> obj = new ThreadObj<>(select);
+//            AlertDialog dialog = new AlertDialog.Builder(getContext()).setTitle("请选择APP").setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    SharedPreUtil.saveInteger(CommonData.SDATA_APP_AUTO_OPEN_BACK, obj.getObj() + 1);
+//                    sv_back_yanchi.setSummary(SharedPreUtil.getInteger(CommonData.SDATA_APP_AUTO_OPEN_BACK, CommonData.SDATA_APP_AUTO_OPEN_BACK_DF) + "秒");
+//                }
+//            }).setSingleChoiceItems(items, select, (dialog1, which) -> obj.setObj(which)).show();
+//        });
+//        sv_back_yanchi.setSummary(SharedPreUtil.getInteger(CommonData.SDATA_APP_AUTO_OPEN_BACK, CommonData.SDATA_APP_AUTO_OPEN_BACK_DF) + "秒");
     }
 
     private void setSTitle(String key, SetView setView) {

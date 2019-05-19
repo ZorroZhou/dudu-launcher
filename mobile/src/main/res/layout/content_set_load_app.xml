@@ -36,7 +36,7 @@
             android:id="@+id/sv_back_yanchi"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            st:titleEx="返回桌面的延迟"
+            st:titleEx="返回桌面的延迟时间"
             st:type="buttonB" />
 
         <View style="@style/Interval" />

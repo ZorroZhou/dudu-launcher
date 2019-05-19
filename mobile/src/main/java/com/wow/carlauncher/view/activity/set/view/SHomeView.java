@@ -24,19 +24,15 @@ import com.wow.carlauncher.view.activity.set.SetActivity;
 import com.wow.carlauncher.view.activity.set.SetBaseView;
 import com.wow.carlauncher.view.activity.set.event.SEventPromptShowRefresh;
 import com.wow.carlauncher.view.activity.set.event.SEventSetHomeFull;
+import com.wow.carlauncher.view.activity.set.listener.SetNumSelectView;
 import com.wow.carlauncher.view.activity.set.listener.SetSingleSelectView;
 import com.wow.carlauncher.view.activity.set.listener.SetSwitchOnClickListener;
-import com.wow.carlauncher.view.activity.set.setItem.SetHomeNum;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 
@@ -165,51 +161,17 @@ public class SHomeView extends SetBaseView {
             }
         });
 
-        @SuppressLint("UseSparseArrays") final Map<Integer, SetHomeNum> setHomeNumMap = new HashMap<>();
-        setHomeNumMap.put(2, new SetHomeNum(2));
-        setHomeNumMap.put(3, new SetHomeNum(3));
-        setHomeNumMap.put(4, new SetHomeNum(4));
-        setHomeNumMap.put(5, new SetHomeNum(5));
-//        v -> {
-//            int select = SharedPreUtil.getInteger(CommonData.SDATA_LAUNCHER_ITEM_NUM, 3) - 2;
-//            final ThreadObj<Integer> obj = new ThreadObj<>(select);
-//            new AlertDialog.Builder(getContext()).setTitle("请选择首页的插件数量").setNegativeButton("取消", null).setPositiveButton("确定", new DialogInterface.OnClickListener() {
-//                @Override
-//                public void onClick(DialogInterface dialog, int which) {
-//                    new AlertDialog.Builder(getContext()).setTitle("警告!").setNegativeButton("取消", null).setPositiveButton("确定", (dialog2, which2) -> {
-//                        SharedPreUtil.saveInteger(CommonData.SDATA_LAUNCHER_ITEM_NUM, obj.getObj() + 2);
-//                        sv_launcher_item_num.setSummary(itemsNum[obj.getObj()]);
-//                        EventBus.getDefault().post(new LItemRefreshEvent());
-//                    }).setMessage("是否确认更改,会导致桌面插件重新加载").show();
-//                }
-//            }).setSingleChoiceItems(itemsNum, select, (dialog12, which) -> obj.setObj(which)).show();
-//        }
-        SetHomeNum setHomeNum = setHomeNumMap.get(SharedPreUtil.getInteger(CommonData.SDATA_LAUNCHER_ITEM_NUM, 3));
-        if (setHomeNum == null) {
-            setHomeNum = setHomeNumMap.get(3);
-        }
-        sv_launcher_item_num.setSummary(setHomeNum.getName());
-        sv_launcher_item_num.setOnClickListener(new SetSingleSelectView<SetHomeNum>(getActivity(), "请选择首页的插件数量") {
+        sv_launcher_item_num.setSummary(SharedPreUtil.getInteger(CommonData.SDATA_LAUNCHER_ITEM_NUM, 3) + "个");
+        sv_launcher_item_num.setOnClickListener(new SetNumSelectView(getActivity(), "请选择首页的插件数量", "个", 2, 5) {
             @Override
-            public Collection<SetHomeNum> getAll() {
-                List<SetHomeNum> setHomeNums = new ArrayList<>(setHomeNumMap.values());
-                Collections.sort(setHomeNums, (o1, o2) -> o1.getNum() - o2.getNum());
-                return setHomeNums;
+            public Integer getCurr() {
+                return SharedPreUtil.getInteger(CommonData.SDATA_LAUNCHER_ITEM_NUM, 3);
             }
 
             @Override
-            public SetHomeNum getCurr() {
-                SetHomeNum setHomeNum = setHomeNumMap.get(SharedPreUtil.getInteger(CommonData.SDATA_LAUNCHER_ITEM_NUM, 3));
-                if (setHomeNum == null) {
-                    setHomeNum = setHomeNumMap.get(3);
-                }
-                return setHomeNum;
-            }
-
-            @Override
-            public void onSelect(SetHomeNum s) {
-                SharedPreUtil.saveInteger(CommonData.SDATA_LAUNCHER_ITEM_NUM, s.getNum());
-                sv_launcher_item_num.setSummary(s.getName());
+            public void onSelect(Integer t, String ss) {
+                SharedPreUtil.saveInteger(CommonData.SDATA_LAUNCHER_ITEM_NUM, t);
+                sv_launcher_item_num.setSummary(ss);
                 EventBus.getDefault().post(new LItemRefreshEvent());
             }
         });

@@ -12,7 +12,6 @@ import com.wow.carlauncher.view.activity.set.SetActivity;
 import com.wow.carlauncher.view.activity.set.SetBaseView;
 import com.wow.carlauncher.view.activity.set.setItem.SetAppInfo;
 import com.wow.carlauncher.view.activity.set.setItem.SetEnum;
-import com.wow.carlauncher.view.activity.set.setItem.SetHomeNum;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -45,9 +44,6 @@ public abstract class SetSingleSelectView<T extends SetEnum> extends SetBaseView
     public boolean equals(T t1, T t2) {
         if (t1 == null || t2 == null) {
             return false;
-        }
-        if (t1 instanceof SetHomeNum && t2 instanceof SetHomeNum) {
-            return CommonUtil.equals(t1.getName(), t2.getName());
         }
         if (t1 instanceof SkinInfo && t2 instanceof SkinInfo) {
             return CommonUtil.equals(((SkinInfo) t1).getMark(), ((SkinInfo) t2).getMark());
@@ -107,7 +103,7 @@ public abstract class SetSingleSelectView<T extends SetEnum> extends SetBaseView
 
     @Override
     protected int getContent() {
-        return R.layout.content_set_select;
+        return R.layout.content_set_single_select;
     }
 
     @Override

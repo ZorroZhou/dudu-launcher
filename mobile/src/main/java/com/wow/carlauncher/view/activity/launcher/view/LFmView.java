@@ -1,20 +1,15 @@
 package com.wow.carlauncher.view.activity.launcher.view;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
-import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.view.activity.launcher.BaseThemeView;
 
 import butterknife.BindView;
@@ -39,74 +34,6 @@ public class LFmView extends BaseThemeView {
         return R.layout.content_l_fm;
     }
 
-//    @Override
-//    public void changedTheme(ThemeManage manage) {
-//        rl_base.setBackgroundResource(manage.getCurrentThemeRes(R.drawable.n_l_item1_bg));
-//        tv_title.setTextColor(manage.getCurrentThemeColor(R.color.l_title));
-//
-//        ll_play.getViewTreeObserver().addOnPreDrawListener(
-//                new ViewTreeObserver.OnPreDrawListener() {
-//                    @Override
-//                    public boolean onPreDraw() {
-//                        if (ll_play.getHeight() > 0) {
-//                            ll_play.getViewTreeObserver().removeOnPreDrawListener(this);
-//                            ViewGroup.LayoutParams lp = iv_play.getLayoutParams();
-//                            if (currentTheme == WHITE || currentTheme == BLACK) {
-//                                lp.width = ll_play.getHeight();
-//                                lp.height = ll_play.getHeight();
-//                            } else {
-//                                lp.width = (int) (ll_play.getHeight() * 0.55);
-//                                lp.height = (int) (ll_play.getHeight() * 0.55);
-//                            }
-//                            iv_play.setLayoutParams(lp);
-//                        }
-//                        return true;
-//                    }
-//                });
-//        refreshPlay();
-//        ll_prew.getViewTreeObserver().addOnPreDrawListener(
-//                new ViewTreeObserver.OnPreDrawListener() {
-//                    @Override
-//                    public boolean onPreDraw() {
-//                        if (ll_prew.getHeight() > 0) {
-//                            ll_prew.getViewTreeObserver().removeOnPreDrawListener(this);
-//                            ViewGroup.LayoutParams lp = iv_prew.getLayoutParams();
-//                            if (currentTheme == WHITE || currentTheme == BLACK) {
-//                                lp.width = (int) (ll_prew.getHeight() * 0.7);
-//                                lp.height = (int) (ll_prew.getHeight() * 0.7);
-//                            } else {
-//                                lp.width = (int) (ll_prew.getHeight() * 0.5);
-//                                lp.height = (int) (ll_prew.getHeight() * 0.5);
-//                            }
-//                            iv_prew.setLayoutParams(lp);
-//                        }
-//                        return true;
-//                    }
-//                });
-//        iv_prew.setImageResource(manage.getCurrentThemeRes(R.mipmap.ic_prev));
-//
-//
-//        ll_next.getViewTreeObserver().addOnPreDrawListener(
-//                new ViewTreeObserver.OnPreDrawListener() {
-//                    @Override
-//                    public boolean onPreDraw() {
-//                        if (ll_next.getHeight() > 0) {
-//                            ll_next.getViewTreeObserver().removeOnPreDrawListener(this);
-//                            ViewGroup.LayoutParams lp = iv_next.getLayoutParams();
-//                            if (currentTheme == WHITE || currentTheme == BLACK) {
-//                                lp.width = (int) (ll_next.getHeight() * 0.7);
-//                                lp.height = (int) (ll_next.getHeight() * 0.7);
-//                            } else {
-//                                lp.width = (int) (ll_next.getHeight() * 0.5);
-//                                lp.height = (int) (ll_next.getHeight() * 0.5);
-//                            }
-//                            iv_next.setLayoutParams(lp);
-//                        }
-//                        return true;
-//                    }
-//                });
-//        iv_next.setImageResource(manage.getCurrentThemeRes(R.mipmap.ic_next));
-//    }
 
     @BindView(R.id.ll_prew)
     LinearLayout ll_prew;
@@ -129,9 +56,6 @@ public class LFmView extends BaseThemeView {
     @BindView(R.id.iv_next)
     ImageView iv_next;
 
-    @BindView(R.id.fl_www)
-    FrameLayout fl_www;
-
     @BindView(R.id.rl_base)
     View rl_base;
 
@@ -139,28 +63,22 @@ public class LFmView extends BaseThemeView {
     public void clickEvent(View view) {
         try {
             switch (view.getId()) {
-                case R.id.rl_base: {
-                    break;
-                }
-                case R.id.ll_play: {
-//                Intent intent2 = new Intent("com.nwd.action.SL_WIDGET_COMMAND");
-//                intent2.putExtra("extra_SL_WIDGET_COMMAND", "switch_band");
-//                getContext().sendBroadcast(intent2);
-                    break;
-                }
-                case R.id.ll_next: {
-//                Intent intent2 = new Intent("com.nwd.action.SL_WIDGET_COMMAND");
-//                intent2.putExtra("extra_SL_WIDGET_COMMAND", "decrease");
-//                getContext().sendBroadcast(intent2);
-
-                    break;
-                }
-                case R.id.ll_prew: {
-//                Intent intent2 = new Intent("com.nwd.action.SL_WIDGET_COMMAND");
-//                intent2.putExtra("extra_SL_WIDGET_COMMAND", "increase");
-//                getContext().sendBroadcast(intent2);
-                    break;
-                }
+//                case R.id.rl_base: {
+//                    break;
+//                }
+//                case R.id.ll_play: {
+//                    speechControler.play();
+//                    break;
+//                }
+//                case R.id.ll_next: {
+//                    speechControler.playNext();
+//
+//                    break;
+//                }
+//                case R.id.ll_prew: {
+//                    speechControler.playPre();
+//                    break;
+//                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -257,33 +175,129 @@ public class LFmView extends BaseThemeView {
 //    }
     @Override
     protected void initView() {
-        BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                LogEx.d(this, "onReceive: " + intent.getAction());
-                if (intent.getExtras() != null) {
-                    for (String key : intent.getExtras().keySet()) {
-                        LogEx.d(this, key + ":" + intent.getExtras().get(key));
-                    }
-                }
+//        BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+//            @Override
+//            public void onReceive(Context context, Intent intent) {
+//                LogEx.d(this, "onReceive: " + intent.getAction());
+//                if (intent.getExtras() != null) {
+//                    for (String key : intent.getExtras().keySet()) {
+//                        LogEx.d(this, key + ":" + intent.getExtras().get(key));
+//                    }
+//                }
+//
+//                LogEx.d(this, "onReceive: ------------");
+//            }
+//        };
+//
+//        IntentFilter intentFilter = new IntentFilter();
+//        intentFilter.addAction("com.ximalaya.ting.android.ACTION_PLAY_START");
+//        intentFilter.addAction("com.ximalaya.ting.android.ACTION_PLAY_PAUSE");
+//        intentFilter.addAction("com.ximalaya.ting.android.ACTION_COMPLETE");
+//        intentFilter.addAction("com.ximalaya.ting.android.ACTION_CONTROL_PLAY_NEXT");
+//        intentFilter.addAction("com.ximalaya.ting.android.ACTION_CONTROL_PLAY_PRE");
+//        intentFilter.addAction("com.ximalaya.ting.android.ACTION_CONTROL_PLAY_NEXT_MAIN");
+//        intentFilter.addAction("com.ximalaya.ting.android.ACTION_CONTROL_PLAY_PRE_MAIN");
+//        intentFilter.addAction("com.ximalaya.ting.android.ACTION_CLOSE");
+//        intentFilter.addAction("com.ximalaya.ting.android.ACTION_CLOSE_MAIN");
+//        this.getContext().registerReceiver(broadcastReceiver, intentFilter);
 
-                LogEx.d(this, "onReceive: ------------");
-            }
-        };
-
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction("com.ximalaya.ting.android.ACTION_PLAY_START");
-        intentFilter.addAction("com.ximalaya.ting.android.ACTION_PLAY_PAUSE");
-        intentFilter.addAction("com.ximalaya.ting.android.ACTION_COMPLETE");
-        intentFilter.addAction("com.ximalaya.ting.android.ACTION_CONTROL_PLAY_NEXT");
-        intentFilter.addAction("com.ximalaya.ting.android.ACTION_CONTROL_PLAY_PRE");
-        intentFilter.addAction("com.ximalaya.ting.android.ACTION_CONTROL_PLAY_NEXT_MAIN");
-        intentFilter.addAction("com.ximalaya.ting.android.ACTION_CONTROL_PLAY_PRE_MAIN");
-        intentFilter.addAction("com.ximalaya.ting.android.ACTION_CLOSE");
-        intentFilter.addAction("com.ximalaya.ting.android.ACTION_CLOSE_MAIN");
-        this.getContext().registerReceiver(broadcastReceiver, intentFilter);
+//        speechControler = SpeechControler.getInstance(getContext());
+//        speechControler.init("c8a2b804a8d5b105ed8ccb33c7417c4a", "3278974c9911b8c6e79800423be56bec", "com.wow.carlauncher");
+//        speechControler.addAdsStatusListener(new IXmAdsStatusListener() {
+//            @Override
+//            public void onStartGetAdsInfo() {
+//
+//            }
+//
+//            @Override
+//            public void onGetAdsInfo(AdvertisList advertisList) {
+//
+//            }
+//
+//            @Override
+//            public void onAdsStartBuffering() {
+//
+//            }
+//
+//            @Override
+//            public void onAdsStopBuffering() {
+//
+//            }
+//
+//            @Override
+//            public void onStartPlayAds(Advertis advertis, int i) {
+//
+//            }
+//
+//            @Override
+//            public void onCompletePlayAds() {
+//
+//            }
+//
+//            @Override
+//            public void onError(int i, int i1) {
+//
+//            }
+//        });
+//        speechControler.addPlayerStatusListener(new IXmPlayerStatusListener() {
+//            @Override
+//            public void onPlayStart() {
+//
+//            }
+//
+//            @Override
+//            public void onPlayPause() {
+//
+//            }
+//
+//            @Override
+//            public void onPlayStop() {
+//
+//            }
+//
+//            @Override
+//            public void onSoundPlayComplete() {
+//
+//            }
+//
+//            @Override
+//            public void onSoundPrepared() {
+//
+//            }
+//
+//            @Override
+//            public void onSoundSwitch(PlayableModel playableModel, PlayableModel playableModel1) {
+//
+//            }
+//
+//            @Override
+//            public void onBufferingStart() {
+//
+//            }
+//
+//            @Override
+//            public void onBufferingStop() {
+//
+//            }
+//
+//            @Override
+//            public void onBufferProgress(int i) {
+//
+//            }
+//
+//            @Override
+//            public void onPlayProgress(int i, int i1) {
+//
+//            }
+//
+//            @Override
+//            public boolean onError(XmPlayerException e) {
+//                return false;
+//            }
+//        });
     }
 
+//    SpeechControler speechControler;
     private boolean run = false;
 
 }

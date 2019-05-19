@@ -72,7 +72,7 @@
             app:layout_heightPercent="20%h"
             app:layout_marginTopPercent="4%h">
 
-            <LinearLayout
+            <com.wow.carlauncher.common.theme.TLinearLayout
                 android:id="@+id/ll_prew"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -84,11 +84,14 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:contentDescription="@string/app_name"
-                    android:scaleType="fitCenter" />
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/theme_ic_prev"
+                    app:layout_heightPercent="70%h"
+                    app:layout_widthPercent="70%h" />
 
-            </LinearLayout>
+            </com.wow.carlauncher.common.theme.TLinearLayout>
 
-            <LinearLayout
+            <com.wow.carlauncher.common.theme.TLinearLayout
                 android:id="@+id/ll_play"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -100,10 +103,13 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:contentDescription="@string/app_name"
-                    android:scaleType="fitCenter" />
-            </LinearLayout>
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/theme_ic_play"
+                    app:layout_heightPercent="70%h"
+                    app:layout_widthPercent="70%h" />
+            </com.wow.carlauncher.common.theme.TLinearLayout>
 
-            <LinearLayout
+            <com.wow.carlauncher.common.theme.TLinearLayout
                 android:id="@+id/ll_next"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -115,14 +121,11 @@
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:contentDescription="@string/app_name"
-                    android:scaleType="fitCenter" />
-            </LinearLayout>
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/theme_ic_next"
+                    app:layout_heightPercent="70%h"
+                    app:layout_widthPercent="70%h" />
+            </com.wow.carlauncher.common.theme.TLinearLayout>
         </com.wow.carlauncher.common.theme.TLinearLayout>
-
-        <FrameLayout
-            android:id="@+id/fl_www"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_heightPercent="60%h" />
     </com.wow.carlauncher.common.theme.TLinearLayout>
 </com.wow.carlauncher.common.theme.TRelativeLayout>

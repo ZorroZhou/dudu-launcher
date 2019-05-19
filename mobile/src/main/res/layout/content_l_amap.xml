@@ -9,25 +9,6 @@
     android:orientation="vertical"
     tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry">
 
-    <com.wow.carlauncher.common.theme.TFrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_heightPercent="12%h">
-
-        <TextView
-            android:id="@+id/tv_title"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:includeFontPadding="false"
-            android:lines="1"
-            android:text="高德导航"
-            android:textColor="@color/theme_item_title"
-            app:layout_marginLeftPercent="25%h"
-            app:layout_marginRightPercent="25%h"
-            app:layout_textSizePercent="50%h" />
-    </com.wow.carlauncher.common.theme.TFrameLayout>
-
     <FrameLayout
         android:id="@+id/base_moren"
         android:layout_width="match_parent"
@@ -432,4 +413,23 @@
             app:layout_marginTopPercent="5%h" />
 
     </com.wow.carlauncher.common.theme.TRelativeLayout>
+
+    <com.wow.carlauncher.common.theme.TFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_heightPercent="12%h">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:lines="1"
+            android:text="高德导航"
+            android:textColor="@color/theme_item_title"
+            app:layout_marginLeftPercent="25%h"
+            app:layout_marginRightPercent="25%h"
+            app:layout_textSizePercent="50%h" />
+    </com.wow.carlauncher.common.theme.TFrameLayout>
 </com.wow.carlauncher.common.theme.TRelativeLayout>

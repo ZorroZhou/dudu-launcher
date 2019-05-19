@@ -84,5 +84,23 @@
             android:contentDescription="@string/app_name"
             android:src="@drawable/theme_prompt_set"
             app:layout_widthPercent="100%h" />
+
+        <com.wow.carlauncher.common.theme.TLinearLayout
+            android:id="@+id/ll_persion"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:visibility="gone"
+            app:layout_widthPercent="100%h">
+
+            <com.wow.carlauncher.common.view.CircleImageView
+                android:id="@+id/iv_persion"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:contentDescription="@string/app_name"
+                android:src="@mipmap/ic_launcher"
+                app:layout_heightPercent="55%h"
+                app:layout_widthPercent="55%h" />
+        </com.wow.carlauncher.common.theme.TLinearLayout>
     </com.wow.carlauncher.common.theme.TLinearLayout>
 </com.wow.carlauncher.common.theme.TFrameLayout>

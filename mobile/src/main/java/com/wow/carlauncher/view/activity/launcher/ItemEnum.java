@@ -7,6 +7,7 @@ import com.wow.carlauncher.view.activity.launcher.view.LAMapView;
 import com.wow.carlauncher.view.activity.launcher.view.LFmView;
 import com.wow.carlauncher.view.activity.launcher.view.LMusicView;
 import com.wow.carlauncher.view.activity.launcher.view.LObdView;
+import com.wow.carlauncher.view.activity.launcher.view.LPersionView;
 import com.wow.carlauncher.view.activity.launcher.view.LTaiyaView;
 import com.wow.carlauncher.view.activity.launcher.view.LTimeView;
 import com.wow.carlauncher.view.activity.launcher.view.LWeatherView;
@@ -19,7 +20,8 @@ public enum ItemEnum implements SetEnum {
     TAIYA("胎压", 4),
     OBD("车况", 5),
     TIME("时间", 6),
-    FM("收音机", 7);
+    FM("收音机", 7),
+    PERSION("个人中心", 8);
     private String name;
     private Integer id;
 
@@ -61,6 +63,8 @@ public enum ItemEnum implements SetEnum {
                 return OBD;
             case 7:
                 return FM;
+            case 8:
+                return PERSION;
         }
         throw new RuntimeException();
     }
@@ -81,6 +85,8 @@ public enum ItemEnum implements SetEnum {
                 return new LObdView(context);
             case FM:
                 return new LFmView(context);
+            case PERSION:
+                return new LPersionView(context);
         }
         return null;
     }

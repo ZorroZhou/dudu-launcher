@@ -10,14 +10,18 @@ import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.common.AppContext;
 import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.TaskExecutor;
+import com.wow.carlauncher.common.user.event.UEventLoginState;
 import com.wow.carlauncher.common.util.DateUtil;
 import com.wow.carlauncher.common.util.NetWorkUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
+import com.wow.carlauncher.ex.manage.ImageManage;
 import com.wow.carlauncher.ex.manage.location.LMEventNewLocation;
 import com.wow.carlauncher.ex.manage.skin.SkinManage;
 import com.wow.carlauncher.ex.manage.time.event.TMEvent3Second;
@@ -108,6 +112,12 @@ public class LPromptView extends BaseThemeView {
 
     @BindView(R.id.iv_wifi)
     ImageView iv_wifi;
+
+    @BindView(R.id.iv_persion)
+    ImageView iv_persion;
+
+    @BindView(R.id.ll_persion)
+    LinearLayout ll_persion;
 
     @OnClick(value = {R.id.iv_set, R.id.iv_wifi, R.id.iv_obd, R.id.tv_time, R.id.iv_carinfo_tp, R.id.iv_location, R.id.iv_mount})
     public void clickEvent(View view) {
@@ -228,6 +238,7 @@ public class LPromptView extends BaseThemeView {
             refreshTpState(ObdPlugin.self().getCurrentPObdEventCarTp());
             onEvent(ObdPlugin.self().getCurrentPObdEventCarTp());
             onEvent(new CEventShowUsbMount());
+            onEvent(new UEventLoginState().setLogin(AppContext.self().getLocalUser() != null));
         });
     }
 
@@ -309,6 +320,17 @@ public class LPromptView extends BaseThemeView {
             iv_mount.setVisibility(VISIBLE);
         } else {
             iv_mount.setVisibility(GONE);
+        }
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(UEventLoginState event) {
+        if (event.isLogin()) {
+            ImageManage.self().loadImage(AppContext.self().getLocalUser().getUserPic(), iv_persion);
+            ll_persion.setVisibility(VISIBLE);
+        } else {
+            ll_persion.setVisibility(GONE);
         }
     }
 }

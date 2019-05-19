@@ -145,6 +145,7 @@ public class SThemeView extends SetBaseView {
         });
 
         sv_load_skin.setOnClickListener(v -> {
+            getActivity().showLoading("处理中");
             PackageManager pManager = getContext().getPackageManager();
             //获取手机内所有应用
             List<PackageInfo> paklist = pManager.getInstalledPackages(0);
@@ -152,7 +153,6 @@ public class SThemeView extends SetBaseView {
             for (PackageInfo packageInfo : paklist) {
                 System.out.println(packageInfo.packageName);
                 if (packageInfo.packageName.startsWith("com.wow.carlauncher.theme")) {
-                    System.out.println("这是我的主题");
                     sqlwhere = sqlwhere + "'" + packageInfo.packageName + "',";
                     try {
                         String nameRes = getContext().getResources().getResourceEntryName(R.string.theme_name);
@@ -178,6 +178,7 @@ public class SThemeView extends SetBaseView {
             }
             sqlwhere = sqlwhere.substring(0, sqlwhere.length() - 1);
             DatabaseManage.delete(SkinInfo.class, "mark not in (" + sqlwhere + ")");
+            getActivity().hideLoading();
         });
 
         TaskExecutor.self().run(this::loadData);

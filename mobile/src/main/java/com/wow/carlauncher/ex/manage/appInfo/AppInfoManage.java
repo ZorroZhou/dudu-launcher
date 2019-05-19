@@ -60,6 +60,11 @@ public class AppInfoManage extends ContextEx {
 
     private PackageManager packageManager;
     private Map<String, AppInfo> allAppInfosMap;
+
+    public Map<String, AppInfo> getAllAppInfosMap() {
+        return allAppInfosMap;
+    }
+
     private Map<String, AppInfo> internalAppsInfoMap;
 
 

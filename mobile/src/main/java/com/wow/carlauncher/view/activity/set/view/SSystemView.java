@@ -21,6 +21,7 @@ import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.AppUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.view.SetView;
+import com.wow.carlauncher.ex.manage.appInfo.AppInfo;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.okHttp.ProgressResponseListener;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
@@ -28,9 +29,10 @@ import com.wow.carlauncher.repertory.server.CommonService;
 import com.wow.carlauncher.view.activity.AboutActivity;
 import com.wow.carlauncher.view.activity.launcher.event.LDockLabelShowChangeEvent;
 import com.wow.carlauncher.view.activity.set.SetActivity;
+import com.wow.carlauncher.view.activity.set.SetAppInfo;
 import com.wow.carlauncher.view.activity.set.SetBaseView;
 import com.wow.carlauncher.view.activity.set.listener.SetAppMultipleSelectOnClickListener;
-import com.wow.carlauncher.view.activity.set.listener.SetAppSingleSelectOnClickListener;
+import com.wow.carlauncher.view.activity.set.listener.SetSingleSelectView;
 import com.wow.carlauncher.view.activity.set.listener.SetSwitchOnClickListener;
 import com.wow.carlauncher.view.dialog.ProgressDialog;
 import com.wow.carlauncher.view.event.CEventShowUsbMount;
@@ -41,6 +43,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import butterknife.BindView;
 import okhttp3.Call;
@@ -179,14 +184,24 @@ public class SSystemView extends SetBaseView {
         });
         sv_launcher_show_dock_label.setChecked(SharedPreUtil.getBoolean(CommonData.SDATA_LAUNCHER_DOCK_LABEL_SHOW, true));
 
-        sv_sys_overlay.setOnClickListener(new SetAppSingleSelectOnClickListener(getContext()) {
+        sv_sys_overlay.setOnClickListener(new SetSingleSelectView<SetAppInfo>(getActivity(), "选择一个APP") {
             @Override
-            public String getCurr() {
+            public SetAppInfo getCurr() {
                 return null;
             }
 
             @Override
-            public void onSelect(String t) {
+            public Collection<SetAppInfo> getAll() {
+                Collection<SetAppInfo> temp = new ArrayList<>();
+                final List<AppInfo> appInfos = new ArrayList<>(AppInfoManage.self().getOtherAppInfos());
+                for (AppInfo appInfo : appInfos) {
+                    temp.add(new SetAppInfo(appInfo));
+                }
+                return temp;
+            }
+
+            @Override
+            public void onSelect(SetAppInfo t) {
                 if (Build.VERSION.SDK_INT >= 23) {
                     Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
                             Uri.parse("package:" + t));

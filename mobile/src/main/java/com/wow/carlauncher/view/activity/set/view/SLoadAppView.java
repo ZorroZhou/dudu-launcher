@@ -1,7 +1,6 @@
 package com.wow.carlauncher.view.activity.set.view;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 
@@ -11,11 +10,17 @@ import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.util.ThreadObj;
 import com.wow.carlauncher.common.view.SetView;
+import com.wow.carlauncher.ex.manage.appInfo.AppInfo;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.view.activity.set.SetActivity;
+import com.wow.carlauncher.view.activity.set.SetAppInfo;
 import com.wow.carlauncher.view.activity.set.SetBaseView;
-import com.wow.carlauncher.view.activity.set.listener.SetAppSingleSelectOnClickListener;
+import com.wow.carlauncher.view.activity.set.listener.SetSingleSelectView;
 import com.wow.carlauncher.view.activity.set.listener.SetSwitchOnClickListener;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -42,7 +47,7 @@ public class SLoadAppView extends SetBaseView {
 
     @Override
     public String getName() {
-        return "启动设置";
+        return "APP联动设置";
     }
 
     @BindView(R.id.sv_load_use)
@@ -56,19 +61,17 @@ public class SLoadAppView extends SetBaseView {
     SetView sv_open3;
     @BindView(R.id.sv_open4)
     SetView sv_open4;
-
     @BindView(R.id.sv_clear)
     SetView sv_clear;
-
     @BindView(R.id.sv_back_yanchi)
     SetView sv_back_yanchi;
 
     @Override
     protected void initView() {
-        sv_open1.setOnClickListener(new MyListener(getContext(), SDATA_APP_AUTO_OPEN1));
-        sv_open2.setOnClickListener(new MyListener(getContext(), SDATA_APP_AUTO_OPEN2));
-        sv_open3.setOnClickListener(new MyListener(getContext(), SDATA_APP_AUTO_OPEN3));
-        sv_open4.setOnClickListener(new MyListener(getContext(), SDATA_APP_AUTO_OPEN4));
+        sv_open1.setOnClickListener(new MyListener(getActivity(), SDATA_APP_AUTO_OPEN1));
+        sv_open2.setOnClickListener(new MyListener(getActivity(), SDATA_APP_AUTO_OPEN2));
+        sv_open3.setOnClickListener(new MyListener(getActivity(), SDATA_APP_AUTO_OPEN3));
+        sv_open4.setOnClickListener(new MyListener(getActivity(), SDATA_APP_AUTO_OPEN4));
 
         setSTitle(SDATA_APP_AUTO_OPEN1, sv_open1);
         setSTitle(SDATA_APP_AUTO_OPEN2, sv_open2);
@@ -117,22 +120,41 @@ public class SLoadAppView extends SetBaseView {
         }
     }
 
-    class MyListener extends SetAppSingleSelectOnClickListener {
-        public MyListener(Context context, String key) {
-            super(context);
+    class MyListener extends SetSingleSelectView<SetAppInfo> {
+        public MyListener(SetActivity context, String key) {
+            super(context, "选择一个APP");
             this.key = key;
         }
 
         private String key;
 
         @Override
-        public String getCurr() {
-            return SharedPreUtil.getString(key);
+        public Collection<SetAppInfo> getAll() {
+            Collection<SetAppInfo> temp = new ArrayList<>();
+            final List<AppInfo> appInfos = new ArrayList<>(AppInfoManage.self().getOtherAppInfos());
+            for (AppInfo appInfo : appInfos) {
+                temp.add(new SetAppInfo(appInfo));
+            }
+            return temp;
+        }
+
+        // return SharedPreUtil.getString(key);
+        @Override
+        public SetAppInfo getCurr() {
+            AppInfo appInfo = AppInfoManage.self().getAllAppInfosMap().get(SharedPreUtil.getString(key));
+            if (appInfo != null) {
+                return new SetAppInfo(appInfo);
+            }
+            return null;
         }
 
         @Override
-        public void onSelect(String t) {
-            SharedPreUtil.saveString(key, t);
+        public boolean equals(SetAppInfo t1, SetAppInfo t2) {
+            return t1 != null && t2 != null && CommonUtil.equals(t1.getAppInfo().clazz, t2.getAppInfo().clazz);
+        }
+
+        @Override
+        public void onSelect(SetAppInfo t) {
             if (key.equals(SDATA_APP_AUTO_OPEN1)) {
                 setSTitle(SDATA_APP_AUTO_OPEN1, sv_open1);
             } else if (key.equals(SDATA_APP_AUTO_OPEN2)) {
@@ -144,4 +166,5 @@ public class SLoadAppView extends SetBaseView {
             }
         }
     }
+
 }

@@ -19,7 +19,6 @@ public abstract class SetSingleSelectView<T extends SetEnum> extends SetBaseView
     private List<Item<T>> allItem;
 
     private LinearLayout content;
-    private TextView textView;
     private T curr;
     private String title;
 

@@ -29,11 +29,11 @@ import com.wow.carlauncher.repertory.server.CommonService;
 import com.wow.carlauncher.view.activity.AboutActivity;
 import com.wow.carlauncher.view.activity.launcher.event.LDockLabelShowChangeEvent;
 import com.wow.carlauncher.view.activity.set.SetActivity;
-import com.wow.carlauncher.view.activity.set.setItem.SetAppInfo;
 import com.wow.carlauncher.view.activity.set.SetBaseView;
-import com.wow.carlauncher.view.activity.set.listener.SetAppMultipleSelectOnClickListener;
+import com.wow.carlauncher.view.activity.set.listener.SetMultipleSelectView;
 import com.wow.carlauncher.view.activity.set.listener.SetSingleSelectView;
 import com.wow.carlauncher.view.activity.set.listener.SetSwitchOnClickListener;
+import com.wow.carlauncher.view.activity.set.setItem.SetAppInfo;
 import com.wow.carlauncher.view.dialog.ProgressDialog;
 import com.wow.carlauncher.view.event.CEventShowUsbMount;
 
@@ -178,16 +178,46 @@ public class SSystemView extends SetBaseView {
             }).setPositiveButton("关闭", null).show();
         });
 
-        sv_apps_hides.setOnClickListener(new SetAppMultipleSelectOnClickListener(getContext()) {
+        sv_apps_hides.setOnClickListener(new SetMultipleSelectView<SetAppInfo>(getActivity(), "选择要隐藏的APP") {
             @Override
-            public String getCurr() {
-                return SharedPreUtil.getString(CommonData.SDATA_HIDE_APPS);
+            public Collection<SetAppInfo> getAll() {
+                Collection<SetAppInfo> temp = new ArrayList<>();
+                final List<AppInfo> appInfos = new ArrayList<>(AppInfoManage.self().getOtherAppInfos());
+                for (AppInfo appInfo : appInfos) {
+                    temp.add(new SetAppInfo(appInfo));
+                }
+                return temp;
             }
 
             @Override
-            public void onSelect(String t) {
-                SharedPreUtil.saveString(CommonData.SDATA_HIDE_APPS, t);
+            public Collection<SetAppInfo> getCurr() {
+                List<SetAppInfo> list = new ArrayList<>();
+                String selectString = SharedPreUtil.getString(CommonData.SDATA_HIDE_APPS);
+                String[] clazzes = selectString.split(";");
+                if (clazzes.length > 0) {
+                    for (String clazz : clazzes) {
+                        AppInfo appInfo = AppInfoManage.self().getAppInfo(clazz.replace("[", "").replace("]", ""));
+                        if (appInfo != null) {
+                            list.add(new SetAppInfo(appInfo));
+                        }
+                    }
+                }
+                return list;
+            }
+
+            @Override
+            public boolean onSelect(Collection<SetAppInfo> t) {
+                List<SetAppInfo> list = new ArrayList<>(t);
+                String selectapp1 = "";
+                for (SetAppInfo setAppInfo : list) {
+                    selectapp1 = selectapp1 + "[" + setAppInfo.getAppInfo().clazz + "];";
+                }
+                if (selectapp1.endsWith(";")) {
+                    selectapp1 = selectapp1.substring(0, selectapp1.length() - 1);
+                }
+                SharedPreUtil.saveString(CommonData.SDATA_HIDE_APPS, selectapp1);
                 AppInfoManage.self().refreshShowApp();
+                return true;
             }
         });
 

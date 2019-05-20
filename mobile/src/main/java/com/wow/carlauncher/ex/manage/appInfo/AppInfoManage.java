@@ -111,7 +111,7 @@ public class AppInfoManage extends ContextEx {
         LogEx.d(this, "init time:" + (System.currentTimeMillis() - t1));
     }
 
-    private AppInfo getAppInfo(String app) {
+    public AppInfo getAppInfo(String app) {
         if (CommonUtil.isNull(app)) {
             return null;
         }

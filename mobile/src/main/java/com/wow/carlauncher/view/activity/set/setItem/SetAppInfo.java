@@ -17,4 +17,11 @@ public class SetAppInfo implements SetEnum {
     public String getName() {
         return appInfo.name + "(" + appInfo.clazz + ")";
     }
+
+    @Override
+    public String toString() {
+        return "SetAppInfo{" +
+                "appInfo=" + appInfo +
+                '}';
+    }
 }

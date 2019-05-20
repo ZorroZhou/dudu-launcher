@@ -188,7 +188,6 @@ public class SThemeView extends SetBaseView {
     }
 
     private void loadData() {
-
         allSkinInfos.clear();
         allOtherSkinInfos.clear();
         List<SkinInfo> temp = DatabaseManage.getAll(SkinInfo.class);
@@ -226,7 +225,7 @@ public class SThemeView extends SetBaseView {
         });
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void onEvent(EventSkinInstall event) {
         loadData();
     }

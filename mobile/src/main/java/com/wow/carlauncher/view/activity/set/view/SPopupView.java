@@ -7,13 +7,20 @@ import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.view.SetView;
+import com.wow.carlauncher.ex.manage.appInfo.AppInfo;
+import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.view.activity.set.SetActivity;
 import com.wow.carlauncher.view.activity.set.SetBaseView;
-import com.wow.carlauncher.view.activity.set.listener.SetAppMultipleSelectOnClickListener;
+import com.wow.carlauncher.view.activity.set.listener.SetMultipleSelectView;
 import com.wow.carlauncher.view.activity.set.listener.SetSwitchOnClickListener;
+import com.wow.carlauncher.view.activity.set.setItem.SetAppInfo;
 import com.wow.carlauncher.view.popup.PopupWin;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -78,15 +85,46 @@ public class SPopupView extends SetBaseView {
         sv_allow_popup_window.setOnValueChangeListener(new SetSwitchOnClickListener(CommonData.SDATA_POPUP_ALLOW_SHOW));
         sv_allow_popup_window.setChecked(SharedPreUtil.getBoolean(CommonData.SDATA_POPUP_ALLOW_SHOW, true));
 
-        sv_popup_window_showapps.setOnClickListener(new SetAppMultipleSelectOnClickListener(getContext()) {
+        sv_popup_window_showapps.setOnClickListener(new SetMultipleSelectView<SetAppInfo>(getActivity(), "选择APP") {
             @Override
-            public String getCurr() {
-                return SharedPreUtil.getString(CommonData.SDATA_POPUP_SHOW_APPS);
+            public Collection<SetAppInfo> getAll() {
+                Collection<SetAppInfo> temp = new ArrayList<>();
+                final List<AppInfo> appInfos = new ArrayList<>(AppInfoManage.self().getOtherAppInfos());
+                for (AppInfo appInfo : appInfos) {
+                    temp.add(new SetAppInfo(appInfo));
+                }
+                return temp;
             }
 
             @Override
-            public void onSelect(String t) {
-                SharedPreUtil.saveString(CommonData.SDATA_POPUP_SHOW_APPS, t);
+            public Collection<SetAppInfo> getCurr() {
+                List<SetAppInfo> list = new ArrayList<>();
+                String selectString = SharedPreUtil.getString(CommonData.SDATA_POPUP_SHOW_APPS);
+                String[] clazzes = selectString.split(";");
+                if (clazzes.length > 0) {
+                    for (String clazz : clazzes) {
+                        AppInfo appInfo = AppInfoManage.self().getAppInfo(clazz.replace("[", "").replace("]", ""));
+                        if (appInfo != null) {
+                            list.add(new SetAppInfo(appInfo));
+                        }
+                    }
+                }
+                return list;
+            }
+
+            @Override
+            public boolean onSelect(Collection<SetAppInfo> t) {
+                List<SetAppInfo> list = new ArrayList<>(t);
+                String selectapp1 = "";
+                for (SetAppInfo setAppInfo : list) {
+                    selectapp1 = selectapp1 + "[" + setAppInfo.getAppInfo().clazz + "];";
+                }
+                if (selectapp1.endsWith(";")) {
+                    selectapp1 = selectapp1.substring(0, selectapp1.length() - 1);
+                }
+                SharedPreUtil.saveString(CommonData.SDATA_POPUP_SHOW_APPS, selectapp1);
+                AppInfoManage.self().refreshShowApp();
+                return true;
             }
         });
 

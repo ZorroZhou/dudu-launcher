@@ -140,8 +140,7 @@ public class SSystemView extends SetBaseView {
             if (SharedPreUtil.getBoolean(CommonData.SDATA_ALLOW_DEBUG_APP, false)) {
                 type = 1;
             }
-
-            CommonService.getUpdate(2, (success, msg, appUpdate) -> {
+            CommonService.getUpdate(type, (success, msg, appUpdate) -> {
                 getActivity().hideLoading();
                 if (success == 0) {
                     if (AppUtil.getLocalVersion(getContext()) < appUpdate.getVersion()) {

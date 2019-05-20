@@ -92,7 +92,6 @@ public class SetActivity extends BaseActivity implements SetFrame {
     @BindView(R.id.btn_back)
     View btn_back;
 
-
     private Tencent mTencent;
 
     @Override
@@ -330,9 +329,6 @@ public class SetActivity extends BaseActivity implements SetFrame {
                     e.printStackTrace();
                     ToastManage.self().show("登陆失败:数据错误!");
                 }
-                //{"access_token":"F72D4071AFC79BA093A4A2CAE6A66545","expires_in":"7776000","openid":"063C55CF4D2682AB99AF299013630531","pay_token":"4C6F2192F952C2F7786390ED5C41352F","ret":"0","pf":"desktop_m_qq-10000144-android-2002-","pfkey":"da77473a10b765e298b3d34d57349565","auth_time":"1557991325082","page_type":"1","expires_time":1565767340312}
-                //LogEx.d(SetActivity.this, "登陆成功,openid:" + jsonResponse.get("openid"));
-                //{"ret":0,"msg":"","is_lost":0,"nickname":"Soap","gender":"男","province":"山东","city":"青岛","year":"1990","constellation":"","figureurl":"http:\/\/qzapp.qlogo.cn\/qzapp\/101580804\/063C55CF4D2682AB99AF299013630531\/30","figureurl_1":"http:\/\/qzapp.qlogo.cn\/qzapp\/101580804\/063C55CF4D2682AB99AF299013630531\/50","figureurl_2":"http:\/\/qzapp.qlogo.cn\/qzapp\/101580804\/063C55CF4D2682AB99AF299013630531\/100","figureurl_qq_1":"http:\/\/thirdqq.qlogo.cn\/g?b=oidb&k=PWXibek9f9IplfjTEX7m1tA&s=40","figureurl_qq_2":"http:\/\/thirdqq.qlogo.cn\/g?b=oidb&k=PWXibek9f9IplfjTEX7m1tA&s=100","figureurl_qq":"http:\/\/thirdqq.qlogo.cn\/g?b=oidb&k=PWXibek9f9IplfjTEX7m1tA&s=140","figureurl_type":"1","is_yellow_vip":"0","vip":"0","yellow_vip_level":"0","level":"0","is_yellow_year_vip":"0"}
             }
 
             @Override

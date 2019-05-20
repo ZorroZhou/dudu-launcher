@@ -91,6 +91,15 @@
             android:textSize="14sp" />
 
         <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/sv_update_receive_debug"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:titleEx="接收测试版本更新"
+            st:type="checkB" />
+
+        <View style="@style/Interval" />
+
+        <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_update"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

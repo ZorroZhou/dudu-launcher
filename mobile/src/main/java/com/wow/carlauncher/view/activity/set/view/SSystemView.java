@@ -102,6 +102,8 @@ public class SSystemView extends SetBaseView {
     @BindView(R.id.sv_show_mount)
     SetView sv_show_mount;
 
+    @BindView(R.id.sv_update_receive_debug)
+    SetView sv_update_receive_debug;
 
     private boolean showKey;
     private BroadcastReceiver nwdKeyTestReceiver = new BroadcastReceiver() {
@@ -115,6 +117,14 @@ public class SSystemView extends SetBaseView {
 
     @Override
     protected void initView() {
+        sv_update_receive_debug.setOnValueChangeListener(new SetSwitchOnClickListener(CommonData.SDATA_ALLOW_DEBUG_APP) {
+            @Override
+            public void newValue(boolean value) {
+                SharedPreUtil.saveBoolean(CommonData.SDATA_ALLOW_DEBUG_APP, value);
+            }
+        });
+        sv_update_receive_debug.setChecked(SharedPreUtil.getBoolean(CommonData.SDATA_ALLOW_DEBUG_APP, false));
+
         sv_show_mount.setOnValueChangeListener(new SetSwitchOnClickListener(CommonData.SDATA_SHOW_USB_MOUNT) {
             @Override
             public void newValue(boolean value) {
@@ -126,6 +136,11 @@ public class SSystemView extends SetBaseView {
 
         sv_update.setOnClickListener(v -> {
             getActivity().showLoading("请求中");
+            int type = 2;
+            if (SharedPreUtil.getBoolean(CommonData.SDATA_ALLOW_DEBUG_APP, false)) {
+                type = 1;
+            }
+
             CommonService.getUpdate(2, (success, msg, appUpdate) -> {
                 getActivity().hideLoading();
                 if (success == 0) {

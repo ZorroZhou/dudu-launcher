@@ -94,6 +94,8 @@
             android:id="@+id/sv_update_receive_debug"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            st:summary="@string/set_yes"
+            st:summary2="@string/set_no"
             st:titleEx="接收测试版本更新"
             st:type="checkB" />
 

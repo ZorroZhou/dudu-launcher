@@ -68,6 +68,7 @@ dependencies {
     //动画
     implementation 'com.ToxicBakery.viewpager.transforms:view-pager-transforms:2.0.24'
 
+//    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-21'
     //noinspection GradleDependency
     implementation 'com.jakewharton:butterknife:8.8.1'
     // skin-support 基础控件支持这里不能用新版本,新版本是给androidX准备的

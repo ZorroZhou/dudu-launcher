@@ -61,6 +61,7 @@ public class CommonData {
             ItemEnum.TAIYA,
             ItemEnum.TIME,
             ItemEnum.WEATHER,
+//            ItemEnum.XMLYFM,
 //            ItemEnum.PERSION
     };
     //所有OBD控制器
@@ -89,6 +90,9 @@ public class CommonData {
     public final static long DAY_MILL = 24 * HOUR_MILL;
 
     public static final int APP_WIDGET_HOST_ID = 0x200;
+
+    public static final int LAST_ACTIVITY_TYPE_MUSIC = 100;
+    public static final int LAST_ACTIVITY_TYPE_RADIO = 101;
 
     public static final String APP_WIDGET_AMAP_PLUGIN = "APP_WIDGET_AMAP_PLUGIN";
 
@@ -206,4 +210,8 @@ public class CommonData {
     public static final String SDATA_KUWO_LAST_MUSIC_NAME = "SDATA_KUWO_LAST_MUSIC_NAME";//
     public static final String SDATA_KUWO_LAST_MUSIC_ARTIST = "SDATA_KUWO_LAST_MUSIC_ARTIST";//
     public static final String SDATA_MUSIC_AUTO_RUN = "SDATA_MUSIC_AUTO_RUN";//自动播放音乐
+
+    public static final String SDATA_MY_FAV_RADIOS = "SDATA_MY_FAV_RADIOS";
+
+    public static final String SDATA_LAST_ACTIVITY_TYPE = "SDATA_LAST_ACTIVITY_TYPE";
 }

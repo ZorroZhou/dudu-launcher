@@ -26,6 +26,7 @@ import com.wow.carlauncher.ex.plugin.console.ConsolePlugin;
 import com.wow.carlauncher.ex.plugin.fk.FangkongPlugin;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
+import com.wow.carlauncher.ex.plugin.xmlyfm.XmlyfmPlugin;
 import com.wow.carlauncher.repertory.db.entiy.CoverTemp;
 import com.wow.carlauncher.repertory.db.entiy.SkinInfo;
 import com.wow.carlauncher.repertory.db.manage.DatabaseInfo;
@@ -160,6 +161,8 @@ public class AppContext {
         VoiceWin.self().init(app);
         //单独的速度插件
         SpeedManage.self().init(app);
+
+        XmlyfmPlugin.self().init(app);
 
         if (SharedPreUtil.getBoolean(CommonData.SDATA_USE_VA, false)) {
             BaiduVoiceAssistant.self().init(app);

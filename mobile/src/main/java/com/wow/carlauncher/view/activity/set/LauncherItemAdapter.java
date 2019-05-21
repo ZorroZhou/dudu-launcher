@@ -8,11 +8,11 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
-import com.wow.carlauncher.common.BaseAdapterEx;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.view.activity.launcher.ItemEnum;
 import com.wow.carlauncher.view.activity.launcher.ItemModel;
+import com.wow.carlauncher.view.base.BaseAdapterEx;
 
 import java.util.ArrayList;
 import java.util.Collections;

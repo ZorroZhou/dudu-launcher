@@ -5,6 +5,7 @@
     android:id="@+id/rl_base"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/theme_item_xmlyfm_bg"
     tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry">
 
     <com.wow.carlauncher.common.theme.TFrameLayout
@@ -19,15 +20,14 @@
             android:gravity="center"
             android:includeFontPadding="false"
             android:lines="1"
-            android:text="收音机"
+            android:text="喜马拉雅FM"
             android:textColor="@color/theme_item_title"
             app:layout_marginLeftPercent="25%h"
             app:layout_marginRightPercent="25%h"
             app:layout_textSizePercent="50%h" />
     </com.wow.carlauncher.common.theme.TFrameLayout>
 
-    <com.wow.carlauncher.common.theme.TLinearLayout
-        android:id="@+id/ll_msg"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -35,42 +35,74 @@
         app:layout_marginRightPercent="2%h"
         app:layout_marginTopPercent="12%h">
 
-        <com.wow.carlauncher.common.view.AutoMarqueeTextView
-            android:id="@+id/tv_music_title"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:ellipsize="marquee"
-            android:gravity="center"
-            android:includeFontPadding="false"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:singleLine="true"
-            android:text="FM97.0"
-            android:textColor="#697380"
-            app:layout_heightPercent="20%h"
-            app:layout_marginTopPercent="5%h"
-            app:layout_textSizePercent="15%h" />
 
-        <com.wow.carlauncher.common.view.AutoMarqueeTextView
+        <com.wow.carlauncher.common.theme.TLinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:ellipsize="marquee"
+            android:layout_weight="7"
             android:gravity="center"
-            android:includeFontPadding="false"
-            android:marqueeRepeatLimit="marquee_forever"
-            android:singleLine="true"
-            android:text="爱车94.0"
-            android:textColor="#697380"
-            app:layout_heightPercent="10%h"
-            app:layout_textSizePercent="6%h" />
+            android:orientation="vertical">
+
+            <com.wow.carlauncher.common.theme.TRelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_heightPercent="50%h">
+
+                <com.wow.carlauncher.common.view.CustomRoundAngleImageView
+                    android:id="@+id/iv_cover"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_centerInParent="true"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/theme_music_dcover"
+                    app:layout_heightPercent="100%h"
+                    app:layout_widthPercent="100%h"
+                    app:radius="6dp" />
+            </com.wow.carlauncher.common.theme.TRelativeLayout>
+
+            <com.wow.carlauncher.common.view.AutoMarqueeTextView
+                android:id="@+id/tv_name"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:ellipsize="marquee"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:singleLine="true"
+                android:text="FM广播"
+                android:textColor="@color/theme_music_title"
+                app:layout_heightPercent="15%h"
+                app:layout_marginTopPercent="6%h"
+                app:layout_textSizePercent="10%h" />
+
+            <TextView
+                android:id="@+id/tv_about"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:ellipsize="marquee"
+                android:focusable="false"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:singleLine="true"
+                android:text="作者"
+                android:textColor="@color/theme_music_singer"
+                app:layout_heightPercent="15%h"
+                app:layout_marginTopPercent="1%h"
+                app:layout_textSizePercent="8%h" />
+        </com.wow.carlauncher.common.theme.TLinearLayout>
+
 
         <com.wow.carlauncher.common.theme.TLinearLayout
             android:id="@+id/ll_controller"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_weight="3"
             android:gravity="center"
-            android:orientation="horizontal"
-            app:layout_heightPercent="20%h"
-            app:layout_marginTopPercent="4%h">
+            android:orientation="horizontal">
 
             <com.wow.carlauncher.common.theme.TLinearLayout
                 android:id="@+id/ll_prew"
@@ -127,5 +159,6 @@
                     app:layout_widthPercent="70%h" />
             </com.wow.carlauncher.common.theme.TLinearLayout>
         </com.wow.carlauncher.common.theme.TLinearLayout>
-    </com.wow.carlauncher.common.theme.TLinearLayout>
+    </LinearLayout>
+
 </com.wow.carlauncher.common.theme.TRelativeLayout>

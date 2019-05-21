@@ -1,7 +1,6 @@
 package com.wow.carlauncher.view.activity.set.listener;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
@@ -124,11 +123,9 @@ public abstract class SetSingleSelectView<T extends SetEnum> extends SetBaseView
 
 
     public static class SelectAdapter<T extends SetEnum> extends BaseAdapterEx<Item<T>> {
-        private LayoutInflater inflate;
 
         public SelectAdapter(Context context) {
             super(context);
-            inflate = LayoutInflater.from(context);
         }
 
         @Override

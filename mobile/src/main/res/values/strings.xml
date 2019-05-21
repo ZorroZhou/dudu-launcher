@@ -36,8 +36,12 @@
 
     <string name="launcher_tp">%1$s\n%2$.1f\n%3$d℃</string>
 
-    <string name="tag_key_launcher_all_all_item_theme">tag_key_launcher_all_all_item_theme</string>
-
+    <string name="pull_to_refresh_pull_label">下拉刷新</string>
+    <string name="pull_to_refresh_release_label">松开后刷新</string>
+    <string name="pull_to_refresh_refreshing_label">刷新\u2026</string>
+    <string name="pull_to_refresh_footer_release_label">松开后加载</string>
+    <string name="pull_to_refresh_footer_pull_label">上拉加载更多</string>
+    <string name="pull_to_refresh_footer_refreshing_label">加载中\u2026</string>
 
     <string name="theme_name">默认</string>
     <string name="theme_item_title_align">center</string>

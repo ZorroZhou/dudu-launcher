@@ -1,6 +1,7 @@
 package com.wow.carlauncher.view.base;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.widget.BaseAdapter;
 
 import java.util.ArrayList;
@@ -12,10 +13,12 @@ import java.util.List;
 public abstract class BaseAdapterEx<T> extends BaseAdapter {
     protected List<T> items;
     protected Context context;
+    protected LayoutInflater inflate;
 
     public BaseAdapterEx(Context context) {
         items = new ArrayList<T>();
         this.context = context;
+        this.inflate = LayoutInflater.from(context);
     }
 
     public void addItems(List<T> items) {

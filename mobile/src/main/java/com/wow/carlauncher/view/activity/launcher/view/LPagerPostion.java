@@ -4,12 +4,12 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.LinearLayout;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.ViewPagerOnPageChangeListener;
-import com.wow.carlauncher.common.theme.TView;
 import com.wow.carlauncher.common.util.ViewUtils;
 import com.wow.carlauncher.view.activity.launcher.BaseThemeView;
 
@@ -35,7 +35,7 @@ public class LPagerPostion extends BaseThemeView implements ViewPagerOnPageChang
     private int select = 0;
 
     public void loadPostion(int num) {
-        postionViews = new TView[num];
+        postionViews = new View[num];
 
         postion.removeAllViews();
 
@@ -43,11 +43,9 @@ public class LPagerPostion extends BaseThemeView implements ViewPagerOnPageChang
         //设置小圆点左右之间的间隔
         params.setMargins(10, 0, 10, 0);
         for (int i = 0; i < postionViews.length; i++) {
-            postionViews[i] = new TView(getContext());
+            postionViews[i] = View.inflate(getContext(), R.layout.content_l_postion_item, null);
             if (i == 0) {
                 postionViews[i].setBackgroundResource(R.drawable.theme_pager_postion_select);
-            } else {
-                postionViews[i].setBackgroundResource(R.drawable.theme_pager_postion);
             }
             postion.addView(postionViews[i], params);
         }
@@ -55,13 +53,13 @@ public class LPagerPostion extends BaseThemeView implements ViewPagerOnPageChang
         LogEx.d(this, "loadPostion: ");
     }
 
-    private TView[] postionViews;
+    private View[] postionViews;
 
     @Override
     public void onPageSelected(int i) {
         if (postionViews != null) {
             select = i;
-            for (TView post : postionViews) {
+            for (View post : postionViews) {
                 post.setBackgroundResource(R.drawable.theme_pager_postion);
             }
             if (select < postionViews.length) {

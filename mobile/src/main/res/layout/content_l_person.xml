@@ -5,40 +5,84 @@
     android:id="@+id/rl_base"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/theme_item_time_bg"
     android:orientation="vertical"
     tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry">
 
-    <FrameLayout
-        android:id="@+id/rl_moren"
+    <com.wow.carlauncher.common.theme.TFrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        app:layout_heightPercent="12%h">
 
-
-        <com.wow.carlauncher.common.theme.TRelativeLayout
+        <TextView
+            android:id="@+id/tv_title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            app:layout_marginLeftPercent="2%h"
-            app:layout_marginRightPercent="2%h">
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:lines="1"
+            android:text="个人中心"
+            android:textColor="@color/theme_item_title"
+            app:layout_marginLeftPercent="25%h"
+            app:layout_marginRightPercent="25%h"
+            app:layout_textSizePercent="50%h" />
+    </com.wow.carlauncher.common.theme.TFrameLayout>
 
+    <com.wow.carlauncher.common.theme.TLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_marginLeftPercent="2%h"
+        app:layout_marginRightPercent="2%h"
+        app:layout_marginTopPercent="2%h">
 
-            <com.wow.carlauncher.common.theme.TFrameLayout
-                android:id="@+id/fl_top2"
+        <com.wow.carlauncher.common.theme.TLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="7"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <com.wow.carlauncher.common.theme.TRelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                app:layout_heightPercent="12%h">
+                app:layout_heightPercent="55%h"
+                app:layout_marginTopPercent="10%h">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="5dp"
-                    android:gravity="center"
-                    android:includeFontPadding="false"
-                    android:lines="1"
-                    android:text="个人中心"
-                    android:textColor="#101933"
-                    app:layout_textSizePercent="50%h" />
-            </com.wow.carlauncher.common.theme.TFrameLayout>
-        </com.wow.carlauncher.common.theme.TRelativeLayout>
-    </FrameLayout>
+                <com.wow.carlauncher.common.view.CircleImageView
+                    android:id="@+id/iv_user_pic"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_centerInParent="true"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/theme_music_dcover"
+                    app:layout_heightPercent="100%h"
+                    app:layout_widthPercent="100%h" />
+            </com.wow.carlauncher.common.theme.TRelativeLayout>
+
+            <com.wow.carlauncher.common.view.AutoMarqueeTextView
+                android:id="@+id/tv_nickname"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:ellipsize="marquee"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:singleLine="true"
+                android:text="点击登录"
+                android:textColor="@color/theme_music_title"
+                app:layout_heightPercent="15%h"
+                app:layout_marginTopPercent="10%h"
+                app:layout_textSizePercent="10%h" />
+
+        </com.wow.carlauncher.common.theme.TLinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="3" />
+    </com.wow.carlauncher.common.theme.TLinearLayout>
 </com.wow.carlauncher.common.theme.TLinearLayout>

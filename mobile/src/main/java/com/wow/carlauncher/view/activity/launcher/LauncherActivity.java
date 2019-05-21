@@ -180,14 +180,7 @@ public class LauncherActivity extends Activity implements SkinManage.OnSkinChang
         //计算排序
         List<ItemModel> items = new ArrayList<>();
         for (ItemEnum item : CommonData.LAUNCHER_ITEMS) {
-            if (item.equals(ItemEnum.FM)) {
-                if (SharedPreUtil.getBoolean(CommonData.SDATA_LAUNCHER_ITEM_OPEN_ + item.getId(), false)) {
-                    items.add(new ItemModel(item,
-                            SharedPreUtil.getInteger(CommonData.SDATA_LAUNCHER_ITEM_SORT_ + item.getId(), item.getId()),
-                            SharedPreUtil.getBoolean(CommonData.SDATA_LAUNCHER_ITEM_OPEN_ + item.getId(), false)
-                    ));
-                }
-            } else if (SharedPreUtil.getBoolean(CommonData.SDATA_LAUNCHER_ITEM_OPEN_ + item.getId(), true)) {
+            if (SharedPreUtil.getBoolean(CommonData.SDATA_LAUNCHER_ITEM_OPEN_ + item.getId(), true)) {
                 items.add(new ItemModel(item,
                         SharedPreUtil.getInteger(CommonData.SDATA_LAUNCHER_ITEM_SORT_ + item.getId(), item.getId()),
                         SharedPreUtil.getBoolean(CommonData.SDATA_LAUNCHER_ITEM_OPEN_ + item.getId(), true)

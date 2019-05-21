@@ -167,6 +167,7 @@ public class SLoadAppView extends SetBaseView {
 
         @Override
         public boolean onSelect(SetAppInfo t) {
+            SharedPreUtil.saveString(key, t.getAppInfo().clazz);
             if (key.equals(SDATA_APP_AUTO_OPEN1)) {
                 setSTitle(SDATA_APP_AUTO_OPEN1, sv_open1);
             } else if (key.equals(SDATA_APP_AUTO_OPEN2)) {

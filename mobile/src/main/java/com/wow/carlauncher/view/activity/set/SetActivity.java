@@ -99,13 +99,15 @@ public class SetActivity extends BaseActivity implements SetFrame {
         setTitle("设置");
         hideTitle();
         setBaseViews = new ArrayList<>();
-        clickEvent(sg_theme);
+        removeAllAndAddSetView(new SThemeView(this));
 
         View.OnClickListener onClickListener = v -> {
             switch (v.getId()) {
                 case R.id.ll_user:
                     if (AppContext.self().getLocalUser() == null) {
                         login();
+                    } else {
+                        //removeAllAndAddSetView(new SPersionView(this));
                     }
                     break;
                 case R.id.set_content_back:
@@ -194,6 +196,8 @@ public class SetActivity extends BaseActivity implements SetFrame {
             tv_nickname.setText(AppContext.self().getLocalUser().getNickname());
             ImageManage.self().loadImage(AppContext.self().getLocalUser().getUserPic(), iv_user_pic);
         } else {
+            tv_nickname.setText("点击登录");
+            iv_user_pic.setImageResource(R.drawable.theme_music_dcover);
             loadQQOpen();
         }
     }
@@ -263,10 +267,12 @@ public class SetActivity extends BaseActivity implements SetFrame {
     }
 
     private void login() {
+        showLoading("处理中...");
         mTencent.login(SetActivity.this, "all", new IUiListener() {
 
             @Override
             public void onComplete(Object response) {
+                hideLoading();
                 JSONObject loginResponse = (JSONObject) response;
                 if (null == loginResponse || loginResponse.length() == 0) {
                     ToastManage.self().show("登陆失败:QQ互联授权失败1");
@@ -333,11 +339,13 @@ public class SetActivity extends BaseActivity implements SetFrame {
 
             @Override
             public void onError(UiError e) {
+                hideLoading();
                 ToastManage.self().show("登陆失败:" + e.errorMessage);
             }
 
             @Override
             public void onCancel() {
+                hideLoading();
                 ToastManage.self().show("登陆取消");
             }
         }, true);

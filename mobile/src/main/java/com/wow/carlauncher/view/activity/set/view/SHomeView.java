@@ -181,13 +181,8 @@ public class SHomeView extends SetBaseView {
         sv_launcher_item_sort_re.setOnClickListener(v -> {
             new AlertDialog.Builder(getContext()).setTitle("警告!").setNegativeButton("取消", null).setPositiveButton("确定", (dialog2, which2) -> {
                 for (ItemEnum item : CommonData.LAUNCHER_ITEMS) {
-                    if (item.equals(ItemEnum.FM)) {
-                        SharedPreUtil.saveInteger(CommonData.SDATA_LAUNCHER_ITEM_SORT_ + item.getId(), item.getId());
-                        SharedPreUtil.saveBoolean(CommonData.SDATA_LAUNCHER_ITEM_OPEN_ + item.getId(), false);
-                    } else {
-                        SharedPreUtil.saveInteger(CommonData.SDATA_LAUNCHER_ITEM_SORT_ + item.getId(), item.getId());
-                        SharedPreUtil.saveBoolean(CommonData.SDATA_LAUNCHER_ITEM_OPEN_ + item.getId(), true);
-                    }
+                    SharedPreUtil.saveInteger(CommonData.SDATA_LAUNCHER_ITEM_SORT_ + item.getId(), item.getId());
+                    SharedPreUtil.saveBoolean(CommonData.SDATA_LAUNCHER_ITEM_OPEN_ + item.getId(), true);
                 }
                 EventBus.getDefault().post(new LItemRefreshEvent());
             }).setMessage("是否确认更改,会导致桌面插件重新加载").show();

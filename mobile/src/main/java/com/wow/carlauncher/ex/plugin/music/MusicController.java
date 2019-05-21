@@ -28,4 +28,6 @@ public abstract class MusicController {
     public abstract String clazz();
 
     public abstract String name();
+
+
 }

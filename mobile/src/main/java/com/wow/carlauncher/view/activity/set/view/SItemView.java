@@ -85,6 +85,9 @@ public class SItemView extends SetBaseView {
     @BindView(R.id.sv_amap_xunhang)
     SetView sv_amap_xunhang;
 
+    @BindView(R.id.sv_music_auto_run)
+    SetView sv_music_auto_run;
+
     private AppWidgetHost appWidgetHost;
 
     @Override
@@ -104,6 +107,9 @@ public class SItemView extends SetBaseView {
 
         sv_use_navc_popup.setOnValueChangeListener(new SetSwitchOnClickListener(CommonData.SDATA_USE_NAVI_POP));
         sv_use_navc_popup.setChecked(SharedPreUtil.getBoolean(CommonData.SDATA_USE_NAVI_POP, false));
+
+        sv_music_auto_run.setOnValueChangeListener(new SetSwitchOnClickListener(CommonData.SDATA_MUSIC_AUTO_RUN));
+        sv_music_auto_run.setChecked(SharedPreUtil.getBoolean(CommonData.SDATA_MUSIC_AUTO_RUN, false));
 
 
         int amapPluginId = SharedPreUtil.getInteger(APP_WIDGET_AMAP_PLUGIN, 0);
@@ -136,7 +142,8 @@ public class SItemView extends SetBaseView {
             public boolean onSelect(MusicControllerEnum setEnum) {
                 SharedPreUtil.saveInteger(SDATA_MUSIC_CONTROLLER, setEnum.getId());
                 MusicPlugin.self().setController(setEnum);
-                sv_plugin_select.setSummary(setEnum.getName()); return true;
+                sv_plugin_select.setSummary(setEnum.getName());
+                return true;
             }
         });
 
@@ -183,7 +190,8 @@ public class SItemView extends SetBaseView {
             public boolean onSelect(ConsoleProtoclEnum setEnum) {
                 SharedPreUtil.saveInteger(SDATA_CONSOLE_MARK, setEnum.getId());
                 sv_console.setSummary("控制协议：" + setEnum.getName());
-                ConsolePlugin.self().loadConsole(); return true;
+                ConsolePlugin.self().loadConsole();
+                return true;
             }
         });
     }

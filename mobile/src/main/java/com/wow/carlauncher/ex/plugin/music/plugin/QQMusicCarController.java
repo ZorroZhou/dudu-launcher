@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.LrcAnalyze;
+import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.GsonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.manage.time.event.TMEventSecond;
@@ -54,6 +55,14 @@ public class QQMusicCarController extends MusicController {
         intent2.setClassName(PACKAGE_NAME, CLASS_NAME);
         intent2.setData(Uri.parse("qqmusiccar://asdasd?action=100"));
         context.sendBroadcast(intent2);
+
+        if (SharedPreUtil.getBoolean(CommonData.SDATA_MUSIC_AUTO_RUN, false)) {
+            TaskExecutor.self().run(() -> {
+                if (!run) {
+                    play();
+                }
+            }, 1000);
+        }
     }
 
     @Override

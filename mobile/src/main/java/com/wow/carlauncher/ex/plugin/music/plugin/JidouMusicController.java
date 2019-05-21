@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.view.KeyEvent;
 
+import com.wow.carlauncher.common.CommonData;
+import com.wow.carlauncher.common.TaskExecutor;
+import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.plugin.music.MusicController;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 
@@ -18,6 +21,9 @@ public class JidouMusicController extends MusicController {
         intentFilter.addAction("com.ijidou.card.music");
         this.context.registerReceiver(mReceiver, intentFilter);
 
+        if (SharedPreUtil.getBoolean(CommonData.SDATA_MUSIC_AUTO_RUN, false)) {
+            TaskExecutor.self().run(this::play, 1000);
+        }
     }
 
     @Override

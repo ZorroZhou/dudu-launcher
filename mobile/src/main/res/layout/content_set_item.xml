@@ -52,6 +52,17 @@
 
         <View style="@style/Interval" />
 
+        <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/sv_music_auto_run"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:summary="@string/set_yes"
+            st:summary2="@string/set_no"
+            st:titleEx="音乐自动播放,打开APP后,直接执行播放命令"
+            st:type="switchB" />
+
+        <View style="@style/Interval" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

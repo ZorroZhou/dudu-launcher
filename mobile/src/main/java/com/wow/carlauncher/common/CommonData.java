@@ -106,14 +106,11 @@ public class CommonData {
     //
     public static final int REQUEST_SELECT_AMAP_PLUGIN = 10004;
 
-    //-------------------------------Intent传输数据时使用的mark-startWakeUp-----------------------------------
-    //-------------------------------Intent传输数据时使用的mark-end-----------------------------------
-
-    //-------------------------------本地缓存使用的mark-startWakeUp-----------------------------------
+    //-------------------------------本地缓存使用的mark-start-----------------------------------
     //音乐播放器的控制器
     public static final String SDATA_MUSIC_CONTROLLER = "SDATA_MUSIC_CONTROLLER";
 
-    //-------------------------------方控设置相关-startWakeUp-----------------------------------
+    //-------------------------------方控设置相关-start-----------------------------------
     //方控的控制器
     public static final String SDATA_FANGKONG_CONTROLLER = "SDATA_FANGKONG_CONTROLLER";
     //方控的名称
@@ -122,7 +119,7 @@ public class CommonData {
     public static final String SDATA_FANGKONG_ADDRESS = "SDATA_FANGKONG_ADDRESS";
     //-------------------------------方控设置相关-end-----------------------------------
 
-    //-------------------------------OBD设置相关-startWakeUp-----------------------------------
+    //-------------------------------OBD设置相关-start-----------------------------------
     //OBD的控制器
     public static final String SDATA_OBD_CONTROLLER = "SDATA_OBD_CONTROLLER";
     //OBD的名称
@@ -204,4 +201,8 @@ public class CommonData {
     public static final String SDATA_AUTO_TO_DRIVING = "SDATA_AUTO_TO_DRIVING";//是否自动跳入驾驶界面
     public static final String SDATA_AUTO_TO_DRIVING_TYPE = "SDATA_AUTO_TO_DRIVING_TYPE";//是否自动跳入驾驶界面
     public static final String SDATA_AUTO_TO_DRIVING_TIME = "SDATA_AUTO_TO_DRIVING_TIME";//自动跳入驾驶界面时间
+
+    public static final String SDATA_KUWO_LAST_MUSIC_NAME = "SDATA_KUWO_LAST_MUSIC_NAME";//
+    public static final String SDATA_KUWO_LAST_MUSIC_ARTIST = "SDATA_KUWO_LAST_MUSIC_ARTIST";//
+    public static final String SDATA_MUSIC_AUTO_RUN = "SDATA_MUSIC_AUTO_RUN";//自动播放音乐
 }

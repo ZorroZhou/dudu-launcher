@@ -5,6 +5,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -273,6 +275,15 @@ public class SSystemView extends SetBaseView {
         });
 
         sv_sys_sdk.setOnClickListener(v -> ToastManage.self().show("当前SDK版本是" + Build.VERSION.SDK_INT));
+
+        try {
+            PackageManager packageManager = getActivity().getPackageManager();
+            PackageInfo packInfo = packageManager.getPackageInfo(getActivity().getPackageName(), 0);
+            sv_about.setSummary("当前版本:" + packInfo.versionName);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
 
         sv_about.setOnClickListener(v -> getActivity().startActivity(new Intent(getContext(), AboutActivity.class)));
     }

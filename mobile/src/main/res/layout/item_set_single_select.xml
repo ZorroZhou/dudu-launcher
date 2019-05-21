@@ -14,6 +14,7 @@
         android:layout_weight="1"
         android:ellipsize="end"
         android:gravity="center_vertical|left"
+        android:singleLine="true"
         android:textColor="#de000000"
         android:textSize="16sp"
         tools:ignore="RtlHardcoded" />

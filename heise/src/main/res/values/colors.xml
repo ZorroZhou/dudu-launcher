@@ -3,6 +3,8 @@
     <color name="theme_item_title">#eee</color>
     <color name="theme_music_title">#eee</color>
     <color name="theme_music_singer">#818796</color>
+    <color name="theme_xmlyfm_title">#eee</color>
+    <color name="theme_xmlyfm_about">#818796</color>
     <color name="theme_amap_xiansu">#eee</color>
     <color name="theme_amap_shengyulicheng">#eee</color>
     <color name="theme_weather_1_tianqi">#848a95</color>

@@ -6,6 +6,10 @@
     <color name="theme_music_title">#fbfbfb</color>
     <!--音乐歌手颜色,歌词-->
     <color name="theme_music_singer">#818796</color>
+    <!--音乐标题颜色-->
+    <color name="theme_xmlyfm_title">#fbfbfb</color>
+    <!--音乐歌手颜色,歌词-->
+    <color name="theme_xmlyfm_about">#818796</color>
     <!--限速文字颜色-->
     <color name="theme_amap_xiansu">#fbfbfb</color>
     <!--剩余里程文字颜色-->

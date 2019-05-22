@@ -45,6 +45,9 @@
     <color name="theme_music_title">#697380</color>
     <color name="theme_music_singer">#7b8391</color>
 
+    <color name="theme_xmlyfm_title">#697380</color>
+    <color name="theme_xmlyfm_about">#7b8391</color>
+
     <color name="theme_amap_xiansu">#333e54</color>
     <color name="theme_amap_shengyulicheng">#333e54</color>
 

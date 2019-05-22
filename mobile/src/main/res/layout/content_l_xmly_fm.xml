@@ -73,7 +73,7 @@
                 android:marqueeRepeatLimit="marquee_forever"
                 android:singleLine="true"
                 android:text="FM广播"
-                android:textColor="@color/theme_music_title"
+                android:textColor="@color/theme_xmlyfm_title"
                 app:layout_heightPercent="15%h"
                 app:layout_marginTopPercent="6%h"
                 app:layout_textSizePercent="10%h" />
@@ -89,7 +89,7 @@
                 android:marqueeRepeatLimit="marquee_forever"
                 android:singleLine="true"
                 android:text="欢迎收听"
-                android:textColor="@color/theme_music_singer"
+                android:textColor="@color/theme_xmlyfm_about"
                 app:layout_heightPercent="15%h"
                 app:layout_marginTopPercent="1%h"
                 app:layout_textSizePercent="8%h" />

@@ -20,25 +20,25 @@
             android:textColor="@color/colorPrimary"
             android:textSize="14sp" />
 
-        <com.wow.carlauncher.common.view.SetView
-            android:id="@+id/sv_save_trip"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            st:summary="@string/set_yes"
-            st:summary2="@string/set_no"
-            st:titleEx="允许上传行程"
-            st:type="switchB" />
+        <!--<com.wow.carlauncher.common.view.SetView-->
+        <!--android:id="@+id/sv_save_trip"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--st:summary="@string/set_yes"-->
+        <!--st:summary2="@string/set_no"-->
+        <!--st:titleEx="允许上传行程"-->
+        <!--st:type="switchB" />-->
 
-        <View style="@style/Interval" />
+        <!--<View style="@style/Interval" />-->
 
-        <com.wow.carlauncher.common.view.SetView
-            android:id="@+id/sv_my_trip"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            st:titleEx="我的行程"
-            st:type="buttonB" />
+        <!--<com.wow.carlauncher.common.view.SetView-->
+        <!--android:id="@+id/sv_my_trip"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--st:titleEx="我的行程"-->
+        <!--st:type="buttonB" />-->
 
-        <View style="@style/Interval" />
+        <!--<View style="@style/Interval" />-->
 
         <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_logout"

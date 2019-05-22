@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.assist.ImageSize;
 import com.tencent.connect.UserInfo;
+import com.tencent.connect.common.Constants;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
@@ -35,6 +36,7 @@ import com.wow.carlauncher.view.activity.set.view.SHomeView;
 import com.wow.carlauncher.view.activity.set.view.SItemView;
 import com.wow.carlauncher.view.activity.set.view.SLoadAppView;
 import com.wow.carlauncher.view.activity.set.view.SObdView;
+import com.wow.carlauncher.view.activity.set.view.SPersionView;
 import com.wow.carlauncher.view.activity.set.view.SPopupView;
 import com.wow.carlauncher.view.activity.set.view.SSystemView;
 import com.wow.carlauncher.view.activity.set.view.SThemeView;
@@ -97,15 +99,15 @@ public class SetActivity extends BaseActivity implements SetFrame {
         setTitle("设置");
         hideTitle();
         setBaseViews = new ArrayList<>();
-        removeAllAndAddSetView(new SThemeView(this));
-
+        removeAllAndAddSetView(new SPersionView(this));
+        
         View.OnClickListener onClickListener = v -> {
             switch (v.getId()) {
                 case R.id.ll_user:
                     if (AppContext.self().getLocalUser() == null) {
                         login();
                     } else {
-                        //removeAllAndAddSetView(new SPersionView(this));
+                        removeAllAndAddSetView(new SPersionView(this));
                     }
                     break;
                 case R.id.set_content_back:
@@ -272,91 +274,13 @@ public class SetActivity extends BaseActivity implements SetFrame {
 
     private void login() {
         showLoading("处理中...");
-        mTencent.login(SetActivity.this, "all", new IUiListener() {
-
-            @Override
-            public void onComplete(Object response) {
-                hideLoading();
-                JSONObject loginResponse = (JSONObject) response;
-                if (null == loginResponse || loginResponse.length() == 0) {
-                    ToastManage.self().show("登陆失败:QQ互联授权失败1");
-                    return;
-                }
-                try {
-                    int ret = loginResponse.getInt("ret");
-                    if (ret != 0) {
-                        ToastManage.self().show("登陆失败:QQ互联授权失败2");
-                        return;
-                    }
-                    IUiListener listener = new IUiListener() {
-                        @Override
-                        public void onComplete(final Object response) {
-                            try {
-                                JSONObject userInfoResponse = (JSONObject) response;
-                                if (userInfoResponse == null || userInfoResponse.length() == 0) {
-                                    ToastManage.self().show("登陆失败:QQ互联获取信息失败1");
-                                    return;
-                                }
-                                int ret = userInfoResponse.getInt("ret");
-                                if (ret != 0) {
-                                    ToastManage.self().show("登陆失败:QQ互联获取信息失败2");
-                                    return;
-                                }
-                                String accessToken = loginResponse.getString("access_token");
-                                final String nickname = userInfoResponse.getString("nickname");
-                                String userPic = userInfoResponse.getString("figureurl_qq_2");
-                                if (CommonUtil.isNull(userPic)) {
-                                    userPic = userInfoResponse.getString("figureurl_qq_1");
-                                }
-                                final String userPic2 = userPic;
-                                CommonService.login(accessToken, nickname, userPic, (success, msg, loginInfo) -> {
-                                    if (success == 0 && loginInfo.getId() != null && CommonUtil.isNotNull(loginInfo.getToken())) {
-                                        ToastManage.self().show("登陆成功");
-                                        AppContext.self().loginSuccess(new LocalUser().setUserId(loginInfo.getId()).setToken(loginInfo.getToken()).setUserPic(userPic2).setNickname(nickname));
-                                    } else {
-                                        ToastManage.self().show("登陆失败:" + msg);
-                                    }
-                                });
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                                ToastManage.self().show("登陆失败:数据错误!");
-                            }
-                        }
-
-                        @Override
-                        public void onCancel() {
-                            ToastManage.self().show("登陆取消");
-                        }
-
-                        @Override
-                        public void onError(UiError e) {
-                            ToastManage.self().show("登陆失败:" + e.errorMessage);
-                        }
-                    };
-                    UserInfo mInfo = new UserInfo(SetActivity.this, mTencent.getQQToken());
-                    mInfo.getUserInfo(listener);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    ToastManage.self().show("登陆失败:数据错误!");
-                }
-            }
-
-            @Override
-            public void onError(UiError e) {
-                hideLoading();
-                ToastManage.self().show("登陆失败:" + e.errorMessage);
-            }
-
-            @Override
-            public void onCancel() {
-                hideLoading();
-                ToastManage.self().show("登陆取消");
-            }
-        }, true);
+        mTencent.login(SetActivity.this, "all", loginListener, !mTencent.isQQInstalled(SetActivity.this));
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == RESULT_OK) {
+        if (requestCode == Constants.REQUEST_LOGIN) {
+            Tencent.onActivityResultData(requestCode, resultCode, data, loginListener);
+        } else if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case REQUEST_SELECT_AMAP_PLUGIN: {
                     int id = data.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, -1);
@@ -381,4 +305,86 @@ public class SetActivity extends BaseActivity implements SetFrame {
             }
         }
     }
+
+    private IUiListener loginListener = new IUiListener() {
+
+        @Override
+        public void onComplete(Object response) {
+            hideLoading();
+            JSONObject loginResponse = (JSONObject) response;
+            if (null == loginResponse || loginResponse.length() == 0) {
+                ToastManage.self().show("登陆失败:QQ互联授权失败1");
+                return;
+            }
+            try {
+                int ret = loginResponse.getInt("ret");
+                if (ret != 0) {
+                    ToastManage.self().show("登陆失败:QQ互联授权失败2");
+                    return;
+                }
+                IUiListener listener = new IUiListener() {
+                    @Override
+                    public void onComplete(final Object response) {
+                        try {
+                            JSONObject userInfoResponse = (JSONObject) response;
+                            if (userInfoResponse == null || userInfoResponse.length() == 0) {
+                                ToastManage.self().show("登陆失败:QQ互联获取信息失败1");
+                                return;
+                            }
+                            int ret = userInfoResponse.getInt("ret");
+                            if (ret != 0) {
+                                ToastManage.self().show("登陆失败:QQ互联获取信息失败2");
+                                return;
+                            }
+                            String accessToken = loginResponse.getString("access_token");
+                            final String nickname = userInfoResponse.getString("nickname");
+                            String userPic = userInfoResponse.getString("figureurl_qq_2");
+                            if (CommonUtil.isNull(userPic)) {
+                                userPic = userInfoResponse.getString("figureurl_qq_1");
+                            }
+                            final String userPic2 = userPic;
+                            CommonService.login(accessToken, nickname, userPic, (success, msg, loginInfo) -> {
+                                if (success == 0 && loginInfo.getId() != null && CommonUtil.isNotNull(loginInfo.getToken())) {
+                                    ToastManage.self().show("登陆成功");
+                                    AppContext.self().loginSuccess(new LocalUser().setUserId(loginInfo.getId()).setToken(loginInfo.getToken()).setUserPic(userPic2).setNickname(nickname));
+                                } else {
+                                    ToastManage.self().show("登陆失败:" + msg);
+                                }
+                            });
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            ToastManage.self().show("登陆失败:数据错误!");
+                        }
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        ToastManage.self().show("登陆取消");
+                    }
+
+                    @Override
+                    public void onError(UiError e) {
+                        ToastManage.self().show("登陆失败:" + e.errorMessage);
+                    }
+                };
+                UserInfo mInfo = new UserInfo(SetActivity.this, mTencent.getQQToken());
+                mInfo.getUserInfo(listener);
+            } catch (Exception e) {
+                e.printStackTrace();
+                ToastManage.self().show("登陆失败:数据错误!");
+            }
+        }
+
+        @Override
+        public void onError(UiError e) {
+            hideLoading();
+            ToastManage.self().show("登陆失败:" + e.errorMessage);
+        }
+
+        @Override
+        public void onCancel() {
+            hideLoading();
+            ToastManage.self().show("登陆取消");
+        }
+    };
 }

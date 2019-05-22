@@ -20,6 +20,7 @@ import com.wow.carlauncher.ex.plugin.music.plugin.NwdMusicController;
 import com.wow.carlauncher.ex.plugin.music.plugin.QQMusicCarController;
 import com.wow.carlauncher.ex.plugin.music.plugin.SystemMusicController;
 import com.wow.carlauncher.ex.plugin.music.plugin.ZXMusicController;
+import com.wow.carlauncher.ex.plugin.xmlyfm.XmlyfmPlugin;
 
 import static com.wow.carlauncher.common.CommonData.SDATA_MUSIC_CONTROLLER;
 
@@ -164,8 +165,16 @@ public class MusicPlugin extends ContextEx {
             if (playing) {
                 musicController.pause();
             } else {
+                XmlyfmPlugin.self().stop();
                 musicController.play();
             }
+        }
+    }
+
+    public void pause() {
+        LogEx.d(this, "pause:" + playing);
+        if (musicController != null) {
+            musicController.pause();
         }
     }
 

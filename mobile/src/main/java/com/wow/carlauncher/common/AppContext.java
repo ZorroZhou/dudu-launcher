@@ -3,6 +3,7 @@ package com.wow.carlauncher.common;
 import android.app.Application;
 import android.content.Intent;
 import android.os.Environment;
+import android.provider.Settings;
 
 import com.wow.carlauncher.CarLauncherApplication;
 import com.wow.carlauncher.common.user.LocalUser;
@@ -223,8 +224,12 @@ public class AppContext {
                     });
                 }
             }
+            try {
+                String deviceId = Settings.System.getString(app.getContentResolver(), Settings.System.ANDROID_ID);
+                CommonService.activate(deviceId);
+            } catch (Exception ignored) {
+            }
         });
-
     }
 
     public Application getApplication() {

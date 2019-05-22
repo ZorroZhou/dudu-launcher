@@ -3,12 +3,13 @@ package com.wow.carlauncher.ex.plugin.xmlyfm;
 import android.annotation.SuppressLint;
 import android.content.Context;
 
-import com.wow.carlauncher.common.GsonListType;
+import com.wow.carlauncher.common.gsonType.GsonBaseResultType;
 import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.util.GsonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.ContextEx;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
+import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest;
 import com.ximalaya.ting.android.opensdk.model.PlayableModel;
 import com.ximalaya.ting.android.opensdk.model.live.radio.Radio;
@@ -105,6 +106,7 @@ public class XmlyfmPlugin extends ContextEx {
         if (run) {
             xmPlayerManager.stop();
         } else {
+            MusicPlugin.self().pause();
             if (radios.size() < 1) {
                 ToastManage.self().show("请先添加");
                 return;
@@ -112,6 +114,10 @@ public class XmlyfmPlugin extends ContextEx {
             nowRadio = radios.get(0);
             play(nowRadio);
         }
+    }
+
+    public void stop() {
+        xmPlayerManager.stop();
     }
 
     public void next() {
@@ -159,7 +165,7 @@ public class XmlyfmPlugin extends ContextEx {
         setContext(context);
         radios = new ArrayList<>();
         try {
-            radios.addAll(GsonUtil.getGson().fromJson(SharedPreUtil.getString(SDATA_MY_FAV_RADIOS), new GsonListType(Radio.class)));
+            radios.addAll(GsonUtil.getGson().fromJson(SharedPreUtil.getString(SDATA_MY_FAV_RADIOS), new GsonBaseResultType(Radio.class)));
         } catch (Exception ignored) {
         }
 

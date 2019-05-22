@@ -1,15 +1,16 @@
-package com.wow.carlauncher.common;
+package com.wow.carlauncher.common.gsonType;
 
 import android.support.annotation.NonNull;
 
+import com.wow.carlauncher.repertory.server.response.BaseResult;
+
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.List;
 
-public class GsonListType implements ParameterizedType {
-    Class clazz;
+public class GsonBaseResultType implements ParameterizedType {
+    Type clazz;
 
-    public GsonListType(Class clz) {
+    public GsonBaseResultType(Type clz) {
         clazz = clz;
     }
 
@@ -22,7 +23,7 @@ public class GsonListType implements ParameterizedType {
     @NonNull
     @Override
     public Type getRawType() {
-        return List.class;
+        return BaseResult.class;
     }
 
     @Override

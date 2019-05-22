@@ -61,7 +61,7 @@ public class CommonData {
             ItemEnum.TAIYA,
             ItemEnum.TIME,
             ItemEnum.WEATHER,
-            ItemEnum.XMLYFM,
+            ItemEnum.XMLYFM
 //            ItemEnum.PERSION
     };
     //所有OBD控制器

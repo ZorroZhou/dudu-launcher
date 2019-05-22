@@ -5,7 +5,7 @@ import android.widget.FrameLayout;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.util.SharedPreUtil;
-import com.wow.carlauncher.view.activity.set.event.SAEventRefreshDriving;
+import com.wow.carlauncher.view.activity.set.event.SEventRefreshDriving;
 import com.wow.carlauncher.view.base.BaseActivity;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -71,7 +71,7 @@ public class DrivingActivity extends BaseActivity {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(final SAEventRefreshDriving event) {
+    public void onEvent(final SEventRefreshDriving event) {
         refreshView();
     }
 }

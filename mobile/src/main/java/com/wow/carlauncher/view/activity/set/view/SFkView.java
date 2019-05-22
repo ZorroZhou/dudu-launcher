@@ -18,7 +18,7 @@ import com.wow.carlauncher.ex.plugin.fk.FangkongPlugin;
 import com.wow.carlauncher.ex.plugin.fk.FangkongProtocolEnum;
 import com.wow.carlauncher.view.activity.set.SetActivity;
 import com.wow.carlauncher.view.activity.set.SetBaseView;
-import com.wow.carlauncher.view.activity.set.event.SAEventRefreshDriving;
+import com.wow.carlauncher.view.activity.set.event.SEventRefreshDriving;
 import com.wow.carlauncher.view.activity.set.listener.SetSingleSelectView;
 import com.wow.carlauncher.view.dialog.ListDialog;
 
@@ -105,7 +105,7 @@ public class SFkView extends SetBaseView {
             public boolean onSelect(FangkongProtocolEnum setEnum) {
                 SharedPreUtil.saveInteger(SDATA_FANGKONG_CONTROLLER, setEnum.getId());
                 sv_fangkong_impl_select.setSummary(setEnum.getName());
-                EventBus.getDefault().post(new SAEventRefreshDriving());
+                EventBus.getDefault().post(new SEventRefreshDriving());
                 return true;
             }
         });

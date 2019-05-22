@@ -11,34 +11,31 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
+        <LinearLayout
+            android:id="@+id/ll_user"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="16dp"
-            android:paddingTop="16dp"
-            android:text="个人中心"
-            android:textColor="@color/colorPrimary"
-            android:textSize="14sp" />
+            android:layout_height="160dp"
+            android:gravity="center"
+            android:orientation="vertical">
 
-        <!--<com.wow.carlauncher.common.view.SetView-->
-        <!--android:id="@+id/sv_save_trip"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--st:summary="@string/set_yes"-->
-        <!--st:summary2="@string/set_no"-->
-        <!--st:titleEx="允许上传行程"-->
-        <!--st:type="switchB" />-->
+            <com.wow.carlauncher.common.view.CircleImageView
+                android:id="@+id/iv_user_pic"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/theme_music_dcover" />
 
-        <!--<View style="@style/Interval" />-->
+            <TextView
+                android:id="@+id/tv_nickname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingTop="5dp"
+                android:text="点击登录"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp" />
+        </LinearLayout>
 
-        <!--<com.wow.carlauncher.common.view.SetView-->
-        <!--android:id="@+id/sv_my_trip"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--st:titleEx="我的行程"-->
-        <!--st:type="buttonB" />-->
-
-        <!--<View style="@style/Interval" />-->
+        <View style="@style/Interval" />
 
         <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_logout"

@@ -11,7 +11,7 @@ import com.wow.carlauncher.view.activity.driving.DrivingViewEnum;
 import com.wow.carlauncher.view.activity.launcher.event.LItemRefreshEvent;
 import com.wow.carlauncher.view.activity.set.SetActivity;
 import com.wow.carlauncher.view.activity.set.SetBaseView;
-import com.wow.carlauncher.view.activity.set.event.SAEventRefreshDriving;
+import com.wow.carlauncher.view.activity.set.event.SEventRefreshDriving;
 import com.wow.carlauncher.view.activity.set.listener.SetNumSelectView;
 import com.wow.carlauncher.view.activity.set.listener.SetSingleSelectView;
 import com.wow.carlauncher.view.activity.set.listener.SetSwitchOnClickListener;
@@ -79,7 +79,7 @@ public class SDrivingView extends SetBaseView {
             public boolean onSelect(DrivingViewEnum setEnum) {
                 SharedPreUtil.saveInteger(SDATA_DRIVING_VIEW, setEnum.getId());
                 sv_driving_type.setSummary(setEnum.getName());
-                EventBus.getDefault().post(new SAEventRefreshDriving());
+                EventBus.getDefault().post(new SEventRefreshDriving());
                 return true;
             }
         });

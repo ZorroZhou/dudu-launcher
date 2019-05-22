@@ -29,6 +29,7 @@ import com.wow.carlauncher.ex.manage.ImageManage;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.repertory.server.CommonService;
 import com.wow.carlauncher.view.activity.set.event.SEventRefreshAmapPlugin;
+import com.wow.carlauncher.view.activity.set.event.SEventRequestLogin;
 import com.wow.carlauncher.view.activity.set.view.SDevView;
 import com.wow.carlauncher.view.activity.set.view.SDrivingView;
 import com.wow.carlauncher.view.activity.set.view.SFkView;
@@ -71,15 +72,6 @@ public class SetActivity extends BaseActivity implements SetFrame {
     @BindView(R.id.set_content)
     FrameLayout set_content;
 
-    @BindView(R.id.ll_user)
-    LinearLayout ll_user;
-
-    @BindView(R.id.tv_nickname)
-    TextView tv_nickname;
-
-    @BindView(R.id.iv_user_pic)
-    ImageView iv_user_pic;
-
     @BindView(R.id.set_content_title)
     TextView set_content_title;
 
@@ -100,16 +92,9 @@ public class SetActivity extends BaseActivity implements SetFrame {
         hideTitle();
         setBaseViews = new ArrayList<>();
         removeAllAndAddSetView(new SPersionView(this));
-        
+
         View.OnClickListener onClickListener = v -> {
             switch (v.getId()) {
-                case R.id.ll_user:
-                    if (AppContext.self().getLocalUser() == null) {
-                        login();
-                    } else {
-                        removeAllAndAddSetView(new SPersionView(this));
-                    }
-                    break;
                 case R.id.set_content_back:
                     backSetView();
                     break;
@@ -127,15 +112,10 @@ public class SetActivity extends BaseActivity implements SetFrame {
             }
         };
 
-        ll_user.setOnClickListener(onClickListener);
         set_content_back.setOnClickListener(onClickListener);
         set_content_save.setOnClickListener(onClickListener);
         btn_back.setOnClickListener(onClickListener);
 
-        if (AppContext.self().getLocalUser() != null) {
-            tv_nickname.setText(AppContext.self().getLocalUser().getNickname());
-            ImageManage.self().loadImage(AppContext.self().getLocalUser().getUserPic(), iv_user_pic, new ImageSize(100, 100));
-        }
         TaskExecutor.self().run(() -> {
             if (AppContext.self().getLocalUser() == null) {
                 showLoading("加载中...");
@@ -145,10 +125,14 @@ public class SetActivity extends BaseActivity implements SetFrame {
         });
     }
 
-    @OnClick(value = {R.id.sg_dev, R.id.sg_item, R.id.sg_driving, R.id.sg_theme, R.id.sg_home, R.id.sg_obd, R.id.sg_fk, R.id.sg_load_app, R.id.sg_popup, R.id.sg_system_set})
+    @OnClick(value = {R.id.sg_dev, R.id.sg_persion, R.id.sg_item, R.id.sg_driving, R.id.sg_theme, R.id.sg_home, R.id.sg_obd, R.id.sg_fk, R.id.sg_load_app, R.id.sg_popup, R.id.sg_system_set})
     public void clickEvent(View view) {
         SetBaseView setView = null;
         switch (view.getId()) {
+            case R.id.sg_persion: {
+                setView = new SPersionView(this);
+                break;
+            }
             case R.id.sg_theme: {
                 setView = new SThemeView(this);
                 break;
@@ -196,17 +180,18 @@ public class SetActivity extends BaseActivity implements SetFrame {
     }
 
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void onEvent(UEventLoginState event) {
-        if (event.isLogin()) {
-            tv_nickname.setText(AppContext.self().getLocalUser().getNickname());
-            ImageManage.self().loadImage(AppContext.self().getLocalUser().getUserPic(), iv_user_pic);
-        } else {
-            tv_nickname.setText("点击登录");
-            iv_user_pic.setImageResource(R.drawable.theme_music_dcover);
+        if (!event.isLogin()) {
             loadQQOpen();
         }
     }
+
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void onEvent(SEventRequestLogin event) {
+        login();
+    }
+
 
     private List<SetBaseView> setBaseViews;
 
@@ -310,16 +295,17 @@ public class SetActivity extends BaseActivity implements SetFrame {
 
         @Override
         public void onComplete(Object response) {
-            hideLoading();
             JSONObject loginResponse = (JSONObject) response;
             if (null == loginResponse || loginResponse.length() == 0) {
                 ToastManage.self().show("登陆失败:QQ互联授权失败1");
+                hideLoading();
                 return;
             }
             try {
                 int ret = loginResponse.getInt("ret");
                 if (ret != 0) {
                     ToastManage.self().show("登陆失败:QQ互联授权失败2");
+                    hideLoading();
                     return;
                 }
                 IUiListener listener = new IUiListener() {
@@ -329,11 +315,13 @@ public class SetActivity extends BaseActivity implements SetFrame {
                             JSONObject userInfoResponse = (JSONObject) response;
                             if (userInfoResponse == null || userInfoResponse.length() == 0) {
                                 ToastManage.self().show("登陆失败:QQ互联获取信息失败1");
+                                hideLoading();
                                 return;
                             }
                             int ret = userInfoResponse.getInt("ret");
                             if (ret != 0) {
                                 ToastManage.self().show("登陆失败:QQ互联获取信息失败2");
+                                hideLoading();
                                 return;
                             }
                             String accessToken = loginResponse.getString("access_token");
@@ -348,22 +336,27 @@ public class SetActivity extends BaseActivity implements SetFrame {
                                     ToastManage.self().show("登陆成功");
                                     AppContext.self().loginSuccess(new LocalUser().setUserId(loginInfo.getId()).setToken(loginInfo.getToken()).setUserPic(userPic2).setNickname(nickname));
                                 } else {
+                                    hideLoading();
                                     ToastManage.self().show("登陆失败:" + msg);
                                 }
+                                hideLoading();
                             });
                         } catch (Exception e) {
                             e.printStackTrace();
+                            hideLoading();
                             ToastManage.self().show("登陆失败:数据错误!");
                         }
                     }
 
                     @Override
                     public void onCancel() {
+                        hideLoading();
                         ToastManage.self().show("登陆取消");
                     }
 
                     @Override
                     public void onError(UiError e) {
+                        hideLoading();
                         ToastManage.self().show("登陆失败:" + e.errorMessage);
                     }
                 };
@@ -372,6 +365,7 @@ public class SetActivity extends BaseActivity implements SetFrame {
             } catch (Exception e) {
                 e.printStackTrace();
                 ToastManage.self().show("登陆失败:数据错误!");
+                hideLoading();
             }
         }
 

@@ -8,179 +8,184 @@
     android:orientation="horizontal"
     tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry">
 
-    <com.zhy.android.percent.support.PercentFrameLayout
+    <FrameLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="3">
 
-        <ScrollView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/white"
-                android:orientation="vertical">
+                android:layout_height="45dp"
+                android:background="@drawable/set_view_top_bg"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="设置"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/btn_back"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_alignParentLeft="true"
+                    android:clickable="true"
+                    android:contentDescription="@string/app_name"
+                    android:focusable="true"
+                    android:padding="10dp"
+                    android:src="@mipmap/ic_back2" />
+
+            </RelativeLayout>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
 
                 <LinearLayout
-                    android:id="@+id/ll_user"
                     android:layout_width="match_parent"
-                    android:layout_height="160dp"
-                    android:gravity="center"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white"
                     android:orientation="vertical">
 
-                    <com.wow.carlauncher.common.view.CircleImageView
-                        android:id="@+id/iv_user_pic"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:src="@drawable/theme_music_dcover" />
-
-                    <TextView
-                        android:id="@+id/tv_nickname"
+                    <com.wow.carlauncher.common.view.SetView
+                        android:id="@+id/sg_persion"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:paddingTop="5dp"
-                        android:text="点击登录"
+                        app:titleEx="个人中心"
+                        app:type="buttonB" />
+
+                    <View style="@style/Interval" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="16dp"
+                        android:paddingTop="16dp"
+                        android:text="常用设置"
                         android:textColor="@color/colorPrimary"
                         android:textSize="14sp" />
+
+                    <com.wow.carlauncher.common.view.SetView
+                        android:id="@+id/sg_theme"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:titleEx="主题设置"
+                        app:type="buttonB" />
+
+                    <View style="@style/Interval" />
+
+                    <com.wow.carlauncher.common.view.SetView
+                        android:id="@+id/sg_home"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:titleEx="首页"
+                        app:type="buttonB" />
+
+                    <View style="@style/Interval" />
+
+                    <com.wow.carlauncher.common.view.SetView
+                        android:id="@+id/sg_item"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:titleEx="插件设置"
+                        app:type="buttonB" />
+
+                    <View style="@style/Interval" />
+
+                    <com.wow.carlauncher.common.view.SetView
+                        android:id="@+id/sg_load_app"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:titleEx="APP联动启动"
+                        app:type="buttonB" />
+
+                    <View style="@style/Interval" />
+
+                    <com.wow.carlauncher.common.view.SetView
+                        android:id="@+id/sg_driving"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:titleEx="驾驶界面"
+                        app:type="buttonB" />
+
+                    <View style="@style/Interval" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="16dp"
+                        android:paddingTop="16dp"
+                        android:text="蓝牙设置"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="14sp" />
+
+                    <com.wow.carlauncher.common.view.SetView
+                        android:id="@+id/sg_obd"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:titleEx="OBD设置"
+                        app:type="buttonB" />
+
+                    <View style="@style/Interval" />
+
+                    <com.wow.carlauncher.common.view.SetView
+                        android:id="@+id/sg_fk"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:titleEx="方控设置"
+                        app:type="buttonB" />
+
+                    <View style="@style/Interval" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="16dp"
+                        android:paddingTop="16dp"
+                        android:text="其他设置"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="14sp" />
+
+                    <com.wow.carlauncher.common.view.SetView
+                        android:id="@+id/sg_popup"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:titleEx="悬浮窗"
+                        app:type="buttonB" />
+
+                    <View style="@style/Interval" />
+
+                    <com.wow.carlauncher.common.view.SetView
+                        android:id="@+id/sg_system_set"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:titleEx="系统"
+                        app:type="buttonB" />
+
+                    <View style="@style/Interval" />
+
+                    <com.wow.carlauncher.common.view.SetView
+                        android:id="@+id/sg_dev"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        app:titleEx="测试"
+                        app:type="buttonB" />
+
+                    <View style="@style/Interval" />
                 </LinearLayout>
-
-                <View style="@style/Interval" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="16dp"
-                    android:paddingTop="16dp"
-                    android:text="常用设置"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="14sp" />
-
-                <com.wow.carlauncher.common.view.SetView
-                    android:id="@+id/sg_theme"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:titleEx="主题设置"
-                    app:type="buttonB" />
-
-                <View style="@style/Interval" />
-
-                <com.wow.carlauncher.common.view.SetView
-                    android:id="@+id/sg_home"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:titleEx="首页"
-                    app:type="buttonB" />
-
-                <View style="@style/Interval" />
-
-                <com.wow.carlauncher.common.view.SetView
-                    android:id="@+id/sg_item"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:titleEx="插件设置"
-                    app:type="buttonB" />
-
-                <View style="@style/Interval" />
-
-                <com.wow.carlauncher.common.view.SetView
-                    android:id="@+id/sg_load_app"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:titleEx="APP联动启动"
-                    app:type="buttonB" />
-
-                <View style="@style/Interval" />
-
-                <com.wow.carlauncher.common.view.SetView
-                    android:id="@+id/sg_driving"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:titleEx="驾驶界面"
-                    app:type="buttonB" />
-
-                <View style="@style/Interval" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="16dp"
-                    android:paddingTop="16dp"
-                    android:text="蓝牙设置"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="14sp" />
-
-                <com.wow.carlauncher.common.view.SetView
-                    android:id="@+id/sg_obd"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:titleEx="OBD设置"
-                    app:type="buttonB" />
-
-                <View style="@style/Interval" />
-
-                <com.wow.carlauncher.common.view.SetView
-                    android:id="@+id/sg_fk"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:titleEx="方控设置"
-                    app:type="buttonB" />
-
-                <View style="@style/Interval" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="16dp"
-                    android:paddingTop="16dp"
-                    android:text="其他设置"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="14sp" />
-
-                <com.wow.carlauncher.common.view.SetView
-                    android:id="@+id/sg_popup"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:titleEx="悬浮窗"
-                    app:type="buttonB" />
-
-                <View style="@style/Interval" />
-
-                <com.wow.carlauncher.common.view.SetView
-                    android:id="@+id/sg_system_set"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:titleEx="系统"
-                    app:type="buttonB" />
-
-                <View style="@style/Interval" />
-
-                <com.wow.carlauncher.common.view.SetView
-                    android:id="@+id/sg_dev"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    app:titleEx="测试"
-                    app:type="buttonB" />
-
-                <View style="@style/Interval" />
-            </LinearLayout>
-        </ScrollView>
-
-        <ImageView
-            android:id="@+id/btn_back"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:clickable="true"
-            android:contentDescription="@string/app_name"
-            android:focusable="true"
-            android:padding="10dp"
-            android:src="@mipmap/ic_back2"
-            app:layout_heightPercent="10%h"
-            app:layout_widthPercent="10%h" />
-    </com.zhy.android.percent.support.PercentFrameLayout>
+            </ScrollView>
+        </LinearLayout>
+    </FrameLayout>
 
     <View
         android:layout_width="0.1dp"
@@ -198,14 +203,14 @@
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:background="@drawable/set_view_top_bg"
-            android:orientation="horizontal"
-            android:padding="10dp">
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:id="@+id/set_content_back"
                 android:layout_width="100dp"
                 android:layout_height="match_parent"
-                android:gravity="left|center_vertical">
+                android:gravity="left|center_vertical"
+                android:padding="10dp">
 
                 <ImageView
                     android:layout_width="25dp"

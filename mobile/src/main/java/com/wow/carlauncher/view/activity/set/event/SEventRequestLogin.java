@@ -1,4 +1,4 @@
 package com.wow.carlauncher.view.activity.set.event;
 
-public class SAEventRefreshDriving {
+public class SEventRequestLogin {
 }

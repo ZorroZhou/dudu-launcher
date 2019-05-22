@@ -7,6 +7,7 @@ import com.wow.carlauncher.common.LogEx;
 
 import java.io.IOException;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -37,7 +38,7 @@ public class OkHttpManage {
         this.context = context;
 
         long t1 = System.currentTimeMillis();
-        okHttpClient = new OkHttpClient();
+        okHttpClient = new OkHttpClient.Builder().connectTimeout(5, TimeUnit.SECONDS).build();
         LogEx.d(this, "init time:" + (System.currentTimeMillis() - t1));
     }
 

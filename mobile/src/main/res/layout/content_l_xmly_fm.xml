@@ -88,7 +88,7 @@
                 android:includeFontPadding="false"
                 android:marqueeRepeatLimit="marquee_forever"
                 android:singleLine="true"
-                android:text="作者"
+                android:text="欢迎收听"
                 android:textColor="@color/theme_music_singer"
                 app:layout_heightPercent="15%h"
                 app:layout_marginTopPercent="1%h"

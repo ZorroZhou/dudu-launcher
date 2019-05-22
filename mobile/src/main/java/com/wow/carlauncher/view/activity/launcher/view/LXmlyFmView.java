@@ -1,5 +1,6 @@
 package com.wow.carlauncher.view.activity.launcher.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -25,7 +26,7 @@ import butterknife.OnClick;
 /**
  * Created by 10124 on 2018/4/20.
  */
-
+@SuppressLint("SetTextI18n")
 public class LXmlyFmView extends BaseThemeView {
 
     public LXmlyFmView(@NonNull Context context) {
@@ -45,11 +46,15 @@ public class LXmlyFmView extends BaseThemeView {
     @BindView(R.id.tv_name)
     TextView tv_name;
 
+    @BindView(R.id.tv_about)
+    TextView tv_about;
+
     @BindView(R.id.iv_cover)
     ImageView iv_cover;
 
     @BindView(R.id.iv_play)
     ImageView iv_play;
+
 
     @OnClick(value = {R.id.rl_base, R.id.ll_prew, R.id.ll_next, R.id.ll_play})
     public void clickEvent(View view) {
@@ -77,11 +82,27 @@ public class LXmlyFmView extends BaseThemeView {
         }
     }
 
+    private boolean run;
+
+    private void refreshPlay() {
+        if (run) {
+            iv_play.setImageResource(R.drawable.theme_ic_pause);
+        } else {
+            iv_play.setImageResource(R.drawable.theme_ic_play);
+        }
+    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final PXmlyfmEventRadioInfo event) {
-        System.out.println(event);
-        tv_name.setText(event.getTitle());
-        ImageManage.self().loadImage(event.getCover(), iv_cover, R.drawable.theme_music_dcover);
+        run = event.isRun();
+        refreshPlay();
+        if (run) {
+            tv_name.setText(event.getTitle());
+            tv_about.setText(event.getProgramName());
+            ImageManage.self().loadImage(event.getCover(), iv_cover, R.drawable.theme_music_dcover);
+        } else {
+            tv_name.setText("FM广播");
+            tv_about.setText("欢迎收听");
+        }
     }
 }

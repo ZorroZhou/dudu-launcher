@@ -1,6 +1,8 @@
 package com.wow.carlauncher.view.activity.radios;
 
+import android.support.annotation.Nullable;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.TaskExecutor;
@@ -11,6 +13,8 @@ import com.wow.carlauncher.view.base.BaseActivity;
 import com.ximalaya.ting.android.opensdk.constants.DTransferConstants;
 import com.ximalaya.ting.android.opensdk.datatrasfer.CommonRequest;
 import com.ximalaya.ting.android.opensdk.datatrasfer.IDataCallBack;
+import com.ximalaya.ting.android.opensdk.model.live.provinces.Province;
+import com.ximalaya.ting.android.opensdk.model.live.provinces.ProvinceList;
 import com.ximalaya.ting.android.opensdk.model.live.radio.Radio;
 import com.ximalaya.ting.android.opensdk.model.live.radio.RadioList;
 
@@ -20,16 +24,18 @@ import java.util.Map;
 import butterknife.BindView;
 
 public class RadiosActivity extends BaseActivity {
-    private int mRadioType = 2;
-    private int mProvinceCode = 360000;
+    private int mRadioType = 1;
+    private long mProvinceCode = 360000;
 
     private RadiosAdapter netRadioAdapter, myFavRadioAdapter;
+    private ProvinceAdapter provinceAdapter;
 
     @Override
     public void init() {
         setContent(R.layout.activity_radios);
         netRadioAdapter = new RadiosAdapter(this);
         myFavRadioAdapter = new RadiosAdapter(this);
+        provinceAdapter = new ProvinceAdapter(this);
     }
 
     @BindView(R.id.lv_radios)
@@ -41,17 +47,39 @@ public class RadiosActivity extends BaseActivity {
     @BindView(R.id.refresh_view)
     PullToRefreshView refresh_view;
 
+    @BindView(R.id.tv_all)
+    TextView tv_all;
+
     @Override
     public void initView() {
         setTitle("FM列表");
         lv_radios.setAdapter(netRadioAdapter);
-        lv_radios.setOnItemClickListener((parent, view, position, id) -> XmlyfmPlugin.self().play(netRadioAdapter.getItem(position)));
+        lv_radios.setOnItemClickListener((parent, view, position, id) -> {
+            if (parent.getAdapter().equals(netRadioAdapter)) {
+                XmlyfmPlugin.self().play(netRadioAdapter.getItem(position));
+            } else {
+                Province province = provinceAdapter.getItem(position);
+                if (province.getProvinceCode() == -1L) {
+                    mRadioType = 1;
+                } else {
+                    mRadioType = 2;
+                    mProvinceCode = province.getProvinceCode();
+                }
+                page = 1;
+                netRadioAdapter.clear();
+                lv_radios.setAdapter(netRadioAdapter);
+                loadRadios();
+            }
+        });
         lv_radios.setOnItemLongClickListener((parent, view, position, id) -> {
-            Radio radio = netRadioAdapter.getItem(position);
-            XmlyfmPlugin.self().addRadio(radio);
-            myFavRadioAdapter.addItem(radio);
-            myFavRadioAdapter.notifyDataSetChanged();
-            return true;
+            if (parent.getAdapter().equals(netRadioAdapter)) {
+                Radio radio = netRadioAdapter.getItem(position);
+                XmlyfmPlugin.self().addRadio(radio);
+                myFavRadioAdapter.addItem(radio);
+                myFavRadioAdapter.notifyDataSetChanged();
+                return true;
+            }
+            return false;
         });
         refresh_view.setOnFooterRefreshListener(view -> {
             if (page < totalPage) {
@@ -63,6 +91,7 @@ public class RadiosActivity extends BaseActivity {
         });
         refresh_view.setOnHeaderRefreshListener(view -> {
             page = 1;
+            netRadioAdapter.clear();
             TaskExecutor.self().run(this::loadRadios, 1000);
         });
 
@@ -76,6 +105,11 @@ public class RadiosActivity extends BaseActivity {
             myFavRadioAdapter.notifyDataSetChanged();
             return true;
         });
+
+        tv_all.setOnClickListener(v -> {
+            lv_radios.setAdapter(provinceAdapter);
+            loadProvince();
+        });
     }
 
     @Override
@@ -88,7 +122,37 @@ public class RadiosActivity extends BaseActivity {
     private int page = 1;
     private int totalPage = 1;
 
-    public void loadRadios() {
+    private void loadProvince() {
+        if (mLoading) {
+            return;
+        }
+        mLoading = true;
+        showLoading("加载中");
+        CommonRequest.getProvinces(null, new IDataCallBack<ProvinceList>() {
+            @Override
+            public void onSuccess(@Nullable ProvinceList provinceList) {
+                if (provinceList != null && provinceList.getProvinceList() != null) {
+                    provinceAdapter.clear();
+                    Province province = new Province();
+                    province.setProvinceName("国家台");
+                    province.setProvinceCode(-1L);
+                    provinceAdapter.addItem(province);
+                    provinceAdapter.addItems(provinceList.getProvinceList());
+                }
+                hideLoading();
+                mLoading = false;
+            }
+
+            @Override
+            public void onError(int i, String message) {
+                ToastManage.self().show(message);
+                hideLoading();
+                mLoading = false;
+            }
+        });
+    }
+
+    private void loadRadios() {
         if (mLoading) {
             return;
         }
@@ -104,7 +168,6 @@ public class RadiosActivity extends BaseActivity {
             @Override
             public void onSuccess(RadioList object) {
                 if (object != null && object.getRadios() != null) {
-                    netRadioAdapter.clear();
                     netRadioAdapter.addItems(object.getRadios());
                     totalPage = object.getTotalPage();
                 }

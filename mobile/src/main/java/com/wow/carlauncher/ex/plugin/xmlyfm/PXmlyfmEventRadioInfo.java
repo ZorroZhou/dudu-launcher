@@ -4,6 +4,16 @@ public class PXmlyfmEventRadioInfo {
     private boolean run;
     private String title;
     private String cover;
+    private String programName;
+
+    public String getProgramName() {
+        return programName;
+    }
+
+    public PXmlyfmEventRadioInfo setProgramName(String programName) {
+        this.programName = programName;
+        return this;
+    }
 
     public boolean isRun() {
         return run;

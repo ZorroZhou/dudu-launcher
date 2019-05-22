@@ -96,7 +96,8 @@ public class XmlyfmPlugin extends ContextEx {
     public void play(Radio radio) {
         nowRadio = radio;
         xmPlayerManager.playActivityRadio(radio);
-        EventBus.getDefault().post(new PXmlyfmEventRadioInfo().setCover(nowRadio.getCoverUrlLarge()).setRun(true).setTitle(nowRadio.getRadioName()));
+        System.out.println(GsonUtil.getGson().toJson(nowRadio));
+        EventBus.getDefault().post(new PXmlyfmEventRadioInfo().setProgramName(nowRadio.getProgramName()).setCover(nowRadio.getCoverUrlLarge()).setRun(true).setTitle(nowRadio.getRadioName()));
     }
 
 
@@ -194,6 +195,7 @@ public class XmlyfmPlugin extends ContextEx {
         @Override
         public void onPlayStop() {
             run = false;
+            EventBus.getDefault().post(new PXmlyfmEventRadioInfo().setRun(false));
         }
 
         @Override

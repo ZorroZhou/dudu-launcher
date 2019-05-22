@@ -2,7 +2,6 @@ package com.wow.carlauncher.repertory.server;
 
 import android.support.annotation.NonNull;
 
-import com.google.gson.reflect.TypeToken;
 import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.gsonType.GsonBaseResultType;
 import com.wow.carlauncher.common.util.CommonUtil;
@@ -19,7 +18,7 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 public class ServerRequestUtil {
-    public static <D> Call get(String url, final CommonCallback<D> commonCallback) {
+    public static <D> Call get(String url, Class<D> clazz, final CommonCallback<D> commonCallback) {
         return OkHttpManage.self().get(url, new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -37,8 +36,7 @@ public class ServerRequestUtil {
                     LogEx.d(ServerRequestUtil.class, "onSuccess: " + result);
                     if (result.length() > 2) {
                         if (commonCallback != null) {
-                            BaseResult<D> res = GsonUtil.getGson().fromJson(result, new GsonBaseResultType(new TypeToken<D>() {
-                            }.getType()));
+                            BaseResult<D> res = GsonUtil.getGson().fromJson(result, new GsonBaseResultType(clazz));
                             if (res == null) {
                                 commonCallback.callback(ServerConstant.RES_ERROR, "网络请求失败", null);
                                 return;
@@ -60,7 +58,7 @@ public class ServerRequestUtil {
         });
     }
 
-    public static <D> Call post(String url, Map<String, Object> param, final CommonCallback<D> commonCallback) {
+    public static <D> Call post(String url, Map<String, Object> param, Class<D> clazz, final CommonCallback<D> commonCallback) {
         return OkHttpManage.self().post(url, param, new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -78,8 +76,7 @@ public class ServerRequestUtil {
                     LogEx.d(ServerRequestUtil.class, "onSuccess: " + result);
                     if (result.length() > 2) {
                         if (commonCallback != null) {
-                            BaseResult<D> res = GsonUtil.getGson().fromJson(result, new GsonBaseResultType(new TypeToken<D>() {
-                            }.getType()));
+                            BaseResult<D> res = GsonUtil.getGson().fromJson(result, new GsonBaseResultType(clazz));
                             if (res == null) {
                                 commonCallback.callback(ServerConstant.RES_ERROR, "网络请求失败", null);
                                 return;

@@ -214,6 +214,7 @@ public class XmlyfmPlugin extends ContextEx {
 
         @Override
         public boolean onError(XmPlayerException exception) {
+            exception.printStackTrace();
             return false;
 
         }

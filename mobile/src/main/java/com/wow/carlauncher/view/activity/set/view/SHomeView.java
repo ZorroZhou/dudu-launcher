@@ -13,6 +13,7 @@ import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.ex.manage.baiduVoice.BaiduVoiceAssistant;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.view.activity.launcher.ItemEnum;
+import com.wow.carlauncher.view.activity.launcher.ItemInterval;
 import com.wow.carlauncher.view.activity.launcher.ItemModel;
 import com.wow.carlauncher.view.activity.launcher.ItemTransformer;
 import com.wow.carlauncher.view.activity.launcher.LayoutEnum;
@@ -23,7 +24,7 @@ import com.wow.carlauncher.view.activity.set.LauncherItemAdapter;
 import com.wow.carlauncher.view.activity.set.SetActivity;
 import com.wow.carlauncher.view.activity.set.SetBaseView;
 import com.wow.carlauncher.view.activity.set.event.SEventPromptShowRefresh;
-import com.wow.carlauncher.view.activity.set.event.SEventSetHomeFull;
+import com.wow.carlauncher.view.activity.set.event.SEventRequestLauncherRecreate;
 import com.wow.carlauncher.view.activity.set.listener.SetNumSelectView;
 import com.wow.carlauncher.view.activity.set.listener.SetSingleSelectView;
 import com.wow.carlauncher.view.activity.set.listener.SetSwitchOnClickListener;
@@ -36,6 +37,7 @@ import java.util.List;
 
 import butterknife.BindView;
 
+import static com.wow.carlauncher.common.CommonData.SDATA_LAUNCHER_ITEM_INTERVAL;
 import static com.wow.carlauncher.common.CommonData.SDATA_LAUNCHER_ITEM_TRAN;
 import static com.wow.carlauncher.common.CommonData.SDATA_LAUNCHER_LAYOUT;
 
@@ -78,12 +80,39 @@ public class SHomeView extends SetBaseView {
     @BindView(R.id.sv_prompt_show)
     SetView sv_prompt_show;
 
+    @BindView(R.id.sv_item_interval)
+    SetView sv_item_interval;
+
     @Override
     public String getName() {
         return "首页设置";
     }
 
     protected void initView() {
+
+        sv_item_interval.setSummary(ItemInterval.getById(SharedPreUtil.getInteger(SDATA_LAUNCHER_ITEM_INTERVAL, ItemInterval.XIAO.getId())).getName());
+        sv_item_interval.setOnClickListener(new SetSingleSelectView<ItemInterval>(getActivity(), "请选择首页卡片间隔") {
+            @Override
+            public Collection<ItemInterval> getAll() {
+                return Arrays.asList(CommonData.ITEM_INTERVALS);
+            }
+
+            @Override
+            public ItemInterval getCurr() {
+                return ItemInterval.getById(SharedPreUtil.getInteger(SDATA_LAUNCHER_ITEM_INTERVAL, ItemInterval.XIAO.getId()));
+            }
+
+            @Override
+            public boolean onSelect(ItemInterval setEnum) {
+                SharedPreUtil.saveInteger(SDATA_LAUNCHER_ITEM_INTERVAL, setEnum.getId());
+                sv_item_interval.setSummary(setEnum.getName());
+                new AlertDialog.Builder(getContext()).setTitle("确认").setNegativeButton("下次重启", null).setPositiveButton("立即生效", (dialog, which) -> {
+                    EventBus.getDefault().post(new SEventRequestLauncherRecreate());
+                }).setMessage("是否立即生效,立即生效首页将会重新加载").show();
+                return true;
+            }
+        });
+
         sv_prompt_show.setOnValueChangeListener(new SetSwitchOnClickListener(CommonData.SDATA_LAUNCHER_PROMPT_SHOW) {
             @Override
             public void newValue(boolean value) {
@@ -136,7 +165,7 @@ public class SHomeView extends SetBaseView {
             @Override
             public void newValue(boolean value) {
                 new AlertDialog.Builder(getContext()).setTitle("确认").setNegativeButton("下次重启", null).setPositiveButton("立即生效", (dialog, which) -> {
-                    EventBus.getDefault().post(new SEventSetHomeFull());
+                    EventBus.getDefault().post(new SEventRequestLauncherRecreate());
                 }).setMessage("是否立即生效,立即生效首页将会重新加载").show();
             }
         });

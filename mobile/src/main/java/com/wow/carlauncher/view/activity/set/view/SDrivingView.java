@@ -57,6 +57,10 @@ public class SDrivingView extends SetBaseView {
     @BindView(R.id.sv_auto_to_driving_type)
     SetView sv_auto_to_driving_type;
 
+    @BindView(R.id.sv_driving_animation)
+    SetView sv_driving_animation;
+
+
     @Override
     protected void initView() {
         sv_driving_type.setSummary(DrivingViewEnum.getById(SharedPreUtil.getInteger(SDATA_DRIVING_VIEW, DrivingViewEnum.BLACK.getId())).getName());
@@ -79,6 +83,9 @@ public class SDrivingView extends SetBaseView {
                 return true;
             }
         });
+
+        sv_driving_animation.setOnValueChangeListener(new SetSwitchOnClickListener(CommonData.SDATA_DRIVING_VIEW_ABUNATION));
+        sv_driving_animation.setChecked(SharedPreUtil.getBoolean(CommonData.SDATA_DRIVING_VIEW_ABUNATION, true));
 
         sv_auto_to_driving.setOnValueChangeListener(new SetSwitchOnClickListener(CommonData.SDATA_AUTO_TO_DRIVING));
         sv_auto_to_driving.setChecked(SharedPreUtil.getBoolean(CommonData.SDATA_AUTO_TO_DRIVING, false));

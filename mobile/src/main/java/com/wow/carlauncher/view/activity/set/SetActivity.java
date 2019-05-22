@@ -17,6 +17,7 @@ import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.AppContext;
+import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.user.LocalUser;
 import com.wow.carlauncher.common.user.event.UEventLoginState;
 import com.wow.carlauncher.common.util.CommonUtil;
@@ -60,9 +61,6 @@ public class SetActivity extends BaseActivity implements SetFrame {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContent(R.layout.activity_set);
-        if (AppContext.self().getLocalUser() == null) {
-            loadQQOpen();
-        }
     }
 
     @BindView(R.id.sg_theme)
@@ -136,7 +134,13 @@ public class SetActivity extends BaseActivity implements SetFrame {
             tv_nickname.setText(AppContext.self().getLocalUser().getNickname());
             ImageManage.self().loadImage(AppContext.self().getLocalUser().getUserPic(), iv_user_pic, new ImageSize(100, 100));
         }
-
+        TaskExecutor.self().run(() -> {
+            if (AppContext.self().getLocalUser() == null) {
+                showLoading("加载中...");
+                loadQQOpen();
+                hideLoading();
+            }
+        });
     }
 
     @OnClick(value = {R.id.sg_dev, R.id.sg_item, R.id.sg_driving, R.id.sg_theme, R.id.sg_home, R.id.sg_obd, R.id.sg_fk, R.id.sg_load_app, R.id.sg_popup, R.id.sg_system_set})

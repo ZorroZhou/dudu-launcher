@@ -7,7 +7,6 @@ import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -23,6 +22,7 @@ import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.appInfo.event.MAppInfoRefreshShowEvent;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.view.activity.launcher.BaseThemeView;
+import com.wow.carlauncher.view.activity.launcher.ItemInterval;
 import com.wow.carlauncher.view.activity.launcher.LayoutEnum;
 import com.wow.carlauncher.view.activity.launcher.event.LDockLabelShowChangeEvent;
 import com.wow.carlauncher.view.adapter.SelectAppAdapter;
@@ -42,6 +42,7 @@ import static com.wow.carlauncher.common.CommonData.SDATA_DOCK2_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK3_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK4_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK5_CLASS;
+import static com.wow.carlauncher.common.CommonData.SDATA_LAUNCHER_ITEM_INTERVAL;
 import static com.wow.carlauncher.common.CommonData.TAG;
 
 /**
@@ -108,63 +109,40 @@ public class LDockView extends BaseThemeView {
         }
     }
 
-    private int oldHeight = 0;
-    private ViewTreeObserver.OnPreDrawListener oldOnPreDrawListener;
-
     private void loadLayout() {
         if (layoutEnum.equals(LayoutEnum.LAYOUT1)) {
             ll_base.setOrientation(LinearLayout.VERTICAL);
-            //使用之前先清理,要不然就混乱了
-            ll_base.getViewTreeObserver().removeOnPreDrawListener(oldOnPreDrawListener);
-            oldOnPreDrawListener = new ViewTreeObserver.OnPreDrawListener() {
-                @Override
-                public boolean onPreDraw() {
-                    if (oldHeight != ll_base.getHeight() && ll_base.getHeight() > 0) {
-                        oldHeight = ll_base.getHeight();
+            int paddingTop = ViewUtils.dip2px(getContext(), ItemInterval.getSizeById(SharedPreUtil.getInteger(SDATA_LAUNCHER_ITEM_INTERVAL, ItemInterval.XIAO.getId())) - 15);
+            ll_base.setPadding(0, paddingTop, 0, 0);
+            LinearLayout.LayoutParams itemLp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0);
+            itemLp.weight = 1;
+            itemLp.setMargins(0,
+                    ViewUtils.dip2px(getContext(), 15),
+                    0,
+                    ViewUtils.dip2px(getContext(), 10));
+            ll_dock1.setLayoutParams(itemLp);
+            ll_dock2.setLayoutParams(itemLp);
+            ll_dock3.setLayoutParams(itemLp);
+            ll_dock4.setLayoutParams(itemLp);
+            ll_dock5.setLayoutParams(itemLp);
 
-                        ll_base.getViewTreeObserver().removeOnPreDrawListener(this);
-                        LinearLayout.LayoutParams itemLp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0);
-                        itemLp.weight = 1;
-                        itemLp.setMargins(0,
-                                ViewUtils.dip2px(getContext(), 15),
-                                0,
-                                ViewUtils.dip2px(getContext(), 10))
-                        ;
-                        ll_dock1.setLayoutParams(itemLp);
-                        ll_dock2.setLayoutParams(itemLp);
-                        ll_dock3.setLayoutParams(itemLp);
-                        ll_dock4.setLayoutParams(itemLp);
-                        ll_dock5.setLayoutParams(itemLp);
-                    }
-                    return true;
-                }
-            };
-            ll_base.getViewTreeObserver().addOnPreDrawListener(oldOnPreDrawListener);
             ll_dock5.setVisibility(GONE);
         } else if (layoutEnum.equals(LayoutEnum.LAYOUT2)) {
             ll_base.setOrientation(LinearLayout.HORIZONTAL);
-            ll_base.getViewTreeObserver().removeOnPreDrawListener(oldOnPreDrawListener);
-            oldOnPreDrawListener = new ViewTreeObserver.OnPreDrawListener() {
-                @Override
-                public boolean onPreDraw() {
-                    if (oldHeight != ll_base.getHeight() && ll_base.getHeight() > 0) {
-                        oldHeight = ll_base.getHeight();
+            ll_base.setPadding(0, 0, 0, 0);
 
-                        ll_base.getViewTreeObserver().removeOnPreDrawListener(this);
-                        LinearLayout.LayoutParams itemLp = new LinearLayout.LayoutParams(0, (int) (oldHeight * 0.9));
-                        itemLp.weight = 1;
-                        itemLp.setMargins(0, 0, 0, 0)
-                        ;
-                        ll_dock1.setLayoutParams(itemLp);
-                        ll_dock2.setLayoutParams(itemLp);
-                        ll_dock3.setLayoutParams(itemLp);
-                        ll_dock4.setLayoutParams(itemLp);
-                        ll_dock5.setLayoutParams(itemLp);
-                    }
-                    return true;
-                }
-            };
-            ll_base.getViewTreeObserver().addOnPreDrawListener(oldOnPreDrawListener);
+            LinearLayout.LayoutParams itemLp = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT);
+            itemLp.weight = 1;
+            itemLp.setMargins(0,
+                    0,
+                    0,
+                    ViewUtils.dip2px(getContext(), 10));
+            ll_dock1.setLayoutParams(itemLp);
+            ll_dock2.setLayoutParams(itemLp);
+            ll_dock3.setLayoutParams(itemLp);
+            ll_dock4.setLayoutParams(itemLp);
+            ll_dock5.setLayoutParams(itemLp);
+
             ll_dock5.setVisibility(VISIBLE);
         }
     }

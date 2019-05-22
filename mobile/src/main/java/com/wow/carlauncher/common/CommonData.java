@@ -8,6 +8,7 @@ import com.wow.carlauncher.ex.plugin.obd.ObdProtocolEnum;
 import com.wow.carlauncher.view.activity.driving.AutoDrivingEnum;
 import com.wow.carlauncher.view.activity.driving.DrivingViewEnum;
 import com.wow.carlauncher.view.activity.launcher.ItemEnum;
+import com.wow.carlauncher.view.activity.launcher.ItemInterval;
 import com.wow.carlauncher.view.activity.launcher.ItemTransformer;
 import com.wow.carlauncher.view.activity.launcher.LayoutEnum;
 
@@ -53,6 +54,11 @@ public class CommonData {
             ItemTransformer.ZoomOut,
     };
 
+    public static final ItemInterval[] ITEM_INTERVALS = {
+            ItemInterval.XIAO,
+            ItemInterval.ZHONG,
+            ItemInterval.DA
+    };
     //所有的桌面插件
     public static final ItemEnum[] LAUNCHER_ITEMS = {
             ItemEnum.AMAP,
@@ -193,6 +199,7 @@ public class CommonData {
     public static final String SDATA_LAUNCHER_ITEM_TRAN = "SDATA_LAUNCHER_ITEM_TRAN";
     public static final String SDATA_LAUNCHER_LAYOUT = "SDATA_LAUNCHER_LAYOUT";
     public static final String SDATA_LAUNCHER_PROMPT_SHOW = "SDATA_LAUNCHER_PROMPT_SHOW";
+    public static final String SDATA_LAUNCHER_ITEM_INTERVAL = "SDATA_LAUNCHER_ITEM_INTERVAL";
 
     public static final String SDATA_MUSIC_INSIDE_COVER = "SDATA_MUSIC_INSIDE_COVER";//是否使用控件自己的封面
     public static final String SDATA_MUSIC_USE_LRC = "SDATA_MUSIC_USE_LRC";//是否使用歌词
@@ -202,6 +209,7 @@ public class CommonData {
     public static final String SDATA_USE_VA = "SDATA_USE_VA";//是否使用语音助手
     public static final String SDATA_LOG_OPEN = "SDATA_LOG_OPEN";//是否打开日志
     public static final String SDATA_DRIVING_VIEW = "SDATA_DRIVING_VIEW";//驾驶界面风格
+    public static final String SDATA_DRIVING_VIEW_ABUNATION = "SDATA_DRIVING_VIEW_ABUNATION";//驾驶界面风格
     public static final String SDATA_SHOW_USB_MOUNT = "SDATA_SHOW_USB_MOUNT";//是否显示挂载
     public static final String SDATA_AUTO_TO_DRIVING = "SDATA_AUTO_TO_DRIVING";//是否自动跳入驾驶界面
     public static final String SDATA_AUTO_TO_DRIVING_TYPE = "SDATA_AUTO_TO_DRIVING_TYPE";//是否自动跳入驾驶界面

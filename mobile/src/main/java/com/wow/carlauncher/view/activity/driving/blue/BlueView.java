@@ -10,9 +10,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.DateUtil;
+import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.manage.ImageManage;
 import com.wow.carlauncher.ex.manage.speed.SMEventSendSpeed;
 import com.wow.carlauncher.ex.manage.time.event.TMEventSecond;
@@ -167,22 +169,26 @@ public class BlueView extends DrivingView {
         super.initView();
         int max = 49;
         int start = 1;
-        TaskExecutor.self().run(() -> {
-            for (int i = start; i <= max; i++) {
-                try {
-                    Thread.sleep(40);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                final int index = i;
-                post(() -> {
-                    iv_center.setImageResource(getContext().getResources().getIdentifier("driving_blue_center_gif_" + index, "mipmap", getContext().getPackageName()));
-                    if (index == max) {
-                        loadOk();
+        if (SharedPreUtil.getBoolean(CommonData.SDATA_DRIVING_VIEW_ABUNATION, true)) {
+            TaskExecutor.self().run(() -> {
+                for (int i = start; i <= max; i++) {
+                    try {
+                        Thread.sleep(40);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
-                });
-            }
-        }, 1000);
+                    final int index = i;
+                    post(() -> {
+                        iv_center.setImageResource(getContext().getResources().getIdentifier("driving_blue_center_gif_" + index, "mipmap", getContext().getPackageName()));
+                        if (index == max) {
+                            loadOk();
+                        }
+                    });
+                }
+            }, 1000);
+        } else {
+            loadOk();
+        }
     }
 
     @OnClick(value = {R.id.music_ll_prew, R.id.music_ll_next, R.id.music_ll_play, R.id.fl_item1})

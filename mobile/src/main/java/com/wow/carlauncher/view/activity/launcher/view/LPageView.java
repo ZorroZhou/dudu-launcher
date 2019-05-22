@@ -8,12 +8,16 @@ import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.util.ViewUtils;
+import com.wow.carlauncher.view.activity.launcher.ItemInterval;
 import com.wow.carlauncher.view.activity.launcher.LayoutEnum;
 import com.wow.carlauncher.view.base.BaseView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static com.wow.carlauncher.common.CommonData.SDATA_LAUNCHER_ITEM_INTERVAL;
 
 public class LPageView extends BaseView {
 
@@ -46,7 +50,7 @@ public class LPageView extends BaseView {
         this.item = item;
         ll_base.removeAllViews();
         int itemIndex = 0;
-        int leftMargin = ViewUtils.dip2px(getContext(), 15);
+        int leftMargin = ViewUtils.dip2px(getContext(), ItemInterval.getSizeById(SharedPreUtil.getInteger(SDATA_LAUNCHER_ITEM_INTERVAL, ItemInterval.XIAO.getId())));
         for (View i : item) {
             if (i == null) {
                 i = new View(getContext());
@@ -79,12 +83,13 @@ public class LPageView extends BaseView {
                     ll_base.getViewTreeObserver().removeOnPreDrawListener(this);
                     if (layoutEnum.equals(LayoutEnum.LAYOUT1)) {
                         int margin10 = ViewUtils.dip2px(getContext(), 10);
-                        int margin15 = ViewUtils.dip2px(getContext(), 15);
-                        int margin8 = ViewUtils.dip2px(getContext(), 8);
-                        ll_base.setPadding(margin10, margin15, margin10, margin8);
+                        int top = ViewUtils.dip2px(getContext(), ItemInterval.getSizeById(SharedPreUtil.getInteger(SDATA_LAUNCHER_ITEM_INTERVAL, ItemInterval.XIAO.getId())));
+                        int bottom = ViewUtils.dip2px(getContext(), 8);
+                        ll_base.setPadding(margin10, top, margin10, bottom);
                     } else {
+                        int zuoyou = ViewUtils.dip2px(getContext(), ItemInterval.getSizeById(SharedPreUtil.getInteger(SDATA_LAUNCHER_ITEM_INTERVAL, ItemInterval.XIAO.getId())) - 8);
                         int margin4 = ViewUtils.dip2px(getContext(), 4);
-                        ll_base.setPadding(margin4, 0, margin4, margin4);
+                        ll_base.setPadding(zuoyou, 0, zuoyou, margin4);
                     }
                 }
                 return true;

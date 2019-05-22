@@ -52,7 +52,7 @@ import com.wow.carlauncher.view.activity.launcher.view.LPageView;
 import com.wow.carlauncher.view.activity.launcher.view.LPagerPostion;
 import com.wow.carlauncher.view.activity.launcher.view.LPromptView;
 import com.wow.carlauncher.view.activity.set.event.SEventPromptShowRefresh;
-import com.wow.carlauncher.view.activity.set.event.SEventSetHomeFull;
+import com.wow.carlauncher.view.activity.set.event.SEventRequestLauncherRecreate;
 import com.wow.carlauncher.view.popup.ConsoleWin;
 
 import org.greenrobot.eventbus.EventBus;
@@ -398,8 +398,8 @@ public class LauncherActivity extends Activity implements SkinManage.OnSkinChang
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(final SEventSetHomeFull event) {
-        LogEx.d(this, "SEventSetHomeFull");
+    public void onEvent(final SEventRequestLauncherRecreate event) {
+        LogEx.d(this, "SEventRequestLauncherRecreate");
         this.recreate();
     }
 

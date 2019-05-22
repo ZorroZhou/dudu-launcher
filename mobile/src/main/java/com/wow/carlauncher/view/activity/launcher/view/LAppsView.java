@@ -20,6 +20,7 @@ import com.wow.carlauncher.common.util.ViewUtils;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfo;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.view.activity.launcher.BaseThemeView;
+import com.wow.carlauncher.view.activity.launcher.ItemInterval;
 import com.wow.carlauncher.view.activity.launcher.LayoutEnum;
 import com.wow.carlauncher.view.activity.set.event.SEventPromptShowRefresh;
 
@@ -30,6 +31,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+
+import static com.wow.carlauncher.common.CommonData.SDATA_LAUNCHER_ITEM_INTERVAL;
 
 
 public class LAppsView extends BaseThemeView implements View.OnClickListener, View.OnLongClickListener {
@@ -78,7 +81,7 @@ public class LAppsView extends BaseThemeView implements View.OnClickListener, Vi
         }
         appInfos = list.subList(num * page, end);
         int psize = getPageItemNum();
-        int leftMargin = ViewUtils.dip2px(getContext(), 15);
+        int leftMargin = ViewUtils.dip2px(getContext(), ItemInterval.getSizeById(SharedPreUtil.getInteger(SDATA_LAUNCHER_ITEM_INTERVAL, ItemInterval.XIAO.getId())));
         LinearLayout row = null;
         for (int i = 0; i < num; i++) {
             if (i % columnNum == 0) {
@@ -87,7 +90,7 @@ public class LAppsView extends BaseThemeView implements View.OnClickListener, Vi
                 LinearLayout.LayoutParams rowLp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, 0);
                 rowLp.weight = 1;
                 if (rows.size() != 0) {
-                    rowLp.topMargin = ViewUtils.dip2px(getContext(), 15);
+                    rowLp.topMargin = ViewUtils.dip2px(getContext(), ItemInterval.getSizeById(SharedPreUtil.getInteger(SDATA_LAUNCHER_ITEM_INTERVAL, ItemInterval.XIAO.getId())));
                 }
                 rows.add(row);
                 ll_base.addView(row, rowLp);
@@ -191,12 +194,13 @@ public class LAppsView extends BaseThemeView implements View.OnClickListener, Vi
 
                     FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
                     int margin4 = ViewUtils.dip2px(getContext(), 4);
-                    params.setMargins(margin4, 0, margin4, margin4);
+                    int zuoyou = ViewUtils.dip2px(getContext(), ItemInterval.getSizeById(SharedPreUtil.getInteger(SDATA_LAUNCHER_ITEM_INTERVAL, ItemInterval.XIAO.getId())) - 8);
+                    params.setMargins(zuoyou, 0, zuoyou, margin4);
                     if (layoutEnum.equals(LayoutEnum.LAYOUT1)) {
                         int margin10 = ViewUtils.dip2px(getContext(), 10);
-                        int margin15 = ViewUtils.dip2px(getContext(), 15);
-                        int margin8 = ViewUtils.dip2px(getContext(), 8);
-                        params.setMargins(margin10, margin15, margin10, margin8);
+                        int top = ViewUtils.dip2px(getContext(), ItemInterval.getSizeById(SharedPreUtil.getInteger(SDATA_LAUNCHER_ITEM_INTERVAL, ItemInterval.XIAO.getId())));
+                        int bottom = ViewUtils.dip2px(getContext(), 8);
+                        params.setMargins(margin10, top, margin10, bottom);
                     }
                     ll_base.setLayoutParams(params);
                 }

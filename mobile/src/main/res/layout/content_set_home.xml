@@ -69,6 +69,16 @@
         <View style="@style/Interval" />
 
         <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/sv_item_interval"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:summary="未选择"
+            st:titleEx="首页卡片间隔"
+            st:type="buttonB" />
+
+        <View style="@style/Interval" />
+
+        <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_home_full"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

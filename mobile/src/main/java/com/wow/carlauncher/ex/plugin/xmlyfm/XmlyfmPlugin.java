@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.wow.carlauncher.common.gsonType.GsonBaseResultType;
 import com.wow.carlauncher.common.LogEx;
+import com.wow.carlauncher.common.gsonType.GsonListType;
 import com.wow.carlauncher.common.util.GsonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.ContextEx;
@@ -165,7 +166,7 @@ public class XmlyfmPlugin extends ContextEx {
         setContext(context);
         radios = new ArrayList<>();
         try {
-            radios.addAll(GsonUtil.getGson().fromJson(SharedPreUtil.getString(SDATA_MY_FAV_RADIOS), new GsonBaseResultType(Radio.class)));
+            radios.addAll(GsonUtil.getGson().fromJson(SharedPreUtil.getString(SDATA_MY_FAV_RADIOS), new GsonListType(Radio.class)));
         } catch (Exception ignored) {
         }
 

@@ -1,6 +1,7 @@
 package com.wow.carlauncher.view.activity.radios;
 
 import android.support.annotation.Nullable;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -58,6 +59,7 @@ public class RadiosActivity extends BaseActivity {
             if (parent.getAdapter().equals(netRadioAdapter)) {
                 XmlyfmPlugin.self().play(netRadioAdapter.getItem(position));
             } else {
+                tv_all.setVisibility(View.VISIBLE);
                 Province province = provinceAdapter.getItem(position);
                 if (province.getProvinceCode() == -1L) {
                     mRadioType = 1;
@@ -107,6 +109,7 @@ public class RadiosActivity extends BaseActivity {
         });
 
         tv_all.setOnClickListener(v -> {
+            tv_all.setVisibility(View.GONE);
             lv_radios.setAdapter(provinceAdapter);
             loadProvince();
         });

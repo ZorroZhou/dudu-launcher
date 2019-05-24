@@ -3,6 +3,7 @@ package com.wow.carlauncher.ex.manage.okHttp;
 import android.annotation.SuppressLint;
 import android.content.Context;
 
+import com.wow.carlauncher.common.AppContext;
 import com.wow.carlauncher.common.LogEx;
 
 import java.io.IOException;
@@ -44,7 +45,11 @@ public class OkHttpManage {
 
     public Call get(String url, Callback callback) {
         LogEx.d(this, "get:" + url);
-        Request request = new Request.Builder().get().url(url).build();
+        Request.Builder builder = new Request.Builder().get().url(url);
+        if (AppContext.self().getLocalUser() != null) {
+            builder.addHeader("token", AppContext.self().getLocalUser().getToken());
+        }
+        Request request = builder.build();
         OkHttpClient clientTemp;
         if (callback instanceof ProgressResponseListener) {
             clientTemp = getProgressClient((ProgressResponseListener) callback);
@@ -58,11 +63,16 @@ public class OkHttpManage {
 
     public Call post(String url, Map<String, Object> param, Callback callback) {
         LogEx.d(this, "get:" + url);
-        FormBody.Builder builder = new FormBody.Builder();
+        FormBody.Builder formBuilder = new FormBody.Builder();
         for (String key : param.keySet()) {
-            builder.add(key, String.valueOf(param.get(key)));
+            formBuilder.add(key, String.valueOf(param.get(key)));
         }
-        Request request = new Request.Builder().post(builder.build()).url(url).build();
+        Request.Builder builder = new Request.Builder().post(formBuilder.build()).url(url);
+        if (AppContext.self().getLocalUser() != null) {
+            builder.addHeader("token", AppContext.self().getLocalUser().getToken());
+        }
+        Request request = builder.build();
+
         OkHttpClient clientTemp;
         if (callback instanceof ProgressResponseListener) {
             clientTemp = getProgressClient((ProgressResponseListener) callback);

@@ -187,6 +187,7 @@ public class BlueView extends DrivingView {
                 }
             }, 1000);
         } else {
+            iv_center.setImageResource(R.mipmap.driving_blue_center_gif_49);
             loadOk();
         }
     }

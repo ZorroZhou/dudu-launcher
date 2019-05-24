@@ -18,6 +18,7 @@ import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.AppContext;
+import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.user.LocalUser;
 import com.wow.carlauncher.common.user.event.UEventLoginState;
@@ -56,13 +57,15 @@ import butterknife.OnClick;
 
 import static com.wow.carlauncher.common.CommonData.APP_WIDGET_AMAP_PLUGIN;
 import static com.wow.carlauncher.common.CommonData.REQUEST_SELECT_AMAP_PLUGIN;
+import static com.wow.carlauncher.common.CommonData.SDATA_HOME_FULL;
 import static com.wow.carlauncher.common.util.ViewUtils.getViewByIds;
 
 public class SetActivity extends BaseActivity implements SetFrame {
     @Override
     public void init() {
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
+        if (SharedPreUtil.getBoolean(SDATA_HOME_FULL, true)) {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        }
         setContent(R.layout.activity_set);
     }
 

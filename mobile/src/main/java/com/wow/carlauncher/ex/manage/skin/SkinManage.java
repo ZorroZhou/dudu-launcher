@@ -14,6 +14,7 @@ import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.util.SunRiseSetUtil;
 import com.wow.carlauncher.ex.manage.location.LMEventNewLocation;
 import com.wow.carlauncher.ex.manage.time.event.TMEvent5Minute;
+import com.wow.carlauncher.ex.manage.time.event.TMEventSecond;
 import com.wow.carlauncher.ex.plugin.console.event.PConsoleEventLightState;
 import com.wow.carlauncher.repertory.db.entiy.SkinInfo;
 import com.wow.carlauncher.repertory.db.manage.DatabaseManage;
@@ -31,6 +32,7 @@ import java.util.Map;
 
 import skin.support.SkinCompatManager;
 
+import static com.wow.carlauncher.common.CommonData.HOUR_MILL;
 import static com.wow.carlauncher.common.CommonData.SDATA_APP_SKIN;
 import static com.wow.carlauncher.common.CommonData.SDATA_APP_SKIN_DAY;
 import static com.wow.carlauncher.common.CommonData.SDATA_APP_SKIN_NIGHT;
@@ -106,13 +108,13 @@ public class SkinManage {
             }
             case SHIJIAN:
                 if (SunRiseSetUtil.isNight(lon, lat, new Date())) {
-//                    if (!currentDay) {
-//                        if (System.currentTimeMillis() - lastChangeShijian < HOUR_MILL) {
-//                            return;
-//                        }
-//                        lastChangeShijian = System.currentTimeMillis();
-//                        currentDay = true;
-//                    }
+                    if (!currentDay) {
+                        if (System.currentTimeMillis() - lastChangeShijian < HOUR_MILL) {
+                            return;
+                        }
+                        lastChangeShijian = System.currentTimeMillis();
+                        currentDay = true;
+                    }
                     SkinInfo skinInfo = getSkininfoByMark(SharedPreUtil.getString(SDATA_APP_SKIN_NIGHT));
                     if (skinInfo == null) {
                         SharedPreUtil.saveString(SDATA_APP_SKIN_NIGHT, DEFAULT_MARK);
@@ -120,13 +122,13 @@ public class SkinManage {
                     }
                     loadSkin(skinInfo);
                 } else {
-//                    if (currentDay) {
-//                        if (System.currentTimeMillis() - lastChangeShijian < HOUR_MILL) {
-//                            return;
-//                        }
-//                        lastChangeShijian = System.currentTimeMillis();
-//                        currentDay = false;
-//                    }
+                    if (currentDay) {
+                        if (System.currentTimeMillis() - lastChangeShijian < HOUR_MILL) {
+                            return;
+                        }
+                        lastChangeShijian = System.currentTimeMillis();
+                        currentDay = false;
+                    }
 
                     SkinInfo skinInfo = getSkininfoByMark(SharedPreUtil.getString(SDATA_APP_SKIN_DAY));
                     if (skinInfo == null) {
@@ -230,8 +232,10 @@ public class SkinManage {
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void onEvent(LMEventNewLocation event) {
-        this.lat = event.getLatitude();
-        this.lon = event.getLongitude();
+        if (event.getLatitude() > 0 && event.getLongitude() > 0) {
+            this.lat = event.getLatitude();
+            this.lon = event.getLongitude();
+        }
     }
 
     //根据mark获取主题实体bean,这里单独做了一个,为了可以查询

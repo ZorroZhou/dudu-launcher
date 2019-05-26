@@ -17,6 +17,7 @@ import com.wow.carlauncher.repertory.db.entiy.SkinInfo;
 import com.wow.carlauncher.repertory.db.manage.DatabaseManage;
 import com.wow.carlauncher.view.activity.set.SetActivity;
 import com.wow.carlauncher.view.activity.set.SetBaseView;
+import com.wow.carlauncher.view.activity.set.listener.SetOnlineSkinSelectView;
 import com.wow.carlauncher.view.activity.set.listener.SetSingleSelectView;
 import com.wow.carlauncher.view.event.EventSkinInstall;
 
@@ -103,7 +104,7 @@ public class SThemeView extends SetBaseView {
                 return true;
             }
         });
-        sv_skin_online.setOnClickListener(v -> ToastManage.self().show("敬请期待!"));
+        sv_skin_online.setOnClickListener(new SetOnlineSkinSelectView(getActivity()));
 
         sv_theme_night.setOnClickListener(new SetSingleSelectView<SkinInfo>(getActivity(), "请选择夜间皮肤") {
 

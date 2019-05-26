@@ -192,65 +192,71 @@
         android:layout_height="match_parent"
         android:background="@color/main_interval_color" />
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="7"
-        android:background="@android:color/white"
-        android:orientation="vertical">
+        android:background="@android:color/white">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:background="@drawable/set_view_top_bg"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <LinearLayout
-                android:id="@+id/set_content_back"
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:gravity="left|center_vertical"
-                android:padding="10dp">
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@drawable/set_view_top_bg"
+                android:orientation="horizontal">
 
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:src="@mipmap/ic_back2" />
+                <LinearLayout
+                    android:id="@+id/set_content_back"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:gravity="left|center_vertical"
+                    android:padding="10dp">
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@mipmap/ic_back2" />
+
+                    <TextView
+                        android:layout_width="75dp"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical|left"
+                        android:text="返回"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="14sp" />
+                </LinearLayout>
 
                 <TextView
-                    android:layout_width="75dp"
+                    android:id="@+id/set_content_title"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:gravity="center_vertical|left"
-                    android:text="返回"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="标题"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/set_content_save"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|right"
+                    android:paddingRight="10dp"
+                    android:text="保存"
                     android:textColor="@color/colorPrimary"
                     android:textSize="14sp" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/set_content_title"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+            <FrameLayout
+                android:id="@+id/set_content"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:text="标题"
-                android:textColor="@color/colorPrimary"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/set_content_save"
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical|right"
-                android:paddingRight="10dp"
-                android:text="保存"
-                android:textColor="@color/colorPrimary"
-                android:textSize="14sp" />
+                android:orientation="vertical" />
         </LinearLayout>
-
-        <FrameLayout
-            android:id="@+id/set_content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-    </LinearLayout>
+    </FrameLayout>
 </LinearLayout>

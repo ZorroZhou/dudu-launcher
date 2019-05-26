@@ -73,6 +73,11 @@ public class LWeatherView extends BaseThemeView {
             fl_base.addView(view, MATCH_PARENT, MATCH_PARENT);
             ButterKnife.bind(this, view);
             refreshShow();
+
+
+            if (layoutId == R.layout.content_l_weather_layout2 && tv_title != null) {
+                tv_title.setGravity(SkinUtil.analysisItemTitleAlign(manage.getString(R.string.theme_item_title_align)));
+            }
         }
     }
 

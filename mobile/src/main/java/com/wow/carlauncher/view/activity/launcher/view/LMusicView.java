@@ -2,6 +2,7 @@ package com.wow.carlauncher.view.activity.launcher.view;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.media.Image;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -58,6 +59,9 @@ public class LMusicView extends BaseThemeView {
     @Override
     protected void initView() {
         refreshPlay();
+
+        music_iv_cover = findViewById(R.id.music_iv_cover);
+
         TaskExecutor.self().run(() -> {
             MusicPlugin.self().requestLast();
             TaskExecutor.self().autoPost(() -> tv_title.setText(MusicPlugin.self().name()));
@@ -68,7 +72,26 @@ public class LMusicView extends BaseThemeView {
     @Override
     public void changedSkin(SkinManage manage) {
         tv_title.setGravity(SkinUtil.analysisItemTitleAlign(manage.getString(R.string.theme_item_title_align)));
-        music_iv_cover.setCircular(SkinUtil.analysisMusicCoverType(manage.getString(R.string.theme_item_music_cover_type)));
+
+        if (SkinUtil.analysisMusicCoverType(manage.getString(R.string.theme_item_music_cover_type))) {
+            ImageView temp2 = findViewById(R.id.music_iv_cover2);
+            if (!temp2.equals(music_iv_cover)) {
+                ImageView temp = music_iv_cover;
+                music_iv_cover = temp2;
+                music_iv_cover.setImageDrawable(temp.getDrawable());
+                temp.setVisibility(GONE);
+                temp2.setVisibility(VISIBLE);
+            }
+        } else {
+            ImageView temp2 = findViewById(R.id.music_iv_cover);
+            if (!temp2.equals(music_iv_cover)) {
+                ImageView temp = music_iv_cover;
+                music_iv_cover = temp2;
+                music_iv_cover.setImageDrawable(temp.getDrawable());
+                temp.setVisibility(GONE);
+                temp2.setVisibility(VISIBLE);
+            }
+        }
     }
 
     private boolean run;
@@ -106,8 +129,7 @@ public class LMusicView extends BaseThemeView {
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
 
-    @BindView(R.id.music_iv_cover)
-    CustomRoundAngleImageView music_iv_cover;
+    private ImageView music_iv_cover;
 
     private void refreshPlay() {
         if (run) {

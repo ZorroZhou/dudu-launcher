@@ -64,7 +64,7 @@
             android:id="@+id/sv_skin_online"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            st:summary="欢迎下载"
+            st:summary="欢迎下载(第一次使用前请先同步皮肤)"
             st:titleEx="在线皮肤"
             st:type="buttonB" />
 

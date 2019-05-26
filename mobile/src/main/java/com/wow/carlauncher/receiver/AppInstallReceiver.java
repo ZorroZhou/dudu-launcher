@@ -3,12 +3,14 @@ package com.wow.carlauncher.receiver;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.res.Resources;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.CommonUtil;
+import com.wow.carlauncher.ex.manage.appInfo.AppInfo;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.ex.manage.skin.SkinManage;
 import com.wow.carlauncher.repertory.db.entiy.SkinInfo;
@@ -41,6 +43,8 @@ public class AppInstallReceiver extends BroadcastReceiver {
                             if (action.equals(Intent.ACTION_PACKAGE_ADDED) || action.equals(Intent.ACTION_PACKAGE_REPLACED)) {
                                 try {
                                     String nameRes = context.getResources().getResourceEntryName(R.string.theme_name);
+                                    PackageInfo packageInfo = context.getPackageManager().getPackageInfo(mark, 0);
+
                                     Resources resources = context.createPackageContext(mark, 0).getResources();
                                     int id = resources.getIdentifier(nameRes, "string", mark);
                                     String name = resources.getString(id);
@@ -50,10 +54,12 @@ public class AppInstallReceiver extends BroadcastReceiver {
                                     if (skinInfo == null) {
                                         DatabaseManage.insert(new SkinInfo()
                                                 .setMark(mark)
+                                                .setVersion(packageInfo.versionCode)
                                                 .setName(name));
                                     } else {
                                         DatabaseManage.update(new SkinInfo()
                                                 .setMark(mark)
+                                                .setVersion(packageInfo.versionCode)
                                                 .setName(name), " mark='" + mark + "'");
                                     }
                                 } catch (Exception e) {

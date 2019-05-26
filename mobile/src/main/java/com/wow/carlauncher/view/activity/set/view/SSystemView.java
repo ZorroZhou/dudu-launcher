@@ -21,6 +21,7 @@ import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.AppUtil;
+import com.wow.carlauncher.common.util.DownUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfo;
@@ -149,7 +150,11 @@ public class SSystemView extends SetBaseView {
                         TaskExecutor.self().autoPost(() -> new AlertDialog.Builder(getContext()).setTitle("发现新版本")
                                 .setNegativeButton("忽略", null)
                                 .setPositiveButton("下载新版本", (dialog12, which) -> {
-                                    loadDownloadApk(appUpdate.getUrl(), appUpdate.getVersion());
+//                                    loadDownloadApk(appUpdate.getUrl(), appUpdate.getVersion());
+                                    DownUtil.loadDownloadApk(getActivity()
+                                            , "正在下载嘟嘟桌面新版本"
+                                            , "/ddlauncher-V" + appUpdate.getVersion() + ".apk"
+                                            , appUpdate.getUrl());
                                 }).setMessage(appUpdate.getAbout()).show());
                     } else {
                         ToastManage.self().show("没有新版本");
@@ -296,63 +301,63 @@ public class SSystemView extends SetBaseView {
         return super.onKeyDown(keyCode, event);
     }
 
-    public void loadDownloadApk(String url, int version) {
-        final String filePath = Environment.getExternalStorageDirectory() + "/ddlauncher-V" + version + ".apk";
-        ProgressDialog progressDialog = new ProgressDialog(getContext());
-        progressDialog.setTitle("正在下载嘟嘟桌面新版本");
-        Call call = CommonService.downFile(url, new ProgressResponseListener() {
-            @Override
-            public void onResponseProgress(long bytesRead, long contentLength, boolean done) {
-                progressDialog.setProgress((float) ((double) bytesRead / (double) contentLength));
-            }
-
-            @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                ToastManage.self().show("更新下载失败!");
-            }
-
-            @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                int len;
-                byte[] buf = new byte[2048];
-                ResponseBody responseBody = response.body();
-                if (responseBody != null) {
-                    InputStream inputStream = responseBody.byteStream();
-                    /**
-                     * 写入本地文件
-                     */
-                    File file = new File(filePath);
-                    FileOutputStream fileOutputStream = new FileOutputStream(file);
-                    while ((len = inputStream.read(buf)) != -1) {
-                        fileOutputStream.write(buf, 0, len);
-                    }
-                    fileOutputStream.flush();
-                    fileOutputStream.close();
-                    inputStream.close();
-
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        Uri value = FileProvider.getUriForFile(getActivity(), "com.satsoftec.risense.fileprovider", new File(filePath));
-                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                        intent.setDataAndType(value,
-                                "application/vnd.android.package-archive");
-                    } else {
-                        intent.setDataAndType(Uri.fromFile(new File(filePath)),
-                                "application/vnd.android.package-archive");
-                    }
-                    getActivity().startActivity(intent);
-                } else {
-                    ToastManage.self().show("更新下载失败!");
-                }
-                TaskExecutor.self().autoPost(progressDialog::dismiss);
-            }
-        });
-        progressDialog.setOnDismissListener(dialog -> {
-            if (!call.isCanceled()) {
-                call.cancel();
-            }
-        });
-        TaskExecutor.self().autoPost(progressDialog::show);
-    }
+//    public void loadDownloadApk(String url, int version) {
+//        final String filePath = Environment.getExternalStorageDirectory() + "/ddlauncher-V" + version + ".apk";
+//        ProgressDialog progressDialog = new ProgressDialog(getContext());
+//        progressDialog.setTitle("正在下载嘟嘟桌面新版本");
+//        Call call = CommonService.downFile(url, new ProgressResponseListener() {
+//            @Override
+//            public void onResponseProgress(long bytesRead, long contentLength, boolean done) {
+//                progressDialog.setProgress((float) ((double) bytesRead / (double) contentLength));
+//            }
+//
+//            @Override
+//            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+//                ToastManage.self().show("更新下载失败!");
+//            }
+//
+//            @Override
+//            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+//                int len;
+//                byte[] buf = new byte[2048];
+//                ResponseBody responseBody = response.body();
+//                if (responseBody != null) {
+//                    InputStream inputStream = responseBody.byteStream();
+//                    /**
+//                     * 写入本地文件
+//                     */
+//                    File file = new File(filePath);
+//                    FileOutputStream fileOutputStream = new FileOutputStream(file);
+//                    while ((len = inputStream.read(buf)) != -1) {
+//                        fileOutputStream.write(buf, 0, len);
+//                    }
+//                    fileOutputStream.flush();
+//                    fileOutputStream.close();
+//                    inputStream.close();
+//
+//                    Intent intent = new Intent(Intent.ACTION_VIEW);
+//                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//                        Uri value = FileProvider.getUriForFile(getActivity(), "com.satsoftec.risense.fileprovider", new File(filePath));
+//                        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//                        intent.setDataAndType(value,
+//                                "application/vnd.android.package-archive");
+//                    } else {
+//                        intent.setDataAndType(Uri.fromFile(new File(filePath)),
+//                                "application/vnd.android.package-archive");
+//                    }
+//                    getActivity().startActivity(intent);
+//                } else {
+//                    ToastManage.self().show("更新下载失败!");
+//                }
+//                TaskExecutor.self().autoPost(progressDialog::dismiss);
+//            }
+//        });
+//        progressDialog.setOnDismissListener(dialog -> {
+//            if (!call.isCanceled()) {
+//                call.cancel();
+//            }
+//        });
+//        TaskExecutor.self().autoPost(progressDialog::show);
+//    }
 }

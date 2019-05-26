@@ -10,6 +10,8 @@ public class ThemePageResponse extends PageResponse<ThemePageResponse.UserThemeD
         private String themePic;
         private String url;
         private Integer version;
+        private String apkPackage;
+        private String versionName;
 
         public String getNickName() {
             return nickName;
@@ -62,6 +64,24 @@ public class ThemePageResponse extends PageResponse<ThemePageResponse.UserThemeD
 
         public UserThemeDto setVersion(Integer version) {
             this.version = version;
+            return this;
+        }
+
+        public String getApkPackage() {
+            return apkPackage;
+        }
+
+        public UserThemeDto setApkPackage(String apkPackage) {
+            this.apkPackage = apkPackage;
+            return this;
+        }
+
+        public String getVersionName() {
+            return versionName;
+        }
+
+        public UserThemeDto setVersionName(String versionName) {
+            this.versionName = versionName;
             return this;
         }
     }

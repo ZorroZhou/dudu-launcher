@@ -155,39 +155,43 @@ public class SThemeView extends SetBaseView {
 
         sv_load_skin.setOnClickListener(v -> {
             getActivity().showLoading("处理中");
-            PackageManager pManager = getContext().getPackageManager();
-            //获取手机内所有应用
-            List<PackageInfo> paklist = pManager.getInstalledPackages(0);
-            String sqlwhere = "";
-            for (PackageInfo packageInfo : paklist) {
-                System.out.println(packageInfo.packageName);
-                if (packageInfo.packageName.startsWith("com.wow.carlauncher.theme")) {
-                    sqlwhere = sqlwhere + "'" + packageInfo.packageName + "',";
-                    try {
-                        String nameRes = getContext().getResources().getResourceEntryName(R.string.theme_name);
-                        Resources resources = getContext().createPackageContext(packageInfo.packageName, 0).getResources();
-                        int id = resources.getIdentifier(nameRes, "string", packageInfo.packageName);
-                        String name = resources.getString(id);
+            TaskExecutor.self().run(() -> {
+                PackageManager pManager = getContext().getPackageManager();
+                //获取手机内所有应用
+                List<PackageInfo> paklist = pManager.getInstalledPackages(0);
+                String sqlwhere = "";
+                for (PackageInfo packageInfo : paklist) {
+                    if (packageInfo.packageName.startsWith("com.wow.carlauncher.theme")) {
+                        sqlwhere = sqlwhere + "'" + packageInfo.packageName + "',";
+                        try {
+                            String nameRes = getContext().getResources().getResourceEntryName(R.string.theme_name);
+                            Resources resources = getContext().createPackageContext(packageInfo.packageName, 0).getResources();
+                            int id = resources.getIdentifier(nameRes, "string", packageInfo.packageName);
+                            String name = resources.getString(id);
 
-                        SkinInfo skinInfo = DatabaseManage.getBean(SkinInfo.class, " mark='" + packageInfo.packageName + "'");
+                            SkinInfo skinInfo = DatabaseManage.getBean(SkinInfo.class, " mark='" + packageInfo.packageName + "'");
 
-                        if (skinInfo == null) {
-                            DatabaseManage.insert(new SkinInfo()
-                                    .setMark(packageInfo.packageName)
-                                    .setName(name));
-                        } else {
-                            DatabaseManage.update(new SkinInfo()
-                                    .setMark(packageInfo.packageName)
-                                    .setName(name), " mark='" + packageInfo.packageName + "'");
+                            if (skinInfo == null) {
+                                DatabaseManage.insert(new SkinInfo()
+                                        .setMark(packageInfo.packageName)
+                                        .setVersion(packageInfo.versionCode)
+                                        .setName(name));
+                            } else {
+                                DatabaseManage.update(new SkinInfo()
+                                        .setMark(packageInfo.packageName)
+                                        .setVersion(packageInfo.versionCode)
+                                        .setName(name), " mark='" + packageInfo.packageName + "'");
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
-                    } catch (Exception e) {
-                        e.printStackTrace();
                     }
                 }
-            }
-            sqlwhere = sqlwhere.substring(0, sqlwhere.length() - 1);
-            DatabaseManage.delete(SkinInfo.class, "mark not in (" + sqlwhere + ")");
-            getActivity().hideLoading();
+                sqlwhere = sqlwhere.substring(0, sqlwhere.length() - 1);
+                DatabaseManage.delete(SkinInfo.class, "mark not in (" + sqlwhere + ")");
+                loadData();
+                getActivity().hideLoading();
+            });
         });
 
         TaskExecutor.self().run(this::loadData);

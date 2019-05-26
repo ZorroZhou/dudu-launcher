@@ -286,7 +286,7 @@ public class AppContext {
 
             @Override
             public int getDbVersion() {
-                return 3;
+                return 4;
             }
 
             @Override

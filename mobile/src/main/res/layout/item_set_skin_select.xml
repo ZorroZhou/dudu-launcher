@@ -6,7 +6,7 @@
     android:gravity="center"
     android:orientation="horizontal"
     android:padding="10dp"
-    tools:ignore="RtlHardcoded,SpUsage">
+    tools:ignore="RtlHardcoded,SpUsage,HardcodedText">
 
     <ImageView
         android:id="@+id/pic"
@@ -25,7 +25,6 @@
             android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="36dp"
-            android:layout_marginLeft="5dp"
             android:ellipsize="end"
             android:gravity="center_vertical|left"
             android:singleLine="true"
@@ -35,13 +34,24 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="36dp"
+            android:gravity="center"
             android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:ellipsize="end"
+                android:gravity="center_vertical|left"
+                android:singleLine="true"
+                android:text="作者:"
+                android:textColor="#de000000"
+                android:textSize="14dp" />
 
             <com.wow.carlauncher.common.view.CircleImageView
                 android:id="@+id/upic"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:padding="5dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:padding="3dp"
                 android:scaleType="centerCrop" />
 
             <TextView
@@ -53,17 +63,19 @@
                 android:gravity="center_vertical|left"
                 android:singleLine="true"
                 android:textColor="#de000000"
-                android:textSize="13dp"
+                android:textSize="14dp"
                 tools:ignore="RtlHardcoded" />
         </LinearLayout>
     </LinearLayout>
 
-
-    <ImageView
-        android:id="@+id/iv_select"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:src="@mipmap/select1"
-        android:visibility="invisible"
-        tools:ignore="ContentDescription" />
+    <TextView
+        android:id="@+id/tv_down"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text="点击下载"
+        android:textColor="#de000000"
+        android:textSize="14dp" />
 </LinearLayout>

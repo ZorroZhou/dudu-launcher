@@ -11,6 +11,16 @@ public class SkinInfo extends BaseEntity implements SetEnum {
 
     private String name;//主题名称
     private String mark;//主题的标记
+    private Integer version;
+
+    public Integer getVersion() {
+        return version;
+    }
+
+    public SkinInfo setVersion(Integer version) {
+        this.version = version;
+        return this;
+    }
 
     public String getMark() {
         return mark;

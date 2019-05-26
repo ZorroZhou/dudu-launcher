@@ -7,7 +7,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -62,7 +61,6 @@ public class LAppsView extends BaseThemeView implements View.OnClickListener, Vi
 
     private List<View> cellViews;
     private List<LinearLayout> rows;
-    private ViewTreeObserver.OnPreDrawListener oldOnPreDrawListener;
 
     public void loadView() {
         cellViews.clear();
@@ -122,14 +120,12 @@ public class LAppsView extends BaseThemeView implements View.OnClickListener, Vi
             row.addView(cellView, cellLp);
             cellViews.add(cellView);
         }
-        addRefreshItemHandle();
+        refreshItemLayout();
 
         LogEx.d(this, "initView: ");
     }
 
     private LayoutEnum layoutEnum = LayoutEnum.LAYOUT1;
-
-    private int oldHeight = 0;//用来比对布局发生改变的
 
     public void setLayoutEnum(LayoutEnum layoutEnum) {
         if (layoutEnum == null) {
@@ -137,13 +133,8 @@ public class LAppsView extends BaseThemeView implements View.OnClickListener, Vi
         }
         if (!layoutEnum.equals(this.layoutEnum)) {
             this.layoutEnum = layoutEnum;
-            addRefreshItemHandle();
+            refreshItemLayout();
         }
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(SEventPromptShowRefresh event) {
-        addRefreshItemHandle();
     }
 
     @Override
@@ -182,32 +173,18 @@ public class LAppsView extends BaseThemeView implements View.OnClickListener, Vi
         getContext().startActivity(deleteIntent);
     }
 
-    private void addRefreshItemHandle() {
-        ll_base.getViewTreeObserver().removeOnPreDrawListener(oldOnPreDrawListener);
-        oldOnPreDrawListener = new ViewTreeObserver.OnPreDrawListener() {
-            @Override
-            public boolean onPreDraw() {
-                int hh = ll_base.getHeight();
-                if (oldHeight != hh && hh > 0) {
-                    oldHeight = hh;
-                    ll_base.getViewTreeObserver().removeOnPreDrawListener(this);
-
-                    FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-                    int margin4 = ViewUtils.dip2px(getContext(), 4);
-                    int zuoyou = ViewUtils.dip2px(getContext(), ItemInterval.getSizeById(SharedPreUtil.getInteger(SDATA_LAUNCHER_ITEM_INTERVAL, ItemInterval.XIAO.getId())) - 8);
-                    params.setMargins(zuoyou, 0, zuoyou, margin4);
-                    if (layoutEnum.equals(LayoutEnum.LAYOUT1)) {
-                        int margin10 = ViewUtils.dip2px(getContext(), 10);
-                        int top = ViewUtils.dip2px(getContext(), ItemInterval.getSizeById(SharedPreUtil.getInteger(SDATA_LAUNCHER_ITEM_INTERVAL, ItemInterval.XIAO.getId())));
-                        int bottom = ViewUtils.dip2px(getContext(), 8);
-                        params.setMargins(margin10, top, margin10, bottom);
-                    }
-                    ll_base.setLayoutParams(params);
-                }
-                return true;
-            }
-        };
-        ll_base.getViewTreeObserver().addOnPreDrawListener(oldOnPreDrawListener);
+    private void refreshItemLayout() {
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        int margin4 = ViewUtils.dip2px(getContext(), 4);
+        int zuoyou = ViewUtils.dip2px(getContext(), ItemInterval.getSizeById(SharedPreUtil.getInteger(SDATA_LAUNCHER_ITEM_INTERVAL, ItemInterval.XIAO.getId())) - 8);
+        params.setMargins(zuoyou, 0, zuoyou, margin4);
+        if (layoutEnum.equals(LayoutEnum.LAYOUT1)) {
+            int margin10 = ViewUtils.dip2px(getContext(), 10);
+            int top = ViewUtils.dip2px(getContext(), ItemInterval.getSizeById(SharedPreUtil.getInteger(SDATA_LAUNCHER_ITEM_INTERVAL, ItemInterval.XIAO.getId())));
+            int bottom = ViewUtils.dip2px(getContext(), 8);
+            params.setMargins(margin10, top, margin10, bottom);
+        }
+        ll_base.setLayoutParams(params);
     }
 
 

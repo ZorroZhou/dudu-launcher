@@ -3,6 +3,7 @@ package com.wow.carlauncher.common.view;
 import android.content.Context;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 
 import skin.support.widget.SkinCompatTextView;
 
@@ -36,6 +37,11 @@ public class AutoMarqueeTextView extends SkinCompatTextView {
     @Override
     public boolean isFocused() {
         return true;
+    }
+
+    @Override
+    public boolean canScrollHorizontally(int direction) {
+        return false;
     }
 
 }

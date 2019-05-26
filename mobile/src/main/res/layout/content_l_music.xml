@@ -64,7 +64,8 @@
                     android:layout_height="match_parent"
                     android:contentDescription="@string/app_name"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/theme_music_dcover" />
+                    android:src="@drawable/theme_music_dcover"
+                    android:visibility="gone" />
             </FrameLayout>
 
             <com.wow.carlauncher.common.view.AutoMarqueeTextView

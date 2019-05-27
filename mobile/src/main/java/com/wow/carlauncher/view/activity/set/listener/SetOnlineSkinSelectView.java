@@ -110,14 +110,8 @@ public class SetOnlineSkinSelectView extends SetBaseView implements View.OnClick
 
     @Override
     public boolean showRight() {
-        return true;
+        return false;
     }
-
-    @Override
-    public String rightTitle() {
-        return "保存";
-    }
-
 
     public static class SelectAdapter extends BaseAdapterEx<ThemePageResponse.UserThemeDto> {
 

@@ -9,10 +9,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Environment;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
-import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.view.KeyEvent;
 
@@ -26,7 +23,6 @@ import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfo;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
-import com.wow.carlauncher.ex.manage.okHttp.ProgressResponseListener;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.repertory.server.CommonService;
 import com.wow.carlauncher.view.activity.AboutActivity;
@@ -37,23 +33,15 @@ import com.wow.carlauncher.view.activity.set.listener.SetMultipleSelectView;
 import com.wow.carlauncher.view.activity.set.listener.SetSingleSelectView;
 import com.wow.carlauncher.view.activity.set.listener.SetSwitchOnClickListener;
 import com.wow.carlauncher.view.activity.set.setItem.SetAppInfo;
-import com.wow.carlauncher.view.dialog.ProgressDialog;
 import com.wow.carlauncher.view.event.CEventShowUsbMount;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import butterknife.BindView;
-import okhttp3.Call;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 /**
  * Created by 10124 on 2018/4/22.

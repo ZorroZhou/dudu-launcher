@@ -14,7 +14,6 @@ import com.wow.carlauncher.common.bean.BeanInfo;
 import com.wow.carlauncher.common.bean.BeanManage;
 import com.wow.carlauncher.common.bean.PropertyInfo;
 import com.wow.carlauncher.common.util.DateUtil;
-import com.wow.carlauncher.common.util.SharedPreUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;

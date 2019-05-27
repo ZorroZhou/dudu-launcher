@@ -4,13 +4,13 @@ import android.content.Context;
 import android.view.View;
 
 import com.wow.carlauncher.view.activity.launcher.view.LAMapView;
-import com.wow.carlauncher.view.activity.launcher.view.LXmlyFmView;
 import com.wow.carlauncher.view.activity.launcher.view.LMusicView;
 import com.wow.carlauncher.view.activity.launcher.view.LObdView;
 import com.wow.carlauncher.view.activity.launcher.view.LPersionView;
 import com.wow.carlauncher.view.activity.launcher.view.LTaiyaView;
 import com.wow.carlauncher.view.activity.launcher.view.LTimeView;
 import com.wow.carlauncher.view.activity.launcher.view.LWeatherView;
+import com.wow.carlauncher.view.activity.launcher.view.LXmlyFmView;
 import com.wow.carlauncher.view.activity.set.setItem.SetEnum;
 
 public enum ItemEnum implements SetEnum {

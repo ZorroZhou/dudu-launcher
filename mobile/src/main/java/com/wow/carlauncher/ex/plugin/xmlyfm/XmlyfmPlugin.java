@@ -3,7 +3,6 @@ package com.wow.carlauncher.ex.plugin.xmlyfm;
 import android.annotation.SuppressLint;
 import android.content.Context;
 
-import com.wow.carlauncher.common.gsonType.GsonBaseResultType;
 import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.gsonType.GsonListType;
 import com.wow.carlauncher.common.util.GsonUtil;

@@ -17,7 +17,6 @@ import com.wow.carlauncher.ex.manage.ImageManage;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.repertory.db.entiy.SkinInfo;
 import com.wow.carlauncher.repertory.db.manage.DatabaseManage;
-import com.wow.carlauncher.repertory.server.CommonCallback;
 import com.wow.carlauncher.repertory.server.UserThemeService;
 import com.wow.carlauncher.repertory.server.response.ThemePageResponse;
 import com.wow.carlauncher.view.activity.set.SetActivity;

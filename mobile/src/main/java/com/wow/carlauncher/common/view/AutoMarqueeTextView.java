@@ -3,7 +3,6 @@ package com.wow.carlauncher.common.view;
 import android.content.Context;
 import android.graphics.Rect;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
 
 import skin.support.widget.SkinCompatTextView;
 

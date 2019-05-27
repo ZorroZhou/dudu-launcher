@@ -15,6 +15,7 @@
             android:id="@+id/ll_user"
             android:layout_width="match_parent"
             android:layout_height="160dp"
+            android:background="@drawable/set_select_bg"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -35,16 +36,12 @@
                 android:textSize="14sp" />
         </LinearLayout>
 
-        <View style="@style/Interval" />
-
         <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_set_back"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             st:titleEx="设置备份"
             st:type="buttonB" />
-
-        <View style="@style/Interval" />
 
         <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_my_trip"
@@ -53,8 +50,6 @@
             st:titleEx="我的行程"
             st:type="buttonB" />
 
-        <View style="@style/Interval" />
-
         <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_bind"
             android:layout_width="match_parent"
@@ -62,8 +57,12 @@
             st:titleEx="绑定邮箱(登陆网站上传主题等)"
             st:type="buttonB" />
 
-        <View style="@style/Interval" />
-
+        <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/sv_unbind"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:titleEx="解绑邮箱"
+            st:type="buttonB" />
 
         <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_logout"
@@ -71,8 +70,6 @@
             android:layout_height="wrap_content"
             st:titleEx="退出登录"
             st:type="buttonB" />
-
-        <View style="@style/Interval" />
 
     </LinearLayout>
 </ScrollView>

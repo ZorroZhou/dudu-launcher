@@ -29,8 +29,6 @@
             st:titleEx="首页布局"
             st:type="buttonB" />
 
-        <View style="@style/Interval" />
-
         <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_item_tran"
             android:layout_width="match_parent"
@@ -39,16 +37,12 @@
             st:titleEx="首页切换动画"
             st:type="buttonB" />
 
-        <View style="@style/Interval" />
-
         <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_launcher_item_sort"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             st:titleEx="首页插件展示顺序(调整后插件会重新加载)"
             st:type="buttonB" />
-
-        <View style="@style/Interval" />
 
         <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_launcher_item_sort_re"
@@ -57,16 +51,12 @@
             st:titleEx="首页插件展示顺序重置"
             st:type="buttonB" />
 
-        <View style="@style/Interval" />
-
         <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_launcher_item_num"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             st:titleEx="首页插件数量"
             st:type="buttonB" />
-
-        <View style="@style/Interval" />
 
         <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_item_interval"
@@ -75,8 +65,6 @@
             st:summary="未选择"
             st:titleEx="首页卡片间隔"
             st:type="buttonB" />
-
-        <View style="@style/Interval" />
 
         <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_home_full"
@@ -87,8 +75,6 @@
             st:titleEx="首页全屏"
             st:type="switchB" />
 
-        <View style="@style/Interval" />
-
         <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_use_va"
             android:layout_width="match_parent"
@@ -97,8 +83,6 @@
             st:summary2="@string/set_no"
             st:titleEx="开启语音助手"
             st:type="switchB" />
-
-        <View style="@style/Interval" />
 
         <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_prompt_show"
@@ -109,6 +93,5 @@
             st:titleEx="是否展示托盘区"
             st:type="switchB" />
 
-        <View style="@style/Interval" />
     </LinearLayout>
 </ScrollView>

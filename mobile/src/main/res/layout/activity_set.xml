@@ -63,7 +63,6 @@
                         app:titleEx="个人中心"
                         app:type="buttonB" />
 
-                    <View style="@style/Interval" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -81,7 +80,6 @@
                         app:titleEx="主题设置"
                         app:type="buttonB" />
 
-                    <View style="@style/Interval" />
 
                     <com.wow.carlauncher.common.view.SetView
                         android:id="@+id/sg_home"
@@ -90,7 +88,6 @@
                         app:titleEx="首页"
                         app:type="buttonB" />
 
-                    <View style="@style/Interval" />
 
                     <com.wow.carlauncher.common.view.SetView
                         android:id="@+id/sg_item"
@@ -99,7 +96,6 @@
                         app:titleEx="插件设置"
                         app:type="buttonB" />
 
-                    <View style="@style/Interval" />
 
                     <com.wow.carlauncher.common.view.SetView
                         android:id="@+id/sg_load_app"
@@ -108,7 +104,6 @@
                         app:titleEx="APP联动启动"
                         app:type="buttonB" />
 
-                    <View style="@style/Interval" />
 
                     <com.wow.carlauncher.common.view.SetView
                         android:id="@+id/sg_driving"
@@ -117,7 +112,6 @@
                         app:titleEx="驾驶界面"
                         app:type="buttonB" />
 
-                    <View style="@style/Interval" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -135,7 +129,6 @@
                         app:titleEx="OBD设置"
                         app:type="buttonB" />
 
-                    <View style="@style/Interval" />
 
                     <com.wow.carlauncher.common.view.SetView
                         android:id="@+id/sg_fk"
@@ -144,7 +137,6 @@
                         app:titleEx="方控设置"
                         app:type="buttonB" />
 
-                    <View style="@style/Interval" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -162,7 +154,6 @@
                         app:titleEx="悬浮窗"
                         app:type="buttonB" />
 
-                    <View style="@style/Interval" />
 
                     <com.wow.carlauncher.common.view.SetView
                         android:id="@+id/sg_system_set"
@@ -171,7 +162,6 @@
                         app:titleEx="系统"
                         app:type="buttonB" />
 
-                    <View style="@style/Interval" />
 
                     <com.wow.carlauncher.common.view.SetView
                         android:id="@+id/sg_dev"
@@ -181,7 +171,7 @@
                         app:titleEx="测试"
                         app:type="buttonB" />
 
-                    <View style="@style/Interval" />
+
                 </LinearLayout>
             </ScrollView>
         </LinearLayout>

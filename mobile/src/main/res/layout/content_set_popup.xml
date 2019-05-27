@@ -29,7 +29,6 @@
             st:titleEx="允许显示(如无法显示，请检查悬浮窗权限)"
             st:type="switchB" />
 
-        <View style="@style/Interval" />
 
         <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_popup_full_screen"
@@ -40,7 +39,6 @@
             st:titleEx="悬浮窗是否需要全屏显示"
             st:type="switchB" />
 
-        <View style="@style/Interval" />
 
         <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_popup_window_size"
@@ -49,7 +47,6 @@
             st:titleEx="悬浮窗大小"
             st:type="buttonB" />
 
-        <View style="@style/Interval" />
 
         <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_popup_window_showtype"
@@ -60,7 +57,6 @@
             st:titleEx="悬浮窗是否全局显示"
             st:type="checkB" />
 
-        <View style="@style/Interval" />
 
         <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_popup_window_showapps"

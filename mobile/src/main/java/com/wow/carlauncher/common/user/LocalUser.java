@@ -5,6 +5,16 @@ public class LocalUser {
     private String token;
     private String nickname;
     private String userPic;
+    private String email;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public LocalUser setEmail(String email) {
+        this.email = email;
+        return this;
+    }
 
     public String getNickname() {
         return nickname;

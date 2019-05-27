@@ -28,8 +28,6 @@
             st:titleEx="皮肤切换模式"
             st:type="buttonB" />
 
-        <View style="@style/Interval" />
-
         <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_theme_day"
             android:layout_width="match_parent"
@@ -38,7 +36,6 @@
             st:titleEx="主皮肤"
             st:type="buttonB" />
 
-        <View style="@style/Interval" />
 
         <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_theme_night"
@@ -48,8 +45,6 @@
             st:titleEx="夜间皮肤"
             st:type="buttonB" />
 
-        <View style="@style/Interval" />
-
         <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_load_skin"
             android:layout_width="match_parent"
@@ -57,8 +52,6 @@
             st:summary="如果安装皮肤后没有显示在APP,请点击进行同步"
             st:titleEx="同步皮肤"
             st:type="buttonB" />
-
-        <View style="@style/Interval" />
 
         <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_skin_online"
@@ -68,6 +61,5 @@
             st:titleEx="在线皮肤"
             st:type="buttonB" />
 
-        <View style="@style/Interval" />
     </LinearLayout>
 </ScrollView>

@@ -17,7 +17,7 @@ import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.AppContext;
 import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.TaskExecutor;
-import com.wow.carlauncher.common.user.event.UEventLoginState;
+import com.wow.carlauncher.common.user.event.UEventRefreshLoginState;
 import com.wow.carlauncher.common.util.DateUtil;
 import com.wow.carlauncher.common.util.NetWorkUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
@@ -238,7 +238,7 @@ public class LPromptView extends BaseThemeView {
             refreshTpState(ObdPlugin.self().getCurrentPObdEventCarTp());
             onEvent(ObdPlugin.self().getCurrentPObdEventCarTp());
             onEvent(new CEventShowUsbMount());
-            onEvent(new UEventLoginState().setLogin(AppContext.self().getLocalUser() != null));
+            onEvent(new UEventRefreshLoginState().setLogin(AppContext.self().getLocalUser() != null));
         });
     }
 
@@ -325,7 +325,7 @@ public class LPromptView extends BaseThemeView {
 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(UEventLoginState event) {
+    public void onEvent(UEventRefreshLoginState event) {
         if (event.isLogin()) {
             ImageManage.self().loadImage(AppContext.self().getLocalUser().getUserPic(), iv_persion);
             ll_persion.setVisibility(VISIBLE);

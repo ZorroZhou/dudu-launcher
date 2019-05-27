@@ -28,8 +28,6 @@
             st:titleEx="OBD绑定"
             st:type="buttonB" />
 
-        <View style="@style/Interval" />
-
         <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_obd_disconnect"
             android:layout_width="match_parent"
@@ -37,15 +35,11 @@
             st:titleEx="断开OBD"
             st:type="buttonB" />
 
-        <View style="@style/Interval" />
-
         <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_obd_impl_select"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             st:titleEx="OBD协议"
             st:type="buttonB" />
-
-        <View style="@style/Interval" />
     </LinearLayout>
 </ScrollView>

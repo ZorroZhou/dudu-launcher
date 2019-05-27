@@ -28,7 +28,7 @@
             st:titleEx="方控绑定"
             st:type="buttonB" />
 
-        <View style="@style/Interval" />
+        
 
         <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_fangkong_remove"
@@ -37,7 +37,7 @@
             st:titleEx="删除方控绑定"
             st:type="buttonB" />
 
-        <View style="@style/Interval" />
+        
 
         <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_fangkong_impl_select"

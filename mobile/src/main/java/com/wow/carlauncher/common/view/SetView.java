@@ -71,10 +71,8 @@ public class SetView extends LinearLayout {
     }
 
     private void init(Context context, AttributeSet attrs) {
-        int contentLayoutId = 0;
         if (attrs != null) {
             TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.SetView);
-            contentLayoutId = ta.getResourceId(R.styleable.SetView_contentLayout, 0);
             type = ta.getInt(R.styleable.SetView_type, 0);
             title = ta.getString(R.styleable.SetView_titleEx);
             if (CommonUtil.isNull(title)) {
@@ -105,19 +103,15 @@ public class SetView extends LinearLayout {
             ta.recycle();
         }
 
-        if (contentLayoutId == 0) {
-            contentLayoutId = R.layout.set_view_default;
-        }
-
-        contentLayoutView = LayoutInflater.from(context).inflate(contentLayoutId, new LinearLayout(getContext()));
+        contentLayoutView = LayoutInflater.from(context).inflate(R.layout.set_view_default, new LinearLayout(getContext()));
 
         LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         addView(contentLayoutView, lp);
 
-        tv_title = (TextView) contentLayoutView.findViewById(android.R.id.title);
+        tv_title = contentLayoutView.findViewById(android.R.id.title);
         tv_title.setText(title);
 
-        tv_summary = (TextView) contentLayoutView.findViewById(android.R.id.summary);
+        tv_summary = contentLayoutView.findViewById(android.R.id.summary);
 
         switch (type) {
             case 0: {
@@ -142,7 +136,7 @@ public class SetView extends LinearLayout {
                 tv_summary.setText(listNames[0]);
                 currentValue = listValues[0];
 
-                ViewGroup frame = (ViewGroup) contentLayoutView.findViewById(android.R.id.widget_frame);
+                ViewGroup frame = contentLayoutView.findViewById(android.R.id.widget_frame);
                 if (frame != null) {
                     ImageView imageView = new ImageView(getContext());
                     imageView.setScaleType(ImageView.ScaleType.FIT_XY);
@@ -154,7 +148,7 @@ public class SetView extends LinearLayout {
             case 2: {
                 tv_summary.setText(summary2);
                 currentValue = "0";
-                ViewGroup frame = (ViewGroup) contentLayoutView.findViewById(android.R.id.widget_frame);
+                ViewGroup frame = contentLayoutView.findViewById(android.R.id.widget_frame);
                 if (frame != null) {
                     CheckBox checkBox = (CheckBox) LayoutInflater.from(context).inflate(R.layout.set_view_frame_checkbox, null);
                     checkBox.setClickable(false);
@@ -167,7 +161,7 @@ public class SetView extends LinearLayout {
             case 3: {
                 tv_summary.setText(summary2);
                 currentValue = "0";
-                ViewGroup frame = (ViewGroup) contentLayoutView.findViewById(android.R.id.widget_frame);
+                ViewGroup frame = contentLayoutView.findViewById(android.R.id.widget_frame);
                 if (frame != null) {
                     Switch checkBox = (Switch) LayoutInflater.from(context).inflate(R.layout.set_view_frame_switch, null);
                     checkBox.setClickable(false);

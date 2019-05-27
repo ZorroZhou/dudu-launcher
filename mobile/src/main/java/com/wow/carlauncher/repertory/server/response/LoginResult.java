@@ -2,7 +2,9 @@ package com.wow.carlauncher.repertory.server.response;
 
 public class LoginResult {
     private String token;
+    private String email;
     private Long id;
+    private String nickName;
 
     public Long getId() {
         return id;
@@ -19,6 +21,24 @@ public class LoginResult {
 
     public LoginResult setToken(String token) {
         this.token = token;
+        return this;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public LoginResult setEmail(String email) {
+        this.email = email;
+        return this;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public LoginResult setNickName(String nickName) {
+        this.nickName = nickName;
         return this;
     }
 

@@ -100,7 +100,6 @@ public abstract class SetNumSelectView extends SetBaseView implements View.OnCli
         seek_bar.setMax(chazhi);
         seek_bar.setProgress(cur);
         getActivity().addSetView(this);
-        System.out.println(min + " " + max + " " + chazhi + " " + savecurr);
     }
 
     @Override

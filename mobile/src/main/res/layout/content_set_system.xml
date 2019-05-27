@@ -29,7 +29,6 @@
             st:titleEx="显示首页挂载入口"
             st:type="switchB" />
 
-        <View style="@style/Interval" />
 
         <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_apps_hides"
@@ -39,7 +38,6 @@
             st:titleEx="桌面隐藏项目"
             st:type="buttonB" />
 
-        <View style="@style/Interval" />
 
         <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_open_log"
@@ -50,7 +48,6 @@
             st:titleEx="开启日志记录"
             st:type="switchB" />
 
-        <View style="@style/Interval" />
 
         <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_launcher_show_dock_label"
@@ -61,7 +58,6 @@
             st:titleEx="展示dock标签"
             st:type="switchB" />
 
-        <View style="@style/Interval" />
 
         <TextView
             android:layout_width="match_parent"
@@ -79,7 +75,6 @@
             st:titleEx="按键测试,可测试方控的按键信息,看看能不能匹配上"
             st:type="buttonB" />
 
-        <View style="@style/Interval" />
 
         <TextView
             android:layout_width="match_parent"
@@ -99,7 +94,6 @@
             st:titleEx="接收测试版本更新"
             st:type="checkB" />
 
-        <View style="@style/Interval" />
 
         <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_update"
@@ -108,7 +102,6 @@
             st:titleEx="版本更新"
             st:type="buttonB" />
 
-        <View style="@style/Interval" />
 
         <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_about"
@@ -117,7 +110,6 @@
             st:titleEx="关于嘟嘟桌面"
             st:type="buttonB" />
 
-        <View style="@style/Interval" />
 
         <TextView
             android:layout_width="match_parent"
@@ -136,7 +128,6 @@
             st:titleEx="系统安全设置界面"
             st:type="buttonB" />
 
-        <View style="@style/Interval" />
 
         <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_sys_overlay"
@@ -144,8 +135,6 @@
             android:layout_height="wrap_content"
             st:titleEx="悬浮框权限设置页面"
             st:type="buttonB" />
-
-        <View style="@style/Interval" />
 
 
         <com.wow.carlauncher.common.view.SetView
@@ -155,7 +144,6 @@
             st:titleEx="查询sdk版本"
             st:type="buttonB" />
 
-        <View style="@style/Interval" />
 
     </LinearLayout>
 </ScrollView>

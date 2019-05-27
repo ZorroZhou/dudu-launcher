@@ -6,14 +6,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.assist.ImageSize;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.AppContext;
-import com.wow.carlauncher.common.user.event.UEventLoginState;
+import com.wow.carlauncher.common.user.event.UEventRefreshLoginState;
+import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.ex.manage.ImageManage;
 import com.wow.carlauncher.view.activity.set.SetActivity;
 import com.wow.carlauncher.view.activity.set.SetBaseView;
+import com.wow.carlauncher.view.activity.set.commonView.BindEmailView;
 import com.wow.carlauncher.view.activity.set.event.SEventRequestLogin;
 
 import org.greenrobot.eventbus.EventBus;
@@ -44,6 +45,12 @@ public class SPersionView extends SetBaseView {
     @BindView(R.id.sv_logout)
     SetView sv_logout;
 
+    @BindView(R.id.sv_bind)
+    SetView sv_bind;
+
+    @BindView(R.id.sv_unbind)
+    SetView sv_unbind;
+
     @BindView(R.id.ll_user)
     LinearLayout ll_user;
 
@@ -53,11 +60,8 @@ public class SPersionView extends SetBaseView {
     @BindView(R.id.iv_user_pic)
     ImageView iv_user_pic;
 
+
     protected void initView() {
-        if (AppContext.self().getLocalUser() != null) {
-            tv_nickname.setText(AppContext.self().getLocalUser().getNickname());
-            ImageManage.self().loadImage(AppContext.self().getLocalUser().getUserPic(), iv_user_pic, new ImageSize(100, 100));
-        }
         View.OnClickListener onClickListener = v -> {
             switch (v.getId()) {
                 case R.id.ll_user:
@@ -74,14 +78,26 @@ public class SPersionView extends SetBaseView {
 
         ll_user.setOnClickListener(onClickListener);
         sv_logout.setOnClickListener(onClickListener);
+        sv_bind.setOnClickListener(new BindEmailView(getActivity()));
+        onEvent(new UEventRefreshLoginState().setLogin(AppContext.self().getLocalUser() != null));
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(UEventLoginState event) {
+    public void onEvent(UEventRefreshLoginState event) {
         if (event.isLogin()) {
             tv_nickname.setText(AppContext.self().getLocalUser().getNickname());
             ImageManage.self().loadImage(AppContext.self().getLocalUser().getUserPic(), iv_user_pic);
+            if (CommonUtil.isNull(AppContext.self().getLocalUser().getEmail())) {
+                sv_bind.setVisibility(VISIBLE);
+                sv_unbind.setVisibility(GONE);
+            } else {
+                sv_unbind.setVisibility(VISIBLE);
+                sv_bind.setVisibility(GONE);
+                sv_unbind.setSummary(AppContext.self().getLocalUser().getEmail());
+            }
         } else {
+            sv_bind.setVisibility(GONE);
+            sv_unbind.setVisibility(GONE);
             tv_nickname.setText("点击登录");
             iv_user_pic.setImageResource(R.drawable.theme_music_dcover);
         }

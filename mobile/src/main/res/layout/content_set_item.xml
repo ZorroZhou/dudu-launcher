@@ -28,8 +28,6 @@
             st:titleEx="音乐播放器控制器，可使用APP控制第三方音乐播放器"
             st:type="buttonB" />
 
-        <View style="@style/Interval" />
-
         <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_music_inside_cover"
             android:layout_width="match_parent"
@@ -38,8 +36,6 @@
             st:summary2="@string/set_no"
             st:titleEx="音乐播放器内置封面(内置封面比较准确,搜索封面可能不准确)"
             st:type="switchB" />
-
-        <View style="@style/Interval" />
 
         <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_music_lrc"
@@ -50,8 +46,6 @@
             st:titleEx="显示歌词,显示歌词后,音乐作者和标题会放到一行显示"
             st:type="switchB" />
 
-        <View style="@style/Interval" />
-
         <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_music_auto_run"
             android:layout_width="match_parent"
@@ -60,8 +54,6 @@
             st:summary2="@string/set_no"
             st:titleEx="音乐自动播放,打开APP后,直接执行播放命令"
             st:type="switchB" />
-
-        <View style="@style/Interval" />
 
         <TextView
             android:layout_width="match_parent"
@@ -78,8 +70,6 @@
             android:layout_height="wrap_content"
             st:titleEx="天气定位"
             st:type="buttonB" />
-
-        <View style="@style/Interval" />
 
         <TextView
             android:layout_width="match_parent"
@@ -99,7 +89,6 @@
             st:titleEx="不导航时使用巡航"
             st:type="switchB" />
 
-        <View style="@style/Interval" />
 
         <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_gaode_chajian"
@@ -108,7 +97,6 @@
             st:titleEx="高德插件(4*3)"
             st:type="buttonB" />
 
-        <View style="@style/Interval" />
 
         <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_use_navc_popup"
@@ -118,8 +106,6 @@
             st:summary2="@string/set_no"
             st:titleEx="导航弹出窗"
             st:type="switchB" />
-
-        <View style="@style/Interval" />
 
         <TextView
             android:layout_width="match_parent"
@@ -138,6 +124,5 @@
             st:titleEx="控制层实现，如声音控制，一件清理等功能的实现，不同的车机可能处理方式不同。"
             st:type="buttonB" />
 
-        <View style="@style/Interval" />
     </LinearLayout>
 </ScrollView>

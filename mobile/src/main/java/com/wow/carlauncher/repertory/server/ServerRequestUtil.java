@@ -32,6 +32,11 @@ public class ServerRequestUtil {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if (response.body() != null) {
+                    String sss = response.header("Set-Cookie");
+                    if (CommonUtil.isNotNull(sss)) {
+                        OkHttpManage.self().setCookie(sss);
+                    }
+
                     String result = response.body().string();
                     LogEx.d(ServerRequestUtil.class, "onSuccess: " + result);
                     if (result.length() > 2) {
@@ -72,6 +77,10 @@ public class ServerRequestUtil {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if (response.body() != null) {
+                    String sss = response.header("Set-Cookie");
+                    if (CommonUtil.isNotNull(sss)) {
+                        OkHttpManage.self().setCookie(sss);
+                    }
                     String result = response.body().string();
                     LogEx.d(ServerRequestUtil.class, "onSuccess: " + result);
                     if (result.length() > 2) {

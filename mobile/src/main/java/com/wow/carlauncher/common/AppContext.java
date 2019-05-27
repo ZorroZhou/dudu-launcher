@@ -7,7 +7,7 @@ import android.provider.Settings;
 
 import com.wow.carlauncher.CarLauncherApplication;
 import com.wow.carlauncher.common.user.LocalUser;
-import com.wow.carlauncher.common.user.event.UEventLoginState;
+import com.wow.carlauncher.common.user.event.UEventRefreshLoginState;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.GsonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
@@ -85,14 +85,14 @@ public class AppContext {
 
     public void loginSuccess(LocalUser localUser) {
         this.localUser = localUser;
-        EventBus.getDefault().post(new UEventLoginState().setLogin(true));
+        EventBus.getDefault().post(new UEventRefreshLoginState().setLogin(true));
         SharedPreUtil.saveLong(LOGIN_USER_ID, localUser.getUserId());
         SharedPreUtil.saveString(LOGIN_USER_INFO, GsonUtil.getGson().toJson(localUser));
     }
 
     public void logout() {
         this.localUser = null;
-        EventBus.getDefault().post(new UEventLoginState().setLogin(false));
+        EventBus.getDefault().post(new UEventRefreshLoginState().setLogin(false));
         SharedPreUtil.saveLong(LOGIN_USER_ID, -1L);
         SharedPreUtil.saveString(LOGIN_USER_INFO, "");
     }
@@ -219,6 +219,7 @@ public class AppContext {
                         } else {
                             if (code == 0) {
                                 ToastManage.self().show("欢迎回来:" + localUser.getNickname());
+                                AppContext.self().loginSuccess(new LocalUser().setUserId(loginInfo.getId()).setToken(loginInfo.getToken()).setUserPic(user.getUserPic()).setNickname(user.getNickname()).setEmail(loginInfo.getEmail()));
                             }
                         }
                     });

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="SetView">
-        <attr name="contentLayout" format="reference" />
         <attr name="titleEx" format="string" />
         <attr name="summary" format="string" />
         <attr name="summary2" format="string" />

@@ -30,7 +30,6 @@
             st:titleEx="是否使用第三方APP加载器"
             st:type="switchB" />
 
-        <View style="@style/Interval" />
 
         <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_back_yanchi"
@@ -39,7 +38,6 @@
             st:titleEx="返回桌面的延迟时间"
             st:type="buttonB" />
 
-        <View style="@style/Interval" />
 
         <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_clear"
@@ -48,7 +46,6 @@
             st:titleEx="清理打开的应用选项"
             st:type="buttonB" />
 
-        <View style="@style/Interval" />
 
         <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_open1"
@@ -57,7 +54,6 @@
             st:titleEx="第一个被打开的APP"
             st:type="buttonB" />
 
-        <View style="@style/Interval" />
 
         <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_open2"
@@ -66,7 +62,6 @@
             st:titleEx="第二个被打开的APP"
             st:type="buttonB" />
 
-        <View style="@style/Interval" />
 
         <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_open3"
@@ -75,7 +70,6 @@
             st:titleEx="第三个被打开的APP"
             st:type="buttonB" />
 
-        <View style="@style/Interval" />
 
         <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_open4"
@@ -84,6 +78,6 @@
             st:titleEx="第四个被打开的APP"
             st:type="buttonB" />
 
-        <View style="@style/Interval" />
+
     </LinearLayout>
 </ScrollView>

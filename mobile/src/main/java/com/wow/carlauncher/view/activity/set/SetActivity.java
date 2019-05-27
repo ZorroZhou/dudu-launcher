@@ -18,7 +18,7 @@ import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.AppContext;
 import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.user.LocalUser;
-import com.wow.carlauncher.common.user.event.UEventLoginState;
+import com.wow.carlauncher.common.user.event.UEventRefreshLoginState;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.view.SetView;
@@ -180,7 +180,7 @@ public class SetActivity extends BaseActivity implements SetFrame {
 
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
-    public void onEvent(UEventLoginState event) {
+    public void onEvent(UEventRefreshLoginState event) {
         if (!event.isLogin()) {
             loadQQOpen();
         }
@@ -333,7 +333,7 @@ public class SetActivity extends BaseActivity implements SetFrame {
                             CommonService.login(accessToken, nickname, userPic, (success, msg, loginInfo) -> {
                                 if (success == 0 && loginInfo.getId() != null && CommonUtil.isNotNull(loginInfo.getToken())) {
                                     ToastManage.self().show("登陆成功");
-                                    AppContext.self().loginSuccess(new LocalUser().setUserId(loginInfo.getId()).setToken(loginInfo.getToken()).setUserPic(userPic2).setNickname(nickname));
+                                    AppContext.self().loginSuccess(new LocalUser().setUserId(loginInfo.getId()).setToken(loginInfo.getToken()).setUserPic(userPic2).setNickname(nickname).setEmail(loginInfo.getEmail()));
                                 } else {
                                     hideLoading();
                                     ToastManage.self().show("登陆失败:" + msg);

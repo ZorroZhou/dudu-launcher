@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.AppContext;
-import com.wow.carlauncher.common.user.event.UEventLoginState;
+import com.wow.carlauncher.common.user.event.UEventRefreshLoginState;
 import com.wow.carlauncher.ex.manage.ImageManage;
 import com.wow.carlauncher.view.activity.launcher.BaseThemeView;
 
@@ -40,7 +40,7 @@ public class LPersionView extends BaseThemeView {
     @Override
     protected void initView() {
         super.initView();
-        onEvent(new UEventLoginState().setLogin(AppContext.self().getLocalUser() != null));
+        onEvent(new UEventRefreshLoginState().setLogin(AppContext.self().getLocalUser() != null));
     }
 
 
@@ -51,7 +51,7 @@ public class LPersionView extends BaseThemeView {
     TextView tv_nickname;
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(UEventLoginState event) {
+    public void onEvent(UEventRefreshLoginState event) {
         if (event.isLogin()) {
             ImageManage.self().loadImage(AppContext.self().getLocalUser().getUserPic(), iv_user_pic);
             tv_nickname.setText(AppContext.self().getLocalUser().getNickname());

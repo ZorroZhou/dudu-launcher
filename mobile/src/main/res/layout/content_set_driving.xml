@@ -28,8 +28,6 @@
             st:titleEx="驾驶界面"
             st:type="buttonB" />
 
-        <View style="@style/Interval" />
-
         <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_driving_animation"
             android:layout_width="match_parent"
@@ -38,8 +36,6 @@
             st:summary2="@string/set_no"
             st:titleEx="驾驶界面启动动画"
             st:type="switchB" />
-
-        <View style="@style/Interval" />
 
         <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_auto_to_driving"
@@ -50,16 +46,12 @@
             st:titleEx="自动跳转到驾驶界面"
             st:type="switchB" />
 
-        <View style="@style/Interval" />
-
         <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_auto_to_driving_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             st:titleEx="驾驶界面跳转方式"
             st:type="buttonB" />
-
-        <View style="@style/Interval" />
 
         <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_auto_to_driving_time"
@@ -68,7 +60,5 @@
             st:titleEx="跳转驾驶界面时间(秒)"
             st:type="buttonB" />
 
-        <View style="@style/Interval" />
     </LinearLayout>
-
 </ScrollView>

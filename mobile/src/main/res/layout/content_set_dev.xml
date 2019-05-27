@@ -27,7 +27,5 @@
             st:summary="测试绑定"
             st:titleEx="OBD绑定"
             st:type="buttonB" />
-
-        <View style="@style/Interval" />
     </LinearLayout>
 </ScrollView>

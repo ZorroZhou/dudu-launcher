@@ -5,10 +5,29 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.telephony.TelephonyManager;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 /**
  * Created by Che on 2016/11/21 0021.
  */
 public class NetWorkUtil {
+
+    public static boolean isOnline() {
+        URL url;
+        try {
+            url = new URL("https://www.baidu.com");
+            InputStream stream = url.openStream();
+            return true;
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
     /**
      * 判断是否有网络连接

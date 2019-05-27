@@ -50,6 +50,9 @@ public class AppIconTemp {
         putIcon("com.android.settings", R.drawable.app_icon_set);
         //浏览器
         putIcon("com.android.browser", R.drawable.app_icon_browser);
+
+        //ES浏览器
+        putIcon("com.estrongs.android.pop", R.drawable.app_icon_esfile);
     }
 
     static void putIcon(String pname, int r) {

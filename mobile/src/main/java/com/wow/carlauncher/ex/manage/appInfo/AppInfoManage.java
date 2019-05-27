@@ -251,8 +251,10 @@ public class AppInfoManage extends ContextEx {
                 allAppInfosMap.putAll(internalAppsInfoMap);
                 for (ResolveInfo info : apps) {
                     String packageName = info.activityInfo.applicationInfo.packageName;
+                    System.out.println(info.activityInfo.applicationInfo.packageName);
                     allAppInfosMap.put(packageName, new AppInfo(info.loadLabel(packageManager).toString(), packageName, MARK_OTHER_APP));
                 }
+
 
                 allAppInfosList.addAll(allAppInfosMap.values());
                 Collections.sort(allAppInfosList, (appInfo1, appInfo2) -> appInfo2.appMark - appInfo1.appMark);

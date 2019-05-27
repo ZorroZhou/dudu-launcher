@@ -152,6 +152,8 @@ public class SetOnlineSkinSelectView extends SetBaseView implements View.OnClick
                     ((TextView) convertView.findViewById(R.id.uname)).setText("系统管理员");
                     ((ImageView) convertView.findViewById(R.id.upic)).setImageResource(R.mipmap.ic_launcher);
                 }
+
+                ((TextView) convertView.findViewById(R.id.xiazai_num)).setText(String.valueOf(model.getDownTime() + "次下载"));
                 convertView.setTag(model);
             }
             return convertView;

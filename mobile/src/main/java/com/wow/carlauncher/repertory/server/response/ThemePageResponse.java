@@ -12,6 +12,16 @@ public class ThemePageResponse extends PageResponse<ThemePageResponse.UserThemeD
         private Integer version;
         private String apkPackage;
         private String versionName;
+        private Integer downTime;
+
+        public Integer getDownTime() {
+            return downTime;
+        }
+
+        public UserThemeDto setDownTime(Integer downTime) {
+            this.downTime = downTime;
+            return this;
+        }
 
         public String getNickName() {
             return nickName;

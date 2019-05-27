@@ -9,6 +9,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.common.AppContext;
 import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.DownUtil;
@@ -21,7 +22,10 @@ import com.wow.carlauncher.repertory.server.UserThemeService;
 import com.wow.carlauncher.repertory.server.response.ThemePageResponse;
 import com.wow.carlauncher.view.activity.set.SetActivity;
 import com.wow.carlauncher.view.activity.set.SetBaseView;
+import com.wow.carlauncher.view.activity.set.event.SEventRequestLogin;
 import com.wow.carlauncher.view.base.BaseAdapterEx;
+
+import org.greenrobot.eventbus.EventBus;
 
 public class SetOnlineSkinSelectView extends SetBaseView implements View.OnClickListener {
     private SelectAdapter selectAdapter;
@@ -66,6 +70,11 @@ public class SetOnlineSkinSelectView extends SetBaseView implements View.OnClick
 
     @Override
     public void onClick(View v) {
+        if (AppContext.self().getLocalUser() == null) {
+            ToastManage.self().show("请先登陆再使用此功能!");
+            EventBus.getDefault().post(new SEventRequestLogin());
+            return;
+        }
         loadPage();
         getActivity().addSetView(this);
     }

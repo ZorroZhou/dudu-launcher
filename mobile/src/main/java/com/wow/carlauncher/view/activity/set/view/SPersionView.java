@@ -12,6 +12,7 @@ import com.wow.carlauncher.common.AppContext;
 import com.wow.carlauncher.common.user.event.UEventLoginState;
 import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.ex.manage.ImageManage;
+import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.view.activity.set.SetActivity;
 import com.wow.carlauncher.view.activity.set.SetBaseView;
 import com.wow.carlauncher.view.activity.set.event.SEventRequestLogin;
@@ -61,7 +62,10 @@ public class SPersionView extends SetBaseView {
         View.OnClickListener onClickListener = v -> {
             switch (v.getId()) {
                 case R.id.ll_user:
-                    EventBus.getDefault().post(new SEventRequestLogin());
+                    if (AppContext.self().getLocalUser() == null) {
+                        EventBus.getDefault().post(new SEventRequestLogin());
+                        return;
+                    }
                     break;
                 case R.id.sv_logout:
                     AppContext.self().logout();

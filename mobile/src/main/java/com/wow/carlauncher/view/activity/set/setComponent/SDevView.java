@@ -1,4 +1,4 @@
-package com.wow.carlauncher.view.activity.set.view;
+package com.wow.carlauncher.view.activity.set.setComponent;
 
 import android.annotation.SuppressLint;
 import android.view.View;

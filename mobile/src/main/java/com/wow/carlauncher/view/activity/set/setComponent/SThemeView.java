@@ -1,4 +1,4 @@
-package com.wow.carlauncher.view.activity.set.view;
+package com.wow.carlauncher.view.activity.set.setComponent;
 
 import android.annotation.SuppressLint;
 import android.content.pm.PackageInfo;
@@ -16,8 +16,8 @@ import com.wow.carlauncher.repertory.db.entiy.SkinInfo;
 import com.wow.carlauncher.repertory.db.manage.DatabaseManage;
 import com.wow.carlauncher.view.activity.set.SetActivity;
 import com.wow.carlauncher.view.activity.set.SetBaseView;
-import com.wow.carlauncher.view.activity.set.listener.SetOnlineSkinSelectView;
-import com.wow.carlauncher.view.activity.set.listener.SetSingleSelectView;
+import com.wow.carlauncher.view.activity.set.commonView.SetOnlineSkinSelectView;
+import com.wow.carlauncher.view.activity.set.commonView.SetSingleSelectView;
 import com.wow.carlauncher.view.event.EventSkinInstall;
 
 import org.greenrobot.eventbus.Subscribe;

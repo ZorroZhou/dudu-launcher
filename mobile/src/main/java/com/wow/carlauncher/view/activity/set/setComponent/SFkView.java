@@ -1,4 +1,4 @@
-package com.wow.carlauncher.view.activity.set.view;
+package com.wow.carlauncher.view.activity.set.setComponent;
 
 import android.annotation.SuppressLint;
 import android.widget.ArrayAdapter;
@@ -19,7 +19,7 @@ import com.wow.carlauncher.ex.plugin.fk.FangkongProtocolEnum;
 import com.wow.carlauncher.view.activity.set.SetActivity;
 import com.wow.carlauncher.view.activity.set.SetBaseView;
 import com.wow.carlauncher.view.activity.set.event.SEventRefreshDriving;
-import com.wow.carlauncher.view.activity.set.listener.SetSingleSelectView;
+import com.wow.carlauncher.view.activity.set.commonView.SetSingleSelectView;
 import com.wow.carlauncher.view.dialog.ListDialog;
 
 import org.greenrobot.eventbus.EventBus;

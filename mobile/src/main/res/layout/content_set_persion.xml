@@ -56,6 +56,16 @@
         <View style="@style/Interval" />
 
         <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/sv_bind"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:titleEx="绑定邮箱(登陆网站上传主题等)"
+            st:type="buttonB" />
+
+        <View style="@style/Interval" />
+
+
+        <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_logout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

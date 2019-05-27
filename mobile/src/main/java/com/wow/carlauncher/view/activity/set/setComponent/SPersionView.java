@@ -1,4 +1,4 @@
-package com.wow.carlauncher.view.activity.set.view;
+package com.wow.carlauncher.view.activity.set.setComponent;
 
 import android.annotation.SuppressLint;
 import android.view.View;
@@ -12,7 +12,6 @@ import com.wow.carlauncher.common.AppContext;
 import com.wow.carlauncher.common.user.event.UEventLoginState;
 import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.ex.manage.ImageManage;
-import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.view.activity.set.SetActivity;
 import com.wow.carlauncher.view.activity.set.SetBaseView;
 import com.wow.carlauncher.view.activity.set.event.SEventRequestLogin;

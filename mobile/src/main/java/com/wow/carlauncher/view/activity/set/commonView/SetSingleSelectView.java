@@ -1,4 +1,4 @@
-package com.wow.carlauncher.view.activity.set.listener;
+package com.wow.carlauncher.view.activity.set.commonView;
 
 import android.content.Context;
 import android.view.View;
@@ -15,16 +15,13 @@ import com.wow.carlauncher.view.activity.set.setItem.SetAppInfo;
 import com.wow.carlauncher.view.activity.set.setItem.SetEnum;
 import com.wow.carlauncher.view.base.BaseAdapterEx;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
-public abstract class SetMultipleSelectView<T extends SetEnum> extends SetBaseView implements View.OnClickListener {
-
-    private String title;
+public abstract class SetSingleSelectView<T extends SetEnum> extends SetBaseView implements View.OnClickListener {
     private SelectAdapter<T> selectAdapter;
+    private String title;
 
-    public SetMultipleSelectView(SetActivity context, String title) {
+    public SetSingleSelectView(SetActivity context, String title) {
         super(context);
         this.title = title;
     }
@@ -36,6 +33,10 @@ public abstract class SetMultipleSelectView<T extends SetEnum> extends SetBaseVi
         list.setAdapter(selectAdapter);
         list.setOnItemClickListener((parent, view, position, id) -> {
             if (position < selectAdapter.getCount()) {
+                for (int i = 0; i < selectAdapter.getCount(); i++) {
+                    Item<T> item = selectAdapter.getItem(i);
+                    item.checked = false;
+                }
                 selectAdapter.getItem(position).checked = !selectAdapter.getItem(position).checked;
                 selectAdapter.notifyDataSetChanged();
             }
@@ -44,9 +45,9 @@ public abstract class SetMultipleSelectView<T extends SetEnum> extends SetBaseVi
 
     public abstract Collection<T> getAll();
 
-    public abstract Collection<T> getCurr();
+    public abstract T getCurr();
 
-    public abstract boolean onSelect(Collection<T> t);
+    public abstract boolean onSelect(T t);
 
     public boolean equals(T t1, T t2) {
         if (t1 == null || t2 == null) {
@@ -56,9 +57,7 @@ public abstract class SetMultipleSelectView<T extends SetEnum> extends SetBaseVi
             return CommonUtil.equals(((SkinInfo) t1).getMark(), ((SkinInfo) t2).getMark());
         }
         if (t1 instanceof SetAppInfo && t2 instanceof SetAppInfo) {
-            String clazz1 = ((SetAppInfo) t1).getAppInfo().clazz.replace("1:", "").replace("2:", "");
-            String clazz2 = ((SetAppInfo) t2).getAppInfo().clazz.replace("1:", "").replace("2:", "");
-            return CommonUtil.equals(clazz1, clazz2);
+            return CommonUtil.equals(((SetAppInfo) t1).getAppInfo().clazz, ((SetAppInfo) t2).getAppInfo().clazz);
         }
         return CommonUtil.equals(t1, t2);
     }
@@ -67,20 +66,14 @@ public abstract class SetMultipleSelectView<T extends SetEnum> extends SetBaseVi
     public void onClick(View v) {
         selectAdapter.clear();
 
-        Collection<T> curr = getCurr();
-        if (curr == null) {
-            curr = new ArrayList<>();
-        }
+        T curr = getCurr();
         Collection<T> list = getAll();
         for (T item : list) {
-            SetMultipleSelectView.Item<T> ii = new SetMultipleSelectView.Item<>();
+            Item<T> ii = new Item<>();
             ii.data = item;
             ii.checked = false;
-            for (T select : curr) {
-                if (equals(ii.data, select)) {
-                    ii.checked = true;
-                    break;
-                }
+            if (equals(ii.data, curr)) {
+                ii.checked = true;
             }
             selectAdapter.addItem(ii);
         }
@@ -114,14 +107,18 @@ public abstract class SetMultipleSelectView<T extends SetEnum> extends SetBaseVi
 
     @Override
     public boolean rightAction() {
-        List<T> select = new ArrayList<>();
+        T select = null;
         for (int i = 0; i < selectAdapter.getCount(); i++) {
             Item<T> item = selectAdapter.getItem(i);
             if (item.checked) {
-                select.add(item.data);
+                select = item.data;
+                break;
             }
         }
-        return onSelect(select);
+        if (!equals(select, getCurr())) {
+            return onSelect(select);
+        }
+        return true;
     }
 
 
@@ -145,5 +142,4 @@ public abstract class SetMultipleSelectView<T extends SetEnum> extends SetBaseVi
             return convertView;
         }
     }
-
 }

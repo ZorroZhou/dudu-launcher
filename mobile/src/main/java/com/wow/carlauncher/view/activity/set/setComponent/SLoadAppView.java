@@ -1,4 +1,4 @@
-package com.wow.carlauncher.view.activity.set.view;
+package com.wow.carlauncher.view.activity.set.setComponent;
 
 import android.annotation.SuppressLint;
 
@@ -11,9 +11,9 @@ import com.wow.carlauncher.ex.manage.appInfo.AppInfo;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
 import com.wow.carlauncher.view.activity.set.SetActivity;
 import com.wow.carlauncher.view.activity.set.SetBaseView;
-import com.wow.carlauncher.view.activity.set.listener.SetNumSelectView;
-import com.wow.carlauncher.view.activity.set.listener.SetSingleSelectView;
-import com.wow.carlauncher.view.activity.set.listener.SetSwitchOnClickListener;
+import com.wow.carlauncher.view.activity.set.commonView.SetNumSelectView;
+import com.wow.carlauncher.view.activity.set.commonView.SetSingleSelectView;
+import com.wow.carlauncher.view.activity.set.commonView.SetSwitchOnClickListener;
 import com.wow.carlauncher.view.activity.set.setItem.SetAppInfo;
 
 import java.util.ArrayList;

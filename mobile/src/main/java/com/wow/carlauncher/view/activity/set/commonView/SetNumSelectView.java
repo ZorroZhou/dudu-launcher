@@ -1,4 +1,4 @@
-package com.wow.carlauncher.view.activity.set.listener;
+package com.wow.carlauncher.view.activity.set.commonView;
 
 import android.view.View;
 import android.widget.SeekBar;

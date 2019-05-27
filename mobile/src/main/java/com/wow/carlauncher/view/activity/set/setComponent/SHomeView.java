@@ -1,4 +1,4 @@
-package com.wow.carlauncher.view.activity.set.view;
+package com.wow.carlauncher.view.activity.set.setComponent;
 
 import android.annotation.SuppressLint;
 import android.support.v7.app.AlertDialog;
@@ -25,9 +25,9 @@ import com.wow.carlauncher.view.activity.set.SetActivity;
 import com.wow.carlauncher.view.activity.set.SetBaseView;
 import com.wow.carlauncher.view.activity.set.event.SEventPromptShowRefresh;
 import com.wow.carlauncher.view.activity.set.event.SEventRequestLauncherRecreate;
-import com.wow.carlauncher.view.activity.set.listener.SetNumSelectView;
-import com.wow.carlauncher.view.activity.set.listener.SetSingleSelectView;
-import com.wow.carlauncher.view.activity.set.listener.SetSwitchOnClickListener;
+import com.wow.carlauncher.view.activity.set.commonView.SetNumSelectView;
+import com.wow.carlauncher.view.activity.set.commonView.SetSingleSelectView;
+import com.wow.carlauncher.view.activity.set.commonView.SetSwitchOnClickListener;
 
 import org.greenrobot.eventbus.EventBus;
 

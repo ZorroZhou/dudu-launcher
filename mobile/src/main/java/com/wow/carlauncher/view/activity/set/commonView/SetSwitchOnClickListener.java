@@ -1,4 +1,4 @@
-package com.wow.carlauncher.view.activity.set.listener;
+package com.wow.carlauncher.view.activity.set.commonView;
 
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.view.SetView;

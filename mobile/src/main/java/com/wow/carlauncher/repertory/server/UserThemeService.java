@@ -17,4 +17,11 @@ public class UserThemeService {
         param.put("rows", rows);
         return ServerRequestUtil.post(ServerConstant.SERVER_URL + GET_PAGE, param, ThemePageResponse.class, commonCallback);
     }
+
+    private final static String GET_URL = "api/app/userTheme/getUrl/[ID]";
+    private final static String GET_URL_ID = "[ID]";
+
+    public static Call getUrl(long id, final CommonCallback<String> commonCallback) {
+        return ServerRequestUtil.get(ServerConstant.SERVER_URL + GET_URL.replace(GET_URL_ID, id + ""), String.class, commonCallback);
+    }
 }

@@ -17,6 +17,7 @@ import com.wow.carlauncher.ex.manage.ImageManage;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.repertory.db.entiy.SkinInfo;
 import com.wow.carlauncher.repertory.db.manage.DatabaseManage;
+import com.wow.carlauncher.repertory.server.CommonCallback;
 import com.wow.carlauncher.repertory.server.UserThemeService;
 import com.wow.carlauncher.repertory.server.response.ThemePageResponse;
 import com.wow.carlauncher.view.activity.set.SetActivity;
@@ -41,12 +42,11 @@ public class SetOnlineSkinSelectView extends SetBaseView implements View.OnClick
             new AlertDialog.Builder(getContext()).setTitle("是否下载新皮肤")
                     .setNegativeButton("取消", null)
                     .setPositiveButton("下载", (dialog12, which) -> {
-//                        loadDownloadApk(appUpdate.getUrl(), appUpdate.getVersion());
                         ThemePageResponse.UserThemeDto model = selectAdapter.getItem(position);
-                        DownUtil.loadDownloadApk(getActivity()
+                        UserThemeService.getUrl(model.getId(), (code, msg, s) -> TaskExecutor.self().autoPost(() -> DownUtil.loadDownloadApk(getActivity()
                                 , "正在下载主题"
                                 , "/temp" + model.getVersion() + ".apk"
-                                , model.getUrl());
+                                , s)));
                     }).show();
         });
 

@@ -8,7 +8,7 @@ public class ThemePageResponse extends PageResponse<ThemePageResponse.UserThemeD
         private String userPic;
         private String themeName;
         private String themePic;
-        private String url;
+        private Long id;
         private Integer version;
         private String apkPackage;
         private String versionName;
@@ -49,12 +49,12 @@ public class ThemePageResponse extends PageResponse<ThemePageResponse.UserThemeD
             return this;
         }
 
-        public String getUrl() {
-            return url;
+        public Long getId() {
+            return id;
         }
 
-        public UserThemeDto setUrl(String url) {
-            this.url = url;
+        public UserThemeDto setId(Long id) {
+            this.id = id;
             return this;
         }
 

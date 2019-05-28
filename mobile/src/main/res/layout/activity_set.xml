@@ -18,9 +18,10 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <RelativeLayout
+            <com.zhy.android.percent.support.PercentRelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:background="@drawable/set_view_top_bg"
                 android:orientation="horizontal">
 
@@ -30,25 +31,28 @@
                     android:gravity="center"
                     android:text="设置"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="16sp" />
+                    app:layout_textSizePercent="40%h" />
 
                 <ImageView
                     android:id="@+id/btn_back"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
                     android:layout_alignParentLeft="true"
                     android:clickable="true"
                     android:contentDescription="@string/app_name"
                     android:focusable="true"
                     android:padding="10dp"
-                    android:src="@mipmap/ic_back2" />
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/ic_back2"
+                    app:layout_heightPercent="100%h"
+                    app:layout_widthPercent="100%h" />
 
-            </RelativeLayout>
+            </com.zhy.android.percent.support.PercentRelativeLayout>
 
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1">
+                android:layout_weight="9">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -193,32 +197,41 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <LinearLayout
+            <com.zhy.android.percent.support.PercentLinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:background="@drawable/set_view_top_bg"
                 android:orientation="horizontal">
 
-                <LinearLayout
+                <com.zhy.android.percent.support.PercentLinearLayout
                     android:id="@+id/set_content_back"
-                    android:layout_width="100dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="left|center_vertical"
                     android:padding="10dp">
 
-                    <ImageView
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:src="@mipmap/ic_back2" />
+                    <com.zhy.android.percent.support.PercentLinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:scaleType="fitXY"
+                            android:src="@mipmap/ic_back2"
+                            app:layout_heightPercent="100%h"
+                            app:layout_widthPercent="100%h" />
+                    </com.zhy.android.percent.support.PercentLinearLayout>
 
                     <TextView
-                        android:layout_width="75dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical|left"
                         android:text="返回"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="14sp" />
-                </LinearLayout>
+                        app:layout_textSizePercent="35%h" />
+                </com.zhy.android.percent.support.PercentLinearLayout>
 
                 <TextView
                     android:id="@+id/set_content_title"
@@ -228,24 +241,24 @@
                     android:gravity="center"
                     android:text="标题"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="16sp" />
+                    app:layout_textSizePercent="40%h" />
 
                 <TextView
                     android:id="@+id/set_content_save"
-                    android:layout_width="100dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical|right"
                     android:paddingRight="10dp"
                     android:text="保存"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="14sp" />
-            </LinearLayout>
+                    app:layout_textSizePercent="35%h" />
+            </com.zhy.android.percent.support.PercentLinearLayout>
 
             <FrameLayout
                 android:id="@+id/set_content"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_weight="9"
                 android:orientation="vertical" />
         </LinearLayout>
     </FrameLayout>

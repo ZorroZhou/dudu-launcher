@@ -6,6 +6,7 @@ import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
+import com.wow.carlauncher.ex.manage.ble.BleManage;
 import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarInfo;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarTp;
@@ -64,30 +65,18 @@ public class CarInfoActivity extends BaseActivity {
         onEventCall(ObdPlugin.self().getCurrentPObdEventCarInfo());
         onEventCall(ObdPlugin.self().getCurrentPObdEventCarTp());
         refreshObdState();
-        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
 
     private void refreshObdState() {
-        String address = SharedPreUtil.getString(CommonData.SDATA_OBD_ADDRESS);
-        if (CommonUtil.isNotNull(address)) {
-//            if (BleManage.self().client().getConnectStatus(address) == STATUS_DEVICE_CONNECTED) {
-//                setTitle("OBD(已连接)");
-//                if (ObdPlugin.self().supportTp()) {
-//                    tv_tp_title.setText("胎压数据:");
-//                } else {
-//                    tv_tp_title.setText("胎压数据(不支持):");
-//                }
-//            } else {
-//                setTitle("OBD(未连接)");
-//            }
+        if (ObdPlugin.self().isConnect()) {
+            setTitle("OBD(已连接)");
+            if (ObdPlugin.self().supportTp()) {
+                tv_tp_title.setText("胎压数据:");
+            } else {
+                tv_tp_title.setText("胎压数据(不支持):");
+            }
         } else {
-            setTitle("OBD(未绑定)");
+            setTitle("OBD(未连接)");
         }
     }
 
@@ -96,51 +85,44 @@ public class CarInfoActivity extends BaseActivity {
         refreshObdState();
     }
 
-    @Subscribe(threadMode = ThreadMode.ASYNC)
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventCall(final PObdEventCarInfo event) {
-        runOnUiThread(() -> {
-            if (event.getSpeed() != null) {
-                String msg = "车速:" + event.getSpeed() + "KM/H";
-                tv_info_speed.setText(msg);
-            }
-            if (event.getRev() != null) {
-                String msg = "转速:" + event.getRev() + "R/S";
-                tv_info_rev.setText(msg);
-            }
-            if (event.getWaterTemp() != null) {
-                String msg = "水温:" + event.getWaterTemp() + "℃";
-                tv_info_wtemp.setText(msg);
-            }
-            if (event.getOilConsumption() != null) {
-                String msg = "油量:" + event.getOilConsumption() + "%";
-                tv_info_oil.setText(msg);
-            }
-        });
+        if (event.getSpeed() != null) {
+            String msg = "车速:" + event.getSpeed() + "KM/H";
+            tv_info_speed.setText(msg);
+        }
+        if (event.getRev() != null) {
+            String msg = "转速:" + event.getRev() + "R/S";
+            tv_info_rev.setText(msg);
+        }
+        if (event.getWaterTemp() != null) {
+            String msg = "水温:" + event.getWaterTemp() + "℃";
+            tv_info_wtemp.setText(msg);
+        }
+        if (event.getOilConsumption() != null) {
+            String msg = "油量:" + event.getOilConsumption() + "%";
+            tv_info_oil.setText(msg);
+        }
     }
 
-    @Subscribe(threadMode = ThreadMode.ASYNC)
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventCall(final PObdEventCarTp event) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (event.getlFTirePressure() != null && event.getlFTemp() != null) {
-                    String msg = "左前轮:" + String.format(Locale.CHINA, "%.1f", event.getlFTirePressure()) + "/" + event.getlFTemp() + "℃";
-                    tv_tp_lf.setText(msg);
-                }
-                if (event.getlBTemp() != null && event.getlBTirePressure() != null) {
-                    String msg = "左后轮:" + String.format(Locale.CHINA, "%.1f", event.getlBTirePressure()) + "/" + event.getlBTemp() + "℃";
-                    tv_tp_lb.setText(msg);
-                }
+        if (event.getlFTirePressure() != null && event.getlFTemp() != null) {
+            String msg = "左前轮:" + String.format(Locale.CHINA, "%.1f", event.getlFTirePressure()) + "/" + event.getlFTemp() + "℃";
+            tv_tp_lf.setText(msg);
+        }
+        if (event.getlBTemp() != null && event.getlBTirePressure() != null) {
+            String msg = "左后轮:" + String.format(Locale.CHINA, "%.1f", event.getlBTirePressure()) + "/" + event.getlBTemp() + "℃";
+            tv_tp_lb.setText(msg);
+        }
 
-                if (event.getrFTirePressure() != null && event.getrFTemp() != null) {
-                    String msg = "右前轮:" + String.format(Locale.CHINA, "%.1f", event.getrFTirePressure()) + "/" + event.getrFTemp() + "℃";
-                    tv_tp_rf.setText(msg);
-                }
-                if (event.getrBTirePressure() != null && event.getrBTemp() != null) {
-                    String msg = "右后轮:" + String.format(Locale.CHINA, "%.1f", event.getrBTirePressure()) + "/" + event.getrBTemp() + "℃";
-                    tv_tp_rb.setText(msg);
-                }
-            }
-        });
+        if (event.getrFTirePressure() != null && event.getrFTemp() != null) {
+            String msg = "右前轮:" + String.format(Locale.CHINA, "%.1f", event.getrFTirePressure()) + "/" + event.getrFTemp() + "℃";
+            tv_tp_rf.setText(msg);
+        }
+        if (event.getrBTirePressure() != null && event.getrBTemp() != null) {
+            String msg = "右后轮:" + String.format(Locale.CHINA, "%.1f", event.getrBTirePressure()) + "/" + event.getrBTemp() + "℃";
+            tv_tp_rb.setText(msg);
+        }
     }
 }

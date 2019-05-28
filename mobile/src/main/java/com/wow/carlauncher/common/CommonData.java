@@ -215,13 +215,13 @@ public class CommonData {
     public static final String SDATA_AUTO_TO_DRIVING_TYPE = "SDATA_AUTO_TO_DRIVING_TYPE";//是否自动跳入驾驶界面
     public static final String SDATA_AUTO_TO_DRIVING_TIME = "SDATA_AUTO_TO_DRIVING_TIME";//自动跳入驾驶界面时间
 
-    public static final String SDATA_KUWO_LAST_MUSIC_NAME = "SDATA_KUWO_LAST_MUSIC_NAME";//
-    public static final String SDATA_KUWO_LAST_MUSIC_ARTIST = "SDATA_KUWO_LAST_MUSIC_ARTIST";//
-    public static final String SDATA_MUSIC_AUTO_RUN = "SDATA_MUSIC_AUTO_RUN";//自动播放音乐
+    public static final String SDATA_KUWO_MUSIC_AUTO_RUN = "SDATA_KUWO_MUSIC_AUTO_RUN";//酷我自动播放命令
 
-    public static final String SDATA_MY_FAV_RADIOS = "SDATA_MY_FAV_RADIOS";
+    public static final String SDATA_QQ_MUSIC_REG_DELAY = "SDATA_QQ_MUSIC_REG_DELAY";//酷我自动播放命令
 
-    public static final String SDATA_START_LAST_ACTIVITY = "SDATA_START_LAST_ACTIVITY";
+    public static final String SDATA_MY_FAV_RADIOS = "SDATA_MY_FAV_RADIOS";//我的FM收藏
+
+    public static final String SDATA_START_LAST_ACTIVITY = "SDATA_START_LAST_ACTIVITY";//最后一次活动的记录
     public static final String SDATA_LAST_ACTIVITY_TYPE = "SDATA_LAST_ACTIVITY_TYPE";
     public static final int SDATA_LAST_ACTIVITY_TYPE_NONE = 0;
     public static final int SDATA_LAST_ACTIVITY_TYPE_MUSIC = 1;

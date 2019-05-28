@@ -85,8 +85,8 @@ public class SItemView extends SetBaseView {
     @BindView(R.id.sv_amap_xunhang)
     SetView sv_amap_xunhang;
 
-    @BindView(R.id.sv_music_auto_run)
-    SetView sv_music_auto_run;
+    @BindView(R.id.sv_music_kw_auto_run)
+    SetView sv_music_kw_auto_run;
 
     @BindView(R.id.sv_start_last_activity)
     SetView sv_start_last_activity;
@@ -115,8 +115,8 @@ public class SItemView extends SetBaseView {
         sv_use_navc_popup.setOnValueChangeListener(new SetSwitchOnClickListener(CommonData.SDATA_USE_NAVI_POP));
         sv_use_navc_popup.setChecked(SharedPreUtil.getBoolean(CommonData.SDATA_USE_NAVI_POP, false));
 
-        sv_music_auto_run.setOnValueChangeListener(new SetSwitchOnClickListener(CommonData.SDATA_MUSIC_AUTO_RUN));
-        sv_music_auto_run.setChecked(SharedPreUtil.getBoolean(CommonData.SDATA_MUSIC_AUTO_RUN, false));
+        sv_music_kw_auto_run.setOnValueChangeListener(new SetSwitchOnClickListener(CommonData.SDATA_KUWO_MUSIC_AUTO_RUN));
+        sv_music_kw_auto_run.setChecked(SharedPreUtil.getBoolean(CommonData.SDATA_KUWO_MUSIC_AUTO_RUN, false));
 
 
         int amapPluginId = SharedPreUtil.getInteger(APP_WIDGET_AMAP_PLUGIN, 0);

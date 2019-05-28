@@ -48,7 +48,7 @@ public class KuwoMusicController extends MusicController {
             if (b) {
                 setRun(CommonUtil.equals(PLAYING, mKwapi.getPlayerStatus()) || CommonUtil.equals(BUFFERING, mKwapi.getPlayerStatus()));
                 nowMusic = mKwapi.getNowPlayingMusic();
-                if (SharedPreUtil.getBoolean(CommonData.SDATA_MUSIC_AUTO_RUN, false)) {
+                if (SharedPreUtil.getBoolean(CommonData.SDATA_KUWO_MUSIC_AUTO_RUN, false)) {
                     TaskExecutor.self().run(() -> {
                         if (!run) {
                             mKwapi.setPlayState(PlayState.STATE_PLAY);
@@ -123,9 +123,6 @@ public class KuwoMusicController extends MusicController {
     private void refreshMusicInfo() {
         if (nowMusic != null) {
             lrcDatas = null;
-            SharedPreUtil.saveString(CommonData.SDATA_KUWO_LAST_MUSIC_NAME, nowMusic.name);
-            SharedPreUtil.saveString(CommonData.SDATA_KUWO_LAST_MUSIC_ARTIST, nowMusic.artist);
-
             musicPlugin.refreshInfo(nowMusic.name, nowMusic.artist, false);
             if (!SharedPreUtil.getBoolean(CommonData.SDATA_MUSIC_INSIDE_COVER, true)) {
                 MusciCoverUtil.loadCover(nowMusic.name, nowMusic.artist, musicPlugin);

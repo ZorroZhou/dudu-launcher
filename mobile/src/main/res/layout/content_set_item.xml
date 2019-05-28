@@ -47,12 +47,12 @@
             st:type="switchB" />
 
         <com.wow.carlauncher.common.view.SetView
-            android:id="@+id/sv_music_auto_run"
+            android:id="@+id/sv_music_kw_auto_run"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             st:summary="@string/set_yes"
             st:summary2="@string/set_no"
-            st:titleEx="检测APP打开后,自动执行播放命令(酷我有效)"
+            st:titleEx="酷我检测APP打开后,自动执行播放命令"
             st:type="switchB" />
 
         <com.wow.carlauncher.common.view.SetView

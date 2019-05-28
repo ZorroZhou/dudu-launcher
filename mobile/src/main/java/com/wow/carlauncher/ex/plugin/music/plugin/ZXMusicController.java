@@ -30,10 +30,6 @@ public class ZXMusicController extends MusicController {
         intentFilter2.addAction("update.widget.playbtnstate");
         intentFilter2.addAction("update.widget.update_proBar");
         this.context.registerReceiver(mReceiver, intentFilter2);
-
-        if (SharedPreUtil.getBoolean(CommonData.SDATA_MUSIC_AUTO_RUN, false)) {
-            TaskExecutor.self().run(this::play, 1000);
-        }
     }
 
     @Override

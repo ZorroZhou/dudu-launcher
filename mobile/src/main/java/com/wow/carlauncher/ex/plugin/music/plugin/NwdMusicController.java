@@ -31,10 +31,6 @@ public class NwdMusicController extends MusicController {
         intentFilter.addAction("com.android.music.metachanged");
         intentFilter.addAction("com.android.music.playstatechanged");
         this.context.registerReceiver(mReceiver, intentFilter);
-
-        if (SharedPreUtil.getBoolean(CommonData.SDATA_MUSIC_AUTO_RUN, false)) {
-            TaskExecutor.self().run(this::play, 1000);
-        }
     }
 
     @Override

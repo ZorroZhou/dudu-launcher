@@ -20,10 +20,6 @@ public class JidouMusicController extends MusicController {
         intentFilter.addAction("com.ijidou.action.UPDATE_PROGRESS");
         intentFilter.addAction("com.ijidou.card.music");
         this.context.registerReceiver(mReceiver, intentFilter);
-
-        if (SharedPreUtil.getBoolean(CommonData.SDATA_MUSIC_AUTO_RUN, false)) {
-            TaskExecutor.self().run(this::play, 1000);
-        }
     }
 
     @Override

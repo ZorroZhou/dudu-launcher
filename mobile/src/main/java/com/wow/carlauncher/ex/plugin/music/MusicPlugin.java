@@ -52,7 +52,7 @@ public class MusicPlugin extends ContextEx {
         if (SharedPreUtil.getBoolean(CommonData.SDATA_START_LAST_ACTIVITY, true) && SharedPreUtil.getInteger(CommonData.SDATA_LAST_ACTIVITY_TYPE, SDATA_LAST_ACTIVITY_TYPE_NONE) == SDATA_LAST_ACTIVITY_TYPE_MUSIC) {
             TaskExecutor.self().run(() -> {
                 if (!playing) {
-                    playOrPause();
+                    next();
                 }
             }, 5000);
         }

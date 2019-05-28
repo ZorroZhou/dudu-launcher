@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             st:summary="@string/set_yes"
             st:summary2="@string/set_no"
-            st:titleEx="启动检查权限"
+            st:titleEx="启动APP使用检查权限"
             st:type="switchB" />
 
         <com.wow.carlauncher.common.view.SetView

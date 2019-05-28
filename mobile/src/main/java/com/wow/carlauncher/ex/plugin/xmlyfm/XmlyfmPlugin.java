@@ -197,7 +197,7 @@ public class XmlyfmPlugin extends ContextEx {
                 if (!run) {
                     playOrStop();
                 }
-            }, 5000);
+            }, 10000);
         }
         LogEx.d(this, "init time:" + (System.currentTimeMillis() - t1));
     }

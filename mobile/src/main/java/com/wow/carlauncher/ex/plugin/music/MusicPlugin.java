@@ -9,6 +9,7 @@ import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.ContextEx;
+import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.music.event.MMEventControllerRefresh;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventCoverRefresh;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventInfo;
@@ -52,9 +53,9 @@ public class MusicPlugin extends ContextEx {
         if (SharedPreUtil.getBoolean(CommonData.SDATA_START_LAST_ACTIVITY, true) && SharedPreUtil.getInteger(CommonData.SDATA_LAST_ACTIVITY_TYPE, SDATA_LAST_ACTIVITY_TYPE_NONE) == SDATA_LAST_ACTIVITY_TYPE_MUSIC) {
             TaskExecutor.self().run(() -> {
                 if (!playing) {
-                    next();
+                    playOrPause();
                 }
-            }, 5000);
+            }, 10000);
         }
         LogEx.d(this, "init time:" + (System.currentTimeMillis() - t1));
     }

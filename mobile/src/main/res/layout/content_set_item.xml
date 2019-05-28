@@ -52,7 +52,16 @@
             android:layout_height="wrap_content"
             st:summary="@string/set_yes"
             st:summary2="@string/set_no"
-            st:titleEx="音乐自动播放,打开APP后,直接执行播放命令"
+            st:titleEx="检测APP打开后,自动执行播放命令(酷我有效)"
+            st:type="switchB" />
+
+        <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/sv_start_last_activity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:summary="@string/set_yes"
+            st:summary2="@string/set_no"
+            st:titleEx="APP开启最后的活动(FM,音乐)"
             st:type="switchB" />
 
         <TextView

@@ -3,7 +3,9 @@ package com.wow.carlauncher.ex.plugin.xmlyfm;
 import android.annotation.SuppressLint;
 import android.content.Context;
 
+import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.LogEx;
+import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.gsonType.GsonListType;
 import com.wow.carlauncher.common.util.GsonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
@@ -22,6 +24,10 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.wow.carlauncher.common.CommonData.SDATA_LAST_ACTIVITY_TYPE;
+import static com.wow.carlauncher.common.CommonData.SDATA_LAST_ACTIVITY_TYPE_FM;
+import static com.wow.carlauncher.common.CommonData.SDATA_LAST_ACTIVITY_TYPE_MUSIC;
+import static com.wow.carlauncher.common.CommonData.SDATA_LAST_ACTIVITY_TYPE_NONE;
 import static com.wow.carlauncher.common.CommonData.SDATA_MY_FAV_RADIOS;
 
 /**
@@ -105,6 +111,7 @@ public class XmlyfmPlugin extends ContextEx {
     public void playOrStop() {
         if (run) {
             xmPlayerManager.stop();
+            SharedPreUtil.saveInteger(SDATA_LAST_ACTIVITY_TYPE, SDATA_LAST_ACTIVITY_TYPE_NONE);
         } else {
             MusicPlugin.self().pause();
             if (radios.size() < 1) {
@@ -113,6 +120,8 @@ public class XmlyfmPlugin extends ContextEx {
             }
             nowRadio = radios.get(0);
             play(nowRadio);
+
+            SharedPreUtil.saveInteger(SDATA_LAST_ACTIVITY_TYPE, SDATA_LAST_ACTIVITY_TYPE_FM);
         }
     }
 
@@ -137,7 +146,9 @@ public class XmlyfmPlugin extends ContextEx {
         if (index == radios.size()) {
             index = 0;
         }
+        MusicPlugin.self().pause();
         play(radios.get(index));
+        SharedPreUtil.saveInteger(SDATA_LAST_ACTIVITY_TYPE, SDATA_LAST_ACTIVITY_TYPE_FM);
     }
 
     public void prev() {
@@ -157,7 +168,9 @@ public class XmlyfmPlugin extends ContextEx {
         if (index < 0) {
             index = radios.size() - 1;
         }
+        MusicPlugin.self().pause();
         play(radios.get(index));
+        SharedPreUtil.saveInteger(SDATA_LAST_ACTIVITY_TYPE, SDATA_LAST_ACTIVITY_TYPE_FM);
     }
 
     public void init(Context context) {
@@ -177,8 +190,15 @@ public class XmlyfmPlugin extends ContextEx {
 
         xmPlayerManager = XmPlayerManager.getInstance(context);
         xmPlayerManager.addPlayerStatusListener(mPlayerStatusListener);
-        xmPlayerManager.play();
 
+
+        if (SharedPreUtil.getBoolean(CommonData.SDATA_START_LAST_ACTIVITY, true) && SharedPreUtil.getInteger(CommonData.SDATA_LAST_ACTIVITY_TYPE, SDATA_LAST_ACTIVITY_TYPE_NONE) == SDATA_LAST_ACTIVITY_TYPE_FM) {
+            TaskExecutor.self().run(() -> {
+                if (!run) {
+                    playOrStop();
+                }
+            }, 5000);
+        }
         LogEx.d(this, "init time:" + (System.currentTimeMillis() - t1));
     }
 

@@ -88,11 +88,18 @@ public class SItemView extends SetBaseView {
     @BindView(R.id.sv_music_auto_run)
     SetView sv_music_auto_run;
 
+    @BindView(R.id.sv_start_last_activity)
+    SetView sv_start_last_activity;
+
+
     private AppWidgetHost appWidgetHost;
 
     @Override
     protected void initView() {
         appWidgetHost = new AppWidgetHost(getContext(), APP_WIDGET_HOST_ID);
+
+        sv_start_last_activity.setOnValueChangeListener(new SetSwitchOnClickListener(CommonData.SDATA_START_LAST_ACTIVITY));
+        sv_start_last_activity.setChecked(SharedPreUtil.getBoolean(CommonData.SDATA_START_LAST_ACTIVITY, true));
 
         sv_amap_xunhang.setOnValueChangeListener(new SetSwitchOnClickListener(CommonData.SDATA_USE_NAVI_XUNHYANG) {
             @Override

@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.LogEx;
+import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.ContextEx;
@@ -22,6 +23,9 @@ import com.wow.carlauncher.ex.plugin.music.plugin.SystemMusicController;
 import com.wow.carlauncher.ex.plugin.music.plugin.ZXMusicController;
 import com.wow.carlauncher.ex.plugin.xmlyfm.XmlyfmPlugin;
 
+import static com.wow.carlauncher.common.CommonData.SDATA_LAST_ACTIVITY_TYPE;
+import static com.wow.carlauncher.common.CommonData.SDATA_LAST_ACTIVITY_TYPE_MUSIC;
+import static com.wow.carlauncher.common.CommonData.SDATA_LAST_ACTIVITY_TYPE_NONE;
 import static com.wow.carlauncher.common.CommonData.SDATA_MUSIC_CONTROLLER;
 
 public class MusicPlugin extends ContextEx {
@@ -45,6 +49,13 @@ public class MusicPlugin extends ContextEx {
         long t1 = System.currentTimeMillis();
         setContext(context);
         setController(MusicControllerEnum.getById(SharedPreUtil.getInteger(SDATA_MUSIC_CONTROLLER, MusicControllerEnum.SYSMUSIC.getId())));
+        if (SharedPreUtil.getBoolean(CommonData.SDATA_START_LAST_ACTIVITY, true) && SharedPreUtil.getInteger(CommonData.SDATA_LAST_ACTIVITY_TYPE, SDATA_LAST_ACTIVITY_TYPE_NONE) == SDATA_LAST_ACTIVITY_TYPE_MUSIC) {
+            TaskExecutor.self().run(() -> {
+                if (!playing) {
+                    playOrPause();
+                }
+            }, 5000);
+        }
         LogEx.d(this, "init time:" + (System.currentTimeMillis() - t1));
     }
 
@@ -164,9 +175,11 @@ public class MusicPlugin extends ContextEx {
         if (musicController != null) {
             if (playing) {
                 musicController.pause();
+                SharedPreUtil.saveInteger(SDATA_LAST_ACTIVITY_TYPE, SDATA_LAST_ACTIVITY_TYPE_NONE);
             } else {
                 XmlyfmPlugin.self().stop();
                 musicController.play();
+                SharedPreUtil.saveInteger(SDATA_LAST_ACTIVITY_TYPE, SDATA_LAST_ACTIVITY_TYPE_MUSIC);
             }
         }
     }
@@ -181,14 +194,18 @@ public class MusicPlugin extends ContextEx {
     public void next() {
         LogEx.d(this, "next");
         if (musicController != null) {
+            XmlyfmPlugin.self().stop();
             musicController.next();
+            SharedPreUtil.saveInteger(SDATA_LAST_ACTIVITY_TYPE, SDATA_LAST_ACTIVITY_TYPE_MUSIC);
         }
     }
 
     public void pre() {
         LogEx.d(this, "pre");
         if (musicController != null) {
+            XmlyfmPlugin.self().stop();
             musicController.pre();
+            SharedPreUtil.saveInteger(SDATA_LAST_ACTIVITY_TYPE, SDATA_LAST_ACTIVITY_TYPE_MUSIC);
         }
     }
 

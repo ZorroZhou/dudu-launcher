@@ -1,5 +1,6 @@
 package com.wow.carlauncher.ex.plugin.music.plugin;
 
+import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +14,7 @@ import com.wow.carlauncher.common.LrcAnalyze;
 import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.GsonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
+import com.wow.carlauncher.ex.manage.time.event.TMEvent3Second;
 import com.wow.carlauncher.ex.manage.time.event.TMEventSecond;
 import com.wow.carlauncher.ex.plugin.music.MusciCoverUtil;
 import com.wow.carlauncher.ex.plugin.music.MusicController;
@@ -51,18 +53,14 @@ public class QQMusicCarController extends MusicController {
         intentFilter.addAction("com.tencent.qqmusiccar.action.PLAY_COMMAND_SEND_FOR_THIRD");
         this.context.registerReceiver(mReceiver, intentFilter);
 
-        Intent intent2 = new Intent("com.tencent.qqmusiccar.action");
-        intent2.setClassName(PACKAGE_NAME, CLASS_NAME);
-        intent2.setData(Uri.parse("qqmusiccar://asdasd?action=100"));
-        context.sendBroadcast(intent2);
 
-        if (SharedPreUtil.getBoolean(CommonData.SDATA_MUSIC_AUTO_RUN, false)) {
-            TaskExecutor.self().run(() -> {
-                if (!run) {
-                    play();
-                }
-            }, 1000);
-        }
+        TaskExecutor.self().run(() -> {
+            Intent intent2 = new Intent("com.tencent.qqmusiccar.action");
+            intent2.setClassName(PACKAGE_NAME, CLASS_NAME);
+            intent2.setData(Uri.parse("qqmusiccar://asdasd?action=100"));
+            context.sendBroadcast(intent2);
+        }, 3000);
+
     }
 
     @Override

@@ -221,6 +221,11 @@ public class CommonData {
 
     public static final String SDATA_MY_FAV_RADIOS = "SDATA_MY_FAV_RADIOS";
 
+    public static final String SDATA_START_LAST_ACTIVITY = "SDATA_START_LAST_ACTIVITY";
     public static final String SDATA_LAST_ACTIVITY_TYPE = "SDATA_LAST_ACTIVITY_TYPE";
+    public static final int SDATA_LAST_ACTIVITY_TYPE_NONE = 0;
+    public static final int SDATA_LAST_ACTIVITY_TYPE_MUSIC = 1;
+    public static final int SDATA_LAST_ACTIVITY_TYPE_FM = 2;
+
     public static final String SDATA_LOAD_CHECK_QUANXIAN = "SDATA_LOAD_CHECK_QUANXIAN";//启动是否检查权限
 }

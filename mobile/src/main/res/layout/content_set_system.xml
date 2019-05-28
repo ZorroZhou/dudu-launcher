@@ -38,6 +38,14 @@
             st:titleEx="桌面隐藏项目"
             st:type="buttonB" />
 
+        <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/sv_load_check_quanxian"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:summary="@string/set_yes"
+            st:summary2="@string/set_no"
+            st:titleEx="启动检查权限"
+            st:type="switchB" />
 
         <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_open_log"

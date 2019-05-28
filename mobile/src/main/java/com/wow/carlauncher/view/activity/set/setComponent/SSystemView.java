@@ -96,6 +96,9 @@ public class SSystemView extends SetBaseView {
     @BindView(R.id.sv_update_receive_debug)
     SetView sv_update_receive_debug;
 
+    @BindView(R.id.sv_load_check_quanxian)
+    SetView sv_load_check_quanxian;
+
     private boolean showKey;
     private BroadcastReceiver nwdKeyTestReceiver = new BroadcastReceiver() {
         public void onReceive(Context paramContext, Intent paramIntent) {
@@ -108,6 +111,9 @@ public class SSystemView extends SetBaseView {
 
     @Override
     protected void initView() {
+        sv_show_mount.setOnValueChangeListener(new SetSwitchOnClickListener(CommonData.SDATA_LOAD_CHECK_QUANXIAN));
+        sv_load_check_quanxian.setChecked(SharedPreUtil.getBoolean(CommonData.SDATA_LOAD_CHECK_QUANXIAN, true));
+
         sv_update_receive_debug.setOnValueChangeListener(new SetSwitchOnClickListener(CommonData.SDATA_ALLOW_DEBUG_APP) {
             @Override
             public void newValue(boolean value) {

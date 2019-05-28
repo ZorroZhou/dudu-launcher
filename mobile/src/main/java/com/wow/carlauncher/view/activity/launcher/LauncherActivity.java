@@ -146,7 +146,10 @@ public class LauncherActivity extends Activity implements SkinManage.OnSkinChang
         onSkinChanged(SkinManage.self());
         SkinManage.self().registerSkinChangeListener(this);
 
-        TaskExecutor.self().run(() -> TaskExecutor.self().autoPost(this::requestRuntime), 1000);
+
+        if (SharedPreUtil.getBoolean(CommonData.SDATA_LOAD_CHECK_QUANXIAN, true)) {
+            TaskExecutor.self().run(() -> TaskExecutor.self().autoPost(this::requestRuntime), 1000);
+        }
         LogEx.d(this, "init time:" + (System.currentTimeMillis() - t1));
     }
 

@@ -23,4 +23,10 @@ public class UserService {
         param.put("pass", pass);
         return ServerRequestUtil.post(ServerConstant.SERVER_URL + BIND_MAIL, param, String.class, commonCallback);
     }
+
+    private final static String UNBIND_MAIL = "api/app/user/unbindEmail";
+
+    public static Call unbindMail(final CommonCallback<Object> commonCallback) {
+        return ServerRequestUtil.post(ServerConstant.SERVER_URL + UNBIND_MAIL, null, Object.class, commonCallback);
+    }
 }

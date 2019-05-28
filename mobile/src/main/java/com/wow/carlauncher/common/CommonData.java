@@ -217,11 +217,12 @@ public class CommonData {
 
     public static final String SDATA_KUWO_MUSIC_AUTO_RUN = "SDATA_KUWO_MUSIC_AUTO_RUN";//酷我自动播放命令
 
-    public static final String SDATA_QQ_MUSIC_REG_DELAY = "SDATA_QQ_MUSIC_REG_DELAY";//酷我自动播放命令
+    public static final String SDATA_QQ_MUSIC_REG_DELAY = "SDATA_QQ_MUSIC_REG_DELAY";//qq车机版注册延迟
 
     public static final String SDATA_MY_FAV_RADIOS = "SDATA_MY_FAV_RADIOS";//我的FM收藏
 
     public static final String SDATA_START_LAST_ACTIVITY = "SDATA_START_LAST_ACTIVITY";//最后一次活动的记录
+    public static final String SDATA_START_LAST_ACTIVITY_DELAY = "SDATA_START_LAST_ACTIVITY_DELAY";//最后一次活动恢复延迟
     public static final String SDATA_LAST_ACTIVITY_TYPE = "SDATA_LAST_ACTIVITY_TYPE";
     public static final int SDATA_LAST_ACTIVITY_TYPE_NONE = 0;
     public static final int SDATA_LAST_ACTIVITY_TYPE_MUSIC = 1;

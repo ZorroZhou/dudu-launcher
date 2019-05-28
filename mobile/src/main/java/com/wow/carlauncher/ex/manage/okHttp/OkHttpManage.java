@@ -80,8 +80,10 @@ public class OkHttpManage {
     public Call post(String url, Map<String, Object> param, Callback callback) {
         LogEx.d(this, "post:" + url + " param:" + param);
         FormBody.Builder formBuilder = new FormBody.Builder();
-        for (String key : param.keySet()) {
-            formBuilder.add(key, String.valueOf(param.get(key)));
+        if (param != null) {
+            for (String key : param.keySet()) {
+                formBuilder.add(key, String.valueOf(param.get(key)));
+            }
         }
         Request.Builder builder = new Request.Builder().post(formBuilder.build()).url(url);
         if (AppContext.self().getLocalUser() != null) {

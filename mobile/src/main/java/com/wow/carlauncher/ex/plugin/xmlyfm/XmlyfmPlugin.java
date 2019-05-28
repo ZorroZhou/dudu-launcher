@@ -29,6 +29,7 @@ import static com.wow.carlauncher.common.CommonData.SDATA_LAST_ACTIVITY_TYPE_FM;
 import static com.wow.carlauncher.common.CommonData.SDATA_LAST_ACTIVITY_TYPE_MUSIC;
 import static com.wow.carlauncher.common.CommonData.SDATA_LAST_ACTIVITY_TYPE_NONE;
 import static com.wow.carlauncher.common.CommonData.SDATA_MY_FAV_RADIOS;
+import static com.wow.carlauncher.common.CommonData.SDATA_START_LAST_ACTIVITY_DELAY;
 
 /**
  * Created by 10124 on 2017/11/9.
@@ -197,7 +198,7 @@ public class XmlyfmPlugin extends ContextEx {
                 if (!run) {
                     playOrStop();
                 }
-            }, 10000);
+            }, SharedPreUtil.getInteger(SDATA_START_LAST_ACTIVITY_DELAY, 10) * 1000);
         }
         LogEx.d(this, "init time:" + (System.currentTimeMillis() - t1));
     }

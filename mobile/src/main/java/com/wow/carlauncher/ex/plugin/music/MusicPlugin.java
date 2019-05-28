@@ -28,6 +28,7 @@ import static com.wow.carlauncher.common.CommonData.SDATA_LAST_ACTIVITY_TYPE;
 import static com.wow.carlauncher.common.CommonData.SDATA_LAST_ACTIVITY_TYPE_MUSIC;
 import static com.wow.carlauncher.common.CommonData.SDATA_LAST_ACTIVITY_TYPE_NONE;
 import static com.wow.carlauncher.common.CommonData.SDATA_MUSIC_CONTROLLER;
+import static com.wow.carlauncher.common.CommonData.SDATA_START_LAST_ACTIVITY_DELAY;
 
 public class MusicPlugin extends ContextEx {
     private static class SingletonHolder {
@@ -55,7 +56,7 @@ public class MusicPlugin extends ContextEx {
                 if (!playing) {
                     playOrPause();
                 }
-            }, 10000);
+            }, SharedPreUtil.getInteger(SDATA_START_LAST_ACTIVITY_DELAY, 10) * 1000);
         }
         LogEx.d(this, "init time:" + (System.currentTimeMillis() - t1));
     }

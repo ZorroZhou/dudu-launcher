@@ -47,6 +47,32 @@
             st:type="switchB" />
 
         <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/sv_start_last_activity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:summary="@string/set_yes"
+            st:summary2="@string/set_no"
+            st:titleEx="APP开启最后的活动(FM,音乐)"
+            st:type="switchB" />
+
+        <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/sv_start_last_activity_run_delay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:summary="10秒"
+            st:titleEx="APP开启最后的活动发起延迟时间"
+            st:type="buttonB" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="16dp"
+            android:paddingTop="16dp"
+            android:text="音乐插件特殊设置"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14sp" />
+
+        <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_music_kw_auto_run"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -56,13 +82,12 @@
             st:type="switchB" />
 
         <com.wow.carlauncher.common.view.SetView
-            android:id="@+id/sv_start_last_activity"
+            android:id="@+id/sv_music_qq_reg_delay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            st:summary="@string/set_yes"
-            st:summary2="@string/set_no"
-            st:titleEx="APP开启最后的活动(FM,音乐)"
-            st:type="switchB" />
+            st:summary="5秒"
+            st:titleEx="QQ音乐车机版注册延迟"
+            st:type="buttonB" />
 
         <TextView
             android:layout_width="match_parent"

@@ -18,8 +18,10 @@ import com.wow.carlauncher.ex.plugin.music.MusicControllerEnum;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import com.wow.carlauncher.view.activity.launcher.event.LAMapCloseXunhang;
 import com.wow.carlauncher.view.activity.launcher.event.LCityRefreshEvent;
+import com.wow.carlauncher.view.activity.launcher.event.LItemRefreshEvent;
 import com.wow.carlauncher.view.activity.set.SetActivity;
 import com.wow.carlauncher.view.activity.set.SetBaseView;
+import com.wow.carlauncher.view.activity.set.commonView.SetNumSelectView;
 import com.wow.carlauncher.view.activity.set.event.SEventRefreshAmapPlugin;
 import com.wow.carlauncher.view.activity.set.commonView.SetSingleSelectView;
 import com.wow.carlauncher.view.activity.set.commonView.SetSwitchOnClickListener;
@@ -91,6 +93,12 @@ public class SItemView extends SetBaseView {
     @BindView(R.id.sv_start_last_activity)
     SetView sv_start_last_activity;
 
+    @BindView(R.id.sv_music_qq_reg_delay)
+    SetView sv_music_qq_reg_delay;
+
+    @BindView(R.id.sv_start_last_activity_run_delay)
+    SetView sv_start_last_activity_run_delay;
+
 
     private AppWidgetHost appWidgetHost;
 
@@ -111,6 +119,33 @@ public class SItemView extends SetBaseView {
         });
         sv_amap_xunhang.setChecked(SharedPreUtil.getBoolean(CommonData.SDATA_USE_NAVI_XUNHYANG, false));
 
+        sv_start_last_activity_run_delay.setSummary(SharedPreUtil.getInteger(CommonData.SDATA_START_LAST_ACTIVITY_DELAY, 10) + "秒");
+        sv_start_last_activity_run_delay.setOnClickListener(new SetNumSelectView(getActivity(), "最后的活动发起延迟", "秒", 1, 60) {
+            @Override
+            public Integer getCurr() {
+                return SharedPreUtil.getInteger(CommonData.SDATA_START_LAST_ACTIVITY_DELAY, 10);
+            }
+
+            @Override
+            public void onSelect(Integer t, String ss) {
+                SharedPreUtil.saveInteger(CommonData.SDATA_START_LAST_ACTIVITY_DELAY, t);
+                sv_start_last_activity_run_delay.setSummary(ss);
+            }
+        });
+
+        sv_music_qq_reg_delay.setSummary(SharedPreUtil.getInteger(CommonData.SDATA_QQ_MUSIC_REG_DELAY, 5) + "秒");
+        sv_music_qq_reg_delay.setOnClickListener(new SetNumSelectView(getActivity(), "QQ音乐注册延迟", "秒", 1, 60) {
+            @Override
+            public Integer getCurr() {
+                return SharedPreUtil.getInteger(CommonData.SDATA_QQ_MUSIC_REG_DELAY, 5);
+            }
+
+            @Override
+            public void onSelect(Integer t, String ss) {
+                SharedPreUtil.saveInteger(CommonData.SDATA_QQ_MUSIC_REG_DELAY, t);
+                sv_music_qq_reg_delay.setSummary(ss);
+            }
+        });
 
         sv_use_navc_popup.setOnValueChangeListener(new SetSwitchOnClickListener(CommonData.SDATA_USE_NAVI_POP));
         sv_use_navc_popup.setChecked(SharedPreUtil.getBoolean(CommonData.SDATA_USE_NAVI_POP, false));

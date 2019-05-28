@@ -248,8 +248,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical|right"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="15dp"
                     android:text="保存"
                     android:textColor="@color/colorPrimary"
                     app:layout_textSizePercent="35%h" />

@@ -111,7 +111,7 @@ public class SSystemView extends SetBaseView {
 
     @Override
     protected void initView() {
-        sv_show_mount.setOnValueChangeListener(new SetSwitchOnClickListener(CommonData.SDATA_LOAD_CHECK_QUANXIAN));
+        sv_load_check_quanxian.setOnValueChangeListener(new SetSwitchOnClickListener(CommonData.SDATA_LOAD_CHECK_QUANXIAN));
         sv_load_check_quanxian.setChecked(SharedPreUtil.getBoolean(CommonData.SDATA_LOAD_CHECK_QUANXIAN, true));
 
         sv_update_receive_debug.setOnValueChangeListener(new SetSwitchOnClickListener(CommonData.SDATA_ALLOW_DEBUG_APP) {

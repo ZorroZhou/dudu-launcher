@@ -49,6 +49,9 @@ public class ServerRequestUtil {
                             if (CommonUtil.equals(res.getCode(), 0)) {
                                 commonCallback.callback(res.getCode(), "", res.getData());
                             } else {
+                                if (res.getCode() == null) {
+                                    res.setCode(ServerConstant.RES_ERROR);
+                                }
                                 ToastManage.self().show(res.getMsg());
                                 commonCallback.callback(res.getCode(), res.getMsg(), null);
                             }
@@ -93,6 +96,9 @@ public class ServerRequestUtil {
                             if (CommonUtil.equals(res.getCode(), 0)) {
                                 commonCallback.callback(res.getCode(), "", res.getData());
                             } else {
+                                if (res.getCode() == null) {
+                                    res.setCode(ServerConstant.RES_ERROR);
+                                }
                                 ToastManage.self().show(res.getMsg());
                                 commonCallback.callback(res.getCode(), res.getMsg(), null);
                             }

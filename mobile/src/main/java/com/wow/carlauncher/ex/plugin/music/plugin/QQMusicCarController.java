@@ -28,6 +28,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static com.wow.carlauncher.common.CommonData.SDATA_QQ_MUSIC_REG_DELAY;
+import static com.wow.carlauncher.common.CommonData.SDATA_START_LAST_ACTIVITY_DELAY;
+
 /**
  * Created by 10124 on 2017/10/26.
  */
@@ -59,7 +62,7 @@ public class QQMusicCarController extends MusicController {
             intent2.setClassName(PACKAGE_NAME, CLASS_NAME);
             intent2.setData(Uri.parse("qqmusiccar://asdasd?action=100"));
             context.sendBroadcast(intent2);
-        }, 3000);
+        }, SharedPreUtil.getInteger(SDATA_QQ_MUSIC_REG_DELAY, 5) * 1000);
 
     }
 

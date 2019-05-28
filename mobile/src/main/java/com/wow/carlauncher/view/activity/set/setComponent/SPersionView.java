@@ -8,10 +8,14 @@ import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.AppContext;
+import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.user.event.UEventRefreshLoginState;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.ex.manage.ImageManage;
+import com.wow.carlauncher.ex.manage.toast.ToastManage;
+import com.wow.carlauncher.repertory.server.CommonCallback;
+import com.wow.carlauncher.repertory.server.UserService;
 import com.wow.carlauncher.view.activity.set.SetActivity;
 import com.wow.carlauncher.view.activity.set.SetBaseView;
 import com.wow.carlauncher.view.activity.set.commonView.BindEmailView;
@@ -73,12 +77,22 @@ public class SPersionView extends SetBaseView {
                 case R.id.sv_logout:
                     AppContext.self().logout();
                     break;
+                case R.id.sv_unbind:
+                    UserService.unbindMail((code, msg, o) -> {
+                        if (code == 0) {
+                            TaskExecutor.self().autoPost(() -> onEvent(new UEventRefreshLoginState().setLogin(AppContext.self().getLocalUser() != null)));
+                        } else {
+                            ToastManage.self().show(msg);
+                        }
+                    });
+                    break;
             }
         };
 
         ll_user.setOnClickListener(onClickListener);
         sv_logout.setOnClickListener(onClickListener);
         sv_bind.setOnClickListener(new BindEmailView(getActivity()));
+        sv_unbind.setOnClickListener(onClickListener);
         onEvent(new UEventRefreshLoginState().setLogin(AppContext.self().getLocalUser() != null));
     }
 

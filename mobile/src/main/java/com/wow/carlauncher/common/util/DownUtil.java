@@ -36,14 +36,13 @@ public class DownUtil {
         }
         path = path + File.separator + System.currentTimeMillis();
         File pathFile = new File(path);
-        boolean createFileRes = true;
         if (!pathFile.exists()) {
-            createFileRes = pathFile.mkdirs();
+            pathFile.mkdirs();
         }
-        if (!createFileRes) {
-            ToastManage.self().show("无法创建缓存文件夹");
-            return;
-        }
+//        if (!createFileRes) {
+//            ToastManage.self().show("无法创建缓存文件夹");
+//            return;
+//        }
 
         String filePath = path + File.separator + fileName;
 

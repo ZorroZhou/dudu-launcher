@@ -7,6 +7,7 @@ import android.net.ConnectivityManager;
 
 import com.wow.carlauncher.common.AppContext;
 import com.wow.carlauncher.common.LogEx;
+import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.user.LocalUser;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.GsonUtil;
@@ -42,23 +43,25 @@ public class NetChangeReceiver extends BroadcastReceiver {
             EventBus.getDefault().post(new EventNetStateChange());
 
             //如果在线,重新登录一下
-            if (NetWorkUtil.isOnline()) {
-                long uid = SharedPreUtil.getLong(LOGIN_USER_ID, -1);
-                if (uid > 0) {
-                    LocalUser user = GsonUtil.getGson().fromJson(SharedPreUtil.getString(LOGIN_USER_INFO), LocalUser.class);
-                    if (user != null && CommonUtil.isNotNull(user.getToken())) {
-                        CommonService.loginByToken(user.getToken(), (code, msg, loginInfo) -> {
-                            if (code != NET_ERROR && code != RES_ERROR && code != 0) {
-                                AppContext.self().logout();
-                            } else {
-                                if (code == 0) {
-                                    AppContext.self().loginSuccess(new LocalUser().setUserId(loginInfo.getId()).setToken(loginInfo.getToken()).setUserPic(user.getUserPic()).setNickname(user.getNickname()).setEmail(loginInfo.getEmail()));
+            TaskExecutor.self().run(() -> {
+                if (NetWorkUtil.isOnline()) {
+                    long uid = SharedPreUtil.getLong(LOGIN_USER_ID, -1);
+                    if (uid > 0) {
+                        LocalUser user = GsonUtil.getGson().fromJson(SharedPreUtil.getString(LOGIN_USER_INFO), LocalUser.class);
+                        if (user != null && CommonUtil.isNotNull(user.getToken())) {
+                            CommonService.loginByToken(user.getToken(), (code, msg, loginInfo) -> {
+                                if (code != NET_ERROR && code != RES_ERROR && code != 0) {
+                                    AppContext.self().logout();
+                                } else {
+                                    if (code == 0) {
+                                        AppContext.self().loginSuccess(new LocalUser().setUserId(loginInfo.getId()).setToken(loginInfo.getToken()).setUserPic(user.getUserPic()).setNickname(user.getNickname()).setEmail(loginInfo.getEmail()));
+                                    }
                                 }
-                            }
-                        });
+                            });
+                        }
                     }
                 }
-            }
+            });
         }
     }
 }

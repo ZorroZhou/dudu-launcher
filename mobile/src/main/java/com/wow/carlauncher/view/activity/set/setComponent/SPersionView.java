@@ -1,6 +1,7 @@
 package com.wow.carlauncher.view.activity.set.setComponent;
 
 import android.annotation.SuppressLint;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -8,14 +9,18 @@ import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.AppContext;
+import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.user.event.UEventRefreshLoginState;
 import com.wow.carlauncher.common.util.CommonUtil;
+import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.ex.manage.ImageManage;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.repertory.server.CommonCallback;
 import com.wow.carlauncher.repertory.server.UserService;
+import com.wow.carlauncher.view.activity.launcher.ItemEnum;
+import com.wow.carlauncher.view.activity.launcher.event.LItemRefreshEvent;
 import com.wow.carlauncher.view.activity.set.SetActivity;
 import com.wow.carlauncher.view.activity.set.SetBaseView;
 import com.wow.carlauncher.view.activity.set.commonView.BindEmailView;
@@ -78,13 +83,16 @@ public class SPersionView extends SetBaseView {
                     AppContext.self().logout();
                     break;
                 case R.id.sv_unbind:
-                    UserService.unbindMail((code, msg, o) -> {
-                        if (code == 0) {
-                            TaskExecutor.self().autoPost(() -> onEvent(new UEventRefreshLoginState().setLogin(AppContext.self().getLocalUser() != null)));
-                        } else {
-                            ToastManage.self().show(msg);
-                        }
-                    });
+                    new AlertDialog.Builder(getContext()).setTitle("警告!").setNegativeButton("取消", null).setPositiveButton("确定", (dialog2, which2) -> {
+                        UserService.unbindMail((code, msg, o) -> {
+                            if (code == 0) {
+                                AppContext.self().getLocalUser().setEmail("");
+                                TaskExecutor.self().autoPost(() -> onEvent(new UEventRefreshLoginState().setLogin(AppContext.self().getLocalUser() != null)));
+                            } else {
+                                ToastManage.self().show(msg);
+                            }
+                        });
+                    }).setMessage("是否确认解绑,解绑后无法登陆web端").show();
                     break;
             }
         };

@@ -119,7 +119,10 @@ public class MusicPlugin extends ContextEx {
 
     private PMusicEventProgress lastMusicProgress;
 
-    public void refreshProgress(final int curr_time, final int total_tim) {
+    public void refreshProgress(int curr_time, int total_tim) {
+        if (curr_time > total_tim) {
+            curr_time = total_tim;
+        }
         lastMusicProgress = new PMusicEventProgress().setCurrTime(curr_time).setTotalTime(total_tim);
         postEvent(lastMusicProgress);
     }

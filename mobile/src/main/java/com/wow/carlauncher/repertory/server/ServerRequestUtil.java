@@ -52,7 +52,6 @@ public class ServerRequestUtil {
                                 if (res.getCode() == null) {
                                     res.setCode(ServerConstant.RES_ERROR);
                                 }
-                                ToastManage.self().show(res.getMsg());
                                 commonCallback.callback(res.getCode(), res.getMsg(), null);
                             }
                             return;
@@ -99,7 +98,6 @@ public class ServerRequestUtil {
                                 if (res.getCode() == null) {
                                     res.setCode(ServerConstant.RES_ERROR);
                                 }
-                                ToastManage.self().show(res.getMsg());
                                 commonCallback.callback(res.getCode(), res.getMsg(), null);
                             }
                             return;

@@ -56,13 +56,13 @@ public class XmlyfmPlugin extends ContextEx {
         return radios;
     }
 
-    public void addRadio(Radio r) {
+    public boolean addRadio(Radio r) {
         if (r == null) {
-            return;
+            return false;
         }
         if (radios.size() >= 10) {
             ToastManage.self().show("最多添加10个节目!");
-            return;
+            return false;
         }
         boolean have = false;
         for (Radio radio : radios) {
@@ -77,7 +77,9 @@ public class XmlyfmPlugin extends ContextEx {
                 SharedPreUtil.saveString(SDATA_MY_FAV_RADIOS, GsonUtil.getGson().toJson(radios));
             } catch (Exception ignored) {
             }
+            return true;
         }
+        return false;
     }
 
     public void removeRadio(Radio r) {

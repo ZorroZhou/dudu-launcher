@@ -76,9 +76,10 @@ public class RadiosActivity extends BaseActivity {
         lv_radios.setOnItemLongClickListener((parent, view, position, id) -> {
             if (parent.getAdapter().equals(netRadioAdapter)) {
                 Radio radio = netRadioAdapter.getItem(position);
-                XmlyfmPlugin.self().addRadio(radio);
-                myFavRadioAdapter.addItem(radio);
-                myFavRadioAdapter.notifyDataSetChanged();
+                if (XmlyfmPlugin.self().addRadio(radio)) {
+                    myFavRadioAdapter.addItem(radio);
+                    myFavRadioAdapter.notifyDataSetChanged();
+                }
                 return true;
             }
             return false;

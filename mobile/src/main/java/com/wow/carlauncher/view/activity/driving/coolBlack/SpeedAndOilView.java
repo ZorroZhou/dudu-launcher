@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarInfo;
 import com.wow.carlauncher.view.base.BaseView;
@@ -58,14 +59,10 @@ public class SpeedAndOilView extends BaseView {
 
     @Override
     protected void initView() {
-        onEventMainThread(ObdPlugin.self().getCurrentPObdEventCarInfo());
-    }
-
-    @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        show = true;
-
+        //同步一下信息
+        TaskExecutor.self().post(() -> {
+            onEventMainThread(ObdPlugin.self().getCurrentPObdEventCarInfo());
+        }, 500);
     }
 
     @Override
@@ -79,42 +76,32 @@ public class SpeedAndOilView extends BaseView {
         iv_oil.setPivotY(getMeasuredHeight() / 2);//支点在图片中心
     }
 
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        show = false;
-    }
-
     public void setOil(int oil) {
-        if (show) {
-            if (oil > MAX_OIL) {
-                oil = MAX_OIL;
-            } else if (oil < 0) {
-                oil = 0;
-            }
-            iv_oil.setRotation(-(float) (oil * 90) / (float) MAX_OIL);
-
-            tv_oil.setText("剩余油量:" + oil + "%");
+        if (oil > MAX_OIL) {
+            oil = MAX_OIL;
+        } else if (oil < 0) {
+            oil = 0;
         }
+        iv_oil.setRotation(-(float) (oil * 90) / (float) MAX_OIL);
+
+        tv_oil.setText("剩余油量:" + oil + "%");
     }
 
     public void setSpeed(int speed) {
-        if (show) {
-            tv_speed.setText(speed + "");
+        tv_speed.setText(speed + "");
 
-            speed = speed * RATE;
-            if (speed > MAX_SPEED) {
-                speed = MAX_SPEED;
-            } else if (speed < 0) {
-                speed = 0;
-            }
-            tagerValue = speed;
-            revChangeValue = Math.abs(tagerValue - currentValue) / 100;
-            if (revChangeValue < 1) {
-                revChangeValue = 1;
-            }
-            postValue();
+        speed = speed * RATE;
+        if (speed > MAX_SPEED) {
+            speed = MAX_SPEED;
+        } else if (speed < 0) {
+            speed = 0;
         }
+        tagerValue = speed;
+        revChangeValue = Math.abs(tagerValue - currentValue) / 100;
+        if (revChangeValue < 1) {
+            revChangeValue = 1;
+        }
+        postValue();
     }
 
     private void postValue() {

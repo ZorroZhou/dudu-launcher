@@ -77,7 +77,8 @@ public class SObdView extends SetBaseView {
             public boolean onSelect(ObdProtocolEnum setEnum) {
                 SharedPreUtil.saveInteger(SDATA_OBD_CONTROLLER, setEnum.getId());
                 sv_obd_impl_select.setSummary("OBD使用的协议：" + setEnum.getName());
-                ObdPlugin.self().disconnect(); return true;
+                ObdPlugin.self().disconnect();
+                return true;
             }
         });
 

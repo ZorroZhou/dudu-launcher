@@ -5,6 +5,7 @@ import android.content.Context;
 import com.wow.carlauncher.view.activity.driving.blue.BlueView;
 import com.wow.carlauncher.view.activity.driving.coolBlack.CoolBlackView;
 import com.wow.carlauncher.view.activity.set.setItem.SetEnum;
+import com.wow.carlauncher.view.base.BaseView;
 
 /**
  * Created by 10124 on 2018/3/29.
@@ -48,7 +49,7 @@ public enum DrivingViewEnum implements SetEnum {
         return BLACK;
     }
 
-    public static DrivingView createView(Context context, DrivingViewEnum itemEnum) {
+    public static BaseView createView(Context context, DrivingViewEnum itemEnum) {
         switch (itemEnum) {
             case BLACK:
                 return new CoolBlackView(context);

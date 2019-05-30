@@ -18,13 +18,12 @@ import com.wow.carlauncher.ex.plugin.music.MusicControllerEnum;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import com.wow.carlauncher.view.activity.launcher.event.LAMapCloseXunhang;
 import com.wow.carlauncher.view.activity.launcher.event.LCityRefreshEvent;
-import com.wow.carlauncher.view.activity.launcher.event.LItemRefreshEvent;
 import com.wow.carlauncher.view.activity.set.SetActivity;
 import com.wow.carlauncher.view.activity.set.SetBaseView;
 import com.wow.carlauncher.view.activity.set.commonView.SetNumSelectView;
-import com.wow.carlauncher.view.activity.set.event.SEventRefreshAmapPlugin;
 import com.wow.carlauncher.view.activity.set.commonView.SetSingleSelectView;
 import com.wow.carlauncher.view.activity.set.commonView.SetSwitchOnClickListener;
+import com.wow.carlauncher.view.activity.set.event.SEventRefreshAmapPlugin;
 import com.wow.carlauncher.view.dialog.CityDialog;
 
 import org.greenrobot.eventbus.EventBus;

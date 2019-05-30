@@ -7,7 +7,6 @@ import com.wow.carlauncher.common.gsonType.GsonBaseResultType;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.GsonUtil;
 import com.wow.carlauncher.ex.manage.okHttp.OkHttpManage;
-import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.repertory.server.response.BaseResult;
 
 import java.io.IOException;

@@ -30,7 +30,7 @@ import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarInfo;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarTp;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventConnect;
-import com.wow.carlauncher.view.activity.driving.DrivingView;
+import com.wow.carlauncher.view.base.BaseView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -38,6 +38,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.concurrent.ScheduledFuture;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -47,9 +48,11 @@ import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.ICONS;
 import static com.wow.carlauncher.ex.plugin.fk.FangkongProtocolEnum.YLFK;
 import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.RIGHT_BOTTOM_CLICK;
 
-public class BlueView extends DrivingView {
+public class BlueView extends BaseView {
     private final static int MAX_REV = 8000;
     private final static int MAX_SPEED = 200;
+    private static boolean frist = true;
+
 
     public BlueView(@NonNull Context context) {
         super(context);
@@ -57,12 +60,6 @@ public class BlueView extends DrivingView {
 
     public BlueView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-    }
-
-    private boolean isFront = true;
-
-    public void setFront(boolean front) {
-        isFront = front;
     }
 
     @Override
@@ -159,18 +156,18 @@ public class BlueView extends DrivingView {
 
     private boolean obdConnect = false;
 
-    private boolean loaded = false;
-
     private boolean showNav = true;
     private boolean naving = false;
+    private ScheduledFuture<?> scheduledFuture;
 
     @Override
     protected void initView() {
         super.initView();
         int max = 49;
         int start = 1;
-        if (SharedPreUtil.getBoolean(CommonData.SDATA_DRIVING_VIEW_ABUNATION, true)) {
-            TaskExecutor.self().run(() -> {
+        if (SharedPreUtil.getBoolean(CommonData.SDATA_DRIVING_VIEW_ABUNATION, true) && frist) {
+            frist = false;
+            scheduledFuture = TaskExecutor.self().run(() -> {
                 for (int i = start; i <= max; i++) {
                     try {
                         Thread.sleep(40);
@@ -178,7 +175,7 @@ public class BlueView extends DrivingView {
                         e.printStackTrace();
                     }
                     final int index = i;
-                    post(() -> {
+                    TaskExecutor.self().autoPost(() -> {
                         iv_center.setImageResource(getContext().getResources().getIdentifier("driving_blue_center_gif_" + index, "mipmap", getContext().getPackageName()));
                         if (index == max) {
                             loadOk();
@@ -189,6 +186,14 @@ public class BlueView extends DrivingView {
         } else {
             iv_center.setImageResource(R.mipmap.driving_blue_center_gif_49);
             loadOk();
+        }
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        if (scheduledFuture != null) {
+            scheduledFuture.cancel(true);
         }
     }
 
@@ -216,7 +221,6 @@ public class BlueView extends DrivingView {
     }
 
     private void loadOk() {
-        loaded = true;
         iv_vss_cursor.setVisibility(VISIBLE);
         iv_fuel_cursor.setVisibility(VISIBLE);
         iv_fuel_mask.setVisibility(VISIBLE);
@@ -229,10 +233,12 @@ public class BlueView extends DrivingView {
         ll_right.setVisibility(VISIBLE);
 
         //同步一下信息
-        onEvent(new PObdEventConnect().setConnected(ObdPlugin.self().isConnect()));
-        onEvent(ObdPlugin.self().getCurrentPObdEventCarInfo());
-        onEvent(ObdPlugin.self().getCurrentPObdEventCarTp());
-        MusicPlugin.self().requestLast();
+        TaskExecutor.self().post(() -> {
+            onEvent(new PObdEventConnect().setConnected(ObdPlugin.self().isConnect()));
+            onEvent(ObdPlugin.self().getCurrentPObdEventCarInfo());
+            onEvent(ObdPlugin.self().getCurrentPObdEventCarTp());
+            MusicPlugin.self().requestLast();
+        }, 500);
     }
 
     private void refreshNavState() {
@@ -249,9 +255,6 @@ public class BlueView extends DrivingView {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final TMEventSecond event) {
-        if (!loaded) {
-            return;
-        }
         long time1 = System.currentTimeMillis() / MINUTE_MILL;
         if (time1 != cur_min) {
             cur_min = time1;
@@ -271,9 +274,6 @@ public class BlueView extends DrivingView {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final PMusicEventInfo event) {
-        if (!loaded) {
-            return;
-        }
         if (tv_music_title != null) {
             if (CommonUtil.isNotNull(event.getTitle())) {
                 String msg = event.getTitle();
@@ -289,9 +289,6 @@ public class BlueView extends DrivingView {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final PMusicEventState event) {
-        if (!loaded) {
-            return;
-        }
         if (music_iv_play != null) {
             if (event.isRun()) {
                 music_iv_play.setImageResource(R.mipmap.ic_pause2_b);
@@ -303,9 +300,6 @@ public class BlueView extends DrivingView {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final PObdEventConnect event) {
-        if (!loaded) {
-            return;
-        }
         boolean showTp = false;
         obdConnect = event.isConnected();
         if (event.isConnected()) {
@@ -328,9 +322,6 @@ public class BlueView extends DrivingView {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(SMEventSendSpeed event) {
-        if (!loaded) {
-            return;
-        }
         if (!obdConnect) {
             setSpeed(event.getSpeed());
         }
@@ -338,9 +329,6 @@ public class BlueView extends DrivingView {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final PObdEventCarInfo event) {
-        if (!loaded) {
-            return;
-        }
         if (event.getRev() != null) {
             setRev(event.getRev());
         }
@@ -360,18 +348,12 @@ public class BlueView extends DrivingView {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final PAmapEventState event) {
-        if (!loaded) {
-            return;
-        }
         naving = event.isRunning();
         refreshNavState();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final PAmapEventNavInfo event) {
-        if (!loaded) {
-            return;
-        }
         if (event.getIcon() - 1 >= 0 && event.getIcon() - 1 < ICONS.length) {
             iv_nav_icon.setImageResource(ICONS[event.getIcon() - 1]);
         }
@@ -403,9 +385,6 @@ public class BlueView extends DrivingView {
 
     @Subscribe(priority = 90)
     public void onEvent(PFkEventAction event) {
-        if (!isFront && !loaded) {
-            return;
-        }
         if (YLFK.equals(event.getFangkongProtocol())) {
             boolean needCancelEvent = false;
             switch (event.getAction()) {
@@ -427,9 +406,6 @@ public class BlueView extends DrivingView {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final PMusicEventCoverRefresh event) {
-        if (!loaded) {
-            return;
-        }
         if (music_iv_cover != null) {
             if (event.isHave()) {
                 ImageManage.self().loadImage(event.getUrl(), music_iv_cover, R.drawable.theme_music_dcover);
@@ -441,9 +417,6 @@ public class BlueView extends DrivingView {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final PObdEventCarTp event) {
-        if (!loaded) {
-            return;
-        }
         if (tv_tp_lf != null && event.getlFTirePressure() != null) {
             tv_tp_lf.setText(getContext().getString(R.string.driving_cool_black_tp, event.getlFTirePressure(), event.getlFTemp()));
         }

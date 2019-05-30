@@ -381,6 +381,10 @@ public class LauncherActivity extends Activity implements SkinManage.OnSkinChang
     }
 
     @Override
+    public void finish() {
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(homeReceiver);

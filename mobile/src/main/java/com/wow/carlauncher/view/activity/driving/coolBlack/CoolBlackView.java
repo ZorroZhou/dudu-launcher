@@ -16,12 +16,13 @@ import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.DateUtil;
 import com.wow.carlauncher.ex.manage.time.event.TMEvent3Second;
+import com.wow.carlauncher.ex.manage.time.event.TMEventSecond;
 import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventNavInfo;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventState;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventAction;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventConnect;
-import com.wow.carlauncher.view.activity.driving.DrivingView;
+import com.wow.carlauncher.view.base.BaseView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -40,7 +41,7 @@ import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.RIGHT_BOT
  * Created by 10124 on 2018/5/11.
  */
 
-public class CoolBlackView extends DrivingView {
+public class CoolBlackView extends BaseView {
     public CoolBlackView(@NonNull Context context) {
         super(context);
     }
@@ -81,17 +82,11 @@ public class CoolBlackView extends DrivingView {
     @BindView(R.id.tv_amapmsg)
     TextView tv_amapmsg;
 
-    private boolean isFront = true;
-
-    public void setFront(boolean front) {
-        isFront = front;
-    }
-
     private boolean fktuoguan = false;
     private boolean showNav = false;
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(final TMEvent3Second event) {
+    public void onEvent(final TMEventSecond event) {
         this.tv_date.setText(DateUtil.dateToString(new Date(), "yyyy-MM-dd"));
         this.tv_time.setText(DateUtil.dateToString(new Date(), "HH:mm:ss"));
         this.tv_trip_time.setText(DateUtil.formatDuring(System.currentTimeMillis() - AppContext.self().getStartTime()));
@@ -99,9 +94,6 @@ public class CoolBlackView extends DrivingView {
 
     @Subscribe(priority = 90)
     public void onEvent(PFkEventAction event) {
-        if (!isFront) {
-            return;
-        }
         if (YLFK.equals(event.getFangkongProtocol())) {
             boolean needCancelEvent = false;
             switch (event.getAction()) {

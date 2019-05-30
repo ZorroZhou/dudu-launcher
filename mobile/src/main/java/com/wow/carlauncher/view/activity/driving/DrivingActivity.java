@@ -5,8 +5,8 @@ import android.widget.FrameLayout;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.util.SharedPreUtil;
-import com.wow.carlauncher.view.activity.set.event.SEventRefreshDriving;
 import com.wow.carlauncher.view.base.BaseActivity;
+import com.wow.carlauncher.view.base.BaseView;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -20,12 +20,11 @@ import static com.wow.carlauncher.common.CommonData.SDATA_DRIVING_VIEW;
  */
 
 public class DrivingActivity extends BaseActivity {
-    private boolean isFront = false;
 
     @BindView(R.id.content)
     FrameLayout content;
 
-    private DrivingView nowContent;
+    private BaseView nowContent;
 
     @Override
     public void init() {
@@ -36,42 +35,9 @@ public class DrivingActivity extends BaseActivity {
     @Override
     public void initView() {
         hideTitle();
-        loadView();
-    }
-
-    private void loadView() {
-        refreshView();
-
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        isFront = true;
-        if (nowContent != null) {
-            nowContent.setFront(true);
-        }
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        isFront = false;
-        if (nowContent != null) {
-            nowContent.setFront(false);
-        }
-    }
-
-    private void refreshView() {
         nowContent = DrivingViewEnum.createView(this, DrivingViewEnum.getById(SharedPreUtil.getInteger(SDATA_DRIVING_VIEW, DrivingViewEnum.BLACK.getId())));
-        nowContent.setFront(isFront);
         content.removeAllViews();
         content.addView(nowContent, FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
-        nowContent.findViewById(R.id.btn_back).setOnClickListener(v -> moveTaskToBack(isTaskRoot()));
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(final SEventRefreshDriving event) {
-        refreshView();
+        nowContent.findViewById(R.id.btn_back).setOnClickListener(v -> finish());
     }
 }

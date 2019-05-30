@@ -10,10 +10,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventInfo;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventState;
+import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
+import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventConnect;
 import com.wow.carlauncher.view.base.BaseView;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -40,6 +43,14 @@ public class MusicView extends BaseView {
     @Override
     protected int getContent() {
         return R.layout.content_driving_cool_black_music;
+    }
+
+    @Override
+    protected void initView() {
+        //同步一下信息
+        TaskExecutor.self().post(() -> {
+            MusicPlugin.self().requestLast();
+        }, 500);
     }
 
     @BindView(R.id.iv_play)

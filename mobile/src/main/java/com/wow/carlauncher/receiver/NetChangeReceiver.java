@@ -13,7 +13,6 @@ import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.GsonUtil;
 import com.wow.carlauncher.common.util.NetWorkUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
-import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.repertory.server.CommonService;
 import com.wow.carlauncher.view.event.EventNetStateChange;
 import com.wow.carlauncher.view.event.EventWifiState;

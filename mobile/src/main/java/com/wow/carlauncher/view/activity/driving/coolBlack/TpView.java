@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.ex.manage.ImageManage;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventCoverRefresh;
 import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
@@ -41,8 +42,11 @@ public class TpView extends BaseView {
 
     @Override
     protected void initView() {
-        onEvent(new PObdEventConnect().setConnected(ObdPlugin.self().isConnect()));
-        onEvent(ObdPlugin.self().getCurrentPObdEventCarTp());
+        //同步一下信息
+        TaskExecutor.self().post(() -> {
+            onEvent(new PObdEventConnect().setConnected(ObdPlugin.self().isConnect()));
+            onEvent(ObdPlugin.self().getCurrentPObdEventCarTp());
+        }, 500);
     }
 
     @BindView(R.id.tv_lf)
@@ -100,9 +104,9 @@ public class TpView extends BaseView {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final PMusicEventCoverRefresh event) {
         if (event.isHave()) {
-            ImageManage.self().loadImage(event.getUrl(), music_iv_cover, R. drawable.theme_music_dcover);
+            ImageManage.self().loadImage(event.getUrl(), music_iv_cover, R.drawable.theme_music_dcover);
         } else {
-            music_iv_cover.setImageResource(R. drawable.theme_music_dcover);
+            music_iv_cover.setImageResource(R.drawable.theme_music_dcover);
         }
     }
 

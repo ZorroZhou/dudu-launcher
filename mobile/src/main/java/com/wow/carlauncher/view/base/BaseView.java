@@ -56,6 +56,7 @@ public abstract class BaseView extends FrameLayout {
             }
         }
         if (have) {
+            System.out.println(getClass() + "!!!!!!123");
             EventBus.getDefault().register(this);
         }
     }

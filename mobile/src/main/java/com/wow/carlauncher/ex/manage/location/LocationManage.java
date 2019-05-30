@@ -8,19 +8,13 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
-import com.wow.carlauncher.common.AppContext;
 import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.TaskExecutor;
-import com.wow.carlauncher.common.user.LocalUser;
 import com.wow.carlauncher.common.util.CommonUtil;
-import com.wow.carlauncher.common.util.GsonUtil;
 import com.wow.carlauncher.common.util.NetWorkUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.ContextEx;
 import com.wow.carlauncher.ex.manage.speed.SMEventReceiveSpeed;
-import com.wow.carlauncher.ex.manage.toast.ToastManage;
-import com.wow.carlauncher.repertory.server.CommonCallback;
-import com.wow.carlauncher.repertory.server.CommonService;
 import com.wow.carlauncher.repertory.server.UserCarService;
 import com.wow.carlauncher.view.event.EventNetStateChange;
 
@@ -29,11 +23,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import static com.wow.carlauncher.common.CommonData.LOGIN_USER_ID;
-import static com.wow.carlauncher.common.CommonData.LOGIN_USER_INFO;
 import static com.wow.carlauncher.common.CommonData.SDATA_ALLOW_REPORT_LOCATION;
-import static com.wow.carlauncher.common.CommonData.SDATA_HOME_FULL;
-import static com.wow.carlauncher.repertory.server.ServerConstant.NET_ERROR;
-import static com.wow.carlauncher.repertory.server.ServerConstant.RES_ERROR;
 
 /**
  * Created by 10124 on 2018/5/12.

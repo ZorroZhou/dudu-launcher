@@ -6,21 +6,19 @@ import android.content.Context;
 import com.wow.carlauncher.common.AppContext;
 import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.util.CommonUtil;
+import com.wow.carlauncher.ex.ContextEx;
 
-import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
-import okhttp3.Headers;
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class OkHttpManage {
+public class OkHttpManage extends ContextEx {
     private static class SingletonHolder {
         @SuppressLint("StaticFieldLeak")
         private static OkHttpManage instance = new OkHttpManage();
@@ -34,7 +32,6 @@ public class OkHttpManage {
         super();
     }
 
-    private Context context;
     private OkHttpClient okHttpClient;
 
     private String cookie;
@@ -44,7 +41,7 @@ public class OkHttpManage {
     }
 
     public void init(Context context) {
-        this.context = context;
+        setContext(context);
 
         long t1 = System.currentTimeMillis();
         okHttpClient = new OkHttpClient.Builder()
@@ -109,16 +106,13 @@ public class OkHttpManage {
     private OkHttpClient getProgressClient(final ProgressResponseListener progressListener) {
         OkHttpClient.Builder client = new OkHttpClient.Builder();
         //增加拦截器
-        client.addInterceptor(new Interceptor() {
-            @Override
-            public Response intercept(Chain chain) throws IOException {
-                //拦截
-                Response originalResponse = chain.proceed(chain.request());
-                //包装响应体并返回
-                return originalResponse.newBuilder()
-                        .body(new ProgressResponseBody(originalResponse.body(), progressListener))
-                        .build();
-            }
+        client.addInterceptor(chain -> {
+            //拦截
+            Response originalResponse = chain.proceed(chain.request());
+            //包装响应体并返回
+            return originalResponse.newBuilder()
+                    .body(new ProgressResponseBody(originalResponse.body(), progressListener))
+                    .build();
         });
         return client.build();
 

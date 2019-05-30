@@ -26,7 +26,6 @@ import java.util.List;
 
 import static com.wow.carlauncher.common.CommonData.SDATA_LAST_ACTIVITY_TYPE;
 import static com.wow.carlauncher.common.CommonData.SDATA_LAST_ACTIVITY_TYPE_FM;
-import static com.wow.carlauncher.common.CommonData.SDATA_LAST_ACTIVITY_TYPE_MUSIC;
 import static com.wow.carlauncher.common.CommonData.SDATA_LAST_ACTIVITY_TYPE_NONE;
 import static com.wow.carlauncher.common.CommonData.SDATA_MY_FAV_RADIOS;
 import static com.wow.carlauncher.common.CommonData.SDATA_START_LAST_ACTIVITY_DELAY;

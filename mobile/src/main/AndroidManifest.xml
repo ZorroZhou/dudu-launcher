@@ -144,7 +144,7 @@
         <service
             android:name="com.ximalaya.ting.android.opensdk.player.service.XmPlayerService"
             android:exported="true"
-            android:process=":player"/>
+            android:process=":player" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

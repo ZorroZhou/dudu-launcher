@@ -43,6 +43,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -270,6 +271,12 @@ public class AppContext {
                 PrintWriter pw = new PrintWriter(new FileWriter(file));
                 e.printStackTrace(pw);
                 pw.close();
+
+                StringWriter sw = new StringWriter();
+                PrintWriter pw2 = new PrintWriter(sw);
+                e.printStackTrace(pw2);
+                pw2.close();
+
                 System.exit(0);
             } catch (Exception ee) {
                 e.printStackTrace();

@@ -1,6 +1,5 @@
 package com.wow.carlauncher.ex.plugin.music.plugin;
 
-import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -14,7 +13,6 @@ import com.wow.carlauncher.common.LrcAnalyze;
 import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.GsonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
-import com.wow.carlauncher.ex.manage.time.event.TMEvent3Second;
 import com.wow.carlauncher.ex.manage.time.event.TMEventSecond;
 import com.wow.carlauncher.ex.plugin.music.MusciCoverUtil;
 import com.wow.carlauncher.ex.plugin.music.MusicController;
@@ -29,7 +27,6 @@ import java.util.List;
 import java.util.Map;
 
 import static com.wow.carlauncher.common.CommonData.SDATA_QQ_MUSIC_REG_DELAY;
-import static com.wow.carlauncher.common.CommonData.SDATA_START_LAST_ACTIVITY_DELAY;
 
 /**
  * Created by 10124 on 2017/10/26.

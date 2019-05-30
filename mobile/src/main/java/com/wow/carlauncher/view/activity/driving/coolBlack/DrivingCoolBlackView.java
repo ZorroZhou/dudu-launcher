@@ -41,12 +41,12 @@ import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.RIGHT_BOT
  * Created by 10124 on 2018/5/11.
  */
 
-public class CoolBlackView extends BaseView {
-    public CoolBlackView(@NonNull Context context) {
+public class DrivingCoolBlackView extends BaseView {
+    public DrivingCoolBlackView(@NonNull Context context) {
         super(context);
     }
 
-    public CoolBlackView(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public DrivingCoolBlackView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 

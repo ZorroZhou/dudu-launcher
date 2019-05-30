@@ -2,8 +2,9 @@ package com.wow.carlauncher.view.activity.driving;
 
 import android.content.Context;
 
-import com.wow.carlauncher.view.activity.driving.blue.BlueView;
-import com.wow.carlauncher.view.activity.driving.coolBlack.CoolBlackView;
+import com.wow.carlauncher.view.activity.driving.blue.DrivingBlueView;
+import com.wow.carlauncher.view.activity.driving.coolBlack.DrivingCoolBlackView;
+import com.wow.carlauncher.view.activity.driving.time.DrivingTimeView;
 import com.wow.carlauncher.view.activity.set.setItem.SetEnum;
 import com.wow.carlauncher.view.base.BaseView;
 
@@ -13,7 +14,8 @@ import com.wow.carlauncher.view.base.BaseView;
 
 public enum DrivingViewEnum implements SetEnum {
     BLACK("酷黑仪表盘(需要OBD支持,音乐,胎压,导航,车况)", 1),
-    BLUE("魅力蓝调(OBD支持更佳,音乐,胎压,导航,车况)", 2);
+    BLUE("魅力蓝调(OBD支持更佳,音乐,胎压,导航,车况)", 2),
+    TIME("时间待机屏幕(只有时间显示的待机屏幕)", 3);
 
     private String name;
     private Integer id;
@@ -45,6 +47,8 @@ public enum DrivingViewEnum implements SetEnum {
                 return BLACK;
             case 2:
                 return BLUE;
+            case 3:
+                return TIME;
         }
         return BLACK;
     }
@@ -52,10 +56,12 @@ public enum DrivingViewEnum implements SetEnum {
     public static BaseView createView(Context context, DrivingViewEnum itemEnum) {
         switch (itemEnum) {
             case BLACK:
-                return new CoolBlackView(context);
+                return new DrivingCoolBlackView(context);
             case BLUE:
-                return new BlueView(context);
+                return new DrivingBlueView(context);
+            case TIME:
+                return new DrivingTimeView(context);
         }
-        return new CoolBlackView(context);
+        return new DrivingCoolBlackView(context);
     }
 }

@@ -1,0 +1,31 @@
+<?xml version="1" encoding="utf-8"?>
+<com.wow.carlauncher.common.theme.TLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/btn_back"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black"
+    android:fitsSystemWindows="true"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:ignore="RtlHardcoded,RtlSymmetry,HardcodedText">
+
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="10:10"
+        android:textColor="#bbb"
+        app:layout_textSizePercent="15%h" />
+
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="10月1日"
+        android:textColor="#bbb"
+        app:layout_textSizePercent="10%h" />
+
+</com.wow.carlauncher.common.theme.TLinearLayout>

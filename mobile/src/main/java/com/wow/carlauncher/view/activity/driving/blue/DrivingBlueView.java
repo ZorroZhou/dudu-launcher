@@ -48,17 +48,17 @@ import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.ICONS;
 import static com.wow.carlauncher.ex.plugin.fk.FangkongProtocolEnum.YLFK;
 import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.RIGHT_BOTTOM_CLICK;
 
-public class BlueView extends BaseView {
+public class DrivingBlueView extends BaseView {
     private final static int MAX_REV = 8000;
     private final static int MAX_SPEED = 200;
     private static boolean fristLoad = true;
 
 
-    public BlueView(@NonNull Context context) {
+    public DrivingBlueView(@NonNull Context context) {
         super(context);
     }
 
-    public BlueView(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public DrivingBlueView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 

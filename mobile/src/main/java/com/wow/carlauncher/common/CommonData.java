@@ -85,7 +85,8 @@ public class CommonData {
 
     public static final DrivingViewEnum[] DRIVING_VIEW = {
             DrivingViewEnum.BLACK,
-            DrivingViewEnum.BLUE};
+            DrivingViewEnum.BLUE,
+            DrivingViewEnum.TIME};
 
     public static final FangkongProtocolEnum[] FANGKONG_CONTROLLER = {FangkongProtocolEnum.YLFK};
 

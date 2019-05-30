@@ -2,6 +2,9 @@ package com.wow.carlauncher.common;
 
 import android.app.Application;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Environment;
 import android.provider.Settings;
 
@@ -277,6 +280,8 @@ public class AppContext {
                 e.printStackTrace(pw2);
                 pw2.close();
 
+                String deviceId = Settings.System.getString(application.getContentResolver(), Settings.System.ANDROID_ID);
+                CommonService.reportError(deviceId, "SDK:" + Build.VERSION.SDK_INT, sw.toString(), null);
                 System.exit(0);
             } catch (Exception ee) {
                 e.printStackTrace();

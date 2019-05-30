@@ -47,4 +47,14 @@ public class CommonService {
     public static Call downFile(String url, final ProgressResponseListener commonCallback) {
         return OkHttpManage.self().get(url, commonCallback);
     }
+
+    private final static String REPORT_ERROR = "api/app/common/reportError";
+
+    public static Call reportError(String deviceId, String deviceMsg, String message, final CommonCallback<Object> commonCallback) {
+        Map<String, Object> param = new HashMap<>();
+        param.put("deviceId", deviceId);
+        param.put("deviceMsg", deviceMsg);
+        param.put("message", message);
+        return ServerRequestUtil.post(REPORT_ERROR, param, Object.class, commonCallback);
+    }
 }

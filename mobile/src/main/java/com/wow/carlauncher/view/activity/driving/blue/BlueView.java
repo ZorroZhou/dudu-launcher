@@ -51,7 +51,7 @@ import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.RIGHT_BOT
 public class BlueView extends BaseView {
     private final static int MAX_REV = 8000;
     private final static int MAX_SPEED = 200;
-    private static boolean frist = true;
+    private static boolean fristLoad = true;
 
 
     public BlueView(@NonNull Context context) {
@@ -165,8 +165,7 @@ public class BlueView extends BaseView {
         super.initView();
         int max = 49;
         int start = 1;
-        if (SharedPreUtil.getBoolean(CommonData.SDATA_DRIVING_VIEW_ABUNATION, true) && frist) {
-            frist = false;
+        if (SharedPreUtil.getBoolean(CommonData.SDATA_DRIVING_VIEW_ABUNATION, true) && fristLoad) {
             scheduledFuture = TaskExecutor.self().run(() -> {
                 for (int i = start; i <= max; i++) {
                     try {
@@ -187,6 +186,7 @@ public class BlueView extends BaseView {
             iv_center.setImageResource(R.mipmap.driving_blue_center_gif_49);
             loadOk();
         }
+        fristLoad = false;
     }
 
     @Override

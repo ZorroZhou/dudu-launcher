@@ -53,6 +53,8 @@ public class AppIconTemp {
 
         //ES浏览器
         putIcon("com.estrongs.android.pop", R.drawable.app_icon_esfile);
+
+        putIcon("ecarx.camera.dvr", R.drawable.app_icon_dvr);
     }
 
     static void putIcon(String pname, int r) {

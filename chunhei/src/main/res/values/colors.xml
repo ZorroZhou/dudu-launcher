@@ -14,6 +14,12 @@
     <color name="theme_amap_xiansu">#fbfbfb</color>
     <!--剩余里程文字颜色-->
     <color name="theme_amap_shengyulicheng">#fbfbfb</color>
+    <!--下个路口距离颜色-->
+    <color name="theme_amap_next_dis">#fff</color>
+    <!--下个路口名称颜色-->
+    <color name="theme_amap_next_road">#ddd</color>
+    <!--速度颜色-->
+    <color name="theme_amap_speed">#fff</color>
     <!--天气布局1相关的颜色-->
     <color name="theme_weather_1_tianqi">#9ba1a9</color>
     <color name="theme_weather_1_wendu">#697185</color>

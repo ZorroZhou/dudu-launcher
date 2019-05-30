@@ -19,7 +19,7 @@ import okhttp3.Response;
 
 public class ServerRequestUtil {
     public static <D> Call get(String url, Class<D> clazz, final CommonCallback<D> commonCallback) {
-        return OkHttpManage.self().get(url, new Callback() {
+        return OkHttpManage.self().get(ServerConstant.SERVER_URL + url, new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 LogEx.e(ServerRequestUtil.class, "onError: ");
@@ -66,7 +66,7 @@ public class ServerRequestUtil {
     }
 
     public static <D> Call post(String url, Map<String, Object> param, Class<D> clazz, final CommonCallback<D> commonCallback) {
-        return OkHttpManage.self().post(url, param, new Callback() {
+        return OkHttpManage.self().post(ServerConstant.SERVER_URL + url, param, new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 LogEx.e(ServerRequestUtil.class, "onError: ");

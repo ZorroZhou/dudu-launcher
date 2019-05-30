@@ -229,4 +229,6 @@ public class CommonData {
     public static final int SDATA_LAST_ACTIVITY_TYPE_FM = 2;
 
     public static final String SDATA_LOAD_CHECK_QUANXIAN = "SDATA_LOAD_CHECK_QUANXIAN";//启动是否检查权限
+
+    public static final String SDATA_ALLOW_REPORT_LOCATION = "SDATA_ALLOW_REPORT_LOCATION";//允许上传位置
 }

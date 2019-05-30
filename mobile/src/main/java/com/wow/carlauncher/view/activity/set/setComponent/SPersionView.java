@@ -24,6 +24,7 @@ import com.wow.carlauncher.view.activity.launcher.event.LItemRefreshEvent;
 import com.wow.carlauncher.view.activity.set.SetActivity;
 import com.wow.carlauncher.view.activity.set.SetBaseView;
 import com.wow.carlauncher.view.activity.set.commonView.BindEmailView;
+import com.wow.carlauncher.view.activity.set.commonView.SetSwitchOnClickListener;
 import com.wow.carlauncher.view.activity.set.event.SEventRequestLogin;
 
 import org.greenrobot.eventbus.EventBus;
@@ -59,6 +60,9 @@ public class SPersionView extends SetBaseView {
 
     @BindView(R.id.sv_unbind)
     SetView sv_unbind;
+
+    @BindView(R.id.sv_allow_report_location)
+    SetView sv_allow_report_location;
 
     @BindView(R.id.ll_user)
     LinearLayout ll_user;
@@ -102,6 +106,9 @@ public class SPersionView extends SetBaseView {
         sv_bind.setOnClickListener(new BindEmailView(getActivity()));
         sv_unbind.setOnClickListener(onClickListener);
         onEvent(new UEventRefreshLoginState().setLogin(AppContext.self().getLocalUser() != null));
+
+        sv_allow_report_location.setOnValueChangeListener(new SetSwitchOnClickListener(CommonData.SDATA_ALLOW_REPORT_LOCATION));
+        sv_allow_report_location.setChecked(SharedPreUtil.getBoolean(CommonData.SDATA_ALLOW_REPORT_LOCATION, true));
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

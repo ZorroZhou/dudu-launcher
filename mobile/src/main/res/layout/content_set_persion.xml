@@ -51,6 +51,15 @@
             st:type="buttonB" />
 
         <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/sv_allow_report_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:summary="@string/set_allow"
+            st:summary2="@string/set_ban"
+            st:titleEx="允许上报位置(之后会组成行程)"
+            st:type="switchB" />
+
+        <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_bind"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

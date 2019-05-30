@@ -16,6 +16,7 @@ import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.AppContext;
+import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.user.LocalUser;
 import com.wow.carlauncher.common.user.event.UEventRefreshLoginState;
@@ -244,7 +245,7 @@ public class SetActivity extends BaseActivity implements SetFrame {
 
     private void loadQQOpen() {
         if (mTencent == null) {
-            mTencent = Tencent.createInstance("101580804", this);
+            mTencent = Tencent.createInstance("101580804", getApplicationContext());
         }
     }
 
@@ -258,6 +259,7 @@ public class SetActivity extends BaseActivity implements SetFrame {
 
     private void login() {
         showLoading("处理中...");
+        System.out.println("!!!1" + mTencent.isQQInstalled(SetActivity.this));
         mTencent.login(SetActivity.this, "all", loginListener, !mTencent.isQQInstalled(SetActivity.this));
     }
 
@@ -296,6 +298,7 @@ public class SetActivity extends BaseActivity implements SetFrame {
         public void onComplete(Object response) {
             JSONObject loginResponse = (JSONObject) response;
             if (null == loginResponse || loginResponse.length() == 0) {
+                LogEx.e(SetActivity.this, loginResponse);
                 ToastManage.self().show("登陆失败:QQ互联授权失败1");
                 hideLoading();
                 return;
@@ -303,27 +306,39 @@ public class SetActivity extends BaseActivity implements SetFrame {
             try {
                 int ret = loginResponse.getInt("ret");
                 if (ret != 0) {
+                    LogEx.e(SetActivity.this, loginResponse);
                     ToastManage.self().show("登陆失败:QQ互联授权失败2");
                     hideLoading();
                     return;
                 }
+                String accessToken = loginResponse.getString("access_token");
+                if (CommonUtil.isNull(accessToken)) {
+                    LogEx.e(SetActivity.this, loginResponse);
+                    ToastManage.self().show("登陆失败:QQ互联授权失败3");
+                    hideLoading();
+                    return;
+                }
+                //坑货QQ,这里竟然必须自己设置
+                mTencent.setOpenId(loginResponse.getString("openid"));
+                mTencent.setAccessToken(accessToken, loginResponse.getString("expires_in"));
                 IUiListener listener = new IUiListener() {
                     @Override
                     public void onComplete(final Object response) {
                         try {
                             JSONObject userInfoResponse = (JSONObject) response;
                             if (userInfoResponse == null || userInfoResponse.length() == 0) {
+                                LogEx.e(SetActivity.this, userInfoResponse);
                                 ToastManage.self().show("登陆失败:QQ互联获取信息失败1");
                                 hideLoading();
                                 return;
                             }
                             int ret = userInfoResponse.getInt("ret");
                             if (ret != 0) {
+                                LogEx.e(SetActivity.this, userInfoResponse);
                                 ToastManage.self().show("登陆失败:QQ互联获取信息失败2");
                                 hideLoading();
                                 return;
                             }
-                            String accessToken = loginResponse.getString("access_token");
                             final String nickname = userInfoResponse.getString("nickname");
                             String userPic = userInfoResponse.getString("figureurl_qq_2");
                             if (CommonUtil.isNull(userPic)) {

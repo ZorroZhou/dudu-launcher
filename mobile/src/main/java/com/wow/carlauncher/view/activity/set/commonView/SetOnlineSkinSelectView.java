@@ -139,7 +139,7 @@ public class SetOnlineSkinSelectView extends SetBaseView implements View.OnClick
                 SkinInfo skinInfo = DatabaseManage.getBean(SkinInfo.class, " mark='" + model.getApkPackage() + "'");
                 String nameMsg = model.getThemeName();
                 convertView.findViewById(R.id.tv_down).setVisibility(VISIBLE);
-                if (skinInfo != null) {
+                if (skinInfo != null && skinInfo.getVersion() != null) {
                     if (skinInfo.getVersion() < model.getVersion()) {
                         nameMsg = nameMsg + "(有更新)";
                     } else {

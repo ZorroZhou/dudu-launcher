@@ -212,9 +212,10 @@ public class PopupWin {
             pluginHome.setVisibility(View.GONE);
             winparams.width = owidth * rank;
             winparams.height = oheight * rank;
-
-            wm.updateViewLayout(popupWindow, winparams);
-
+            try {
+                wm.updateViewLayout(popupWindow, winparams);
+            } catch (Throwable ignored) {
+            }
         } else if (pluginId == 2) {
             pluginHome.setVisibility(View.VISIBLE);
             pluginHome.removeAllViews();

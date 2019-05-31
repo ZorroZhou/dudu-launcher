@@ -105,7 +105,7 @@ public class LocationManage extends ContextEx implements AMapLocationListener {
                 EventBus.getDefault().post(new SMEventReceiveSpeed().setSpeed((int) (aMapLocation.getSpeed() * 60 * 60 / 1000)).setFrom(SMEventReceiveSpeed.SMReceiveSpeedFrom.GPS));
             }
 
-            if (SharedPreUtil.getBoolean(SDATA_ALLOW_REPORT_LOCATION, true) && netOk && System.currentTimeMillis() - lastReportTime > 10 * 1000) {
+            if (SharedPreUtil.getBoolean(SDATA_ALLOW_REPORT_LOCATION, true) && netOk && System.currentTimeMillis() - lastReportTime > 60 * 1000 * 2) {
                 lastReportTime = System.currentTimeMillis();
                 TaskExecutor.self().run(() -> {
                     long uid = SharedPreUtil.getLong(LOGIN_USER_ID, -1);

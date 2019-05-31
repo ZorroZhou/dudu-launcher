@@ -355,14 +355,11 @@ public class PopupWin {
         }, 500 - System.currentTimeMillis() % 500, 500);
     }
 
-    private View.OnClickListener onClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.ll_xunhuan: {
-                    showPlugin(true);
-                    break;
-                }
+    private View.OnClickListener onClickListener = v -> {
+        switch (v.getId()) {
+            case R.id.ll_xunhuan: {
+                showPlugin(true);
+                break;
             }
         }
     };
@@ -392,13 +389,10 @@ public class PopupWin {
     };
 
     private void setTime() {
-        TaskExecutor.self().autoPost(new Runnable() {
-            @Override
-            public void run() {
-                Date d = new Date();
-                String datetime = DateUtil.dateToString(d, "MM月dd日 HH:mm");
-                tv_time.setText(datetime);
-            }
+        TaskExecutor.self().autoPost(() -> {
+            Date d = new Date();
+            String datetime = DateUtil.dateToString(d, "MM月dd日 HH:mm");
+            tv_time.setText(datetime);
         });
     }
 

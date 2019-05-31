@@ -176,7 +176,6 @@ public class AppContext {
 
         int size = SharedPreUtil.getInteger(CommonData.SDATA_POPUP_SIZE, 1);
         PopupWin.self().setRank(size + 1);
-        handerException();
 
         TaskExecutor.self().run(() -> {
             if (SharedPreUtil.getBoolean(CommonData.SDATA_APP_AUTO_OPEN_USE, false)) {
@@ -240,55 +239,6 @@ public class AppContext {
     public Application getApplication() {
         return this.application;
     }
-
-    private void handerException() {
-        Thread.setDefaultUncaughtExceptionHandler((t, e) -> {
-            e.printStackTrace();
-            try {
-                String path;
-
-                if (Environment.getExternalStorageState().equals(
-                        Environment.MEDIA_MOUNTED)) {// 优先保存到SD卡中
-                    path = Environment.getExternalStorageDirectory()
-                            .getAbsolutePath() + File.separator + "duduLauncher" + File.separator + "error";
-                } else {// 如果SD卡不存在，就保存到本应用的目录下
-                    path = getApplication().getFilesDir().getAbsolutePath()
-                            + File.separator + "duduLauncher" + File.separator + "error";
-                }
-
-                File pathFile = new File(path);
-                if (!pathFile.exists()) {
-                    pathFile.mkdirs();
-                }
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault());
-                String date = format.format(new Date(System.currentTimeMillis()));
-
-                File file = new File(path, "log_"
-                        + date + ".log");
-                if (!file.exists() && file.createNewFile()) {
-                    LogEx.d(this, "创建文件");
-                } else {
-                    return;
-                }
-
-                PrintWriter pw = new PrintWriter(new FileWriter(file));
-                e.printStackTrace(pw);
-                pw.close();
-
-                StringWriter sw = new StringWriter();
-                PrintWriter pw2 = new PrintWriter(sw);
-                e.printStackTrace(pw2);
-                pw2.close();
-
-                String deviceId = Settings.System.getString(application.getContentResolver(), Settings.System.ANDROID_ID);
-                CommonService.reportError(deviceId, "SDK:" + Build.VERSION.SDK_INT, sw.toString(), null);
-                System.exit(0);
-            } catch (Exception ee) {
-                e.printStackTrace();
-            }
-        });
-    }
-
 
     private DatabaseInfo getDatabaseInfo() {
         return new DatabaseInfo() {

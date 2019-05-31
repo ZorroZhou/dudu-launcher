@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import com.wow.carlauncher.common.ActivityLifecycleListener;
 import com.wow.carlauncher.common.AppContext;
+import com.wow.carlauncher.common.util.ErrorUtil;
 import com.wow.carlauncher.service.MainService;
 
 import static com.wow.carlauncher.common.util.AppUtil.getCurProcessName;
@@ -21,6 +22,7 @@ public class CarLauncherApplication extends Application {
             Intent startIntent = new Intent(this, MainService.class);
             startService(startIntent);
         }
+        ErrorUtil.handerException(this);
     }
 
     private int startedActivityCount = 0;

@@ -155,15 +155,6 @@ public class AppContext {
         ObdPlugin.self().init(app);
         //车机控制插件
         ConsolePlugin.self().init(app);
-        //悬浮窗
-        //弹出敞口
-        PopupWin.self().init(app);
-        //控制窗口
-        ConsoleWin.self().init(app);
-        //导航窗口
-        NaviWin.self().init(app);
-        //语音窗口
-        VoiceWin.self().init(app);
         //单独的速度插件
         SpeedManage.self().init(app);
 
@@ -173,9 +164,6 @@ public class AppContext {
             BaiduVoiceAssistant.self().init(app);
             TaskExecutor.self().run(() -> BaiduVoiceAssistant.self().startWakeUp(), 1000);
         }
-
-        int size = SharedPreUtil.getInteger(CommonData.SDATA_POPUP_SIZE, 1);
-        PopupWin.self().setRank(size + 1);
 
         TaskExecutor.self().run(() -> {
             if (SharedPreUtil.getBoolean(CommonData.SDATA_APP_AUTO_OPEN_USE, false)) {
@@ -236,7 +224,7 @@ public class AppContext {
         });
     }
 
-    public Application getApplication() {
+    public CarLauncherApplication getApplication() {
         return this.application;
     }
 

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.PixelFormat;
 import android.os.Build;
+import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 
 import com.wow.carlauncher.CarLauncherApplication;
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.common.AppContext;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.TaskExecutor;
@@ -115,8 +117,17 @@ public class ConsoleWin {
         LogEx.d(this, "init time:" + (System.currentTimeMillis() - t1));
     }
 
+    private static final byte[] lock = new byte[0];
 
     public void show() {
+        if (Build.VERSION.SDK_INT >= 23 && !Settings.canDrawOverlays(context)) {
+            return;
+        }
+        synchronized (lock) {
+            if (consoleWin == null) {
+                init(AppContext.self().getApplication());
+            }
+        }
         if (!isShow) {
             wm.addView(consoleWin, winparams);
             isShow = true;

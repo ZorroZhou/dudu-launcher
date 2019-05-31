@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.wow.carlauncher.CarLauncherApplication;
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.common.AppContext;
 import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.TaskExecutor;
@@ -119,6 +120,8 @@ public class PopupWin {
             winparams.flags = WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_FULLSCREEN;
         }
         winparams.format = PixelFormat.TRANSLUCENT;
+
+        rank = SharedPreUtil.getInteger(CommonData.SDATA_POPUP_SIZE, 1) + 1;
         winparams.width = owidth * rank;
         winparams.height = oheight * rank;
 
@@ -300,7 +303,7 @@ public class PopupWin {
     }
 
     public synchronized void checkShow(int count) {
-        if (context.checkActivity(count) > 0) {
+        if (AppContext.self().getApplication().checkActivity(count) > 0) {
             hide();
         } else {
             Log.d(TAG, "checkShow: 请求打开悬浮窗");
@@ -322,12 +325,19 @@ public class PopupWin {
     }
 
     private Timer timer;
+    private static final byte[] lock = new byte[0];
 
     //显示方法
     private void show() {
         if (Build.VERSION.SDK_INT >= 23 && !Settings.canDrawOverlays(context)) {
             return;
         }
+        synchronized (lock) {
+            if (popupWindow == null) {
+                init(AppContext.self().getApplication());
+            }
+        }
+
         if (!SharedPreUtil.getBoolean(SDATA_POPUP_ALLOW_SHOW, true)) {
             return;
         }

@@ -159,12 +159,7 @@ public class PopupWin {
         //如果APP是空的,则说明用户没有打开权限,则直接不显示了
         if (!SharedPreUtil.getBoolean(CommonData.SDATA_POPUP_SHOW_TYPE, true)) {
             if (CommonUtil.isNull(app)) {
-                TaskExecutor.self().autoPost(new Runnable() {
-                    @Override
-                    public void run() {
-                        popupWindow.setVisibility(View.GONE);
-                    }
-                });
+                TaskExecutor.self().autoPost(() -> popupWindow.setVisibility(View.GONE));
             }
         }
 
@@ -329,9 +324,6 @@ public class PopupWin {
 
     //显示方法
     private void show() {
-        if (Build.VERSION.SDK_INT >= 23 && !Settings.canDrawOverlays(context)) {
-            return;
-        }
         synchronized (lock) {
             if (popupWindow == null) {
                 init(AppContext.self().getApplication());
@@ -339,6 +331,9 @@ public class PopupWin {
         }
 
         if (!SharedPreUtil.getBoolean(SDATA_POPUP_ALLOW_SHOW, true)) {
+            return;
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(context)) {
             return;
         }
         if (!isShow) {

@@ -97,9 +97,7 @@ public class KuwoMusicController extends MusicController {
     }
 
     public void pause() {
-        if (!mKwapi.isKuwoRunning()) {
-            opKuwo();
-        } else {
+        if (mKwapi.isKuwoRunning()) {
             mKwapi.setPlayState(PlayState.STATE_PAUSE);
         }
     }

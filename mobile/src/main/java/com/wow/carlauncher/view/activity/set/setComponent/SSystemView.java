@@ -12,6 +12,7 @@ import android.os.Build;
 import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
 import android.view.KeyEvent;
+import android.view.View;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
@@ -99,6 +100,8 @@ public class SSystemView extends SetBaseView {
     @BindView(R.id.sv_load_check_quanxian)
     SetView sv_load_check_quanxian;
 
+    @BindView(R.id.sv_moren_launcher)
+    SetView sv_moren_launcher;
     private boolean showKey;
     private BroadcastReceiver nwdKeyTestReceiver = new BroadcastReceiver() {
         public void onReceive(Context paramContext, Intent paramIntent) {
@@ -111,6 +114,18 @@ public class SSystemView extends SetBaseView {
 
     @Override
     protected void initView() {
+        sv_moren_launcher.setSummary(AppUtil.isDefaultLauncher(getActivity()) ? "当前是默认桌面" : "点击设置默认桌面");
+        sv_moren_launcher.setOnClickListener(v -> {
+            if (!AppUtil.isDefaultLauncher(getActivity())) {
+                Intent intent = new Intent(Intent.ACTION_MAIN);
+                intent.addCategory(Intent.CATEGORY_HOME);
+                intent.addCategory(Intent.CATEGORY_DEFAULT);
+                intent.setClassName("android", "com.android.internal.app.ResolverActivity");
+                getActivity().startActivity(intent);
+            }
+        });
+
+
         sv_load_check_quanxian.setOnValueChangeListener(new SetSwitchOnClickListener(CommonData.SDATA_LOAD_CHECK_QUANXIAN));
         sv_load_check_quanxian.setChecked(SharedPreUtil.getBoolean(CommonData.SDATA_LOAD_CHECK_QUANXIAN, true));
 

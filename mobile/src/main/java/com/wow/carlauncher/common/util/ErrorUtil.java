@@ -21,6 +21,14 @@ public class ErrorUtil {
         Thread.setDefaultUncaughtExceptionHandler((t, e) -> {
             e.printStackTrace();
             try {
+                StringWriter sw = new StringWriter();
+                PrintWriter pw2 = new PrintWriter(sw);
+                e.printStackTrace(pw2);
+                pw2.close();
+
+                String deviceId = Settings.System.getString(application.getContentResolver(), Settings.System.ANDROID_ID);
+                CommonService.reportError(deviceId, "SDK:" + Build.VERSION.SDK_INT, sw.toString(), null);
+
                 String path;
 
                 if (Environment.getExternalStorageState().equals(
@@ -51,13 +59,6 @@ public class ErrorUtil {
                 e.printStackTrace(pw);
                 pw.close();
 
-                StringWriter sw = new StringWriter();
-                PrintWriter pw2 = new PrintWriter(sw);
-                e.printStackTrace(pw2);
-                pw2.close();
-
-                String deviceId = Settings.System.getString(application.getContentResolver(), Settings.System.ANDROID_ID);
-                CommonService.reportError(deviceId, "SDK:" + Build.VERSION.SDK_INT, sw.toString(), null);
                 System.exit(0);
             } catch (Exception ee) {
                 e.printStackTrace();

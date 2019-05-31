@@ -8,8 +8,10 @@ import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
@@ -125,6 +127,16 @@ public class AppUtil {
         } else {
             return 0;
         }
+    }
+
+    public static boolean isDefaultLauncher(Context context) {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory("android.intent.category.HOME");
+        intent.addCategory("android.intent.category.DEFAULT");
+        PackageManager pm = context.getPackageManager();
+        ResolveInfo info = pm.resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY);
+        boolean isDefault = context.getPackageName().equals(info.activityInfo.packageName);
+        return isDefault;
     }
 
     public static void sendKeyCode(final int keyCode) {

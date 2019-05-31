@@ -21,6 +21,14 @@
             android:textSize="14sp" />
 
         <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/sv_moren_launcher"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:summary="根据APP展示悬浮框需要打开用户统计功能，才能使用"
+            st:titleEx="默认桌面"
+            st:type="buttonB" />
+
+        <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_show_mount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -120,13 +120,13 @@ public class ConsoleWin {
     private static final byte[] lock = new byte[0];
 
     public void show() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(AppContext.self().getApplication())) {
+            return;
+        }
         synchronized (lock) {
             if (consoleWin == null) {
                 init(AppContext.self().getApplication());
             }
-        }
-        if (Build.VERSION.SDK_INT >= 23 && !Settings.canDrawOverlays(context)) {
-            return;
         }
         if (!isShow) {
             wm.addView(consoleWin, winparams);

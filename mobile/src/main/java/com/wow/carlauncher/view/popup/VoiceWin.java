@@ -70,7 +70,7 @@ public class VoiceWin {
         }
 
         public void show() {
-            if (Build.VERSION.SDK_INT >= 23 && !Settings.canDrawOverlays(context)) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(context)) {
                 return;
             }
             synchronized (lock) {

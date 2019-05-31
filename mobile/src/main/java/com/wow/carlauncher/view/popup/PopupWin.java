@@ -324,17 +324,16 @@ public class PopupWin {
 
     //显示方法
     private void show() {
+        if (!SharedPreUtil.getBoolean(SDATA_POPUP_ALLOW_SHOW, true)) {
+            return;
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(AppContext.self().getApplication())) {
+            return;
+        }
         synchronized (lock) {
             if (popupWindow == null) {
                 init(AppContext.self().getApplication());
             }
-        }
-
-        if (!SharedPreUtil.getBoolean(SDATA_POPUP_ALLOW_SHOW, true)) {
-            return;
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !Settings.canDrawOverlays(context)) {
-            return;
         }
         if (!isShow) {
             wm.addView(popupWindow, winparams);

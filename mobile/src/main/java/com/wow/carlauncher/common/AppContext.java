@@ -32,6 +32,7 @@ import com.wow.carlauncher.repertory.db.manage.DatabaseInfo;
 import com.wow.carlauncher.repertory.db.manage.DatabaseManage;
 import com.wow.carlauncher.repertory.server.CommonService;
 import com.wow.carlauncher.view.popup.NaviWin;
+import com.wow.carlauncher.view.popup.VoiceWin;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -143,6 +144,7 @@ public class AppContext {
         SpeedManage.self().init(app);
 
         NaviWin.watch().init(app);
+        VoiceWin.watch().init(app);
 
         XmlyfmPlugin.self().init(app);
 

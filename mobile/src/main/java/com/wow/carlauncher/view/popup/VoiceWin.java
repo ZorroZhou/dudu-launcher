@@ -23,6 +23,7 @@ import com.wow.carlauncher.ex.manage.baiduVoice.BaiduVoiceAssistant;
 import com.wow.carlauncher.ex.manage.baiduVoice.event.MVaAsrStateChange;
 import com.wow.carlauncher.ex.manage.baiduVoice.event.MVaNewWordFind;
 import com.wow.carlauncher.ex.manage.time.event.TMEvent3Second;
+import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventNavInfo;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -35,11 +36,56 @@ import butterknife.OnClick;
 public class VoiceWin {
     private static class SingletonHolder {
         @SuppressLint("StaticFieldLeak")
-        private static VoiceWin instance = new VoiceWin();
+        private static VoiceWatch instance = new VoiceWatch();
     }
 
-    public static VoiceWin self() {
+    public static VoiceWatch watch() {
         return VoiceWin.SingletonHolder.instance;
+    }
+
+
+    //这里使用watch加载,确保使用的时候才加载!!
+    public static class VoiceWatch {
+
+        private CarLauncherApplication context;
+
+        private VoiceWin voiceWin;
+
+        private VoiceWatch() {
+
+        }
+
+        public void init(CarLauncherApplication context) {
+            this.context = context;
+            EventBus.getDefault().register(VoiceWatch.this);
+        }
+
+        @Subscribe(threadMode = ThreadMode.MAIN)
+        public void onEvent(final MVaAsrStateChange event) {
+            if (event.isRun()) {
+                show();
+            } else {
+                hide();
+            }
+        }
+
+        public void show() {
+            if (Build.VERSION.SDK_INT >= 23 && !Settings.canDrawOverlays(context)) {
+                return;
+            }
+            synchronized (lock) {
+                if (voiceWin == null) {
+                    voiceWin = new VoiceWin();
+                    voiceWin.init(AppContext.self().getApplication());
+                }
+            }
+
+            voiceWin.show();
+        }
+
+        public void hide() {
+            voiceWin.hide();
+        }
     }
 
     private VoiceWin() {
@@ -96,15 +142,6 @@ public class VoiceWin {
     private static final byte[] lock = new byte[0];
 
     public void show() {
-        if (Build.VERSION.SDK_INT >= 23 && !Settings.canDrawOverlays(context)) {
-            return;
-        }
-        synchronized (lock) {
-            if (consoleWin == null) {
-                init(AppContext.self().getApplication());
-            }
-        }
-
         if (!isShow) {
             wm.addView(consoleWin, winparams);
             isShow = true;
@@ -144,15 +181,6 @@ public class VoiceWin {
             if (System.currentTimeMillis() - actionTime > 30 * 1000) {
                 BaiduVoiceAssistant.self().stopAsr();
             }
-        }
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(final MVaAsrStateChange event) {
-        if (event.isRun()) {
-            show();
-        } else {
-            hide();
         }
     }
 

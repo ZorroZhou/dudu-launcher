@@ -2,7 +2,6 @@ package com.wow.carlauncher.view.activity.driving.time;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;

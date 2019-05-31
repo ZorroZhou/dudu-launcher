@@ -1,11 +1,6 @@
 package com.wow.carlauncher.common;
 
-import android.app.Application;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.os.Build;
-import android.os.Environment;
 import android.provider.Settings;
 
 import com.wow.carlauncher.CarLauncherApplication;
@@ -36,20 +31,9 @@ import com.wow.carlauncher.repertory.db.entiy.SkinInfo;
 import com.wow.carlauncher.repertory.db.manage.DatabaseInfo;
 import com.wow.carlauncher.repertory.db.manage.DatabaseManage;
 import com.wow.carlauncher.repertory.server.CommonService;
-import com.wow.carlauncher.view.popup.ConsoleWin;
 import com.wow.carlauncher.view.popup.NaviWin;
-import com.wow.carlauncher.view.popup.PopupWin;
-import com.wow.carlauncher.view.popup.VoiceWin;
 
 import org.greenrobot.eventbus.EventBus;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 import static com.wow.carlauncher.common.CommonData.LOGIN_USER_ID;
 import static com.wow.carlauncher.common.CommonData.LOGIN_USER_INFO;
@@ -157,6 +141,8 @@ public class AppContext {
         ConsolePlugin.self().init(app);
         //单独的速度插件
         SpeedManage.self().init(app);
+
+        NaviWin.watch().init(app);
 
         XmlyfmPlugin.self().init(app);
 

@@ -8,9 +8,6 @@ import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.view.base.BaseActivity;
 import com.wow.carlauncher.view.base.BaseView;
 
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
 import butterknife.BindView;
 
 import static com.wow.carlauncher.common.CommonData.SDATA_DRIVING_VIEW;

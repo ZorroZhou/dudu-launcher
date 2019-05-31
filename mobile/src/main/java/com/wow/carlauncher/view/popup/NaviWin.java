@@ -40,11 +40,65 @@ import static com.wow.carlauncher.common.util.ViewUtils.getViewByIds;
 public class NaviWin {
     private static class SingletonHolder {
         @SuppressLint("StaticFieldLeak")
-        private static NaviWin instance = new NaviWin();
+        private static NavWatch instance = new NavWatch();
     }
 
-    public static NaviWin self() {
+    public static NavWatch watch() {
         return NaviWin.SingletonHolder.instance;
+    }
+
+    //这里使用watch加载,确保使用的时候才加载!!
+    public static class NavWatch {
+        private boolean isShow = false;
+
+        private CarLauncherApplication context;
+
+        private NaviWin naviWin;
+
+        private NavWatch() {
+
+        }
+
+        public void init(CarLauncherApplication context) {
+            this.context = context;
+            EventBus.getDefault().register(NavWatch.this);
+        }
+
+        private long lastTime = 0L;
+
+        @Subscribe(threadMode = ThreadMode.MAIN)
+        public void onEvent(final PAmapEventNavInfo event) {
+            if (event.getSegRemainDis() <= 300 && event.getRouteRemainDis() > 100) {
+                if (!isShow && SharedPreUtil.getBoolean(CommonData.SDATA_USE_NAVI_POP, false)) {
+                    show();
+                    lastTime = System.currentTimeMillis();
+                }
+            } else if (event.getRouteRemainDis() < 100) {
+                hide();
+            } else {
+                if (System.currentTimeMillis() - lastTime > 5000 && isShow) {
+                    hide();
+                }
+            }
+        }
+
+        public void show() {
+            if (Build.VERSION.SDK_INT >= 23 && !Settings.canDrawOverlays(context)) {
+                return;
+            }
+            synchronized (lock) {
+                if (naviWin == null) {
+                    naviWin = new NaviWin();
+                    naviWin.init(AppContext.self().getApplication());
+                }
+            }
+
+            naviWin.show();
+        }
+
+        public void hide() {
+            naviWin.hide();
+        }
     }
 
     private NaviWin() {
@@ -174,28 +228,12 @@ public class NaviWin {
         }
     }
 
-    private long lastTime = 0L;
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(final PAmapEventNavInfo event) {
-        if (event.getSegRemainDis() <= 300 && event.getRouteRemainDis() > 100) {
-            if (!isShow && SharedPreUtil.getBoolean(CommonData.SDATA_USE_NAVI_POP, false)) {
-                show();
-                lastTime = System.currentTimeMillis();
-            }
-        } else if (event.getRouteRemainDis() < 100) {
-            hide();
-        } else {
-            if (System.currentTimeMillis() - lastTime > 5000 && isShow) {
-                hide();
-            }
-        }
-    }
-
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final PAmapEventState event) {
         if (!event.isRunning()) {
             hide();
         }
     }
+
+
 }

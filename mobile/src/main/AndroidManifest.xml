@@ -76,7 +76,6 @@
             android:enabled="true"
             android:excludeFromRecents="true"
             android:launchMode="singleInstance"
-            android:resumeWhilePausing="true"
             android:screenOrientation="landscape"
             android:stateNotNeeded="true"
             android:taskAffinity="">
@@ -87,12 +86,6 @@
                 <category android:name="android.intent.category.HOME" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.MONKEY" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".view.activity.WelcomeActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
             </intent-filter>
         </activity>
         <activity

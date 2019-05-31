@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 
 import com.wow.carlauncher.common.LogEx;
+import com.wow.carlauncher.ex.ContextEx;
 import com.wow.carlauncher.ex.manage.time.event.TMEvent3Second;
 
 import org.greenrobot.eventbus.EventBus;
@@ -13,7 +14,7 @@ import org.greenrobot.eventbus.ThreadMode;
 /**
  * 速度管理器,这里单独管理吧,开发还简单
  */
-public class SpeedManage {
+public class SpeedManage extends ContextEx {
     @SuppressLint("StaticFieldLeak")
     private static SpeedManage self;
 
@@ -27,11 +28,9 @@ public class SpeedManage {
     private SpeedManage() {
     }
 
-    private Context context;
-
     public void init(Context context) {
         long t1 = System.currentTimeMillis();
-        this.context = context;
+        setContext(context);
         EventBus.getDefault().register(this);
         LogEx.d(this, "init time:" + (System.currentTimeMillis() - t1));
     }

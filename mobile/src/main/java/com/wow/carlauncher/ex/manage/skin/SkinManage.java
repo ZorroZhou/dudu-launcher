@@ -12,6 +12,7 @@ import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.util.SunRiseSetUtil;
+import com.wow.carlauncher.ex.ContextEx;
 import com.wow.carlauncher.ex.manage.location.LMEventNewLocation;
 import com.wow.carlauncher.ex.manage.time.event.TMEvent5Minute;
 import com.wow.carlauncher.ex.plugin.console.event.PConsoleEventLightState;
@@ -36,7 +37,7 @@ import static com.wow.carlauncher.common.CommonData.SDATA_APP_SKIN;
 import static com.wow.carlauncher.common.CommonData.SDATA_APP_SKIN_DAY;
 import static com.wow.carlauncher.common.CommonData.SDATA_APP_SKIN_NIGHT;
 
-public class SkinManage {
+public class SkinManage extends ContextEx {
 
     private static class SingletonHolder {
         @SuppressLint("StaticFieldLeak")
@@ -51,7 +52,6 @@ public class SkinManage {
         super();
     }
 
-    private Context context;
     public static final String DEFAULT_MARK = "com.wow.carlauncher.theme";
 
     private SkinInfo defaultSkin;
@@ -62,7 +62,7 @@ public class SkinManage {
 
     public void init(Application context) {
         long t1 = System.currentTimeMillis();
-        this.context = context;
+        setContext(context);
         SkinCompatManager.withoutActivity(context).addStrategy(new MySkinLoader());
 
         defaultSkin = new SkinInfo()
@@ -171,20 +171,20 @@ public class SkinManage {
         //如果是默认主题,则不加载额外信息
         if (CommonUtil.equals(this.skinMark, DEFAULT_MARK)) {
             skinPackageName = "";
-            skinSkinResources = context.getResources();
+            skinSkinResources = getContext().getResources();
         } else {
             //如果不是默认主题,加载额外信息,如果加载失败,则加载默认主题
             try {
                 skinPackageName = this.skinMark;
-                skinSkinResources = context.createPackageContext(skinPackageName, 0).getResources();
+                skinSkinResources = getContext().createPackageContext(skinPackageName, 0).getResources();
                 if (skinSkinResources == null) {
                     skinPackageName = "";
-                    skinSkinResources = context.getResources();
+                    skinSkinResources = getContext().getResources();
                 }
             } catch (Exception e) {
                 e.printStackTrace();
                 skinPackageName = "";
-                skinSkinResources = context.getResources();
+                skinSkinResources = getContext().getResources();
             }
         }
 
@@ -254,7 +254,7 @@ public class SkinManage {
         String name = cachedIdToName.get(resId);
         //查询缓存,如果
         if (CommonUtil.isNull(name)) {
-            name = context.getResources().getResourceEntryName(resId);
+            name = getContext().getResources().getResourceEntryName(resId);
             cachedIdToName.put(resId, name);
         }
         return name;
@@ -264,14 +264,14 @@ public class SkinManage {
     public String getString(int resId) {
         LogEx.d(this, "getString mark:" + skinMark);
         if (CommonUtil.equals(skinMark, DEFAULT_MARK) || skinSkinResources == null) {
-            return context.getResources().getString(resId);
+            return getContext().getResources().getString(resId);
         }
         String name = getResName(resId);
         String value = cachedString.get(name);
         if (CommonUtil.isNull(value)) {
             int id = skinSkinResources.getIdentifier(name, "string", skinPackageName);
             if (id == 0) {
-                value = context.getResources().getString(resId);
+                value = getContext().getResources().getString(resId);
             } else {
                 value = skinSkinResources.getString(id);
             }
@@ -284,7 +284,7 @@ public class SkinManage {
     public Drawable getDrawable(int resId) {
         LogEx.d(this, "getDrawable mark:" + skinMark);
         if (CommonUtil.equals(skinMark, DEFAULT_MARK) || skinSkinResources == null) {
-            return context.getResources().getDrawable(resId);
+            return getContext().getResources().getDrawable(resId);
         }
 
         String name = getResName(resId);
@@ -294,7 +294,7 @@ public class SkinManage {
             cachedDrawable.put(name, id);
         }
         if (id == 0) {
-            return context.getResources().getDrawable(resId);
+            return getContext().getResources().getDrawable(resId);
         }
         return skinSkinResources.getDrawable(id);
     }

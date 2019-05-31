@@ -14,8 +14,9 @@ import com.nostra13.universalimageloader.core.assist.ImageSize;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.download.BaseImageDownloader;
 import com.wow.carlauncher.common.LogEx;
+import com.wow.carlauncher.ex.ContextEx;
 
-public class ImageManage {
+public class ImageManage extends ContextEx {
     private static class SingletonHolder {
         @SuppressLint("StaticFieldLeak")
         private static ImageManage instance = new ImageManage();
@@ -26,7 +27,6 @@ public class ImageManage {
     }
 
     private ImageManage() {
-        super();
     }
 
 
@@ -34,6 +34,7 @@ public class ImageManage {
 
     public void init(Context context) {
         long t1 = System.currentTimeMillis();
+        setContext(context);
         DEFAULT_DISPLAY_OPTION = new DisplayImageOptions.Builder()
                 .cacheInMemory(true)
                 .cacheOnDisc(true)

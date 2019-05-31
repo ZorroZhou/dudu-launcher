@@ -6,8 +6,6 @@ import com.wow.carlauncher.view.activity.set.setItem.SetEnum;
 
 @Table(name = "SkinInfo")
 public class SkinInfo extends BaseEntity implements SetEnum {
-    public static final int TYPE_APP_IN = 1;
-    public static final int TYPE_OTHER = 2;
 
     private String name;//主题名称
     private String mark;//主题的标记

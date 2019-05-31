@@ -8,10 +8,11 @@ import android.content.Context;
 import android.view.View;
 
 import com.wow.carlauncher.common.LogEx;
+import com.wow.carlauncher.ex.ContextEx;
 
 import static com.wow.carlauncher.common.CommonData.APP_WIDGET_HOST_ID;
 
-public class AppWidgetManage {
+public class AppWidgetManage extends ContextEx {
     @SuppressLint("StaticFieldLeak")
     private static AppWidgetManage self;
 
@@ -27,11 +28,10 @@ public class AppWidgetManage {
 
     private AppWidgetHost appWidgetHost;
     private AppWidgetManager appWidgetManager;
-    private Context context;
 
     public void init(Context context) {
         long t1 = System.currentTimeMillis();
-        this.context = context;
+        setContext(context);
         appWidgetHost = new AppWidgetHost(context, APP_WIDGET_HOST_ID);
         appWidgetManager = AppWidgetManager.getInstance(context);
         appWidgetHost.startListening();
@@ -41,6 +41,6 @@ public class AppWidgetManage {
     public View getWidgetById(int id) {
         LogEx.d(this, "getWidgetById:" + id);
         AppWidgetProviderInfo popupWidgetInfo = appWidgetManager.getAppWidgetInfo(id);
-        return appWidgetHost.createView(context, id, popupWidgetInfo);
+        return appWidgetHost.createView(getContext(), id, popupWidgetInfo);
     }
 }

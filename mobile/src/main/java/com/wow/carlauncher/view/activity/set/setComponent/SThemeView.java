@@ -186,8 +186,10 @@ public class SThemeView extends SetBaseView {
                         }
                     }
                 }
-                sqlwhere = sqlwhere.substring(0, sqlwhere.length() - 1);
-                DatabaseManage.delete(SkinInfo.class, "mark not in (" + sqlwhere + ")");
+                if (CommonUtil.isNotNull(sqlwhere)) {
+                    sqlwhere = sqlwhere.substring(0, sqlwhere.length() - 1);
+                    DatabaseManage.delete(SkinInfo.class, "mark not in (" + sqlwhere + ")");
+                }
                 loadData();
                 getActivity().hideLoading();
             });

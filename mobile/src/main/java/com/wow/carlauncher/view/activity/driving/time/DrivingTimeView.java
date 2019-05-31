@@ -26,9 +26,6 @@ public class DrivingTimeView extends BaseView {
     @BindView(R.id.tv_time)
     TextView tv_time;
 
-    @BindView(R.id.tv_date)
-    TextView tv_date;
-
     @Override
     protected int getContent() {
         return R.layout.content_driving_time;
@@ -47,11 +44,6 @@ public class DrivingTimeView extends BaseView {
                 time = time.substring(1);
             }
             tv_time.setText(time);
-            String date = DateUtil.dateToString(d, "MM月dd日 ");
-            if (date.startsWith("0")) {
-                date = date.substring(1);
-            }
-            tv_date.setText(date);
         }
     }
 }

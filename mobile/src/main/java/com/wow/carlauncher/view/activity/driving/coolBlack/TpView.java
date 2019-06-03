@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.TaskExecutor;
+import com.wow.carlauncher.common.util.BitmapBase64Util;
 import com.wow.carlauncher.ex.manage.ImageManage;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventCoverRefresh;
 import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
@@ -103,10 +104,21 @@ public class TpView extends BaseView {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final PMusicEventCoverRefresh event) {
-        if (event.isHave()) {
-            ImageManage.self().loadImage(event.getUrl(), music_iv_cover, R.drawable.theme_music_dcover);
-        } else {
-            music_iv_cover.setImageResource(R.drawable.theme_music_dcover);
+        switch (event.getCoverType()) {
+            case PMusicEventCoverRefresh.TYPE_URL: {
+                ImageManage.self().loadImage(event.getUrl(), music_iv_cover, R.drawable.theme_music_dcover);
+                break;
+            }
+            case PMusicEventCoverRefresh.TYPE_BASE64: {
+                try {
+                    music_iv_cover.setImageBitmap(BitmapBase64Util.base64ToBitmap(event.getCoverBas64()));
+                } catch (Exception ignored) {
+                    music_iv_cover.setImageResource(R.drawable.theme_music_dcover);
+                }
+                break;
+            }
+            default:
+                music_iv_cover.setImageResource(R.drawable.theme_music_dcover);
         }
     }
 

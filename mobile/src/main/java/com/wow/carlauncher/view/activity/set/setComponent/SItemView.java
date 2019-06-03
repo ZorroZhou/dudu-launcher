@@ -164,7 +164,7 @@ public class SItemView extends SetBaseView {
             int widgetId = appWidgetHost.allocateAppWidgetId();
             Intent pickIntent = new Intent(AppWidgetManager.ACTION_APPWIDGET_PICK);
             pickIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, widgetId);
-            ((Activity) getContext()).startActivityForResult(pickIntent, REQUEST_SELECT_AMAP_PLUGIN);
+            getActivity().startActivityForResult(pickIntent, REQUEST_SELECT_AMAP_PLUGIN);
         });
 
         sv_plugin_select.setSummary(MusicControllerEnum.getById(SharedPreUtil.getInteger(SDATA_MUSIC_CONTROLLER, MusicControllerEnum.SYSMUSIC.getId())).getName());

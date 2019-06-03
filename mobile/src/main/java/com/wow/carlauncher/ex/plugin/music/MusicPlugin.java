@@ -15,6 +15,7 @@ import com.wow.carlauncher.ex.plugin.music.event.PMusicEventInfo;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventProgress;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicEventState;
 import com.wow.carlauncher.ex.plugin.music.event.PMusicRefresLrc;
+import com.wow.carlauncher.ex.plugin.music.plugin.DDMusicCarController;
 import com.wow.carlauncher.ex.plugin.music.plugin.JidouMusicController;
 import com.wow.carlauncher.ex.plugin.music.plugin.KuwoMusicController;
 import com.wow.carlauncher.ex.plugin.music.plugin.NwdMusicController;
@@ -83,6 +84,9 @@ public class MusicPlugin extends ContextEx {
             case KUWOMUSIC:
                 musicController = new KuwoMusicController();
                 break;
+            case DUDUMUSIC:
+                musicController = new DDMusicCarController();
+                break;
             default:
                 musicController = new SystemMusicController();
                 break;
@@ -138,9 +142,22 @@ public class MusicPlugin extends ContextEx {
     private String lastCover = "";
 
     public void refreshCover(final String url) {
+        refreshCover(url, null);
+    }
+
+    public void refreshCover(final String url, final String base64) {
         if (CommonUtil.isNull(url) || !CommonUtil.equals(lastCover, url)) {
             lastCover = url;
-            lastMusicCover = new PMusicEventCoverRefresh().setUrl(url).setHave(CommonUtil.isNotNull(url));
+            lastMusicCover = new PMusicEventCoverRefresh();
+            int type = PMusicEventCoverRefresh.TYPE_NONE;
+            if (CommonUtil.isNotNull(url)) {
+                type = PMusicEventCoverRefresh.TYPE_URL;
+                lastMusicCover.setUrl(url);
+            } else if (CommonUtil.isNotNull(base64)) {
+                type = PMusicEventCoverRefresh.TYPE_BASE64;
+                lastMusicCover.setCoverBas64(base64);
+            }
+            lastMusicCover.setCoverType(type);
             postEvent(lastMusicCover);
         }
     }

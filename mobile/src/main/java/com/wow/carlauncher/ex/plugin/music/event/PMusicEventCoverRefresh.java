@@ -5,8 +5,13 @@ package com.wow.carlauncher.ex.plugin.music.event;
  */
 
 public class PMusicEventCoverRefresh {
+    public final static int TYPE_NONE = 1;
+    public final static int TYPE_URL = 2;
+    public final static int TYPE_BASE64 = 3;
+
     private String url;
-    private boolean have;
+    private int coverType;
+    private String coverBas64;
 
     public String getUrl() {
         return url;
@@ -17,12 +22,21 @@ public class PMusicEventCoverRefresh {
         return this;
     }
 
-    public boolean isHave() {
-        return have;
+    public String getCoverBas64() {
+        return coverBas64;
     }
 
-    public PMusicEventCoverRefresh setHave(boolean have) {
-        this.have = have;
+    public PMusicEventCoverRefresh setCoverBas64(String coverBas64) {
+        this.coverBas64 = coverBas64;
+        return this;
+    }
+
+    public int getCoverType() {
+        return coverType;
+    }
+
+    public PMusicEventCoverRefresh setCoverType(int coverType) {
+        this.coverType = coverType;
         return this;
     }
 }

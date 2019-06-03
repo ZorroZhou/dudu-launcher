@@ -76,6 +76,7 @@ public class CommonData {
             ObdProtocolEnum.YJ_PTB};
     //所有的音乐控制器
     public static final MusicControllerEnum[] MUSIC_CONTROLLER = {
+            MusicControllerEnum.DUDUMUSIC,
             MusicControllerEnum.SYSMUSIC,
             MusicControllerEnum.QQCARMUSIC,
             MusicControllerEnum.JIDOUMUSIC,

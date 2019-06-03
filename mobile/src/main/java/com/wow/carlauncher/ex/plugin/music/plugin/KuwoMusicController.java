@@ -207,9 +207,12 @@ public class KuwoMusicController extends MusicController {
         @Override
         public void sendSyncNotice_LyricsFinished(Music music, String s) {
             if (CommonUtil.equals(nowMusic, music)) {
-                LrcAnalyze lrcAnalyze = new LrcAnalyze(s);
-                lrcDatas = lrcAnalyze.lrcList();
-                musicPlugin.refreshInfo(nowMusic.name, nowMusic.artist, lrcDatas != null);
+                try {
+                    LrcAnalyze lrcAnalyze = new LrcAnalyze(s);
+                    lrcDatas = lrcAnalyze.lrcList();
+                    musicPlugin.refreshInfo(nowMusic.name, nowMusic.artist, lrcDatas != null);
+                } catch (Exception ignored) {
+                }
             }
         }
 

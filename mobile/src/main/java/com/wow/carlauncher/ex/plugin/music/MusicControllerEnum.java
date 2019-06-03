@@ -7,6 +7,7 @@ import com.wow.carlauncher.view.activity.set.setItem.SetEnum;
  */
 
 public enum MusicControllerEnum implements SetEnum {
+    DUDUMUSIC("嘟嘟音乐", 666),
     SYSMUSIC("系统音乐(兼容性未知,需自己尝试)", 3),
     QQCARMUSIC("QQ音乐车机版(封面,歌名,歌手,进度,歌词)", 6),
     JIDOUMUSIC("极豆音乐(封面,歌名,歌手)", 7),
@@ -52,6 +53,8 @@ public enum MusicControllerEnum implements SetEnum {
                 return ZXMUSIC;
             case 11:
                 return KUWOMUSIC;
+            case 666:
+                return DUDUMUSIC;
         }
         return SYSMUSIC;
     }

@@ -6,8 +6,8 @@ android {
         applicationId "com.wow.carlauncher"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 2010012
-        versionName "2.010"
+        versionCode 2011001
+        versionName "2.011"
         //规则就是前4位是2.009,后面三位是小版本
         javaCompileOptions {
             annotationProcessorOptions {

@@ -11,6 +11,8 @@ import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.AppContext;
 import com.wow.carlauncher.common.user.event.UEventRefreshLoginState;
 import com.wow.carlauncher.ex.manage.ImageManage;
+import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
+import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventConnect;
 import com.wow.carlauncher.view.activity.launcher.BaseThemeView;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -40,9 +42,14 @@ public class LPersionView extends BaseThemeView {
     @Override
     protected void initView() {
         super.initView();
-        onEvent(new UEventRefreshLoginState().setLogin(AppContext.self().getLocalUser() != null));
+
     }
 
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        onEvent(new UEventRefreshLoginState().setLogin(AppContext.self().getLocalUser() != null));
+    }
 
     @BindView(R.id.iv_user_pic)
     ImageView iv_user_pic;

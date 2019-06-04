@@ -35,6 +35,7 @@ import static com.wow.carlauncher.common.CommonData.SDATA_DOCK1_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK2_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK3_CLASS;
 import static com.wow.carlauncher.common.CommonData.SDATA_DOCK4_CLASS;
+import static com.wow.carlauncher.common.CommonData.SDATA_DOCK5_CLASS;
 import static com.wow.carlauncher.ex.manage.appInfo.AppInfo.INTERNAL_APP_DRIVING;
 import static com.wow.carlauncher.ex.manage.appInfo.AppInfo.INTERNAL_APP_SETTING;
 import static com.wow.carlauncher.ex.manage.appInfo.AppInfo.MARK_INTERNAL_APP;
@@ -106,8 +107,8 @@ public class AppInfoManage extends ContextEx {
         internalAppsInfoMap = new ConcurrentHashMap<>();
         internalAppsInfoMap.put(INTERNAL_APP_DRIVING, new InternalAppInfo("驾驶", INTERNAL_APP_DRIVING, MARK_INTERNAL_APP, DrivingActivity.class));
         internalAppsInfoMap.put(INTERNAL_APP_SETTING, new InternalAppInfo("桌面设置", INTERNAL_APP_SETTING, MARK_INTERNAL_APP, SetActivity.class));
-        refreshAppInfo();
 
+        refreshAppInfo();
         LogEx.d(this, "init time:" + (System.currentTimeMillis() - t1));
     }
 
@@ -121,10 +122,7 @@ public class AppInfoManage extends ContextEx {
                 app = xx[1];
             }
         }
-        if (allAppInfosMap.containsKey(app)) {
-            return allAppInfosMap.get(app);
-        }
-        return null;
+        return allAppInfosMap.get(app);
     }
 
     public void setIconWithSkin(ImageView view, String app) {
@@ -204,7 +202,6 @@ public class AppInfoManage extends ContextEx {
     }
 
     public boolean checkApp(String app) {
-        //这里应该是没加载完
         AppInfo info = getAppInfo(app);
         return info != null;
     }
@@ -254,7 +251,6 @@ public class AppInfoManage extends ContextEx {
                     allAppInfosMap.put(packageName, new AppInfo(info.loadLabel(packageManager).toString(), packageName, MARK_OTHER_APP));
                 }
 
-
                 allAppInfosList.addAll(allAppInfosMap.values());
                 Collections.sort(allAppInfosList, (appInfo1, appInfo2) -> appInfo2.appMark - appInfo1.appMark);
 
@@ -276,23 +272,22 @@ public class AppInfoManage extends ContextEx {
         TaskExecutor.self().run(() -> {
             synchronized (LOCK2) {
                 showAppInfosList.clear();
-                showAppInfosList.addAll(allAppInfosList);
                 String packname1 = SharedPreUtil.getString(SDATA_DOCK1_CLASS);
                 String packname2 = SharedPreUtil.getString(SDATA_DOCK2_CLASS);
                 String packname3 = SharedPreUtil.getString(SDATA_DOCK3_CLASS);
                 String packname4 = SharedPreUtil.getString(SDATA_DOCK4_CLASS);
+                String packname5 = SharedPreUtil.getString(SDATA_DOCK5_CLASS);
                 String selectapp = SharedPreUtil.getString(CommonData.SDATA_HIDE_APPS);
-                List<AppInfo> hides = new ArrayList<>();
-                for (AppInfo appInfo : showAppInfosList) {
-                    if (selectapp.contains("[" + appInfo.clazz + "]")
+                for (AppInfo appInfo : allAppInfosList) {
+                    if (!(selectapp.contains("[" + appInfo.clazz + "]")
                             || (CommonUtil.isNotNull(packname1) && packname1.contains(appInfo.clazz))
-                            || (CommonUtil.isNotNull(packname2) && packname2.contains(appInfo.clazz))
-                            || (CommonUtil.isNotNull(packname3) && packname3.contains(appInfo.clazz))
-                            || (CommonUtil.isNotNull(packname4) && packname4.contains(appInfo.clazz))) {
-                        hides.add(appInfo);
+                            || (CommonUtil.isNotNull(packname2) && packname1.contains(appInfo.clazz))
+                            || (CommonUtil.isNotNull(packname3) && packname2.contains(appInfo.clazz))
+                            || (CommonUtil.isNotNull(packname4) && packname3.contains(appInfo.clazz))
+                            || (CommonUtil.isNotNull(packname5) && packname4.contains(appInfo.clazz)))) {
+                        showAppInfosList.add(appInfo);
                     }
                 }
-                showAppInfosList.removeAll(hides);
                 postEvent(new MAppInfoRefreshShowEvent());
             }
         });

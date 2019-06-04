@@ -55,6 +55,8 @@ public class AppIconTemp {
         putIcon("com.estrongs.android.pop", R.drawable.app_icon_esfile);
 
         putIcon("ecarx.camera.dvr", R.drawable.app_icon_dvr);
+
+        putIcon("com.acloud.stub.localradio", R.drawable.app_icon_radio);
     }
 
     static void putIcon(String pname, int r) {

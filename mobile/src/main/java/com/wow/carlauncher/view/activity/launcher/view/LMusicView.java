@@ -58,14 +58,14 @@ public class LMusicView extends BaseThemeView {
     @Override
     protected void initView() {
         refreshPlay();
-
         music_iv_cover = findViewById(R.id.music_iv_cover);
+        TaskExecutor.self().post(() -> tv_title.setText(MusicPlugin.self().name()), 500);
+    }
 
-        TaskExecutor.self().run(() -> {
-            MusicPlugin.self().requestLast();
-            TaskExecutor.self().autoPost(() -> tv_title.setText(MusicPlugin.self().name()));
-        }, 500);
-        LogEx.d(this, "initView: ");
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        MusicPlugin.self().requestLast();
     }
 
     @Override

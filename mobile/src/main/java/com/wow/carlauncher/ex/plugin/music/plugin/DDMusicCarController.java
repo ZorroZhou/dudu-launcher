@@ -28,6 +28,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ScheduledFuture;
 
 import static com.wow.carlauncher.common.CommonData.SDATA_QQ_MUSIC_REG_DELAY;
 import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.AMAP_PACKAGE;
@@ -126,6 +127,8 @@ public class DDMusicCarController extends MusicController {
 
     private String title, singer;
 
+    private ScheduledFuture coverRefreshTask;
+
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
         public void onReceive(Context paramAnonymousContext, Intent intent) {
             try {
@@ -142,7 +145,7 @@ public class DDMusicCarController extends MusicController {
                         musicPlugin.refreshInfo(title, singer, false);
                         totalTime = intent.getIntExtra(SONG_CHANGE_TOTAL_TIME, 0);
                         musicPlugin.refreshProgress(0, totalTime);
-                        musicPlugin.refreshCover(null);
+                        coverRefreshTask = TaskExecutor.self().run(() -> musicPlugin.refreshCover(null), 5000);
                         break;
                     }
                     case PROGRESS_CHANGE: {
@@ -156,9 +159,12 @@ public class DDMusicCarController extends MusicController {
                         String title = intent.getStringExtra(SONG_CHANGE_TITLE);
                         String singer = intent.getStringExtra(SONG_CHANGE_SINGER);
                         String cover = intent.getStringExtra(SONG_CHANGE_COVER);
-                        System.out.println("cover:" + cover);
                         if (CommonUtil.equals(title, DDMusicCarController.this.title) && CommonUtil.equals(singer, DDMusicCarController.this.singer) && CommonUtil.isNotNull(cover)) {
                             musicPlugin.refreshCover(null, cover);
+                            if (coverRefreshTask != null) {
+                                coverRefreshTask.cancel(true);
+                                coverRefreshTask = null;
+                            }
                         }
                         break;
                     }

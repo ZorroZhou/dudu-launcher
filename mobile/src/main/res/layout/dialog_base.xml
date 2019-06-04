@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.wow.carlauncher.common.theme.TLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.zhy.android.percent.support.PercentLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/ll_dialog_background"
     android:layout_width="wrap_content"
@@ -8,7 +8,7 @@
     android:background="@drawable/free_dialog_bg"
     android:orientation="vertical">
 
-    <com.wow.carlauncher.common.theme.TRelativeLayout
+    <com.zhy.android.percent.support.PercentRelativeLayout
         android:id="@+id/rl_headline"
         android:layout_width="match_parent"
         android:layout_height="20dp"
@@ -34,7 +34,7 @@
             android:layout_marginRight="8dp"
             android:padding="5dp"
             android:src="@mipmap/dialog_cancel" />
-    </com.wow.carlauncher.common.theme.TRelativeLayout>
+    </com.zhy.android.percent.support.PercentRelativeLayout>
 
     <RelativeLayout
         android:id="@+id/content"
@@ -50,7 +50,7 @@
         android:visibility="gone"
         app:layout_textSizePercent="4%sh" />
     <!--最底部按钮-->
-    <com.wow.carlauncher.common.theme.TLinearLayout
+    <com.zhy.android.percent.support.PercentLinearLayout
         android:id="@+id/dialog_bottom_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -89,7 +89,7 @@
             android:paddingTop="10dp"
             android:text="确定"
             android:visibility="gone" />
-    </com.wow.carlauncher.common.theme.TLinearLayout>
+    </com.zhy.android.percent.support.PercentLinearLayout>
 
-</com.wow.carlauncher.common.theme.TLinearLayout>
+</com.zhy.android.percent.support.PercentLinearLayout>
 

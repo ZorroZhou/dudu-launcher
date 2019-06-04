@@ -158,10 +158,9 @@ public class SSystemView extends SetBaseView {
                         TaskExecutor.self().autoPost(() -> new AlertDialog.Builder(getContext()).setTitle("发现新版本")
                                 .setNegativeButton("忽略", null)
                                 .setPositiveButton("下载新版本", (dialog12, which) -> {
-//                                    loadDownloadApk(appUpdate.getUrl(), appUpdate.getVersion());
                                     DownUtil.loadDownloadApk(getActivity()
                                             , "正在下载嘟嘟桌面新版本"
-                                            , "/ddlauncher-V" + appUpdate.getVersion() + ".apk"
+                                            , "/dudulauncher-V" + appUpdate.getVersion() + ".apk"
                                             , appUpdate.getUrl());
                                 }).setMessage(appUpdate.getAbout()).show());
                     } else {

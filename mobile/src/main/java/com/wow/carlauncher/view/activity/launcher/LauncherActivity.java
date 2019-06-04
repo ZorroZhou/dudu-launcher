@@ -115,6 +115,7 @@ public class LauncherActivity extends Activity implements SkinManage.OnSkinChang
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.AppTheme);
 
         long t1 = System.currentTimeMillis();
         //防止初始化两次

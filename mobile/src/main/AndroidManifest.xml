@@ -78,7 +78,8 @@
             android:launchMode="singleInstance"
             android:screenOrientation="landscape"
             android:stateNotNeeded="true"
-            android:taskAffinity="">
+            android:taskAffinity=""
+            android:theme="@style/AppTheme.StartingWindowTheme">
             <intent-filter android:priority="2">
                 <action android:name="android.intent.action.MAIN" />
 

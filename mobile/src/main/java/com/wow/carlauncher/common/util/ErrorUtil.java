@@ -1,5 +1,7 @@
 package com.wow.carlauncher.common.util;
 
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.Settings;
@@ -25,9 +27,16 @@ public class ErrorUtil {
                 PrintWriter pw2 = new PrintWriter(sw);
                 e.printStackTrace(pw2);
                 pw2.close();
-
+                int version = -1;
+                try {
+                    PackageManager packageManager = application.getPackageManager();
+                    PackageInfo packInfo = packageManager.getPackageInfo(application.getPackageName(), 0);
+                    version = packInfo.versionCode;
+                } catch (PackageManager.NameNotFoundException ee) {
+                    e.printStackTrace();
+                }
                 String deviceId = Settings.System.getString(application.getContentResolver(), Settings.System.ANDROID_ID);
-                CommonService.reportError(deviceId, "SDK:" + Build.VERSION.SDK_INT, sw.toString(), null);
+                CommonService.reportError(deviceId, "嘟嘟桌面:" + version + " SDK:" + Build.VERSION.SDK_INT, sw.toString(), null);
 
                 String path;
 

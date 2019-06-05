@@ -224,6 +224,7 @@ public class LMusicView extends BaseThemeView {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final PMusicEventCoverRefresh event) {
+        music_iv_cover.setImageResource(0);
         switch (event.getCoverType()) {
             case PMusicEventCoverRefresh.TYPE_URL: {
                 ImageManage.self().loadImage(event.getUrl(), music_iv_cover, R.drawable.theme_music_dcover);

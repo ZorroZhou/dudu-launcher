@@ -145,7 +145,11 @@ public class DDMusicCarController extends MusicController {
                         musicPlugin.refreshInfo(title, singer, false);
                         totalTime = intent.getIntExtra(SONG_CHANGE_TOTAL_TIME, 0);
                         musicPlugin.refreshProgress(0, totalTime);
-                        coverRefreshTask = TaskExecutor.self().run(() -> musicPlugin.refreshCover(null), 5000);
+                        if (coverRefreshTask != null) {
+                            coverRefreshTask.cancel(true);
+                            coverRefreshTask = null;
+                        }
+                        coverRefreshTask = TaskExecutor.self().run(() -> musicPlugin.refreshCover(null), 3000);
                         break;
                     }
                     case PROGRESS_CHANGE: {

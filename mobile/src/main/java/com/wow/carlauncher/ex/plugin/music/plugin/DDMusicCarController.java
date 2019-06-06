@@ -68,6 +68,8 @@ public class DDMusicCarController extends MusicController {
     private static final int COVER_CHANGE = 4;
     private static final String SONG_CHANGE_COVER = "SONG_CHANGE_COVER";
 
+    private static final int LRC_CHANGE = 5;
+    private static final String SONG_CHANGE_LRC = "SONG_CHANGE_LRC";
 
     public void init(Context context, MusicPlugin musicView) {
         super.init(context, musicView);
@@ -75,7 +77,7 @@ public class DDMusicCarController extends MusicController {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(RECEIVE_ACTION);
         this.context.registerReceiver(mReceiver, intentFilter);
-
+        EventBus.getDefault().register(this);
         sendEvent(CMD_REQUEST_LAST);
     }
 
@@ -114,6 +116,34 @@ public class DDMusicCarController extends MusicController {
 
     @Override
     public void destroy() {
+        EventBus.getDefault().unregister(this);
+        context.unregisterReceiver(mReceiver);
+    }
+
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void onEvent(final TMEventSecond event) {
+        if (lrcDatas != null) {
+            try {
+                LrcAnalyze.LrcData lll = null;
+                List<LrcAnalyze.LrcData> remove = new ArrayList<>();
+                List<LrcAnalyze.LrcData> tempLrc = new ArrayList<>(lrcDatas);
+                for (LrcAnalyze.LrcData lrc : tempLrc) {
+                    if (lrc.getTimeMs() < nowTime * 1000) {
+                        lll = lrc;
+                        remove.add(lrc);
+                    } else {
+                        break;
+                    }
+                }
+
+                lrcDatas.removeAll(remove);
+                if (lll != null) {
+                    musicPlugin.refreshLrc(lll.getLrcLine());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
@@ -123,7 +153,9 @@ public class DDMusicCarController extends MusicController {
 
     private boolean run = false;
 
+    private int nowTime;
     private int totalTime;
+    private List<LrcAnalyze.LrcData> lrcDatas;
 
     private String title, singer;
 
@@ -142,9 +174,10 @@ public class DDMusicCarController extends MusicController {
                     case SONG_CHANGE: {
                         title = intent.getStringExtra(SONG_CHANGE_TITLE);
                         singer = intent.getStringExtra(SONG_CHANGE_SINGER);
-                        musicPlugin.refreshInfo(title, singer, false);
+                        musicPlugin.refreshInfo(title, singer, true);
                         totalTime = intent.getIntExtra(SONG_CHANGE_TOTAL_TIME, 0);
                         musicPlugin.refreshProgress(0, totalTime);
+                        lrcDatas = null;
                         if (coverRefreshTask != null) {
                             coverRefreshTask.cancel(true);
                             coverRefreshTask = null;
@@ -153,9 +186,9 @@ public class DDMusicCarController extends MusicController {
                         break;
                     }
                     case PROGRESS_CHANGE: {
-                        int current = intent.getIntExtra(CURRENT_PROGRESS, 0);
-                        if (current <= totalTime && run) {
-                            musicPlugin.refreshProgress(current, totalTime);
+                        nowTime = intent.getIntExtra(CURRENT_PROGRESS, 0);
+                        if (nowTime <= totalTime && run) {
+                            musicPlugin.refreshProgress(nowTime, totalTime);
                         }
                         break;
                     }
@@ -172,8 +205,18 @@ public class DDMusicCarController extends MusicController {
                         }
                         break;
                     }
+                    case LRC_CHANGE: {
+                        String title = intent.getStringExtra(SONG_CHANGE_TITLE);
+                        String singer = intent.getStringExtra(SONG_CHANGE_SINGER);
+                        String lrc = intent.getStringExtra(SONG_CHANGE_LRC);
+                        if (CommonUtil.equals(title, DDMusicCarController.this.title) && CommonUtil.equals(singer, DDMusicCarController.this.singer) && CommonUtil.isNotNull(lrc)) {
+                            LrcAnalyze lrcAnalyze = new LrcAnalyze(lrc);
+                            lrcDatas = lrcAnalyze.lrcList();
+                        }
+                        break;
+                    }
                 }
-            } catch (Exception e) {
+            } catch (Exception ignored) {
 
             }
         }

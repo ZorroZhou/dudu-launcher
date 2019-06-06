@@ -1,6 +1,7 @@
 package com.wow.carlauncher.ex.plugin.music.plugin;
 
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -112,6 +113,10 @@ public class DDMusicCarController extends MusicController {
         intent.setClassName(PACKAGE_NAME, CLASS_NAME);
         intent.putExtra(CMD, event);
         context.sendBroadcast(intent);
+
+        Intent serviceIntent = new Intent();
+        serviceIntent.setComponent(new ComponentName("com.wow.dudu.music", "com.wow.dudu.music.service.MainService"));
+        context.startService(serviceIntent);
     }
 
     @Override

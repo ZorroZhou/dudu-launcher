@@ -6,12 +6,9 @@ import android.view.WindowManager;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.CommonData;
-import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.util.ViewUtils;
 import com.wow.carlauncher.common.view.SetView;
-import com.wow.carlauncher.ex.manage.baiduVoice.BaiduVoiceAssistant;
-import com.wow.carlauncher.ex.manage.toast.ToastManage;
 import com.wow.carlauncher.view.activity.launcher.ItemEnum;
 import com.wow.carlauncher.view.activity.launcher.ItemInterval;
 import com.wow.carlauncher.view.activity.launcher.ItemModel;
@@ -70,9 +67,6 @@ public class SHomeView extends SetBaseView {
 
     @BindView(R.id.sv_home_full)
     SetView sv_home_full;
-
-    @BindView(R.id.sv_use_va)
-    SetView sv_use_va;
 
     @BindView(R.id.sv_home_layout)
     SetView sv_home_layout;
@@ -142,24 +136,6 @@ public class SHomeView extends SetBaseView {
                 return true;
             }
         });
-
-
-        sv_use_va.setOnValueChangeListener(new SetSwitchOnClickListener(CommonData.SDATA_USE_VA) {
-            @Override
-            public void newValue(boolean value) {
-                if (!value) {
-                    ToastManage.self().show("语音助手将在下次启动时关闭");
-                } else {
-                    BaiduVoiceAssistant.self().init(getContext());
-                    TaskExecutor.self().run(() -> {
-                        ToastManage.self().show("正在开启语音助手,如果没有异常提示,则开启成功!");
-                        BaiduVoiceAssistant.self().startWakeUp();
-                    }, 1000);
-                }
-            }
-        });
-        sv_use_va.setChecked(SharedPreUtil.getBoolean(CommonData.SDATA_USE_VA, false));
-
 
         sv_home_full.setOnValueChangeListener(new SetSwitchOnClickListener(CommonData.SDATA_HOME_FULL) {
             @Override

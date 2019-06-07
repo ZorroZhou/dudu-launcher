@@ -51,6 +51,6 @@
         <!-- 可以设置成纯颜色（设置一个和Activity UI相似的背景） -->
         <!--<item name="android:windowBackground">@color/startingwindow_bgcolor</item>-->
         <!--也可以设置成一张图片 -->
-        <item name="android:windowBackground">@mipmap/startingwindow_bg</item>
+        <item name="android:windowBackground">@drawable/qidong</item>
     </style>
 </resources>

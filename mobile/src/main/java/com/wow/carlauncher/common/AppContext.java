@@ -13,7 +13,6 @@ import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.manage.AppWidgetManage;
 import com.wow.carlauncher.ex.manage.ImageManage;
 import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
-import com.wow.carlauncher.ex.manage.baiduVoice.BaiduVoiceAssistant;
 import com.wow.carlauncher.ex.manage.ble.BleManage;
 import com.wow.carlauncher.ex.manage.location.LocationManage;
 import com.wow.carlauncher.ex.manage.okHttp.OkHttpManage;
@@ -33,7 +32,6 @@ import com.wow.carlauncher.repertory.db.manage.DatabaseInfo;
 import com.wow.carlauncher.repertory.db.manage.DatabaseManage;
 import com.wow.carlauncher.repertory.server.CommonService;
 import com.wow.carlauncher.view.popup.NaviWin;
-import com.wow.carlauncher.view.popup.VoiceWin;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -158,14 +156,7 @@ public class AppContext {
         SpeedManage.self().init(app);
 
         NaviWin.watch().init(app);
-        VoiceWin.watch().init(app);
-
         DudufmPlugin.self().init(app);
-
-        if (SharedPreUtil.getBoolean(CommonData.SDATA_USE_VA, false)) {
-            BaiduVoiceAssistant.self().init(app);
-            TaskExecutor.self().run(() -> BaiduVoiceAssistant.self().startWakeUp(), 1000);
-        }
 
         TaskExecutor.self().run(() -> {
             if (SharedPreUtil.getBoolean(CommonData.SDATA_APP_AUTO_OPEN_USE, false)) {

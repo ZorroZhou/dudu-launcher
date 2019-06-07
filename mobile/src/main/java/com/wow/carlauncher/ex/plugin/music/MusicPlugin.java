@@ -53,6 +53,7 @@ public class MusicPlugin extends ContextEx {
         setController(MusicControllerEnum.getById(SharedPreUtil.getInteger(SDATA_MUSIC_CONTROLLER, MusicControllerEnum.SYSMUSIC.getId())));
         if (SharedPreUtil.getBoolean(CommonData.SDATA_START_LAST_ACTIVITY, true) && SharedPreUtil.getInteger(CommonData.SDATA_LAST_ACTIVITY_TYPE, SDATA_LAST_ACTIVITY_TYPE_NONE) == SDATA_LAST_ACTIVITY_TYPE_MUSIC) {
             TaskExecutor.self().run(() -> {
+                LogEx.d(MusicPlugin.class, "last activity to music");
                 if (!playing) {
                     playOrPause();
                 }
@@ -196,7 +197,6 @@ public class MusicPlugin extends ContextEx {
         if (musicController != null) {
             if (playing) {
                 musicController.pause();
-                SharedPreUtil.saveInteger(SDATA_LAST_ACTIVITY_TYPE, SDATA_LAST_ACTIVITY_TYPE_NONE);
             } else {
                 DudufmPlugin.self().stop();
                 musicController.play();

@@ -13,6 +13,7 @@ import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.AppUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.ContextEx;
+import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 
 import static com.wow.carlauncher.common.CommonData.SDATA_LAST_ACTIVITY_TYPE;
 import static com.wow.carlauncher.common.CommonData.SDATA_LAST_ACTIVITY_TYPE_FM;
@@ -78,7 +79,11 @@ public class DudufmPlugin extends ContextEx {
 
     public void playOrStop() {
         sendEvent(CMD_PLAY_OR_PAUSE);
-        SharedPreUtil.saveInteger(SDATA_LAST_ACTIVITY_TYPE, SDATA_LAST_ACTIVITY_TYPE_FM);
+        if (!run) {
+            MusicPlugin.self().pause();
+        } else {
+            SharedPreUtil.saveInteger(SDATA_LAST_ACTIVITY_TYPE, SDATA_LAST_ACTIVITY_TYPE_FM);
+        }
     }
 
     public void stop() {
@@ -88,11 +93,13 @@ public class DudufmPlugin extends ContextEx {
     public void next() {
         sendEvent(CMD_NEXT);
         SharedPreUtil.saveInteger(SDATA_LAST_ACTIVITY_TYPE, SDATA_LAST_ACTIVITY_TYPE_FM);
+        MusicPlugin.self().pause();
     }
 
     public void prev() {
         sendEvent(CMD_PRE);
         SharedPreUtil.saveInteger(SDATA_LAST_ACTIVITY_TYPE, SDATA_LAST_ACTIVITY_TYPE_FM);
+        MusicPlugin.self().pause();
     }
 
     public void init(Context context) {

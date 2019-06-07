@@ -67,7 +67,7 @@ public class DudufmPlugin extends ContextEx {
 
     private void sendEvent(int event) {
         if (!AppUtil.isInstall(getContext(), AMAP_PACKAGE)) {
-            Toast.makeText(getContext(), "没有安装嘟嘟音乐", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "没有安装嘟嘟FM", Toast.LENGTH_SHORT).show();
             return;
         }
 

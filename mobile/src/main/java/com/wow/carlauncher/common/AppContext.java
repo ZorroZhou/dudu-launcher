@@ -1,5 +1,6 @@
 package com.wow.carlauncher.common;
 
+import android.content.ComponentName;
 import android.content.Intent;
 import android.provider.Settings;
 
@@ -105,6 +106,17 @@ public class AppContext {
             SharedPreUtil.saveString(SDATA_APP_SKIN_NIGHT, "com.wow.carlauncher.theme.heise");
         }
 
+        if (SharedPreUtil.getBoolean(CommonData.SDATA_AUTO_OPEN_DUDU_MUSIC, false)) {
+            Intent serviceIntent = new Intent();
+            serviceIntent.setComponent(new ComponentName("com.wow.dudu.music", "com.wow.dudu.music.service.MainService"));
+            app.startService(serviceIntent);
+        }
+        if (SharedPreUtil.getBoolean(CommonData.SDATA_AUTO_OPEN_DUDU_FM, false)) {
+            LogEx.e(this, "还没开发出来FM");
+        }
+        if (SharedPreUtil.getBoolean(CommonData.SDATA_AUTO_OPEN_DUDU_VOICE, false)) {
+            LogEx.e(this, "还没开发出来VOICE");
+        }
         //日志管理器
         LogEx.init(app);
         //网络

@@ -233,4 +233,8 @@ public class CommonData {
     public static final String SDATA_LOAD_CHECK_QUANXIAN = "SDATA_LOAD_CHECK_QUANXIAN";//启动是否检查权限
 
     public static final String SDATA_ALLOW_REPORT_LOCATION = "SDATA_ALLOW_REPORT_LOCATION";//允许上传位置
+
+    public static final String SDATA_AUTO_OPEN_DUDU_MUSIC = "SDATA_AUTO_OPEN_DUDU_MUSIC";
+    public static final String SDATA_AUTO_OPEN_DUDU_FM = "SDATA_AUTO_OPEN_DUDU_FM";
+    public static final String SDATA_AUTO_OPEN_DUDU_VOICE = "SDATA_AUTO_OPEN_DUDU_VOICE";
 }

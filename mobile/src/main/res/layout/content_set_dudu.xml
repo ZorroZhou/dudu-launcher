@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:st="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="16dp"
+            android:paddingTop="16dp"
+            android:text="嘟嘟全家桶"
+            android:textColor="@color/colorPrimary"
+            android:textSize="14sp" />
+
+        <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/sv_hava_dudu_music"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:summary="未安装"
+            st:titleEx="嘟嘟音乐"
+            st:type="buttonB" />
+
+        <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/sv_dudu_music_auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:summary="@string/set_yes"
+            st:summary2="@string/set_no"
+            st:titleEx="嘟嘟音乐后台启动"
+            st:type="switchB" />
+
+        <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/sv_hava_dudu_fm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:summary="未安装"
+            st:titleEx="嘟嘟FM"
+            st:type="buttonB" />
+
+        <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/sv_dudu_fm_auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:summary="@string/set_yes"
+            st:summary2="@string/set_no"
+            st:titleEx="嘟嘟FM后台启动"
+            st:type="switchB" />
+
+        <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/sv_hava_dudu_voice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:summary="未安装"
+            st:titleEx="嘟嘟语音"
+            st:type="buttonB" />
+
+        <com.wow.carlauncher.common.view.SetView
+            android:id="@+id/sv_dudu_voice_auto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            st:summary="@string/set_yes"
+            st:summary2="@string/set_no"
+            st:titleEx="嘟嘟语音后台启动"
+            st:type="switchB" />
+    </LinearLayout>
+</ScrollView>

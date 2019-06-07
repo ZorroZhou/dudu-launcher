@@ -30,6 +30,7 @@ import com.wow.carlauncher.view.activity.set.event.SEventRefreshAmapPlugin;
 import com.wow.carlauncher.view.activity.set.event.SEventRequestLogin;
 import com.wow.carlauncher.view.activity.set.setComponent.SDevView;
 import com.wow.carlauncher.view.activity.set.setComponent.SDrivingView;
+import com.wow.carlauncher.view.activity.set.setComponent.SDuduView;
 import com.wow.carlauncher.view.activity.set.setComponent.SFkView;
 import com.wow.carlauncher.view.activity.set.setComponent.SHomeView;
 import com.wow.carlauncher.view.activity.set.setComponent.SItemView;
@@ -125,7 +126,7 @@ public class SetActivity extends BaseActivity implements SetFrame {
         });
     }
 
-    @OnClick(value = {R.id.sg_dev, R.id.sg_persion, R.id.sg_item, R.id.sg_driving, R.id.sg_theme, R.id.sg_home, R.id.sg_obd, R.id.sg_fk, R.id.sg_load_app, R.id.sg_popup, R.id.sg_system_set})
+    @OnClick(value = {R.id.sg_dev, R.id.sg_persion, R.id.sg_dudu, R.id.sg_item, R.id.sg_driving, R.id.sg_theme, R.id.sg_home, R.id.sg_obd, R.id.sg_fk, R.id.sg_load_app, R.id.sg_popup, R.id.sg_system_set})
     public void clickEvent(View view) {
         SetBaseView setView = null;
         switch (view.getId()) {
@@ -139,6 +140,10 @@ public class SetActivity extends BaseActivity implements SetFrame {
             }
             case R.id.sg_home: {
                 setView = new SHomeView(this);
+                break;
+            }
+            case R.id.sg_dudu: {
+                setView = new SDuduView(this);
                 break;
             }
             case R.id.sg_item: {

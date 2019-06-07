@@ -26,7 +26,7 @@ import com.wow.carlauncher.ex.plugin.console.ConsolePlugin;
 import com.wow.carlauncher.ex.plugin.fk.FangkongPlugin;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
-import com.wow.carlauncher.ex.plugin.xmlyfm.XmlyfmPlugin;
+import com.wow.carlauncher.ex.plugin.dudufm.DudufmPlugin;
 import com.wow.carlauncher.repertory.db.entiy.CoverTemp;
 import com.wow.carlauncher.repertory.db.entiy.SkinInfo;
 import com.wow.carlauncher.repertory.db.manage.DatabaseInfo;
@@ -112,7 +112,9 @@ public class AppContext {
             app.startService(serviceIntent);
         }
         if (SharedPreUtil.getBoolean(CommonData.SDATA_AUTO_OPEN_DUDU_FM, false)) {
-            LogEx.e(this, "还没开发出来FM");
+            Intent serviceIntent = new Intent();
+            serviceIntent.setComponent(new ComponentName("com.wow.dudu.music", "com.wow.dudu.fm.service.MainService"));
+            app.startService(serviceIntent);
         }
         if (SharedPreUtil.getBoolean(CommonData.SDATA_AUTO_OPEN_DUDU_VOICE, false)) {
             LogEx.e(this, "还没开发出来VOICE");
@@ -158,7 +160,7 @@ public class AppContext {
         NaviWin.watch().init(app);
         VoiceWin.watch().init(app);
 
-        XmlyfmPlugin.self().init(app);
+        DudufmPlugin.self().init(app);
 
         if (SharedPreUtil.getBoolean(CommonData.SDATA_USE_VA, false)) {
             BaiduVoiceAssistant.self().init(app);

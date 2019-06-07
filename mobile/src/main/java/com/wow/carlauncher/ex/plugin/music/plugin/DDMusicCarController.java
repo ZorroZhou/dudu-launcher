@@ -49,6 +49,7 @@ public class DDMusicCarController extends MusicController {
     private static final int CMD_NEXT = 2;
     private static final int CMD_PRE = 3;
     private static final int CMD_REQUEST_LAST = 4;
+    private static final int CMD_STOP = 5;
 
     private static final String RECEIVE_ACTION = "com.wow.dudu.music.notice";
 
@@ -92,7 +93,7 @@ public class DDMusicCarController extends MusicController {
     }
 
     public void pause() {
-        sendEvent(CMD_PLAY_OR_PAUSE);
+        sendEvent(CMD_STOP);
     }
 
     public void next() {

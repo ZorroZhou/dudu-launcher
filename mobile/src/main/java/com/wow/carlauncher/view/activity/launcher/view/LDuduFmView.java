@@ -2,7 +2,6 @@ package com.wow.carlauncher.view.activity.launcher.view;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
@@ -11,11 +10,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
+import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.ex.manage.ImageManage;
-import com.wow.carlauncher.ex.plugin.xmlyfm.PXmlyfmEventRadioInfo;
-import com.wow.carlauncher.ex.plugin.xmlyfm.XmlyfmPlugin;
+import com.wow.carlauncher.ex.manage.appInfo.AppInfoManage;
+import com.wow.carlauncher.ex.plugin.dudufm.DudufmPlugin;
+import com.wow.carlauncher.ex.plugin.dudufm.PDuduFmEventRadioInfo;
+import com.wow.carlauncher.ex.plugin.dudufm.PDuduFmEventStateChange;
 import com.wow.carlauncher.view.activity.launcher.BaseThemeView;
-import com.wow.carlauncher.view.activity.radios.RadiosActivity;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -27,19 +28,19 @@ import butterknife.OnClick;
  * Created by 10124 on 2018/4/20.
  */
 @SuppressLint("SetTextI18n")
-public class LXmlyFmView extends BaseThemeView {
+public class LDuduFmView extends BaseThemeView {
 
-    public LXmlyFmView(@NonNull Context context) {
+    public LDuduFmView(@NonNull Context context) {
         super(context);
     }
 
-    public LXmlyFmView(@NonNull Context context, @Nullable AttributeSet attrs) {
+    public LDuduFmView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
     @Override
     protected int getContent() {
-        return R.layout.content_l_xmly_fm;
+        return R.layout.content_l_dudu_fm;
     }
 
 
@@ -61,19 +62,21 @@ public class LXmlyFmView extends BaseThemeView {
         try {
             switch (view.getId()) {
                 case R.id.rl_base: {
-                    getContext().startActivity(new Intent(getContext(), RadiosActivity.class));
+                    if (CommonUtil.isNotNull(DudufmPlugin.PACKAGE_NAME)) {
+                        AppInfoManage.self().openApp(DudufmPlugin.PACKAGE_NAME);
+                    }
                     break;
                 }
                 case R.id.ll_play: {
-                    XmlyfmPlugin.self().playOrStop();
+                    DudufmPlugin.self().playOrStop();
                     break;
                 }
                 case R.id.ll_next: {
-                    XmlyfmPlugin.self().next();
+                    DudufmPlugin.self().next();
                     break;
                 }
                 case R.id.ll_prew: {
-                    XmlyfmPlugin.self().prev();
+                    DudufmPlugin.self().prev();
                     break;
                 }
             }
@@ -93,16 +96,16 @@ public class LXmlyFmView extends BaseThemeView {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(final PXmlyfmEventRadioInfo event) {
+    public void onEvent(final PDuduFmEventStateChange event) {
         run = event.isRun();
         refreshPlay();
-        if (run) {
-            tv_name.setText(event.getTitle());
-            tv_about.setText(event.getProgramName());
-            ImageManage.self().loadImage(event.getCover(), iv_cover, R.drawable.theme_music_dcover);
-        } else {
-            tv_name.setText("FM广播");
-            tv_about.setText("欢迎收听");
-        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(final PDuduFmEventRadioInfo event) {
+        refreshPlay();
+        tv_name.setText(event.getTitle());
+        tv_about.setText(event.getProgramName());
+        ImageManage.self().loadImage(event.getCover(), iv_cover, R.drawable.theme_music_dcover);
     }
 }

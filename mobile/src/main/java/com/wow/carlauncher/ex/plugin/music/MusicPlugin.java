@@ -22,7 +22,7 @@ import com.wow.carlauncher.ex.plugin.music.plugin.NwdMusicController;
 import com.wow.carlauncher.ex.plugin.music.plugin.QQMusicCarController;
 import com.wow.carlauncher.ex.plugin.music.plugin.SystemMusicController;
 import com.wow.carlauncher.ex.plugin.music.plugin.ZXMusicController;
-import com.wow.carlauncher.ex.plugin.xmlyfm.XmlyfmPlugin;
+import com.wow.carlauncher.ex.plugin.dudufm.DudufmPlugin;
 
 import static com.wow.carlauncher.common.CommonData.SDATA_LAST_ACTIVITY_TYPE;
 import static com.wow.carlauncher.common.CommonData.SDATA_LAST_ACTIVITY_TYPE_MUSIC;
@@ -198,7 +198,7 @@ public class MusicPlugin extends ContextEx {
                 musicController.pause();
                 SharedPreUtil.saveInteger(SDATA_LAST_ACTIVITY_TYPE, SDATA_LAST_ACTIVITY_TYPE_NONE);
             } else {
-                XmlyfmPlugin.self().stop();
+                DudufmPlugin.self().stop();
                 musicController.play();
                 SharedPreUtil.saveInteger(SDATA_LAST_ACTIVITY_TYPE, SDATA_LAST_ACTIVITY_TYPE_MUSIC);
             }
@@ -215,7 +215,7 @@ public class MusicPlugin extends ContextEx {
     public void next() {
         LogEx.d(this, "next");
         if (musicController != null) {
-            XmlyfmPlugin.self().stop();
+            DudufmPlugin.self().stop();
             musicController.next();
             SharedPreUtil.saveInteger(SDATA_LAST_ACTIVITY_TYPE, SDATA_LAST_ACTIVITY_TYPE_MUSIC);
         }
@@ -224,7 +224,7 @@ public class MusicPlugin extends ContextEx {
     public void pre() {
         LogEx.d(this, "pre");
         if (musicController != null) {
-            XmlyfmPlugin.self().stop();
+            DudufmPlugin.self().stop();
             musicController.pre();
             SharedPreUtil.saveInteger(SDATA_LAST_ACTIVITY_TYPE, SDATA_LAST_ACTIVITY_TYPE_MUSIC);
         }

@@ -1,7 +1,6 @@
-package com.wow.carlauncher.ex.plugin.xmlyfm;
+package com.wow.carlauncher.ex.plugin.dudufm;
 
-public class PXmlyfmEventRadioInfo {
-    private boolean run;
+public class PDuduFmEventRadioInfo {
     private String title;
     private String cover;
     private String programName;
@@ -10,17 +9,8 @@ public class PXmlyfmEventRadioInfo {
         return programName;
     }
 
-    public PXmlyfmEventRadioInfo setProgramName(String programName) {
+    public PDuduFmEventRadioInfo setProgramName(String programName) {
         this.programName = programName;
-        return this;
-    }
-
-    public boolean isRun() {
-        return run;
-    }
-
-    public PXmlyfmEventRadioInfo setRun(boolean run) {
-        this.run = run;
         return this;
     }
 
@@ -28,7 +18,7 @@ public class PXmlyfmEventRadioInfo {
         return title;
     }
 
-    public PXmlyfmEventRadioInfo setTitle(String title) {
+    public PDuduFmEventRadioInfo setTitle(String title) {
         this.title = title;
         return this;
     }
@@ -37,15 +27,14 @@ public class PXmlyfmEventRadioInfo {
         return cover;
     }
 
-    public PXmlyfmEventRadioInfo setCover(String cover) {
+    public PDuduFmEventRadioInfo setCover(String cover) {
         this.cover = cover;
         return this;
     }
 
     @Override
     public String toString() {
-        return "PXmlyfmEventRadioInfo{" +
-                "run=" + run +
+        return "PDuduFmEventRadioInfo{" +
                 ", title='" + title + '\'' +
                 ", cover='" + cover + '\'' +
                 '}';

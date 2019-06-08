@@ -1,24 +1,16 @@
 package com.wow.carlauncher.ex.plugin.music.plugin;
 
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.net.Uri;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.wow.carlauncher.common.CommonData;
-import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.common.LrcAnalyze;
 import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.AppUtil;
 import com.wow.carlauncher.common.util.CommonUtil;
-import com.wow.carlauncher.common.util.GsonUtil;
-import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.ex.manage.time.event.TMEventSecond;
-import com.wow.carlauncher.ex.plugin.music.MusciCoverUtil;
 import com.wow.carlauncher.ex.plugin.music.MusicController;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 
@@ -28,11 +20,8 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ScheduledFuture;
 
-import static com.wow.carlauncher.common.CommonData.SDATA_QQ_MUSIC_REG_DELAY;
-import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.AMAP_PACKAGE;
 
 /**
  * Created by 10124 on 2017/10/26.
@@ -105,7 +94,7 @@ public class DDMusicCarController extends MusicController {
     }
 
     private void sendEvent(int event) {
-        if (!AppUtil.isInstall(context, AMAP_PACKAGE)) {
+        if (!AppUtil.isInstall(context, PACKAGE_NAME)) {
             Toast.makeText(context, "没有安装嘟嘟音乐", Toast.LENGTH_SHORT).show();
             return;
         }

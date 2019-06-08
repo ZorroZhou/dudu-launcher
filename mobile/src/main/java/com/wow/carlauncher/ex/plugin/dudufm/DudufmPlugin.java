@@ -17,10 +17,8 @@ import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 
 import static com.wow.carlauncher.common.CommonData.SDATA_LAST_ACTIVITY_TYPE;
 import static com.wow.carlauncher.common.CommonData.SDATA_LAST_ACTIVITY_TYPE_FM;
-import static com.wow.carlauncher.common.CommonData.SDATA_LAST_ACTIVITY_TYPE_MUSIC;
 import static com.wow.carlauncher.common.CommonData.SDATA_LAST_ACTIVITY_TYPE_NONE;
 import static com.wow.carlauncher.common.CommonData.SDATA_START_LAST_ACTIVITY_DELAY;
-import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.AMAP_PACKAGE;
 
 /**
  * Created by 10124 on 2017/11/9.
@@ -66,7 +64,7 @@ public class DudufmPlugin extends ContextEx {
     private static final String RADIO_CHANGE_LOGO = "RADIO_CHANGE_LOGO";
 
     private void sendEvent(int event) {
-        if (!AppUtil.isInstall(getContext(), AMAP_PACKAGE)) {
+        if (!AppUtil.isInstall(getContext(), PACKAGE_NAME)) {
             Toast.makeText(getContext(), "没有安装嘟嘟FM", Toast.LENGTH_SHORT).show();
             return;
         }

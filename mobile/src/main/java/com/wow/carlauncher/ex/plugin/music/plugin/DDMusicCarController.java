@@ -82,7 +82,9 @@ public class DDMusicCarController extends MusicController {
     }
 
     public void pause() {
-        sendEvent(CMD_STOP);
+        if (run) {
+            sendEvent(CMD_STOP);
+        }
     }
 
     public void next() {

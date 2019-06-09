@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.Map;
 
 public class SystemMusicController extends MusicController {
-    private String PACKAGE_NAME = null;
 
     private Map<String, String> clazzs;
 
@@ -188,20 +187,12 @@ public class SystemMusicController extends MusicController {
 
     private BroadcastReceiver mReceiver = new BroadcastReceiver() {
         public void onReceive(Context paramAnonymousContext, Intent intent) {
-            try {
-                if (intent.getStringExtra("android.media.extra.PACKAGE_NAME") != null && clazzs.containsKey(intent.getStringExtra("android.media.extra.PACKAGE_NAME"))) {
-                    PACKAGE_NAME = intent.getStringExtra("android.media.extra.PACKAGE_NAME");
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
             LogEx.e(SystemMusicController.this, "onReceive: " + intent.getAction());
             if (intent.getExtras() != null) {
                 for (String key : intent.getExtras().keySet()) {
                     LogEx.e(SystemMusicController.this, key + ": " + intent.getExtras().get(key));
                 }
             }
-
 
             if (CommonUtil.isNotNull(intent.getAction()) && intent.getAction().contains("playstatechanged")) {
                 try {

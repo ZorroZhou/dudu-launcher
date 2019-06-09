@@ -85,7 +85,9 @@ public class DudufmPlugin extends ContextEx {
     }
 
     public void stop() {
-        sendEvent(CMD_STOP);
+        if (run) {
+            sendEvent(CMD_STOP);
+        }
     }
 
     public void next() {

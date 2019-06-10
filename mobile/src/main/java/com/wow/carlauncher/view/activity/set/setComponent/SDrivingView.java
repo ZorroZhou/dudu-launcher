@@ -7,6 +7,7 @@ import com.wow.carlauncher.common.CommonData;
 import com.wow.carlauncher.common.util.SharedPreUtil;
 import com.wow.carlauncher.common.view.SetView;
 import com.wow.carlauncher.view.activity.driving.AutoDrivingEnum;
+import com.wow.carlauncher.view.activity.driving.DAEventChangeContent;
 import com.wow.carlauncher.view.activity.driving.DrivingViewEnum;
 import com.wow.carlauncher.view.activity.launcher.event.LItemRefreshEvent;
 import com.wow.carlauncher.view.activity.set.SetActivity;
@@ -63,7 +64,7 @@ public class SDrivingView extends SetBaseView {
     @Override
     protected void initView() {
         sv_driving_type.setSummary(DrivingViewEnum.getById(SharedPreUtil.getInteger(SDATA_DRIVING_VIEW, DrivingViewEnum.BLACK.getId())).getName());
-        sv_driving_type.setOnClickListener(new SetSingleSelectView<DrivingViewEnum>(getActivity(), "请选择首页切换动画") {
+        sv_driving_type.setOnClickListener(new SetSingleSelectView<DrivingViewEnum>(getActivity(), "请选择驾驶界面") {
             @Override
             public Collection<DrivingViewEnum> getAll() {
                 return Arrays.asList(CommonData.DRIVING_VIEW);
@@ -78,6 +79,7 @@ public class SDrivingView extends SetBaseView {
             public boolean onSelect(DrivingViewEnum setEnum) {
                 SharedPreUtil.saveInteger(SDATA_DRIVING_VIEW, setEnum.getId());
                 sv_driving_type.setSummary(setEnum.getName());
+                EventBus.getDefault().post(new DAEventChangeContent());
                 return true;
             }
         });

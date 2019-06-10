@@ -19,6 +19,6 @@
         android:gravity="center"
         android:text="10:10"
         android:textColor="#bbb"
-        app:layout_textSizePercent="15%h" />
+        app:layout_textSizePercent="25%h" />
 
 </com.wow.carlauncher.common.theme.TLinearLayout>

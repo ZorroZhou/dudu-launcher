@@ -31,6 +31,7 @@ import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarInfo;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarTp;
 import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventConnect;
+import com.wow.carlauncher.view.activity.driving.DrivingBaseView;
 import com.wow.carlauncher.view.base.BaseView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -49,7 +50,7 @@ import static com.wow.carlauncher.ex.plugin.amapcar.AMapCarConstant.ICONS;
 import static com.wow.carlauncher.ex.plugin.fk.FangkongProtocolEnum.YLFK;
 import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.RIGHT_BOTTOM_CLICK;
 
-public class DrivingBlueView extends BaseView {
+public class DrivingBlueView extends DrivingBaseView {
     private final static int MAX_REV = 8000;
     private final static int MAX_SPEED = 200;
     private static boolean fristLoad = true;
@@ -153,6 +154,9 @@ public class DrivingBlueView extends BaseView {
     @BindView(R.id.rl_main_info)
     View rl_main_info;
 
+    @BindView(R.id.btn_back)
+    View btn_back;
+
     private boolean show = true;
 
     private boolean obdConnect = false;
@@ -198,7 +202,7 @@ public class DrivingBlueView extends BaseView {
         }
     }
 
-    @OnClick(value = {R.id.music_ll_prew, R.id.music_ll_next, R.id.music_ll_play, R.id.fl_item1})
+    @OnClick(value = {R.id.music_ll_prew, R.id.music_ll_next, R.id.music_ll_play, R.id.fl_item1, R.id.btn_back})
     public void clickEvent(View view) {
         switch (view.getId()) {
             case R.id.music_ll_prew: {
@@ -216,6 +220,10 @@ public class DrivingBlueView extends BaseView {
             case R.id.fl_item1: {
                 showNav = !showNav;
                 refreshNavState();
+                break;
+            }
+            case R.id.btn_back: {
+                getActivity().moveTaskToBack(true);
                 break;
             }
         }
@@ -386,7 +394,7 @@ public class DrivingBlueView extends BaseView {
 
     @Subscribe(priority = 90)
     public void onEvent(PFkEventAction event) {
-        if (YLFK.equals(event.getFangkongProtocol())) {
+        if (YLFK.equals(event.getFangkongProtocol()) && showing()) {
             boolean needCancelEvent = false;
             switch (event.getAction()) {
                 case RIGHT_BOTTOM_CLICK:

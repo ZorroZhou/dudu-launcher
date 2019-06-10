@@ -5,8 +5,12 @@ import android.widget.FrameLayout;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.util.SharedPreUtil;
+import com.wow.carlauncher.ex.manage.time.event.TMEventSecond;
 import com.wow.carlauncher.view.base.BaseActivity;
 import com.wow.carlauncher.view.base.BaseView;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 
@@ -21,7 +25,7 @@ public class DrivingActivity extends BaseActivity {
     @BindView(R.id.content)
     FrameLayout content;
 
-    private BaseView nowContent;
+    private DrivingBaseView nowContent;
 
     @Override
     public void init() {
@@ -32,9 +36,34 @@ public class DrivingActivity extends BaseActivity {
     @Override
     public void initView() {
         hideTitle();
+        loadContent();
+    }
+
+    private void loadContent() {
         nowContent = DrivingViewEnum.createView(this, DrivingViewEnum.getById(SharedPreUtil.getInteger(SDATA_DRIVING_VIEW, DrivingViewEnum.BLACK.getId())));
+        nowContent.setDrivingActivity(this);
         content.removeAllViews();
         content.addView(nowContent, FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
-        nowContent.findViewById(R.id.btn_back).setOnClickListener(v -> finish());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (nowContent != null) {
+            nowContent.setShowing(true);
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (nowContent != null) {
+            nowContent.setShowing(false);
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(final DAEventChangeContent event) {
+        loadContent();
     }
 }

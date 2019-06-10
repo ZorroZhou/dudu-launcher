@@ -2,11 +2,13 @@ package com.wow.carlauncher.view.activity.driving.time;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.view.View;
 import android.widget.TextView;
 
 import com.wow.carlauncher.R;
 import com.wow.carlauncher.common.util.DateUtil;
 import com.wow.carlauncher.ex.manage.time.event.TMEventSecond;
+import com.wow.carlauncher.view.activity.driving.DrivingBaseView;
 import com.wow.carlauncher.view.base.BaseView;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -18,7 +20,7 @@ import butterknife.BindView;
 
 import static com.wow.carlauncher.common.CommonData.MINUTE_MILL;
 
-public class DrivingTimeView extends BaseView {
+public class DrivingTimeView extends DrivingBaseView {
     public DrivingTimeView(@NonNull Context context) {
         super(context);
     }
@@ -26,9 +28,17 @@ public class DrivingTimeView extends BaseView {
     @BindView(R.id.tv_time)
     TextView tv_time;
 
+    @BindView(R.id.btn_back)
+    View btn_back;
+
     @Override
     protected int getContent() {
         return R.layout.content_driving_time;
+    }
+
+    @Override
+    protected void initView() {
+        btn_back.setOnClickListener(v -> getActivity().moveTaskToBack(true));
     }
 
     private long cur_min = 0L;

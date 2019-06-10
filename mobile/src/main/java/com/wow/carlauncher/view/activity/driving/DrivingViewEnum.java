@@ -53,7 +53,7 @@ public enum DrivingViewEnum implements SetEnum {
         return BLACK;
     }
 
-    public static BaseView createView(Context context, DrivingViewEnum itemEnum) {
+    public static DrivingBaseView createView(Context context, DrivingViewEnum itemEnum) {
         switch (itemEnum) {
             case BLACK:
                 return new DrivingCoolBlackView(context);

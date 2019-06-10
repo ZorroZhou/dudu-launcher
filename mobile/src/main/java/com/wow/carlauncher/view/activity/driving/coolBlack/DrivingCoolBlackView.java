@@ -21,6 +21,7 @@ import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventNavInfo;
 import com.wow.carlauncher.ex.plugin.amapcar.event.PAmapEventState;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventAction;
 import com.wow.carlauncher.ex.plugin.fk.event.PFkEventConnect;
+import com.wow.carlauncher.view.activity.driving.DrivingBaseView;
 import com.wow.carlauncher.view.base.BaseView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -40,7 +41,7 @@ import static com.wow.carlauncher.ex.plugin.fk.protocol.YiLianProtocol.RIGHT_BOT
  * Created by 10124 on 2018/5/11.
  */
 
-public class DrivingCoolBlackView extends BaseView {
+public class DrivingCoolBlackView extends DrivingBaseView {
     public DrivingCoolBlackView(@NonNull Context context) {
         super(context);
     }
@@ -81,6 +82,14 @@ public class DrivingCoolBlackView extends BaseView {
     @BindView(R.id.tv_amapmsg)
     TextView tv_amapmsg;
 
+    @BindView(R.id.btn_back)
+    View btn_back;
+
+    @Override
+    protected void initView() {
+        btn_back.setOnClickListener(v -> getActivity().moveTaskToBack(true));
+    }
+
     private boolean fktuoguan = false;
     private boolean showNav = false;
 
@@ -93,7 +102,7 @@ public class DrivingCoolBlackView extends BaseView {
 
     @Subscribe(priority = 90)
     public void onEvent(PFkEventAction event) {
-        if (YLFK.equals(event.getFangkongProtocol())) {
+        if (YLFK.equals(event.getFangkongProtocol()) && showing()) {
             boolean needCancelEvent = false;
             switch (event.getAction()) {
                 case RIGHT_BOTTOM_CLICK:

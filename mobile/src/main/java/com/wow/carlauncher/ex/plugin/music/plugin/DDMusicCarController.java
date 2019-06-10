@@ -69,7 +69,7 @@ public class DDMusicCarController extends MusicController {
         intentFilter.addAction(RECEIVE_ACTION);
         this.context.registerReceiver(mReceiver, intentFilter);
         EventBus.getDefault().register(this);
-        sendEvent(CMD_REQUEST_LAST);
+        sendEvent(CMD_REQUEST_LAST, false);
     }
 
     @Override
@@ -78,25 +78,25 @@ public class DDMusicCarController extends MusicController {
     }
 
     public void play() {
-        sendEvent(CMD_PLAY_OR_PAUSE);
+        sendEvent(CMD_PLAY_OR_PAUSE, true);
     }
 
     public void pause() {
         if (run) {
-            sendEvent(CMD_STOP);
+            sendEvent(CMD_STOP, true);
         }
     }
 
     public void next() {
-        sendEvent(CMD_NEXT);
+        sendEvent(CMD_NEXT, true);
     }
 
     public void pre() {
-        sendEvent(CMD_PRE);
+        sendEvent(CMD_PRE, true);
     }
 
-    private void sendEvent(int event) {
-        if (!AppUtil.isInstall(context, PACKAGE_NAME)) {
+    private void sendEvent(int event, boolean neexCheck) {
+        if (neexCheck && !AppUtil.isInstall(context, PACKAGE_NAME)) {
             Toast.makeText(context, "没有安装嘟嘟音乐", Toast.LENGTH_SHORT).show();
             return;
         }

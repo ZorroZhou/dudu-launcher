@@ -281,10 +281,10 @@ public class AppInfoManage extends ContextEx {
                 for (AppInfo appInfo : allAppInfosList) {
                     if (!(selectapp.contains("[" + appInfo.clazz + "]")
                             || (CommonUtil.isNotNull(packname1) && packname1.contains(appInfo.clazz))
-                            || (CommonUtil.isNotNull(packname2) && packname1.contains(appInfo.clazz))
-                            || (CommonUtil.isNotNull(packname3) && packname2.contains(appInfo.clazz))
-                            || (CommonUtil.isNotNull(packname4) && packname3.contains(appInfo.clazz))
-                            || (CommonUtil.isNotNull(packname5) && packname4.contains(appInfo.clazz)))) {
+                            || (CommonUtil.isNotNull(packname2) && packname2.contains(appInfo.clazz))
+                            || (CommonUtil.isNotNull(packname3) && packname3.contains(appInfo.clazz))
+                            || (CommonUtil.isNotNull(packname4) && packname4.contains(appInfo.clazz))
+                            || (CommonUtil.isNotNull(packname5) && packname5.contains(appInfo.clazz)))) {
                         showAppInfosList.add(appInfo);
                     }
                 }

@@ -63,8 +63,8 @@ public class DudufmPlugin extends ContextEx {
     private static final String RADIO_CHANGE_PNAME = "RADIO_CHANGE_PNAME";
     private static final String RADIO_CHANGE_LOGO = "RADIO_CHANGE_LOGO";
 
-    private void sendEvent(int event) {
-        if (!AppUtil.isInstall(getContext(), PACKAGE_NAME)) {
+    private void sendEvent(int event, boolean neexCheck) {
+        if (neexCheck && !AppUtil.isInstall(getContext(), PACKAGE_NAME)) {
             Toast.makeText(getContext(), "没有安装嘟嘟FM", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -76,7 +76,7 @@ public class DudufmPlugin extends ContextEx {
     }
 
     public void playOrStop() {
-        sendEvent(CMD_PLAY_OR_PAUSE);
+        sendEvent(CMD_PLAY_OR_PAUSE, true);
         if (!run) {
             MusicPlugin.self().pause();
         } else {
@@ -86,18 +86,18 @@ public class DudufmPlugin extends ContextEx {
 
     public void stop() {
         if (run) {
-            sendEvent(CMD_STOP);
+            sendEvent(CMD_STOP, true);
         }
     }
 
     public void next() {
-        sendEvent(CMD_NEXT);
+        sendEvent(CMD_NEXT, true);
         SharedPreUtil.saveInteger(SDATA_LAST_ACTIVITY_TYPE, SDATA_LAST_ACTIVITY_TYPE_FM);
         MusicPlugin.self().pause();
     }
 
     public void prev() {
-        sendEvent(CMD_PRE);
+        sendEvent(CMD_PRE, true);
         SharedPreUtil.saveInteger(SDATA_LAST_ACTIVITY_TYPE, SDATA_LAST_ACTIVITY_TYPE_FM);
         MusicPlugin.self().pause();
     }
@@ -109,7 +109,7 @@ public class DudufmPlugin extends ContextEx {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(RECEIVE_ACTION);
         context.registerReceiver(mReceiver, intentFilter);
-        sendEvent(CMD_REQUEST_LAST);
+        sendEvent(CMD_REQUEST_LAST, false);
 
         if (SharedPreUtil.getBoolean(CommonData.SDATA_START_LAST_ACTIVITY, true) && SharedPreUtil.getInteger(CommonData.SDATA_LAST_ACTIVITY_TYPE, SDATA_LAST_ACTIVITY_TYPE_NONE) == SDATA_LAST_ACTIVITY_TYPE_FM) {
             TaskExecutor.self().run(() -> {

@@ -314,7 +314,6 @@ public class LDockView extends BaseThemeView {
                     SharedPreUtil.saveString(key, appInfo.appMark + CommonData.CONSTANT_APP_PACKAGE_SEPARATE + appInfo.clazz);
                     AppInfoManage.self().refreshShowApp();
                 }).show();
-
     }
 
     private void dockLabelShow(boolean show) {

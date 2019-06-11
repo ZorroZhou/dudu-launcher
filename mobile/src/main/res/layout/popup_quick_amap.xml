@@ -16,7 +16,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="高德地图车机版"
-            android:textColor="@android:color/white"
+            android:textColor="#fff"
             app:layout_textSizePercent="15%h" />
 
         <com.wow.carlauncher.common.theme.TLinearLayout

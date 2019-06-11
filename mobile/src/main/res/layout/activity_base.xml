@@ -30,7 +30,7 @@
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:textColor="@android:color/white"
+            android:textColor="#fff"
             app:layout_textSizePercent="50%h" />
     </com.wow.carlauncher.common.theme.TRelativeLayout>
 

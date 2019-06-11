@@ -12,7 +12,7 @@
         android:id="@+id/et_email"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:background="@android:color/transparent"
+        android:background="#00000000"
         android:hint="请输入邮箱" />
 
     <View style="@style/Interval" />
@@ -26,7 +26,7 @@
             android:id="@+id/et_code"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:background="@android:color/transparent"
+            android:background="#00000000"
             android:hint="请输入验证码"
             android:inputType="number" />
 
@@ -47,7 +47,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="10dp"
-        android:background="@android:color/transparent"
+        android:background="#00000000"
         android:hint="请输入密码" />
 
     <View style="@style/Interval" />

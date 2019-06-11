@@ -19,7 +19,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="11:11"
-            android:textColor="@android:color/white"
+            android:textColor="#fff"
             app:layout_textSizePercent="20%h" />
 
         <LinearLayout

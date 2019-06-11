@@ -15,7 +15,6 @@
             android:id="@+id/ll_user"
             android:layout_width="match_parent"
             android:layout_height="160dp"
-            android:background="@drawable/set_select_bg"
             android:gravity="center"
             android:orientation="vertical">
 
@@ -35,6 +34,11 @@
                 android:textColor="@color/colorPrimary"
                 android:textSize="14sp" />
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:background="@color/main_interval_color" />
 
         <com.wow.carlauncher.common.view.SetView
             android:id="@+id/sv_set_back"

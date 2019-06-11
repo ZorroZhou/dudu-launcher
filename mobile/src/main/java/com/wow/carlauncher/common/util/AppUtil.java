@@ -119,15 +119,19 @@ public class AppUtil {
         return localVersion;
     }
 
-    public static long getApkVersion(String absPath, Context context) {
-        PackageManager pm = context.getPackageManager();
-        PackageInfo pkgInfo = pm.getPackageArchiveInfo(absPath, PackageManager.GET_ACTIVITIES);
-        if (pkgInfo != null) {
-            return pkgInfo.versionCode;
-        } else {
-            return 0;
+    public static int getLocalVersion(Context ctx, String packageName) {
+        int localVersion = 0;
+        try {
+            PackageInfo packageInfo = ctx.getApplicationContext()
+                    .getPackageManager()
+                    .getPackageInfo(packageName, 0);
+            localVersion = packageInfo.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
         }
+        return localVersion;
     }
+
 
     public static boolean isDefaultLauncher(Context context) {
         Intent intent = new Intent(Intent.ACTION_MAIN);

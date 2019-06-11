@@ -11,12 +11,26 @@ import java.util.Map;
 import okhttp3.Call;
 
 public class CommonService {
+    public static final int APP_TYPE_LAUNCHER = 0;
+    public static final int APP_TYPE_MUSIC = 1;
+    public static final int APP_TYPE_FM = 2;
+
+    public static final int UPDATE_TYPE_DEBUG = 1;
+    public static final int UPDATE_TYPE_RELEASE = 2;
 
     private final static String GET_UPDATE = "api/app/common/getUpdate/[TYPE]";
     private final static String GET_UPDATE_TYPE = "[TYPE]";
 
     public static Call getUpdate(int type, final CommonCallback<AppUpdateRes> commonCallback) {
         return ServerRequestUtil.get(GET_UPDATE.replace(GET_UPDATE_TYPE, type + ""), AppUpdateRes.class, commonCallback);
+    }
+
+    private final static String GET_APP_UPDATE = "api/app/common/getUpdate/[TYPE]/[APP_TYPE]";
+    private final static String GET_APP_UPDATE_TYPE = "[TYPE]";
+    private final static String GET_APP_UPDATE_APP_TYPE = "[APP_TYPE]";
+
+    public static Call getUpdate(int type, int apptype, final CommonCallback<AppUpdateRes> commonCallback) {
+        return ServerRequestUtil.get(GET_APP_UPDATE.replace(GET_APP_UPDATE_TYPE, type + "").replace(GET_APP_UPDATE_APP_TYPE, apptype + ""), AppUpdateRes.class, commonCallback);
     }
 
     private final static String GET_LOGIN = "api/app/common/login";

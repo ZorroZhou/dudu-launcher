@@ -463,7 +463,6 @@ public class LauncherActivity extends Activity implements SkinManage.OnSkinChang
                 CommonUtil.equals(SharedPreUtil.getInteger(CommonData.SDATA_AUTO_TO_DRIVING_TYPE, AutoDrivingEnum.TIME.getId()), AutoDrivingEnum.TIME.getId())) {
             //如果是根据时间,就直接根据时间处理
             if (System.currentTimeMillis() - lastTouchTime > SharedPreUtil.getInteger(SDATA_AUTO_TO_DRIVING_TIME, 60) * 1000) {
-                System.out.println("跳转到驾驶界面");
                 lastTouchTime = System.currentTimeMillis();
                 TaskExecutor.self().autoPost(() -> LauncherActivity.this.startActivity(new Intent(LauncherActivity.this, DrivingActivity.class)));
             }
@@ -473,7 +472,6 @@ public class LauncherActivity extends Activity implements SkinManage.OnSkinChang
                 ) {
             //如果是根据转速,直接根据转速>600同时距离最后一次操作大于20秒,暂时这样使用看看
             if (System.currentTimeMillis() - lastTouchTime > 20000 && rev > 600) {
-                System.out.println("跳转到驾驶界面");
                 lastTouchTime = System.currentTimeMillis();
                 TaskExecutor.self().autoPost(() -> LauncherActivity.this.startActivity(new Intent(LauncherActivity.this, DrivingActivity.class)));
             }

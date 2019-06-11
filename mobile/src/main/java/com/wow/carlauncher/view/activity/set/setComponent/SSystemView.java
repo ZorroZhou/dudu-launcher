@@ -147,9 +147,9 @@ public class SSystemView extends SetBaseView {
 
         sv_update.setOnClickListener(v -> {
             getActivity().showLoading("请求中");
-            int type = 2;
+            int type = CommonService.UPDATE_TYPE_RELEASE;
             if (SharedPreUtil.getBoolean(CommonData.SDATA_ALLOW_DEBUG_APP, false)) {
-                type = 1;
+                type = CommonService.UPDATE_TYPE_DEBUG;
             }
             CommonService.getUpdate(type, (success, msg, appUpdate) -> {
                 getActivity().hideLoading();
@@ -166,6 +166,8 @@ public class SSystemView extends SetBaseView {
                     } else {
                         ToastManage.self().show("没有新版本");
                     }
+                } else {
+                    ToastManage.self().show("没有新版本");
                 }
             });
         });

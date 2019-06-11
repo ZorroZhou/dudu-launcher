@@ -41,6 +41,9 @@
     <color name="color_light">#ECEFF1</color>
     <color name="color_transparent">#00000000</color>
 
+    <color name="set_normal">#fff</color>
+    <color name="set_gray">#ccc</color>
+
     <color name="theme_item_title">#333e54</color>
 
     <color name="theme_music_title">#697380</color>

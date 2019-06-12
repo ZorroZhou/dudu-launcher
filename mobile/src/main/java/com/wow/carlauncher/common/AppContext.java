@@ -7,6 +7,7 @@ import android.provider.Settings;
 import com.wow.carlauncher.CarLauncherApplication;
 import com.wow.carlauncher.common.user.LocalUser;
 import com.wow.carlauncher.common.user.event.UEventRefreshLoginState;
+import com.wow.carlauncher.common.util.AppUtil;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.common.util.GsonUtil;
 import com.wow.carlauncher.common.util.SharedPreUtil;
@@ -162,20 +163,28 @@ public class AppContext {
             if (SharedPreUtil.getBoolean(CommonData.SDATA_APP_AUTO_OPEN_USE, false)) {
                 LogEx.d(this, "开始唤醒其他APP");
                 if (CommonUtil.isNotNull(SharedPreUtil.getString(CommonData.SDATA_APP_AUTO_OPEN1))) {
-                    LogEx.d(this, "SDATA_APP_AUTO_OPEN1 " + SharedPreUtil.getString(CommonData.SDATA_APP_AUTO_OPEN1));
-                    AppInfoManage.self().openApp(SharedPreUtil.getString(CommonData.SDATA_APP_AUTO_OPEN1));
+                    TaskExecutor.self().run(() -> {
+                        LogEx.d(this, "SDATA_APP_AUTO_OPEN1 " + SharedPreUtil.getString(CommonData.SDATA_APP_AUTO_OPEN1));
+                        AppInfoManage.self().openApp(SharedPreUtil.getString(CommonData.SDATA_APP_AUTO_OPEN1));
+                    }, 1000);
                 }
                 if (CommonUtil.isNotNull(SharedPreUtil.getString(CommonData.SDATA_APP_AUTO_OPEN2))) {
-                    LogEx.d(this, "SDATA_APP_AUTO_OPEN2 " + SharedPreUtil.getString(CommonData.SDATA_APP_AUTO_OPEN2));
-                    AppInfoManage.self().openApp(SharedPreUtil.getString(CommonData.SDATA_APP_AUTO_OPEN2));
+                    TaskExecutor.self().run(() -> {
+                        LogEx.d(this, "SDATA_APP_AUTO_OPEN2 " + SharedPreUtil.getString(CommonData.SDATA_APP_AUTO_OPEN2));
+                        AppInfoManage.self().openApp(SharedPreUtil.getString(CommonData.SDATA_APP_AUTO_OPEN2));
+                    }, 2000);
                 }
                 if (CommonUtil.isNotNull(SharedPreUtil.getString(CommonData.SDATA_APP_AUTO_OPEN3))) {
-                    LogEx.d(this, "SDATA_APP_AUTO_OPEN3 " + SharedPreUtil.getString(CommonData.SDATA_APP_AUTO_OPEN3));
-                    AppInfoManage.self().openApp(SharedPreUtil.getString(CommonData.SDATA_APP_AUTO_OPEN3));
+                    TaskExecutor.self().run(() -> {
+                        LogEx.d(this, "SDATA_APP_AUTO_OPEN3 " + SharedPreUtil.getString(CommonData.SDATA_APP_AUTO_OPEN3));
+                        AppInfoManage.self().openApp(SharedPreUtil.getString(CommonData.SDATA_APP_AUTO_OPEN3));
+                    }, 3000);
                 }
                 if (CommonUtil.isNotNull(SharedPreUtil.getString(CommonData.SDATA_APP_AUTO_OPEN4))) {
-                    LogEx.d(this, "SDATA_APP_AUTO_OPEN4 " + SharedPreUtil.getString(CommonData.SDATA_APP_AUTO_OPEN4));
-                    AppInfoManage.self().openApp(SharedPreUtil.getString(CommonData.SDATA_APP_AUTO_OPEN4));
+                    TaskExecutor.self().run(() -> {
+                        LogEx.d(this, "SDATA_APP_AUTO_OPEN4 " + SharedPreUtil.getString(CommonData.SDATA_APP_AUTO_OPEN4));
+                        AppInfoManage.self().openApp(SharedPreUtil.getString(CommonData.SDATA_APP_AUTO_OPEN4));
+                    }, 4000);
                 }
                 LogEx.d(this, "延迟返回:" + SharedPreUtil.getInteger(CommonData.SDATA_APP_AUTO_OPEN_BACK, 5) + "秒");
                 TaskExecutor.self().run(() -> {
@@ -184,7 +193,7 @@ public class AppContext {
                     home.addCategory(Intent.CATEGORY_HOME);
                     home.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     application.startActivity(home);
-                }, SharedPreUtil.getInteger(CommonData.SDATA_APP_AUTO_OPEN_BACK, CommonData.SDATA_APP_AUTO_OPEN_BACK_DF) * 1000);
+                }, SharedPreUtil.getInteger(CommonData.SDATA_APP_AUTO_OPEN_BACK, CommonData.SDATA_APP_AUTO_OPEN_BACK_DF) * 1000 + 4000);
             } else {
                 LogEx.d(this, "不唤醒其他APP");
             }
@@ -211,7 +220,7 @@ public class AppContext {
             }
             try {
                 String deviceId = Settings.System.getString(app.getContentResolver(), Settings.System.ANDROID_ID);
-                CommonService.activate(deviceId);
+                CommonService.activate(deviceId, AppUtil.getLocalVersion(app), CommonService.APP_TYPE_LAUNCHER);
             } catch (Exception ignored) {
             }
         });

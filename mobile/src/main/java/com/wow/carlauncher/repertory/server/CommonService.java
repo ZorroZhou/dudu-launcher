@@ -18,13 +18,6 @@ public class CommonService {
     public static final int UPDATE_TYPE_DEBUG = 1;
     public static final int UPDATE_TYPE_RELEASE = 2;
 
-    private final static String GET_UPDATE = "api/app/common/getUpdate/[TYPE]";
-    private final static String GET_UPDATE_TYPE = "[TYPE]";
-
-    public static Call getUpdate(int type, final CommonCallback<AppUpdateRes> commonCallback) {
-        return ServerRequestUtil.get(GET_UPDATE.replace(GET_UPDATE_TYPE, type + ""), AppUpdateRes.class, commonCallback);
-    }
-
     private final static String GET_APP_UPDATE = "api/app/common/getUpdate/[TYPE]/[APP_TYPE]";
     private final static String GET_APP_UPDATE_TYPE = "[TYPE]";
     private final static String GET_APP_UPDATE_APP_TYPE = "[APP_TYPE]";
@@ -51,11 +44,14 @@ public class CommonService {
         return ServerRequestUtil.post(GET_LOGIN_BY_TOKEN, param, LoginResult.class, commonCallback);
     }
 
-    private final static String ACTIVATE = "api/app/common/activate/[DEVICE_ID]";
-    private final static String ACTIVATE_DEVICE_ID = "[DEVICE_ID]";
+    private final static String ACTIVATE = "api/app/common/activate";
 
-    public static Call activate(String device) {
-        return ServerRequestUtil.get(ACTIVATE.replace(ACTIVATE_DEVICE_ID, device + ""), Object.class, null);
+    public static Call activate(String deviceId, Integer version, Integer appType) {
+        Map<String, Object> param = new HashMap<>();
+        param.put("deviceId", deviceId);
+        param.put("version", version);
+        param.put("appType", appType);
+        return ServerRequestUtil.post(ACTIVATE, param, Object.class, null);
     }
 
     public static Call downFile(String url, final ProgressResponseListener commonCallback) {

@@ -18,46 +18,36 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <FrameLayout
+            <com.zhy.android.percent.support.PercentRelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:background="@drawable/st_bg"
+                android:orientation="horizontal">
 
-                <com.zhy.android.percent.support.PercentRelativeLayout
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                    android:gravity="center"
+                    android:text="设置"
+                    android:textColor="@color/colorPrimary"
+                    app:layout_textSizePercent="40%h" />
 
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:text="设置"
-                        android:textColor="@color/colorPrimary"
-                        app:layout_textSizePercent="40%h" />
+                <ImageView
+                    android:id="@+id/btn_back"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_alignParentLeft="true"
+                    android:clickable="true"
+                    android:contentDescription="@string/app_name"
+                    android:focusable="true"
+                    android:padding="10dp"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/ic_back2"
+                    app:layout_heightPercent="100%h"
+                    app:layout_widthPercent="100%h" />
 
-                    <ImageView
-                        android:id="@+id/btn_back"
-                        android:layout_width="0dp"
-                        android:layout_height="0dp"
-                        android:layout_alignParentLeft="true"
-                        android:clickable="true"
-                        android:contentDescription="@string/app_name"
-                        android:focusable="true"
-                        android:padding="10dp"
-                        android:scaleType="fitXY"
-                        android:src="@mipmap/ic_back2"
-                        app:layout_heightPercent="100%h"
-                        app:layout_widthPercent="100%h" />
-
-                </com.zhy.android.percent.support.PercentRelativeLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.1dp"
-                    android:layout_gravity="bottom"
-                    android:background="@color/main_interval_color" />
-            </FrameLayout>
+            </com.zhy.android.percent.support.PercentRelativeLayout>
 
             <ScrollView
                 android:layout_width="match_parent"
@@ -213,73 +203,63 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <FrameLayout
+            <com.zhy.android.percent.support.PercentLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:background="@drawable/st_bg"
+                android:orientation="horizontal">
 
                 <com.zhy.android.percent.support.PercentLinearLayout
-                    android:layout_width="match_parent"
+                    android:id="@+id/set_content_back"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                    android:gravity="left|center_vertical"
+                    android:padding="10dp">
 
                     <com.zhy.android.percent.support.PercentLinearLayout
-                        android:id="@+id/set_content_back"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="left|center_vertical"
-                        android:padding="10dp">
+                        android:layout_height="match_parent">
 
-                        <com.zhy.android.percent.support.PercentLinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent">
-
-                            <ImageView
-                                android:layout_width="0dp"
-                                android:layout_height="0dp"
-                                android:scaleType="fitXY"
-                                android:src="@mipmap/ic_back2"
-                                app:layout_heightPercent="100%h"
-                                app:layout_widthPercent="100%h" />
-                        </com.zhy.android.percent.support.PercentLinearLayout>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:gravity="center_vertical|left"
-                            android:text="返回"
-                            android:textColor="@color/colorPrimary"
-                            app:layout_textSizePercent="35%h" />
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:scaleType="fitXY"
+                            android:src="@mipmap/ic_back2"
+                            app:layout_heightPercent="100%h"
+                            app:layout_widthPercent="100%h" />
                     </com.zhy.android.percent.support.PercentLinearLayout>
 
                     <TextView
-                        android:id="@+id/set_content_title"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="标题"
-                        android:textColor="@color/colorPrimary"
-                        app:layout_textSizePercent="40%h" />
-
-                    <TextView
-                        android:id="@+id/set_content_save"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:gravity="center_vertical|right"
-                        android:paddingLeft="20dp"
-                        android:paddingRight="15dp"
-                        android:text="保存"
+                        android:gravity="center_vertical|left"
+                        android:text="返回"
                         android:textColor="@color/colorPrimary"
                         app:layout_textSizePercent="35%h" />
                 </com.zhy.android.percent.support.PercentLinearLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.1dp"
-                    android:layout_gravity="bottom"
-                    android:background="@color/main_interval_color" />
-            </FrameLayout>
+                <TextView
+                    android:id="@+id/set_content_title"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="标题"
+                    android:textColor="@color/colorPrimary"
+                    app:layout_textSizePercent="40%h" />
+
+                <TextView
+                    android:id="@+id/set_content_save"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical|right"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="15dp"
+                    android:text="保存"
+                    android:textColor="@color/colorPrimary"
+                    app:layout_textSizePercent="35%h" />
+            </com.zhy.android.percent.support.PercentLinearLayout>
 
             <FrameLayout
                 android:id="@+id/set_content"

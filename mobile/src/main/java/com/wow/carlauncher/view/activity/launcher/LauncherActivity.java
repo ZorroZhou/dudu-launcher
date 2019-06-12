@@ -637,8 +637,7 @@ public class LauncherActivity extends Activity implements SkinManage.OnSkinChang
                         Manifest.permission.BLUETOOTH,
                         Manifest.permission.RECEIVE_BOOT_COMPLETED,
                         Manifest.permission.KILL_BACKGROUND_PROCESSES,
-                        Manifest.permission.ACCESS_NETWORK_STATE,
-                        Manifest.permission.RECORD_AUDIO
+                        Manifest.permission.ACCESS_NETWORK_STATE
                 )
                 .onBeforeRequest((permission, executor) -> {
                     new AlertDialog.Builder(LauncherActivity.this).setTitle("警告!")

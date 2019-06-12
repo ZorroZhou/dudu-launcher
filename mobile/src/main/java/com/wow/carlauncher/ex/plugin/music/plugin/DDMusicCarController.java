@@ -196,7 +196,6 @@ public class DDMusicCarController extends MusicController {
                                 coverRefreshTask = null;
                             }
                         }
-                        System.out.println("!!!!!!!!!1");
                         break;
                     }
                     case LRC_CHANGE: {
@@ -207,7 +206,6 @@ public class DDMusicCarController extends MusicController {
                             LrcAnalyze lrcAnalyze = new LrcAnalyze(lrc);
                             lrcDatas = lrcAnalyze.lrcList();
                         }
-                        System.out.println("!!!!!!!!!2");
                         break;
                     }
                 }

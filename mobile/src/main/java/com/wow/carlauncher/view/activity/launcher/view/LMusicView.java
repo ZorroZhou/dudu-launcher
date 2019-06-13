@@ -98,15 +98,6 @@ public class LMusicView extends BaseThemeView {
     @BindView(R.id.rl_base)
     View rl_base;
 
-    @BindView(R.id.ll_prew)
-    LinearLayout ll_prew;
-
-    @BindView(R.id.ll_next)
-    LinearLayout ll_next;
-
-    @BindView(R.id.ll_play)
-    LinearLayout ll_play;
-
     @BindView(R.id.tv_title)
     TextView tv_title;
 

@@ -125,12 +125,15 @@ public class AMapCartReceiver extends BroadcastReceiver {
                             .setRouteAllTime(intent.getIntExtra(NaviInfoConstant.ROUTE_ALL_TIME, -1))
                             .setCurSpeed(intent.getIntExtra(NaviInfoConstant.CUR_SPEED, -1))
                             .setCameraSpeed(intent.getIntExtra(NaviInfoConstant.CAMERA_SPEED, -1));
+                    LogEx.d(this, "onReceive PAmapEventNavInfo:" + GsonUtil.getGson().toJson(info));
                     if (info.getCurSpeed() >= 0) {
-                        EventBus.getDefault().post(new SMEventReceiveSpeed().setSpeed(info.getCurSpeed()).setFrom(SMEventReceiveSpeed.SMReceiveSpeedFrom.AMAP));
+                        EventBus.getDefault().post(new SMEventReceiveSpeed()
+                                .setSpeed(info.getCurSpeed())
+                                .setFrom(SMEventReceiveSpeed.SMReceiveSpeedFrom.AMAP)
+                                .setCameraSpeed(info.getCameraSpeed()));
                     }
                     if (icon != -1
                             && info.getSegRemainDis() != 0
-                            && info.getRouteAllDis() != 0
                             && CommonUtil.isNotNull(info.getNextRoadName())
                             && CommonUtil.isNotNull(info.getCurRoadName())) {
                         LogEx.d(this, "onReceive PAmapEventNavInfo:" + info);

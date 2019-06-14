@@ -6,6 +6,10 @@ import android.content.Context;
 import com.wow.carlauncher.common.LogEx;
 import com.wow.carlauncher.ex.ContextEx;
 import com.wow.carlauncher.ex.manage.time.event.TMEvent3Second;
+import com.wow.carlauncher.ex.manage.time.event.TMEventSecond;
+import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
+import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventCarInfo;
+import com.wow.carlauncher.ex.plugin.obd.evnet.PObdEventConnect;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -36,29 +40,56 @@ public class SpeedManage extends ContextEx {
     }
 
     private long amaptime = 0;
+    private long obdtime = 0;
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void onEvent(SMEventReceiveSpeed event) {
         time = 0;
         if (event.getFrom().equals(SMEventReceiveSpeed.SMReceiveSpeedFrom.AMAP)) {
             amaptime = System.currentTimeMillis();
+            cameraSpeed = event.getCameraSpeed();
         }
-        if (System.currentTimeMillis() - amaptime > 5000) {
-            EventBus.getDefault().post(new SMEventSendSpeed().setUse(true).setSpeed(event.getSpeed()));
-        } else {
-            if (event.getFrom().equals(SMEventReceiveSpeed.SMReceiveSpeedFrom.AMAP)) {
-                EventBus.getDefault().post(new SMEventSendSpeed().setUse(true).setSpeed(event.getSpeed()));
-            }
+        if (event.getFrom().equals(SMEventReceiveSpeed.SMReceiveSpeedFrom.OBD)) {
+            obdtime = System.currentTimeMillis();
+            speed = event.getSpeed();
         }
+        if (event.getFrom().equals(SMEventReceiveSpeed.SMReceiveSpeedFrom.AMAP) &&
+                System.currentTimeMillis() - obdtime > 5000) {
+            speed = event.getSpeed();
+        } else if (event.getFrom().equals(SMEventReceiveSpeed.SMReceiveSpeedFrom.GPS) &&
+                System.currentTimeMillis() - obdtime > 5000 &&
+                System.currentTimeMillis() - amaptime > 5000) {
+            speed = event.getSpeed();
+        }
+
+//        else if (System.currentTimeMillis() - amaptime > 5000) {
+//            EventBus.getDefault().post(new SMEventSendSpeed().setUse(true).setSpeed(event.getSpeed()));
+//        } else {
+//            if (event.getFrom().equals(SMEventReceiveSpeed.SMReceiveSpeedFrom.AMAP)) {
+//                EventBus.getDefault().post(new SMEventSendSpeed().setUse(true).setSpeed(event.getSpeed()));
+//            }
+//        }
     }
+
+    private int speed = 0;
+    private int cameraSpeed = 0;
+    private boolean use = false;
 
     private int time = 0;
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
-    public void onEvent(TMEvent3Second event) {
+    public void onEvent(TMEventSecond event) {
         time++;
-        if (time == 2) {
+        if (time == 6) {
             EventBus.getDefault().post(new SMEventSendSpeed().setUse(false));
         }
+        if (use) {
+            EventBus.getDefault().post(new SMEventSendSpeed().setUse(true).setSpeed(speed).setCameraSpeed(cameraSpeed));
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void onEvent(final PObdEventCarInfo event) {
+        onEvent(new SMEventReceiveSpeed().setSpeed(event.getSpeed()).setFrom(SMEventReceiveSpeed.SMReceiveSpeedFrom.OBD));
     }
 }

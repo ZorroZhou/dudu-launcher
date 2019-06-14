@@ -216,6 +216,11 @@ public class LAMapView extends BaseThemeView {
     @BindView(R.id.btn_gd_root)
     View btn_gd_root;
 
+    @BindView(R.id.tv_xunxiansu)
+    TextView tv_xunxiansu;
+
+    @BindView(R.id.ll_xunxiansu)
+    LinearLayout ll_xunxiansu;
 
     private boolean loactionOk = false;
 
@@ -411,6 +416,12 @@ public class LAMapView extends BaseThemeView {
             //方向取值范围：【0，360】，其中0度表示正北方向，90度表示正东，180度表示正南，270度表示正西
             if (tv_speed != null) {
                 tv_speed.setText(String.valueOf(event.getSpeed()));
+                if (event.getCameraSpeed() > 0) {
+                    ll_xunxiansu.setVisibility(VISIBLE);
+                    tv_xunxiansu.setText(String.valueOf(event.getCameraSpeed()));
+                } else {
+                    ll_xunxiansu.setVisibility(GONE);
+                }
             }
         } else if (loactionOk) {
             loactionOk = false;

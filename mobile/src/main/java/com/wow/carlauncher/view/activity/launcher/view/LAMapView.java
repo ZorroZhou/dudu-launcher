@@ -73,7 +73,7 @@ public class LAMapView extends BaseThemeView {
     public void changedSkin(SkinManage manage) {
         tv_title.setGravity(SkinUtil.analysisItemTitleAlign(manage.getString(R.string.theme_item_title_align)));
         line_daohang.setVisibility(SkinUtil.analysisVisibility(manage.getString(R.string.theme_item_amap_daohang_line)));
-        if (loactionOk) {
+        if (showSpeed) {
             line_xunhang.setVisibility(SkinUtil.analysisVisibility(manage.getString(R.string.theme_item_amap_xunhang_line)));
         } else {
             line_xunhang.setVisibility(GONE);
@@ -221,9 +221,6 @@ public class LAMapView extends BaseThemeView {
 
     @BindView(R.id.ll_xunxiansu)
     LinearLayout ll_xunxiansu;
-
-    private boolean loactionOk = false;
-
 
     private void refreshMute() {
         if (mute) {
@@ -399,14 +396,16 @@ public class LAMapView extends BaseThemeView {
         }
     }
 
+    private boolean showSpeed = false;
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(final SMEventSendSpeed event) {
         if (event.isUse() && SharedPreUtil.getBoolean(CommonData.SDATA_USE_NAVI_XUNHYANG, false)) {
-            if (!loactionOk) {
-                loactionOk = true;
+            if (!showSpeed) {
+                showSpeed = true;
                 iv_moren.setVisibility(GONE);
                 rl_che.setVisibility(VISIBLE);
-                if (loactionOk) {
+                if (showSpeed) {
                     line_xunhang.setVisibility(SkinUtil.analysisVisibility(SkinManage.self().getString(R.string.theme_item_amap_xunhang_line)));
                 } else {
                     line_xunhang.setVisibility(GONE);
@@ -423,8 +422,8 @@ public class LAMapView extends BaseThemeView {
                     ll_xunxiansu.setVisibility(GONE);
                 }
             }
-        } else if (loactionOk) {
-            loactionOk = false;
+        } else if (showSpeed) {
+            showSpeed = false;
             iv_moren.setVisibility(VISIBLE);
             rl_che.setVisibility(GONE);
             line_xunhang.setVisibility(GONE);

@@ -73,23 +73,22 @@ public class SpeedManage extends ContextEx {
 
     private int speed = 0;
     private int cameraSpeed = 0;
-    private boolean use = false;
-
     private int time = 0;
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void onEvent(TMEventSecond event) {
         time++;
-        if (time == 6) {
+        if (time >= 20) {
             EventBus.getDefault().post(new SMEventSendSpeed().setUse(false));
-        }
-        if (use) {
+        } else {
             EventBus.getDefault().post(new SMEventSendSpeed().setUse(true).setSpeed(speed).setCameraSpeed(cameraSpeed));
         }
     }
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void onEvent(final PObdEventCarInfo event) {
-        onEvent(new SMEventReceiveSpeed().setSpeed(event.getSpeed()).setFrom(SMEventReceiveSpeed.SMReceiveSpeedFrom.OBD));
+        if (ObdPlugin.self().isConnect()) {
+            onEvent(new SMEventReceiveSpeed().setSpeed(event.getSpeed()).setFrom(SMEventReceiveSpeed.SMReceiveSpeedFrom.OBD));
+        }
     }
 }

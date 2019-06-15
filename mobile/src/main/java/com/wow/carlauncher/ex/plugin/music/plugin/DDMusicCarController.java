@@ -1,6 +1,7 @@
 package com.wow.carlauncher.ex.plugin.music.plugin;
 
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -11,6 +12,7 @@ import com.wow.carlauncher.common.TaskExecutor;
 import com.wow.carlauncher.common.util.AppUtil;
 import com.wow.carlauncher.common.util.CommonUtil;
 import com.wow.carlauncher.ex.manage.time.event.TMEventSecond;
+import com.wow.carlauncher.ex.plugin.dudufm.DudufmPlugin;
 import com.wow.carlauncher.ex.plugin.music.MusicController;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
 
@@ -28,8 +30,9 @@ import java.util.concurrent.ScheduledFuture;
  */
 
 public class DDMusicCarController extends MusicController {
-    private static final String PACKAGE_NAME = "com.wow.dudu.music";
-    private static final String CLASS_NAME = "com.wow.dudu.music.receiver.MusicCmdReceiver";
+    public static final String PACKAGE_NAME = "com.wow.dudu.music";
+    public static final String CLASS_NAME = "com.wow.dudu.music.receiver.MusicCmdReceiver";
+    public static final String SERVICE_NAME = "com.wow.dudu.music.service.MainService";
 
     private static final String ACTION = "com.wow.dudu.music.cmd";
 
@@ -100,11 +103,19 @@ public class DDMusicCarController extends MusicController {
             Toast.makeText(context, "没有安装嘟嘟音乐", Toast.LENGTH_SHORT).show();
             return;
         }
-
+        if (!AppUtil.isServiceRunning(context, SERVICE_NAME)) {
+            System.out.println("重启服务!!!!!!");
+            Intent serviceIntent = new Intent();
+            serviceIntent.setComponent(new ComponentName(PACKAGE_NAME, SERVICE_NAME));
+            context.startService(serviceIntent);
+        }
         Intent intent = new Intent(ACTION);
         intent.setClassName(PACKAGE_NAME, CLASS_NAME);
         intent.putExtra(CMD, event);
         context.sendBroadcast(intent);
+        if (event != CMD_STOP) {
+            DudufmPlugin.self().stop();
+        }
     }
 
     @Override

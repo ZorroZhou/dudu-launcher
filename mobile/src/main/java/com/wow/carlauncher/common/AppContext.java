@@ -25,6 +25,7 @@ import com.wow.carlauncher.ex.plugin.amapcar.AMapCarPlugin;
 import com.wow.carlauncher.ex.plugin.console.ConsolePlugin;
 import com.wow.carlauncher.ex.plugin.fk.FangkongPlugin;
 import com.wow.carlauncher.ex.plugin.music.MusicPlugin;
+import com.wow.carlauncher.ex.plugin.music.plugin.DDMusicCarController;
 import com.wow.carlauncher.ex.plugin.obd.ObdPlugin;
 import com.wow.carlauncher.ex.plugin.dudufm.DudufmPlugin;
 import com.wow.carlauncher.repertory.db.entiy.CoverTemp;
@@ -107,12 +108,12 @@ public class AppContext {
 
         if (SharedPreUtil.getBoolean(CommonData.SDATA_AUTO_OPEN_DUDU_MUSIC, false)) {
             Intent serviceIntent = new Intent();
-            serviceIntent.setComponent(new ComponentName("com.wow.dudu.music", "com.wow.dudu.music.service.MainService"));
+            serviceIntent.setComponent(new ComponentName(DDMusicCarController.PACKAGE_NAME, DDMusicCarController.SERVICE_NAME));
             app.startService(serviceIntent);
         }
         if (SharedPreUtil.getBoolean(CommonData.SDATA_AUTO_OPEN_DUDU_FM, false)) {
             Intent serviceIntent = new Intent();
-            serviceIntent.setComponent(new ComponentName("com.wow.dudu.music", "com.wow.dudu.fm.service.MainService"));
+            serviceIntent.setComponent(new ComponentName(DudufmPlugin.PACKAGE_NAME, DudufmPlugin.SERVICE_NAME));
             app.startService(serviceIntent);
         }
         if (SharedPreUtil.getBoolean(CommonData.SDATA_AUTO_OPEN_DUDU_VOICE, false)) {

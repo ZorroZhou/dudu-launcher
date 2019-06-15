@@ -53,12 +53,6 @@ public class AMapCartReceiver extends BroadcastReceiver {
         this.aMapCarPlugin = aMapCarPlugin;
     }
 
-    void setGetHcNext(int getHcNext) {
-        this.getHcNext = getHcNext;
-        setGetHcNextTime = System.currentTimeMillis();
-    }
-
-    @Override
     public void onReceive(Context context, final Intent intent) {
         String action = intent.getAction();
         if (RECEIVE_ACTION.equals(action)) {

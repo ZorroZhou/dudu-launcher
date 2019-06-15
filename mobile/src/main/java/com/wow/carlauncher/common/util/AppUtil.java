@@ -18,7 +18,9 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.provider.Settings;
+import android.text.TextUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static android.content.Context.WIFI_SERVICE;
@@ -132,6 +134,22 @@ public class AppUtil {
         return localVersion;
     }
 
+    public static boolean isServiceRunning(Context context, String ServiceName) {
+        if (TextUtils.isEmpty(ServiceName)) {
+            return false;
+        }
+        ActivityManager myManager = (ActivityManager) context
+                .getSystemService(Context.ACTIVITY_SERVICE);
+        ArrayList<ActivityManager.RunningServiceInfo> runningService = (ArrayList<ActivityManager.RunningServiceInfo>) myManager
+                .getRunningServices(30);
+        for (int i = 0; i < runningService.size(); i++) {
+            if (runningService.get(i).service.getClassName().toString()
+                    .equals(ServiceName)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public static boolean isDefaultLauncher(Context context) {
         Intent intent = new Intent(Intent.ACTION_MAIN);

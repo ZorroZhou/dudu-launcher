@@ -2,6 +2,7 @@ package com.wow.carlauncher.ex.plugin.dudufm;
 
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -38,8 +39,9 @@ public class DudufmPlugin extends ContextEx {
 
     }
 
+    public static final String SERVICE_NAME = "com.wow.dudu.music.service.MainService";
     public static final String PACKAGE_NAME = "com.wow.dudu.fm";
-    private static final String CLASS_NAME = "com.wow.dudu.fm.receiver.FmCmdReceiver";
+    public static final String CLASS_NAME = "com.wow.dudu.fm.receiver.FmCmdReceiver";
 
     private static final String ACTION = "com.wow.dudu.fm.cmd";
 
@@ -69,19 +71,24 @@ public class DudufmPlugin extends ContextEx {
             return;
         }
 
+        if (!AppUtil.isServiceRunning(getContext(), SERVICE_NAME)) {
+            Intent serviceIntent = new Intent();
+            serviceIntent.setComponent(new ComponentName(PACKAGE_NAME, SERVICE_NAME));
+            getContext().startService(serviceIntent);
+        }
+
         Intent intent = new Intent(ACTION);
         intent.setClassName(PACKAGE_NAME, CLASS_NAME);
         intent.putExtra(CMD, event);
         getContext().sendBroadcast(intent);
+        if (event != CMD_STOP) {
+            MusicPlugin.self().pause();
+        }
     }
 
     public void playOrStop() {
         sendEvent(CMD_PLAY_OR_PAUSE, true);
-        if (!run) {
-            MusicPlugin.self().pause();
-        } else {
-            SharedPreUtil.saveInteger(SDATA_LAST_ACTIVITY_TYPE, SDATA_LAST_ACTIVITY_TYPE_FM);
-        }
+        SharedPreUtil.saveInteger(SDATA_LAST_ACTIVITY_TYPE, SDATA_LAST_ACTIVITY_TYPE_FM);
     }
 
     public void stop() {
@@ -93,13 +100,11 @@ public class DudufmPlugin extends ContextEx {
     public void next() {
         sendEvent(CMD_NEXT, true);
         SharedPreUtil.saveInteger(SDATA_LAST_ACTIVITY_TYPE, SDATA_LAST_ACTIVITY_TYPE_FM);
-        MusicPlugin.self().pause();
     }
 
     public void prev() {
         sendEvent(CMD_PRE, true);
         SharedPreUtil.saveInteger(SDATA_LAST_ACTIVITY_TYPE, SDATA_LAST_ACTIVITY_TYPE_FM);
-        MusicPlugin.self().pause();
     }
 
     public void init(Context context) {

@@ -74,13 +74,18 @@ public class SpeedManage extends ContextEx {
     private int speed = 0;
     private int cameraSpeed = 0;
     private int time = 0;
+    private boolean run = false;
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void onEvent(TMEventSecond event) {
         time++;
         if (time >= 20) {
-            EventBus.getDefault().post(new SMEventSendSpeed().setUse(false));
+            if (run) {
+                run = false;
+                EventBus.getDefault().post(new SMEventSendSpeed().setUse(false));
+            }
         } else {
+            run = true;
             EventBus.getDefault().post(new SMEventSendSpeed().setUse(true).setSpeed(speed).setCameraSpeed(cameraSpeed));
         }
     }
